@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -134,7 +135,11 @@ func dataSourceTelemetryInfoRead(ctx context.Context, d *schema.ResourceData, m 
 	method1 := []bool{okID}
 	method2 := []bool{okPage, okSize, okFilter, okFilterType}
 
+	log.Printf("[DEBUG] Selecting method. Method 1 %q. Method 2 %q", method1, method2)
+
 	if pickMethod(method1, method2) == 1 {
+		log.Printf("[DEBUG] Selected method 1")
+
 		response1, _, err := client.TelemetryInformation.GetTelemetryInfoByID(vID.(string))
 		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
@@ -142,6 +147,8 @@ func dataSourceTelemetryInfoRead(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at GetTelemetryInfoByID, unexpected response", ""))
 			return diags
 		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		vItem1 := flattenTelemetryInformationGetTelemetryInfoByIDItem(&response1.TelemetryInfo)
 		if err := d.Set("item", vItem1); err != nil {
@@ -155,6 +162,8 @@ func dataSourceTelemetryInfoRead(ctx context.Context, d *schema.ResourceData, m 
 
 		return diags
 	}
+
+	log.Printf("[DEBUG] Selected method 2")
 
 	queryParams2 := isegosdk.GetTelemetryInformationQueryParams{}
 	if okPage {
@@ -177,6 +186,8 @@ func dataSourceTelemetryInfoRead(ctx context.Context, d *schema.ResourceData, m 
 			"Failure at GetTelemetryInformation, unexpected response", ""))
 		return diags
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
 	var items2 []isegosdk.ResponseTelemetryInformationGetTelemetryInformationSearchResultResources
 	for len(response2.SearchResult.Resources) > 0 {
