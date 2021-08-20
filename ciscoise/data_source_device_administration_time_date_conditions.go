@@ -1,0 +1,284 @@
+package ciscoise
+
+import (
+	"context"
+
+	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"log"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
+	return &schema.Resource{
+		ReadContext: dataSourceDeviceAdministrationTimeDateConditionsRead,
+		Schema: map[string]*schema.Schema{
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"response": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+						},
+						"version": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"dates_range": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"dates_range_exception": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"hours_range": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"hours_range_exception": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"week_days": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"week_days_exception": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+	vID, okID := d.GetOk("id")
+
+	method1 := []bool{}
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminTimeConditions")
+
+		response1, _, err := client.DeviceAdministrationTimeDateConditions.GetDeviceAdminTimeConditions()
+
+		if err != nil || response1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDeviceAdminTimeConditions", err,
+				"Failure at GetDeviceAdminTimeConditions, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+
+		vItems1 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItems(response1)
+		if err := d.Set("items", vItems1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminTimeConditions response",
+				err))
+			return diags
+		}
+		d.SetId(getUnixTimeString())
+		return diags
+
+	}
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminTimeConditionByID")
+		vvID := vID.(string)
+
+		response2, _, err := client.DeviceAdministrationTimeDateConditions.GetDeviceAdminTimeConditionByID(vvID)
+
+		if err != nil || response2 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetDeviceAdminTimeConditionByID", err,
+				"Failure at GetDeviceAdminTimeConditionByID, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+
+		vItem2 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(&response2.Response)
+		if err := d.Set("item", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminTimeConditionByID response",
+				err))
+			return diags
+		}
+		d.SetId(getUnixTimeString())
+		return diags
+
+	}
+	return diags
+}
+
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItems(items *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditions) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["response"] = items.Response
+	respItem["version"] = items.Version
+	return []map[string]interface{}{
+		respItem,
+	}
+}
+
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["dates_range"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemDatesRange(item.DatesRange)
+	respItem["dates_range_exception"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemDatesRangeException(item.DatesRangeException)
+	respItem["description"] = item.Description
+	respItem["hours_range"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemHoursRange(item.HoursRange)
+	respItem["hours_range_exception"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemHoursRangeException(item.HoursRangeException)
+	respItem["id"] = item.ID
+	respItem["name"] = item.Name
+	respItem["week_days"] = item.WeekDays
+	respItem["week_days_exception"] = item.WeekDaysException
+	return []map[string]interface{}{
+		respItem,
+	}
+}
+
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemDatesRange(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseDatesRange) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["end_date"] = item.EndDate
+	respItem["start_date"] = item.StartDate
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemDatesRangeException(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseDatesRangeException) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["end_date"] = item.EndDate
+	respItem["start_date"] = item.StartDate
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemHoursRange(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseHoursRange) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["end_time"] = item.EndTime
+	respItem["start_time"] = item.StartTime
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemHoursRangeException(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseHoursRangeException) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["end_time"] = item.EndTime
+	respItem["start_time"] = item.StartTime
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}

@@ -1,0 +1,201 @@
+package ciscoise
+
+import (
+	"context"
+
+	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"log"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+func dataSourceRepository() *schema.Resource {
+	return &schema.Resource{
+		ReadContext: dataSourceRepositoryRead,
+		Schema: map[string]*schema.Schema{
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"path": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"server_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"user_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_pki": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"path": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"server_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"user_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_pki": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+	vName, okName := d.GetOk("name")
+
+	method1 := []bool{}
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: GetRepositories")
+
+		response1, _, err := client.Repository.GetRepositories()
+
+		if err != nil || response1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetRepositories", err,
+				"Failure at GetRepositories, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+
+		vItems1 := flattenRepositoryGetRepositoriesItems(&response1.Response)
+		if err := d.Set("items", vItems1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetRepositories response",
+				err))
+			return diags
+		}
+		d.SetId(getUnixTimeString())
+		return diags
+
+	}
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method 2: GetRepository")
+		vvName := vName.(string)
+
+		response2, _, err := client.Repository.GetRepository(vvName)
+
+		if err != nil || response2 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetRepository", err,
+				"Failure at GetRepository, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+
+		vItem2 := flattenRepositoryGetRepositoryItem(&response2.Response)
+		if err := d.Set("item", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetRepository response",
+				err))
+			return diags
+		}
+		d.SetId(getUnixTimeString())
+		return diags
+
+	}
+	return diags
+}
+
+func flattenRepositoryGetRepositoriesItems(items *[]isegosdk.ResponseRepositoryGetRepositoriesResponse) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["name"] = item.Name
+		respItem["protocol"] = item.Protocol
+		respItem["path"] = item.Path
+		respItem["password"] = item.Password
+		respItem["server_name"] = item.ServerName
+		respItem["user_name"] = item.UserName
+		respItem["enable_pki"] = item.EnablePki
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenRepositoryGetRepositoryItem(item *isegosdk.ResponseRepositoryGetRepositoryResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["name"] = item.Name
+	respItem["protocol"] = item.Protocol
+	respItem["path"] = item.Path
+	respItem["password"] = item.Password
+	respItem["server_name"] = item.ServerName
+	respItem["user_name"] = item.UserName
+	respItem["enable_pki"] = item.EnablePki
+	return []map[string]interface{}{
+		respItem,
+	}
+}

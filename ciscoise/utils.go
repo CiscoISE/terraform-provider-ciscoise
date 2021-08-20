@@ -19,34 +19,30 @@ func listNicely(values []string) string {
 	return strings.Join(strings.Split(pvalues, " "), ", ")
 }
 
-func pickMethod(m1 []bool, m2 []bool) int {
-	lenM1 := len(m1) + 1 // Start with 1 to avoid divide by zero
-	lenM2 := len(m2) + 1
-	priorityM1 := lenM1 <= lenM2 // Give priority to m1
-	countM1 := 1                 // Start with 1 to avoid divide by zero
-	countM2 := 1
-	for _, em1 := range m1 {
-		if em1 {
-			countM1 += 1
+func pickMethodAux(method []bool) float64 {
+	lenM := len(method) + 1 // Start with 1 to avoid divide by zero
+	countM := 1             // Start with 1 to avoid divide by zero
+	for _, em := range method {
+		if em {
+			countM += 1
 		}
 	}
-	for _, em2 := range m2 {
-		if em2 {
-			countM2 += 1
+	var percentM float64 = float64(countM) / float64(lenM)
+	return percentM
+}
+
+func pickMethod(methods [][]bool) int {
+	methodN := 0
+	maxPercentM := 0.0
+	for i, method := range methods {
+		percentM := pickMethodAux(method)
+		if maxPercentM < percentM {
+			methodN = i
+			maxPercentM = percentM
 		}
 	}
-	var percentM1 float64 = float64(countM1) / float64(lenM1)
-	var percentM2 float64 = float64(countM2) / float64(lenM2)
-	if percentM1 == percentM2 {
-		if priorityM1 {
-			return 1
-		}
-		return 2
-	}
-	if percentM1 < percentM2 {
-		return 2
-	}
-	return 1
+	// Add 1 to match number method and not index
+	return methodN + 1
 }
 
 func diagError(summaryErr string, err error) diag.Diagnostic {
