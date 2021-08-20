@@ -5,10 +5,17 @@ import (
 )
 
 func interfaceToSliceString(v interface{}) []string {
+	value, ok := v.([]interface{})
+	if !ok {
+		return nil
+	}
 	newValue := []string{}
-	value := v.([]interface{})
 	for _, i := range value {
-		newValue = append(newValue, fmt.Sprintf("%v", i))
+		newValue = append(newValue, interfaceToString(i))
 	}
 	return newValue
+}
+
+func interfaceToString(v interface{}) string {
+	return fmt.Sprint(v)
 }
