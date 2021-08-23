@@ -55,6 +55,9 @@ func dataSourceTasks() *schema.Resource {
 						"detail_status": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 					},
 				},
@@ -96,6 +99,9 @@ func dataSourceTasks() *schema.Resource {
 						"detail_status": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 					},
 				},
@@ -184,7 +190,7 @@ func flattenTasksGetTaskStatusItems(items *[]isegosdk.ResponseTasksGetTaskStatus
 		respItem["resources_count"] = item.ResourcesCount
 		respItem["success_count"] = item.SuccessCount
 		respItem["fail_count"] = item.FailCount
-		respItem["detail_status"] = item.DetailStatus
+		respItem["detail_status"] = interfaceToSliceString(item.DetailStatus)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -202,7 +208,7 @@ func flattenTasksGetTaskStatusByIDItem(item *isegosdk.ResponseTasksGetTaskStatus
 	respItem["resources_count"] = item.ResourcesCount
 	respItem["success_count"] = item.SuccessCount
 	respItem["fail_count"] = item.FailCount
-	respItem["detail_status"] = item.DetailStatus
+	respItem["detail_status"] = interfaceToSliceString(item.DetailStatus)
 	return []map[string]interface{}{
 		respItem,
 	}

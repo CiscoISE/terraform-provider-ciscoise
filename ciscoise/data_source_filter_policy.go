@@ -74,30 +74,21 @@ func dataSourceFilterPolicy() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_filter_policy": &schema.Schema{
-							Type:     schema.TypeList,
+						"subnet": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"subnet": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"domains": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sgt": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"vn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
+						},
+						"domains": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sgt": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},

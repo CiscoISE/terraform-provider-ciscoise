@@ -64,6 +64,9 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 						"conditions": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 					},
 				},
@@ -240,7 +243,7 @@ func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItems
 		respItem["id"] = item.ID
 		respItem["link"] = flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItemsLink(item.Link)
 		respItem["name"] = item.Name
-		respItem["conditions"] = item.Conditions
+		respItem["conditions"] = interfaceToSliceString(item.Conditions)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

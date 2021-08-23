@@ -55,94 +55,85 @@ func dataSourceInternalUser() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"internal_user": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"email": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"first_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"last_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"change_password": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"identity_groups": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"expiry_date_enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"expiry_date": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_password": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"password_idstore": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"email": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"password": &schema.Schema{
-										Type:      schema.TypeString,
-										Sensitive: true,
-										Computed:  true,
-									},
-									"first_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"last_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"change_password": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"identity_groups": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"expiry_date_enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"expiry_date": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"enable_password": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"custom_attributes": &schema.Schema{
-										Type:     schema.TypeMap,
-										Computed: true,
-									},
-									"password_idstore": &schema.Schema{
-										Type:      schema.TypeString,
-										Sensitive: true,
-										Computed:  true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
@@ -156,94 +147,85 @@ func dataSourceInternalUser() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"internal_user": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"email": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"first_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"last_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"change_password": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"identity_groups": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"expiry_date_enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"expiry_date": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_password": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"password_idstore": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"email": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"password": &schema.Schema{
-										Type:      schema.TypeString,
-										Sensitive: true,
-										Computed:  true,
-									},
-									"first_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"last_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"change_password": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"identity_groups": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"expiry_date_enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"expiry_date": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"enable_password": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"custom_attributes": &schema.Schema{
-										Type:     schema.TypeMap,
-										Computed: true,
-									},
-									"password_idstore": &schema.Schema{
-										Type:      schema.TypeString,
-										Sensitive: true,
-										Computed:  true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

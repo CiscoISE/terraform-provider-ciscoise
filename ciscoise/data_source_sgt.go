@@ -93,64 +93,58 @@ func dataSourceSgt() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"sgt": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"value": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"generation_id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"is_read_only": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"propogate_to_apic": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"default_sgacls": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"value": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"generation_id": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"is_read_only": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"propogate_to_apic": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"default_sgacls": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
@@ -315,7 +309,7 @@ func flattenSecurityGroupsGetSecurityGroupByIDItem(item *isegosdk.ResponseSecuri
 	respItem["generation_id"] = item.GenerationID
 	respItem["is_read_only"] = item.IsReadOnly
 	respItem["propogate_to_apic"] = item.PropogateToAPIc
-	respItem["default_sgacls"] = item.DefaultSgACLs
+	respItem["default_sgacls"] = interfaceToSliceString(item.DefaultSgACLs)
 	respItem["link"] = flattenSecurityGroupsGetSecurityGroupByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

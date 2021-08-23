@@ -27,6 +27,9 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 						"response": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"version": &schema.Schema{
 							Type:     schema.TypeString,
@@ -213,7 +216,7 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(i
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["response"] = items.Response
+	respItem["response"] = interfaceToSliceString(items.Response)
 	respItem["version"] = items.Version
 	return []map[string]interface{}{
 		respItem,

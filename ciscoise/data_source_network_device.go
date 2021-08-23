@@ -55,287 +55,278 @@ func dataSourceNetworkDevice() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"network_device": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"authentication_settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"network_protocol": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"second_radius_shared_secret": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"radius_shared_secret": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"authentication_settings": &schema.Schema{
-										Type:     schema.TypeList,
+									"enable_key_wrap": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"network_protocol": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"second_radius_shared_secret": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"radius_shared_secret": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"enable_key_wrap": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"dtls_required": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"enable_multi_secret": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"key_encryption_key": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"message_authenticator_code_key": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"key_input_format": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"snmpsettings": &schema.Schema{
-										Type:     schema.TypeList,
+									"enabled": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"version": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"ro_community": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"polling_interval": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"link_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mac_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"originating_policy_services_node": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"trustsecsettings": &schema.Schema{
-										Type:     schema.TypeList,
+									"dtls_required": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"device_authentication_settings": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"sga_device_id": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"sga_device_password": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"sga_notification_and_updates": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"downlaod_environment_data_every_x_seconds": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"downlaod_peer_authorization_policy_every_x_seconds": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"re_authentication_every_x_seconds": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"download_sga_cllists_every_x_seconds": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"other_sga_devices_to_trust_this_device": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"send_configuration_to_device": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"send_configuration_to_device_using": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"coa_source_host": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"device_configuration_deployment": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"include_when_deploying_sgt_updates": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"enable_mode_password": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"exec_mode_password": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"exec_mode_username": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"push_id_support": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"tacacs_settings": &schema.Schema{
-										Type:     schema.TypeList,
+									"enable_multi_secret": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"shared_secret": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"connect_mode_options": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"profile_name": &schema.Schema{
+									"key_encryption_key": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"model_name": &schema.Schema{
+									"message_authenticator_code_key": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"software_version": &schema.Schema{
+									"key_input_format": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"coa_port": &schema.Schema{
+								},
+							},
+						},
+						"snmpsettings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"version": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"ro_community": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"polling_interval": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"dtls_dns_name": &schema.Schema{
+									"link_trap_query": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mac_trap_query": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"originating_policy_services_node": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"network_device_iplist": &schema.Schema{
+								},
+							},
+						},
+						"trustsecsettings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"device_authentication_settings": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"ipaddress": &schema.Schema{
+												"sga_device_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"mask": &schema.Schema{
+												"sga_device_password": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"sga_notification_and_updates": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"downlaod_environment_data_every_x_seconds": &schema.Schema{
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-												"get_ipaddress_exclude": &schema.Schema{
+												"downlaod_peer_authorization_policy_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"re_authentication_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"download_sga_cllists_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"other_sga_devices_to_trust_this_device": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"send_configuration_to_device": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"send_configuration_to_device_using": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"coa_source_host": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
 										},
 									},
-									"network_device_group_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"link": &schema.Schema{
+									"device_configuration_deployment": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
+												"include_when_deploying_sgt_updates": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"enable_mode_password": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"href": &schema.Schema{
+												"exec_mode_password": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"type": &schema.Schema{
+												"exec_mode_username": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
 										},
+									},
+									"push_id_support": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"tacacs_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"shared_secret": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"connect_mode_options": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"profile_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"model_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"software_version": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"coa_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"dtls_dns_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"network_device_iplist": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"ipaddress": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mask": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"get_ipaddress_exclude": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"network_device_group_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -349,287 +340,278 @@ func dataSourceNetworkDevice() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"network_device": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"authentication_settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"network_protocol": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"second_radius_shared_secret": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"radius_shared_secret": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"authentication_settings": &schema.Schema{
-										Type:     schema.TypeList,
+									"enable_key_wrap": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"network_protocol": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"second_radius_shared_secret": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"radius_shared_secret": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"enable_key_wrap": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"dtls_required": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"enable_multi_secret": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"key_encryption_key": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"message_authenticator_code_key": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"key_input_format": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"snmpsettings": &schema.Schema{
-										Type:     schema.TypeList,
+									"enabled": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"version": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"ro_community": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"polling_interval": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"link_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mac_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"originating_policy_services_node": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"trustsecsettings": &schema.Schema{
-										Type:     schema.TypeList,
+									"dtls_required": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"device_authentication_settings": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"sga_device_id": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"sga_device_password": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"sga_notification_and_updates": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"downlaod_environment_data_every_x_seconds": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"downlaod_peer_authorization_policy_every_x_seconds": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"re_authentication_every_x_seconds": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"download_sga_cllists_every_x_seconds": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"other_sga_devices_to_trust_this_device": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"send_configuration_to_device": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"send_configuration_to_device_using": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"coa_source_host": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"device_configuration_deployment": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"include_when_deploying_sgt_updates": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"enable_mode_password": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"exec_mode_password": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"exec_mode_username": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"push_id_support": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"tacacs_settings": &schema.Schema{
-										Type:     schema.TypeList,
+									"enable_multi_secret": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"shared_secret": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"connect_mode_options": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"profile_name": &schema.Schema{
+									"key_encryption_key": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"coa_port": &schema.Schema{
+									"message_authenticator_code_key": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"key_input_format": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"snmpsettings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"version": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"ro_community": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"polling_interval": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"dtls_dns_name": &schema.Schema{
+									"link_trap_query": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mac_trap_query": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"originating_policy_services_node": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"model_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"software_version": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"network_device_iplist": &schema.Schema{
+								},
+							},
+						},
+						"trustsecsettings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"device_authentication_settings": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"ipaddress": &schema.Schema{
+												"sga_device_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"mask": &schema.Schema{
+												"sga_device_password": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"sga_notification_and_updates": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"downlaod_environment_data_every_x_seconds": &schema.Schema{
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-												"get_ipaddress_exclude": &schema.Schema{
+												"downlaod_peer_authorization_policy_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"re_authentication_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"download_sga_cllists_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"other_sga_devices_to_trust_this_device": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"send_configuration_to_device": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"send_configuration_to_device_using": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"coa_source_host": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
 										},
 									},
-									"network_device_group_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"link": &schema.Schema{
+									"device_configuration_deployment": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
+												"include_when_deploying_sgt_updates": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"enable_mode_password": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"href": &schema.Schema{
+												"exec_mode_password": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"type": &schema.Schema{
+												"exec_mode_username": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
 										},
+									},
+									"push_id_support": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"tacacs_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"shared_secret": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"connect_mode_options": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"profile_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"coa_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"dtls_dns_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"model_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"software_version": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"network_device_iplist": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"ipaddress": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mask": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"get_ipaddress_exclude": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"network_device_group_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

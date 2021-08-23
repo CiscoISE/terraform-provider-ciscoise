@@ -93,178 +93,169 @@ func dataSourceGuestType() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"guest_type": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_default_type": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"access_time": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"is_default_type": &schema.Schema{
+									"from_first_login": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"access_time": &schema.Schema{
+									"max_account_duration": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"duration_time_unit": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"default_duration": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_access_on_specific_days_times": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"day_time_limits": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"from_first_login": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"max_account_duration": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"duration_time_unit": &schema.Schema{
+												"start_time": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"default_duration": &schema.Schema{
-													Type:     schema.TypeInt,
+												"end_time": &schema.Schema{
+													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"allow_access_on_specific_days_times": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"day_time_limits": &schema.Schema{
+												"days": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"start_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"end_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"days": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
-															},
-														},
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
 													},
 												},
 											},
 										},
 									},
-									"login_options": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"login_options": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"limit_simultaneous_logins": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"max_simultaneous_logins": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"failure_action": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"max_registered_devices": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"identity_group_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"allow_guest_portal_bypass": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"expiration_notification": &schema.Schema{
-										Type:     schema.TypeList,
+									"limit_simultaneous_logins": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+									},
+									"max_simultaneous_logins": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"failure_action": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"max_registered_devices": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"identity_group_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"allow_guest_portal_bypass": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"expiration_notification": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"enable_notification": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"advance_notification_duration": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"advance_notification_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"send_email_notification": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"email_text": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"send_sms_notification": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"sms_text": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"sponsor_groups": &schema.Schema{
-										Type:     schema.TypeList,
+									"enable_notification": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"advance_notification_duration": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+									},
+									"advance_notification_units": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"send_email_notification": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"email_text": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"send_sms_notification": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"sms_text": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"sponsor_groups": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

@@ -89,64 +89,55 @@ func dataSourceSgMapping() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"sgmapping": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sgt": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"deploy_to": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"deploy_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"host_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"host_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mapping_group": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"sgt": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"deploy_to": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"deploy_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"host_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"host_ip": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mapping_group": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

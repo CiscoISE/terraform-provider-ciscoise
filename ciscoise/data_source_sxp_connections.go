@@ -85,68 +85,59 @@ func dataSourceSxpConnections() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_sxp_connection": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sxp_peer": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sxp_vpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sxp_node": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sxp_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sxp_version": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"sxp_peer": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"sxp_vpn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sxp_node": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ip_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sxp_mode": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sxp_version": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

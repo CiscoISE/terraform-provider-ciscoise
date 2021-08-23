@@ -36,64 +36,55 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"tacacs_external_server": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"host_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"connection_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"single_connect": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"shared_secret": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"host_ip": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"connection_port": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"single_connect": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"shared_secret": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
@@ -107,64 +98,55 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"tacacs_external_server": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"host_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"connection_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"single_connect": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"shared_secret": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"host_ip": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"connection_port": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"single_connect": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"shared_secret": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

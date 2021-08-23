@@ -50,50 +50,41 @@ func dataSourceAciBindings() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"aci_bindings": &schema.Schema{
-							Type:     schema.TypeList,
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ip": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sgt_value": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"vn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"psn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"learned_from": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"learned_by": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sgt_value": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"psn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"learned_from": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"learned_by": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},

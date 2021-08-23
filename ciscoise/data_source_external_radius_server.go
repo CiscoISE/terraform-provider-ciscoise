@@ -36,88 +36,79 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"external_radius_server": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"host_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"shared_secret": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_key_wrap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"encryption_key": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"authenticator_key": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"key_input_format": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"authentication_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"accounting_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"retries": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"proxy_timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"host_ip": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"shared_secret": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"enable_key_wrap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"encryption_key": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"authenticator_key": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"key_input_format": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"authentication_port": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"accounting_port": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"retries": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"proxy_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
@@ -131,88 +122,79 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"external_radius_server": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"host_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"shared_secret": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_key_wrap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"encryption_key": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"authenticator_key": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"key_input_format": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"authentication_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"accounting_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"retries": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"proxy_timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"host_ip": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"shared_secret": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"enable_key_wrap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"encryption_key": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"authenticator_key": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"key_input_format": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"authentication_port": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"accounting_port": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"retries": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"proxy_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

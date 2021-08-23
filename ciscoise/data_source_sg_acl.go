@@ -93,64 +93,55 @@ func dataSourceSgACL() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"sgacl": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"generation_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"aclcontent": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_read_only": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"modelled_content": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip_version": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"generation_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"aclcontent": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"is_read_only": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"modelled_content": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ip_version": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

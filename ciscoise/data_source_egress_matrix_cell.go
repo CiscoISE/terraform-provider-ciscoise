@@ -93,67 +93,58 @@ func dataSourceEgressMatrixCell() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"egress_matrix_cell": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"source_sgt_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"destination_sgt_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"matrix_cell_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"default_rule": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sgacls": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"source_sgt_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"destination_sgt_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"matrix_cell_status": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"default_rule": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sgacls": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

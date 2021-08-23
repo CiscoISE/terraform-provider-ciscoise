@@ -24,72 +24,63 @@ func dataSourceSgtBulkMonitorStatus() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"bulk_status": &schema.Schema{
+						"bulk_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"media_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"execution_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"operation_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"start_time": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"resources_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"success_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"fail_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"resources_status": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"bulk_id": &schema.Schema{
+									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"media_type": &schema.Schema{
+									"name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"execution_status": &schema.Schema{
+									"description": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"operation_type": &schema.Schema{
+									"resource_execution_status": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"start_time": &schema.Schema{
+									"status": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"resources_count": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"success_count": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"fail_count": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"resources_status": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"resource_execution_status": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"status": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

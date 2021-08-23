@@ -93,77 +93,68 @@ func dataSourceAdminUser() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"admin_user": &schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"change_password": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"include_system_alarms_in_email": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"external_user": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"inactive_account_never_disabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"admin_groups": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"name": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"id": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"password": &schema.Schema{
-										Type:      schema.TypeString,
-										Sensitive: true,
-										Computed:  true,
-									},
-									"change_password": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"include_system_alarms_in_email": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"external_user": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"inactive_account_never_disabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"admin_groups": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"custom_attributes": &schema.Schema{
-										Type:     schema.TypeMap,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
