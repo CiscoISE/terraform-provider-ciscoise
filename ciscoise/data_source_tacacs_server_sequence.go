@@ -36,72 +36,63 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"tacacs_server_sequence": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"server_list": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"local_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"remote_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"prefix_strip": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"prefix_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_strip": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"suffix_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"server_list": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"local_accounting": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"remote_accounting": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"prefix_strip": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"prefix_delimiter": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"suffix_strip": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"suffix_delimiter": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
@@ -115,72 +106,63 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"tacacs_server_sequence": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"server_list": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"local_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"remote_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"prefix_strip": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"prefix_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_strip": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"suffix_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"server_list": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"local_accounting": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"remote_accounting": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"prefix_strip": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"prefix_delimiter": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"suffix_strip": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"suffix_delimiter": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

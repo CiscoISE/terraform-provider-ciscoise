@@ -24,40 +24,31 @@ func dataSourceResourceVersion() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"version_info": &schema.Schema{
+						"current_server_version": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"supported_versions": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"current_server_version": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"supported_versions": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

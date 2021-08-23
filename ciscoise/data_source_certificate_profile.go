@@ -36,64 +36,55 @@ func dataSourceCertificateProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"certificate_profile": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"external_identity_store_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"certificate_attribute_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"allowed_as_user_name": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"match_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"username_from": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"external_identity_store_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"certificate_attribute_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"allowed_as_user_name": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"match_mode": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"username_from": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
@@ -107,64 +98,55 @@ func dataSourceCertificateProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"certificate_profile": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"external_identity_store_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"certificate_attribute_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"allowed_as_user_name": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"match_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"username_from": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"external_identity_store_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"certificate_attribute_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"allowed_as_user_name": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"match_mode": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"username_from": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

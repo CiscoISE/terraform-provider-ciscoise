@@ -20,34 +20,25 @@ func dataSourcePanHa() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"response": &schema.Schema{
-							Type:     schema.TypeList,
+						"is_enabled": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"is_enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"primary_health_check_node": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"secondary_health_check_node": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"polling_interval": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"failed_attempts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-								},
-							},
+						},
+						"primary_health_check_node": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"secondary_health_check_node": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"polling_interval": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"failed_attempts": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 					},
 				},

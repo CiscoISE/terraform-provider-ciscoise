@@ -55,163 +55,154 @@ func dataSourceGuestUser() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"guest_user": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"guest_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"status_reason": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"reason_for_visit": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sponsor_user_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sponsor_user_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"guest_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"first_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"last_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"company": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"guest_type": &schema.Schema{
+									"creation_time": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"status": &schema.Schema{
+									"notification_language": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"status_reason": &schema.Schema{
+									"user_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"reason_for_visit": &schema.Schema{
+									"email_address": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"sponsor_user_id": &schema.Schema{
+									"phone_number": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"sponsor_user_name": &schema.Schema{
+									"password": &schema.Schema{
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
+									},
+									"enabled": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"sms_service_provider": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"guest_info": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"guest_access_info": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"first_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"last_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"company": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"creation_time": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"notification_language": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"user_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"email_address": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"phone_number": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"password": &schema.Schema{
-													Type:      schema.TypeString,
-													Sensitive: true,
-													Computed:  true,
-												},
-												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"sms_service_provider": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"guest_access_info": &schema.Schema{
-										Type:     schema.TypeList,
+									"valid_days": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"valid_days": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"from_date": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"to_date": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"location": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"ssid": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"group_tag": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"portal_id": &schema.Schema{
+									"from_date": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"custom_fields": &schema.Schema{
-										Type:     schema.TypeMap,
+									"to_date": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"location": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+									},
+									"ssid": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"group_tag": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"portal_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"custom_fields": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -225,163 +216,154 @@ func dataSourceGuestUser() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"guest_user": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"guest_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"status_reason": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"reason_for_visit": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sponsor_user_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sponsor_user_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"guest_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"first_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"last_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"company": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"guest_type": &schema.Schema{
+									"creation_time": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"status": &schema.Schema{
+									"notification_language": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"status_reason": &schema.Schema{
+									"user_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"reason_for_visit": &schema.Schema{
+									"email_address": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"sponsor_user_id": &schema.Schema{
+									"phone_number": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"sponsor_user_name": &schema.Schema{
+									"password": &schema.Schema{
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
+									},
+									"enabled": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"sms_service_provider": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"guest_info": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"guest_access_info": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"first_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"last_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"company": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"creation_time": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"notification_language": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"user_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"email_address": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"phone_number": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"password": &schema.Schema{
-													Type:      schema.TypeString,
-													Sensitive: true,
-													Computed:  true,
-												},
-												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"sms_service_provider": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"guest_access_info": &schema.Schema{
-										Type:     schema.TypeList,
+									"valid_days": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"valid_days": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"from_date": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"to_date": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"location": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"ssid": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"group_tag": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"portal_id": &schema.Schema{
+									"from_date": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"custom_fields": &schema.Schema{
-										Type:     schema.TypeMap,
+									"to_date": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"location": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+									},
+									"ssid": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"group_tag": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"portal_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"custom_fields": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

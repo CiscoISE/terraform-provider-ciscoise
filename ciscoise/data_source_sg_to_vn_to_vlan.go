@@ -85,7 +85,23 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"sgt_vnvlan_container": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sgt_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"virtualnetworklist": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -103,11 +119,11 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"sgt_id": &schema.Schema{
-										Type:     schema.TypeString,
+									"default_virtual_network": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"virtualnetworklist": &schema.Schema{
+									"vlans": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
@@ -125,66 +141,41 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"default_virtual_network": &schema.Schema{
+												"default_vlan": &schema.Schema{
 													Type:     schema.TypeBool,
 													Computed: true,
 												},
-												"vlans": &schema.Schema{
-													Type:     schema.TypeList,
+												"max_value": &schema.Schema{
+													Type:     schema.TypeInt,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"id": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"description": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"default_vlan": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"max_value": &schema.Schema{
-																Type:     schema.TypeInt,
-																Computed: true,
-															},
-															"data": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-														},
-													},
+												},
+												"data": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
 												},
 											},
 										},
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

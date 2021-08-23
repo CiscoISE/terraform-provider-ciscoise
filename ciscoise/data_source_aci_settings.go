@@ -20,110 +20,101 @@ func dataSourceAciSettings() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"aci_settings": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_aci": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"ip_address_host_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"admin_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"admin_password": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"aciipaddress": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"aciuser_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"acipassword": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"tenant_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"l3_route_network": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_to_epg": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_to_sgt": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"all_sxp_domain": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"specific_sxp_domain": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"specifix_sxp_domain_list": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"enable_aci": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"ip_address_host_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"admin_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"admin_password": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"aciipaddress": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"aciuser_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"acipassword": &schema.Schema{
-										Type:      schema.TypeString,
-										Sensitive: true,
-										Computed:  true,
-									},
-									"tenant_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"l3_route_network": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"suffix_to_epg": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"suffix_to_sgt": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"all_sxp_domain": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"specific_sxp_domain": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"specifix_sxp_domain_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"enable_data_plane": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"untagged_packet_iepg_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"default_sgt_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"enable_elements_limit": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"max_num_iepg_from_aci": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"max_num_sgt_to_aci": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"aci50": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"aci51": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-								},
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
+						},
+						"enable_data_plane": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"untagged_packet_iepg_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"default_sgt_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_elements_limit": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"max_num_iepg_from_aci": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"max_num_sgt_to_aci": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"aci50": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"aci51": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
 						},
 					},
 				},

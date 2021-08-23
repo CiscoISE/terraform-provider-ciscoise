@@ -36,73 +36,64 @@ func dataSourceIDStoreSequence() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id_store_sequence": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"parent": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id_seq_item": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"idstore": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
+									"order": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"parent": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"id_seq_item": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"certificate_authentication_profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"break_on_store_fail": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"idstore": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"order": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"certificate_authentication_profile": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"break_on_store_fail": &schema.Schema{
-										Type:     schema.TypeBool,
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
@@ -116,73 +107,64 @@ func dataSourceIDStoreSequence() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id_store_sequence": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"parent": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id_seq_item": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"idstore": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
+									"order": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"parent": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"id_seq_item": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"certificate_authentication_profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"break_on_store_fail": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"idstore": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"order": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"certificate_authentication_profile": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"break_on_store_fail": &schema.Schema{
-										Type:     schema.TypeBool,
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

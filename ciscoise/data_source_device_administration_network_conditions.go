@@ -64,6 +64,9 @@ func dataSourceDeviceAdministrationNetworkConditions() *schema.Resource {
 						"conditions": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 					},
 				},
@@ -240,7 +243,7 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions
 		respItem["id"] = item.ID
 		respItem["link"] = flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItemsLink(item.Link)
 		respItem["name"] = item.Name
-		respItem["conditions"] = item.Conditions
+		respItem["conditions"] = interfaceToSliceString(item.Conditions)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

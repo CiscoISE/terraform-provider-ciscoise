@@ -55,82 +55,73 @@ func dataSourceRestIDStore() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_rest_idstore": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ers_rest_idstore_attributes": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"username_suffix": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"root_url": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"predefined": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"ers_rest_idstore_attributes": &schema.Schema{
+									"headers": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"username_suffix": &schema.Schema{
+												"key": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"root_url": &schema.Schema{
+												"value": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
-												},
-												"predefined": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"headers": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"key": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
 												},
 											},
 										},
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -144,82 +135,73 @@ func dataSourceRestIDStore() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_rest_idstore": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ers_rest_idstore_attributes": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"username_suffix": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"root_url": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"predefined": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"ers_rest_idstore_attributes": &schema.Schema{
+									"headers": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"username_suffix": &schema.Schema{
+												"key": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"root_url": &schema.Schema{
+												"value": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
-												},
-												"predefined": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"headers": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"key": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
 												},
 											},
 										},
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

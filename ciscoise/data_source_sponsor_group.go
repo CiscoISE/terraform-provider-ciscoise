@@ -93,179 +93,170 @@ func dataSourceSponsorGroup() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"sponsor_group": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"is_default_group": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"member_groups": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"guest_types": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"locations": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"auto_notification": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"create_permissions": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"is_enabled": &schema.Schema{
+									"can_import_multiple_accounts": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"is_default_group": &schema.Schema{
+									"import_batch_size_limit": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"can_create_random_accounts": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"member_groups": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"guest_types": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"locations": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"auto_notification": &schema.Schema{
-										Type:     schema.TypeBool,
+									"random_batch_size_limit": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"create_permissions": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"can_import_multiple_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"import_batch_size_limit": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"can_create_random_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"random_batch_size_limit": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"default_username_prefix": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"can_specify_username_prefix": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_set_future_start_date": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"start_date_future_limit_days": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"manage_permission": &schema.Schema{
+									"default_username_prefix": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"other_permissions": &schema.Schema{
-										Type:     schema.TypeList,
+									"can_specify_username_prefix": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"can_update_guest_contact_info": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_view_guest_passwords": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_send_sms_notifications": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_reset_guest_passwords": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_extend_guest_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_delete_guest_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_suspend_guest_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"require_suspension_reason": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_reinstate_suspended_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_approve_selfreg_guests": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"limit_approval_to_sponsors_guests": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"can_access_via_rest": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"can_set_future_start_date": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+									},
+									"start_date_future_limit_days": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"manage_permission": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"other_permissions": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"can_update_guest_contact_info": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_view_guest_passwords": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_send_sms_notifications": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_reset_guest_passwords": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_extend_guest_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_delete_guest_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_suspend_guest_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"require_suspension_reason": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_reinstate_suspended_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_approve_selfreg_guests": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"limit_approval_to_sponsors_guests": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_access_via_rest": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

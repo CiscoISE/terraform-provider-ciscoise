@@ -85,77 +85,68 @@ func dataSourceGuestSmtpNotificationSettings() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_guest_smtp_notification_settings": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"smtp_server": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"notification_enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"use_default_from_address": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"default_from_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"smtp_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"connection_timeout": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"use_tlsor_ssl_encryption": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"use_password_authentication": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"user_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"smtp_server": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"notification_enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"use_default_from_address": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"default_from_address": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"smtp_port": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"connection_timeout": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"use_tlsor_ssl_encryption": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"use_password_authentication": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"user_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"password": &schema.Schema{
-										Type:      schema.TypeString,
-										Sensitive: true,
-										Computed:  true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

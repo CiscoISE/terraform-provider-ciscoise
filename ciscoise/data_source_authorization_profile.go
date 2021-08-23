@@ -36,250 +36,241 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"authorization_profile": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"advanced_attributes": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"advanced_attributes": &schema.Schema{
+									"left_hand_side_dictionary_attribue": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"left_hand_side_dictionary_attribue": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"advanced_attribute_value_type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"dictionary_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"attribute_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"right_hand_side_attribue_value": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"advanced_attribute_value_type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"dictionary_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"attribute_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-											},
-										},
-									},
-									"access_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"authz_profile_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"vlan": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"name_id": &schema.Schema{
+												"advanced_attribute_value_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"tag_id": &schema.Schema{
-													Type:     schema.TypeInt,
+												"dictionary_name": &schema.Schema{
+													Type:     schema.TypeString,
 													Computed: true,
 												},
-											},
-										},
-									},
-									"reauth": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"timer": &schema.Schema{
-													Type:     schema.TypeInt,
+												"attribute_name": &schema.Schema{
+													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"connectivity": &schema.Schema{
+												"value": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
 										},
 									},
-									"airespace_acl": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"airespace_ipv6_acl": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"web_redirection": &schema.Schema{
+									"right_hand_side_attribue_value": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"web_redirection_type": &schema.Schema{
+												"advanced_attribute_value_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"acl": &schema.Schema{
+												"dictionary_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"portal_name": &schema.Schema{
+												"attribute_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"static_iphost_name_fqd_n": &schema.Schema{
+												"value": &schema.Schema{
 													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"display_certificates_renewal_messages": &schema.Schema{
-													Type:     schema.TypeBool,
 													Computed: true,
 												},
 											},
 										},
+									},
+								},
+							},
+						},
+						"access_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"authz_profile_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vlan": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"name_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"tag_id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"reauth": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"timer": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"connectivity": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"airespace_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"airespace_ipv6_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"web_redirection": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"web_redirection_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"acl": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"track_movement": &schema.Schema{
+									"portal_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"static_iphost_name_fqd_n": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"display_certificates_renewal_messages": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"agentless_posture": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"service_template": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"easywired_session_candidate": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"dacl_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"voice_domain_permission": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"neat": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"web_auth": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"auto_smart_port": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"interface_template": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ipv6_acl_filter": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"avc_profile": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mac_sec_policy": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"asa_vpn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"profile_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ipv6_dacl_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"track_movement": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"agentless_posture": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"service_template": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"easywired_session_candidate": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"voice_domain_permission": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"neat": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"web_auth": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"auto_smart_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface_template": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipv6_acl_filter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"avc_profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mac_sec_policy": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"asa_vpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"profile_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipv6_dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -293,250 +284,241 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"authorization_profile": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"advanced_attributes": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"advanced_attributes": &schema.Schema{
+									"left_hand_side_dictionary_attribue": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"left_hand_side_dictionary_attribue": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"advanced_attribute_value_type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"dictionary_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"attribute_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"right_hand_side_attribue_value": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"advanced_attribute_value_type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"dictionary_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"attribute_name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-											},
-										},
-									},
-									"access_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"authz_profile_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"vlan": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"name_id": &schema.Schema{
+												"advanced_attribute_value_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"tag_id": &schema.Schema{
-													Type:     schema.TypeInt,
+												"dictionary_name": &schema.Schema{
+													Type:     schema.TypeString,
 													Computed: true,
 												},
-											},
-										},
-									},
-									"reauth": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"timer": &schema.Schema{
-													Type:     schema.TypeInt,
+												"attribute_name": &schema.Schema{
+													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"connectivity": &schema.Schema{
+												"value": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
 										},
 									},
-									"airespace_acl": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"airespace_ipv6_acl": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"web_redirection": &schema.Schema{
+									"right_hand_side_attribue_value": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"web_redirection_type": &schema.Schema{
+												"advanced_attribute_value_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"acl": &schema.Schema{
+												"dictionary_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"portal_name": &schema.Schema{
+												"attribute_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"static_iphost_name_fqd_n": &schema.Schema{
+												"value": &schema.Schema{
 													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"display_certificates_renewal_messages": &schema.Schema{
-													Type:     schema.TypeBool,
 													Computed: true,
 												},
 											},
 										},
+									},
+								},
+							},
+						},
+						"access_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"authz_profile_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vlan": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"name_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"tag_id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"reauth": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"timer": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"connectivity": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"airespace_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"airespace_ipv6_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"web_redirection": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"web_redirection_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"acl": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"track_movement": &schema.Schema{
+									"portal_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"static_iphost_name_fqd_n": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"display_certificates_renewal_messages": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"agentless_posture": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"service_template": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"easywired_session_candidate": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"dacl_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"voice_domain_permission": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"neat": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"web_auth": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"auto_smart_port": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"interface_template": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ipv6_acl_filter": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"avc_profile": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mac_sec_policy": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"asa_vpn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"profile_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ipv6_dacl_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"track_movement": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"agentless_posture": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"service_template": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"easywired_session_candidate": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"voice_domain_permission": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"neat": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"web_auth": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"auto_smart_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface_template": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipv6_acl_filter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"avc_profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mac_sec_policy": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"asa_vpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"profile_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipv6_dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

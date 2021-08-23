@@ -47,99 +47,90 @@ func dataSourceNode() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"node": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"gate_way": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"user_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"pass_word": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"display_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"in_deployment": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"other_pap_fqdn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip_addresses": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"ip_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sxp_ip_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"node_service_types": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"fqdn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"pap_node": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"primary_pap_node": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"px_grid_node": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"gate_way": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"user_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"pass_word": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"display_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"in_deployment": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"other_pap_fqdn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ip_addresses": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"ip_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sxp_ip_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"node_service_types": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"fqdn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"pap_node": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"primary_pap_node": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"px_grid_node": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},
@@ -153,99 +144,90 @@ func dataSourceNode() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"node": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"gate_way": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"user_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"pass_word": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"display_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"in_deployment": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"other_pap_fqdn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip_addresses": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"ip_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sxp_ip_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"node_service_types": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"fqdn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"pap_node": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"primary_pap_node": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"px_grid_node": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"gate_way": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"user_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"pass_word": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"display_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"in_deployment": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"other_pap_fqdn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ip_addresses": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"ip_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sxp_ip_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"node_service_types": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"fqdn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"pap_node": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"primary_pap_node": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"px_grid_node": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

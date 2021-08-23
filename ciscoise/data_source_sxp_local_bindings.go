@@ -85,60 +85,51 @@ func dataSourceSxpLocalBindings() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_sxp_local_bindings": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"binding_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip_address_or_host": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sxp_vpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sgt": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vns": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"binding_name": &schema.Schema{
+									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
-									},
-									"ip_address_or_host": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sxp_vpn": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"sgt": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"vns": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
 								},
 							},

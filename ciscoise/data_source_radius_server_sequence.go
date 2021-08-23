@@ -74,145 +74,136 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"radius_server_sequence": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"strip_prefix": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"strip_suffix": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"prefix_separator": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_separator": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"remote_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"local_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"use_attr_set_on_request": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"use_attr_set_before_acc": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"continue_authorz_policy": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"radius_server_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"on_request_attr_manipulator_list": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"action": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"dictionary_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"attribute_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"strip_prefix": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"strip_suffix": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"prefix_separator": &schema.Schema{
+									"value": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"suffix_separator": &schema.Schema{
+									"changed_val": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"remote_accounting": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"local_accounting": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"use_attr_set_on_request": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"use_attr_set_before_acc": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"continue_authorz_policy": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"radius_server_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"on_request_attr_manipulator_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"before_accept_attr_manipulators_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"action": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"dictionary_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"attribute_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"changed_val": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"before_accept_attr_manipulators_list": &schema.Schema{
-										Type:     schema.TypeList,
+									"action": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"action": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"dictionary_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"attribute_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"changed_val": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"dictionary_name": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+									},
+									"attribute_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"value": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"changed_val": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

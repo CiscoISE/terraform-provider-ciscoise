@@ -24,48 +24,39 @@ func dataSourceNodeGroup() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"response": &schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mar_cache": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
+									"enabled": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
+									"replication_timeout": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"mar_cache": &schema.Schema{
-										Type:     schema.TypeList,
+									"replication_attempts": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"replication_timeout": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"replication_attempts": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"query_timeout": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"query_attempts": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
+									},
+									"query_timeout": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"query_attempts": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},

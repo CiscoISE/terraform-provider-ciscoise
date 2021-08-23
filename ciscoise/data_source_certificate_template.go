@@ -36,38 +36,29 @@ func dataSourceCertificateTemplate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_certificate_template": &schema.Schema{
-							Type:     schema.TypeList,
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"key_size": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"validity_period": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"raprofile": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"key_size": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"validity_period": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"raprofile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -78,38 +69,29 @@ func dataSourceCertificateTemplate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_certificate_template": &schema.Schema{
-							Type:     schema.TypeList,
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"key_size": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"validity_period": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"raprofile": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"key_size": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"validity_period": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"raprofile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},

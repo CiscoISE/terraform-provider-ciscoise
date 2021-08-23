@@ -55,141 +55,132 @@ func dataSourceEndpoint() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_end_point": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mac": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"profile_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"static_profile_assignment": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"group_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"static_group_assignment": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"portal_user": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"identity_store": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"identity_store_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mdm_attributes": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"mdm_server_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mac": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"profile_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"static_profile_assignment": &schema.Schema{
+									"mdm_reachable": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"group_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"static_group_assignment": &schema.Schema{
+									"mdm_enrolled": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"portal_user": &schema.Schema{
+									"mdm_compliance_status": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_os": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"identity_store": &schema.Schema{
+									"mdm_manufacturer": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"identity_store_id": &schema.Schema{
+									"mdm_model": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"mdm_attributes": &schema.Schema{
-										Type:     schema.TypeList,
+									"mdm_serial": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+									},
+									"mdm_encrypted": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_pinlock": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_jail_broken": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_ime_i": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_phone_number": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"mdm_server_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_reachable": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_enrolled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_compliance_status": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_os": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_manufacturer": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_model": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_serial": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_encrypted": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_pinlock": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_jail_broken": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_ime_i": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_phone_number": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"custom_attributes": &schema.Schema{
-										Type:     schema.TypeMap,
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -203,141 +194,132 @@ func dataSourceEndpoint() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"ers_end_point": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mac": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"profile_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"static_profile_assignment": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"group_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"static_group_assignment": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"portal_user": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"identity_store": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"identity_store_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mdm_attributes": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"mdm_server_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mac": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"profile_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"static_profile_assignment": &schema.Schema{
+									"mdm_reachable": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"group_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"static_group_assignment": &schema.Schema{
+									"mdm_enrolled": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"portal_user": &schema.Schema{
+									"mdm_compliance_status": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_os": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"identity_store": &schema.Schema{
+									"mdm_manufacturer": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"identity_store_id": &schema.Schema{
+									"mdm_model": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"mdm_attributes": &schema.Schema{
-										Type:     schema.TypeList,
+									"mdm_serial": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+									},
+									"mdm_encrypted": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_pinlock": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_jail_broken": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_ime_i": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_phone_number": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"mdm_server_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_reachable": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_enrolled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_compliance_status": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_os": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_manufacturer": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_model": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_serial": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_encrypted": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_pinlock": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_jail_broken": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"mdm_ime_i": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"mdm_phone_number": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"custom_attributes": &schema.Schema{
-										Type:     schema.TypeMap,
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

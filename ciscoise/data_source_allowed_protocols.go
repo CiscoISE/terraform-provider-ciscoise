@@ -36,381 +36,372 @@ func dataSourceAllowedProtocols() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"allowed_protocols": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"eap_tls": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"allow_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_tls_enable_stateless_session_resume": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_tls_session_ticket_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"eap_tls_session_ticket_ttl_units": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"eap_tls_session_ticket_precentage": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"peap": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_peap_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_peap_eap_gtc": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_gtc_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_gtc_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_peap_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"require_cryptobinding": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_v0": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"eap_fast": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_eap_fast_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_gtc": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_gtc_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_gtc_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_tunnel_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_tunnel_pac_ttl_units": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"eap_fast_use_pacs_use_proactive_pac_update_precentage": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_allow_anonym_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_allow_authen_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_accept_client_cert": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_machine_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_machine_pac_ttl_units": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"eap_tls": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"allow_eap_tls_auth_of_expired_certs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_tls_enable_stateless_session_resume": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_tls_session_ticket_ttl": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_tls_session_ticket_ttl_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"eap_tls_session_ticket_precentage": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"peap": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"allow_peap_eap_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_ms_chap_v2_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_peap_eap_gtc": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_gtc_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_gtc_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_peap_eap_tls": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_tls_auth_of_expired_certs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"require_cryptobinding": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_v0": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"eap_fast": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"allow_eap_fast_eap_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_ms_chap_v2_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_gtc": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_gtc_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_gtc_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_tls": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_tls_auth_of_expired_certs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_tunnel_pac_ttl": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_tunnel_pac_ttl_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_use_proactive_pac_update_precentage": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_allow_anonym_provisioning": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_allow_authen_provisioning": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_accept_client_cert": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_machine_pac_ttl": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_machine_pac_ttl_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_allow_machine_authentication": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_stateless_session_resume": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_authorization_pac_ttl": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_authorization_pac_ttl_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"eap_fast_dont_use_pacs_accept_client_cert": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_dont_use_pacs_allow_machine_authentication": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_enable_eap_chaining": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"eap_ttls": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"eap_ttls_pap_ascii": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_chap": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_ms_chap_v1": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_eap_md5": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_eap_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_eap_ms_chap_v2_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"teap": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"allow_teap_eap_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_teap_eap_ms_chap_v2_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_teap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_teap_eap_tls": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_teap_eap_tls_auth_of_expired_certs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"accept_client_cert_during_tunnel_est": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"enable_eap_chaining": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_downgrade_msk": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"process_host_lookup": &schema.Schema{
+									"eap_fast_use_pacs_allow_machine_authentication": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"allow_pap_ascii": &schema.Schema{
+									"eap_fast_use_pacs_stateless_session_resume": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"allow_chap": &schema.Schema{
-										Type:     schema.TypeBool,
+									"eap_fast_use_pacs_authorization_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"allow_ms_chap_v1": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_ms_chap_v2": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_eap_md5": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_leap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_eap_tls": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_eap_ttls": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_eap_fast": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_peap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_teap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_preferred_eap_protocol": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"preferred_eap_protocol": &schema.Schema{
+									"eap_fast_use_pacs_authorization_pac_ttl_units": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"eap_tls_l_bit": &schema.Schema{
+									"eap_fast_dont_use_pacs_accept_client_cert": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"allow_weak_ciphers_for_eap": &schema.Schema{
+									"eap_fast_dont_use_pacs_allow_machine_authentication": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"require_message_auth": &schema.Schema{
+									"eap_fast_enable_eap_chaining": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"eap_ttls": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"eap_ttls_pap_ascii": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_chap": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_ms_chap_v1": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_eap_md5": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"teap": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_teap_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_teap_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_teap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_teap_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_teap_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"accept_client_cert_during_tunnel_est": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_eap_chaining": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_downgrade_msk": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"process_host_lookup": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_pap_ascii": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_chap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_ms_chap_v1": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_ms_chap_v2": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_eap_md5": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_leap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_eap_tls": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_eap_ttls": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_eap_fast": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_peap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_teap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_preferred_eap_protocol": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"preferred_eap_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"eap_tls_l_bit": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_weak_ciphers_for_eap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"require_message_auth": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
@@ -424,381 +415,372 @@ func dataSourceAllowedProtocols() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"allowed_protocols": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"eap_tls": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
+									"allow_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_tls_enable_stateless_session_resume": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_tls_session_ticket_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"eap_tls_session_ticket_ttl_units": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"eap_tls_session_ticket_precentage": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"peap": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_peap_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_peap_eap_gtc": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_gtc_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_gtc_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_peap_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"require_cryptobinding": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_peap_v0": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"eap_fast": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_eap_fast_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_gtc": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_gtc_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_gtc_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_tunnel_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_tunnel_pac_ttl_units": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
+									"eap_fast_use_pacs_use_proactive_pac_update_precentage": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_allow_anonym_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_allow_authen_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_accept_client_cert": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_machine_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_machine_pac_ttl_units": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"eap_tls": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"allow_eap_tls_auth_of_expired_certs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_tls_enable_stateless_session_resume": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_tls_session_ticket_ttl": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_tls_session_ticket_ttl_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"eap_tls_session_ticket_precentage": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"peap": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"allow_peap_eap_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_ms_chap_v2_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_peap_eap_gtc": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_gtc_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_gtc_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_peap_eap_tls": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_eap_tls_auth_of_expired_certs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"require_cryptobinding": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_peap_v0": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"eap_fast": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"allow_eap_fast_eap_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_ms_chap_v2_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_gtc": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_gtc_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_gtc_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_tls": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_eap_fast_eap_tls_auth_of_expired_certs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_tunnel_pac_ttl": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_tunnel_pac_ttl_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_use_proactive_pac_update_precentage": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_allow_anonym_provisioning": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_allow_authen_provisioning": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_accept_client_cert": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_machine_pac_ttl": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_machine_pac_ttl_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_allow_machine_authentication": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_stateless_session_resume": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_authorization_pac_ttl": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"eap_fast_use_pacs_authorization_pac_ttl_units": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"eap_fast_dont_use_pacs_accept_client_cert": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_dont_use_pacs_allow_machine_authentication": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_fast_enable_eap_chaining": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"eap_ttls": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"eap_ttls_pap_ascii": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_chap": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_ms_chap_v1": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_eap_md5": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_eap_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_eap_ms_chap_v2_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"eap_ttls_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"teap": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"allow_teap_eap_ms_chap_v2": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_teap_eap_ms_chap_v2_pwd_change": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_teap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"allow_teap_eap_tls": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_teap_eap_tls_auth_of_expired_certs": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"accept_client_cert_during_tunnel_est": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"enable_eap_chaining": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"allow_downgrade_msk": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"process_host_lookup": &schema.Schema{
+									"eap_fast_use_pacs_allow_machine_authentication": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"allow_pap_ascii": &schema.Schema{
+									"eap_fast_use_pacs_stateless_session_resume": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"allow_chap": &schema.Schema{
-										Type:     schema.TypeBool,
+									"eap_fast_use_pacs_authorization_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"allow_ms_chap_v1": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_ms_chap_v2": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_eap_md5": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_leap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_eap_tls": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_eap_ttls": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_eap_fast": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_peap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_teap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"allow_preferred_eap_protocol": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"preferred_eap_protocol": &schema.Schema{
+									"eap_fast_use_pacs_authorization_pac_ttl_units": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"eap_tls_l_bit": &schema.Schema{
+									"eap_fast_dont_use_pacs_accept_client_cert": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"allow_weak_ciphers_for_eap": &schema.Schema{
+									"eap_fast_dont_use_pacs_allow_machine_authentication": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"require_message_auth": &schema.Schema{
+									"eap_fast_enable_eap_chaining": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"eap_ttls": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"eap_ttls_pap_ascii": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_chap": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_ms_chap_v1": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_eap_md5": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"teap": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_teap_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_teap_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_teap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"allow_teap_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_teap_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"accept_client_cert_during_tunnel_est": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_eap_chaining": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"allow_downgrade_msk": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"process_host_lookup": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_pap_ascii": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_chap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_ms_chap_v1": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_ms_chap_v2": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_eap_md5": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_leap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_eap_tls": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_eap_ttls": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_eap_fast": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_peap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_teap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_preferred_eap_protocol": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"preferred_eap_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"eap_tls_l_bit": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"allow_weak_ciphers_for_eap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"require_message_auth": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},

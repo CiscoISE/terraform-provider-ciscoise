@@ -93,193 +93,143 @@ func dataSourceByodPortal() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"byo_d_portal": &schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"portal_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"portal_test_url": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"settings": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"portal_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"portal_test_url": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"settings": &schema.Schema{
+									"portal_settings": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"portal_settings": &schema.Schema{
+												"https_port": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"allowed_interfaces": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"certificate_group_tag": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"endpoint_identity_group": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"display_lang": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"fallback_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"always_used_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"byod_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"byod_welcome_settings": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"https_port": &schema.Schema{
-																Type:     schema.TypeInt,
+															"enable_byo_d": &schema.Schema{
+																Type:     schema.TypeBool,
 																Computed: true,
 															},
-															"allowed_interfaces": &schema.Schema{
-																Type:     schema.TypeList,
+															"enable_guest_access": &schema.Schema{
+																Type:     schema.TypeBool,
 																Computed: true,
-																Elem: &schema.Schema{
-																	Type: schema.TypeString,
-																},
 															},
-															"certificate_group_tag": &schema.Schema{
+															"require_mdm": &schema.Schema{
+																Type:     schema.TypeBool,
+																Computed: true,
+															},
+															"include_aup": &schema.Schema{
+																Type:     schema.TypeBool,
+																Computed: true,
+															},
+															"aup_display": &schema.Schema{
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-															"endpoint_identity_group": &schema.Schema{
-																Type:     schema.TypeString,
+															"require_aup_acceptance": &schema.Schema{
+																Type:     schema.TypeBool,
 																Computed: true,
 															},
-															"display_lang": &schema.Schema{
-																Type:     schema.TypeString,
+															"require_scrolling": &schema.Schema{
+																Type:     schema.TypeBool,
 																Computed: true,
 															},
-															"fallback_language": &schema.Schema{
-																Type:     schema.TypeString,
+														},
+													},
+												},
+												"byod_registration_settings": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"show_device_id": &schema.Schema{
+																Type:     schema.TypeBool,
 																Computed: true,
 															},
-															"always_used_language": &schema.Schema{
+															"end_point_identity_group_id": &schema.Schema{
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 														},
 													},
 												},
-												"byod_settings": &schema.Schema{
+												"byod_registration_success_settings": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"byod_welcome_settings": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"enable_byo_d": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Computed: true,
-																		},
-																		"enable_guest_access": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Computed: true,
-																		},
-																		"require_mdm": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Computed: true,
-																		},
-																		"include_aup": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Computed: true,
-																		},
-																		"aup_display": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																		"require_aup_acceptance": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Computed: true,
-																		},
-																		"require_scrolling": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-															"byod_registration_settings": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"show_device_id": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Computed: true,
-																		},
-																		"end_point_identity_group_id": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-															"byod_registration_success_settings": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"success_redirect": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																		"redirect_url": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"support_info_settings": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"include_support_info_page": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"include_mac_addr": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"include_ip_address": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"include_browser_user_agent": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"include_policy_server": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"include_failure_code": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"empty_field_display": &schema.Schema{
+															"success_redirect": &schema.Schema{
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-															"default_empty_field_value": &schema.Schema{
+															"redirect_url": &schema.Schema{
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -289,166 +239,207 @@ func dataSourceByodPortal() *schema.Resource {
 											},
 										},
 									},
-									"customizations": &schema.Schema{
+									"support_info_settings": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"portal_theme": &schema.Schema{
-													Type:     schema.TypeList,
+												"include_support_info_page": &schema.Schema{
+													Type:     schema.TypeBool,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"id": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"theme_data": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
 												},
-												"portal_tweak_settings": &schema.Schema{
-													Type:     schema.TypeList,
+												"include_mac_addr": &schema.Schema{
+													Type:     schema.TypeBool,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"banner_color": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"banner_text_color": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"page_background_color": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"page_label_and_text_color": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
 												},
-												"language": &schema.Schema{
-													Type:     schema.TypeList,
+												"include_ip_address": &schema.Schema{
+													Type:     schema.TypeBool,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"view_language": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
 												},
-												"global_customizations": &schema.Schema{
-													Type:     schema.TypeList,
+												"include_browser_user_agent": &schema.Schema{
+													Type:     schema.TypeBool,
 													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"mobile_logo_image": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"data": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-															"desktop_logo_image": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"data": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-															"banner_image": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"data": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-															"background_image": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"data": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-															"banner_title": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"contact_text": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"footer_element": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
 												},
-												"page_customizations": &schema.Schema{
+												"include_policy_server": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"include_failure_code": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"empty_field_display": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"default_empty_field_value": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"customizations": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"portal_theme": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"id": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"theme_data": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"portal_tweak_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"banner_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"banner_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"page_background_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"page_label_and_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"language": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"view_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"global_customizations": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"mobile_logo_image": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeList,
+																Type:     schema.TypeString,
 																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
+															},
+														},
+													},
+												},
+												"desktop_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
 
-																		"key": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																		"value": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
+															"data": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"banner_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"background_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"banner_title": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"contact_text": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"footer_element": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"page_customizations": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"data": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -456,26 +447,26 @@ func dataSourceByodPortal() *schema.Resource {
 											},
 										},
 									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
+								},
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
