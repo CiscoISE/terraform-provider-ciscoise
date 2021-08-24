@@ -20,8 +20,8 @@ func listNicely(values []string) string {
 }
 
 func pickMethodAux(method []bool) float64 {
-	lenM := len(method) + 1 // Start with 1 to avoid divide by zero
-	countM := 1             // Start with 1 to avoid divide by zero
+	lenM := len(method)
+	countM := 0
 	for _, em := range method {
 		if em {
 			countM += 1

@@ -305,7 +305,7 @@ func flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItem(item *isegosdk.Respon
 	respItem["generation_id"] = item.GenerationID
 	respItem["aclcontent"] = item.ACLcontent
 	respItem["is_read_only"] = item.IsReadOnly
-	respItem["modelled_content"] = interfaceToString(item.ModelledContent)
+	respItem["modelled_content"] = responseInterfaceToString(item.ModelledContent)
 	respItem["ip_version"] = item.IPVersion
 	respItem["link"] = flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItemLink(item.Link)
 	return []map[string]interface{}{

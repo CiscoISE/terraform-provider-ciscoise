@@ -1342,7 +1342,7 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 	respItem["approve_deny_links_time_units"] = item.ApproveDenyLinksTimeUnits
 	respItem["require_approver_to_authenticate"] = item.RequireApproverToAuthenticate
 	respItem["authenticate_sponsors_using_portal_list"] = item.AuthenticateSponsorsUsingPortalList
-	respItem["sponsor_portal_list"] = interfaceToSliceString(item.SponsorPortalList)
+	respItem["sponsor_portal_list"] = responseInterfaceToSliceString(item.SponsorPortalList)
 
 	return []map[string]interface{}{
 		respItem,

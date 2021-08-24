@@ -708,7 +708,7 @@ func flattenSponsorPortalGetSponsorPortalByIDItemSettingsLoginPageSettings(item 
 	respItem["aup_display"] = item.AupDisplay
 	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
 	respItem["require_aup_scrolling"] = item.RequireAupScrolling
-	respItem["social_configs"] = interfaceToSliceString(item.SocialConfigs)
+	respItem["social_configs"] = responseInterfaceToSliceString(item.SocialConfigs)
 
 	return []map[string]interface{}{
 		respItem,

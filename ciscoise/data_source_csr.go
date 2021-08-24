@@ -121,6 +121,10 @@ func dataSourceCsr() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"csr_contents": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"friendly_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -339,6 +343,7 @@ func flattenCertificatesGetCsrByIDItem(item *isegosdk.ResponseCertificatesGetCsr
 		return nil
 	}
 	respItem := make(map[string]interface{})
+	respItem["csr_contents"] = item.CsrContents
 	respItem["friendly_name"] = item.FriendlyName
 	respItem["group_tag"] = item.GroupTag
 	respItem["host_name"] = item.HostName
