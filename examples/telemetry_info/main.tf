@@ -28,21 +28,21 @@ provider "ciscoise" {
 # To reduce the number of data_sources created, the function executed depends on the parameters given
 
 # The first example is going to get all telemetry info
-data "ise_telemetry_info" "response" {
+data "ciscoise_telemetry_info" "response" {
   provider = ciscoise
   page     = 1
   size     = 20
 }
-output "ise_telemetry_info_response" {
-  value = data.ise_telemetry_info.response
+output "ciscoise__telemetry_info_response" {
+  value = data.ciscoise_telemetry_info.response
 }
 
 # The second example is going to get telemetry_info by id
-data "ise_telemetry_info" "single_response" {
+data "ciscoise_telemetry_info" "single_response" {
   provider = ciscoise
-  id       = data.ise_telemetry_info.response.items[0].id
+  id       = data.ciscoise_telemetry_info.response.items[0].id
 }
 
-output "ise_telemetry_info_single_response" {
-  value = data.ise_telemetry_info.single_response
+output "ciscoise__telemetry_info_single_response" {
+  value = data.ciscoise_telemetry_info.single_response
 }
