@@ -24,26 +24,109 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"response": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-						"version": &schema.Schema{
+						"condition_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-					},
-				},
-			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
+						"is_negate": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"attribute_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"attribute_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"attribute_value": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dictionary_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dictionary_value": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"operator": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"children": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"condition_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"is_negate": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
 						"dates_range": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -77,10 +160,6 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 									},
 								},
 							},
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
 						},
 						"hours_range": &schema.Schema{
 							Type:     schema.TypeList,
@@ -116,6 +195,62 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 								},
 							},
 						},
+						"week_days": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"week_days_exception": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
+				},
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"condition_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_negate": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -123,6 +258,136 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"attribute_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"attribute_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"attribute_value": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dictionary_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dictionary_value": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"operator": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"children": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"condition_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"is_negate": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"dates_range": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"dates_range_exception": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"hours_range": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"hours_range_exception": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"start_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"week_days": &schema.Schema{
 							Type:     schema.TypeList,
@@ -171,7 +436,7 @@ func dataSourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schem
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(response1)
+		vItems1 := flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(&response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessTimeConditions response",
@@ -211,16 +476,115 @@ func dataSourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schem
 	return diags
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(items *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditions) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(items *[]isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponse) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
+	var respItems []map[string]interface{}
+	for _, item := range *items {
+		respItem := make(map[string]interface{})
+		respItem["condition_type"] = item.ConditionType
+		respItem["is_negate"] = item.IsNegate
+		respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsLink(item.Link)
+		respItem["description"] = item.Description
+		respItem["id"] = item.ID
+		respItem["name"] = item.Name
+		respItem["attribute_name"] = item.AttributeName
+		respItem["attribute_id"] = item.AttributeID
+		respItem["attribute_value"] = item.AttributeValue
+		respItem["dictionary_name"] = item.DictionaryName
+		respItem["dictionary_value"] = item.DictionaryValue
+		respItem["operator"] = item.Operator
+		respItem["children"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildren(item.Children)
+		respItem["dates_range"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDatesRange(item.DatesRange)
+		respItem["dates_range_exception"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDatesRangeException(item.DatesRangeException)
+		respItem["hours_range"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHoursRange(item.HoursRange)
+		respItem["hours_range_exception"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHoursRangeException(item.HoursRangeException)
+		respItem["week_days"] = item.WeekDays
+		respItem["week_days_exception"] = item.WeekDaysException
+		respItems = append(respItems, respItem)
+	}
+	return respItems
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsLink(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseLink) []map[string]interface{} {
 	respItem := make(map[string]interface{})
-	respItem["response"] = interfaceToSliceString(items.Response)
-	respItem["version"] = items.Version
+	respItem["href"] = item.Href
+	respItem["rel"] = item.Rel
+	respItem["type"] = item.Type
+
 	return []map[string]interface{}{
 		respItem,
 	}
+
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildren(items []isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseChildren) []map[string]interface{} {
+	var respItems []map[string]interface{}
+	for _, item := range items {
+		respItem := make(map[string]interface{})
+		respItem["condition_type"] = item.ConditionType
+		respItem["is_negate"] = item.IsNegate
+		respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildrenLink(item.Link)
+	}
+	return respItems
+
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildrenLink(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseChildrenLink) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["href"] = item.Href
+	respItem["rel"] = item.Rel
+	respItem["type"] = item.Type
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDatesRange(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseDatesRange) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["end_date"] = item.EndDate
+	respItem["start_date"] = item.StartDate
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDatesRangeException(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseDatesRangeException) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["end_date"] = item.EndDate
+	respItem["start_date"] = item.StartDate
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHoursRange(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseHoursRange) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["end_time"] = item.EndTime
+	respItem["start_time"] = item.StartTime
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHoursRangeException(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseHoursRangeException) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["end_time"] = item.EndTime
+	respItem["start_time"] = item.StartTime
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
 }
 
 func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponse) []map[string]interface{} {
@@ -228,18 +592,64 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["dates_range"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRange(item.DatesRange)
-	respItem["dates_range_exception"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRangeException(item.DatesRangeException)
+	respItem["condition_type"] = item.ConditionType
+	respItem["is_negate"] = item.IsNegate
+	respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemLink(item.Link)
 	respItem["description"] = item.Description
-	respItem["hours_range"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemHoursRange(item.HoursRange)
-	respItem["hours_range_exception"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemHoursRangeException(item.HoursRangeException)
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
+	respItem["attribute_name"] = item.AttributeName
+	respItem["attribute_id"] = item.AttributeID
+	respItem["attribute_value"] = item.AttributeValue
+	respItem["dictionary_name"] = item.DictionaryName
+	respItem["dictionary_value"] = item.DictionaryValue
+	respItem["operator"] = item.Operator
+	respItem["children"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildren(item.Children)
+	respItem["dates_range"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRange(item.DatesRange)
+	respItem["dates_range_exception"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRangeException(item.DatesRangeException)
+	respItem["hours_range"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemHoursRange(item.HoursRange)
+	respItem["hours_range_exception"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemHoursRangeException(item.HoursRangeException)
 	respItem["week_days"] = item.WeekDays
 	respItem["week_days_exception"] = item.WeekDaysException
 	return []map[string]interface{}{
 		respItem,
 	}
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemLink(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseLink) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["href"] = item.Href
+	respItem["rel"] = item.Rel
+	respItem["type"] = item.Type
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildren(items []isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseChildren) []map[string]interface{} {
+	var respItems []map[string]interface{}
+	for _, item := range items {
+		respItem := make(map[string]interface{})
+		respItem["condition_type"] = item.ConditionType
+		respItem["is_negate"] = item.IsNegate
+		respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildrenLink(item.Link)
+	}
+	return respItems
+
+}
+
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildrenLink(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseChildrenLink) []map[string]interface{} {
+	respItem := make(map[string]interface{})
+	respItem["href"] = item.Href
+	respItem["rel"] = item.Rel
+	respItem["type"] = item.Type
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
 }
 
 func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRange(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseDatesRange) []map[string]interface{} {

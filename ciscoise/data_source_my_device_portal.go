@@ -698,7 +698,7 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettings(ite
 	respItem["aup_display"] = item.AupDisplay
 	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
 	respItem["require_scrolling"] = item.RequireScrolling
-	respItem["social_configs"] = interfaceToSliceString(item.SocialConfigs)
+	respItem["social_configs"] = responseInterfaceToSliceString(item.SocialConfigs)
 
 	return []map[string]interface{}{
 		respItem,

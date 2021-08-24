@@ -493,9 +493,9 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfo(item isegos
 	respItem["deployment_id"] = item.DeploymentID
 	respItem["is_csn_enabled"] = item.IsCsnEnabled
 	respItem["node_list"] = flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfoNodeList(item.NodeList)
-	respItem["sda_vns"] = interfaceToSliceString(item.SdaVns)
+	respItem["sda_vns"] = responseInterfaceToSliceString(item.SdaVns)
 	respItem["trust_sec_control"] = item.TrustSecControl
-	respItem["radius3_rd_party"] = interfaceToSliceString(item.Radius3RdParty)
+	respItem["radius3_rd_party"] = responseInterfaceToSliceString(item.Radius3RdParty)
 
 	return []map[string]interface{}{
 		respItem,
@@ -505,7 +505,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfo(item isegos
 
 func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNetworkAccessInfoNodeList) []map[string]interface{} {
 	respItem := make(map[string]interface{})
-	respItem["node_and_scope"] = interfaceToSliceString(item.NodeAndScope)
+	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
 
 	return []map[string]interface{}{
 		respItem,
@@ -541,7 +541,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeListNode(item
 		respItem["online_subscription_enabled"] = item.OnlineSubscriptionEnabled
 		respItem["last_applied_feed_date_time"] = item.LastAppliedFeedDateTime
 		respItem["scope"] = item.Scope
-		respItem["profiles"] = interfaceToString(item.Profiles)
+		respItem["profiles"] = responseInterfaceToString(item.Profiles)
 	}
 	return respItems
 
@@ -587,7 +587,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeListNodeAnd
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["name"] = item.Name
-		respItem["value"] = interfaceToString(item.Value)
+		respItem["value"] = responseInterfaceToString(item.Value)
 		respItem["declared_type"] = item.DeclaredType
 		respItem["scope"] = item.Scope
 		respItem["nil"] = item.Nil
@@ -611,7 +611,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfo(item isegosdk.Respons
 
 func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNadInfoNodeList) []map[string]interface{} {
 	respItem := make(map[string]interface{})
-	respItem["node_and_scope"] = interfaceToSliceString(item.NodeAndScope)
+	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
 
 	return []map[string]interface{}{
 		respItem,
@@ -645,7 +645,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfo(item isegosdk.Respons
 
 func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoMdmInfoNodeList) []map[string]interface{} {
 	respItem := make(map[string]interface{})
-	respItem["node_and_scope"] = interfaceToSliceString(item.NodeAndScope)
+	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
 
 	return []map[string]interface{}{
 		respItem,
@@ -666,7 +666,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfo(item isegosdk.Re
 
 func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoLicensesInfoNodeList) []map[string]interface{} {
 	respItem := make(map[string]interface{})
-	respItem["node"] = interfaceToSliceString(item.Node)
+	respItem["node"] = responseInterfaceToSliceString(item.Node)
 
 	return []map[string]interface{}{
 		respItem,
@@ -689,7 +689,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfoContent(items []is
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["name"] = item.Name
-		respItem["value"] = interfaceToString(item.Value)
+		respItem["value"] = responseInterfaceToString(item.Value)
 		respItem["declared_type"] = item.DeclaredType
 		respItem["scope"] = item.Scope
 		respItem["nil"] = item.Nil
@@ -748,9 +748,9 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeServiceRo
 	for _, item := range items {
 		respItem := make(map[string]interface{})
 		respItem["route_name"] = item.RouteName
-		respItem["http_count"] = interfaceToString(item.HTTPCount)
-		respItem["latency_count"] = interfaceToString(item.LatencyCount)
-		respItem["latency_sum"] = interfaceToString(item.LatencySum)
+		respItem["http_count"] = responseInterfaceToString(item.HTTPCount)
+		respItem["latency_count"] = responseInterfaceToString(item.LatencyCount)
+		respItem["latency_sum"] = responseInterfaceToString(item.LatencySum)
 	}
 	return respItems
 

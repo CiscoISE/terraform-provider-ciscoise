@@ -94,7 +94,7 @@ func dataSourceDownloadableACL() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"link1": &schema.Schema{
+						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -257,13 +257,13 @@ func flattenDownloadableACLGetDownloadableACLByIDItem(item *isegosdk.ResponseDow
 	respItem["description"] = item.Description
 	respItem["dacl"] = item.Dacl
 	respItem["dacl_type"] = item.DaclType
-	respItem["link1"] = flattenDownloadableACLGetDownloadableACLByIDItemLink1(item.Link1)
+	respItem["link"] = flattenDownloadableACLGetDownloadableACLByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenDownloadableACLGetDownloadableACLByIDItemLink1(item isegosdk.ResponseDownloadableACLGetDownloadableACLByIDDownloadableACLLink1) []map[string]interface{} {
+func flattenDownloadableACLGetDownloadableACLByIDItemLink(item isegosdk.ResponseDownloadableACLGetDownloadableACLByIDDownloadableACLLink) []map[string]interface{} {
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

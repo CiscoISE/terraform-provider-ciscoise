@@ -98,7 +98,7 @@ func dataSourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"enable_multi_secret": &schema.Schema{
-										Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"key_encryption_key": &schema.Schema{
@@ -383,7 +383,7 @@ func dataSourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"enable_multi_secret": &schema.Schema{
-										Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"key_encryption_key": &schema.Schema{

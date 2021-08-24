@@ -64,8 +64,45 @@ func dataSourceDeviceAdministrationNetworkConditions() *schema.Resource {
 						"conditions": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"cli_dnis_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"ip_addr_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"mac_addr_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"device_group_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"device_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+								},
 							},
 						},
 					},
@@ -243,7 +280,7 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions
 		respItem["id"] = item.ID
 		respItem["link"] = flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItemsLink(item.Link)
 		respItem["name"] = item.Name
-		respItem["conditions"] = interfaceToSliceString(item.Conditions)
+		respItem["conditions"] = flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItemsConditions(item.Conditions)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -258,6 +295,20 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions
 	return []map[string]interface{}{
 		respItem,
 	}
+
+}
+
+func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItemsConditions(items []isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsResponseConditions) []map[string]interface{} {
+	var respItems []map[string]interface{}
+	for _, item := range items {
+		respItem := make(map[string]interface{})
+		respItem["cli_dnis_list"] = item.CliDnisList
+		respItem["ip_addr_list"] = item.IPAddrList
+		respItem["mac_addr_list"] = item.MacAddrList
+		respItem["device_group_list"] = item.DeviceGroupList
+		respItem["device_list"] = item.DeviceList
+	}
+	return respItems
 
 }
 
