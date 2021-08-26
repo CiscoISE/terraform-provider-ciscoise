@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -228,7 +228,7 @@ func dataSourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItems(&response1.Response)
+		vItems1 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessNetworkConditions response",
@@ -254,7 +254,7 @@ func dataSourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItem(&response2.Response)
+		vItem2 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessNetworkConditionByID response",
@@ -286,7 +286,10 @@ func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItems
 	return respItems
 }
 
-func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItemsLink(item isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsResponseLink) []map[string]interface{} {
+func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItemsLink(item *isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -298,9 +301,12 @@ func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItems
 
 }
 
-func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItemsConditions(items []isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsResponseConditions) []map[string]interface{} {
+func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItemsConditions(items *[]isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsResponseConditions) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["cli_dnis_list"] = item.CliDnisList
 		respItem["ip_addr_list"] = item.IPAddrList
@@ -328,7 +334,10 @@ func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDIt
 	}
 }
 
-func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItemLink(item isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDResponseLink) []map[string]interface{} {
+func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItemLink(item *isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -340,9 +349,12 @@ func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDIt
 
 }
 
-func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItemConditions(items []isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDResponseConditions) []map[string]interface{} {
+func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItemConditions(items *[]isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDResponseConditions) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["cli_dnis_list"] = item.CliDnisList
 		respItem["ip_addr_list"] = item.IPAddrList

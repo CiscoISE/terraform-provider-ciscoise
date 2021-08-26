@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -477,7 +477,7 @@ func dataSourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNodeDeploymentGetNodesItems(&response1.Response)
+		vItems1 := flattenNodeDeploymentGetNodesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodes response",
@@ -503,7 +503,7 @@ func dataSourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenNodeDeploymentGetNodeDetailsItem(&response2.Response)
+		vItem2 := flattenNodeDeploymentGetNodeDetailsItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodeDetails response",
@@ -551,7 +551,10 @@ func flattenNodeDeploymentGetNodeDetailsItem(item *isegosdk.ResponseNodeDeployme
 	}
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemAdministration(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseAdministration) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemAdministration(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseAdministration) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["is_enabled"] = item.IsEnabled
 	respItem["role"] = item.Role
@@ -562,7 +565,10 @@ func flattenNodeDeploymentGetNodeDetailsItemAdministration(item isegosdk.Respons
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemGeneralSettings(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettings) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemGeneralSettings(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["monitoring"] = flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoring(item.Monitoring)
 
@@ -572,7 +578,10 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettings(item isegosdk.Respon
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoring(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettingsMonitoring) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoring(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettingsMonitoring) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["is_enabled"] = item.IsEnabled
 	respItem["role"] = item.Role
@@ -587,7 +596,10 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoring(item isego
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservice(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettingsMonitoringPolicyservice) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservice(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettingsMonitoringPolicyservice) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["session_service"] = flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyserviceSessionService(item.SessionService)
@@ -603,7 +615,10 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservi
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyserviceSessionService(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettingsMonitoringPolicyserviceSessionService) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyserviceSessionService(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettingsMonitoringPolicyserviceSessionService) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["is_enabled"] = item.IsEnabled
 	respItem["nodegroup"] = item.Nodegroup
@@ -614,7 +629,10 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservi
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyserviceSxpservice(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettingsMonitoringPolicyserviceSxpservice) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyserviceSxpservice(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseGeneralSettingsMonitoringPolicyserviceSxpservice) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["is_enabled"] = item.IsEnabled
 	respItem["user_interface"] = item.UserInterface
@@ -625,7 +643,10 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservi
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfiguration(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfiguration) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfiguration(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfiguration) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["netflow"] = flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNetflow(item.Netflow)
 	respItem["dhcp"] = flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcp(item.Dhcp)
@@ -645,7 +666,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfiguration(item isegosdk
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNetflow(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationNetflow) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNetflow(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationNetflow) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["interface"] = item.Interface
@@ -658,7 +682,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNetflow(item i
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcp(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationDhcp) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcp(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationDhcp) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["interface"] = item.Interface
@@ -671,7 +698,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcp(item iseg
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcpSpan(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationDhcpSpan) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcpSpan(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationDhcpSpan) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["interface"] = item.Interface
@@ -683,7 +713,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcpSpan(item 
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationHTTP(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationHTTP) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationHTTP(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationHTTP) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["interface"] = item.Interface
@@ -695,7 +728,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationHTTP(item iseg
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationRadius(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationRadius) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationRadius(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationRadius) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["description"] = item.Description
@@ -706,7 +742,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationRadius(item is
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNmap(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationNmap) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNmap(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationNmap) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["description"] = item.Description
@@ -717,7 +756,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNmap(item iseg
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDNS(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationDNS) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDNS(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationDNS) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["description"] = item.Description
@@ -728,7 +770,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDNS(item isego
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationSNMPQuery(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationSNMPQuery) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationSNMPQuery(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationSNMPQuery) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["description"] = item.Description
@@ -742,7 +787,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationSNMPQuery(item
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationSNMPTrap(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationSNMPTrap) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationSNMPTrap(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationSNMPTrap) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["link_trap_query"] = item.LinkTrapQuery
 	respItem["mac_trap_query"] = item.MacTrapQuery
@@ -756,7 +804,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationSNMPTrap(item 
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationActiveDirectory(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationActiveDirectory) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationActiveDirectory(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationActiveDirectory) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["days_before_rescan"] = item.DaysBeforeRescan
@@ -768,7 +819,10 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationActiveDirector
 
 }
 
-func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationPxgrid(item isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationPxgrid) []map[string]interface{} {
+func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationPxgrid(item *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponseProfilingConfigurationPxgrid) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["description"] = item.Description

@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -243,8 +243,8 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseCertificatesGetCsrsResponse
-		for len(response1.Response) > 0 {
-			items1 = append(items1, response1.Response...)
+		for response1.Response != nil && len(*response1.Response) > 0 {
+			items1 = append(items1, *response1.Response...)
 			if response1.NextPage.Rel == "next" {
 				href := response1.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -290,7 +290,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenCertificatesGetCsrByIDItem(&response2.Response)
+		vItem2 := flattenCertificatesGetCsrByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetCsrByID response",
@@ -326,7 +326,10 @@ func flattenCertificatesGetCsrsItems(items *[]isegosdk.ResponseCertificatesGetCs
 	return respItems
 }
 
-func flattenCertificatesGetCsrsItemsLink(item isegosdk.ResponseCertificatesGetCsrsResponseLink) []map[string]interface{} {
+func flattenCertificatesGetCsrsItemsLink(item *isegosdk.ResponseCertificatesGetCsrsResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -359,7 +362,10 @@ func flattenCertificatesGetCsrByIDItem(item *isegosdk.ResponseCertificatesGetCsr
 	}
 }
 
-func flattenCertificatesGetCsrByIDItemLink(item isegosdk.ResponseCertificatesGetCsrByIDResponseLink) []map[string]interface{} {
+func flattenCertificatesGetCsrByIDItemLink(item *isegosdk.ResponseCertificatesGetCsrByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel

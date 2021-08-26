@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -311,8 +311,8 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseRestidStoreGetRestIDStoreSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -357,7 +357,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenRestidStoreGetRestIDStoreByNameItemName(&response2.ERSRestIDStore)
+		vItemName2 := flattenRestidStoreGetRestIDStoreByNameItemName(response2.ERSRestIDStore)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetRestIDStoreByName response",
@@ -383,7 +383,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenRestidStoreGetRestIDStoreByIDItemID(&response3.ERSRestIDStore)
+		vItemID3 := flattenRestidStoreGetRestIDStoreByIDItemID(response3.ERSRestIDStore)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetRestIDStoreByID response",
@@ -413,7 +413,10 @@ func flattenRestidStoreGetRestIDStoreItems(items *[]isegosdk.ResponseRestidStore
 	return respItems
 }
 
-func flattenRestidStoreGetRestIDStoreItemsLink(item isegosdk.ResponseRestidStoreGetRestIDStoreSearchResultResourcesLink) []map[string]interface{} {
+func flattenRestidStoreGetRestIDStoreItemsLink(item *isegosdk.ResponseRestidStoreGetRestIDStoreSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -440,7 +443,10 @@ func flattenRestidStoreGetRestIDStoreByNameItemName(item *isegosdk.ResponseResti
 	}
 }
 
-func flattenRestidStoreGetRestIDStoreByNameItemNameErsRestIDStoreAttributes(item isegosdk.ResponseRestidStoreGetRestIDStoreByNameERSRestIDStoreErsRestIDStoreAttributes) []map[string]interface{} {
+func flattenRestidStoreGetRestIDStoreByNameItemNameErsRestIDStoreAttributes(item *isegosdk.ResponseRestidStoreGetRestIDStoreByNameERSRestIDStoreErsRestIDStoreAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["username_suffix"] = item.UsernameSuffix
 	respItem["root_url"] = item.RootURL
@@ -453,9 +459,12 @@ func flattenRestidStoreGetRestIDStoreByNameItemNameErsRestIDStoreAttributes(item
 
 }
 
-func flattenRestidStoreGetRestIDStoreByNameItemNameErsRestIDStoreAttributesHeaders(items []isegosdk.ResponseRestidStoreGetRestIDStoreByNameERSRestIDStoreErsRestIDStoreAttributesHeaders) []map[string]interface{} {
+func flattenRestidStoreGetRestIDStoreByNameItemNameErsRestIDStoreAttributesHeaders(items *[]isegosdk.ResponseRestidStoreGetRestIDStoreByNameERSRestIDStoreErsRestIDStoreAttributesHeaders) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
@@ -464,7 +473,10 @@ func flattenRestidStoreGetRestIDStoreByNameItemNameErsRestIDStoreAttributesHeade
 
 }
 
-func flattenRestidStoreGetRestIDStoreByNameItemNameLink(item isegosdk.ResponseRestidStoreGetRestIDStoreByNameERSRestIDStoreLink) []map[string]interface{} {
+func flattenRestidStoreGetRestIDStoreByNameItemNameLink(item *isegosdk.ResponseRestidStoreGetRestIDStoreByNameERSRestIDStoreLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -491,7 +503,10 @@ func flattenRestidStoreGetRestIDStoreByIDItemID(item *isegosdk.ResponseRestidSto
 	}
 }
 
-func flattenRestidStoreGetRestIDStoreByIDItemIDErsRestIDStoreAttributes(item isegosdk.ResponseRestidStoreGetRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributes) []map[string]interface{} {
+func flattenRestidStoreGetRestIDStoreByIDItemIDErsRestIDStoreAttributes(item *isegosdk.ResponseRestidStoreGetRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["username_suffix"] = item.UsernameSuffix
 	respItem["root_url"] = item.RootURL
@@ -504,9 +519,12 @@ func flattenRestidStoreGetRestIDStoreByIDItemIDErsRestIDStoreAttributes(item ise
 
 }
 
-func flattenRestidStoreGetRestIDStoreByIDItemIDErsRestIDStoreAttributesHeaders(items []isegosdk.ResponseRestidStoreGetRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders) []map[string]interface{} {
+func flattenRestidStoreGetRestIDStoreByIDItemIDErsRestIDStoreAttributesHeaders(items *[]isegosdk.ResponseRestidStoreGetRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
@@ -515,7 +533,10 @@ func flattenRestidStoreGetRestIDStoreByIDItemIDErsRestIDStoreAttributesHeaders(i
 
 }
 
-func flattenRestidStoreGetRestIDStoreByIDItemIDLink(item isegosdk.ResponseRestidStoreGetRestIDStoreByIDERSRestIDStoreLink) []map[string]interface{} {
+func flattenRestidStoreGetRestIDStoreByIDItemIDLink(item *isegosdk.ResponseRestidStoreGetRestIDStoreByIDERSRestIDStoreLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

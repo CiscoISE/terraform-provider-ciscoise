@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -473,8 +473,8 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseGuestUserGetGuestUsersSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -519,7 +519,7 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenGuestUserGetGuestUserByNameItemName(&response2.GuestUser)
+		vItemName2 := flattenGuestUserGetGuestUserByNameItemName(response2.GuestUser)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGuestUserByName response",
@@ -545,7 +545,7 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenGuestUserGetGuestUserByIDItemID(&response3.GuestUser)
+		vItemID3 := flattenGuestUserGetGuestUserByIDItemID(response3.GuestUser)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGuestUserByID response",
@@ -575,7 +575,10 @@ func flattenGuestUserGetGuestUsersItems(items *[]isegosdk.ResponseGuestUserGetGu
 	return respItems
 }
 
-func flattenGuestUserGetGuestUsersItemsLink(item isegosdk.ResponseGuestUserGetGuestUsersSearchResultResourcesLink) []map[string]interface{} {
+func flattenGuestUserGetGuestUsersItemsLink(item *isegosdk.ResponseGuestUserGetGuestUsersSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -611,7 +614,10 @@ func flattenGuestUserGetGuestUserByNameItemName(item *isegosdk.ResponseGuestUser
 	}
 }
 
-func flattenGuestUserGetGuestUserByNameItemNameGuestInfo(item isegosdk.ResponseGuestUserGetGuestUserByNameGuestUserGuestInfo) []map[string]interface{} {
+func flattenGuestUserGetGuestUserByNameItemNameGuestInfo(item *isegosdk.ResponseGuestUserGetGuestUserByNameGuestUserGuestInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["first_name"] = item.FirstName
 	respItem["last_name"] = item.LastName
@@ -631,7 +637,10 @@ func flattenGuestUserGetGuestUserByNameItemNameGuestInfo(item isegosdk.ResponseG
 
 }
 
-func flattenGuestUserGetGuestUserByNameItemNameGuestAccessInfo(item isegosdk.ResponseGuestUserGetGuestUserByNameGuestUserGuestAccessInfo) []map[string]interface{} {
+func flattenGuestUserGetGuestUserByNameItemNameGuestAccessInfo(item *isegosdk.ResponseGuestUserGetGuestUserByNameGuestUserGuestAccessInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["valid_days"] = item.ValidDays
 	respItem["from_date"] = item.FromDate
@@ -646,7 +655,10 @@ func flattenGuestUserGetGuestUserByNameItemNameGuestAccessInfo(item isegosdk.Res
 
 }
 
-func flattenGuestUserGetGuestUserByNameItemNameLink(item isegosdk.ResponseGuestUserGetGuestUserByNameGuestUserLink) []map[string]interface{} {
+func flattenGuestUserGetGuestUserByNameItemNameLink(item *isegosdk.ResponseGuestUserGetGuestUserByNameGuestUserLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -682,7 +694,10 @@ func flattenGuestUserGetGuestUserByIDItemID(item *isegosdk.ResponseGuestUserGetG
 	}
 }
 
-func flattenGuestUserGetGuestUserByIDItemIDGuestInfo(item isegosdk.ResponseGuestUserGetGuestUserByIDGuestUserGuestInfo) []map[string]interface{} {
+func flattenGuestUserGetGuestUserByIDItemIDGuestInfo(item *isegosdk.ResponseGuestUserGetGuestUserByIDGuestUserGuestInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["first_name"] = item.FirstName
 	respItem["last_name"] = item.LastName
@@ -702,7 +717,10 @@ func flattenGuestUserGetGuestUserByIDItemIDGuestInfo(item isegosdk.ResponseGuest
 
 }
 
-func flattenGuestUserGetGuestUserByIDItemIDGuestAccessInfo(item isegosdk.ResponseGuestUserGetGuestUserByIDGuestUserGuestAccessInfo) []map[string]interface{} {
+func flattenGuestUserGetGuestUserByIDItemIDGuestAccessInfo(item *isegosdk.ResponseGuestUserGetGuestUserByIDGuestUserGuestAccessInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["valid_days"] = item.ValidDays
 	respItem["from_date"] = item.FromDate
@@ -717,7 +735,10 @@ func flattenGuestUserGetGuestUserByIDItemIDGuestAccessInfo(item isegosdk.Respons
 
 }
 
-func flattenGuestUserGetGuestUserByIDItemIDLink(item isegosdk.ResponseGuestUserGetGuestUserByIDGuestUserLink) []map[string]interface{} {
+func flattenGuestUserGetGuestUserByIDItemIDLink(item *isegosdk.ResponseGuestUserGetGuestUserByIDGuestUserLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

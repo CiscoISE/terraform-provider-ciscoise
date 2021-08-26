@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -216,8 +216,8 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponsePsnNodeDetailsWithRadiusServiceGetSessionServiceNodeSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -262,7 +262,7 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByNameItemName(&response2.SessionServiceNode)
+		vItemName2 := flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByNameItemName(response2.SessionServiceNode)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSessionServiceNodeByName response",
@@ -288,7 +288,7 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByIDItemID(&response3.SessionServiceNode)
+		vItemID3 := flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByIDItemID(response3.SessionServiceNode)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSessionServiceNodeByID response",
@@ -318,7 +318,10 @@ func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeItems(items *[]i
 	return respItems
 }
 
-func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeItemsLink(item isegosdk.ResponsePsnNodeDetailsWithRadiusServiceGetSessionServiceNodeSearchResultResourcesLink) []map[string]interface{} {
+func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeItemsLink(item *isegosdk.ResponsePsnNodeDetailsWithRadiusServiceGetSessionServiceNodeSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -346,7 +349,10 @@ func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByNameItemName(i
 	}
 }
 
-func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByNameItemNameLink(item isegosdk.ResponsePsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByNameSessionServiceNodeLink) []map[string]interface{} {
+func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByNameItemNameLink(item *isegosdk.ResponsePsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByNameSessionServiceNodeLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -374,7 +380,10 @@ func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByIDItemID(item 
 	}
 }
 
-func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByIDItemIDLink(item isegosdk.ResponsePsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByIDSessionServiceNodeLink) []map[string]interface{} {
+func flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByIDItemIDLink(item *isegosdk.ResponsePsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByIDSessionServiceNodeLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

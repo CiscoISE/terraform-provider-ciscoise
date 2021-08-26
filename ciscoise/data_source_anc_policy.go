@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -237,8 +237,8 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseAncPolicyGetAncPolicySearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -283,7 +283,7 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenAncPolicyGetAncPolicyByNameItemName(&response2.ErsAncPolicy)
+		vItemName2 := flattenAncPolicyGetAncPolicyByNameItemName(response2.ErsAncPolicy)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAncPolicyByName response",
@@ -309,7 +309,7 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenAncPolicyGetAncPolicyByIDItemID(&response3.ErsAncPolicy)
+		vItemID3 := flattenAncPolicyGetAncPolicyByIDItemID(response3.ErsAncPolicy)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAncPolicyByID response",
@@ -338,7 +338,10 @@ func flattenAncPolicyGetAncPolicyItems(items *[]isegosdk.ResponseAncPolicyGetAnc
 	return respItems
 }
 
-func flattenAncPolicyGetAncPolicyItemsLink(item isegosdk.ResponseAncPolicyGetAncPolicySearchResultResourcesLink) []map[string]interface{} {
+func flattenAncPolicyGetAncPolicyItemsLink(item *isegosdk.ResponseAncPolicyGetAncPolicySearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -364,7 +367,10 @@ func flattenAncPolicyGetAncPolicyByNameItemName(item *isegosdk.ResponseAncPolicy
 	}
 }
 
-func flattenAncPolicyGetAncPolicyByNameItemNameLink(item isegosdk.ResponseAncPolicyGetAncPolicyByNameErsAncPolicyLink) []map[string]interface{} {
+func flattenAncPolicyGetAncPolicyByNameItemNameLink(item *isegosdk.ResponseAncPolicyGetAncPolicyByNameErsAncPolicyLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -390,7 +396,10 @@ func flattenAncPolicyGetAncPolicyByIDItemID(item *isegosdk.ResponseAncPolicyGetA
 	}
 }
 
-func flattenAncPolicyGetAncPolicyByIDItemIDLink(item isegosdk.ResponseAncPolicyGetAncPolicyByIDErsAncPolicyLink) []map[string]interface{} {
+func flattenAncPolicyGetAncPolicyByIDItemIDLink(item *isegosdk.ResponseAncPolicyGetAncPolicyByIDErsAncPolicyLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

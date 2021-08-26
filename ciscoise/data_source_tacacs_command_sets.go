@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -268,8 +268,8 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -314,7 +314,7 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemName(&response2.TacacsCommandSets)
+		vItemName2 := flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemName(response2.TacacsCommandSets)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsCommandSetsByName response",
@@ -340,7 +340,7 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemID(&response3.TacacsCommandSets)
+		vItemID3 := flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemID(response3.TacacsCommandSets)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsCommandSetsByID response",
@@ -370,7 +370,10 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsItems(items *[]isegosdk.Respons
 	return respItems
 }
 
-func flattenTacacsCommandSetsGetTacacsCommandSetsItemsLink(item isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsSearchResultResourcesLink) []map[string]interface{} {
+func flattenTacacsCommandSetsGetTacacsCommandSetsItemsLink(item *isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -398,7 +401,10 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemName(item *isegosdk.R
 	}
 }
 
-func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommands(item isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByNameTacacsCommandSetsCommands) []map[string]interface{} {
+func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommands(item *isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByNameTacacsCommandSetsCommands) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["command_list"] = flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommandsCommandList(item.CommandList)
 
@@ -408,9 +414,12 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommands(item ise
 
 }
 
-func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommandsCommandList(items []isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByNameTacacsCommandSetsCommandsCommandList) []map[string]interface{} {
+func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommandsCommandList(items *[]isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByNameTacacsCommandSetsCommandsCommandList) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["grant"] = item.Grant
 		respItem["command"] = item.Command
@@ -420,7 +429,10 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommandsCommandLi
 
 }
 
-func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameLink(item isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByNameTacacsCommandSetsLink) []map[string]interface{} {
+func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameLink(item *isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByNameTacacsCommandSetsLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -448,7 +460,10 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemID(item *isegosdk.Respo
 	}
 }
 
-func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommands(item isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByIDTacacsCommandSetsCommands) []map[string]interface{} {
+func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommands(item *isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByIDTacacsCommandSetsCommands) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["command_list"] = flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommandsCommandList(item.CommandList)
 
@@ -458,9 +473,12 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommands(item isegosd
 
 }
 
-func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommandsCommandList(items []isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList) []map[string]interface{} {
+func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommandsCommandList(items *[]isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["grant"] = item.Grant
 		respItem["command"] = item.Command
@@ -470,7 +488,10 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommandsCommandList(i
 
 }
 
-func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDLink(item isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByIDTacacsCommandSetsLink) []map[string]interface{} {
+func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDLink(item *isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByIDTacacsCommandSetsLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

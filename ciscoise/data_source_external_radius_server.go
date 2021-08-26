@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -288,8 +288,8 @@ func dataSourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseExternalRadiusServerGetExternalRadiusServerSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -334,7 +334,7 @@ func dataSourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceD
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenExternalRadiusServerGetExternalRadiusServerByNameItemName(&response2.ExternalRadiusServer)
+		vItemName2 := flattenExternalRadiusServerGetExternalRadiusServerByNameItemName(response2.ExternalRadiusServer)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetExternalRadiusServerByName response",
@@ -360,7 +360,7 @@ func dataSourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceD
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenExternalRadiusServerGetExternalRadiusServerByIDItemID(&response3.ExternalRadiusServer)
+		vItemID3 := flattenExternalRadiusServerGetExternalRadiusServerByIDItemID(response3.ExternalRadiusServer)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetExternalRadiusServerByID response",
@@ -390,7 +390,10 @@ func flattenExternalRadiusServerGetExternalRadiusServerItems(items *[]isegosdk.R
 	return respItems
 }
 
-func flattenExternalRadiusServerGetExternalRadiusServerItemsLink(item isegosdk.ResponseExternalRadiusServerGetExternalRadiusServerSearchResultResourcesLink) []map[string]interface{} {
+func flattenExternalRadiusServerGetExternalRadiusServerItemsLink(item *isegosdk.ResponseExternalRadiusServerGetExternalRadiusServerSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -427,7 +430,10 @@ func flattenExternalRadiusServerGetExternalRadiusServerByNameItemName(item *iseg
 	}
 }
 
-func flattenExternalRadiusServerGetExternalRadiusServerByNameItemNameLink(item isegosdk.ResponseExternalRadiusServerGetExternalRadiusServerByNameExternalRadiusServerLink) []map[string]interface{} {
+func flattenExternalRadiusServerGetExternalRadiusServerByNameItemNameLink(item *isegosdk.ResponseExternalRadiusServerGetExternalRadiusServerByNameExternalRadiusServerLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -464,7 +470,10 @@ func flattenExternalRadiusServerGetExternalRadiusServerByIDItemID(item *isegosdk
 	}
 }
 
-func flattenExternalRadiusServerGetExternalRadiusServerByIDItemIDLink(item isegosdk.ResponseExternalRadiusServerGetExternalRadiusServerByIDExternalRadiusServerLink) []map[string]interface{} {
+func flattenExternalRadiusServerGetExternalRadiusServerByIDItemIDLink(item *isegosdk.ResponseExternalRadiusServerGetExternalRadiusServerByIDExternalRadiusServerLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

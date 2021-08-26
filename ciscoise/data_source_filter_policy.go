@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -134,8 +134,8 @@ func dataSourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseFilterPolicyGetFilterPolicySearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -180,7 +180,7 @@ func dataSourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m i
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenFilterPolicyGetFilterPolicyByIDItem(&response2.ERSFilterPolicy)
+		vItem2 := flattenFilterPolicyGetFilterPolicyByIDItem(response2.ERSFilterPolicy)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetFilterPolicyByID response",
@@ -210,7 +210,10 @@ func flattenFilterPolicyGetFilterPolicyItems(items *[]isegosdk.ResponseFilterPol
 	return respItems
 }
 
-func flattenFilterPolicyGetFilterPolicyItemsLink(item isegosdk.ResponseFilterPolicyGetFilterPolicySearchResultResourcesLink) []map[string]interface{} {
+func flattenFilterPolicyGetFilterPolicyItemsLink(item *isegosdk.ResponseFilterPolicyGetFilterPolicySearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

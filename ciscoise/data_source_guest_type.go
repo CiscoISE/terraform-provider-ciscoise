@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -320,8 +320,8 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseGuestTypeGetGuestTypeSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -366,7 +366,7 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenGuestTypeGetGuestTypeByIDItem(&response2.GuestType)
+		vItem2 := flattenGuestTypeGetGuestTypeByIDItem(response2.GuestType)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGuestTypeByID response",
@@ -396,7 +396,10 @@ func flattenGuestTypeGetGuestTypeItems(items *[]isegosdk.ResponseGuestTypeGetGue
 	return respItems
 }
 
-func flattenGuestTypeGetGuestTypeItemsLink(item isegosdk.ResponseGuestTypeGetGuestTypeSearchResultResourcesLink) []map[string]interface{} {
+func flattenGuestTypeGetGuestTypeItemsLink(item *isegosdk.ResponseGuestTypeGetGuestTypeSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -427,7 +430,10 @@ func flattenGuestTypeGetGuestTypeByIDItem(item *isegosdk.ResponseGuestTypeGetGue
 	}
 }
 
-func flattenGuestTypeGetGuestTypeByIDItemAccessTime(item isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeAccessTime) []map[string]interface{} {
+func flattenGuestTypeGetGuestTypeByIDItemAccessTime(item *isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeAccessTime) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["from_first_login"] = item.FromFirstLogin
 	respItem["max_account_duration"] = item.MaxAccountDuration
@@ -442,9 +448,12 @@ func flattenGuestTypeGetGuestTypeByIDItemAccessTime(item isegosdk.ResponseGuestT
 
 }
 
-func flattenGuestTypeGetGuestTypeByIDItemAccessTimeDayTimeLimits(items []isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeAccessTimeDayTimeLimits) []map[string]interface{} {
+func flattenGuestTypeGetGuestTypeByIDItemAccessTimeDayTimeLimits(items *[]isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeAccessTimeDayTimeLimits) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["start_time"] = item.StartTime
 		respItem["end_time"] = item.EndTime
@@ -454,7 +463,10 @@ func flattenGuestTypeGetGuestTypeByIDItemAccessTimeDayTimeLimits(items []isegosd
 
 }
 
-func flattenGuestTypeGetGuestTypeByIDItemLoginOptions(item isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeLoginOptions) []map[string]interface{} {
+func flattenGuestTypeGetGuestTypeByIDItemLoginOptions(item *isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeLoginOptions) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["limit_simultaneous_logins"] = item.LimitSimultaneousLogins
 	respItem["max_simultaneous_logins"] = item.MaxSimultaneousLogins
@@ -469,7 +481,10 @@ func flattenGuestTypeGetGuestTypeByIDItemLoginOptions(item isegosdk.ResponseGues
 
 }
 
-func flattenGuestTypeGetGuestTypeByIDItemExpirationNotification(item isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeExpirationNotification) []map[string]interface{} {
+func flattenGuestTypeGetGuestTypeByIDItemExpirationNotification(item *isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeExpirationNotification) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enable_notification"] = item.EnableNotification
 	respItem["advance_notification_duration"] = item.AdvanceNotificationDuration
@@ -485,7 +500,10 @@ func flattenGuestTypeGetGuestTypeByIDItemExpirationNotification(item isegosdk.Re
 
 }
 
-func flattenGuestTypeGetGuestTypeByIDItemLink(item isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeLink) []map[string]interface{} {
+func flattenGuestTypeGetGuestTypeByIDItemLink(item *isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

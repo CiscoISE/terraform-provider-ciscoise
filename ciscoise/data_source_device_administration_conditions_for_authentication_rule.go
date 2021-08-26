@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -232,7 +232,7 @@ func dataSourceDeviceAdministrationConditionsForAuthenticationRuleRead(ctx conte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItems(&response1.Response)
+		vItems1 := flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminConditionsForAuthenticationRules response",
@@ -277,7 +277,10 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 	return respItems
 }
 
-func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsLink(item isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsLink(item *isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -289,9 +292,12 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 
 }
 
-func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsChildren(items []isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseChildren) []map[string]interface{} {
+func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsChildren(items *[]isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -301,7 +307,10 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 
 }
 
-func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsChildrenLink(item isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseChildrenLink) []map[string]interface{} {
+func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsChildrenLink(item *isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -313,7 +322,10 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 
 }
 
-func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsDatesRange(item isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseDatesRange) []map[string]interface{} {
+func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsDatesRange(item *isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -324,7 +336,10 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 
 }
 
-func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsDatesRangeException(item isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseDatesRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsDatesRangeException(item *isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -335,7 +350,10 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 
 }
 
-func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsHoursRange(item isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseHoursRange) []map[string]interface{} {
+func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsHoursRange(item *isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -346,7 +364,10 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 
 }
 
-func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsHoursRangeException(item isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseHoursRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsHoursRangeException(item *isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesResponseHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime

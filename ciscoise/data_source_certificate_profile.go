@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -240,8 +240,8 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseCertificateProfileGetCertificateProfileSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -286,7 +286,7 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenCertificateProfileGetCertificateProfileByNameItemName(&response2.CertificateProfile)
+		vItemName2 := flattenCertificateProfileGetCertificateProfileByNameItemName(response2.CertificateProfile)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetCertificateProfileByName response",
@@ -312,7 +312,7 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenCertificateProfileGetCertificateProfileByIDItemID(&response3.CertificateProfile)
+		vItemID3 := flattenCertificateProfileGetCertificateProfileByIDItemID(response3.CertificateProfile)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetCertificateProfileByID response",
@@ -342,7 +342,10 @@ func flattenCertificateProfileGetCertificateProfileItems(items *[]isegosdk.Respo
 	return respItems
 }
 
-func flattenCertificateProfileGetCertificateProfileItemsLink(item isegosdk.ResponseCertificateProfileGetCertificateProfileSearchResultResourcesLink) []map[string]interface{} {
+func flattenCertificateProfileGetCertificateProfileItemsLink(item *isegosdk.ResponseCertificateProfileGetCertificateProfileSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -373,7 +376,10 @@ func flattenCertificateProfileGetCertificateProfileByNameItemName(item *isegosdk
 	}
 }
 
-func flattenCertificateProfileGetCertificateProfileByNameItemNameLink(item isegosdk.ResponseCertificateProfileGetCertificateProfileByNameCertificateProfileLink) []map[string]interface{} {
+func flattenCertificateProfileGetCertificateProfileByNameItemNameLink(item *isegosdk.ResponseCertificateProfileGetCertificateProfileByNameCertificateProfileLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -404,7 +410,10 @@ func flattenCertificateProfileGetCertificateProfileByIDItemID(item *isegosdk.Res
 	}
 }
 
-func flattenCertificateProfileGetCertificateProfileByIDItemIDLink(item isegosdk.ResponseCertificateProfileGetCertificateProfileByIDCertificateProfileLink) []map[string]interface{} {
+func flattenCertificateProfileGetCertificateProfileByIDItemIDLink(item *isegosdk.ResponseCertificateProfileGetCertificateProfileByIDCertificateProfileLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

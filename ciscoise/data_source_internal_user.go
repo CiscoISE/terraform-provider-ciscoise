@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -335,8 +335,8 @@ func dataSourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseInternalUserGetInternalUserSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -381,7 +381,7 @@ func dataSourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m i
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenInternalUserGetInternalUserByNameItemName(&response2.InternalUser)
+		vItemName2 := flattenInternalUserGetInternalUserByNameItemName(response2.InternalUser)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetInternalUserByName response",
@@ -407,7 +407,7 @@ func dataSourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m i
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenInternalUserGetInternalUserByIDItemID(&response3.InternalUser)
+		vItemID3 := flattenInternalUserGetInternalUserByIDItemID(response3.InternalUser)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetInternalUserByID response",
@@ -437,7 +437,10 @@ func flattenInternalUserGetInternalUserItems(items *[]isegosdk.ResponseInternalU
 	return respItems
 }
 
-func flattenInternalUserGetInternalUserItemsLink(item isegosdk.ResponseInternalUserGetInternalUserSearchResultResourcesLink) []map[string]interface{} {
+func flattenInternalUserGetInternalUserItemsLink(item *isegosdk.ResponseInternalUserGetInternalUserSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -475,7 +478,10 @@ func flattenInternalUserGetInternalUserByNameItemName(item *isegosdk.ResponseInt
 	}
 }
 
-func flattenInternalUserGetInternalUserByNameItemNameLink(item isegosdk.ResponseInternalUserGetInternalUserByNameInternalUserLink) []map[string]interface{} {
+func flattenInternalUserGetInternalUserByNameItemNameLink(item *isegosdk.ResponseInternalUserGetInternalUserByNameInternalUserLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -513,7 +519,10 @@ func flattenInternalUserGetInternalUserByIDItemID(item *isegosdk.ResponseInterna
 	}
 }
 
-func flattenInternalUserGetInternalUserByIDItemIDLink(item isegosdk.ResponseInternalUserGetInternalUserByIDInternalUserLink) []map[string]interface{} {
+func flattenInternalUserGetInternalUserByIDItemIDLink(item *isegosdk.ResponseInternalUserGetInternalUserByIDInternalUserLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

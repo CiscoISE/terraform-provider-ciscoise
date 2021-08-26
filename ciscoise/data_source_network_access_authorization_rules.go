@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -590,7 +590,7 @@ func dataSourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schem
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItems(&response1.Response)
+		vItems1 := flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRules response",
@@ -617,7 +617,7 @@ func dataSourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schem
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItem(&response2.Response)
+		vItem2 := flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRuleByID response",
@@ -647,7 +647,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 	return respItems
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsLink(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseLink) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -659,7 +662,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRule(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRule) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRule(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRule) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleCondition(item.Condition)
 	respItem["default"] = item.Default
@@ -675,7 +681,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleCondition(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleCondition) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleCondition(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleCondition) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = item.IsNegate
@@ -703,7 +712,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionLink(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionLink) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -715,9 +727,12 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildren(items []isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionChildren) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildren(items *[]isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -727,7 +742,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildrenLink(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionChildrenLink) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildrenLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -739,7 +757,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionDatesRange(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionDatesRange) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionDatesRange(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -750,7 +771,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionDatesRangeException(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionDatesRangeException) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionDatesRangeException(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -761,7 +785,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionHoursRange(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionHoursRange) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionHoursRange(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -772,7 +799,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionHoursRangeException(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionHoursRangeException) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionHoursRangeException(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -797,7 +827,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 	}
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemLink(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseLink) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -809,7 +842,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRule(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRule) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRule(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRule) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleCondition(item.Condition)
 	respItem["default"] = item.Default
@@ -825,7 +861,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleCondition(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleCondition) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleCondition(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleCondition) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = item.IsNegate
@@ -853,7 +892,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionLink(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionLink) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -865,9 +907,12 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildren(items []isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionChildren) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildren(items *[]isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -877,7 +922,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildrenLink(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionChildrenLink) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildrenLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -889,7 +937,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionDatesRange(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionDatesRange) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionDatesRange(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -900,7 +951,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionDatesRangeException(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionDatesRangeException) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionDatesRangeException(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -911,7 +965,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionHoursRange(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionHoursRange) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionHoursRange(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -922,7 +979,10 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionHoursRangeException(item isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionHoursRangeException) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionHoursRangeException(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime

@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -243,8 +243,8 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseNetworkDeviceGroupGetNetworkDeviceGroupSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -289,7 +289,7 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenNetworkDeviceGroupGetNetworkDeviceGroupByNameItemName(&response2.NetworkDeviceGroup)
+		vItemName2 := flattenNetworkDeviceGroupGetNetworkDeviceGroupByNameItemName(response2.NetworkDeviceGroup)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkDeviceGroupByName response",
@@ -315,7 +315,7 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenNetworkDeviceGroupGetNetworkDeviceGroupByIDItemID(&response3.NetworkDeviceGroup)
+		vItemID3 := flattenNetworkDeviceGroupGetNetworkDeviceGroupByIDItemID(response3.NetworkDeviceGroup)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkDeviceGroupByID response",
@@ -345,7 +345,10 @@ func flattenNetworkDeviceGroupGetNetworkDeviceGroupItems(items *[]isegosdk.Respo
 	return respItems
 }
 
-func flattenNetworkDeviceGroupGetNetworkDeviceGroupItemsLink(item isegosdk.ResponseNetworkDeviceGroupGetNetworkDeviceGroupSearchResultResourcesLink) []map[string]interface{} {
+func flattenNetworkDeviceGroupGetNetworkDeviceGroupItemsLink(item *isegosdk.ResponseNetworkDeviceGroupGetNetworkDeviceGroupSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -372,7 +375,10 @@ func flattenNetworkDeviceGroupGetNetworkDeviceGroupByNameItemName(item *isegosdk
 	}
 }
 
-func flattenNetworkDeviceGroupGetNetworkDeviceGroupByNameItemNameLink(item isegosdk.ResponseNetworkDeviceGroupGetNetworkDeviceGroupByNameNetworkDeviceGroupLink) []map[string]interface{} {
+func flattenNetworkDeviceGroupGetNetworkDeviceGroupByNameItemNameLink(item *isegosdk.ResponseNetworkDeviceGroupGetNetworkDeviceGroupByNameNetworkDeviceGroupLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -399,7 +405,10 @@ func flattenNetworkDeviceGroupGetNetworkDeviceGroupByIDItemID(item *isegosdk.Res
 	}
 }
 
-func flattenNetworkDeviceGroupGetNetworkDeviceGroupByIDItemIDLink(item isegosdk.ResponseNetworkDeviceGroupGetNetworkDeviceGroupByIDNetworkDeviceGroupLink) []map[string]interface{} {
+func flattenNetworkDeviceGroupGetNetworkDeviceGroupByIDItemIDLink(item *isegosdk.ResponseNetworkDeviceGroupGetNetworkDeviceGroupByIDNetworkDeviceGroupLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

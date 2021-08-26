@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -721,8 +721,8 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseNetworkDeviceGetNetworkDeviceSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -767,7 +767,7 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenNetworkDeviceGetNetworkDeviceByNameItemName(&response2.NetworkDevice)
+		vItemName2 := flattenNetworkDeviceGetNetworkDeviceByNameItemName(response2.NetworkDevice)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkDeviceByName response",
@@ -793,7 +793,7 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenNetworkDeviceGetNetworkDeviceByIDItemID(&response3.NetworkDevice)
+		vItemID3 := flattenNetworkDeviceGetNetworkDeviceByIDItemID(response3.NetworkDevice)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkDeviceByID response",
@@ -823,7 +823,10 @@ func flattenNetworkDeviceGetNetworkDeviceItems(items *[]isegosdk.ResponseNetwork
 	return respItems
 }
 
-func flattenNetworkDeviceGetNetworkDeviceItemsLink(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceSearchResultResourcesLink) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceItemsLink(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -860,7 +863,10 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemName(item *isegosdk.ResponseN
 	}
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameAuthenticationSettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceAuthenticationSettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameAuthenticationSettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceAuthenticationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["network_protocol"] = item.NetworkProtocol
 	respItem["second_radius_shared_secret"] = item.SecondRadiusSharedSecret
@@ -879,7 +885,10 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameAuthenticationSettings(it
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameSNMPsettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceSNMPsettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameSNMPsettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceSNMPsettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["version"] = item.Version
 	respItem["ro_community"] = item.RoCommunity
@@ -894,7 +903,10 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameSNMPsettings(item isegosd
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTrustsecsettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTrustsecsettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["device_authentication_settings"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceAuthenticationSettings(item.DeviceAuthenticationSettings)
 	respItem["sga_notification_and_updates"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsSgaNotificationAndUpdates(item.SgaNotificationAndUpdates)
@@ -907,7 +919,10 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettings(item ise
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceAuthenticationSettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceAuthenticationSettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["sga_device_id"] = item.SgaDeviceID
 	respItem["sga_device_password"] = item.SgaDevicePassword
@@ -918,7 +933,10 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceAut
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsSgaNotificationAndUpdates(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsSgaNotificationAndUpdates(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["downlaod_environment_data_every_x_seconds"] = item.DownlaodEnvironmentDataEveryXSeconds
 	respItem["downlaod_peer_authorization_policy_every_x_seconds"] = item.DownlaodPeerAuthorizationPolicyEveryXSeconds
@@ -935,7 +953,10 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsSgaNotifi
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceConfigurationDeployment(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceConfigurationDeployment(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_when_deploying_sgt_updates"] = item.IncludeWhenDeployingSgtUpdates
 	respItem["enable_mode_password"] = item.EnableModePassword
@@ -948,7 +969,10 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceCon
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTacacsSettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTacacsSettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTacacsSettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceTacacsSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["shared_secret"] = item.SharedSecret
 	respItem["connect_mode_options"] = item.ConnectModeOptions
@@ -959,9 +983,12 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTacacsSettings(item isego
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameNetworkDeviceIPList(items []isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceNetworkDeviceIPList) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameNetworkDeviceIPList(items *[]isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceNetworkDeviceIPList) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["ipaddress"] = item.IPaddress
 		respItem["mask"] = item.Mask
@@ -971,7 +998,10 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameNetworkDeviceIPList(items
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByNameItemNameLink(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceLink) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByNameItemNameLink(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -1008,7 +1038,10 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemID(item *isegosdk.ResponseNetwo
 	}
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDAuthenticationSettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceAuthenticationSettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDAuthenticationSettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceAuthenticationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["network_protocol"] = item.NetworkProtocol
 	respItem["second_radius_shared_secret"] = item.SecondRadiusSharedSecret
@@ -1027,7 +1060,10 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDAuthenticationSettings(item i
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDSNMPsettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceSNMPsettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDSNMPsettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceSNMPsettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["version"] = item.Version
 	respItem["ro_community"] = item.RoCommunity
@@ -1042,7 +1078,10 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDSNMPsettings(item isegosdk.Re
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTrustsecsettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTrustsecsettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["device_authentication_settings"] = flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceAuthenticationSettings(item.DeviceAuthenticationSettings)
 	respItem["sga_notification_and_updates"] = flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsSgaNotificationAndUpdates(item.SgaNotificationAndUpdates)
@@ -1055,7 +1094,10 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettings(item isegosd
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceAuthenticationSettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceAuthenticationSettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["sga_device_id"] = item.SgaDeviceID
 	respItem["sga_device_password"] = item.SgaDevicePassword
@@ -1066,7 +1108,10 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceAuthent
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsSgaNotificationAndUpdates(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsSgaNotificationAndUpdates(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["downlaod_environment_data_every_x_seconds"] = item.DownlaodEnvironmentDataEveryXSeconds
 	respItem["downlaod_peer_authorization_policy_every_x_seconds"] = item.DownlaodPeerAuthorizationPolicyEveryXSeconds
@@ -1083,7 +1128,10 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsSgaNotificati
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceConfigurationDeployment(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceConfigurationDeployment(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_when_deploying_sgt_updates"] = item.IncludeWhenDeployingSgtUpdates
 	respItem["enable_mode_password"] = item.EnableModePassword
@@ -1096,7 +1144,10 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceConfigu
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTacacsSettings(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTacacsSettings) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTacacsSettings(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceTacacsSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["shared_secret"] = item.SharedSecret
 	respItem["connect_mode_options"] = item.ConnectModeOptions
@@ -1107,9 +1158,12 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTacacsSettings(item isegosdk.
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDNetworkDeviceIPList(items []isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDNetworkDeviceIPList(items *[]isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["ipaddress"] = item.IPaddress
 		respItem["mask"] = item.Mask
@@ -1119,7 +1173,10 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDNetworkDeviceIPList(items []i
 
 }
 
-func flattenNetworkDeviceGetNetworkDeviceByIDItemIDLink(item isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceLink) []map[string]interface{} {
+func flattenNetworkDeviceGetNetworkDeviceByIDItemIDLink(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

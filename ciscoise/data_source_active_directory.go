@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -620,8 +620,8 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseActiveDirectoryGetActiveDirectorySearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -666,7 +666,7 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenActiveDirectoryGetActiveDirectoryByNameItemName(&response2.ERSActiveDirectory)
+		vItemName2 := flattenActiveDirectoryGetActiveDirectoryByNameItemName(response2.ERSActiveDirectory)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetActiveDirectoryByName response",
@@ -692,7 +692,7 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenActiveDirectoryGetActiveDirectoryByIDItemID(&response3.ERSActiveDirectory)
+		vItemID3 := flattenActiveDirectoryGetActiveDirectoryByIDItemID(response3.ERSActiveDirectory)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetActiveDirectoryByID response",
@@ -722,7 +722,10 @@ func flattenActiveDirectoryGetActiveDirectoryItems(items *[]isegosdk.ResponseAct
 	return respItems
 }
 
-func flattenActiveDirectoryGetActiveDirectoryItemsLink(item isegosdk.ResponseActiveDirectoryGetActiveDirectorySearchResultResourcesLink) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryItemsLink(item *isegosdk.ResponseActiveDirectoryGetActiveDirectorySearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -755,7 +758,10 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemName(item *isegosdk.Respo
 	}
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroups(item isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdgroups) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroups(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdgroups) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["groups"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroupsGroups(item.Groups)
 
@@ -765,9 +771,12 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroups(item isegosd
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroupsGroups(items []isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdgroupsGroups) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroupsGroups(items *[]isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdgroupsGroups) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["name"] = item.Name
 		respItem["sid"] = item.Sid
@@ -777,7 +786,10 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroupsGroups(items 
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettings(item isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdvancedSettings) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettings(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdvancedSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enable_pass_change"] = item.EnablePassChange
 	respItem["enable_machine_auth"] = item.EnableMachineAuth
@@ -812,9 +824,12 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettings(item
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettingsRewriteRules(items []isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdvancedSettingsRewriteRules) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettingsRewriteRules(items *[]isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdvancedSettingsRewriteRules) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["row_id"] = item.RowID
 		respItem["rewrite_match"] = item.RewriteMatch
@@ -824,7 +839,10 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettingsRewri
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributes(item isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdAttributes) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributes(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["attributes"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributesAttributes(item.Attributes)
 
@@ -834,9 +852,12 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributes(item ise
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributesAttributes(items []isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdAttributesAttributes) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributesAttributes(items *[]isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdAttributesAttributes) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["name"] = item.Name
 		respItem["type"] = item.Type
@@ -847,7 +868,10 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributesAttribute
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByNameItemNameLink(item isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryLink) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByNameItemNameLink(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -880,7 +904,10 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemID(item *isegosdk.ResponseA
 	}
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroups(item isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdgroups) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroups(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdgroups) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["groups"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroupsGroups(item.Groups)
 
@@ -890,9 +917,12 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroups(item isegosdk.Re
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroupsGroups(items []isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdgroupsGroups) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroupsGroups(items *[]isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdgroupsGroups) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["name"] = item.Name
 		respItem["sid"] = item.Sid
@@ -902,7 +932,10 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroupsGroups(items []is
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettings(item isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdvancedSettings) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettings(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdvancedSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enable_pass_change"] = item.EnablePassChange
 	respItem["enable_machine_auth"] = item.EnableMachineAuth
@@ -937,9 +970,12 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettings(item ise
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettingsRewriteRules(items []isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdvancedSettingsRewriteRules) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettingsRewriteRules(items *[]isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdvancedSettingsRewriteRules) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["row_id"] = item.RowID
 		respItem["rewrite_match"] = item.RewriteMatch
@@ -949,7 +985,10 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettingsRewriteRu
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributes(item isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdAttributes) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributes(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["attributes"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributesAttributes(item.Attributes)
 
@@ -959,9 +998,12 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributes(item isegosd
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributesAttributes(items []isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdAttributesAttributes) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributesAttributes(items *[]isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdAttributesAttributes) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["name"] = item.Name
 		respItem["type"] = item.Type
@@ -972,7 +1014,10 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributesAttributes(it
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByIDItemIDLink(item isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryLink) []map[string]interface{} {
+func flattenActiveDirectoryGetActiveDirectoryByIDItemIDLink(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

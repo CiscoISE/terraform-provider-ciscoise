@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -143,7 +143,7 @@ func dataSourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m in
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItem1 := flattenAciSettingsGetAciSettingsItem(&response1.AciSettings)
+		vItem1 := flattenAciSettingsGetAciSettingsItem(response1.AciSettings)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAciSettings response",

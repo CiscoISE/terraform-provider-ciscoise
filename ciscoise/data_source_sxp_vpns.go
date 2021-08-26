@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -174,8 +174,8 @@ func dataSourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseSxpVpnsGetSxpVpnsSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -220,7 +220,7 @@ func dataSourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interf
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenSxpVpnsGetSxpVpnByIDItem(&response2.ERSSxpVpn)
+		vItem2 := flattenSxpVpnsGetSxpVpnByIDItem(response2.ERSSxpVpn)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSxpVpnByID response",
@@ -248,7 +248,10 @@ func flattenSxpVpnsGetSxpVpnsItems(items *[]isegosdk.ResponseSxpVpnsGetSxpVpnsSe
 	return respItems
 }
 
-func flattenSxpVpnsGetSxpVpnsItemsLink(item isegosdk.ResponseSxpVpnsGetSxpVpnsSearchResultResourcesLink) []map[string]interface{} {
+func flattenSxpVpnsGetSxpVpnsItemsLink(item *isegosdk.ResponseSxpVpnsGetSxpVpnsSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -273,7 +276,10 @@ func flattenSxpVpnsGetSxpVpnByIDItem(item *isegosdk.ResponseSxpVpnsGetSxpVpnByID
 	}
 }
 
-func flattenSxpVpnsGetSxpVpnByIDItemLink(item isegosdk.ResponseSxpVpnsGetSxpVpnByIDERSSxpVpnLink) []map[string]interface{} {
+func flattenSxpVpnsGetSxpVpnByIDItemLink(item *isegosdk.ResponseSxpVpnsGetSxpVpnByIDERSSxpVpnLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

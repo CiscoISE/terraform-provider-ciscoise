@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -64,7 +64,7 @@ func dataSourceEndpointGetRejectedEndpointsRead(ctx context.Context, d *schema.R
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItem1 := flattenEndpointGetRejectedEndpointsItem(&response1.OperationResult)
+		vItem1 := flattenEndpointGetRejectedEndpointsItem(response1.OperationResult)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetRejectedEndpoints response",
@@ -89,9 +89,12 @@ func flattenEndpointGetRejectedEndpointsItem(item *isegosdk.ResponseEndpointGetR
 	}
 }
 
-func flattenEndpointGetRejectedEndpointsItemResultValue(items []isegosdk.ResponseEndpointGetRejectedEndpointsOperationResultResultValue) []map[string]interface{} {
+func flattenEndpointGetRejectedEndpointsItemResultValue(items *[]isegosdk.ResponseEndpointGetRejectedEndpointsOperationResultResultValue) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["value"] = item.Value
 		respItem["name"] = item.Name

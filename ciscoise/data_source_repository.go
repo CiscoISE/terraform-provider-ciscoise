@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -124,7 +124,7 @@ func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m int
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenRepositoryGetRepositoriesItems(&response1.Response)
+		vItems1 := flattenRepositoryGetRepositoriesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetRepositories response",
@@ -150,7 +150,7 @@ func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m int
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenRepositoryGetRepositoryItem(&response2.Response)
+		vItem2 := flattenRepositoryGetRepositoryItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetRepository response",

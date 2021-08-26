@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -224,8 +224,8 @@ func dataSourcePxGridNodeRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponsePxGridNodeGetPxGridNodeSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -270,7 +270,7 @@ func dataSourcePxGridNodeRead(ctx context.Context, d *schema.ResourceData, m int
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenPxGridNodeGetPxGridNodeByNameItemName(&response2.PxgridNode)
+		vItemName2 := flattenPxGridNodeGetPxGridNodeByNameItemName(response2.PxgridNode)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPxGridNodeByName response",
@@ -296,7 +296,7 @@ func dataSourcePxGridNodeRead(ctx context.Context, d *schema.ResourceData, m int
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenPxGridNodeGetPxGridNodeByIDItemID(&response3.PxgridNode)
+		vItemID3 := flattenPxGridNodeGetPxGridNodeByIDItemID(response3.PxgridNode)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPxGridNodeByID response",
@@ -326,7 +326,10 @@ func flattenPxGridNodeGetPxGridNodeItems(items *[]isegosdk.ResponsePxGridNodeGet
 	return respItems
 }
 
-func flattenPxGridNodeGetPxGridNodeItemsLink(item isegosdk.ResponsePxGridNodeGetPxGridNodeSearchResultResourcesLink) []map[string]interface{} {
+func flattenPxGridNodeGetPxGridNodeItemsLink(item *isegosdk.ResponsePxGridNodeGetPxGridNodeSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -355,7 +358,10 @@ func flattenPxGridNodeGetPxGridNodeByNameItemName(item *isegosdk.ResponsePxGridN
 	}
 }
 
-func flattenPxGridNodeGetPxGridNodeByNameItemNameLink(item isegosdk.ResponsePxGridNodeGetPxGridNodeByNamePxgridNodeLink) []map[string]interface{} {
+func flattenPxGridNodeGetPxGridNodeByNameItemNameLink(item *isegosdk.ResponsePxGridNodeGetPxGridNodeByNamePxgridNodeLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -384,7 +390,10 @@ func flattenPxGridNodeGetPxGridNodeByIDItemID(item *isegosdk.ResponsePxGridNodeG
 	}
 }
 
-func flattenPxGridNodeGetPxGridNodeByIDItemIDLink(item isegosdk.ResponsePxGridNodeGetPxGridNodeByIDPxgridNodeLink) []map[string]interface{} {
+func flattenPxGridNodeGetPxGridNodeByIDItemIDLink(item *isegosdk.ResponsePxGridNodeGetPxGridNodeByIDPxgridNodeLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

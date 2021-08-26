@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -552,8 +552,8 @@ func dataSourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseMyDevicePortalGetMyDevicePortalSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -598,7 +598,7 @@ func dataSourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenMyDevicePortalGetMyDevicePortalByIDItem(&response2.MyDevicePortal)
+		vItem2 := flattenMyDevicePortalGetMyDevicePortalByIDItem(response2.MyDevicePortal)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetMyDevicePortalByID response",
@@ -628,7 +628,10 @@ func flattenMyDevicePortalGetMyDevicePortalItems(items *[]isegosdk.ResponseMyDev
 	return respItems
 }
 
-func flattenMyDevicePortalGetMyDevicePortalItemsLink(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalSearchResultResourcesLink) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalItemsLink(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -658,7 +661,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItem(item *isegosdk.ResponseMyDev
 	}
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_settings"] = flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPortalSettings(item.PortalSettings)
 	respItem["login_page_settings"] = flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettings(item.LoginPageSettings)
@@ -674,7 +680,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettings(item isegosdk.Respon
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPortalSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsPortalSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPortalSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["https_port"] = item.HTTPSPort
 	respItem["allowed_interfaces"] = item.AllowedInterfaces
@@ -690,7 +699,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPortalSettings(item i
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsLoginPageSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsLoginPageSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["max_failed_attempts_before_rate_limit"] = item.MaxFailedAttemptsBeforeRateLimit
 	respItem["time_between_logins_during_rate_limit"] = item.TimeBetweenLoginsDuringRateLimit
@@ -706,7 +718,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettings(ite
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsAupSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsAupSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsAupSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsAupSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["display_frequency_interval_days"] = item.DisplayFrequencyIntervalDays
 	respItem["display_frequency"] = item.DisplayFrequency
@@ -719,7 +734,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsAupSettings(item iseg
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsEmployeeChangePasswordSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsEmployeeChangePasswordSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsEmployeeChangePasswordSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsEmployeeChangePasswordSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_employee_to_change_pwd"] = item.AllowEmployeeToChangePwd
 
@@ -729,7 +747,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsEmployeeChangePasswor
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPostLoginBannerSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsPostLoginBannerSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPostLoginBannerSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsPostLoginBannerSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
 
@@ -739,7 +760,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPostLoginBannerSettin
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPostAccessBannerSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsPostAccessBannerSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPostAccessBannerSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsPostAccessBannerSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
 
@@ -749,7 +773,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPostAccessBannerSetti
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsSupportInfoSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsSupportInfoSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsSupportInfoSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsSupportInfoSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
 	respItem["include_mac_addr"] = item.IncludeMacAddr
@@ -766,7 +793,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsSupportInfoSettings(i
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizations(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizations) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizations(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_theme"] = flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPortalTheme(item.PortalTheme)
 	respItem["portal_tweak_settings"] = flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPortalTweakSettings(item.PortalTweakSettings)
@@ -780,7 +810,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizations(item isegosdk.
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPortalTheme(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsPortalTheme) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPortalTheme(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsPortalTheme) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -792,7 +825,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPortalTheme(ite
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPortalTweakSettings(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPortalTweakSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["banner_color"] = item.BannerColor
 	respItem["banner_text_color"] = item.BannerTextColor
@@ -805,7 +841,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPortalTweakSett
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsLanguage(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsLanguage) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsLanguage(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsLanguage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["view_language"] = item.ViewLanguage
 
@@ -815,7 +854,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsLanguage(item i
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizations(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizations(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["mobile_logo_image"] = flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item.MobileLogoImage)
 	respItem["desktop_logo_image"] = flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item.DesktopLogoImage)
@@ -831,7 +873,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomiza
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -841,7 +886,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomiza
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -851,7 +899,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomiza
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -861,7 +912,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomiza
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -871,7 +925,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsGlobalCustomiza
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPageCustomizations(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizations) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPageCustomizations(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPageCustomizationsData(item.Data)
 
@@ -881,9 +938,12 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPageCustomizati
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPageCustomizationsData(items []isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPageCustomizationsData(items *[]isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
@@ -892,7 +952,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPageCustomizati
 
 }
 
-func flattenMyDevicePortalGetMyDevicePortalByIDItemLink(item isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalLink) []map[string]interface{} {
+func flattenMyDevicePortalGetMyDevicePortalByIDItemLink(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

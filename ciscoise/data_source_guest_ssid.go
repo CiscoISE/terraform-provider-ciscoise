@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -178,8 +178,8 @@ func dataSourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseGuestSSIDGetGuestSSIDSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -224,7 +224,7 @@ func dataSourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenGuestSSIDGetGuestSSIDByIDItem(&response2.GuestSSID)
+		vItem2 := flattenGuestSSIDGetGuestSSIDByIDItem(response2.GuestSSID)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGuestSSIDByID response",
@@ -253,7 +253,10 @@ func flattenGuestSSIDGetGuestSSIDItems(items *[]isegosdk.ResponseGuestSSIDGetGue
 	return respItems
 }
 
-func flattenGuestSSIDGetGuestSSIDItemsLink(item isegosdk.ResponseGuestSSIDGetGuestSSIDSearchResultResourcesLink) []map[string]interface{} {
+func flattenGuestSSIDGetGuestSSIDItemsLink(item *isegosdk.ResponseGuestSSIDGetGuestSSIDSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -278,7 +281,10 @@ func flattenGuestSSIDGetGuestSSIDByIDItem(item *isegosdk.ResponseGuestSSIDGetGue
 	}
 }
 
-func flattenGuestSSIDGetGuestSSIDByIDItemLink(item isegosdk.ResponseGuestSSIDGetGuestSSIDByIDGuestSSIDLink) []map[string]interface{} {
+func flattenGuestSSIDGetGuestSSIDByIDItemLink(item *isegosdk.ResponseGuestSSIDGetGuestSSIDByIDGuestSSIDLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
