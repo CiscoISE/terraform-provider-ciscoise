@@ -506,8 +506,33 @@ func resourceAllowedProtocolsCreate(ctx context.Context, d *schema.ResourceData,
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestAllowedProtocolsCreateAllowedProtocol("item.0", d)
+	request1 := expandRequestAllowedProtocolsCreateAllowedProtocol(ctx, "item.0", d)
 	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+
+	vID, okID := resourceItem["id"]
+	vName, okName := resourceItem["name"]
+	vvID := interfaceToString(vID)
+	vvName := interfaceToString(vName)
+	if okID && vID != "" {
+		getResponse1, _, err := client.AllowedProtocols.GetAllowedProtocolByID(vvID)
+		if err == nil && getResponse1 != nil {
+			resourceMap := make(map[string]string)
+			resourceMap["id"] = interfaceToString(vID)
+			resourceMap["name"] = interfaceToString(vName)
+			d.SetId(joinResourceID(resourceMap))
+			return diags
+		}
+	}
+	if okName && vName != "" {
+		getResponse2, _, err := client.AllowedProtocols.GetAllowedProtocolByName(vvName)
+		if err == nil && getResponse2 != nil {
+			resourceMap := make(map[string]string)
+			resourceMap["id"] = interfaceToString(vID)
+			resourceMap["name"] = interfaceToString(vName)
+			d.SetId(joinResourceID(resourceMap))
+			return diags
+		}
+	}
 
 	restyResp1, err := client.AllowedProtocols.CreateAllowedProtocol(request1)
 	if err != nil {
@@ -627,7 +652,7 @@ func resourceAllowedProtocolsUpdate(ctx context.Context, d *schema.ResourceData,
 	if d.HasChange("item") {
 		log.Printf("[DEBUG] vvID %s", vvID)
 
-		request1 := expandRequestAllowedProtocolsUpdateAllowedProtocolByID("item.0", d)
+		request1 := expandRequestAllowedProtocolsUpdateAllowedProtocolByID(ctx, "item.0", d)
 		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
 
 		response1, restyResp1, err := client.AllowedProtocols.UpdateAllowedProtocolByID(vvID, request1)
@@ -710,559 +735,574 @@ func resourceAllowedProtocolsDelete(ctx context.Context, d *schema.ResourceData,
 	return diags
 }
 
-func expandRequestAllowedProtocolsCreateAllowedProtocol(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocol {
+func expandRequestAllowedProtocolsCreateAllowedProtocol(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocol {
 	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocol{}
-	request.AllowedProtocols = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols(key, d)
+	request.AllowedProtocols = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols(ctx, key, d)
 	return &request
 }
 
-func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols {
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols {
 	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols{}
-	if v, ok := d.GetOkExists(key + ".name"); ok || true {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); ok || true {
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
-	if _, ok := d.GetOk(key + ".eap_tls"); ok {
-		request.EapTls = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls(key+".eap_tls.0", d)
+	if v, ok := d.GetOkExists(key + ".eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls"))) {
+		request.EapTls = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls(ctx, key+".eap_tls.0", d)
 	}
-	if _, ok := d.GetOk(key + ".peap"); ok {
-		request.Peap = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap(key+".peap.0", d)
+	if v, ok := d.GetOkExists(key + ".peap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".peap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".peap"))) {
+		request.Peap = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap(ctx, key+".peap.0", d)
 	}
-	if _, ok := d.GetOk(key + ".eap_fast"); ok {
-		request.EapFast = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast(key+".eap_fast.0", d)
+	if v, ok := d.GetOkExists(key + ".eap_fast"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast"))) {
+		request.EapFast = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast(ctx, key+".eap_fast.0", d)
 	}
-	if _, ok := d.GetOk(key + ".eap_ttls"); ok {
-		request.EapTtls = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls(key+".eap_ttls.0", d)
+	if v, ok := d.GetOkExists(key + ".eap_ttls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls"))) {
+		request.EapTtls = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls(ctx, key+".eap_ttls.0", d)
 	}
-	if _, ok := d.GetOk(key + ".teap"); ok {
-		request.Teap = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap(key+".teap.0", d)
+	if v, ok := d.GetOkExists(key + ".teap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".teap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".teap"))) {
+		request.Teap = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap(ctx, key+".teap.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".process_host_lookup"); ok || true {
+	if v, ok := d.GetOkExists(key + ".process_host_lookup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".process_host_lookup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".process_host_lookup"))) {
 		request.ProcessHostLookup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_pap_ascii"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_pap_ascii"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_pap_ascii"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_pap_ascii"))) {
 		request.AllowPapAscii = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_chap"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_chap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_chap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_chap"))) {
 		request.AllowChap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v1"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v1"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_ms_chap_v1"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_ms_chap_v1"))) {
 		request.AllowMsChapV1 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v2"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_ms_chap_v2"))) {
 		request.AllowMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_md5"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_eap_md5"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_md5"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_md5"))) {
 		request.AllowEapMd5 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_leap"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_leap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_leap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_leap"))) {
 		request.AllowLeap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_tls"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls"))) {
 		request.AllowEapTls = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_ttls"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_eap_ttls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_ttls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_ttls"))) {
 		request.AllowEapTtls = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast"))) {
 		request.AllowEapFast = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_peap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap"))) {
 		request.AllowPeap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_teap"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_teap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap"))) {
 		request.AllowTeap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_preferred_eap_protocol"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_preferred_eap_protocol"))) {
 		request.AllowPreferredEapProtocol = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".preferred_eap_protocol"); ok || true {
+	if v, ok := d.GetOkExists(key + ".preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".preferred_eap_protocol"))) {
 		request.PreferredEapProtocol = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_tls_l_bit"); ok || true {
+	if v, ok := d.GetOkExists(key + ".eap_tls_l_bit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_l_bit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_l_bit"))) {
 		request.EapTlsLBit = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_weak_ciphers_for_eap"); ok || true {
+	if v, ok := d.GetOkExists(key + ".allow_weak_ciphers_for_eap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_weak_ciphers_for_eap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_weak_ciphers_for_eap"))) {
 		request.AllowWeakCiphersForEap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_message_auth"); ok || true {
+	if v, ok := d.GetOkExists(key + ".require_message_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_message_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_message_auth"))) {
 		request.RequireMessageAuth = interfaceToBoolPtr(v)
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls {
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls {
 	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls{}
-	if v, ok := d.GetOkExists(key + ".allow_eap_tls_auth_of_expired_certs"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls_auth_of_expired_certs"))) {
 		log.Printf("[DEBUG] eap_tls.allow_eap_tls_auth_of_expired_certs => %v %v", v, ok)
 		request.AllowEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_tls_enable_stateless_session_resume"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_tls_enable_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_enable_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_enable_stateless_session_resume"))) {
 		log.Printf("[DEBUG] eap_tls.eap_tls_enable_stateless_session_resume => %v %v", v, ok)
 		request.EapTlsEnableStatelessSessionResume = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl"))) {
 		log.Printf("[DEBUG] eap_tls.eap_tls_session_ticket_ttl => %v %v", v, ok)
 		request.EapTlsSessionTicketTtl = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl_units"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl_units"))) {
 		log.Printf("[DEBUG] eap_tls.eap_tls_session_ticket_ttl_units => %v %v", v, ok)
 		request.EapTlsSessionTicketTtlUnits = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_precentage"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_precentage"))) {
 		log.Printf("[DEBUG] eap_tls.eap_tls_session_ticket_precentage => %v %v", v, ok)
 		request.EapTlsSessionTicketPrecentage = interfaceToIntPtr(v)
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap {
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap {
 	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap{}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2"))) {
 		request.AllowPeapEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) {
 		request.AllowPeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change_retries"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) {
 		request.AllowPeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc"))) {
 		request.AllowPeapEapGtc = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change"))) {
 		request.AllowPeapEapGtcPwdChange = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change_retries"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) {
 		request.AllowPeapEapGtcPwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls"))) {
 		request.AllowPeapEapTls = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls_auth_of_expired_certs"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) {
 		request.AllowPeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_cryptobinding"); ok {
+	if v, ok := d.GetOkExists(key + ".require_cryptobinding"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_cryptobinding"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_cryptobinding"))) {
 		request.RequireCryptobinding = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_v0"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_peap_v0"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_v0"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_v0"))) {
 		request.AllowPeapV0 = interfaceToBoolPtr(v)
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast {
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast {
 	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast{}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2"))) {
 		request.AllowEapFastEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) {
 		request.AllowEapFastEapMsChapV2PwdChange = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) {
 		request.AllowEapFastEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc"))) {
 		request.AllowEapFastEapGtc = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) {
 		request.AllowEapFastEapGtcPwdChange = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change_retries"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) {
 		request.AllowEapFastEapGtcPwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls"))) {
 		request.AllowEapFastEapTls = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls_auth_of_expired_certs"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) {
 		request.AllowEapFastEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs"))) {
 		request.EapFastUsePacs = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) {
 		request.EapFastUsePacsTunnelPacTtl = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl_units"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) {
 		request.EapFastUsePacsTunnelPacTtlUnits = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_use_proactive_pac_update_precentage"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_use_proactive_pac_update_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) {
 		request.EapFastUsePacsUseProactivePacUpdatePrecentage = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_anonym_provisioning"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_anonym_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) {
 		request.EapFastUsePacsAllowAnonymProvisioning = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_authen_provisioning"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_authen_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) {
 		request.EapFastUsePacsAllowAuthenProvisioning = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) {
 		request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_accept_client_cert"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) {
 		request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) {
 		request.EapFastUsePacsMachinePacTtl = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl_units"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) {
 		request.EapFastUsePacsMachinePacTtlUnits = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_machine_authentication"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_machine_authentication"))) {
 		request.EapFastUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_stateless_session_resume"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) {
 		request.EapFastUsePacsStatelessSessionResume = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) {
 		request.EapFastUsePacsAuthorizationPacTtl = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl_units"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) {
 		request.EapFastUsePacsAuthorizationPacTtlUnits = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_accept_client_cert"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) {
 		request.EapFastDontUsePacsAcceptClientCert = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_allow_machine_authentication"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) {
 		request.EapFastDontUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_enable_eap_chaining"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_fast_enable_eap_chaining"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_enable_eap_chaining"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_enable_eap_chaining"))) {
 		request.EapFastEnableEApChaining = interfaceToBoolPtr(v)
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls {
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls {
 	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls{}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_pap_ascii"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_ttls_pap_ascii"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_pap_ascii"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_pap_ascii"))) {
 		request.EapTtlsPapAscii = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_chap"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_ttls_chap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_chap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_chap"))) {
 		request.EapTtlsChap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v1"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v1"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_ms_chap_v1"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_ms_chap_v1"))) {
 		request.EapTtlsMsChapV1 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v2"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_ms_chap_v2"))) {
 		request.EapTtlsMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_md5"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_md5"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_md5"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_md5"))) {
 		request.EapTtlsEapMd5 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2"))) {
 		request.EapTtlsEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) {
 		request.EapTtlsEapMsChapV2PwdChange = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change_retries"); ok {
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) {
 		request.EapTtlsEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap {
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap {
 	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap{}
-	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2"))) {
 		request.AllowTeapEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) {
 		request.AllowTeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change_retries"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) {
 		request.AllowTeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls"))) {
 		request.AllowTeapEapTls = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls_auth_of_expired_certs"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) {
 		request.AllowTeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".accept_client_cert_during_tunnel_est"); ok {
+	if v, ok := d.GetOkExists(key + ".accept_client_cert_during_tunnel_est"); !isEmptyValue(reflect.ValueOf(d.Get(key+".accept_client_cert_during_tunnel_est"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".accept_client_cert_during_tunnel_est"))) {
 		request.AcceptClientCertDuringTunnelEst = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_eap_chaining"); ok {
+	if v, ok := d.GetOkExists(key + ".enable_eap_chaining"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_eap_chaining"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_eap_chaining"))) {
 		request.EnableEapChaining = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_downgrade_msk"); ok {
+	if v, ok := d.GetOkExists(key + ".allow_downgrade_msk"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_downgrade_msk"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_downgrade_msk"))) {
 		request.AllowDowngradeMsk = interfaceToBoolPtr(v)
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsUpdateAllowedProtocolByID(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByID {
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByID {
 	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByID{}
-	request.AllowedProtocols = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(key, d)
+	request.AllowedProtocols = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(ctx, key, d)
 	return &request
 }
 
-func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols {
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols {
 	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols{}
-	if oldResource, newResource := d.GetChange(key + ".name"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.Name = interfaceToString(newResource)
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".description"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.Description = interfaceToString(newResource)
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+		request.Description = interfaceToString(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_tls"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapTls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(key+".eap_tls.0", d)
+	if v, ok := d.GetOkExists(key + ".eap_tls"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls"))) {
+		request.EapTls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(ctx, key+".eap_tls.0", d)
 	}
-	if oldResource, newResource := d.GetChange(key + ".peap"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.Peap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(key+".peap.0", d)
+	if v, ok := d.GetOkExists(key + ".peap"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".peap"))) {
+		request.Peap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(ctx, key+".peap.0", d)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapFast = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast(key+".eap_fast.0", d)
+	if v, ok := d.GetOkExists(key + ".eap_fast"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast"))) {
+		request.EapFast = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast(ctx, key+".eap_fast.0", d)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapTtls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls(key+".eap_ttls.0", d)
+	if v, ok := d.GetOkExists(key + ".eap_ttls"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls"))) {
+		request.EapTtls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls(ctx, key+".eap_ttls.0", d)
 	}
-	if oldResource, newResource := d.GetChange(key + ".teap"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.Teap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(key+".teap.0", d)
+	if v, ok := d.GetOkExists(key + ".teap"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".teap"))) {
+		request.Teap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(ctx, key+".teap.0", d)
 	}
-	if oldResource, newResource := d.GetChange(key + ".process_host_lookup"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.ProcessHostLookup = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".process_host_lookup"); ok || !reflect.DeepEqual(v, d.Get(key+".process_host_lookup")) {
+		request.ProcessHostLookup = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_pap_ascii"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPapAscii = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_pap_ascii"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_pap_ascii")) {
+		request.AllowPapAscii = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_chap"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowChap = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_chap"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_chap")) {
+		request.AllowChap = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_ms_chap_v1"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowMsChapV1 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v1"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_ms_chap_v1")) {
+		request.AllowMsChapV1 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_ms_chap_v2"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowMsChapV2 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v2"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_ms_chap_v2")) {
+		request.AllowMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_md5"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapMd5 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_md5"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_md5")) {
+		request.AllowEapMd5 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_leap"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowLeap = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_leap"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_leap")) {
+		request.AllowLeap = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_tls"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapTls = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_tls"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls")) {
+		request.AllowEapTls = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_ttls"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapTtls = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_ttls"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_ttls")) {
+		request.AllowEapTtls = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapFast = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast")) {
+		request.AllowEapFast = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPeap = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap")) {
+		request.AllowPeap = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_teap"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowTeap = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_teap"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap")) {
+		request.AllowTeap = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_preferred_eap_protocol"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPreferredEapProtocol = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_preferred_eap_protocol"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_preferred_eap_protocol")) {
+		request.AllowPreferredEapProtocol = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".preferred_eap_protocol"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.PreferredEapProtocol = interfaceToString(newResource)
+	if v, ok := d.GetOkExists(key + ".preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".preferred_eap_protocol"))) {
+		request.PreferredEapProtocol = interfaceToString(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_tls_l_bit"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTlsLBit = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_tls_l_bit"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_l_bit")) {
+		request.EapTlsLBit = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_weak_ciphers_for_eap"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowWeakCiphersForEap = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_weak_ciphers_for_eap"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_weak_ciphers_for_eap")) {
+		request.AllowWeakCiphersForEap = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".require_message_auth"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.RequireMessageAuth = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".require_message_auth"); ok || !reflect.DeepEqual(v, d.Get(key+".require_message_auth")) {
+		request.RequireMessageAuth = interfaceToBoolPtr(v)
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls {
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls {
 	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls{}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_tls_auth_of_expired_certs"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_tls_auth_of_expired_certs"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls_auth_of_expired_certs")) {
+		request.AllowEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_tls_enable_stateless_session_resume"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTlsEnableStatelessSessionResume = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_tls_enable_stateless_session_resume"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_enable_stateless_session_resume")) {
+		request.EapTlsEnableStatelessSessionResume = interfaceToBoolPtr(v)
 	}
 	if oldResource, newResource := d.GetChange(key + ".eap_tls_session_ticket_ttl"); reflect.DeepEqual(oldResource, newResource) == false {
 		request.EapTlsSessionTicketTtl = interfaceToIntPtr(newResource)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_tls_session_ticket_ttl_units"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTlsSessionTicketTtlUnits = interfaceToString(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl_units"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl_units"))) {
+		request.EapTlsSessionTicketTtlUnits = interfaceToString(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_tls_session_ticket_precentage"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapTlsSessionTicketPrecentage = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_precentage"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_precentage")) {
+		request.EapTlsSessionTicketPrecentage = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap {
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap {
 	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap{}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_eap_ms_chap_v2"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPeapEapMsChapV2 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2")) {
+		request.AllowPeapEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_eap_ms_chap_v2_pwd_change"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPeapEapMsChapV2PwdChange = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change")) {
+		request.AllowPeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_eap_ms_chap_v2_pwd_change_retries"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.AllowPeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change_retries"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries")) {
+		request.AllowPeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_eap_gtc"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPeapEapGtc = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc")) {
+		request.AllowPeapEapGtc = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_eap_gtc_pwd_change"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPeapEapGtcPwdChange = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change")) {
+		request.AllowPeapEapGtcPwdChange = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_eap_gtc_pwd_change_retries"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.AllowPeapEapGtcPwdChangeRetries = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change_retries"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change_retries")) {
+		request.AllowPeapEapGtcPwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_eap_tls"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPeapEapTls = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls")) {
+		request.AllowPeapEapTls = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_eap_tls_auth_of_expired_certs"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls_auth_of_expired_certs"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs")) {
+		request.AllowPeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".require_cryptobinding"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.RequireCryptobinding = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".require_cryptobinding"); ok || !reflect.DeepEqual(v, d.Get(key+".require_cryptobinding")) {
+		request.RequireCryptobinding = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_peap_v0"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowPeapV0 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_peap_v0"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_v0")) {
+		request.AllowPeapV0 = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast {
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast {
 	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast{}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast_eap_ms_chap_v2"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapFastEapMsChapV2 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2")) {
+		request.AllowEapFastEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapFastEapMsChapV2PwdChange = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change")) {
+		request.AllowEapFastEapMsChapV2PwdChange = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.AllowEapFastEapMsChapV2PwdChangeRetries = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries")) {
+		request.AllowEapFastEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast_eap_gtc"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapFastEapGtc = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc")) {
+		request.AllowEapFastEapGtc = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast_eap_gtc_pwd_change"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapFastEapGtcPwdChange = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change")) {
+		request.AllowEapFastEapGtcPwdChange = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast_eap_gtc_pwd_change_retries"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.AllowEapFastEapGtcPwdChangeRetries = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change_retries"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries")) {
+		request.AllowEapFastEapGtcPwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast_eap_tls"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapFastEapTls = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls")) {
+		request.AllowEapFastEapTls = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_eap_fast_eap_tls_auth_of_expired_certs"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowEapFastEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls_auth_of_expired_certs"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs")) {
+		request.AllowEapFastEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacs = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs")) {
+		request.EapFastUsePacs = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_tunnel_pac_ttl"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapFastUsePacsTunnelPacTtl = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl")) {
+		request.EapFastUsePacsTunnelPacTtl = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_tunnel_pac_ttl_units"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsTunnelPacTtlUnits = interfaceToString(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) {
+		request.EapFastUsePacsTunnelPacTtlUnits = interfaceToString(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_use_proactive_pac_update_precentage"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapFastUsePacsUseProactivePacUpdatePrecentage = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_use_proactive_pac_update_precentage"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage")) {
+		request.EapFastUsePacsUseProactivePacUpdatePrecentage = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_allow_anonym_provisioning"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsAllowAnonymProvisioning = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_anonym_provisioning"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning")) {
+		request.EapFastUsePacsAllowAnonymProvisioning = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_allow_authen_provisioning"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsAllowAuthenProvisioning = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_authen_provisioning"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning")) {
+		request.EapFastUsePacsAllowAuthenProvisioning = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning")) {
+		request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_accept_client_cert"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_accept_client_cert"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_accept_client_cert")) {
+		request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_machine_pac_ttl"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapFastUsePacsMachinePacTtl = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl")) {
+		request.EapFastUsePacsMachinePacTtl = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_machine_pac_ttl_units"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsMachinePacTtlUnits = interfaceToString(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) {
+		request.EapFastUsePacsMachinePacTtlUnits = interfaceToString(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_allow_machine_authentication"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsAllowMachineAuthentication = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_machine_authentication"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_machine_authentication")) {
+		request.EapFastUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_stateless_session_resume"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsStatelessSessionResume = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_stateless_session_resume"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_stateless_session_resume")) {
+		request.EapFastUsePacsStatelessSessionResume = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_authorization_pac_ttl"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapFastUsePacsAuthorizationPacTtl = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl")) {
+		request.EapFastUsePacsAuthorizationPacTtl = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_use_pacs_authorization_pac_ttl_units"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastUsePacsAuthorizationPacTtlUnits = interfaceToString(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(v)) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) {
+		request.EapFastUsePacsAuthorizationPacTtlUnits = interfaceToString(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_dont_use_pacs_accept_client_cert"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastDontUsePacsAcceptClientCert = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_accept_client_cert"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert")) {
+		request.EapFastDontUsePacsAcceptClientCert = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_dont_use_pacs_allow_machine_authentication"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastDontUsePacsAllowMachineAuthentication = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_allow_machine_authentication"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication")) {
+		request.EapFastDontUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_fast_enable_eap_chaining"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapFastEnableEApChaining = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_fast_enable_eap_chaining"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_enable_eap_chaining")) {
+		request.EapFastEnableEApChaining = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls {
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls {
 	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls{}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls_pap_ascii"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTtlsPapAscii = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_ttls_pap_ascii"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_pap_ascii")) {
+		request.EapTtlsPapAscii = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls_chap"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTtlsChap = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_ttls_chap"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_chap")) {
+		request.EapTtlsChap = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls_ms_chap_v1"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTtlsMsChapV1 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v1"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_ms_chap_v1")) {
+		request.EapTtlsMsChapV1 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls_ms_chap_v2"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTtlsMsChapV2 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v2"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_ms_chap_v2")) {
+		request.EapTtlsMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls_eap_md5"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTtlsEapMd5 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_md5"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_md5")) {
+		request.EapTtlsEapMd5 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls_eap_ms_chap_v2"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTtlsEapMsChapV2 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2")) {
+		request.EapTtlsEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls_eap_ms_chap_v2_pwd_change"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EapTtlsEapMsChapV2PwdChange = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change")) {
+		request.EapTtlsEapMsChapV2PwdChange = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".eap_ttls_eap_ms_chap_v2_pwd_change_retries"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.EapTtlsEapMsChapV2PwdChangeRetries = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change_retries"); ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries")) {
+		request.EapTtlsEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
 	}
 	return &request
 }
 
-func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap {
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap {
 	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap{}
-	if oldResource, newResource := d.GetChange(key + ".allow_teap_eap_ms_chap_v2"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowTeapEapMsChapV2 = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2")) {
+		request.AllowTeapEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_teap_eap_ms_chap_v2_pwd_change"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowTeapEapMsChapV2PwdChange = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change")) {
+		request.AllowTeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_teap_eap_ms_chap_v2_pwd_change_retries"); reflect.DeepEqual(oldResource, newResource) == false {
-		request.AllowTeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change_retries"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries")) {
+		request.AllowTeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_teap_eap_tls"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowTeapEapTls = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls")) {
+		request.AllowTeapEapTls = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_teap_eap_tls_auth_of_expired_certs"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowTeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls_auth_of_expired_certs"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs")) {
+		request.AllowTeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".accept_client_cert_during_tunnel_est"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AcceptClientCertDuringTunnelEst = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".accept_client_cert_during_tunnel_est"); ok || !reflect.DeepEqual(v, d.Get(key+".accept_client_cert_during_tunnel_est")) {
+		request.AcceptClientCertDuringTunnelEst = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".enable_eap_chaining"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.EnableEapChaining = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".enable_eap_chaining"); ok || !reflect.DeepEqual(v, d.Get(key+".enable_eap_chaining")) {
+		request.EnableEapChaining = interfaceToBoolPtr(v)
 	}
-	if oldResource, newResource := d.GetChange(key + ".allow_downgrade_msk"); reflect.DeepEqual(oldResource, newResource) == false || true {
-		request.AllowDowngradeMsk = interfaceToBoolPtr(newResource)
+	if v, ok := d.GetOkExists(key + ".allow_downgrade_msk"); ok || !reflect.DeepEqual(v, d.Get(key+".allow_downgrade_msk")) {
+		request.AllowDowngradeMsk = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
 	}
 	return &request
 }
