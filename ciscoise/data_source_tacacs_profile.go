@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -260,8 +260,8 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseTacacsProfileGetTacacsProfileSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -306,7 +306,7 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenTacacsProfileGetTacacsProfileByNameItemName(&response2.TacacsProfile)
+		vItemName2 := flattenTacacsProfileGetTacacsProfileByNameItemName(response2.TacacsProfile)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsProfileByName response",
@@ -332,7 +332,7 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenTacacsProfileGetTacacsProfileByIDItemID(&response3.TacacsProfile)
+		vItemID3 := flattenTacacsProfileGetTacacsProfileByIDItemID(response3.TacacsProfile)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsProfileByID response",
@@ -362,7 +362,10 @@ func flattenTacacsProfileGetTacacsProfileItems(items *[]isegosdk.ResponseTacacsP
 	return respItems
 }
 
-func flattenTacacsProfileGetTacacsProfileItemsLink(item isegosdk.ResponseTacacsProfileGetTacacsProfileSearchResultResourcesLink) []map[string]interface{} {
+func flattenTacacsProfileGetTacacsProfileItemsLink(item *isegosdk.ResponseTacacsProfileGetTacacsProfileSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -389,7 +392,10 @@ func flattenTacacsProfileGetTacacsProfileByNameItemName(item *isegosdk.ResponseT
 	}
 }
 
-func flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributes(item isegosdk.ResponseTacacsProfileGetTacacsProfileByNameTacacsProfileSessionAttributes) []map[string]interface{} {
+func flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributes(item *isegosdk.ResponseTacacsProfileGetTacacsProfileByNameTacacsProfileSessionAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["session_attribute_list"] = flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributesSessionAttributeList(item.SessionAttributeList)
 
@@ -399,9 +405,12 @@ func flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributes(item is
 
 }
 
-func flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributesSessionAttributeList(items []isegosdk.ResponseTacacsProfileGetTacacsProfileByNameTacacsProfileSessionAttributesSessionAttributeList) []map[string]interface{} {
+func flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributesSessionAttributeList(items *[]isegosdk.ResponseTacacsProfileGetTacacsProfileByNameTacacsProfileSessionAttributesSessionAttributeList) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["type"] = item.Type
 		respItem["name"] = item.Name
@@ -411,7 +420,10 @@ func flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributesSessionA
 
 }
 
-func flattenTacacsProfileGetTacacsProfileByNameItemNameLink(item isegosdk.ResponseTacacsProfileGetTacacsProfileByNameTacacsProfileLink) []map[string]interface{} {
+func flattenTacacsProfileGetTacacsProfileByNameItemNameLink(item *isegosdk.ResponseTacacsProfileGetTacacsProfileByNameTacacsProfileLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -438,7 +450,10 @@ func flattenTacacsProfileGetTacacsProfileByIDItemID(item *isegosdk.ResponseTacac
 	}
 }
 
-func flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributes(item isegosdk.ResponseTacacsProfileGetTacacsProfileByIDTacacsProfileSessionAttributes) []map[string]interface{} {
+func flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributes(item *isegosdk.ResponseTacacsProfileGetTacacsProfileByIDTacacsProfileSessionAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["session_attribute_list"] = flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributesSessionAttributeList(item.SessionAttributeList)
 
@@ -448,9 +463,12 @@ func flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributes(item isegos
 
 }
 
-func flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributesSessionAttributeList(items []isegosdk.ResponseTacacsProfileGetTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList) []map[string]interface{} {
+func flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributesSessionAttributeList(items *[]isegosdk.ResponseTacacsProfileGetTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["type"] = item.Type
 		respItem["name"] = item.Name
@@ -460,7 +478,10 @@ func flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributesSessionAttri
 
 }
 
-func flattenTacacsProfileGetTacacsProfileByIDItemIDLink(item isegosdk.ResponseTacacsProfileGetTacacsProfileByIDTacacsProfileLink) []map[string]interface{} {
+func flattenTacacsProfileGetTacacsProfileByIDItemIDLink(item *isegosdk.ResponseTacacsProfileGetTacacsProfileByIDTacacsProfileLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

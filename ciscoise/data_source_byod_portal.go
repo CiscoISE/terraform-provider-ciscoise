@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -531,8 +531,8 @@ func dataSourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseByodPortalGetByodPortalSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -577,7 +577,7 @@ func dataSourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m int
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenByodPortalGetByodPortalByIDItem(&response2.ByodPortal)
+		vItem2 := flattenByodPortalGetByodPortalByIDItem(response2.ByodPortal)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetByodPortalByID response",
@@ -607,7 +607,10 @@ func flattenByodPortalGetByodPortalItems(items *[]isegosdk.ResponseByodPortalGet
 	return respItems
 }
 
-func flattenByodPortalGetByodPortalItemsLink(item isegosdk.ResponseByodPortalGetByodPortalSearchResultResourcesLink) []map[string]interface{} {
+func flattenByodPortalGetByodPortalItemsLink(item *isegosdk.ResponseByodPortalGetByodPortalSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -637,7 +640,10 @@ func flattenByodPortalGetByodPortalByIDItem(item *isegosdk.ResponseByodPortalGet
 	}
 }
 
-func flattenByodPortalGetByodPortalByIDItemSettings(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettings) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemSettings(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_settings"] = flattenByodPortalGetByodPortalByIDItemSettingsPortalSettings(item.PortalSettings)
 	respItem["byod_settings"] = flattenByodPortalGetByodPortalByIDItemSettingsByodSettings(item.ByodSettings)
@@ -649,7 +655,10 @@ func flattenByodPortalGetByodPortalByIDItemSettings(item isegosdk.ResponseByodPo
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemSettingsPortalSettings(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsPortalSettings) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemSettingsPortalSettings(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["https_port"] = item.HTTPSPort
 	respItem["allowed_interfaces"] = item.AllowedInterfaces
@@ -665,7 +674,10 @@ func flattenByodPortalGetByodPortalByIDItemSettingsPortalSettings(item isegosdk.
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemSettingsByodSettings(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsByodSettings) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemSettingsByodSettings(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsByodSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["byod_welcome_settings"] = flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item.ByodWelcomeSettings)
 	respItem["byod_registration_settings"] = flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item.ByodRegistrationSettings)
@@ -677,7 +689,10 @@ func flattenByodPortalGetByodPortalByIDItemSettingsByodSettings(item isegosdk.Re
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enable_byo_d"] = item.EnableByod
 	respItem["enable_guest_access"] = item.EnableGuestAccess
@@ -693,7 +708,10 @@ func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodWelcomeSettin
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["show_device_id"] = item.ShowDeviceID
 	respItem["end_point_identity_group_id"] = item.EndPointIDentityGroupID
@@ -704,7 +722,10 @@ func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodRegistrationS
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodRegistrationSuccessSettings(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodRegistrationSuccessSettings(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["success_redirect"] = item.SuccessRedirect
 	respItem["redirect_url"] = item.RedirectURL
@@ -715,7 +736,10 @@ func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodRegistrationS
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemSettingsSupportInfoSettings(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsSupportInfoSettings) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemSettingsSupportInfoSettings(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalSettingsSupportInfoSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
 	respItem["include_mac_addr"] = item.IncludeMacAddr
@@ -732,7 +756,10 @@ func flattenByodPortalGetByodPortalByIDItemSettingsSupportInfoSettings(item iseg
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizations(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizations) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizations(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_theme"] = flattenByodPortalGetByodPortalByIDItemCustomizationsPortalTheme(item.PortalTheme)
 	respItem["portal_tweak_settings"] = flattenByodPortalGetByodPortalByIDItemCustomizationsPortalTweakSettings(item.PortalTweakSettings)
@@ -746,7 +773,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizations(item isegosdk.Response
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsPortalTheme(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsPortalTheme) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsPortalTheme(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsPortalTheme) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -758,7 +788,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsPortalTheme(item isegos
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsPortalTweakSettings(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsPortalTweakSettings(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["banner_color"] = item.BannerColor
 	respItem["banner_text_color"] = item.BannerTextColor
@@ -771,7 +804,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsPortalTweakSettings(ite
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsLanguage(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsLanguage) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsLanguage(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsLanguage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["view_language"] = item.ViewLanguage
 
@@ -781,7 +817,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsLanguage(item isegosdk.
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizations(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizations(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["mobile_logo_image"] = flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item.MobileLogoImage)
 	respItem["desktop_logo_image"] = flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item.DesktopLogoImage)
@@ -797,7 +836,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizations(it
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -807,7 +849,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsMob
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -817,7 +862,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsDes
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -827,7 +875,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsBan
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -837,7 +888,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsGlobalCustomizationsBac
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizations(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsPageCustomizations) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizations(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsPageCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizationsData(item.Data)
 
@@ -847,9 +901,12 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizations(item
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizationsData(items []isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizationsData(items *[]isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
@@ -858,7 +915,10 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizationsData(
 
 }
 
-func flattenByodPortalGetByodPortalByIDItemLink(item isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalLink) []map[string]interface{} {
+func flattenByodPortalGetByodPortalByIDItemLink(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

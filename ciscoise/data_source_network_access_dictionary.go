@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -148,7 +148,7 @@ func dataSourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resour
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNetworkAccessDictionaryGetNetworkAccessDictionariesItems(&response1.Response)
+		vItems1 := flattenNetworkAccessDictionaryGetNetworkAccessDictionariesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessDictionaries response",
@@ -174,7 +174,7 @@ func dataSourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resour
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItem(&response2.Response)
+		vItem2 := flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessDictionaryByName response",
@@ -206,7 +206,10 @@ func flattenNetworkAccessDictionaryGetNetworkAccessDictionariesItems(items *[]is
 	return respItems
 }
 
-func flattenNetworkAccessDictionaryGetNetworkAccessDictionariesItemsLink(item isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionariesResponseLink) []map[string]interface{} {
+func flattenNetworkAccessDictionaryGetNetworkAccessDictionariesItemsLink(item *isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionariesResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -234,7 +237,10 @@ func flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItem(item *is
 	}
 }
 
-func flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItemLink(item isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionaryByNameResponseLink) []map[string]interface{} {
+func flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItemLink(item *isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionaryByNameResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel

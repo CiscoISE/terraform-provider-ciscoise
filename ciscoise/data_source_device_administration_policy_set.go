@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -568,7 +568,7 @@ func dataSourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItems(&response1.Response)
+		vItems1 := flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminPolicySets response",
@@ -594,7 +594,7 @@ func dataSourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItem(&response2.Response)
+		vItem2 := flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminPolicySetByID response",
@@ -631,7 +631,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItems(items *[]
 	return respItems
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsCondition(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseCondition) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsCondition(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseCondition) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = item.IsNegate
@@ -659,7 +662,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsCondition(
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionLink(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionLink) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionLink(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -671,9 +677,12 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionL
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionChildren(items []isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionChildren) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionChildren(items *[]isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -683,7 +692,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionC
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionChildrenLink(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionChildrenLink) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionChildrenLink(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -695,7 +707,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionC
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionDatesRange(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionDatesRange) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionDatesRange(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -706,7 +721,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionD
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionDatesRangeException(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionDatesRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionDatesRangeException(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -717,7 +735,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionD
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionHoursRange(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionHoursRange) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionHoursRange(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -728,7 +749,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionH
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionHoursRangeException(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionHoursRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionHoursRangeException(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseConditionHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -739,7 +763,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionH
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsLink(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsLink(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -772,7 +799,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItem(item *i
 	}
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemCondition(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseCondition) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemCondition(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseCondition) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = item.IsNegate
@@ -800,7 +830,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionLink(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionLink) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionLink(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -812,9 +845,12 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionChildren(items []isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionChildren) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionChildren(items *[]isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -824,7 +860,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionChildrenLink(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionChildrenLink) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionChildrenLink(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -836,7 +875,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionDatesRange(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionDatesRange) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionDatesRange(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -847,7 +889,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionDatesRangeException(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionDatesRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionDatesRangeException(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -858,7 +903,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionHoursRange(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionHoursRange) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionHoursRange(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -869,7 +917,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionHoursRangeException(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionHoursRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionHoursRangeException(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseConditionHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -880,7 +931,10 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 
 }
 
-func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemLink(item isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemLink(item *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel

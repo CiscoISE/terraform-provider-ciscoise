@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -712,8 +712,8 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalsSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -758,7 +758,7 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItem(&response2.SponsoredGuestPortal)
+		vItem2 := flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItem(response2.SponsoredGuestPortal)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSponsoredGuestPortalByID response",
@@ -788,7 +788,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalsItems(items *[]isegosdk.
 	return respItems
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalsItemsLink(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalsSearchResultResourcesLink) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalsItemsLink(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalsSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -818,7 +821,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItem(item *isegosdk.R
 	}
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_settings"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPortalSettings(item.PortalSettings)
 	respItem["login_page_settings"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPageSettings(item.LoginPageSettings)
@@ -837,7 +843,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettings(item ise
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPortalSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPortalSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPortalSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["https_port"] = item.HTTPSPort
 	respItem["allowed_interfaces"] = item.AllowedInterfaces
@@ -854,7 +863,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPortalSet
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPageSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPageSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["require_access_code"] = item.RequireAccessCode
 	respItem["max_failed_attempts_before_rate_limit"] = item.MaxFailedAttemptsBeforeRateLimit
@@ -875,9 +887,12 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPage
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPageSettingsSocialConfigs(items []isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPageSettingsSocialConfigs(items *[]isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["social_media_type"] = item.SocialMediaType
 		respItem["social_media_value"] = item.SocialMediaValue
@@ -886,7 +901,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPage
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsAupSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAupSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsAupSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAupSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_aup"] = item.IncludeAup
 	respItem["require_aup_scrolling"] = item.RequireAupScrolling
@@ -902,7 +920,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsAupSettin
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsGuestChangePasswordSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestChangePasswordSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsGuestChangePasswordSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestChangePasswordSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_change_passwd_at_first_login"] = item.AllowChangePasswdAtFirstLogin
 
@@ -912,7 +933,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsGuestChan
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsGuestDeviceRegistrationSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsGuestDeviceRegistrationSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["auto_register_guest_devices"] = item.AutoRegisterGuestDevices
 	respItem["allow_guests_to_register_devices"] = item.AllowGuestsToRegisterDevices
@@ -923,7 +947,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsGuestDevi
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["byod_welcome_settings"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item.ByodWelcomeSettings)
 	respItem["byod_registration_settings"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item.ByodRegistrationSettings)
@@ -935,7 +962,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSetti
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enable_byo_d"] = item.EnableByod
 	respItem["enable_guest_access"] = item.EnableGuestAccess
@@ -951,7 +981,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSetti
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["show_device_id"] = item.ShowDeviceID
 	respItem["end_point_identity_group_id"] = item.EndPointIDentityGroupID
@@ -962,7 +995,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSetti
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettingsByodRegistrationSuccessSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSettingsByodRegistrationSuccessSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["success_redirect"] = item.SuccessRedirect
 	respItem["redirect_url"] = item.RedirectURL
@@ -973,7 +1009,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSetti
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPostAccessBannerSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostAccessBannerSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPostAccessBannerSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostAccessBannerSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
 
@@ -983,7 +1022,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPostAcces
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsAuthSuccessSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAuthSuccessSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsAuthSuccessSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAuthSuccessSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["success_redirect"] = item.SuccessRedirect
 	respItem["redirect_url"] = item.RedirectURL
@@ -994,7 +1036,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsAuthSucce
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPostLoginBannerSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostLoginBannerSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPostLoginBannerSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostLoginBannerSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
 
@@ -1004,7 +1049,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPostLogin
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsSupportInfoSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsSupportInfoSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsSupportInfoSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsSupportInfoSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
 	respItem["include_mac_addr"] = item.IncludeMacAddr
@@ -1021,7 +1069,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsSupportIn
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizations(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizations) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizations(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_theme"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPortalTheme(item.PortalTheme)
 	respItem["portal_tweak_settings"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPortalTweakSettings(item.PortalTweakSettings)
@@ -1035,7 +1086,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizations(it
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPortalTheme(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTheme) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPortalTheme(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTheme) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -1047,7 +1101,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPor
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPortalTweakSettings(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPortalTweakSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["banner_color"] = item.BannerColor
 	respItem["banner_text_color"] = item.BannerTextColor
@@ -1060,7 +1117,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPor
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsLanguage(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsLanguage) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsLanguage(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsLanguage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["view_language"] = item.ViewLanguage
 
@@ -1070,7 +1130,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsLan
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizations(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizations(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["mobile_logo_image"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item.MobileLogoImage)
 	respItem["desktop_logo_image"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item.DesktopLogoImage)
@@ -1086,7 +1149,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -1096,7 +1162,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -1106,7 +1175,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -1116,7 +1188,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -1126,7 +1201,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPageCustomizations(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPageCustomizations(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPageCustomizationsData(item.Data)
 
@@ -1136,9 +1214,12 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPag
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPageCustomizationsData(items []isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPageCustomizationsData(items *[]isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
@@ -1147,7 +1228,10 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPag
 
 }
 
-func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemLink(item isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalLink) []map[string]interface{} {
+func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemLink(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

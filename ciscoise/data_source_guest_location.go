@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -182,8 +182,8 @@ func dataSourceGuestLocationRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseGuestLocationGetGuestLocationSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -228,7 +228,7 @@ func dataSourceGuestLocationRead(ctx context.Context, d *schema.ResourceData, m 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenGuestLocationGetGuestLocationByIDItem(&response2.LocationIDentification)
+		vItem2 := flattenGuestLocationGetGuestLocationByIDItem(response2.LocationIDentification)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGuestLocationByID response",
@@ -258,7 +258,10 @@ func flattenGuestLocationGetGuestLocationItems(items *[]isegosdk.ResponseGuestLo
 	return respItems
 }
 
-func flattenGuestLocationGetGuestLocationItemsLink(item isegosdk.ResponseGuestLocationGetGuestLocationSearchResultResourcesLink) []map[string]interface{} {
+func flattenGuestLocationGetGuestLocationItemsLink(item *isegosdk.ResponseGuestLocationGetGuestLocationSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -283,7 +286,10 @@ func flattenGuestLocationGetGuestLocationByIDItem(item *isegosdk.ResponseGuestLo
 	}
 }
 
-func flattenGuestLocationGetGuestLocationByIDItemLink(item isegosdk.ResponseGuestLocationGetGuestLocationByIDLocationIDentificationLink) []map[string]interface{} {
+func flattenGuestLocationGetGuestLocationByIDItemLink(item *isegosdk.ResponseGuestLocationGetGuestLocationByIDLocationIDentificationLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

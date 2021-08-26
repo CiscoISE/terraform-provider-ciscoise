@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -228,7 +228,7 @@ func dataSourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItems(&response1.Response)
+		vItems1 := flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminNetworkConditions response",
@@ -254,7 +254,7 @@ func dataSourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItem(&response2.Response)
+		vItem2 := flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminNetworkConditionByID response",
@@ -286,7 +286,10 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions
 	return respItems
 }
 
-func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItemsLink(item isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItemsLink(item *isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -298,9 +301,12 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions
 
 }
 
-func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItemsConditions(items []isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsResponseConditions) []map[string]interface{} {
+func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsItemsConditions(items *[]isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsResponseConditions) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["cli_dnis_list"] = item.CliDnisList
 		respItem["ip_addr_list"] = item.IPAddrList
@@ -328,7 +334,10 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionB
 	}
 }
 
-func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItemLink(item isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItemLink(item *isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -340,9 +349,12 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionB
 
 }
 
-func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItemConditions(items []isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDResponseConditions) []map[string]interface{} {
+func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItemConditions(items *[]isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDResponseConditions) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["cli_dnis_list"] = item.CliDnisList
 		respItem["ip_addr_list"] = item.IPAddrList

@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -436,7 +436,7 @@ func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItems(&response1.Response)
+		vItems1 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminTimeConditions response",
@@ -462,7 +462,7 @@ func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(&response2.Response)
+		vItem2 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminTimeConditionByID response",
@@ -507,7 +507,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 	return respItems
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsLink(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsLink(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -519,9 +522,12 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsChildren(items []isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseChildren) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsChildren(items *[]isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -531,7 +537,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsChildrenLink(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseChildrenLink) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsChildrenLink(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -543,7 +552,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsDatesRange(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseDatesRange) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsDatesRange(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -554,7 +566,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsDatesRangeException(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseDatesRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsDatesRangeException(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -565,7 +580,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsHoursRange(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseHoursRange) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsHoursRange(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -576,7 +594,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsHoursRangeException(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseHoursRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsHoursRangeException(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponseHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -616,7 +637,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 	}
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemLink(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemLink(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -628,9 +652,12 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemChildren(items []isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseChildren) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemChildren(items *[]isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -640,7 +667,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemChildrenLink(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseChildrenLink) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemChildrenLink(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -652,7 +682,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemDatesRange(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseDatesRange) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemDatesRange(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -663,7 +696,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemDatesRangeException(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseDatesRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemDatesRangeException(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -674,7 +710,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemHoursRange(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseHoursRange) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemHoursRange(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -685,7 +724,10 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 
 }
 
-func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemHoursRangeException(item isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseHoursRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemHoursRangeException(item *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDResponseHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime

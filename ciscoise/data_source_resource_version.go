@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -82,7 +82,7 @@ func dataSourceResourceVersionRead(ctx context.Context, d *schema.ResourceData, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItem1 := flattenVersionInfoGetVersionInfoItem(&response1.VersionInfo)
+		vItem1 := flattenVersionInfoGetVersionInfoItem(response1.VersionInfo)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetVersionInfo response",
@@ -109,7 +109,10 @@ func flattenVersionInfoGetVersionInfoItem(item *isegosdk.ResponseVersionInfoGetV
 	}
 }
 
-func flattenVersionInfoGetVersionInfoItemLink(item isegosdk.ResponseVersionInfoGetVersionInfoVersionInfoLink) []map[string]interface{} {
+func flattenVersionInfoGetVersionInfoItemLink(item *isegosdk.ResponseVersionInfoGetVersionInfoVersionInfoLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

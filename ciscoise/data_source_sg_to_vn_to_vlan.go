@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -232,8 +232,8 @@ func dataSourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -278,7 +278,7 @@ func dataSourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m i
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItem(&response2.SgtVnVLANContainer)
+		vItem2 := flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItem(response2.SgtVnVLANContainer)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSecurityGroupsToVnToVLANByID response",
@@ -308,7 +308,10 @@ func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANItems(items 
 	return respItems
 }
 
-func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANItemsLink(item isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANSearchResultResourcesLink) []map[string]interface{} {
+func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANItemsLink(item *isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -336,9 +339,12 @@ func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItem(ite
 	}
 }
 
-func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirtualnetworklist(items []isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklist) []map[string]interface{} {
+func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirtualnetworklist(items *[]isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklist) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["id"] = item.ID
 		respItem["name"] = item.Name
@@ -350,9 +356,12 @@ func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirt
 
 }
 
-func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirtualnetworklistVLANs(items []isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistVLANs) []map[string]interface{} {
+func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirtualnetworklistVLANs(items *[]isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistVLANs) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["id"] = item.ID
 		respItem["name"] = item.Name
@@ -365,7 +374,10 @@ func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirt
 
 }
 
-func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemLink(item isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDSgtVnVLANContainerLink) []map[string]interface{} {
+func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemLink(item *isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDSgtVnVLANContainerLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

@@ -4,10 +4,43 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"net/url"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
 )
+
+func joinResourceID(result_params map[string]string) string {
+	var PARAMS_SEPARATOR string = "/"
+	var PARAM_VALUE_SEPARATOR string = "="
+	ID := ""
+	params := []string{}
+	for key, value := range result_params {
+		if value != "" {
+			params = append(params, fmt.Sprintf("%s%s%s", key, PARAM_VALUE_SEPARATOR, value))
+		}
+	}
+	sort.Strings(params) // Sort params
+	ID = strings.Join(params, PARAMS_SEPARATOR)
+	return ID
+}
+
+func separateResourceID(ID string) map[string]string {
+	var PARAMS_SEPARATOR string = "/"
+	var PARAM_VALUE_SEPARATOR string = "="
+	params := strings.Split(ID, PARAMS_SEPARATOR)
+	sort.Strings(params) // Sort params
+	result_params := make(map[string]string)
+	for _, param := range params {
+		param_key_value := strings.Split(param, PARAM_VALUE_SEPARATOR)
+		if len(param_key_value) == 2 {
+			if param_key_value[1] != "" {
+				result_params[param_key_value[0]] = param_key_value[1]
+			}
+		}
+	}
+	return result_params
+}
 
 // listNicely listNicely
 /* Converts []string to string, by adding quotes and separate values by comma
@@ -50,6 +83,30 @@ func diagError(summaryErr string, err error) diag.Diagnostic {
 	if err != nil {
 		diagErrResponse.Detail = err.Error()
 		return diagErrResponse
+	}
+	return diagErrResponse
+}
+
+func diagErrorWithResponse(summaryErr string, err error, restyResponse string) diag.Diagnostic {
+	diagErrResponse := diag.Diagnostic{Severity: diag.Error, Summary: summaryErr}
+	if err != nil {
+		diagErrResponse.Detail = fmt.Sprintf("%s\n%v", err.Error(), restyResponse)
+		return diagErrResponse
+	}
+	diagErrResponse.Detail = restyResponse
+	return diagErrResponse
+}
+
+func diagErrorWithAltAndResponse(summaryErr string, err error, restyResponse string, summaryAlt string, detail string) diag.Diagnostic {
+	diagErrResponse := diag.Diagnostic{Severity: diag.Error}
+	if err != nil {
+		diagErrResponse.Summary = summaryErr
+		diagErrResponse.Detail = fmt.Sprintf("%s\n%v", err.Error(), restyResponse)
+		return diagErrResponse
+	}
+	diagErrResponse.Summary = summaryAlt
+	if detail != "" {
+		diagErrResponse.Detail = detail
 	}
 	return diagErrResponse
 }

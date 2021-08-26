@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -96,7 +96,7 @@ func dataSourceDeviceAdministrationDictionaryAttributesAuthenticationRead(ctx co
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionariesAuthenticationItems(&response1.Response)
+		vItems1 := flattenDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionariesAuthenticationItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminDictionariesAuthentication response",
@@ -130,9 +130,12 @@ func flattenDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionari
 	return respItems
 }
 
-func flattenDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionariesAuthenticationItemsAllowedValues(items []isegosdk.ResponseDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionariesAuthenticationResponseAllowedValues) []map[string]interface{} {
+func flattenDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionariesAuthenticationItemsAllowedValues(items *[]isegosdk.ResponseDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionariesAuthenticationResponseAllowedValues) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["is_default"] = item.IsDefault
 		respItem["key"] = item.Key

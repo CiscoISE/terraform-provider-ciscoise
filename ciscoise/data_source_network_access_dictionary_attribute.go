@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -170,7 +170,7 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameItems(&response1.Response)
+		vItems1 := flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessDictionaryAttributesByDictionaryName response",
@@ -197,7 +197,7 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameItem(&response2.Response)
+		vItem2 := flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessDictionaryAttributeByName response",
@@ -231,9 +231,12 @@ func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributes
 	return respItems
 }
 
-func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameItemsAllowedValues(items []isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameResponseAllowedValues) []map[string]interface{} {
+func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameItemsAllowedValues(items *[]isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameResponseAllowedValues) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["is_default"] = item.IsDefault
 		respItem["key"] = item.Key
@@ -261,9 +264,12 @@ func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeB
 	}
 }
 
-func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameItemAllowedValues(items []isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameResponseAllowedValues) []map[string]interface{} {
+func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameItemAllowedValues(items *[]isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameResponseAllowedValues) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["is_default"] = item.IsDefault
 		respItem["key"] = item.Key

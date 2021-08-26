@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -456,7 +456,7 @@ func dataSourceDeploymentRead(ctx context.Context, d *schema.ResourceData, m int
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItem1 := flattenPullDeploymentInfoGetDeploymentInfoItem(&response1.ERSDeploymentInfo)
+		vItem1 := flattenPullDeploymentInfoGetDeploymentInfoItem(response1.ERSDeploymentInfo)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeploymentInfo response",
@@ -488,7 +488,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItem(item *isegosdk.ResponsePullD
 	}
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNetworkAccessInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNetworkAccessInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["deployment_id"] = item.DeploymentID
 	respItem["is_csn_enabled"] = item.IsCsnEnabled
@@ -503,7 +506,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfo(item isegos
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNetworkAccessInfoNodeList) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfoNodeList(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNetworkAccessInfoNodeList) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
 
@@ -513,7 +519,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfoNodeList(ite
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoProfilerInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoProfilerInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["deployment_id"] = item.DeploymentID
 	respItem["node_list"] = flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeList(item.NodeList)
@@ -524,7 +533,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfo(item isegosdk.Re
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoProfilerInfoNodeList) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeList(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoProfilerInfoNodeList) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["node"] = flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeListNode(item.Node)
 
@@ -534,9 +546,12 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeList(item ise
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeListNode(items []isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoProfilerInfoNodeListNode) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeListNode(items *[]isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoProfilerInfoNodeListNode) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["online_subscription_enabled"] = item.OnlineSubscriptionEnabled
 		respItem["last_applied_feed_date_time"] = item.LastAppliedFeedDateTime
@@ -547,7 +562,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeListNode(item
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoDeploymentInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoDeploymentInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["deployment_id"] = item.DeploymentID
 	respItem["version_history_info"] = flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoVersionHistoryInfo(item.VersionHistoryInfo)
@@ -560,9 +578,12 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfo(item isegosdk.
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoVersionHistoryInfo(items []isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoDeploymentInfoVersionHistoryInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoVersionHistoryInfo(items *[]isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoDeploymentInfoVersionHistoryInfo) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["op_type"] = item.OpType
 		respItem["main_version"] = item.MainVersion
@@ -572,7 +593,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoVersionHistoryI
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoDeploymentInfoNodeList) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeList(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoDeploymentInfoNodeList) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["node_and_node_count_and_count_info"] = flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeListNodeAndNodeCountAndCountInfo(item.NodeAndNodeCountAndCountInfo)
 
@@ -582,9 +606,12 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeList(item i
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeListNodeAndNodeCountAndCountInfo(items []isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoDeploymentInfoNodeListNodeAndNodeCountAndCountInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeListNodeAndNodeCountAndCountInfo(items *[]isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoDeploymentInfoNodeListNodeAndNodeCountAndCountInfo) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["name"] = item.Name
 		respItem["value"] = responseInterfaceToString(item.Value)
@@ -598,7 +625,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeListNodeAnd
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNadInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNadInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["node_list"] = flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNodeList(item.NodeList)
 	respItem["nadcount_info"] = flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNadcountInfo(item.NadcountInfo)
@@ -609,7 +639,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfo(item isegosdk.Respons
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNadInfoNodeList) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNodeList(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNadInfoNodeList) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
 
@@ -619,7 +652,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNodeList(item isegosdk
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNadcountInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNadInfoNadcountInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNadcountInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoNadInfoNadcountInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["total_active_nad_count"] = item.TotalActiveNADCount
 
@@ -629,7 +665,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNadcountInfo(item iseg
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoMdmInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoMdmInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["active_mdm_servers_count"] = item.ActiveMdmServersCount
 	respItem["active_desktop_mdm_servers_count"] = item.ActiveDesktopMdmServersCount
@@ -643,7 +682,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfo(item isegosdk.Respons
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoMdmInfoNodeList) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfoNodeList(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoMdmInfoNodeList) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
 
@@ -653,7 +695,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfoNodeList(item isegosdk
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoLicensesInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoLicensesInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["deployment_id"] = item.DeploymentID
 	respItem["node_list"] = flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfoNodeList(item.NodeList)
@@ -664,7 +709,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfo(item isegosdk.Re
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoLicensesInfoNodeList) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfoNodeList(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoLicensesInfoNodeList) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["node"] = responseInterfaceToSliceString(item.Node)
 
@@ -674,7 +722,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfoNodeList(item ise
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoPostureInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoPostureInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["content"] = flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfoContent(item.Content)
 
@@ -684,9 +735,12 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfo(item isegosdk.Res
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfoContent(items []isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoPostureInfoContent) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfoContent(items *[]isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoPostureInfoContent) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["name"] = item.Name
 		respItem["value"] = responseInterfaceToString(item.Value)
@@ -700,7 +754,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfoContent(items []is
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfo(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfo) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfo(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["deployment_id"] = item.DeploymentID
 	respItem["node_list"] = flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeList(item.NodeList)
@@ -711,7 +768,10 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfo(item isegosdk.Respon
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeList(item isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfoNodeList) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeList(item *isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfoNodeList) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["node"] = flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNode(item.Node)
 
@@ -721,9 +781,12 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeList(item isegosd
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNode(items []isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfoNodeListNode) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNode(items *[]isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfoNodeListNode) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["sn"] = item.Sn
 		respItem["service"] = flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeService(item.Service)
@@ -732,9 +795,12 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNode(items []
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeService(items []isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfoNodeListNodeService) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeService(items *[]isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfoNodeListNodeService) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["service_name"] = item.ServiceName
 		respItem["route"] = flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeServiceRoute(item.Route)
@@ -743,9 +809,12 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeService(i
 
 }
 
-func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeServiceRoute(items []isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfoNodeListNodeServiceRoute) []map[string]interface{} {
+func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeServiceRoute(items *[]isegosdk.ResponsePullDeploymentInfoGetDeploymentInfoERSDeploymentInfoKongInfoNodeListNodeServiceRoute) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["route_name"] = item.RouteName
 		respItem["http_count"] = responseInterfaceToString(item.HTTPCount)

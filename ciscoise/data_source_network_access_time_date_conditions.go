@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -436,7 +436,7 @@ func dataSourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schem
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(&response1.Response)
+		vItems1 := flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessTimeConditions response",
@@ -462,7 +462,7 @@ func dataSourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schem
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem(&response2.Response)
+		vItem2 := flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessTimeConditionByID response",
@@ -507,7 +507,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(i
 	return respItems
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsLink(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseLink) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsLink(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -519,9 +522,12 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsLi
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildren(items []isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseChildren) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildren(items *[]isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -531,7 +537,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsCh
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildrenLink(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseChildrenLink) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildrenLink(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -543,7 +552,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsCh
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDatesRange(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseDatesRange) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDatesRange(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -554,7 +566,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDa
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDatesRangeException(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseDatesRangeException) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDatesRangeException(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -565,7 +580,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsDa
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHoursRange(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseHoursRange) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHoursRange(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -576,7 +594,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHo
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHoursRangeException(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseHoursRangeException) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsHoursRangeException(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponseHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -616,7 +637,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 	}
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemLink(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseLink) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemLink(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -628,9 +652,12 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildren(items []isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseChildren) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildren(items *[]isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -640,7 +667,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildrenLink(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseChildrenLink) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildrenLink(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -652,7 +682,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRange(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseDatesRange) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRange(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -663,7 +696,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRangeException(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseDatesRangeException) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemDatesRangeException(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -674,7 +710,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemHoursRange(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseHoursRange) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemHoursRange(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -685,7 +724,10 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 
 }
 
-func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemHoursRangeException(item isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseHoursRangeException) []map[string]interface{} {
+func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemHoursRangeException(item *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDResponseHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime

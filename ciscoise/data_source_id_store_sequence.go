@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -258,8 +258,8 @@ func dataSourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseIDentitySequenceGetIDentitySequenceSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -304,7 +304,7 @@ func dataSourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenIDentitySequenceGetIDentitySequenceByNameItemName(&response2.IDStoreSequence)
+		vItemName2 := flattenIDentitySequenceGetIDentitySequenceByNameItemName(response2.IDStoreSequence)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetIDentitySequenceByName response",
@@ -330,7 +330,7 @@ func dataSourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenIDentitySequenceGetIDentitySequenceByIDItemID(&response3.IDStoreSequence)
+		vItemID3 := flattenIDentitySequenceGetIDentitySequenceByIDItemID(response3.IDStoreSequence)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetIDentitySequenceByID response",
@@ -360,7 +360,10 @@ func flattenIDentitySequenceGetIDentitySequenceItems(items *[]isegosdk.ResponseI
 	return respItems
 }
 
-func flattenIDentitySequenceGetIDentitySequenceItemsLink(item isegosdk.ResponseIDentitySequenceGetIDentitySequenceSearchResultResourcesLink) []map[string]interface{} {
+func flattenIDentitySequenceGetIDentitySequenceItemsLink(item *isegosdk.ResponseIDentitySequenceGetIDentitySequenceSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -390,9 +393,12 @@ func flattenIDentitySequenceGetIDentitySequenceByNameItemName(item *isegosdk.Res
 	}
 }
 
-func flattenIDentitySequenceGetIDentitySequenceByNameItemNameIDSeqItem(items []isegosdk.ResponseIDentitySequenceGetIDentitySequenceByNameIDStoreSequenceIDSeqItem) []map[string]interface{} {
+func flattenIDentitySequenceGetIDentitySequenceByNameItemNameIDSeqItem(items *[]isegosdk.ResponseIDentitySequenceGetIDentitySequenceByNameIDStoreSequenceIDSeqItem) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["idstore"] = item.IDstore
 		respItem["order"] = item.Order
@@ -401,7 +407,10 @@ func flattenIDentitySequenceGetIDentitySequenceByNameItemNameIDSeqItem(items []i
 
 }
 
-func flattenIDentitySequenceGetIDentitySequenceByNameItemNameLink(item isegosdk.ResponseIDentitySequenceGetIDentitySequenceByNameIDStoreSequenceLink) []map[string]interface{} {
+func flattenIDentitySequenceGetIDentitySequenceByNameItemNameLink(item *isegosdk.ResponseIDentitySequenceGetIDentitySequenceByNameIDStoreSequenceLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -431,9 +440,12 @@ func flattenIDentitySequenceGetIDentitySequenceByIDItemID(item *isegosdk.Respons
 	}
 }
 
-func flattenIDentitySequenceGetIDentitySequenceByIDItemIDIDSeqItem(items []isegosdk.ResponseIDentitySequenceGetIDentitySequenceByIDIDStoreSequenceIDSeqItem) []map[string]interface{} {
+func flattenIDentitySequenceGetIDentitySequenceByIDItemIDIDSeqItem(items *[]isegosdk.ResponseIDentitySequenceGetIDentitySequenceByIDIDStoreSequenceIDSeqItem) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["idstore"] = item.IDstore
 		respItem["order"] = item.Order
@@ -442,7 +454,10 @@ func flattenIDentitySequenceGetIDentitySequenceByIDItemIDIDSeqItem(items []isego
 
 }
 
-func flattenIDentitySequenceGetIDentitySequenceByIDItemIDLink(item isegosdk.ResponseIDentitySequenceGetIDentitySequenceByIDIDStoreSequenceLink) []map[string]interface{} {
+func flattenIDentitySequenceGetIDentitySequenceByIDItemIDLink(item *isegosdk.ResponseIDentitySequenceGetIDentitySequenceByIDIDStoreSequenceLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

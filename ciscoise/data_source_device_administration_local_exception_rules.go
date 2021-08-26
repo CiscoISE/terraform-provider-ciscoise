@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -590,7 +590,7 @@ func dataSourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItems(&response1.Response)
+		vItems1 := flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminLocalExceptionRules response",
@@ -617,7 +617,7 @@ func dataSourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItem(&response2.Response)
+		vItem2 := flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminLocalExceptionRuleByID response",
@@ -647,7 +647,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 	return respItems
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsLink(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsLink(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -659,7 +662,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRule(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRule) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRule(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRule) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleCondition(item.Condition)
 	respItem["default"] = item.Default
@@ -675,7 +681,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleCondition(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleCondition) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleCondition(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleCondition) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = item.IsNegate
@@ -703,7 +712,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionLink(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionLink) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionLink(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -715,9 +727,12 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionChildren(items []isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionChildren) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionChildren(items *[]isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -727,7 +742,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionChildrenLink(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionChildrenLink) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionChildrenLink(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -739,7 +757,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionDatesRange(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionDatesRange) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionDatesRange(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -750,7 +771,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionDatesRangeException(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionDatesRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionDatesRangeException(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -761,7 +785,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionHoursRange(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionHoursRange) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionHoursRange(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -772,7 +799,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionHoursRangeException(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionHoursRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesItemsRuleConditionHoursRangeException(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponseRuleConditionHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -797,7 +827,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 	}
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemLink(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseLink) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemLink(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -809,7 +842,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRule(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRule) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRule(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRule) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleCondition(item.Condition)
 	respItem["default"] = item.Default
@@ -825,7 +861,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleCondition(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleCondition) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleCondition(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleCondition) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = item.IsNegate
@@ -853,7 +892,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionLink(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionLink) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionLink(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -865,9 +907,12 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionChildren(items []isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionChildren) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionChildren(items *[]isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -877,7 +922,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionChildrenLink(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionChildrenLink) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionChildrenLink(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -889,7 +937,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionDatesRange(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionDatesRange) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionDatesRange(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -900,7 +951,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionDatesRangeException(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionDatesRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionDatesRangeException(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -911,7 +965,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionHoursRange(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionHoursRange) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionHoursRange(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -922,7 +979,10 @@ func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalEx
 
 }
 
-func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionHoursRangeException(item isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionHoursRangeException) []map[string]interface{} {
+func flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItemRuleConditionHoursRangeException(item *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDResponseRuleConditionHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime

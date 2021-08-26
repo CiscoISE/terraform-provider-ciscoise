@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -520,8 +520,8 @@ func dataSourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseHotspotPortalGetHotspotPortalSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -566,7 +566,7 @@ func dataSourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m 
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenHotspotPortalGetHotspotPortalByIDItem(&response2.HotspotPortal)
+		vItem2 := flattenHotspotPortalGetHotspotPortalByIDItem(response2.HotspotPortal)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetHotspotPortalByID response",
@@ -596,7 +596,10 @@ func flattenHotspotPortalGetHotspotPortalItems(items *[]isegosdk.ResponseHotspot
 	return respItems
 }
 
-func flattenHotspotPortalGetHotspotPortalItemsLink(item isegosdk.ResponseHotspotPortalGetHotspotPortalSearchResultResourcesLink) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalItemsLink(item *isegosdk.ResponseHotspotPortalGetHotspotPortalSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -626,7 +629,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItem(item *isegosdk.ResponseHotspot
 	}
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemSettings(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettings) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemSettings(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_settings"] = flattenHotspotPortalGetHotspotPortalByIDItemSettingsPortalSettings(item.PortalSettings)
 	respItem["aup_settings"] = flattenHotspotPortalGetHotspotPortalByIDItemSettingsAupSettings(item.AupSettings)
@@ -641,7 +647,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettings(item isegosdk.Response
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPortalSettings(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsPortalSettings) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPortalSettings(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["https_port"] = item.HTTPSPort
 	respItem["allowed_interfaces"] = item.AllowedInterfaces
@@ -658,7 +667,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPortalSettings(item ise
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemSettingsAupSettings(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsAupSettings) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemSettingsAupSettings(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsAupSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["require_access_code"] = item.RequireAccessCode
 	respItem["access_code"] = item.AccessCode
@@ -671,7 +683,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsAupSettings(item isegos
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPostAccessBannerSettings(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsPostAccessBannerSettings) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPostAccessBannerSettings(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsPostAccessBannerSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
 
@@ -681,7 +696,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPostAccessBannerSetting
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemSettingsAuthSuccessSettings(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsAuthSuccessSettings) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemSettingsAuthSuccessSettings(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsAuthSuccessSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["success_redirect"] = item.SuccessRedirect
 	respItem["redirect_url"] = item.RedirectURL
@@ -692,7 +710,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsAuthSuccessSettings(ite
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPostLoginBannerSettings(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsPostLoginBannerSettings) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPostLoginBannerSettings(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsPostLoginBannerSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
 
@@ -702,7 +723,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPostLoginBannerSettings
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemSettingsSupportInfoSettings(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsSupportInfoSettings) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemSettingsSupportInfoSettings(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalSettingsSupportInfoSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
 	respItem["include_mac_addr"] = item.IncludeMacAddr
@@ -719,7 +743,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsSupportInfoSettings(ite
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizations(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizations) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizations(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_theme"] = flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPortalTheme(item.PortalTheme)
 	respItem["portal_tweak_settings"] = flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPortalTweakSettings(item.PortalTweakSettings)
@@ -733,7 +760,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizations(item isegosdk.Re
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPortalTheme(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsPortalTheme) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPortalTheme(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsPortalTheme) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -745,7 +775,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPortalTheme(item 
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPortalTweakSettings(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPortalTweakSettings(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["banner_color"] = item.BannerColor
 	respItem["banner_text_color"] = item.BannerTextColor
@@ -758,7 +791,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPortalTweakSettin
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsLanguage(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsLanguage) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsLanguage(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsLanguage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["view_language"] = item.ViewLanguage
 
@@ -768,7 +804,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsLanguage(item ise
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizations(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizations(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["mobile_logo_image"] = flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item.MobileLogoImage)
 	respItem["desktop_logo_image"] = flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item.DesktopLogoImage)
@@ -784,7 +823,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizati
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -794,7 +836,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizati
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -804,7 +849,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizati
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -814,7 +862,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizati
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -824,7 +875,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsGlobalCustomizati
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPageCustomizations(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPageCustomizations(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPageCustomizationsData(item.Data)
 
@@ -834,9 +888,12 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPageCustomization
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPageCustomizationsData(items []isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPageCustomizationsData(items *[]isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
@@ -845,7 +902,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPageCustomization
 
 }
 
-func flattenHotspotPortalGetHotspotPortalByIDItemLink(item isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalLink) []map[string]interface{} {
+func flattenHotspotPortalGetHotspotPortalByIDItemLink(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

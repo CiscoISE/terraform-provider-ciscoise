@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -321,8 +321,8 @@ func dataSourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseSponsorGroupGetSponsorGroupSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -367,7 +367,7 @@ func dataSourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m i
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenSponsorGroupGetSponsorGroupByIDItem(&response2.SponsorGroup)
+		vItem2 := flattenSponsorGroupGetSponsorGroupByIDItem(response2.SponsorGroup)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSponsorGroupByID response",
@@ -397,7 +397,10 @@ func flattenSponsorGroupGetSponsorGroupItems(items *[]isegosdk.ResponseSponsorGr
 	return respItems
 }
 
-func flattenSponsorGroupGetSponsorGroupItemsLink(item isegosdk.ResponseSponsorGroupGetSponsorGroupSearchResultResourcesLink) []map[string]interface{} {
+func flattenSponsorGroupGetSponsorGroupItemsLink(item *isegosdk.ResponseSponsorGroupGetSponsorGroupSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -432,7 +435,10 @@ func flattenSponsorGroupGetSponsorGroupByIDItem(item *isegosdk.ResponseSponsorGr
 	}
 }
 
-func flattenSponsorGroupGetSponsorGroupByIDItemCreatePermissions(item isegosdk.ResponseSponsorGroupGetSponsorGroupByIDSponsorGroupCreatePermissions) []map[string]interface{} {
+func flattenSponsorGroupGetSponsorGroupByIDItemCreatePermissions(item *isegosdk.ResponseSponsorGroupGetSponsorGroupByIDSponsorGroupCreatePermissions) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["can_import_multiple_accounts"] = item.CanImportMultipleAccounts
 	respItem["import_batch_size_limit"] = item.ImportBatchSizeLimit
@@ -449,7 +455,10 @@ func flattenSponsorGroupGetSponsorGroupByIDItemCreatePermissions(item isegosdk.R
 
 }
 
-func flattenSponsorGroupGetSponsorGroupByIDItemOtherPermissions(item isegosdk.ResponseSponsorGroupGetSponsorGroupByIDSponsorGroupOtherPermissions) []map[string]interface{} {
+func flattenSponsorGroupGetSponsorGroupByIDItemOtherPermissions(item *isegosdk.ResponseSponsorGroupGetSponsorGroupByIDSponsorGroupOtherPermissions) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["can_update_guest_contact_info"] = item.CanUpdateGuestContactInfo
 	respItem["can_view_guest_passwords"] = item.CanViewGuestPasswords
@@ -470,7 +479,10 @@ func flattenSponsorGroupGetSponsorGroupByIDItemOtherPermissions(item isegosdk.Re
 
 }
 
-func flattenSponsorGroupGetSponsorGroupByIDItemLink(item isegosdk.ResponseSponsorGroupGetSponsorGroupByIDSponsorGroupLink) []map[string]interface{} {
+func flattenSponsorGroupGetSponsorGroupByIDItemLink(item *isegosdk.ResponseSponsorGroupGetSponsorGroupByIDSponsorGroupLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

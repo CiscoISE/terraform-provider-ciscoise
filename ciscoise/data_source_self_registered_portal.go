@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -1121,8 +1121,8 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalsSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -1167,7 +1167,7 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItem(&response2.SelfRegPortal)
+		vItem2 := flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItem(response2.SelfRegPortal)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSelfRegisteredPortalByID response",
@@ -1197,7 +1197,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalsItems(items *[]isegosdk.
 	return respItems
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalsItemsLink(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalsSearchResultResourcesLink) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalsItemsLink(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalsSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -1227,7 +1230,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItem(item *isegosdk.R
 	}
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_settings"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPortalSettings(item.PortalSettings)
 	respItem["login_page_settings"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPageSettings(item.LoginPageSettings)
@@ -1248,7 +1254,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettings(item ise
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPortalSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsPortalSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPortalSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsPortalSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["https_port"] = item.HTTPSPort
 	respItem["allowed_interfaces"] = item.AllowedInterfaces
@@ -1265,7 +1274,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPortalSet
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPageSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPageSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["require_access_code"] = item.RequireAccessCode
 	respItem["max_failed_attempts_before_rate_limit"] = item.MaxFailedAttemptsBeforeRateLimit
@@ -1289,9 +1301,12 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPage
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPageSettingsSocialConfigs(items []isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettingsSocialConfigs) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPageSettingsSocialConfigs(items *[]isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettingsSocialConfigs) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["social_media_type"] = item.SocialMediaType
 		respItem["social_media_value"] = item.SocialMediaValue
@@ -1300,7 +1315,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPage
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["assign_guests_to_guest_type"] = item.AssignGuestsToGuestType
 	respItem["account_validity_duration"] = item.AccountValidityDuration
@@ -1350,7 +1368,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldUserName(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldUserName) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldUserName(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldUserName) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1361,7 +1382,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldFirstName(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldFirstName) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldFirstName(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldFirstName) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1372,7 +1396,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldLastName(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldLastName) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldLastName(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldLastName) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1383,7 +1410,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldEmailAddr(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldEmailAddr) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldEmailAddr(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldEmailAddr) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1394,7 +1424,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldPhoneNo(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldPhoneNo) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldPhoneNo(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldPhoneNo) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1405,7 +1438,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldCompany(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldCompany) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldCompany(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldCompany) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1416,7 +1452,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldLocation(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldLocation) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldLocation(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldLocation) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1427,7 +1466,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldSmsProvider(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldSmsProvider) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldSmsProvider(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldSmsProvider) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1438,7 +1480,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldPersonBeingVisited(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldPersonBeingVisited) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldPersonBeingVisited(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldPersonBeingVisited) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1449,7 +1494,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldReasonForVisit(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldReasonForVisit) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldReasonForVisit(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettingsFieldReasonForVisit) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include"] = item.Include
 	respItem["require"] = item.Require
@@ -1460,7 +1508,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegSuccessSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegSuccessSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegSuccessSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegSuccessSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_user_name"] = item.IncludeUserName
 	respItem["include_password"] = item.IncludePassword
@@ -1488,7 +1539,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegSu
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsAupSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsAupSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsAupSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsAupSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_aup"] = item.IncludeAup
 	respItem["use_diff_aup_for_employees"] = item.UseDiffAupForEmployees
@@ -1504,7 +1558,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsAupSettin
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsGuestChangePasswordSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsGuestChangePasswordSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsGuestChangePasswordSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsGuestChangePasswordSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_change_passwd_at_first_login"] = item.AllowChangePasswdAtFirstLogin
 
@@ -1514,7 +1571,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsGuestChan
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsGuestDeviceRegistrationSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsGuestDeviceRegistrationSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsGuestDeviceRegistrationSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsGuestDeviceRegistrationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["auto_register_guest_devices"] = item.AutoRegisterGuestDevices
 	respItem["allow_guests_to_register_devices"] = item.AllowGuestsToRegisterDevices
@@ -1525,7 +1585,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsGuestDevi
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsByodSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsByodSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["byod_welcome_settings"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item.ByodWelcomeSettings)
 	respItem["byod_registration_settings"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item.ByodRegistrationSettings)
@@ -1537,7 +1600,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSetti
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsByodSettingsByodWelcomeSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettingsByodWelcomeSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsByodSettingsByodWelcomeSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enable_byo_d"] = item.EnableByod
 	respItem["enable_guest_access"] = item.EnableGuestAccess
@@ -1553,7 +1619,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSetti
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsByodSettingsByodRegistrationSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettingsByodRegistrationSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsByodSettingsByodRegistrationSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["show_device_id"] = item.ShowDeviceID
 	respItem["end_point_identity_group_id"] = item.EndPointIDentityGroupID
@@ -1564,7 +1633,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSetti
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettingsByodRegistrationSuccessSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsByodSettingsByodRegistrationSuccessSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSettingsByodRegistrationSuccessSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsByodSettingsByodRegistrationSuccessSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["success_redirect"] = item.SuccessRedirect
 	respItem["redirect_url"] = item.RedirectURL
@@ -1575,7 +1647,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSetti
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPostLoginBannerSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsPostLoginBannerSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPostLoginBannerSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsPostLoginBannerSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
 
@@ -1585,7 +1660,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPostLogin
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPostAccessBannerSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsPostAccessBannerSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPostAccessBannerSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsPostAccessBannerSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
 
@@ -1595,7 +1673,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPostAcces
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsAuthSuccessSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsAuthSuccessSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsAuthSuccessSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsAuthSuccessSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["success_redirect"] = item.SuccessRedirect
 	respItem["redirect_url"] = item.RedirectURL
@@ -1606,7 +1687,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsAuthSucce
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSupportInfoSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSupportInfoSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSupportInfoSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSupportInfoSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
 	respItem["include_mac_addr"] = item.IncludeMacAddr
@@ -1623,7 +1707,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSupportIn
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizations(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizations) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizations(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["portal_theme"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPortalTheme(item.PortalTheme)
 	respItem["portal_tweak_settings"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPortalTweakSettings(item.PortalTweakSettings)
@@ -1637,7 +1724,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizations(it
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPortalTheme(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsPortalTheme) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPortalTheme(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsPortalTheme) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -1649,7 +1739,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPor
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPortalTweakSettings(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPortalTweakSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsPortalTweakSettings) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["banner_color"] = item.BannerColor
 	respItem["banner_text_color"] = item.BannerTextColor
@@ -1662,7 +1755,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPor
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsLanguage(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsLanguage) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsLanguage(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsLanguage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["view_language"] = item.ViewLanguage
 
@@ -1672,7 +1768,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsLan
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizations(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizations(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["mobile_logo_image"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item.MobileLogoImage)
 	respItem["desktop_logo_image"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item.DesktopLogoImage)
@@ -1688,7 +1787,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsMobileLogoImage(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizationsMobileLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -1698,7 +1800,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsDesktopLogoImage(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizationsDesktopLogoImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -1708,7 +1813,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsBannerImage(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizationsBannerImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -1718,7 +1826,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlobalCustomizationsBackgroundImage(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsGlobalCustomizationsBackgroundImage) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = item.Data
 
@@ -1728,7 +1839,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsGlo
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPageCustomizations(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizations) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPageCustomizations(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizations) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["data"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPageCustomizationsData(item.Data)
 
@@ -1738,9 +1852,12 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPag
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPageCustomizationsData(items []isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPageCustomizationsData(items *[]isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizationsData) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
@@ -1749,7 +1866,10 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPag
 
 }
 
-func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemLink(item isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalLink) []map[string]interface{} {
+func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemLink(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

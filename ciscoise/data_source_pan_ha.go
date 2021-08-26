@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -67,7 +67,7 @@ func dataSourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenPanHaGetPanHaStatusItems(&response1.Response)
+		vItems1 := flattenPanHaGetPanHaStatusItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPanHaStatus response",

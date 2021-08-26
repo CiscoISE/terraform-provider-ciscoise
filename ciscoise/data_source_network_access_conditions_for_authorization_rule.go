@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -232,7 +232,7 @@ func dataSourceNetworkAccessConditionsForAuthorizationRuleRead(ctx context.Conte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItems(&response1.Response)
+		vItems1 := flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessConditionsForAuthorizationRules response",
@@ -277,7 +277,10 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRul
 	return respItems
 }
 
-func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsLink(item isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseLink) []map[string]interface{} {
+func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsLink(item *isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -289,9 +292,12 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRul
 
 }
 
-func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsChildren(items []isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseChildren) []map[string]interface{} {
+func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsChildren(items *[]isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseChildren) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
@@ -301,7 +307,10 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRul
 
 }
 
-func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsChildrenLink(item isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseChildrenLink) []map[string]interface{} {
+func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsChildrenLink(item *isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseChildrenLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -313,7 +322,10 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRul
 
 }
 
-func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsDatesRange(item isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseDatesRange) []map[string]interface{} {
+func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsDatesRange(item *isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseDatesRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -324,7 +336,10 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRul
 
 }
 
-func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsDatesRangeException(item isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseDatesRangeException) []map[string]interface{} {
+func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsDatesRangeException(item *isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseDatesRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_date"] = item.EndDate
 	respItem["start_date"] = item.StartDate
@@ -335,7 +350,10 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRul
 
 }
 
-func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsHoursRange(item isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseHoursRange) []map[string]interface{} {
+func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsHoursRange(item *isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseHoursRange) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime
@@ -346,7 +364,10 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRul
 
 }
 
-func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsHoursRangeException(item isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseHoursRangeException) []map[string]interface{} {
+func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsHoursRangeException(item *isegosdk.ResponseNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesResponseHoursRangeException) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["end_time"] = item.EndTime
 	respItem["start_time"] = item.StartTime

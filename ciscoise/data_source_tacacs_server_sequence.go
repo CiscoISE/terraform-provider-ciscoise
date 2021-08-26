@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -256,8 +256,8 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseTacacsServerSequenceGetTacacsServerSequenceSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -302,7 +302,7 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenTacacsServerSequenceGetTacacsServerSequenceByNameItemName(&response2.TacacsServerSequence)
+		vItemName2 := flattenTacacsServerSequenceGetTacacsServerSequenceByNameItemName(response2.TacacsServerSequence)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsServerSequenceByName response",
@@ -328,7 +328,7 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenTacacsServerSequenceGetTacacsServerSequenceByIDItemID(&response3.TacacsServerSequence)
+		vItemID3 := flattenTacacsServerSequenceGetTacacsServerSequenceByIDItemID(response3.TacacsServerSequence)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsServerSequenceByID response",
@@ -358,7 +358,10 @@ func flattenTacacsServerSequenceGetTacacsServerSequenceItems(items *[]isegosdk.R
 	return respItems
 }
 
-func flattenTacacsServerSequenceGetTacacsServerSequenceItemsLink(item isegosdk.ResponseTacacsServerSequenceGetTacacsServerSequenceSearchResultResourcesLink) []map[string]interface{} {
+func flattenTacacsServerSequenceGetTacacsServerSequenceItemsLink(item *isegosdk.ResponseTacacsServerSequenceGetTacacsServerSequenceSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -391,7 +394,10 @@ func flattenTacacsServerSequenceGetTacacsServerSequenceByNameItemName(item *iseg
 	}
 }
 
-func flattenTacacsServerSequenceGetTacacsServerSequenceByNameItemNameLink(item isegosdk.ResponseTacacsServerSequenceGetTacacsServerSequenceByNameTacacsServerSequenceLink) []map[string]interface{} {
+func flattenTacacsServerSequenceGetTacacsServerSequenceByNameItemNameLink(item *isegosdk.ResponseTacacsServerSequenceGetTacacsServerSequenceByNameTacacsServerSequenceLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -424,7 +430,10 @@ func flattenTacacsServerSequenceGetTacacsServerSequenceByIDItemID(item *isegosdk
 	}
 }
 
-func flattenTacacsServerSequenceGetTacacsServerSequenceByIDItemIDLink(item isegosdk.ResponseTacacsServerSequenceGetTacacsServerSequenceByIDTacacsServerSequenceLink) []map[string]interface{} {
+func flattenTacacsServerSequenceGetTacacsServerSequenceByIDItemIDLink(item *isegosdk.ResponseTacacsServerSequenceGetTacacsServerSequenceByIDTacacsServerSequenceLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

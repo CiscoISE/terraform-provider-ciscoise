@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -280,8 +280,8 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseCertificatesGetSystemCertificatesResponse
-		for len(response1.Response) > 0 {
-			items1 = append(items1, response1.Response...)
+		for response1.Response != nil && len(*response1.Response) > 0 {
+			items1 = append(items1, *response1.Response...)
 			if response1.NextPage.Rel == "next" {
 				href := response1.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -327,7 +327,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItem2 := flattenCertificatesGetSystemCertificateByIDItem(&response2.Response)
+		vItem2 := flattenCertificatesGetSystemCertificateByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSystemCertificateByID response",
@@ -368,7 +368,10 @@ func flattenCertificatesGetSystemCertificatesItems(items *[]isegosdk.ResponseCer
 	return respItems
 }
 
-func flattenCertificatesGetSystemCertificatesItemsLink(item isegosdk.ResponseCertificatesGetSystemCertificatesResponseLink) []map[string]interface{} {
+func flattenCertificatesGetSystemCertificatesItemsLink(item *isegosdk.ResponseCertificatesGetSystemCertificatesResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel
@@ -405,7 +408,10 @@ func flattenCertificatesGetSystemCertificateByIDItem(item *isegosdk.ResponseCert
 	}
 }
 
-func flattenCertificatesGetSystemCertificateByIDItemLink(item isegosdk.ResponseCertificatesGetSystemCertificateByIDResponseLink) []map[string]interface{} {
+func flattenCertificatesGetSystemCertificateByIDItemLink(item *isegosdk.ResponseCertificatesGetSystemCertificateByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["href"] = item.Href
 	respItem["rel"] = item.Rel

@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -429,8 +429,8 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseEndpointGetEndpointsSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -475,7 +475,7 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenEndpointGetEndpointByNameItemName(&response2.ERSEndPoint)
+		vItemName2 := flattenEndpointGetEndpointByNameItemName(response2.ERSEndPoint)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEndpointByName response",
@@ -501,7 +501,7 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenEndpointGetEndpointByIDItemID(&response3.ERSEndPoint)
+		vItemID3 := flattenEndpointGetEndpointByIDItemID(response3.ERSEndPoint)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEndpointByID response",
@@ -531,7 +531,10 @@ func flattenEndpointGetEndpointsItems(items *[]isegosdk.ResponseEndpointGetEndpo
 	return respItems
 }
 
-func flattenEndpointGetEndpointsItemsLink(item isegosdk.ResponseEndpointGetEndpointsSearchResultResourcesLink) []map[string]interface{} {
+func flattenEndpointGetEndpointsItemsLink(item *isegosdk.ResponseEndpointGetEndpointsSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -567,7 +570,10 @@ func flattenEndpointGetEndpointByNameItemName(item *isegosdk.ResponseEndpointGet
 	}
 }
 
-func flattenEndpointGetEndpointByNameItemNameMdmAttributes(item isegosdk.ResponseEndpointGetEndpointByNameERSEndPointMdmAttributes) []map[string]interface{} {
+func flattenEndpointGetEndpointByNameItemNameMdmAttributes(item *isegosdk.ResponseEndpointGetEndpointByNameERSEndPointMdmAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["mdm_server_name"] = item.MdmServerName
 	respItem["mdm_reachable"] = item.MdmReachable
@@ -589,7 +595,10 @@ func flattenEndpointGetEndpointByNameItemNameMdmAttributes(item isegosdk.Respons
 
 }
 
-func flattenEndpointGetEndpointByNameItemNameLink(item isegosdk.ResponseEndpointGetEndpointByNameERSEndPointLink) []map[string]interface{} {
+func flattenEndpointGetEndpointByNameItemNameLink(item *isegosdk.ResponseEndpointGetEndpointByNameERSEndPointLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -625,7 +634,10 @@ func flattenEndpointGetEndpointByIDItemID(item *isegosdk.ResponseEndpointGetEndp
 	}
 }
 
-func flattenEndpointGetEndpointByIDItemIDMdmAttributes(item isegosdk.ResponseEndpointGetEndpointByIDERSEndPointMdmAttributes) []map[string]interface{} {
+func flattenEndpointGetEndpointByIDItemIDMdmAttributes(item *isegosdk.ResponseEndpointGetEndpointByIDERSEndPointMdmAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["mdm_server_name"] = item.MdmServerName
 	respItem["mdm_reachable"] = item.MdmReachable
@@ -647,7 +659,10 @@ func flattenEndpointGetEndpointByIDItemIDMdmAttributes(item isegosdk.ResponseEnd
 
 }
 
-func flattenEndpointGetEndpointByIDItemIDLink(item isegosdk.ResponseEndpointGetEndpointByIDERSEndPointLink) []map[string]interface{} {
+func flattenEndpointGetEndpointByIDItemIDLink(item *isegosdk.ResponseEndpointGetEndpointByIDERSEndPointLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

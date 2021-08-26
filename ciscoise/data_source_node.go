@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -329,8 +329,8 @@ func dataSourceNodeRead(ctx context.Context, d *schema.ResourceData, m interface
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseNodeDetailsGetNodeDetailsSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -375,7 +375,7 @@ func dataSourceNodeRead(ctx context.Context, d *schema.ResourceData, m interface
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenNodeDetailsGetNodeDetailByNameItemName(&response2.Node)
+		vItemName2 := flattenNodeDetailsGetNodeDetailByNameItemName(response2.Node)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodeDetailByName response",
@@ -401,7 +401,7 @@ func dataSourceNodeRead(ctx context.Context, d *schema.ResourceData, m interface
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenNodeDetailsGetNodeDetailByIDItemID(&response3.Node)
+		vItemID3 := flattenNodeDetailsGetNodeDetailByIDItemID(response3.Node)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodeDetailByID response",
@@ -431,7 +431,10 @@ func flattenNodeDetailsGetNodeDetailsItems(items *[]isegosdk.ResponseNodeDetails
 	return respItems
 }
 
-func flattenNodeDetailsGetNodeDetailsItemsLink(item isegosdk.ResponseNodeDetailsGetNodeDetailsSearchResultResourcesLink) []map[string]interface{} {
+func flattenNodeDetailsGetNodeDetailsItemsLink(item *isegosdk.ResponseNodeDetailsGetNodeDetailsSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -470,7 +473,10 @@ func flattenNodeDetailsGetNodeDetailByNameItemName(item *isegosdk.ResponseNodeDe
 	}
 }
 
-func flattenNodeDetailsGetNodeDetailByNameItemNameLink(item isegosdk.ResponseNodeDetailsGetNodeDetailByNameNodeLink) []map[string]interface{} {
+func flattenNodeDetailsGetNodeDetailByNameItemNameLink(item *isegosdk.ResponseNodeDetailsGetNodeDetailByNameNodeLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -509,7 +515,10 @@ func flattenNodeDetailsGetNodeDetailByIDItemID(item *isegosdk.ResponseNodeDetail
 	}
 }
 
-func flattenNodeDetailsGetNodeDetailByIDItemIDLink(item isegosdk.ResponseNodeDetailsGetNodeDetailByIDNodeLink) []map[string]interface{} {
+func flattenNodeDetailsGetNodeDetailByIDItemIDLink(item *isegosdk.ResponseNodeDetailsGetNodeDetailByIDNodeLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

@@ -19,7 +19,7 @@ output "ciscoise__network_access_time_date_conditions_response" {
 
 data "ciscoise_network_access_time_date_conditions" "single_response" {
   provider = ciscoise
-  id = data.ciscoise_network_access_time_date_conditions.response.items[0].id
+  id       = data.ciscoise_network_access_time_date_conditions.response.items[0].id
 }
 output "ciscoise__network_access_time_date_conditions_single_response" {
   value = data.ciscoise_network_access_time_date_conditions.single_response

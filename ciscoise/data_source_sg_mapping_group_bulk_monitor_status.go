@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -114,7 +114,7 @@ func dataSourceSgMappingGroupBulkMonitorStatusRead(ctx context.Context, d *schem
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItem1 := flattenIPToSgtMappingGroupMonitorBulkStatusIPToSgtMappingGroupItem(&response1.BulkStatus)
+		vItem1 := flattenIPToSgtMappingGroupMonitorBulkStatusIPToSgtMappingGroupItem(response1.BulkStatus)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting MonitorBulkStatusIPToSgtMappingGroup response",
@@ -147,9 +147,12 @@ func flattenIPToSgtMappingGroupMonitorBulkStatusIPToSgtMappingGroupItem(item *is
 	}
 }
 
-func flattenIPToSgtMappingGroupMonitorBulkStatusIPToSgtMappingGroupItemResourcesStatus(items []isegosdk.ResponseIPToSgtMappingGroupMonitorBulkStatusIPToSgtMappingGroupBulkStatusResourcesStatus) []map[string]interface{} {
+func flattenIPToSgtMappingGroupMonitorBulkStatusIPToSgtMappingGroupItemResourcesStatus(items *[]isegosdk.ResponseIPToSgtMappingGroupMonitorBulkStatusIPToSgtMappingGroupBulkStatusResourcesStatus) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["id"] = item.ID
 		respItem["name"] = item.Name

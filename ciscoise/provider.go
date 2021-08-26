@@ -4,6 +4,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+func init() {
+	// Set descriptions to support markdown syntax, this will be used in document generation
+	// and the language server.
+	schema.DescriptionKind = schema.StringMarkdown
+}
+
 // Provider definition of schema(configuration), resources(CRUD) operations and dataSources(query)
 func Provider() *schema.Provider {
 	return &schema.Provider{
@@ -12,24 +18,28 @@ func Provider() *schema.Provider {
 				Type:        schema.TypeString,
 				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("ISE_BASE_URL", nil),
+				Description: "Identity Services Engine base URL, FQDN or IP. If not set, it uses the ISE_BASE_URL environment variable.",
 			},
 			"username": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
 				Sensitive:   true,
 				DefaultFunc: schema.EnvDefaultFunc("ISE_USERNAME", nil),
+				Description: "Identity Services Engine username to authenticate. If not set, it uses the ISE_USERNAME environment variable.",
 			},
 			"password": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
 				Sensitive:   true,
 				DefaultFunc: schema.EnvDefaultFunc("ISE_PASSWORD", nil),
+				Description: "Identity Services Engine password to authenticate. If not set, it uses the ISE_PASSWORD environment variable.",
 			},
 			"debug": &schema.Schema{
 				Type:         schema.TypeString,
 				Optional:     true,
 				DefaultFunc:  schema.EnvDefaultFunc("ISE_DEBUG", "false"),
 				ValidateFunc: validateStringHasValueFunc([]string{"true", "false"}),
+				Description:  "Flag for Identity Services Engine to enable debugging. If not set, it uses the ISE_DEBUG environment variable; defaults to `false`.",
 			},
 			"ssl_verify": &schema.Schema{
 				Type:         schema.TypeString,
@@ -37,21 +47,26 @@ func Provider() *schema.Provider {
 				Sensitive:    true,
 				DefaultFunc:  schema.EnvDefaultFunc("ISE_SSL_VERIFY", "true"),
 				ValidateFunc: validateStringHasValueFunc([]string{"true", "false"}),
+				Description:  "Flag to enable or disable SSL certificate verification. If not set, it uses the ISE_SSL_VERIFY environment variable; defaults to `true`.",
 			},
 			"use_api_gateway": &schema.Schema{
 				Type:         schema.TypeString,
 				Optional:     true,
 				DefaultFunc:  schema.EnvDefaultFunc("ISE_USE_API_GATEWAY", "false"),
 				ValidateFunc: validateStringHasValueFunc([]string{"true", "false"}),
+				Description:  "Flag to enable or disable the usage of the ISE's API Gateway. If not set, it uses the ISE_USE_API_GATEWAY environment variable; defaults to `false`.",
 			},
 			"use_csrf_token": &schema.Schema{
 				Type:         schema.TypeString,
 				Optional:     true,
 				DefaultFunc:  schema.EnvDefaultFunc("ISE_USE_CSRF_TOKEN", "false"),
 				ValidateFunc: validateStringHasValueFunc([]string{"true", "false"}),
+				Description:  "Flag to enable or disable the usage of the X-CSRF-Token header. If not set, it uses the ISE_USE_CSRF_TOKEN environment varible; defaults to `false`.",
 			},
 		},
-		ResourcesMap: map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{
+			"ciscoise_allowed_protocols": resourceAllowedProtocols(),
+		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"ciscoise_mnt_account_status":                                         dataSourceMntAccountStatus(),
 			"ciscoise_mnt_athentication_status":                                   dataSourceMntAthenticationStatus(),

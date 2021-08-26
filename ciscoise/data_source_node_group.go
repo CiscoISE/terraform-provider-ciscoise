@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -140,7 +140,7 @@ func dataSourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
-		vItems1 := flattenNodeGroupGetNodeGroupsItems(&response1.Response)
+		vItems1 := flattenNodeGroupGetNodeGroupsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodeGroups response",
@@ -195,7 +195,10 @@ func flattenNodeGroupGetNodeGroupsItems(items *[]isegosdk.ResponseNodeGroupGetNo
 	return respItems
 }
 
-func flattenNodeGroupGetNodeGroupsItemsMarCache(item isegosdk.ResponseNodeGroupGetNodeGroupsResponseMarCache) []map[string]interface{} {
+func flattenNodeGroupGetNodeGroupsItemsMarCache(item *isegosdk.ResponseNodeGroupGetNodeGroupsResponseMarCache) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["replication_timeout"] = item.ReplicationTimeout
@@ -222,7 +225,10 @@ func flattenNodeGroupGetNodeGroupItem(item *isegosdk.ResponseNodeGroupGetNodeGro
 	}
 }
 
-func flattenNodeGroupGetNodeGroupItemMarCache(item isegosdk.ResponseNodeGroupGetNodeGroupMarCache) []map[string]interface{} {
+func flattenNodeGroupGetNodeGroupItemMarCache(item *isegosdk.ResponseNodeGroupGetNodeGroupMarCache) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["enabled"] = item.Enabled
 	respItem["replication_timeout"] = item.ReplicationTimeout

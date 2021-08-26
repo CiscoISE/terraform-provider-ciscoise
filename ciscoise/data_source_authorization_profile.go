@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -612,8 +612,8 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseAuthorizationProfileGetAuthorizationProfilesSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -658,7 +658,7 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenAuthorizationProfileGetAuthorizationProfileByNameItemName(&response2.AuthorizationProfile)
+		vItemName2 := flattenAuthorizationProfileGetAuthorizationProfileByNameItemName(response2.AuthorizationProfile)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAuthorizationProfileByName response",
@@ -684,7 +684,7 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenAuthorizationProfileGetAuthorizationProfileByIDItemID(&response3.AuthorizationProfile)
+		vItemID3 := flattenAuthorizationProfileGetAuthorizationProfileByIDItemID(response3.AuthorizationProfile)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAuthorizationProfileByID response",
@@ -714,7 +714,10 @@ func flattenAuthorizationProfileGetAuthorizationProfilesItems(items *[]isegosdk.
 	return respItems
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfilesItemsLink(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfilesSearchResultResourcesLink) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfilesItemsLink(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfilesSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -765,9 +768,12 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemName(item *iseg
 	}
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributes(items []isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileAdvancedAttributes) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributes(items *[]isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileAdvancedAttributes) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["left_hand_side_dictionary_attribue"] = flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesLeftHandSideDictionaryAttribue(item.LeftHandSideDictionaryAttribue)
 		respItem["right_hand_side_attribue_value"] = flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesRightHandSideAttribueValue(item.RightHandSideAttribueValue)
@@ -776,7 +782,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAtt
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesLeftHandSideDictionaryAttribue(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesLeftHandSideDictionaryAttribue(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["advanced_attribute_value_type"] = item.AdvancedAttributeValueType
 	respItem["dictionary_name"] = item.DictionaryName
@@ -789,7 +798,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAtt
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesRightHandSideAttribueValue(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesRightHandSideAttribueValue(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["advanced_attribute_value_type"] = item.AdvancedAttributeValueType
 	respItem["dictionary_name"] = item.DictionaryName
@@ -802,7 +814,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAtt
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameVLAN(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileVLAN) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameVLAN(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileVLAN) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["name_id"] = item.NameID
 	respItem["tag_id"] = item.TagID
@@ -813,7 +828,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameVLAN(item i
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameReauth(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileReauth) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameReauth(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileReauth) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["timer"] = item.Timer
 	respItem["connectivity"] = item.Connectivity
@@ -824,7 +842,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameReauth(item
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameWebRedirection(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileWebRedirection) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameWebRedirection(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileWebRedirection) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["web_redirection_type"] = item.WebRedirectionType
 	respItem["acl"] = item.ACL
@@ -838,7 +859,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameWebRedirect
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameLink(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileLink) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameLink(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -889,9 +913,12 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemID(item *isegosdk
 	}
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributes(items []isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributes(items *[]isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes) []map[string]interface{} {
+	if items == nil {
+		return nil
+	}
 	var respItems []map[string]interface{}
-	for _, item := range items {
+	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["left_hand_side_dictionary_attribue"] = flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesLeftHandSideDictionaryAttribue(item.LeftHandSideDictionaryAttribue)
 		respItem["right_hand_side_attribue_value"] = flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesRightHandSideAttribueValue(item.RightHandSideAttribueValue)
@@ -900,7 +927,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttribu
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesLeftHandSideDictionaryAttribue(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesLeftHandSideDictionaryAttribue(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["advanced_attribute_value_type"] = item.AdvancedAttributeValueType
 	respItem["dictionary_name"] = item.DictionaryName
@@ -913,7 +943,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttribu
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesRightHandSideAttribueValue(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesRightHandSideAttribueValue(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["advanced_attribute_value_type"] = item.AdvancedAttributeValueType
 	respItem["dictionary_name"] = item.DictionaryName
@@ -926,7 +959,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttribu
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDVLAN(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileVLAN) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDVLAN(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileVLAN) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["name_id"] = item.NameID
 	respItem["tag_id"] = item.TagID
@@ -937,7 +973,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDVLAN(item isego
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDReauth(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileReauth) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDReauth(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileReauth) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["timer"] = item.Timer
 	respItem["connectivity"] = item.Connectivity
@@ -948,7 +987,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDReauth(item ise
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDWebRedirection(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileWebRedirection) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDWebRedirection(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileWebRedirection) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["web_redirection_type"] = item.WebRedirectionType
 	respItem["acl"] = item.ACL
@@ -962,7 +1004,10 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDWebRedirection(
 
 }
 
-func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDLink(item isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileLink) []map[string]interface{} {
+func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDLink(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href

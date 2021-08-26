@@ -3,7 +3,7 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -874,8 +874,8 @@ func dataSourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Retrieved response %+v", *response1)
 
 		var items1 []isegosdk.ResponseAllowedProtocolsGetAllowedProtocolsSearchResultResources
-		for len(response1.SearchResult.Resources) > 0 {
-			items1 = append(items1, response1.SearchResult.Resources...)
+		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
+			items1 = append(items1, *response1.SearchResult.Resources...)
 			if response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
@@ -920,7 +920,7 @@ func dataSourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData,
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response2)
 
-		vItemName2 := flattenAllowedProtocolsGetAllowedProtocolByNameItemName(&response2.AllowedProtocols)
+		vItemName2 := flattenAllowedProtocolsGetAllowedProtocolByNameItemName(response2.AllowedProtocols)
 		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAllowedProtocolByName response",
@@ -946,7 +946,7 @@ func dataSourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData,
 
 		log.Printf("[DEBUG] Retrieved response %+v", *response3)
 
-		vItemID3 := flattenAllowedProtocolsGetAllowedProtocolByIDItemID(&response3.AllowedProtocols)
+		vItemID3 := flattenAllowedProtocolsGetAllowedProtocolByIDItemID(response3.AllowedProtocols)
 		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAllowedProtocolByID response",
@@ -976,7 +976,10 @@ func flattenAllowedProtocolsGetAllowedProtocolsItems(items *[]isegosdk.ResponseA
 	return respItems
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolsItemsLink(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolsSearchResultResourcesLink) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolsItemsLink(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolsSearchResultResourcesLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -1024,7 +1027,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByNameItemName(item *isegosdk.Resp
 	}
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapTls(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsEapTls) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapTls(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsEapTls) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_eap_tls_auth_of_expired_certs"] = item.AllowEapTlsAuthOfExpiredCerts
 	respItem["eap_tls_enable_stateless_session_resume"] = item.EapTlsEnableStatelessSessionResume
@@ -1038,7 +1044,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapTls(item isegosdk
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByNameItemNamePeap(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsPeap) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByNameItemNamePeap(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsPeap) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_peap_eap_ms_chap_v2"] = item.AllowPeapEapMsChapV2
 	respItem["allow_peap_eap_ms_chap_v2_pwd_change"] = item.AllowPeapEapMsChapV2PwdChange
@@ -1057,7 +1066,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByNameItemNamePeap(item isegosdk.R
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapFast(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsEapFast) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapFast(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsEapFast) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_eap_fast_eap_ms_chap_v2"] = item.AllowEapFastEapMsChapV2
 	respItem["allow_eap_fast_eap_ms_chap_v2_pwd_change"] = item.AllowEapFastEapMsChapV2PwdChange
@@ -1091,7 +1103,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapFast(item isegosd
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapTtls(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsEapTtls) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapTtls(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsEapTtls) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["eap_ttls_pap_ascii"] = item.EapTtlsPapAscii
 	respItem["eap_ttls_chap"] = item.EapTtlsChap
@@ -1108,7 +1123,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapTtls(item isegosd
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameTeap(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsTeap) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameTeap(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsTeap) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_teap_eap_ms_chap_v2"] = item.AllowTeapEapMsChapV2
 	respItem["allow_teap_eap_ms_chap_v2_pwd_change"] = item.AllowTeapEapMsChapV2PwdChange
@@ -1125,7 +1143,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameTeap(item isegosdk.R
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameLink(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsLink) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameLink(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByNameAllowedProtocolsLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
@@ -1173,7 +1194,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByIDItemID(item *isegosdk.Response
 	}
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapTls(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsEapTls) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapTls(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsEapTls) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_eap_tls_auth_of_expired_certs"] = item.AllowEapTlsAuthOfExpiredCerts
 	respItem["eap_tls_enable_stateless_session_resume"] = item.EapTlsEnableStatelessSessionResume
@@ -1187,7 +1211,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapTls(item isegosdk.Res
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDPeap(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsPeap) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDPeap(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsPeap) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_peap_eap_ms_chap_v2"] = item.AllowPeapEapMsChapV2
 	respItem["allow_peap_eap_ms_chap_v2_pwd_change"] = item.AllowPeapEapMsChapV2PwdChange
@@ -1206,7 +1233,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDPeap(item isegosdk.Respo
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapFast(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsEapFast) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapFast(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsEapFast) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_eap_fast_eap_ms_chap_v2"] = item.AllowEapFastEapMsChapV2
 	respItem["allow_eap_fast_eap_ms_chap_v2_pwd_change"] = item.AllowEapFastEapMsChapV2PwdChange
@@ -1240,7 +1270,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapFast(item isegosdk.Re
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapTtls(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsEapTtls) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapTtls(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsEapTtls) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["eap_ttls_pap_ascii"] = item.EapTtlsPapAscii
 	respItem["eap_ttls_chap"] = item.EapTtlsChap
@@ -1257,7 +1290,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapTtls(item isegosdk.Re
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDTeap(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsTeap) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDTeap(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsTeap) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["allow_teap_eap_ms_chap_v2"] = item.AllowTeapEapMsChapV2
 	respItem["allow_teap_eap_ms_chap_v2_pwd_change"] = item.AllowTeapEapMsChapV2PwdChange
@@ -1274,7 +1310,10 @@ func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDTeap(item isegosdk.Respo
 
 }
 
-func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDLink(item isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsLink) []map[string]interface{} {
+func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDLink(item *isegosdk.ResponseAllowedProtocolsGetAllowedProtocolByIDAllowedProtocolsLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
 	respItem := make(map[string]interface{})
 	respItem["rel"] = item.Rel
 	respItem["href"] = item.Href
