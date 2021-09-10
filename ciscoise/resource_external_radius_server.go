@@ -4,7 +4,7 @@ import (
 	"context"
 	"reflect"
 
-	"ciscoise-go-sdk/sdk"
+	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
