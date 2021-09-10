@@ -421,9 +421,9 @@ func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schem
 	vvID := vID
 	vvName := vName
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
@@ -510,9 +510,9 @@ func resourceNetworkAccessGlobalExceptionRulesUpdate(ctx context.Context, d *sch
 	vvID := vID
 	vvName := vName
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	// NOTE: Consider adding getAllItems and search function to get missing params
@@ -566,9 +566,9 @@ func resourceNetworkAccessGlobalExceptionRulesDelete(ctx context.Context, d *sch
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string

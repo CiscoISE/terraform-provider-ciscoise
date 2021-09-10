@@ -151,9 +151,9 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	// Changed order of selection to give priority to id
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
@@ -220,9 +220,9 @@ func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
@@ -278,9 +278,9 @@ func resourceAncPolicyDelete(ctx context.Context, d *schema.ResourceData, m inte
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string

@@ -163,9 +163,9 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 	vName, okName := resourceMap["name"]
 
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
@@ -241,9 +241,9 @@ func resourceSgMappingGroupUpdate(ctx context.Context, d *schema.ResourceData, m
 	vName, okName := resourceMap["name"]
 
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
@@ -297,9 +297,9 @@ func resourceSgMappingGroupDelete(ctx context.Context, d *schema.ResourceData, m
 	vName, okName := resourceMap["name"]
 
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string

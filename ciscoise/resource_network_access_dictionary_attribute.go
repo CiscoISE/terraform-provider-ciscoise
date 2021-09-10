@@ -171,9 +171,9 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 	vName, okName := resourceMap["name"]
 
 	method1 := []bool{okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName, okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -248,9 +248,9 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 	vName, okName := resourceMap["name"]
 
 	method1 := []bool{okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName, okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvDictionaryName string
@@ -310,9 +310,9 @@ func resourceNetworkAccessDictionaryAttributeDelete(ctx context.Context, d *sche
 	vName, okName := resourceMap["name"]
 
 	method1 := []bool{okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName, okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvDictionaryName string
