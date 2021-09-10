@@ -18,7 +18,7 @@ func dataSourceNetworkAccessDictionary() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -68,7 +68,7 @@ func dataSourceNetworkAccessDictionary() *schema.Resource {
 					},
 				},
 			},
-			"item": &schema.Schema{
+			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{

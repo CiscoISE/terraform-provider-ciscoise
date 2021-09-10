@@ -14,6 +14,14 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceTacacsServerSequenceRead,
 		Schema: map[string]*schema.Schema{
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -22,13 +30,75 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"item_id": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"local_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"prefix_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"prefix_strip": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"remote_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"server_list": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_delimiter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_strip": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"item_name": &schema.Schema{
 				Type:     schema.TypeList,
@@ -36,43 +106,11 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"server_list": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"local_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"remote_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"prefix_strip": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"prefix_delimiter": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"suffix_strip": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"suffix_delimiter": &schema.Schema{
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -82,11 +120,11 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -97,32 +135,19 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 								},
 							},
 						},
-					},
-				},
-			},
-			"item_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
+						"local_accounting": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"description": &schema.Schema{
+						"prefix_delimiter": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"server_list": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"local_accounting": &schema.Schema{
+						"prefix_strip": &schema.Schema{
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
@@ -130,42 +155,17 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
-						"prefix_strip": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"prefix_delimiter": &schema.Schema{
+						"server_list": &schema.Schema{
 							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"suffix_strip": &schema.Schema{
-							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"suffix_delimiter": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
+						"suffix_strip": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
 						},
 					},
 				},
@@ -176,15 +176,11 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -194,11 +190,11 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -208,6 +204,10 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -258,7 +258,7 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 		var items1 []isegosdk.ResponseTacacsServerSequenceGetTacacsServerSequenceSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

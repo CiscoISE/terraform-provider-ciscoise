@@ -14,15 +14,15 @@ func dataSourceCsrExport() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceCsrExportRead,
 		Schema: map[string]*schema.Schema{
+			"dirpath": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+			},
 			"hostname": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
-			},
-			"dirpath": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},

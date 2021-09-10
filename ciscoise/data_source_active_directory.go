@@ -14,6 +14,14 @@ func dataSourceActiveDirectory() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceActiveDirectoryRead,
 		Schema: map[string]*schema.Schema{
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -22,13 +30,257 @@ func dataSourceActiveDirectory() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"item_id": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"ad_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"attributes": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"default_value": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"internal_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"ad_scopes_names": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"adgroups": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"groups": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"sid": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"advanced_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"aging_time": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"auth_protection_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"country": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"department": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"email": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"enable_callback_for_dialin_client": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_dialin_permission_check": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_failed_auth_protection": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_machine_access": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_machine_auth": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_pass_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_rewrites": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"failed_auth_threshold": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"first_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"identity_not_in_ad_behaviour": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"job_title": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"last_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"locality": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"organizational_unit": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"plaintext_auth": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"rewrite_rules": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"rewrite_match": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rewrite_result": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"row_id": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"schema": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"state_or_province": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"street_address": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"telephone": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"unreachable_domains_behaviour": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"domain": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_domain_allowed_list": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"enable_domain_white_list": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"item_name": &schema.Schema{
 				Type:     schema.TypeList,
@@ -36,28 +288,42 @@ func dataSourceActiveDirectory() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
+						"ad_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"attributes": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"default_value": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"internal_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"ad_scopes_names": &schema.Schema{
 							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"domain": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"enable_domain_allowed_list": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"enable_domain_white_list": &schema.Schema{
-							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"adgroups": &schema.Schema{
@@ -96,31 +362,31 @@ func dataSourceActiveDirectory() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"enable_pass_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"enable_machine_auth": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"enable_machine_access": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
 									"aging_time": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"enable_dialin_permission_check": &schema.Schema{
-										Type:     schema.TypeBool,
+									"auth_protection_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"country": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"department": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"email": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_callback_for_dialin_client": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"plaintext_auth": &schema.Schema{
+									"enable_dialin_permission_check": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
@@ -128,23 +394,51 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"auth_protection_type": &schema.Schema{
-										Type:     schema.TypeString,
+									"enable_machine_access": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_machine_auth": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_pass_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"enable_rewrites": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"failed_auth_threshold": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
+									"first_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"identity_not_in_ad_behaviour": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"unreachable_domains_behaviour": &schema.Schema{
+									"job_title": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"enable_rewrites": &schema.Schema{
+									"last_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"locality": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"organizational_unit": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"plaintext_auth": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
@@ -154,10 +448,6 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"row_id": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
 												"rewrite_match": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
@@ -166,34 +456,14 @@ func dataSourceActiveDirectory() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
+												"row_id": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
 											},
 										},
 									},
-									"first_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"department": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"last_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"organizational_unit": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"job_title": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"locality": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"email": &schema.Schema{
+									"schema": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -201,100 +471,20 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"telephone": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"country": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
 									"street_address": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"schema": &schema.Schema{
+									"telephone": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"unreachable_domains_behaviour": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 								},
 							},
-						},
-						"ad_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"attributes": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"internal_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"default_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-						"ad_scopes_names": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-			"item_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -304,209 +494,15 @@ func dataSourceActiveDirectory() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"enable_domain_white_list": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
 						"enable_domain_allowed_list": &schema.Schema{
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
-						"adgroups": &schema.Schema{
-							Type:     schema.TypeList,
+						"enable_domain_white_list": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"groups": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"sid": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-								},
-							},
 						},
-						"advanced_settings": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"enable_pass_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"enable_machine_auth": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"enable_machine_access": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"aging_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"enable_dialin_permission_check": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"enable_callback_for_dialin_client": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"plaintext_auth": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"enable_failed_auth_protection": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"auth_protection_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"failed_auth_threshold": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"identity_not_in_ad_behaviour": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"unreachable_domains_behaviour": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"enable_rewrites": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"rewrite_rules": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"row_id": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-												"rewrite_match": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"rewrite_result": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"first_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"department": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"last_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"organizational_unit": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"job_title": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"locality": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"email": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"state_or_province": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"telephone": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"country": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"street_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"schema": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"ad_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"attributes": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"internal_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"default_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-						"ad_scopes_names": &schema.Schema{
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -516,11 +512,11 @@ func dataSourceActiveDirectory() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -530,6 +526,10 @@ func dataSourceActiveDirectory() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -540,15 +540,11 @@ func dataSourceActiveDirectory() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -558,11 +554,11 @@ func dataSourceActiveDirectory() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -572,6 +568,10 @@ func dataSourceActiveDirectory() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -622,7 +622,7 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 		var items1 []isegosdk.ResponseActiveDirectoryGetActiveDirectorySearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

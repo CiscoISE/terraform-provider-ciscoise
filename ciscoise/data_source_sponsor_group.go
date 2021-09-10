@@ -14,6 +14,21 @@ func dataSourceSponsorGroup() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceSponsorGroupRead,
 		Schema: map[string]*schema.Schema{
+			"filter": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"filter_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -30,110 +45,12 @@ func dataSourceSponsorGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"filter": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"items": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"is_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"is_default_group": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"member_groups": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-						"guest_types": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-						"locations": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
 						"auto_notification": &schema.Schema{
 							Type:     schema.TypeBool,
 							Computed: true,
@@ -144,32 +61,32 @@ func dataSourceSponsorGroup() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"can_import_multiple_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"import_batch_size_limit": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
 									"can_create_random_accounts": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"random_batch_size_limit": &schema.Schema{
-										Type:     schema.TypeInt,
+									"can_import_multiple_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"default_username_prefix": &schema.Schema{
-										Type:     schema.TypeString,
+									"can_set_future_start_date": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"can_specify_username_prefix": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"can_set_future_start_date": &schema.Schema{
-										Type:     schema.TypeBool,
+									"default_username_prefix": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"import_batch_size_limit": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"random_batch_size_limit": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"start_date_future_limit_days": &schema.Schema{
@@ -179,66 +96,28 @@ func dataSourceSponsorGroup() *schema.Resource {
 								},
 							},
 						},
-						"manage_permission": &schema.Schema{
+						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"other_permissions": &schema.Schema{
+						"guest_types": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"can_update_guest_contact_info": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_view_guest_passwords": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_send_sms_notifications": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_reset_guest_passwords": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_extend_guest_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_delete_guest_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_suspend_guest_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"require_suspension_reason": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_reinstate_suspended_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_approve_selfreg_guests": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"limit_approval_to_sponsors_guests": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"can_access_via_rest": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-								},
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_default_group": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"is_enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -246,11 +125,11 @@ func dataSourceSponsorGroup() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -260,6 +139,127 @@ func dataSourceSponsorGroup() *schema.Resource {
 									},
 								},
 							},
+						},
+						"locations": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"manage_permission": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"member_groups": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"other_permissions": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"can_access_via_rest": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_approve_selfreg_guests": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_delete_guest_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_extend_guest_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_reinstate_suspended_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_reset_guest_passwords": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_send_sms_notifications": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_suspend_guest_accounts": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_update_guest_contact_info": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"can_view_guest_passwords": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"limit_approval_to_sponsors_guests": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"require_suspension_reason": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -323,7 +323,7 @@ func dataSourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m i
 		var items1 []isegosdk.ResponseSponsorGroupGetSponsorGroupSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

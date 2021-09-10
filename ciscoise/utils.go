@@ -11,6 +11,20 @@ import (
 	"time"
 )
 
+func replaceAllStr(original_str string, old string, new string) string {
+	return strings.ReplaceAll(original_str, old, new)
+}
+
+func getLocationID(location string) string {
+	var locationID string
+	URL_SEPARATOR := "/"
+	locationFragments := strings.Split(location, URL_SEPARATOR)
+	if len(locationFragments) > 0 {
+		return locationFragments[len(locationFragments)-1]
+	}
+	return locationID
+}
+
 func isEmptyValue(v reflect.Value) bool {
 	if !v.IsValid() {
 		return true

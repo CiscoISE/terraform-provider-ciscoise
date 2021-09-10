@@ -14,6 +14,10 @@ func dataSourceFilterPolicy() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceFilterPolicyRead,
 		Schema: map[string]*schema.Schema{
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -22,9 +26,30 @@ func dataSourceFilterPolicy() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"domains": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sgt": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"subnet": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"items": &schema.Schema{
 				Type:     schema.TypeList,
@@ -32,15 +57,11 @@ func dataSourceFilterPolicy() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -50,11 +71,11 @@ func dataSourceFilterPolicy() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -65,28 +86,7 @@ func dataSourceFilterPolicy() *schema.Resource {
 								},
 							},
 						},
-					},
-				},
-			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"subnet": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"domains": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"sgt": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"vn": &schema.Schema{
+						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -136,7 +136,7 @@ func dataSourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m i
 		var items1 []isegosdk.ResponseFilterPolicyGetFilterPolicySearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

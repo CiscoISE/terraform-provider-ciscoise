@@ -28,11 +28,15 @@ func dataSourceGuestUserBulkMonitorStatus() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"media_type": &schema.Schema{
+						"execution_status": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"execution_status": &schema.Schema{
+						"fail_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"media_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -40,19 +44,7 @@ func dataSourceGuestUserBulkMonitorStatus() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"start_time": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"resources_count": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"success_count": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"fail_count": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
@@ -62,15 +54,15 @@ func dataSourceGuestUserBulkMonitorStatus() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"description": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"description": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -84,6 +76,14 @@ func dataSourceGuestUserBulkMonitorStatus() *schema.Resource {
 									},
 								},
 							},
+						},
+						"start_time": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"success_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 					},
 				},

@@ -26,11 +26,11 @@ func dataSourceEndpointGetRejectedEndpoints() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"value": &schema.Schema{
+									"name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"name": &schema.Schema{
+									"value": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},

@@ -14,14 +14,6 @@ func dataSourceTelemetryInfo() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceTelemetryInfoRead,
 		Schema: map[string]*schema.Schema{
-			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-			},
-			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -36,6 +28,60 @@ func dataSourceTelemetryInfo() *schema.Resource {
 			"id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+			},
+			"page": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"size": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"deployment_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"udi_sn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"items": &schema.Schema{
 				Type:     schema.TypeList,
@@ -53,57 +99,11 @@ func dataSourceTelemetryInfo() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
 									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"status": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"deployment_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"udi_sn": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
 									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -168,7 +168,7 @@ func dataSourceTelemetryInfoRead(ctx context.Context, d *schema.ResourceData, m 
 		var items1 []isegosdk.ResponseTelemetryInformationGetTelemetryInformationSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

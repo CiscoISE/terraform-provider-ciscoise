@@ -14,6 +14,21 @@ func dataSourceGuestType() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceGuestTypeRead,
 		Schema: map[string]*schema.Schema{
+			"filter": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"filter_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -30,107 +45,18 @@ func dataSourceGuestType() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"filter": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"items": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"is_default_type": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
 						"access_time": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"from_first_login": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"max_account_duration": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"duration_time_unit": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"default_duration": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
 									"allow_access_on_specific_days_times": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
@@ -141,14 +67,6 @@ func dataSourceGuestType() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"start_time": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"end_time": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
 												"days": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -156,44 +74,39 @@ func dataSourceGuestType() *schema.Resource {
 														Type: schema.TypeString,
 													},
 												},
+												"end_time": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"start_time": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
 											},
 										},
+									},
+									"default_duration": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"duration_time_unit": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"from_first_login": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"max_account_duration": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
 						},
-						"login_options": &schema.Schema{
-							Type:     schema.TypeList,
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"limit_simultaneous_logins": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"max_simultaneous_logins": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"failure_action": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"max_registered_devices": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"identity_group_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"allow_guest_portal_bypass": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-								},
-							},
 						},
 						"expiration_notification": &schema.Schema{
 							Type:     schema.TypeList,
@@ -201,10 +114,6 @@ func dataSourceGuestType() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"enable_notification": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
 									"advance_notification_duration": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
@@ -213,12 +122,16 @@ func dataSourceGuestType() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"send_email_notification": &schema.Schema{
+									"email_text": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"enable_notification": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"email_text": &schema.Schema{
-										Type:     schema.TypeString,
+									"send_email_notification": &schema.Schema{
+										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"send_sms_notification": &schema.Schema{
@@ -232,12 +145,13 @@ func dataSourceGuestType() *schema.Resource {
 								},
 							},
 						},
-						"sponsor_groups": &schema.Schema{
-							Type:     schema.TypeList,
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+						},
+						"is_default_type": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -245,11 +159,11 @@ func dataSourceGuestType() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -259,6 +173,92 @@ func dataSourceGuestType() *schema.Resource {
 									},
 								},
 							},
+						},
+						"login_options": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_guest_portal_bypass": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"failure_action": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"identity_group_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"limit_simultaneous_logins": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"max_registered_devices": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"max_simultaneous_logins": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sponsor_groups": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
+				},
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -322,7 +322,7 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 		var items1 []isegosdk.ResponseGuestTypeGetGuestTypeSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

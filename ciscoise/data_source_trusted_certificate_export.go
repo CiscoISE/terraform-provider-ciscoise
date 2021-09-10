@@ -14,11 +14,11 @@ func dataSourceTrustedCertificateExport() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceTrustedCertificateExportRead,
 		Schema: map[string]*schema.Schema{
-			"id": &schema.Schema{
+			"dirpath": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"dirpath": &schema.Schema{
+			"id": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},

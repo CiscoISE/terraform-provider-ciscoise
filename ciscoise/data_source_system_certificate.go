@@ -14,7 +14,22 @@ func dataSourceSystemCertificate() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceSystemCertificateRead,
 		Schema: map[string]*schema.Schema{
+			"filter": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"filter_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"host_name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
@@ -34,22 +49,7 @@ func dataSourceSystemCertificate() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"filter": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -135,7 +135,7 @@ func dataSourceSystemCertificate() *schema.Resource {
 					},
 				},
 			},
-			"item": &schema.Schema{
+			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -282,7 +282,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 		var items1 []isegosdk.ResponseCertificatesGetSystemCertificatesResponse
 		for response1.Response != nil && len(*response1.Response) > 0 {
 			items1 = append(items1, *response1.Response...)
-			if response1.NextPage.Rel == "next" {
+			if response1.NextPage != nil && response1.NextPage.Rel == "next" {
 				href := response1.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

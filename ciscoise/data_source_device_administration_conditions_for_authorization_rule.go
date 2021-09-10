@@ -20,44 +20,7 @@ func dataSourceDeviceAdministrationConditionsForAuthorizationRule() *schema.Reso
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"condition_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"is_negate": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
+						"attribute_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -65,23 +28,7 @@ func dataSourceDeviceAdministrationConditionsForAuthorizationRule() *schema.Reso
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"attribute_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"attribute_value": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"dictionary_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"dictionary_value": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"operator": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -123,6 +70,10 @@ func dataSourceDeviceAdministrationConditionsForAuthorizationRule() *schema.Reso
 								},
 							},
 						},
+						"condition_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"dates_range": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -157,6 +108,18 @@ func dataSourceDeviceAdministrationConditionsForAuthorizationRule() *schema.Reso
 								},
 							},
 						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dictionary_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dictionary_value": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"hours_range": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -190,6 +153,43 @@ func dataSourceDeviceAdministrationConditionsForAuthorizationRule() *schema.Reso
 									},
 								},
 							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_negate": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"operator": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"week_days": &schema.Schema{
 							Type:     schema.TypeList,

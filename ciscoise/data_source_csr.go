@@ -14,22 +14,6 @@ func dataSourceCsr() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceCsrRead,
 		Schema: map[string]*schema.Schema{
-			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-			},
-			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-			},
-			"sort": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"sort_by": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -49,12 +33,32 @@ func dataSourceCsr() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"items": &schema.Schema{
+			"page": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"size": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"sort": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"sort_by": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"csr_contents": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"friendly_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -115,16 +119,12 @@ func dataSourceCsr() *schema.Resource {
 					},
 				},
 			},
-			"item": &schema.Schema{
+			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"csr_contents": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"friendly_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -245,7 +245,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 		var items1 []isegosdk.ResponseCertificatesGetCsrsResponse
 		for response1.Response != nil && len(*response1.Response) > 0 {
 			items1 = append(items1, *response1.Response...)
-			if response1.NextPage.Rel == "next" {
+			if response1.NextPage != nil && response1.NextPage.Rel == "next" {
 				href := response1.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

@@ -14,14 +14,6 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceSgToVnToVLANRead,
 		Schema: map[string]*schema.Schema{
-			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-			},
-			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
-			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -37,21 +29,25 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"items": &schema.Schema{
+			"page": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"size": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -61,11 +57,11 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -76,24 +72,7 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 								},
 							},
 						},
-					},
-				},
-			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -107,6 +86,14 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"default_virtual_network": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"description": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"id": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
@@ -115,42 +102,34 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"default_virtual_network": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
 									"vlans": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"description": &schema.Schema{
-													Type:     schema.TypeString,
+												"data": &schema.Schema{
+													Type:     schema.TypeBool,
 													Computed: true,
 												},
 												"default_vlan": &schema.Schema{
 													Type:     schema.TypeBool,
 													Computed: true,
 												},
+												"description": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"id": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
 												"max_value": &schema.Schema{
 													Type:     schema.TypeInt,
 													Computed: true,
 												},
-												"data": &schema.Schema{
-													Type:     schema.TypeBool,
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -159,17 +138,34 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 								},
 							},
 						},
+					},
+				},
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -179,6 +175,10 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -234,7 +234,7 @@ func dataSourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m i
 		var items1 []isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

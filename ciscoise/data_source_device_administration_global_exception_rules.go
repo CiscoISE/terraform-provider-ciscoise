@@ -18,274 +18,6 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"items": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"commands": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"profile": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"rule": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"condition": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"condition_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"is_negate": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"link": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"href": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"rel": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"attribute_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"attribute_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"attribute_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"dictionary_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"dictionary_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"operator": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"children": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"condition_type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"is_negate": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"link": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"href": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																		"rel": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																		"type": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
-															},
-														},
-													},
-												},
-												"dates_range": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"end_date": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"start_date": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"dates_range_exception": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"end_date": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"start_date": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"hours_range": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"end_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"hours_range_exception": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"end_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"week_days": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"week_days_exception": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-											},
-										},
-									},
-									"default": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"hit_counts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rank": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"state": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -336,44 +68,7 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"condition_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"is_negate": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"link": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"href": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"rel": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
-												},
-												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"name": &schema.Schema{
+												"attribute_id": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -381,23 +76,7 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"attribute_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
 												"attribute_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"dictionary_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"dictionary_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"operator": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -439,6 +118,10 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 														},
 													},
 												},
+												"condition_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
 												"dates_range": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -473,6 +156,18 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 														},
 													},
 												},
+												"description": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dictionary_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dictionary_value": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
 												"hours_range": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
@@ -506,6 +201,311 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 															},
 														},
 													},
+												},
+												"id": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"is_negate": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"operator": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"week_days": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"week_days_exception": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
+									"default": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"hit_counts": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rank": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"state": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"commands": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rule": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"condition": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"attribute_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"attribute_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"attribute_value": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"children": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"condition_type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"is_negate": &schema.Schema{
+																Type:     schema.TypeBool,
+																Computed: true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
+															},
+														},
+													},
+												},
+												"condition_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dates_range": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_date": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"start_date": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"dates_range_exception": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_date": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"start_date": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"description": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dictionary_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"dictionary_value": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"hours_range": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_time": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"start_time": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"hours_range_exception": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_time": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"start_time": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"id": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"is_negate": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"operator": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"week_days": &schema.Schema{
 													Type:     schema.TypeList,

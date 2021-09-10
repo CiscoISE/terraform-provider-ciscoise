@@ -18,59 +18,17 @@ func dataSourceRepository() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"items": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"protocol": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"path": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Sensitive: true,
-							Computed:  true,
-						},
-						"server_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"enable_pki": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-					},
-				},
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"enable_pki": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"protocol": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"path": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -78,6 +36,14 @@ func dataSourceRepository() *schema.Resource {
 							Type:      schema.TypeString,
 							Sensitive: true,
 							Computed:  true,
+						},
+						"path": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"server_name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -87,8 +53,42 @@ func dataSourceRepository() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+					},
+				},
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
 						"enable_pki": &schema.Schema{
 							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"path": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"server_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"user_name": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
