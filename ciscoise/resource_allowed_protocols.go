@@ -1,0 +1,1338 @@
+package ciscoise
+
+import (
+	"context"
+	"reflect"
+
+	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"log"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+func resourceAllowedProtocols() *schema.Resource {
+	return &schema.Resource{
+
+		CreateContext: resourceAllowedProtocolsCreate,
+		ReadContext:   resourceAllowedProtocolsRead,
+		UpdateContext: resourceAllowedProtocolsUpdate,
+		DeleteContext: resourceAllowedProtocolsDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
+		Schema: map[string]*schema.Schema{
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"allow_chap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_eap_fast": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_eap_md5": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_eap_tls": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_eap_ttls": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_leap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_ms_chap_v1": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_ms_chap_v2": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_pap_ascii": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_peap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_preferred_eap_protocol": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_teap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"allow_weak_ciphers_for_eap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"eap_fast": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_eap_fast_eap_gtc": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_gtc_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_gtc_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_eap_fast_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_dont_use_pacs_accept_client_cert": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_dont_use_pacs_allow_machine_authentication": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_enable_eap_chaining": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_accept_client_cert": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_allow_anonym_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_allow_authen_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_allow_machine_authentication": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_authorization_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_authorization_pac_ttl_units": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_machine_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_machine_pac_ttl_units": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_stateless_session_resume": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_tunnel_pac_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_tunnel_pac_ttl_units": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_fast_use_pacs_use_proactive_pac_update_precentage": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"eap_tls": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_tls_enable_stateless_session_resume": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_tls_session_ticket_precentage": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_tls_session_ticket_ttl": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_tls_session_ticket_ttl_units": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"eap_tls_l_bit": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"eap_ttls": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"eap_ttls_chap": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_ttls_eap_md5": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_ttls_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_ttls_ms_chap_v1": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_ttls_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"eap_ttls_pap_ascii": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:             schema.TypeList,
+							DiffSuppressFunc: diffSuppressAlways(),
+							Computed:         true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+									"rel": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+									"type": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"peap": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_peap_eap_gtc": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_peap_eap_gtc_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_peap_eap_gtc_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_peap_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_peap_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_peap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_peap_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_peap_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_peap_v0": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"require_cryptobinding": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"preferred_eap_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"process_host_lookup": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"require_message_auth": &schema.Schema{
+							Type:     schema.TypeBool,
+							Optional: true,
+							Computed: true,
+						},
+						"teap": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"accept_client_cert_during_tunnel_est": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_downgrade_msk": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_teap_eap_ms_chap_v2": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_teap_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_teap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_teap_eap_tls": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"allow_teap_eap_tls_auth_of_expired_certs": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+									"enable_eap_chaining": &schema.Schema{
+										Type:     schema.TypeBool,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func resourceAllowedProtocolsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceItem := *getResourceItem(d.Get("item"))
+	request1 := expandRequestAllowedProtocolsCreateAllowedProtocol(ctx, "item.0", d)
+	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+
+	vID, okID := resourceItem["id"]
+	vvID := interfaceToString(vID)
+	vName, okName := resourceItem["name"]
+	vvName := interfaceToString(vName)
+	if okID && vvID != "" {
+		getResponse1, _, err := client.AllowedProtocols.GetAllowedProtocolByID(vvID)
+		if err == nil && getResponse1 != nil {
+			resourceMap := make(map[string]string)
+			resourceMap["id"] = vvID
+			resourceMap["name"] = vvName
+			d.SetId(joinResourceID(resourceMap))
+			return diags
+		}
+	}
+	if okName && vvName != "" {
+		getResponse2, _, err := client.AllowedProtocols.GetAllowedProtocolByName(vvName)
+		if err == nil && getResponse2 != nil {
+			resourceMap := make(map[string]string)
+			resourceMap["id"] = vvID
+			resourceMap["name"] = vvName
+			d.SetId(joinResourceID(resourceMap))
+			return diags
+		}
+	}
+	restyResp1, err := client.AllowedProtocols.CreateAllowedProtocol(request1)
+	if err != nil {
+		if restyResp1 != nil {
+			diags = append(diags, diagErrorWithResponse(
+				"Failure when executing CreateAllowedProtocol", err, restyResp1.String()))
+			return diags
+		}
+		diags = append(diags, diagError(
+			"Failure when executing CreateAllowedProtocol", err))
+		return diags
+	}
+	headers := restyResp1.Header()
+	if locationHeader, ok := headers["Location"]; ok && len(locationHeader) > 0 {
+		vvID = getLocationID(locationHeader[0])
+	}
+	resourceMap := make(map[string]string)
+	resourceMap["id"] = vvID
+	resourceMap["name"] = vvName
+	d.SetId(joinResourceID(resourceMap))
+	return diags
+}
+
+func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vName, okName := resourceMap["name"]
+	vID, okID := resourceMap["id"]
+
+	// Changed order of selection to give priority to id
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method: GetAllowedProtocolByName")
+		vvName := vName
+
+		response1, _, err := client.AllowedProtocols.GetAllowedProtocolByName(vvName)
+
+		if err != nil || response1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetAllowedProtocolByName", err,
+				"Failure at GetAllowedProtocolByName, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+
+		vItemName1 := flattenAllowedProtocolsGetAllowedProtocolByNameItemName(response1.AllowedProtocols)
+		if err := d.Set("item", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAllowedProtocolByName response",
+				err))
+			return diags
+		}
+		return diags
+
+	}
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetAllowedProtocolByID")
+		vvID := vID
+
+		response2, _, err := client.AllowedProtocols.GetAllowedProtocolByID(vvID)
+
+		if err != nil || response2 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetAllowedProtocolByID", err,
+				"Failure at GetAllowedProtocolByID, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+
+		vItemID2 := flattenAllowedProtocolsGetAllowedProtocolByIDItemID(response2.AllowedProtocols)
+		if err := d.Set("item", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAllowedProtocolByID response",
+				err))
+			return diags
+		}
+		return diags
+
+	}
+	return diags
+}
+
+func resourceAllowedProtocolsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vName, okName := resourceMap["name"]
+	vID, okID := resourceMap["id"]
+
+	// Changed order of selection to give priority to id
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
+	if selectedMethod == 1 {
+		vvID = vID
+	}
+	if selectedMethod == 2 {
+		vvName = vName
+		getResp, _, err := client.AllowedProtocols.GetAllowedProtocolByName(vvName)
+		if err != nil || getResp == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetAllowedProtocolByName", err,
+				"Failure at GetAllowedProtocolByName, unexpected response", ""))
+			return diags
+		}
+		//Set value vvID = getResp.
+		if getResp.AllowedProtocols != nil {
+			vvID = getResp.AllowedProtocols.ID
+		}
+	}
+	if d.HasChange("item") {
+		log.Printf("[DEBUG] vvID %s", vvID)
+		request1 := expandRequestAllowedProtocolsUpdateAllowedProtocolByID(ctx, "item.0", d)
+		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		response1, restyResp1, err := client.AllowedProtocols.UpdateAllowedProtocolByID(vvID, request1)
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing UpdateAllowedProtocolByID", err, restyResp1.String(),
+					"Failure at UpdateAllowedProtocolByID, unexpected response", ""))
+				return diags
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing UpdateAllowedProtocolByID", err,
+				"Failure at UpdateAllowedProtocolByID, unexpected response", ""))
+			return diags
+		}
+	}
+
+	return resourceAllowedProtocolsRead(ctx, d, m)
+}
+
+func resourceAllowedProtocolsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vName, okName := resourceMap["name"]
+	vID, okID := resourceMap["id"]
+
+	// Changed order of selection to give priority to id
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
+	if selectedMethod == 1 {
+		vvID = vID
+		getResp, _, err := client.AllowedProtocols.GetAllowedProtocolByID(vvID)
+		if err != nil || getResp == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+	}
+	if selectedMethod == 2 {
+		vvName = vName
+		getResp, _, err := client.AllowedProtocols.GetAllowedProtocolByName(vvName)
+		if err != nil || getResp == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		//Set value vvID = getResp.
+		if getResp.AllowedProtocols != nil {
+			vvID = getResp.AllowedProtocols.ID
+		}
+	}
+	restyResp1, err := client.AllowedProtocols.DeleteAllowedProtocolByID(vvID)
+	if err != nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing DeleteAllowedProtocolByID", err, restyResp1.String(),
+				"Failure at DeleteAllowedProtocolByID, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing DeleteAllowedProtocolByID", err,
+			"Failure at DeleteAllowedProtocolByID, unexpected response", ""))
+		return diags
+	}
+
+	// d.SetId("") is automatically called assuming delete returns no errors, but
+	// it is added here for explicitness.
+	d.SetId("")
+
+	return diags
+}
+func expandRequestAllowedProtocolsCreateAllowedProtocol(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocol {
+	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocol{}
+	request.AllowedProtocols = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols(ctx, key, d)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols {
+	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols{}
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls"))) {
+		request.EapTls = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls(ctx, key+".eap_tls.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".peap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".peap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".peap"))) {
+		request.Peap = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap(ctx, key+".peap.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast"))) {
+		request.EapFast = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast(ctx, key+".eap_fast.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls"))) {
+		request.EapTtls = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls(ctx, key+".eap_ttls.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".teap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".teap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".teap"))) {
+		request.Teap = expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap(ctx, key+".teap.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".process_host_lookup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".process_host_lookup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".process_host_lookup"))) {
+		request.ProcessHostLookup = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_pap_ascii"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_pap_ascii"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_pap_ascii"))) {
+		request.AllowPapAscii = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_chap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_chap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_chap"))) {
+		request.AllowChap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v1"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_ms_chap_v1"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_ms_chap_v1"))) {
+		request.AllowMsChapV1 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_ms_chap_v2"))) {
+		request.AllowMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_md5"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_md5"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_md5"))) {
+		request.AllowEapMd5 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_leap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_leap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_leap"))) {
+		request.AllowLeap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls"))) {
+		request.AllowEapTls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_ttls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_ttls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_ttls"))) {
+		request.AllowEapTtls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast"))) {
+		request.AllowEapFast = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap"))) {
+		request.AllowPeap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap"))) {
+		request.AllowTeap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_preferred_eap_protocol"))) {
+		request.AllowPreferredEapProtocol = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".preferred_eap_protocol"))) {
+		request.PreferredEapProtocol = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_l_bit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_l_bit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_l_bit"))) {
+		request.EapTlsLBit = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_weak_ciphers_for_eap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_weak_ciphers_for_eap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_weak_ciphers_for_eap"))) {
+		request.AllowWeakCiphersForEap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_message_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_message_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_message_auth"))) {
+		request.RequireMessageAuth = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls {
+	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTls{}
+	if v, ok := d.GetOkExists(key + ".allow_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls_auth_of_expired_certs"))) {
+		request.AllowEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_enable_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_enable_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_enable_stateless_session_resume"))) {
+		request.EapTlsEnableStatelessSessionResume = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl"))) {
+		request.EapTlsSessionTicketTtl = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl_units"))) {
+		request.EapTlsSessionTicketTtlUnits = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_precentage"))) {
+		request.EapTlsSessionTicketPrecentage = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap {
+	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsPeap{}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2"))) {
+		request.AllowPeapEapMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) {
+		request.AllowPeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) {
+		request.AllowPeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc"))) {
+		request.AllowPeapEapGtc = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change"))) {
+		request.AllowPeapEapGtcPwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) {
+		request.AllowPeapEapGtcPwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls"))) {
+		request.AllowPeapEapTls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) {
+		request.AllowPeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_cryptobinding"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_cryptobinding"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_cryptobinding"))) {
+		request.RequireCryptobinding = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_v0"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_v0"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_v0"))) {
+		request.AllowPeapV0 = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast {
+	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast{}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2"))) {
+		request.AllowEapFastEapMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) {
+		request.AllowEapFastEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) {
+		request.AllowEapFastEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc"))) {
+		request.AllowEapFastEapGtc = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) {
+		request.AllowEapFastEapGtcPwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) {
+		request.AllowEapFastEapGtcPwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls"))) {
+		request.AllowEapFastEapTls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) {
+		request.AllowEapFastEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs"))) {
+		request.EapFastUsePacs = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) {
+		request.EapFastUsePacsTunnelPacTtl = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) {
+		request.EapFastUsePacsTunnelPacTtlUnits = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_use_proactive_pac_update_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) {
+		request.EapFastUsePacsUseProactivePacUpdatePrecentage = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_anonym_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) {
+		request.EapFastUsePacsAllowAnonymProvisioning = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_authen_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) {
+		request.EapFastUsePacsAllowAuthenProvisioning = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) {
+		request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) {
+		request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) {
+		request.EapFastUsePacsMachinePacTtl = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) {
+		request.EapFastUsePacsMachinePacTtlUnits = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_machine_authentication"))) {
+		request.EapFastUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) {
+		request.EapFastUsePacsStatelessSessionResume = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) {
+		request.EapFastUsePacsAuthorizationPacTtl = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) {
+		request.EapFastUsePacsAuthorizationPacTtlUnits = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) {
+		request.EapFastDontUsePacsAcceptClientCert = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) {
+		request.EapFastDontUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_enable_eap_chaining"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_enable_eap_chaining"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_enable_eap_chaining"))) {
+		request.EapFastEnableEApChaining = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls {
+	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapTtls{}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_pap_ascii"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_pap_ascii"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_pap_ascii"))) {
+		request.EapTtlsPapAscii = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_chap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_chap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_chap"))) {
+		request.EapTtlsChap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v1"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_ms_chap_v1"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_ms_chap_v1"))) {
+		request.EapTtlsMsChapV1 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_ms_chap_v2"))) {
+		request.EapTtlsMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_md5"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_md5"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_md5"))) {
+		request.EapTtlsEapMd5 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2"))) {
+		request.EapTtlsEapMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) {
+		request.EapTtlsEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) {
+		request.EapTtlsEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap {
+	request := isegosdk.RequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap{}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2"))) {
+		request.AllowTeapEapMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) {
+		request.AllowTeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) {
+		request.AllowTeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls"))) {
+		request.AllowTeapEapTls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) {
+		request.AllowTeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".accept_client_cert_during_tunnel_est"); !isEmptyValue(reflect.ValueOf(d.Get(key+".accept_client_cert_during_tunnel_est"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".accept_client_cert_during_tunnel_est"))) {
+		request.AcceptClientCertDuringTunnelEst = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".enable_eap_chaining"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_eap_chaining"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_eap_chaining"))) {
+		request.EnableEapChaining = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_downgrade_msk"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_downgrade_msk"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_downgrade_msk"))) {
+		request.AllowDowngradeMsk = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByID {
+	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByID{}
+	request.AllowedProtocols = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(ctx, key, d)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols {
+	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols{}
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls"))) {
+		request.EapTls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(ctx, key+".eap_tls.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".peap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".peap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".peap"))) {
+		request.Peap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(ctx, key+".peap.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast"))) {
+		request.EapFast = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast(ctx, key+".eap_fast.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls"))) {
+		request.EapTtls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls(ctx, key+".eap_ttls.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".teap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".teap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".teap"))) {
+		request.Teap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(ctx, key+".teap.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".process_host_lookup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".process_host_lookup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".process_host_lookup"))) {
+		request.ProcessHostLookup = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_pap_ascii"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_pap_ascii"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_pap_ascii"))) {
+		request.AllowPapAscii = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_chap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_chap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_chap"))) {
+		request.AllowChap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v1"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_ms_chap_v1"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_ms_chap_v1"))) {
+		request.AllowMsChapV1 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_ms_chap_v2"))) {
+		request.AllowMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_md5"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_md5"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_md5"))) {
+		request.AllowEapMd5 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_leap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_leap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_leap"))) {
+		request.AllowLeap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls"))) {
+		request.AllowEapTls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_ttls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_ttls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_ttls"))) {
+		request.AllowEapTtls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast"))) {
+		request.AllowEapFast = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap"))) {
+		request.AllowPeap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap"))) {
+		request.AllowTeap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_preferred_eap_protocol"))) {
+		request.AllowPreferredEapProtocol = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".preferred_eap_protocol"))) {
+		request.PreferredEapProtocol = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_l_bit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_l_bit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_l_bit"))) {
+		request.EapTlsLBit = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_weak_ciphers_for_eap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_weak_ciphers_for_eap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_weak_ciphers_for_eap"))) {
+		request.AllowWeakCiphersForEap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_message_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_message_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_message_auth"))) {
+		request.RequireMessageAuth = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls {
+	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls{}
+	if v, ok := d.GetOkExists(key + ".allow_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls_auth_of_expired_certs"))) {
+		request.AllowEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_enable_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_enable_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_enable_stateless_session_resume"))) {
+		request.EapTlsEnableStatelessSessionResume = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl"))) {
+		request.EapTlsSessionTicketTtl = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl_units"))) {
+		request.EapTlsSessionTicketTtlUnits = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_precentage"))) {
+		request.EapTlsSessionTicketPrecentage = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap {
+	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap{}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2"))) {
+		request.AllowPeapEapMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) {
+		request.AllowPeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) {
+		request.AllowPeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc"))) {
+		request.AllowPeapEapGtc = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change"))) {
+		request.AllowPeapEapGtcPwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) {
+		request.AllowPeapEapGtcPwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls"))) {
+		request.AllowPeapEapTls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) {
+		request.AllowPeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_cryptobinding"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_cryptobinding"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_cryptobinding"))) {
+		request.RequireCryptobinding = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_peap_v0"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_v0"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_v0"))) {
+		request.AllowPeapV0 = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast {
+	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast{}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2"))) {
+		request.AllowEapFastEapMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) {
+		request.AllowEapFastEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) {
+		request.AllowEapFastEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc"))) {
+		request.AllowEapFastEapGtc = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) {
+		request.AllowEapFastEapGtcPwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) {
+		request.AllowEapFastEapGtcPwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls"))) {
+		request.AllowEapFastEapTls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) {
+		request.AllowEapFastEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs"))) {
+		request.EapFastUsePacs = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) {
+		request.EapFastUsePacsTunnelPacTtl = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) {
+		request.EapFastUsePacsTunnelPacTtlUnits = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_use_proactive_pac_update_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) {
+		request.EapFastUsePacsUseProactivePacUpdatePrecentage = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_anonym_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) {
+		request.EapFastUsePacsAllowAnonymProvisioning = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_authen_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) {
+		request.EapFastUsePacsAllowAuthenProvisioning = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) {
+		request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) {
+		request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) {
+		request.EapFastUsePacsMachinePacTtl = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) {
+		request.EapFastUsePacsMachinePacTtlUnits = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_machine_authentication"))) {
+		request.EapFastUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) {
+		request.EapFastUsePacsStatelessSessionResume = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) {
+		request.EapFastUsePacsAuthorizationPacTtl = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) {
+		request.EapFastUsePacsAuthorizationPacTtlUnits = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) {
+		request.EapFastDontUsePacsAcceptClientCert = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) {
+		request.EapFastDontUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_fast_enable_eap_chaining"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_enable_eap_chaining"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_enable_eap_chaining"))) {
+		request.EapFastEnableEApChaining = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls {
+	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls{}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_pap_ascii"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_pap_ascii"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_pap_ascii"))) {
+		request.EapTtlsPapAscii = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_chap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_chap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_chap"))) {
+		request.EapTtlsChap = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v1"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_ms_chap_v1"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_ms_chap_v1"))) {
+		request.EapTtlsMsChapV1 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_ms_chap_v2"))) {
+		request.EapTtlsMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_md5"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_md5"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_md5"))) {
+		request.EapTtlsEapMd5 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2"))) {
+		request.EapTtlsEapMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) {
+		request.EapTtlsEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) {
+		request.EapTtlsEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap {
+	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap{}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2"))) {
+		request.AllowTeapEapMsChapV2 = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) {
+		request.AllowTeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) {
+		request.AllowTeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls"))) {
+		request.AllowTeapEapTls = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) {
+		request.AllowTeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".accept_client_cert_during_tunnel_est"); !isEmptyValue(reflect.ValueOf(d.Get(key+".accept_client_cert_during_tunnel_est"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".accept_client_cert_during_tunnel_est"))) {
+		request.AcceptClientCertDuringTunnelEst = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".enable_eap_chaining"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_eap_chaining"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_eap_chaining"))) {
+		request.EnableEapChaining = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allow_downgrade_msk"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_downgrade_msk"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_downgrade_msk"))) {
+		request.AllowDowngradeMsk = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}

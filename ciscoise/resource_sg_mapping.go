@@ -1,0 +1,515 @@
+package ciscoise
+
+import (
+	"context"
+	"fmt"
+	"reflect"
+
+	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"log"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+func resourceSgMapping() *schema.Resource {
+	return &schema.Resource{
+
+		CreateContext: resourceSgMappingCreate,
+		ReadContext:   resourceSgMappingRead,
+		UpdateContext: resourceSgMappingUpdate,
+		DeleteContext: resourceSgMappingDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
+		Schema: map[string]*schema.Schema{
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"deploy_to": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"deploy_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"host_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"host_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:             schema.TypeList,
+							DiffSuppressFunc: diffSuppressAlways(),
+							Computed:         true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+									"rel": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+									"type": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+								},
+							},
+						},
+						"mapping_group": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sgt": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceItem := *getResourceItem(d.Get("item"))
+	request1 := expandRequestSgMappingCreateIPToSgtMapping(ctx, "item.0", d)
+	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+
+	vID, okID := resourceItem["id"]
+	vvID := interfaceToString(vID)
+	vName, _ := resourceItem["name"]
+	vvName := interfaceToString(vName)
+	if okID && vvID != "" {
+		getResponse2, _, err := client.IPToSgtMapping.GetIPToSgtMappingByID(vvID)
+		if err == nil && getResponse2 != nil {
+			resourceMap := make(map[string]string)
+			resourceMap["id"] = vvID
+			resourceMap["name"] = vvName
+			d.SetId(joinResourceID(resourceMap))
+			return diags
+		}
+	} else {
+		queryParams2 := isegosdk.GetIPToSgtMappingQueryParams{}
+
+		response2, _, err := client.IPToSgtMapping.GetIPToSgtMapping(&queryParams2)
+		if response2 != nil && err == nil {
+			items2 := getAllItemsIPToSgtMappingGetIPToSgtMapping(m, response2, &queryParams2)
+			item2, err := searchIPToSgtMappingGetIPToSgtMapping(m, items2, vvName, vvID)
+			if err == nil && item2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return diags
+			}
+		}
+	}
+	restyResp1, err := client.IPToSgtMapping.CreateIPToSgtMapping(request1)
+	if err != nil {
+		if restyResp1 != nil {
+			diags = append(diags, diagErrorWithResponse(
+				"Failure when executing CreateIPToSgtMapping", err, restyResp1.String()))
+			return diags
+		}
+		diags = append(diags, diagError(
+			"Failure when executing CreateIPToSgtMapping", err))
+		return diags
+	}
+	headers := restyResp1.Header()
+	if locationHeader, ok := headers["Location"]; ok && len(locationHeader) > 0 {
+		vvID = getLocationID(locationHeader[0])
+	}
+	resourceMap := make(map[string]string)
+	resourceMap["id"] = vvID
+	resourceMap["name"] = vvName
+	d.SetId(joinResourceID(resourceMap))
+	return diags
+}
+
+func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+
+	vID, okID := resourceMap["id"]
+	vName, okName := resourceMap["name"]
+
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 2 {
+		vvName := vName
+		vvID := vID
+		log.Printf("[DEBUG] Selected method: GetIPToSgtMapping")
+		queryParams1 := isegosdk.GetIPToSgtMappingQueryParams{}
+
+		response1, _, err := client.IPToSgtMapping.GetIPToSgtMapping(&queryParams1)
+
+		if err != nil || response1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetIPToSgtMapping", err,
+				"Failure at GetIPToSgtMapping, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+
+		items1 := getAllItemsIPToSgtMappingGetIPToSgtMapping(m, response1, &queryParams1)
+		item1, err := searchIPToSgtMappingGetIPToSgtMapping(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetIPToSgtMapping response", err,
+				"Failure when searching item from GetIPToSgtMapping, unexpected response", ""))
+			return diags
+		}
+		if err := d.Set("item", item1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPToSgtMapping search response",
+				err))
+			return diags
+		}
+
+	}
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetIPToSgtMappingByID")
+		vvID := vID
+
+		response2, _, err := client.IPToSgtMapping.GetIPToSgtMappingByID(vvID)
+
+		if err != nil || response2 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetIPToSgtMappingByID", err,
+				"Failure at GetIPToSgtMappingByID, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+
+		vItem2 := flattenIPToSgtMappingGetIPToSgtMappingByIDItem(response2.SgMapping)
+		if err := d.Set("item", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPToSgtMappingByID response",
+				err))
+			return diags
+		}
+		return diags
+
+	}
+	return diags
+}
+
+func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+
+	vID, okID := resourceMap["id"]
+	vName, okName := resourceMap["name"]
+
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	// NOTE: Consider adding getAllItems and search function to get missing params
+	if selectedMethod == 2 {
+		queryParams1 := isegosdk.GetIPToSgtMappingQueryParams{}
+		getResp1, _, err := client.IPToSgtMapping.GetIPToSgtMapping(&queryParams1)
+		if err == nil && getResp1 != nil {
+			items1 := getAllItemsIPToSgtMappingGetIPToSgtMapping(m, getResp1, &queryParams1)
+			item1, err := searchIPToSgtMappingGetIPToSgtMapping(m, items1, vName, vID)
+			if err == nil && item1 != nil {
+				if vID != item1.ID {
+					vvID = item1.ID
+				} else {
+					vvID = vID
+				}
+			}
+		}
+	}
+	if selectedMethod == 1 {
+		vvID = vID
+	}
+	if d.HasChange("item") {
+		log.Printf("[DEBUG] vvID %s", vvID)
+		request1 := expandRequestSgMappingUpdateIPToSgtMappingByID(ctx, "item.0", d)
+		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		response1, restyResp1, err := client.IPToSgtMapping.UpdateIPToSgtMappingByID(vvID, request1)
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing UpdateIPToSgtMappingByID", err, restyResp1.String(),
+					"Failure at UpdateIPToSgtMappingByID, unexpected response", ""))
+				return diags
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing UpdateIPToSgtMappingByID", err,
+				"Failure at UpdateIPToSgtMappingByID, unexpected response", ""))
+			return diags
+		}
+	}
+
+	return resourceSgMappingRead(ctx, d, m)
+}
+
+func resourceSgMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+
+	vID, okID := resourceMap["id"]
+	vName, okName := resourceMap["name"]
+
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 2 {
+		queryParams1 := isegosdk.GetIPToSgtMappingQueryParams{}
+
+		getResp1, _, err := client.IPToSgtMapping.GetIPToSgtMapping(&queryParams1)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsIPToSgtMappingGetIPToSgtMapping(m, getResp1, &queryParams1)
+		item1, err := searchIPToSgtMappingGetIPToSgtMapping(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		if vID != item1.ID {
+			vvID = item1.ID
+		} else {
+			vvID = vID
+		}
+	}
+	if selectedMethod == 1 {
+		vvID = vID
+		getResp, _, err := client.IPToSgtMapping.GetIPToSgtMappingByID(vvID)
+		if err != nil || getResp == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+	}
+	restyResp1, err := client.IPToSgtMapping.DeleteIPToSgtMappingByID(vvID)
+	if err != nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing DeleteIPToSgtMappingByID", err, restyResp1.String(),
+				"Failure at DeleteIPToSgtMappingByID, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing DeleteIPToSgtMappingByID", err,
+			"Failure at DeleteIPToSgtMappingByID, unexpected response", ""))
+		return diags
+	}
+
+	// d.SetId("") is automatically called assuming delete returns no errors, but
+	// it is added here for explicitness.
+	d.SetId("")
+
+	return diags
+}
+func expandRequestSgMappingCreateIPToSgtMapping(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIPToSgtMappingCreateIPToSgtMapping {
+	request := isegosdk.RequestIPToSgtMappingCreateIPToSgtMapping{}
+	request.SgMapping = expandRequestSgMappingCreateIPToSgtMappingSgMapping(ctx, key, d)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSgMappingCreateIPToSgtMappingSgMapping(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIPToSgtMappingCreateIPToSgtMappingSgMapping {
+	request := isegosdk.RequestIPToSgtMappingCreateIPToSgtMappingSgMapping{}
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
+		request.Sgt = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".deploy_to"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_to"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_to"))) {
+		request.DeployTo = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".deploy_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_type"))) {
+		request.DeployType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".host_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".host_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".host_name"))) {
+		request.HostName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".host_ip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".host_ip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".host_ip"))) {
+		request.HostIP = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".mapping_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mapping_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mapping_group"))) {
+		request.MappingGroup = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSgMappingUpdateIPToSgtMappingByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIPToSgtMappingUpdateIPToSgtMappingByID {
+	request := isegosdk.RequestIPToSgtMappingUpdateIPToSgtMappingByID{}
+	request.SgMapping = expandRequestSgMappingUpdateIPToSgtMappingByIDSgMapping(ctx, key, d)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSgMappingUpdateIPToSgtMappingByIDSgMapping(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIPToSgtMappingUpdateIPToSgtMappingByIDSgMapping {
+	request := isegosdk.RequestIPToSgtMappingUpdateIPToSgtMappingByIDSgMapping{}
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
+		request.Sgt = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".deploy_to"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_to"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_to"))) {
+		request.DeployTo = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".deploy_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_type"))) {
+		request.DeployType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".host_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".host_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".host_name"))) {
+		request.HostName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".host_ip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".host_ip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".host_ip"))) {
+		request.HostIP = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".mapping_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mapping_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mapping_group"))) {
+		request.MappingGroup = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func getAllItemsIPToSgtMappingGetIPToSgtMapping(m interface{}, response *isegosdk.ResponseIPToSgtMappingGetIPToSgtMapping, queryParams *isegosdk.GetIPToSgtMappingQueryParams) []isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingSearchResultResources {
+	client := m.(*isegosdk.Client)
+	var respItems []isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingSearchResultResources
+	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
+		respItems = append(respItems, *response.SearchResult.Resources...)
+		if response.SearchResult.NextPage != nil && response.SearchResult.NextPage.Rel == "next" {
+			href := response.SearchResult.NextPage.Href
+			page, size, err := getNextPageAndSizeParams(href)
+			if err != nil {
+				break
+			}
+			if queryParams != nil {
+				queryParams.Page = page
+				queryParams.Size = size
+			}
+			response, _, err = client.IPToSgtMapping.GetIPToSgtMapping(queryParams)
+			if err != nil {
+				break
+			}
+			// All is good, continue to the next page
+			continue
+		}
+		// Does not have next page finish iteration
+		break
+	}
+	return respItems
+}
+
+func searchIPToSgtMappingGetIPToSgtMapping(m interface{}, items []isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingSearchResultResources, name string, id string) (*isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingByIDSgMapping, error) {
+	client := m.(*isegosdk.Client)
+	var err error
+	var foundItem *isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingByIDSgMapping
+	for _, item := range items {
+		if id != "" && item.ID == id {
+			// Call get by _ method and set value to foundItem and return
+			var getItem *isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingByID
+			getItem, _, err = client.IPToSgtMapping.GetIPToSgtMappingByID(id)
+			if err != nil {
+				return foundItem, err
+			}
+			if getItem == nil {
+				return foundItem, fmt.Errorf("Empty response from %s", "GetIPToSgtMappingByID")
+			}
+			foundItem = getItem.SgMapping
+			return foundItem, err
+		} else if name != "" && item.Name == name {
+			// Call get by _ method and set value to foundItem and return
+			var getItem *isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingByID
+			getItem, _, err = client.IPToSgtMapping.GetIPToSgtMappingByID(item.ID)
+			if err != nil {
+				return foundItem, err
+			}
+			if getItem == nil {
+				return foundItem, fmt.Errorf("Empty response from %s", "GetIPToSgtMappingByID")
+			}
+			foundItem = getItem.SgMapping
+			return foundItem, err
+		}
+	}
+	return foundItem, err
+}

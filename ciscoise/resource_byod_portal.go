@@ -1,0 +1,1576 @@
+package ciscoise
+
+import (
+	"context"
+	"fmt"
+	"reflect"
+
+	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	"log"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+func resourceByodPortal() *schema.Resource {
+	return &schema.Resource{
+
+		CreateContext: resourceByodPortalCreate,
+		ReadContext:   resourceByodPortalRead,
+		UpdateContext: resourceByodPortalUpdate,
+		DeleteContext: resourceByodPortalDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
+		Schema: map[string]*schema.Schema{
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"customizations": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"global_customizations": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"background_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"banner_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"banner_title": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"contact_text": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"desktop_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"footer_element": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"mobile_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"language": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"view_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"page_customizations": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"data": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"portal_theme": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"theme_data": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"portal_tweak_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"banner_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"banner_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"page_background_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"page_label_and_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:             schema.TypeList,
+							DiffSuppressFunc: diffSuppressAlways(),
+							Computed:         true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+									"rel": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+									"type": &schema.Schema{
+										Type:             schema.TypeString,
+										DiffSuppressFunc: diffSuppressAlways(),
+										Computed:         true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"portal_test_url": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"portal_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"byod_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"byod_registration_settings": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_point_identity_group_id": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"show_device_id": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"byod_registration_success_settings": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"redirect_url": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"success_redirect": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+												"byod_welcome_settings": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"aup_display": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+																Computed: true,
+															},
+															"enable_byo_d": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+																Computed: true,
+															},
+															"enable_guest_access": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+																Computed: true,
+															},
+															"include_aup": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+																Computed: true,
+															},
+															"require_aup_acceptance": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+																Computed: true,
+															},
+															"require_mdm": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+																Computed: true,
+															},
+															"require_scrolling": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+																Computed: true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"portal_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"allowed_interfaces": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"always_used_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"certificate_group_tag": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"display_lang": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"endpoint_identity_group": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"fallback_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"https_port": &schema.Schema{
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"support_info_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"default_empty_field_value": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"empty_field_display": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+													Computed: true,
+												},
+												"include_browser_user_agent": &schema.Schema{
+													Type:     schema.TypeBool,
+													Optional: true,
+													Computed: true,
+												},
+												"include_failure_code": &schema.Schema{
+													Type:     schema.TypeBool,
+													Optional: true,
+													Computed: true,
+												},
+												"include_ip_address": &schema.Schema{
+													Type:     schema.TypeBool,
+													Optional: true,
+													Computed: true,
+												},
+												"include_mac_addr": &schema.Schema{
+													Type:     schema.TypeBool,
+													Optional: true,
+													Computed: true,
+												},
+												"include_policy_server": &schema.Schema{
+													Type:     schema.TypeBool,
+													Optional: true,
+													Computed: true,
+												},
+												"include_support_info_page": &schema.Schema{
+													Type:     schema.TypeBool,
+													Optional: true,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceItem := *getResourceItem(d.Get("item"))
+	request1 := expandRequestByodPortalCreateByodPortal(ctx, "item.0", d)
+	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+
+	vID, okID := resourceItem["id"]
+	vName, _ := resourceItem["name"]
+	vvID := interfaceToString(vID)
+	vvName := interfaceToString(vName)
+	if okID && vvID != "" {
+		getResponse2, _, err := client.ByodPortal.GetByodPortalByID(vvID)
+		if err == nil && getResponse2 != nil {
+			resourceMap := make(map[string]string)
+			resourceMap["id"] = vvID
+			resourceMap["name"] = vvName
+			d.SetId(joinResourceID(resourceMap))
+			return diags
+		}
+	} else {
+		queryParams2 := isegosdk.GetByodPortalQueryParams{}
+
+		response2, _, err := client.ByodPortal.GetByodPortal(&queryParams2)
+		if response2 != nil && err == nil {
+			items2 := getAllItemsByodPortalGetByodPortal(m, response2, &queryParams2)
+			item2, err := searchByodPortalGetByodPortal(m, items2, vvName, vvID)
+			if err == nil && item2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return diags
+			}
+		}
+	}
+	restyResp1, err := client.ByodPortal.CreateByodPortal(request1)
+	if err != nil {
+		if restyResp1 != nil {
+			diags = append(diags, diagErrorWithResponse(
+				"Failure when executing CreateByodPortal", err, restyResp1.String()))
+			return diags
+		}
+		diags = append(diags, diagError(
+			"Failure when executing CreateByodPortal", err))
+		return diags
+	}
+	headers := restyResp1.Header()
+	if locationHeader, ok := headers["Location"]; ok && len(locationHeader) > 0 {
+		vvID = getLocationID(locationHeader[0])
+	}
+	resourceMap := make(map[string]string)
+	resourceMap["id"] = vvID
+	resourceMap["name"] = vvName
+	d.SetId(joinResourceID(resourceMap))
+	return diags
+}
+
+func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vID, okID := resourceMap["id"]
+	vName, okName := resourceMap["name"]
+
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	if selectedMethod == 2 {
+		vvName := vName
+		vvID := vID
+
+		log.Printf("[DEBUG] Selected method: GetByodPortal")
+		queryParams1 := isegosdk.GetByodPortalQueryParams{}
+		response1, _, err := client.ByodPortal.GetByodPortal(&queryParams1)
+
+		if err != nil || response1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetByodPortal", err,
+				"Failure at GetByodPortal, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+
+		items1 := getAllItemsByodPortalGetByodPortal(m, response1, &queryParams1)
+		item1, err := searchByodPortalGetByodPortal(m, items1, vvName, vvID)
+		if err != nil || item1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when searching item from GetByodPortal response", err,
+				"Failure when searching item from GetByodPortal, unexpected response", ""))
+			return diags
+		}
+		if err := d.Set("item", item1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetByodPortal search response",
+				err))
+			return diags
+		}
+		// TODO: Review, what happens if you reset the Id
+	}
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetByodPortalByID")
+		vvID := vID
+
+		response2, _, err := client.ByodPortal.GetByodPortalByID(vvID)
+
+		if err != nil || response2 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetByodPortalByID", err,
+				"Failure at GetByodPortalByID, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+
+		vItem2 := flattenByodPortalGetByodPortalByIDItem(response2.ByodPortal)
+		if err := d.Set("item", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetByodPortalByID response",
+				err))
+			return diags
+		}
+		return diags
+
+	}
+	return diags
+}
+
+func resourceByodPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vID, okID := resourceMap["id"]
+	vName, okName := resourceMap["name"]
+
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	// NOTE: Consider adding getAllItems and search function to get missing params
+	if selectedMethod == 2 {
+		vvName := vName
+		vvID := vID
+
+		log.Printf("[DEBUG] Selected method: GetByodPortal")
+		queryParams1 := isegosdk.GetByodPortalQueryParams{}
+		response1, _, err := client.ByodPortal.GetByodPortal(&queryParams1)
+
+		if err == nil && response1 != nil {
+			items1 := getAllItemsByodPortalGetByodPortal(m, response1, &queryParams1)
+			item1, err := searchByodPortalGetByodPortal(m, items1, vvName, vvID)
+			if err == nil && item1 != nil {
+				vvID = item1.ID
+			}
+		}
+	}
+	if selectedMethod == 1 {
+		vvID = vID
+	}
+	if d.HasChange("item") {
+		log.Printf("[DEBUG] vvID %s", vvID)
+		request1 := expandRequestByodPortalUpdateByodPortalByID(ctx, "item.0", d)
+		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		response1, restyResp1, err := client.ByodPortal.UpdateByodPortalByID(vvID, request1)
+		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing UpdateByodPortalByID", err, restyResp1.String(),
+					"Failure at UpdateByodPortalByID, unexpected response", ""))
+				return diags
+			}
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing UpdateByodPortalByID", err,
+				"Failure at UpdateByodPortalByID, unexpected response", ""))
+			return diags
+		}
+	}
+
+	return resourceByodPortalRead(ctx, d, m)
+}
+
+func resourceByodPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vID, okID := resourceMap["id"]
+	vName, okName := resourceMap["name"]
+
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	// var vvName string
+	// REVIEW: Add getAllItems and search function to get missing params
+	if selectedMethod == 2 {
+		queryParams1 := isegosdk.GetByodPortalQueryParams{}
+
+		getResp1, _, err := client.ByodPortal.GetByodPortal(&queryParams1)
+		if err != nil || getResp1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		items1 := getAllItemsByodPortalGetByodPortal(m, getResp1, &queryParams1)
+		item1, err := searchByodPortalGetByodPortal(m, items1, vName, vID)
+		if err != nil || item1 == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		if vID != item1.ID {
+			vvID = item1.ID
+		} else {
+			vvID = vID
+		}
+	}
+	if selectedMethod == 1 {
+		vvID = vID
+		getResp, _, err := client.ByodPortal.GetByodPortalByID(vvID)
+		if err != nil || getResp == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+	}
+	restyResp1, err := client.ByodPortal.DeleteByodPortalByID(vvID)
+	if err != nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing DeleteByodPortalByID", err, restyResp1.String(),
+				"Failure at DeleteByodPortalByID, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing DeleteByodPortalByID", err,
+			"Failure at DeleteByodPortalByID, unexpected response", ""))
+		return diags
+	}
+
+	// d.SetId("") is automatically called assuming delete returns no errors, but
+	// it is added here for explicitness.
+	d.SetId("")
+
+	return diags
+}
+func expandRequestByodPortalCreateByodPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortal {
+	request := isegosdk.RequestByodPortalCreateByodPortal{}
+	request.ByodPortal = expandRequestByodPortalCreateByodPortalByodPortal(ctx, key, d)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortal {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortal{}
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".portal_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_type"))) {
+		request.PortalType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".portal_test_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_test_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_test_url"))) {
+		request.PortalTestURL = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".settings"))) {
+		request.Settings = expandRequestByodPortalCreateByodPortalByodPortalSettings(ctx, key+".settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customizations"))) {
+		request.Customizations = expandRequestByodPortalCreateByodPortalByodPortalCustomizations(ctx, key+".customizations.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettings {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettings{}
+	if v, ok := d.GetOkExists(key + ".portal_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_settings"))) {
+		request.PortalSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings(ctx, key+".portal_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".byod_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_settings"))) {
+		request.ByodSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettings(ctx, key+".byod_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".support_info_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_info_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_info_settings"))) {
+		request.SupportInfoSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSettings(ctx, key+".support_info_settings.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings{}
+	if v, ok := d.GetOkExists(key + ".https_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".https_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".https_port"))) {
+		request.HTTPSPort = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
+		request.AllowedInterfaces = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
+		request.CertificateGroupTag = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".endpoint_identity_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".endpoint_identity_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".endpoint_identity_group"))) {
+		request.EndpointIDentityGroup = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".display_lang"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_lang"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_lang"))) {
+		request.DisplayLang = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".fallback_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".fallback_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".fallback_language"))) {
+		request.FallbackLanguage = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".always_used_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".always_used_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".always_used_language"))) {
+		request.AlwaysUsedLanguage = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettings {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettings{}
+	if v, ok := d.GetOkExists(key + ".byod_welcome_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_welcome_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_welcome_settings"))) {
+		request.ByodWelcomeSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWelcomeSettings(ctx, key+".byod_welcome_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".byod_registration_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_settings"))) {
+		request.ByodRegistrationSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSettings(ctx, key+".byod_registration_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".byod_registration_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_success_settings"))) {
+		request.ByodRegistrationSuccessSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx, key+".byod_registration_success_settings.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWelcomeSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWelcomeSettings {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWelcomeSettings{}
+	if v, ok := d.GetOkExists(key + ".enable_byo_d"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_byo_d"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_byo_d"))) {
+		request.EnableByod = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".enable_guest_access"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_guest_access"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_guest_access"))) {
+		request.EnableGuestAccess = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_mdm"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_mdm"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_mdm"))) {
+		request.RequireMdm = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+		request.IncludeAup = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".aup_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_display"))) {
+		request.AupDisplay = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_aup_acceptance"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_acceptance"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_acceptance"))) {
+		request.RequireAupAcceptance = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+		request.RequireScrolling = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSettings {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSettings{}
+	if v, ok := d.GetOkExists(key + ".show_device_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".show_device_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".show_device_id"))) {
+		request.ShowDeviceID = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".end_point_identity_group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_point_identity_group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_point_identity_group_id"))) {
+		request.EndPointIDentityGroupID = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSuccessSettings {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSuccessSettings{}
+	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+		request.SuccessRedirect = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+		request.RedirectURL = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSettings {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSettings{}
+	if v, ok := d.GetOkExists(key + ".include_support_info_page"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_support_info_page"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_support_info_page"))) {
+		request.IncludeSupportInfoPage = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_mac_addr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_mac_addr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_mac_addr"))) {
+		request.IncludeMacAddr = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_ip_address"))) {
+		request.IncludeIPAddress = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_browser_user_agent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_browser_user_agent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_browser_user_agent"))) {
+		request.IncludeBrowserUserAgent = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_policy_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_policy_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_policy_server"))) {
+		request.IncludePolicyServer = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_failure_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_failure_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_failure_code"))) {
+		request.IncludeFailureCode = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".empty_field_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".empty_field_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".empty_field_display"))) {
+		request.EmptyFieldDisplay = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".default_empty_field_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_empty_field_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_empty_field_value"))) {
+		request.DefaultEmptyFieldValue = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizations {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizations{}
+	if v, ok := d.GetOkExists(key + ".portal_theme"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_theme"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_theme"))) {
+		request.PortalTheme = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme(ctx, key+".portal_theme.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".portal_tweak_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_tweak_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_tweak_settings"))) {
+		request.PortalTweakSettings = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakSettings(ctx, key+".portal_tweak_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".language"))) {
+		request.Language = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage(ctx, key+".language.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".global_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".global_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".global_customizations"))) {
+		request.GlobalCustomizations = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizations(ctx, key+".global_customizations.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".page_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_customizations"))) {
+		request.PageCustomizations = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations(ctx, key+".page_customizations.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme{}
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+		request.ThemeData = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakSettings {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakSettings{}
+	if v, ok := d.GetOkExists(key + ".banner_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_color"))) {
+		request.BannerColor = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".banner_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_text_color"))) {
+		request.BannerTextColor = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".page_background_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_background_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_background_color"))) {
+		request.PageBackgroundColor = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".page_label_and_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_label_and_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_label_and_text_color"))) {
+		request.PageLabelAndTextColor = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage{}
+	if v, ok := d.GetOkExists(key + ".view_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".view_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".view_language"))) {
+		request.ViewLanguage = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizations {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizations{}
+	if v, ok := d.GetOkExists(key + ".mobile_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mobile_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mobile_logo_image"))) {
+		request.MobileLogoImage = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx, key+".mobile_logo_image.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".desktop_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".desktop_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".desktop_logo_image"))) {
+		request.DesktopLogoImage = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx, key+".desktop_logo_image.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".banner_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_image"))) {
+		request.BannerImage = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBannerImage(ctx, key+".banner_image.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".background_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".background_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".background_image"))) {
+		request.BackgroundImage = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx, key+".background_image.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".banner_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_title"))) {
+		request.BannerTitle = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".contact_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".contact_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".contact_text"))) {
+		request.ContactText = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".footer_element"); !isEmptyValue(reflect.ValueOf(d.Get(key+".footer_element"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".footer_element"))) {
+		request.FooterElement = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsMobileLogoImage {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsMobileLogoImage{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBannerImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBannerImage {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBannerImage{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBackgroundImage {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBackgroundImage{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData {
+	request := []isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData{}
+	o := d.Get(key)
+	if o != nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		request = append(request, *i)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData {
+	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData{}
+	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+		request.Key = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+		request.Value = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByID {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByID{}
+	request.ByodPortal = expandRequestByodPortalUpdateByodPortalByIDByodPortal(ctx, key, d)
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortal {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortal{}
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".portal_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_type"))) {
+		request.PortalType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".portal_test_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_test_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_test_url"))) {
+		request.PortalTestURL = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".settings"))) {
+		request.Settings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettings(ctx, key+".settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customizations"))) {
+		request.Customizations = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizations(ctx, key+".customizations.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettings {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettings{}
+	if v, ok := d.GetOkExists(key + ".portal_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_settings"))) {
+		request.PortalSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings(ctx, key+".portal_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".byod_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_settings"))) {
+		request.ByodSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings(ctx, key+".byod_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".support_info_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_info_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_info_settings"))) {
+		request.SupportInfoSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSettings(ctx, key+".support_info_settings.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings{}
+	if v, ok := d.GetOkExists(key + ".https_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".https_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".https_port"))) {
+		request.HTTPSPort = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
+		request.AllowedInterfaces = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
+		request.CertificateGroupTag = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".endpoint_identity_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".endpoint_identity_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".endpoint_identity_group"))) {
+		request.EndpointIDentityGroup = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".display_lang"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_lang"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_lang"))) {
+		request.DisplayLang = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".fallback_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".fallback_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".fallback_language"))) {
+		request.FallbackLanguage = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".always_used_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".always_used_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".always_used_language"))) {
+		request.AlwaysUsedLanguage = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings{}
+	if v, ok := d.GetOkExists(key + ".byod_welcome_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_welcome_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_welcome_settings"))) {
+		request.ByodWelcomeSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings(ctx, key+".byod_welcome_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".byod_registration_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_settings"))) {
+		request.ByodRegistrationSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings(ctx, key+".byod_registration_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".byod_registration_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_success_settings"))) {
+		request.ByodRegistrationSuccessSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx, key+".byod_registration_success_settings.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings{}
+	if v, ok := d.GetOkExists(key + ".enable_byo_d"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_byo_d"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_byo_d"))) {
+		request.EnableByod = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".enable_guest_access"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_guest_access"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_guest_access"))) {
+		request.EnableGuestAccess = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_mdm"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_mdm"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_mdm"))) {
+		request.RequireMdm = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+		request.IncludeAup = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".aup_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_display"))) {
+		request.AupDisplay = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_aup_acceptance"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_acceptance"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_acceptance"))) {
+		request.RequireAupAcceptance = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+		request.RequireScrolling = interfaceToBoolPtr(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings{}
+	if v, ok := d.GetOkExists(key + ".show_device_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".show_device_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".show_device_id"))) {
+		request.ShowDeviceID = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".end_point_identity_group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_point_identity_group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_point_identity_group_id"))) {
+		request.EndPointIDentityGroupID = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings{}
+	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+		request.SuccessRedirect = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+		request.RedirectURL = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSettings {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSettings{}
+	if v, ok := d.GetOkExists(key + ".include_support_info_page"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_support_info_page"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_support_info_page"))) {
+		request.IncludeSupportInfoPage = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_mac_addr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_mac_addr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_mac_addr"))) {
+		request.IncludeMacAddr = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_ip_address"))) {
+		request.IncludeIPAddress = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_browser_user_agent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_browser_user_agent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_browser_user_agent"))) {
+		request.IncludeBrowserUserAgent = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_policy_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_policy_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_policy_server"))) {
+		request.IncludePolicyServer = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".include_failure_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_failure_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_failure_code"))) {
+		request.IncludeFailureCode = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".empty_field_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".empty_field_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".empty_field_display"))) {
+		request.EmptyFieldDisplay = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".default_empty_field_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_empty_field_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_empty_field_value"))) {
+		request.DefaultEmptyFieldValue = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizations {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizations{}
+	if v, ok := d.GetOkExists(key + ".portal_theme"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_theme"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_theme"))) {
+		request.PortalTheme = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTheme(ctx, key+".portal_theme.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".portal_tweak_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_tweak_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_tweak_settings"))) {
+		request.PortalTweakSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTweakSettings(ctx, key+".portal_tweak_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".language"))) {
+		request.Language = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage(ctx, key+".language.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".global_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".global_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".global_customizations"))) {
+		request.GlobalCustomizations = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizations(ctx, key+".global_customizations.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".page_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_customizations"))) {
+		request.PageCustomizations = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations(ctx, key+".page_customizations.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTheme {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTheme{}
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+		request.ThemeData = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTweakSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTweakSettings {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTweakSettings{}
+	if v, ok := d.GetOkExists(key + ".banner_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_color"))) {
+		request.BannerColor = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".banner_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_text_color"))) {
+		request.BannerTextColor = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".page_background_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_background_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_background_color"))) {
+		request.PageBackgroundColor = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".page_label_and_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_label_and_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_label_and_text_color"))) {
+		request.PageLabelAndTextColor = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage{}
+	if v, ok := d.GetOkExists(key + ".view_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".view_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".view_language"))) {
+		request.ViewLanguage = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizations {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizations{}
+	if v, ok := d.GetOkExists(key + ".mobile_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mobile_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mobile_logo_image"))) {
+		request.MobileLogoImage = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx, key+".mobile_logo_image.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".desktop_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".desktop_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".desktop_logo_image"))) {
+		request.DesktopLogoImage = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx, key+".desktop_logo_image.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".banner_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_image"))) {
+		request.BannerImage = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage(ctx, key+".banner_image.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".background_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".background_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".background_image"))) {
+		request.BackgroundImage = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx, key+".background_image.0", d)
+	}
+	if v, ok := d.GetOkExists(key + ".banner_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_title"))) {
+		request.BannerTitle = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".contact_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".contact_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".contact_text"))) {
+		request.ContactText = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".footer_element"); !isEmptyValue(reflect.ValueOf(d.Get(key+".footer_element"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".footer_element"))) {
+		request.FooterElement = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations{}
+	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+		request.Data = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData {
+	request := []isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData{}
+	o := d.Get(key)
+	if o != nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no, _ := range objs {
+		i := expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		request = append(request, *i)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData {
+	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData{}
+	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+		request.Key = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+		request.Value = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func getAllItemsByodPortalGetByodPortal(m interface{}, response *isegosdk.ResponseByodPortalGetByodPortal, queryParams *isegosdk.GetByodPortalQueryParams) []isegosdk.ResponseByodPortalGetByodPortalSearchResultResources {
+	client := m.(*isegosdk.Client)
+	var respItems []isegosdk.ResponseByodPortalGetByodPortalSearchResultResources
+	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
+		respItems = append(respItems, *response.SearchResult.Resources...)
+		if response.SearchResult.NextPage != nil && response.SearchResult.NextPage.Rel == "next" {
+			href := response.SearchResult.NextPage.Href
+			page, size, err := getNextPageAndSizeParams(href)
+			if err != nil {
+				break
+			}
+			if queryParams != nil {
+				queryParams.Page = page
+				queryParams.Size = size
+			}
+			response, _, err = client.ByodPortal.GetByodPortal(queryParams)
+			if err != nil {
+				break
+			}
+			// All is good, continue to the next page
+			continue
+		}
+		// Does not have next page finish iteration
+		break
+	}
+	return respItems
+}
+
+func searchByodPortalGetByodPortal(m interface{}, items []isegosdk.ResponseByodPortalGetByodPortalSearchResultResources, name string, id string) (*isegosdk.ResponseByodPortalGetByodPortalByIDByodPortal, error) {
+	client := m.(*isegosdk.Client)
+	var err error
+	var foundItem *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortal
+	for _, item := range items {
+		if id != "" && item.ID == id {
+			// Call get by _ method and set value to foundItem and return
+			var getItem *isegosdk.ResponseByodPortalGetByodPortalByID
+			getItem, _, err = client.ByodPortal.GetByodPortalByID(id)
+			if err != nil {
+				return foundItem, err
+			}
+			if getItem == nil {
+				return foundItem, fmt.Errorf("Empty response from %s", "GetByodPortalByID")
+			}
+			foundItem = getItem.ByodPortal
+			return foundItem, err
+		} else if name != "" && item.Name == name {
+			// Call get by _ method and set value to foundItem and return
+			var getItem *isegosdk.ResponseByodPortalGetByodPortalByID
+			getItem, _, err = client.ByodPortal.GetByodPortalByID(item.ID)
+			if err != nil {
+				return foundItem, err
+			}
+			if getItem == nil {
+				return foundItem, fmt.Errorf("Empty response from %s", "GetByodPortalByID")
+			}
+			foundItem = getItem.ByodPortal
+			return foundItem, err
+		}
+	}
+	return foundItem, err
+}
