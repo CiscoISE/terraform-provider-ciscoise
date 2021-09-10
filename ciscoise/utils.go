@@ -5,11 +5,25 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"net/url"
 	"reflect"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
 )
+
+func compareSGT(first_sgt, second_sgt string) bool {
+	rexp := `\s*\(.*\)$`
+	oldClear, newClear := replaceRegExStrings(first_sgt, second_sgt, rexp, "")
+	return oldClear == newClear
+}
+
+func replaceRegExStrings(first_str, second_str, regex_src, sub_repl string) (string, string) {
+	m1 := regexp.MustCompile(regex_src)
+	first_repl := m1.ReplaceAllString(first_str, sub_repl)
+	second_repl := m1.ReplaceAllString(second_str, sub_repl)
+	return first_repl, second_repl
+}
 
 func replaceAllStr(original_str string, old string, new string) string {
 	return strings.ReplaceAll(original_str, old, new)
