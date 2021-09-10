@@ -439,9 +439,9 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 	vvPolicyID := vPolicyID
 	vvName := vName
 	method1 := []bool{okPolicyID, okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okPolicyID, okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
@@ -526,9 +526,9 @@ func resourceNetworkAccessAuthenticationRulesUpdate(ctx context.Context, d *sche
 	vvPolicyID := vPolicyID
 	vvName := vName
 	method1 := []bool{okPolicyID, okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okPolicyID, okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	// NOTE: Consider adding getAllItems and search function to get missing params
@@ -599,9 +599,9 @@ func resourceNetworkAccessAuthenticationRulesDelete(ctx context.Context, d *sche
 	vvPolicyID := vPolicyID
 	vvName := vName
 	method1 := []bool{okPolicyID, okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okPolicyID, okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 

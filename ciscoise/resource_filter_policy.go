@@ -155,9 +155,9 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 	vvVn := vVn
 	vvID := vID
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okSgt, okSubnet, okVn}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
@@ -234,9 +234,9 @@ func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m i
 	vvVn := vVn
 	vvID := vID
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okSgt, okSubnet, okVn}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	// NOTE: Consider adding getAllItems and search function to get missing params
@@ -294,9 +294,9 @@ func resourceFilterPolicyDelete(ctx context.Context, d *schema.ResourceData, m i
 	vvVn := vVn
 	vvID := vID
 	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okSgt, okSubnet, okVn}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	// REVIEW: Add getAllItems and search function to get missing params
