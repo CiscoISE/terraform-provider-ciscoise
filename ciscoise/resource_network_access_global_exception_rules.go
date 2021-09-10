@@ -44,26 +44,22 @@ func resourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 							Optional: true,
 						},
 						"link": &schema.Schema{
-							Type:             schema.TypeList,
-							DiffSuppressFunc: diffSuppressAlways(),
-							Computed:         true,
+							Type:     schema.TypeList,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"href": &schema.Schema{
-										Type:             schema.TypeString,
-										DiffSuppressFunc: diffSuppressAlways(),
-										Computed:         true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"rel": &schema.Schema{
-										Type:             schema.TypeString,
-										DiffSuppressFunc: diffSuppressAlways(),
-										Computed:         true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"type": &schema.Schema{
-										Type:             schema.TypeString,
-										DiffSuppressFunc: diffSuppressAlways(),
-										Computed:         true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 								},
 							},
