@@ -14,11 +14,11 @@ func dataSourceMntSessionReauthentication() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceMntSessionReauthenticationRead,
 		Schema: map[string]*schema.Schema{
-			"psn_nam_e": &schema.Schema{
+			"end_poi_ntm_ac": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"end_poi_ntm_ac": &schema.Schema{
+			"psn_nam_e": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},

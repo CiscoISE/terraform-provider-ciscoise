@@ -14,6 +14,25 @@ func dataSourceRestIDStore() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceRestIDStoreRead,
 		Schema: map[string]*schema.Schema{
+			"filter": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"filter_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -30,24 +49,85 @@ func dataSourceRestIDStore() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"filter": &schema.Schema{
+			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ers_rest_idstore_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"headers": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"key": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"value": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"predefined": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"root_url": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"username_suffix": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
 				},
-			},
-			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
 			},
 			"item_name": &schema.Schema{
 				Type:     schema.TypeList,
@@ -55,14 +135,6 @@ func dataSourceRestIDStore() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -73,18 +145,6 @@ func dataSourceRestIDStore() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"username_suffix": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"root_url": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"predefined": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
 									"headers": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -102,58 +162,7 @@ func dataSourceRestIDStore() *schema.Resource {
 											},
 										},
 									},
-								},
-							},
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
-			"item_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"ers_rest_idstore_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"username_suffix": &schema.Schema{
+									"predefined": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -161,29 +170,16 @@ func dataSourceRestIDStore() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"predefined": &schema.Schema{
+									"username_suffix": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"headers": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"key": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
 								},
 							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -191,11 +187,11 @@ func dataSourceRestIDStore() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -205,6 +201,10 @@ func dataSourceRestIDStore() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -215,15 +215,11 @@ func dataSourceRestIDStore() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -233,11 +229,11 @@ func dataSourceRestIDStore() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -247,6 +243,10 @@ func dataSourceRestIDStore() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -313,7 +313,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 		var items1 []isegosdk.ResponseRestidStoreGetRestIDStoreSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

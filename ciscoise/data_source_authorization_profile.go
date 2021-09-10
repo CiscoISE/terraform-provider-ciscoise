@@ -14,6 +14,14 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceAuthorizationProfileRead,
 		Schema: map[string]*schema.Schema{
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -22,29 +30,17 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"item_name": &schema.Schema{
+			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
+						"access_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
+						"acl": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -64,11 +60,11 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"dictionary_name": &schema.Schema{
+												"attribute_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"attribute_name": &schema.Schema{
+												"dictionary_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -89,11 +85,11 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"dictionary_name": &schema.Schema{
+												"attribute_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"attribute_name": &schema.Schema{
+												"dictionary_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -107,12 +103,122 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 								},
 							},
 						},
-						"access_type": &schema.Schema{
+						"agentless_posture": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"airespace_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"airespace_ipv6_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"asa_vpn": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"authz_profile_type": &schema.Schema{
 							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"auto_smart_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"avc_profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"easywired_session_candidate": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface_template": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipv6_acl_filter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipv6_dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"mac_sec_policy": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"neat": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"profile_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"reauth": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"connectivity": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"timer": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"service_template": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"track_movement": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"vlan": &schema.Schema{
@@ -132,29 +238,12 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 								},
 							},
 						},
-						"reauth": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"timer": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"connectivity": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"airespace_acl": &schema.Schema{
-							Type:     schema.TypeString,
+						"voice_domain_permission": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
-						"airespace_ipv6_acl": &schema.Schema{
-							Type:     schema.TypeString,
+						"web_auth": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"web_redirection": &schema.Schema{
@@ -171,104 +260,15 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"display_certificates_renewal_messages": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
 									"portal_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"static_iphost_name_fqd_n": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"display_certificates_renewal_messages": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"acl": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"track_movement": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"agentless_posture": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"service_template": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"easywired_session_candidate": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"dacl_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"voice_domain_permission": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"neat": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"web_auth": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"auto_smart_port": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"interface_template": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"ipv6_acl_filter": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"avc_profile": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"mac_sec_policy": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"asa_vpn": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"profile_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"ipv6_dacl_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -278,21 +278,17 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 					},
 				},
 			},
-			"item_id": &schema.Schema{
+			"item_name": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
+						"access_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
+						"acl": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -312,11 +308,11 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"dictionary_name": &schema.Schema{
+												"attribute_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"attribute_name": &schema.Schema{
+												"dictionary_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -337,11 +333,11 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"dictionary_name": &schema.Schema{
+												"attribute_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"attribute_name": &schema.Schema{
+												"dictionary_name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -355,12 +351,122 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 								},
 							},
 						},
-						"access_type": &schema.Schema{
+						"agentless_posture": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"airespace_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"airespace_ipv6_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"asa_vpn": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"authz_profile_type": &schema.Schema{
 							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"auto_smart_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"avc_profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"easywired_session_candidate": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface_template": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipv6_acl_filter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipv6_dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"mac_sec_policy": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"neat": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"profile_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"reauth": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"connectivity": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"timer": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"service_template": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"track_movement": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"vlan": &schema.Schema{
@@ -380,29 +486,12 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 								},
 							},
 						},
-						"reauth": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"timer": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"connectivity": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"airespace_acl": &schema.Schema{
-							Type:     schema.TypeString,
+						"voice_domain_permission": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
-						"airespace_ipv6_acl": &schema.Schema{
-							Type:     schema.TypeString,
+						"web_auth": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"web_redirection": &schema.Schema{
@@ -419,104 +508,15 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"display_certificates_renewal_messages": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
 									"portal_name": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"static_iphost_name_fqd_n": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"display_certificates_renewal_messages": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"acl": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"track_movement": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"agentless_posture": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"service_template": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"easywired_session_candidate": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"dacl_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"voice_domain_permission": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"neat": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"web_auth": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"auto_smart_port": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"interface_template": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"ipv6_acl_filter": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"avc_profile": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"mac_sec_policy": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"asa_vpn": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"profile_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"ipv6_dacl_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -532,15 +532,11 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -550,11 +546,11 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -564,6 +560,10 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -614,7 +614,7 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 		var items1 []isegosdk.ResponseAuthorizationProfileGetAuthorizationProfilesSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

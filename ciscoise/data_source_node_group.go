@@ -18,62 +18,12 @@ func dataSourceNodeGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"items": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"mar_cache": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"replication_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"replication_attempts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"query_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"query_attempts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-								},
-							},
-						},
-					},
-				},
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -88,11 +38,7 @@ func dataSourceNodeGroup() *schema.Resource {
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
-									"replication_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
-									},
-									"replication_attempts": &schema.Schema{
+									"query_attempts": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -100,12 +46,66 @@ func dataSourceNodeGroup() *schema.Resource {
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
-									"query_attempts": &schema.Schema{
+									"replication_attempts": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"replication_timeout": &schema.Schema{
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mar_cache": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"enabled": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"query_attempts": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"query_timeout": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"replication_attempts": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"replication_timeout": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},

@@ -18,61 +18,28 @@ func dataSourceTasks() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"items": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"execution_status": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"module_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"start_time": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"resources_count": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"success_count": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"fail_count": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"detail_status": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
-					},
-				},
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
+						"detail_status": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"execution_status": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"execution_status": &schema.Schema{
+						"fail_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -80,7 +47,47 @@ func dataSourceTasks() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"resources_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 						"start_time": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"success_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"detail_status": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"execution_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"fail_count": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"module_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -88,20 +95,13 @@ func dataSourceTasks() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"start_time": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"success_count": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
-						},
-						"fail_count": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"detail_status": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 					},
 				},

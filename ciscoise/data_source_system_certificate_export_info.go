@@ -1,0 +1,86 @@
+package ciscoise
+
+import (
+	"context"
+
+	"reflect"
+
+	"ciscoise-go-sdk/sdk"
+	"log"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
+
+// dataSourceAction
+func dataSourceSystemCertificateExportInfo() *schema.Resource {
+	return &schema.Resource{
+		ReadContext: dataSourceSystemCertificateExportInfoRead,
+		Schema: map[string]*schema.Schema{
+			"dirpath": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+			},
+			"export": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"password": &schema.Schema{
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+			},
+		},
+	}
+}
+
+func dataSourceSystemCertificateExportInfoRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	selectedMethod := 1
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: ExportSystemCertificate")
+		request1 := expandRequestSystemCertificateExportInfoExportSystemCertificate(ctx, "", d)
+
+		response1, _, err := client.Certificates.ExportSystemCertificate(request1)
+
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when executing ExportSystemCertificate", err))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response")
+
+		vvDirpath := d.Get("dirpath").(string)
+		err = response1.SaveDownload(vvDirpath)
+		if err != nil {
+			diags = append(diags, diagError(
+				"Failure when downloading file", err))
+			return diags
+		}
+		log.Printf("[DEBUG] Downloaded file %s", vvDirpath)
+
+	}
+	return diags
+}
+
+func expandRequestSystemCertificateExportInfoExportSystemCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesExportSystemCertificate {
+	request := isegosdk.RequestCertificatesExportSystemCertificate{}
+	if v, ok := d.GetOkExists(key + ".export"); !isEmptyValue(reflect.ValueOf(d.Get(key+".export"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".export"))) {
+		request.Export = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+		request.Password = interfaceToString(v)
+	}
+	return &request
+}

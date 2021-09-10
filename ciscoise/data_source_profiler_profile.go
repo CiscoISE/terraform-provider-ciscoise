@@ -14,6 +14,21 @@ func dataSourceProfilerProfile() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceProfilerProfileRead,
 		Schema: map[string]*schema.Schema{
+			"filter": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"filter_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -30,36 +45,17 @@ func dataSourceProfilerProfile() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"filter": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -69,11 +65,11 @@ func dataSourceProfilerProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -84,24 +80,7 @@ func dataSourceProfilerProfile() *schema.Resource {
 								},
 							},
 						},
-					},
-				},
-			},
-			"item": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -109,17 +88,34 @@ func dataSourceProfilerProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+					},
+				},
+			},
+			"items": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -129,6 +125,10 @@ func dataSourceProfilerProfile() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -192,7 +192,7 @@ func dataSourceProfilerProfileRead(ctx context.Context, d *schema.ResourceData, 
 		var items1 []isegosdk.ResponseProfilerProfileGetProfilerProfilesSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

@@ -14,11 +14,11 @@ func dataSourceMntSessionDisconnect() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceMntSessionDisconnectRead,
 		Schema: map[string]*schema.Schema{
-			"end_poi_nti_p": &schema.Schema{
+			"dis_con_nec_tty_pe": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"psn_nam_e": &schema.Schema{
+			"end_poi_nti_p": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -26,11 +26,11 @@ func dataSourceMntSessionDisconnect() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"dis_con_nec_tty_pe": &schema.Schema{
+			"nas_ipv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"nas_ipv4": &schema.Schema{
+			"psn_nam_e": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},

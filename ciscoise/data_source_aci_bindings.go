@@ -14,6 +14,20 @@ func dataSourceAciBindings() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceAciBindingsRead,
 		Schema: map[string]*schema.Schema{
+			"filter_by": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"filter_value": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -30,27 +44,29 @@ func dataSourceAciBindings() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"filter_by": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"filter_value": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"learned_by": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"learned_from": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -58,11 +74,7 @@ func dataSourceAciBindings() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"ip": &schema.Schema{
+						"psn": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -71,18 +83,6 @@ func dataSourceAciBindings() *schema.Resource {
 							Computed: true,
 						},
 						"vn": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"psn": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"learned_from": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"learned_by": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},

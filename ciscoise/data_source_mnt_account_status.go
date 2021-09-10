@@ -14,11 +14,11 @@ func dataSourceMntAccountStatus() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceMntAccountStatusRead,
 		Schema: map[string]*schema.Schema{
-			"mac": &schema.Schema{
+			"duration": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"duration": &schema.Schema{
+			"mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},

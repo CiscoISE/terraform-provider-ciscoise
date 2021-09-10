@@ -14,6 +14,25 @@ func dataSourceInternalUser() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceInternalUserRead,
 		Schema: map[string]*schema.Schema{
+			"filter": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"filter_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -30,24 +49,97 @@ func dataSourceInternalUser() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"filter": &schema.Schema{
+			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"change_password": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"email": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_password": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"expiry_date": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"expiry_date_enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"first_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"identity_groups": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"last_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"password_idstore": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+					},
 				},
-			},
-			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
 			},
 			"item_name": &schema.Schema{
 				Type:     schema.TypeList,
@@ -55,52 +147,19 @@ func dataSourceInternalUser() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
+						"change_password": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
 							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
 						"email": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Sensitive: true,
-							Computed:  true,
-						},
-						"first_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"last_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"change_password": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"identity_groups": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"expiry_date_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"expiry_date": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -108,14 +167,33 @@ func dataSourceInternalUser() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
+						"enabled": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
 						},
-						"password_idstore": &schema.Schema{
-							Type:      schema.TypeString,
-							Sensitive: true,
-							Computed:  true,
+						"expiry_date": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"expiry_date_enabled": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"first_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"identity_groups": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"last_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -123,11 +201,11 @@ func dataSourceInternalUser() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -138,32 +216,7 @@ func dataSourceInternalUser() *schema.Resource {
 								},
 							},
 						},
-					},
-				},
-			},
-			"item_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"email": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -172,63 +225,10 @@ func dataSourceInternalUser() *schema.Resource {
 							Sensitive: true,
 							Computed:  true,
 						},
-						"first_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"last_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"change_password": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"identity_groups": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"expiry_date_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"expiry_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"enable_password": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
-							Computed: true,
-						},
 						"password_idstore": &schema.Schema{
 							Type:      schema.TypeString,
 							Sensitive: true,
 							Computed:  true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
 						},
 					},
 				},
@@ -239,15 +239,11 @@ func dataSourceInternalUser() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -257,11 +253,11 @@ func dataSourceInternalUser() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -271,6 +267,10 @@ func dataSourceInternalUser() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -337,7 +337,7 @@ func dataSourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m i
 		var items1 []isegosdk.ResponseInternalUserGetInternalUserSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

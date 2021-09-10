@@ -24,12 +24,12 @@ func dataSourceMntVersion() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"version": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"type_of_node": &schema.Schema{
 							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"version": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},

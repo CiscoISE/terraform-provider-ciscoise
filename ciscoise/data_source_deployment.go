@@ -20,7 +20,7 @@ func dataSourceDeployment() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"network_access_info": &schema.Schema{
+						"deployment_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -30,8 +30,8 @@ func dataSourceDeployment() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"is_csn_enabled": &schema.Schema{
-										Type:     schema.TypeBool,
+									"fipsstatus": &schema.Schema{
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"node_list": &schema.Schema{
@@ -40,38 +40,71 @@ func dataSourceDeployment() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"node_and_scope": &schema.Schema{
+												"node_and_node_count_and_count_info": &schema.Schema{
 													Type:     schema.TypeList,
 													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"declared_type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"global_scope": &schema.Schema{
+																Type:     schema.TypeBool,
+																Computed: true,
+															},
+															"name": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"nil": &schema.Schema{
+																Type:     schema.TypeBool,
+																Computed: true,
+															},
+															"scope": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type_substituted": &schema.Schema{
+																Type:     schema.TypeBool,
+																Computed: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
 													},
 												},
 											},
 										},
 									},
-									"sda_vns": &schema.Schema{
+									"version_history_info": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"trust_sec_control": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"radius3_rd_party": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"epoch_time": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"main_version": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"op_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
 										},
 									},
 								},
 							},
 						},
-						"profiler_info": &schema.Schema{
+						"kong_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -93,186 +126,49 @@ func dataSourceDeployment() *schema.Resource {
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"online_subscription_enabled": &schema.Schema{
-																Type:     schema.TypeBool,
+															"service": &schema.Schema{
+																Type:     schema.TypeList,
 																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"route": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Computed: true,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"http_count": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"latency_count": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"latency_sum": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"route_name": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																				},
+																			},
+																		},
+																		"service_name": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
-															"last_applied_feed_date_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"scope": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"profiles": &schema.Schema{
+															"sn": &schema.Schema{
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 														},
-													},
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-						"deployment_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"deployment_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"version_history_info": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"op_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"main_version": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"epoch_time": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"node_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"node_and_node_count_and_count_info": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"name": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"declared_type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"scope": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"nil": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"global_scope": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"type_substituted": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-														},
-													},
-												},
-											},
-										},
-									},
-									"fipsstatus": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"nad_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"node_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"node_and_scope": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-											},
-										},
-									},
-									"nadcount_info": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"total_active_nad_count": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
-						"mdm_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"active_mdm_servers_count": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"active_desktop_mdm_servers_count": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"active_mobile_mdm_servers_count": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"deployment_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"node_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"node_and_scope": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
 													},
 												},
 											},
@@ -310,6 +206,136 @@ func dataSourceDeployment() *schema.Resource {
 								},
 							},
 						},
+						"mdm_info": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"active_desktop_mdm_servers_count": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"active_mdm_servers_count": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"active_mobile_mdm_servers_count": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"deployment_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"node_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"node_and_scope": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"nad_info": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"nadcount_info": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"total_active_nad_count": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"node_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"node_and_scope": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"network_access_info": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"deployment_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"is_csn_enabled": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"node_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"node_and_scope": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+											},
+										},
+									},
+									"radius3_rd_party": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"sda_vns": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"trust_sec_control": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"posture_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -322,19 +348,15 @@ func dataSourceDeployment() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
 												"declared_type": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
-												"scope": &schema.Schema{
+												"global_scope": &schema.Schema{
+													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"name": &schema.Schema{
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -342,12 +364,16 @@ func dataSourceDeployment() *schema.Resource {
 													Type:     schema.TypeBool,
 													Computed: true,
 												},
-												"global_scope": &schema.Schema{
-													Type:     schema.TypeBool,
+												"scope": &schema.Schema{
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"type_substituted": &schema.Schema{
 													Type:     schema.TypeBool,
+													Computed: true,
+												},
+												"value": &schema.Schema{
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -356,7 +382,7 @@ func dataSourceDeployment() *schema.Resource {
 								},
 							},
 						},
-						"kong_info": &schema.Schema{
+						"profiler_info": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -378,47 +404,21 @@ func dataSourceDeployment() *schema.Resource {
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"sn": &schema.Schema{
+															"last_applied_feed_date_time": &schema.Schema{
 																Type:     schema.TypeString,
 																Computed: true,
 															},
-															"service": &schema.Schema{
-																Type:     schema.TypeList,
+															"online_subscription_enabled": &schema.Schema{
+																Type:     schema.TypeBool,
 																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"service_name": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																		"route": &schema.Schema{
-																			Type:     schema.TypeList,
-																			Computed: true,
-																			Elem: &schema.Resource{
-																				Schema: map[string]*schema.Schema{
-
-																					"route_name": &schema.Schema{
-																						Type:     schema.TypeString,
-																						Computed: true,
-																					},
-																					"http_count": &schema.Schema{
-																						Type:     schema.TypeString,
-																						Computed: true,
-																					},
-																					"latency_count": &schema.Schema{
-																						Type:     schema.TypeString,
-																						Computed: true,
-																					},
-																					"latency_sum": &schema.Schema{
-																						Type:     schema.TypeString,
-																						Computed: true,
-																					},
-																				},
-																			},
-																		},
-																	},
-																},
+															},
+															"profiles": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"scope": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},

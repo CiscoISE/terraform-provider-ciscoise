@@ -6,6 +6,14 @@ import (
 	"strconv"
 )
 
+func mapInterfaceToMapString(m map[string]interface{}) map[string]string {
+	new_m := map[string]string{}
+	for k, v := range m {
+		new_m[k] = interfaceToString(v)
+	}
+	return new_m
+}
+
 func interfaceToIntPtr(item interface{}) *int {
 	nItem := interfaceToString(item)
 	nnItem, err := strconv.Atoi(nItem)

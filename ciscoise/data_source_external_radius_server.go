@@ -14,6 +14,14 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceExternalRadiusServerRead,
 		Schema: map[string]*schema.Schema{
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -22,13 +30,91 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"item_id": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"accounting_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"authentication_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"authenticator_key": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"enable_key_wrap": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"encryption_key": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"host_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"key_input_format": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"proxy_timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"retries": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"shared_secret": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"timeout": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"item_name": &schema.Schema{
 				Type:     schema.TypeList,
@@ -36,23 +122,19 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
+						"accounting_port": &schema.Schema{
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
-						"name": &schema.Schema{
+						"authentication_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"authenticator_key": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"host_ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"shared_secret": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -64,32 +146,16 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"authenticator_key": &schema.Schema{
+						"host_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"key_input_format": &schema.Schema{
 							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"authentication_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"accounting_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"timeout": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"retries": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"proxy_timeout": &schema.Schema{
-							Type:     schema.TypeInt,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -98,11 +164,11 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -113,91 +179,25 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 								},
 							},
 						},
-					},
-				},
-			},
-			"item_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
+						"proxy_timeout": &schema.Schema{
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
-						"host_ip": &schema.Schema{
-							Type:     schema.TypeString,
+						"retries": &schema.Schema{
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 						"shared_secret": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"enable_key_wrap": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"encryption_key": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"authenticator_key": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"key_input_format": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"authentication_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"accounting_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
 						"timeout": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
-						},
-						"retries": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"proxy_timeout": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
 						},
 					},
 				},
@@ -208,15 +208,11 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -226,11 +222,11 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -240,6 +236,10 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -290,7 +290,7 @@ func dataSourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceD
 		var items1 []isegosdk.ResponseExternalRadiusServerGetExternalRadiusServerSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

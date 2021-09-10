@@ -14,6 +14,25 @@ func dataSourceEndpoint() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceEndpointRead,
 		Schema: map[string]*schema.Schema{
+			"filter": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"filter_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"page": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -30,24 +49,144 @@ func dataSourceEndpoint() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"filter": &schema.Schema{
+			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
+							Computed: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"group_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"identity_store": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"identity_store_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"mac": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mdm_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"mdm_compliance_status": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_encrypted": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_enrolled": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_ime_i": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_jail_broken": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_manufacturer": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_model": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_os": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_phone_number": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_pinlock": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_reachable": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_serial": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_server_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"portal_user": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"profile_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"static_group_assignment": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"static_profile_assignment": &schema.Schema{
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+					},
 				},
-			},
-			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
 			},
 			"item_name": &schema.Schema{
 				Type:     schema.TypeList,
@@ -55,39 +194,19 @@ func dataSourceEndpoint() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeMap,
 							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"mac": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"profile_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"static_profile_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
 						"group_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"static_group_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"portal_user": &schema.Schema{
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -99,82 +218,17 @@ func dataSourceEndpoint() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"mdm_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"mdm_server_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_reachable": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_enrolled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_compliance_status": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_os": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_manufacturer": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_model": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_serial": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_encrypted": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_pinlock": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_jail_broken": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_ime_i": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_phone_number": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
-							Computed: true,
-						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -185,28 +239,76 @@ func dataSourceEndpoint() *schema.Resource {
 								},
 							},
 						},
-					},
-				},
-			},
-			"item_id": &schema.Schema{
-				Type:     schema.TypeList,
-				Computed: true,
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-
-						"id": &schema.Schema{
+						"mac": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"mdm_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"mdm_compliance_status": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_encrypted": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_enrolled": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_ime_i": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_jail_broken": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_manufacturer": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_model": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_os": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_phone_number": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_pinlock": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_reachable": &schema.Schema{
+										Type:     schema.TypeBool,
+										Computed: true,
+									},
+									"mdm_serial": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"mdm_server_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"mac": &schema.Schema{
+						"portal_user": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -214,115 +316,13 @@ func dataSourceEndpoint() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"static_profile_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"group_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"static_group_assignment": &schema.Schema{
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
-						"portal_user": &schema.Schema{
-							Type:     schema.TypeString,
+						"static_profile_assignment": &schema.Schema{
+							Type:     schema.TypeBool,
 							Computed: true,
-						},
-						"identity_store": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"identity_store_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"mdm_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"mdm_server_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_reachable": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_enrolled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_compliance_status": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_os": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_manufacturer": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_model": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_serial": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_encrypted": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_pinlock": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_jail_broken": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"mdm_ime_i": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"mdm_phone_number": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
 						},
 					},
 				},
@@ -333,15 +333,11 @@ func dataSourceEndpoint() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
 						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -351,11 +347,11 @@ func dataSourceEndpoint() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"rel": &schema.Schema{
+									"href": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"href": &schema.Schema{
+									"rel": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -365,6 +361,10 @@ func dataSourceEndpoint() *schema.Resource {
 									},
 								},
 							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -431,7 +431,7 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 		var items1 []isegosdk.ResponseEndpointGetEndpointsSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
 			items1 = append(items1, *response1.SearchResult.Resources...)
-			if response1.SearchResult.NextPage.Rel == "next" {
+			if response1.SearchResult.NextPage != nil && response1.SearchResult.NextPage.Rel == "next" {
 				href := response1.SearchResult.NextPage.Href
 				page, size, err := getNextPageAndSizeParams(href)
 				if err != nil {

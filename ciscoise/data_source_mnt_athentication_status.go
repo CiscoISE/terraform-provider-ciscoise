@@ -18,11 +18,11 @@ func dataSourceMntAthenticationStatus() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"sec_ond_s": &schema.Schema{
+			"rec_ord_s": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"rec_ord_s": &schema.Schema{
+			"sec_ond_s": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},

@@ -22,7 +22,7 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -80,7 +80,7 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 					},
 				},
 			},
-			"item": &schema.Schema{
+			"items": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
