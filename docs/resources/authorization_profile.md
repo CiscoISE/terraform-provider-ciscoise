@@ -4,18 +4,16 @@ page_title: "ciscoise_authorization_profile Resource - terraform-provider-ciscoi
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on AuthorizationProfile.
-  This resource allows the client to update an authorization profile.
-    This resource deletes an authorization profile.
-    This resource creates an authorization profile.
+  This resource allows the client to update an authorization profile.This resource deletes an authorization profile.This resource creates an authorization profile.
 ---
 
 # ciscoise_authorization_profile (Resource)
 
 It manages create, read, update and delete operations on AuthorizationProfile.
   
-  This resource allows the client to update an authorization profile.
-  This resource deletes an authorization profile.
-  This resource creates an authorization profile.
+  - This resource allows the client to update an authorization profile.
+  - This resource deletes an authorization profile.
+  - This resource creates an authorization profile.
 
 ## Example Usage
 

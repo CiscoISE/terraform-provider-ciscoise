@@ -36,17 +36,14 @@ description: |-
   ConditionReference objects can also include a reference ID to a condition of type
     TimeAndDate
     .
-  Network Access Update library condition using condition name.
-    Network Access Delete a library condition using condition Name.
-    Network Access Update library condition.
-    Network Access Delete a library condition.
+  Network Access Update library condition using condition name.Network Access Delete a library condition using condition Name.Network Access Update library condition.Network Access Delete a library condition.
 ---
 
 # ciscoise_network_access_conditions (Resource)
 
 It manages create, read, update and delete operations on Network Access - Conditions.
   
-  Network Access Creates a library condition:
+  - Network Access Creates a library condition:
   
   
   
@@ -97,10 +94,10 @@ It manages create, read, update and delete operations on Network Access - Condit
   
   
   
-  Network Access Update library condition using condition name.
-  Network Access Delete a library condition using condition Name.
-  Network Access Update library condition.
-  Network Access Delete a library condition.
+  - Network Access Update library condition using condition name.
+  - Network Access Delete a library condition using condition Name.
+  - Network Access Update library condition.
+  - Network Access Delete a library condition.
 
 ## Example Usage
 

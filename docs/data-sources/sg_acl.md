@@ -4,17 +4,9 @@ page_title: "ciscoise_sg_acl Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on SecurityGroupsACLs.
-  - This data source allows the client to get a security group ACL by ID.
-  - This data source allows the client to get all the security group ACLs.
+  This data source allows the client to get a security group ACL by ID.This data source allows the client to get all the security group ACLs.
   Filter:
   [ipVersion, name, description]
-  To search guest users by using
-  toDate
-   column,follow the format:
-  DD-MON-YY (Example:13-SEP-18)
-  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
   Sorting:
   [ipVersion, name, description]
 ---
@@ -29,19 +21,6 @@ It performs read operation on SecurityGroupsACLs.
 Filter:
 
 [ipVersion, name, description]
-
-To search guest users by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 
 
 Sorting:

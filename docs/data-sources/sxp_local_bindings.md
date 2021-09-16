@@ -4,8 +4,7 @@ page_title: "ciscoise_sxp_local_bindings Data Source - terraform-provider-ciscoi
 subcategory: ""
 description: |-
   It performs read operation on SXPLocalBindings.
-  - This data source allows the client to get a SXP local binding by ID.
-  - This data source allows the client to get all the SXP local bindings.
+  This data source allows the client to get a SXP local binding by ID.This data source allows the client to get all the SXP local bindings.
   Filter:
   [name, description]
   Sorting:

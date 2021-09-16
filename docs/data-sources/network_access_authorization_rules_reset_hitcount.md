@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Network Access - Authorization Rules.
 
-Network Access Reset HitCount for Authorization Rules
+- Network Access Reset HitCount for Authorization Rules
 
 ## Example Usage
 

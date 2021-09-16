@@ -4,16 +4,15 @@ page_title: "ciscoise_network_access_global_exception_rules Data Source - terraf
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Authorization Global Exception Rules.
-  Network Access Get global execption rules.
-  Network Access Get global exception rule attributes.
+  Network Access Get global execption rules.Network Access Get global exception rule attributes.
 ---
 
 # ciscoise_network_access_global_exception_rules (Data Source)
 
 It performs read operation on Network Access - Authorization Global Exception Rules.
 
-Network Access Get global execption rules.
-Network Access Get global exception rule attributes.
+- Network Access Get global execption rules.
+- Network Access Get global exception rule attributes.
 
 ## Example Usage
 

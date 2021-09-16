@@ -11,7 +11,7 @@ description: |-
 
 It manages read and update operations on ACISettings.
   
-  This resource allows the client to update ACI settings.
+  - This resource allows the client to update ACI settings.
 
 ## Example Usage
 

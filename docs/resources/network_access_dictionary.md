@@ -4,18 +4,16 @@ page_title: "ciscoise_network_access_dictionary Resource - terraform-provider-ci
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Network Access - Dictionary.
-  Network Access Create a new Dictionary.
-    Network Access Update a Dictionary.
-    Network Access Delete a Dictionary.
+  Network Access Create a new Dictionary.Network Access Update a Dictionary.Network Access Delete a Dictionary.
 ---
 
 # ciscoise_network_access_dictionary (Resource)
 
 It manages create, read, update and delete operations on Network Access - Dictionary.
   
-  Network Access Create a new Dictionary.
-  Network Access Update a Dictionary.
-  Network Access Delete a Dictionary.
+  - Network Access Create a new Dictionary.
+  - Network Access Update a Dictionary.
+  - Network Access Delete a Dictionary.
 
 ## Example Usage
 

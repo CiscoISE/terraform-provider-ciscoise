@@ -4,8 +4,7 @@ page_title: "ciscoise_my_device_portal Data Source - terraform-provider-ciscoise
 subcategory: ""
 description: |-
   It performs read operation on MyDevicePortal.
-  - This data source allows the client to get a my device portal by ID.
-  - This data source allows the client to get all the my device portals.
+  This data source allows the client to get a my device portal by ID.This data source allows the client to get all the my device portals.
   Filter:
   [name, description]
   Sorting:

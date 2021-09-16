@@ -4,18 +4,16 @@ page_title: "ciscoise_hotspot_portal Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on HotspotPortal.
-  This resource allows the client to update a hotspot portal by ID.
-    This resource deletes a hotspot portal by ID.
-    This resource creates a hotspot portal.
+  This resource allows the client to update a hotspot portal by ID.This resource deletes a hotspot portal by ID.This resource creates a hotspot portal.
 ---
 
 # ciscoise_hotspot_portal (Resource)
 
 It manages create, read, update and delete operations on HotspotPortal.
   
-  This resource allows the client to update a hotspot portal by ID.
-  This resource deletes a hotspot portal by ID.
-  This resource creates a hotspot portal.
+  - This resource allows the client to update a hotspot portal by ID.
+  - This resource deletes a hotspot portal by ID.
+  - This resource creates a hotspot portal.
 
 ## Example Usage
 

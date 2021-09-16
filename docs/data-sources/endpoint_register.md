@@ -4,7 +4,7 @@ page_title: "ciscoise_endpoint_register Data Source - terraform-provider-ciscois
 subcategory: ""
 description: |-
   It performs update operation on endpoint.
-  - This data source action allows the client to register an endpoint.
+  This data source action allows the client to register an endpoint.
 ---
 
 # ciscoise_endpoint_register (Data Source)

@@ -4,18 +4,16 @@ page_title: "ciscoise_endpoint Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on endpoint.
-  This resource allows the client to update an endpoint.
-    This resource deletes an endpoint.
-    This resource creates an endpoint.
+  This resource allows the client to update an endpoint.This resource deletes an endpoint.This resource creates an endpoint.
 ---
 
 # ciscoise_endpoint (Resource)
 
 It manages create, read, update and delete operations on endpoint.
   
-  This resource allows the client to update an endpoint.
-  This resource deletes an endpoint.
-  This resource creates an endpoint.
+  - This resource allows the client to update an endpoint.
+  - This resource deletes an endpoint.
+  - This resource creates an endpoint.
 
 ## Example Usage
 

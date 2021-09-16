@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Device Administration - Authentication Rules.
 
-Device Admin Reset HitCount for Authentication Rules
+- Device Admin Reset HitCount for Authentication Rules
 
 ## Example Usage
 

@@ -4,7 +4,7 @@ page_title: "ciscoise_endpoint_certificate Data Source - terraform-provider-cisc
 subcategory: ""
 description: |-
   It performs update operation on EndpointCertificate.
-  - This data source action allows the client to create an endpoint certificate.
+  This data source action allows the client to create an endpoint certificate.
 ---
 
 # ciscoise_endpoint_certificate (Data Source)

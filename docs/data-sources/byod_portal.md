@@ -4,8 +4,7 @@ page_title: "ciscoise_byod_portal Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on BYODPortal.
-  - This data source allows the client to get a BYOD portal by ID.
-  - This data source allows the client to get all the BYOD portals.
+  This data source allows the client to get a BYOD portal by ID.This data source allows the client to get all the BYOD portals.
   Filter:
   [name, description]
   Sorting:

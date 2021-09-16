@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Device Administration - Authorization Global Exception Rules.
 
-Device Admin Reset HitCount for Global Exceptions
+- Device Admin Reset HitCount for Global Exceptions
 
 ## Example Usage
 

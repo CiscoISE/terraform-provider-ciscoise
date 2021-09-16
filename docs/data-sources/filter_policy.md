@@ -4,8 +4,7 @@ page_title: "ciscoise_filter_policy Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on FilterPolicy.
-  - This data source allows the client to get a filter policy by ID.
-  - This data source allows the client to get all the filter policies.
+  This data source allows the client to get a filter policy by ID.This data source allows the client to get all the filter policies.
 ---
 
 # ciscoise_filter_policy (Data Source)

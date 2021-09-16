@@ -4,14 +4,14 @@ page_title: "ciscoise_egress_matrix_cell_set_all_status Data Source - terraform-
 subcategory: ""
 description: |-
   It performs update operation on EgressMatrixCell.
-  his API allows the client to set status of all the egress matrix cells.
+  This data source action allows the client to set status of all the egress matrix cells.
 ---
 
 # ciscoise_egress_matrix_cell_set_all_status (Data Source)
 
 It performs update operation on EgressMatrixCell.
 
-his API allows the client to set status of all the egress matrix cells.
+- This data source action allows the client to set status of all the egress matrix cells.
 
 ## Example Usage
 

@@ -4,18 +4,16 @@ page_title: "ciscoise_radius_server_sequence Resource - terraform-provider-cisco
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on RADIUSServerSequence.
-  This resource allows the client to update a RADIUS server sequence.
-    This resource deletes a RADIUS server sequence.
-    This resource creates a RADIUS server sequence.
+  This resource allows the client to update a RADIUS server sequence.This resource deletes a RADIUS server sequence.This resource creates a RADIUS server sequence.
 ---
 
 # ciscoise_radius_server_sequence (Resource)
 
 It manages create, read, update and delete operations on RADIUSServerSequence.
   
-  This resource allows the client to update a RADIUS server sequence.
-  This resource deletes a RADIUS server sequence.
-  This resource creates a RADIUS server sequence.
+  - This resource allows the client to update a RADIUS server sequence.
+  - This resource deletes a RADIUS server sequence.
+  - This resource creates a RADIUS server sequence.
 
 ## Example Usage
 

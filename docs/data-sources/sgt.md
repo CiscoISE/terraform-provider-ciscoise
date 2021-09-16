@@ -4,8 +4,7 @@ page_title: "ciscoise_sgt Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on SecurityGroups.
-  - This data source allows the client to get a security group by ID.
-  - This data source allows the client to get all the security groups.
+  This data source allows the client to get a security group by ID.This data source allows the client to get all the security groups.
   Filter:
   [propogateToApic, name, description, value]
   Sorting:

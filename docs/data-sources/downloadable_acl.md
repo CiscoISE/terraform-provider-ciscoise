@@ -4,8 +4,7 @@ page_title: "ciscoise_downloadable_acl Data Source - terraform-provider-ciscoise
 subcategory: ""
 description: |-
   It performs read operation on DownloadableACL.
-  - This data source allows the client to get a downloadable ACL by ID.
-  - This data source allows the client to get all downloadable ACLs.
+  This data source allows the client to get a downloadable ACL by ID.This data source allows the client to get all downloadable ACLs.
 ---
 
 # ciscoise_downloadable_acl (Data Source)

@@ -13,15 +13,14 @@ description: |-
   or dynamically built conditions which are not stored in the conditions Library, using models
     ConditionAttributes, ConditionAndBlock, ConditionOrBlock
     .
-  Network Access Update rule.
-    Network Access Delete rule.
+  Network Access Update rule.Network Access Delete rule.
 ---
 
 # ciscoise_network_access_authentication_rules (Resource)
 
 It manages create, read, update and delete operations on Network Access - Authentication Rules.
   
-  Network Access Create authentication rule:
+  - Network Access Create authentication rule:
   
   
   
@@ -42,8 +41,8 @@ It manages create, read, update and delete operations on Network Access - Authen
   
   
   
-  Network Access Update rule.
-  Network Access Delete rule.
+  - Network Access Update rule.
+  - Network Access Delete rule.
 
 ## Example Usage
 

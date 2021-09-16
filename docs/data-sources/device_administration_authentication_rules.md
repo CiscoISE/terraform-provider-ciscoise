@@ -4,16 +4,15 @@ page_title: "ciscoise_device_administration_authentication_rules Data Source - t
 subcategory: ""
 description: |-
   It performs read operation on Device Administration - Authentication Rules.
-  Device Admin Get authentication rules.
-  Device Admin Get rule attributes.
+  Device Admin Get authentication rules.Device Admin Get rule attributes.
 ---
 
 # ciscoise_device_administration_authentication_rules (Data Source)
 
 It performs read operation on Device Administration - Authentication Rules.
 
-Device Admin Get authentication rules.
-Device Admin Get rule attributes.
+- Device Admin Get authentication rules.
+- Device Admin Get rule attributes.
 
 ## Example Usage
 

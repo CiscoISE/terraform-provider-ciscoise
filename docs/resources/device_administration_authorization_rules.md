@@ -4,18 +4,16 @@ page_title: "ciscoise_device_administration_authorization_rules Resource - terra
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Device Administration - Authorization Rules.
-  Device Admin Create authorization rule.
-    Device Admin Update authorization rule.
-    Device Admin Delete authorization rule.
+  Device Admin Create authorization rule.Device Admin Update authorization rule.Device Admin Delete authorization rule.
 ---
 
 # ciscoise_device_administration_authorization_rules (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Authorization Rules.
   
-  Device Admin Create authorization rule.
-  Device Admin Update authorization rule.
-  Device Admin Delete authorization rule.
+  - Device Admin Create authorization rule.
+  - Device Admin Update authorization rule.
+  - Device Admin Delete authorization rule.
 
 ## Example Usage
 

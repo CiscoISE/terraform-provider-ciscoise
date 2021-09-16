@@ -5,19 +5,17 @@ subcategory: ""
 description: |-
   It manages create, read, update and delete operations on IdentitySequence.
   This resource allows the client to update an identity sequence.
-    Partial update is not supported
-    This resource deletes an identity sequence.
-    This resource creates an identity sequence.
+  Partial update is not supportedThis resource deletes an identity sequence.This resource creates an identity sequence.
 ---
 
 # ciscoise_id_store_sequence (Resource)
 
 It manages create, read, update and delete operations on IdentitySequence.
   
-  This resource allows the client to update an identity sequence.
+  - This resource allows the client to update an identity sequence.
   Partial update is not supported
-  This resource deletes an identity sequence.
-  This resource creates an identity sequence.
+  - This resource deletes an identity sequence.
+  - This resource creates an identity sequence.
 
 ## Example Usage
 

@@ -4,8 +4,7 @@ page_title: "ciscoise_egress_matrix_cell Data Source - terraform-provider-ciscoi
 subcategory: ""
 description: |-
   It performs read operation on EgressMatrixCell.
-  - This data source allows the client to get an egress matrix cell by ID.
-  - This data source allows the client to get all the egress matrix cell.
+  This data source allows the client to get an egress matrix cell by ID.This data source allows the client to get all the egress matrix cell.
   Filter:
   [sgtSrcValue, matrixStatus, description, sgtSrcName, sgtDstName, sgtDstValue]
   Sorting:

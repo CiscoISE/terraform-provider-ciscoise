@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Device Administration - Policy Set.
 
-Device Admin Reset HitCount for PolicySets
+- Device Admin Reset HitCount for PolicySets
 
 ## Example Usage
 

@@ -4,16 +4,15 @@ page_title: "ciscoise_device_administration_authorization_rules Data Source - te
 subcategory: ""
 description: |-
   It performs read operation on Device Administration - Authorization Rules.
-  Device Admin Get authorization rules.
-  Device Admin Get authorization rule attributes.
+  Device Admin Get authorization rules.Device Admin Get authorization rule attributes.
 ---
 
 # ciscoise_device_administration_authorization_rules (Data Source)
 
 It performs read operation on Device Administration - Authorization Rules.
 
-Device Admin Get authorization rules.
-Device Admin Get authorization rule attributes.
+- Device Admin Get authorization rules.
+- Device Admin Get authorization rule attributes.
 
 ## Example Usage
 

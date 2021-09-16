@@ -4,18 +4,16 @@ page_title: "ciscoise_network_access_conditions Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Conditions.
-  Network Access Returns all library conditions
-  Network Access Returns a library condition.
-  Network Access Returns a library condition.
+  Network Access Returns all library conditionsNetwork Access Returns a library condition.Network Access Returns a library condition.
 ---
 
 # ciscoise_network_access_conditions (Data Source)
 
 It performs read operation on Network Access - Conditions.
 
-Network Access Returns all library conditions
-Network Access Returns a library condition.
-Network Access Returns a library condition.
+- Network Access Returns all library conditions
+- Network Access Returns a library condition.
+- Network Access Returns a library condition.
 
 ## Example Usage
 

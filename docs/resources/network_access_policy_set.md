@@ -13,15 +13,14 @@ description: |-
     or, dynamically built conditions which are not stored in the conditions Library, using models
     ConditionAttributes, ConditionAndBlock, ConditionOrBlock
     .
-  Network Access Update a policy set.
-    Network Access Delete a policy set.
+  Network Access Update a policy set.Network Access Delete a policy set.
 ---
 
 # ciscoise_network_access_policy_set (Resource)
 
 It manages create, read, update and delete operations on Network Access - Policy Set.
   
-  Network Access Create a new policy set:
+  - Network Access Create a new policy set:
   
   
   
@@ -41,8 +40,8 @@ It manages create, read, update and delete operations on Network Access - Policy
   
   
   
-  Network Access Update a policy set.
-  Network Access Delete a policy set.
+  - Network Access Update a policy set.
+  - Network Access Delete a policy set.
 
 ## Example Usage
 

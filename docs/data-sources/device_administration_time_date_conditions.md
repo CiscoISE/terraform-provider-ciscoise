@@ -4,16 +4,15 @@ page_title: "ciscoise_device_administration_time_date_conditions Data Source - t
 subcategory: ""
 description: |-
   It performs read operation on Device Administration - Time/Date Conditions.
-  Device Admin Returns a list of time and date conditions.
-  Device Admin Returns a network condition.
+  Device Admin Returns a list of time and date conditions.Device Admin Returns a network condition.
 ---
 
 # ciscoise_device_administration_time_date_conditions (Data Source)
 
 It performs read operation on Device Administration - Time/Date Conditions.
 
-Device Admin Returns a list of time and date conditions.
-Device Admin Returns a network condition.
+- Device Admin Returns a list of time and date conditions.
+- Device Admin Returns a network condition.
 
 ## Example Usage
 

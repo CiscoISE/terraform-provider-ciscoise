@@ -5,21 +5,17 @@ subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Repository.
   Create a new repository in the system. The name provided for the
-    repository must be unique.
-  Update the definition of a specific repository, providing ALL parameters for the repository.
-  Long description TBD
+  repository must be unique.Update the definition of a specific repository, providing ALL parameters for the repository.
 ---
 
 # ciscoise_repository (Resource)
 
 It manages create, read, update and delete operations on Repository.
   
-  Create a new repository in the system. The name provided for the
+  - Create a new repository in the system. The name provided for the
   repository must be unique.
   
-  Update the definition of a specific repository, providing ALL parameters for the repository.
-  
-  Long description TBD
+  - Update the definition of a specific repository, providing ALL parameters for the repository.
 
 ## Example Usage
 

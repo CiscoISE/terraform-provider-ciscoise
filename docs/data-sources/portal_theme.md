@@ -4,8 +4,7 @@ page_title: "ciscoise_portal_theme Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on PortalTheme.
-  - This data source allows the client to get a portal theme by ID.
-  - This data source allows the client to get all the portal themes.
+  This data source allows the client to get a portal theme by ID.This data source allows the client to get all the portal themes.
   Filter:
   [name]
   Sorting:

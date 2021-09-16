@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Certificates.
 
-CSR Generation for Intermediate Certificates.
+- CSR Generation for Intermediate Certificates.
 
 ## Example Usage
 

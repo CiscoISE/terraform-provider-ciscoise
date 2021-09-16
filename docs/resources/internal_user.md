@@ -4,22 +4,18 @@ page_title: "ciscoise_internal_user Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on InternalUser.
-  This resource allows the client to update an internal user by name.
-    This resource deletes an internal user by name.
-    This resource allows the client to update an internal user by ID.
-    This resource deletes an internal user by ID.
-    This resource creates an internal user.
+  This resource allows the client to update an internal user by name.This resource deletes an internal user by name.This resource allows the client to update an internal user by ID.This resource deletes an internal user by ID.This resource creates an internal user.
 ---
 
 # ciscoise_internal_user (Resource)
 
 It manages create, read, update and delete operations on InternalUser.
   
-  This resource allows the client to update an internal user by name.
-  This resource deletes an internal user by name.
-  This resource allows the client to update an internal user by ID.
-  This resource deletes an internal user by ID.
-  This resource creates an internal user.
+  - This resource allows the client to update an internal user by name.
+  - This resource deletes an internal user by name.
+  - This resource allows the client to update an internal user by ID.
+  - This resource deletes an internal user by ID.
+  - This resource creates an internal user.
 
 ## Example Usage
 

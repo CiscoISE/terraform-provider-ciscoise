@@ -4,18 +4,16 @@ page_title: "ciscoise_network_access_network_condition Resource - terraform-prov
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Network Access - Network Conditions.
-  Network Access Creates network condition.
-    Network Access Update network condition.
-    Network Access Delete network condition.
+  Network Access Creates network condition.Network Access Update network condition.Network Access Delete network condition.
 ---
 
 # ciscoise_network_access_network_condition (Resource)
 
 It manages create, read, update and delete operations on Network Access - Network Conditions.
   
-  Network Access Creates network condition.
-  Network Access Update network condition.
-  Network Access Delete network condition.
+  - Network Access Creates network condition.
+  - Network Access Update network condition.
+  - Network Access Delete network condition.
 
 ## Example Usage
 

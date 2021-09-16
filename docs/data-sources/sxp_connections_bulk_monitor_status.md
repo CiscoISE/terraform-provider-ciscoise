@@ -4,7 +4,7 @@ page_title: "ciscoise_sxp_connections_bulk_monitor_status Data Source - terrafor
 subcategory: ""
 description: |-
   It performs read operation on SXPConnections.
-  - This data source allows the client to monitor the bulk request.
+  This data source allows the client to monitor the bulk request.
 ---
 
 # ciscoise_sxp_connections_bulk_monitor_status (Data Source)

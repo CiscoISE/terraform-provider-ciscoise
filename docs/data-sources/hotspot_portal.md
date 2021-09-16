@@ -4,8 +4,7 @@ page_title: "ciscoise_hotspot_portal Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on HotspotPortal.
-  - This data source allows the client to get a hotspot portal by ID.
-  - This data source allows the client to get all the hotspot portals.
+  This data source allows the client to get a hotspot portal by ID.This data source allows the client to get all the hotspot portals.
   Filter:
   [name]
   Sorting:

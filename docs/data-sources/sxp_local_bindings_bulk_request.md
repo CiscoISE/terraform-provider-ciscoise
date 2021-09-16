@@ -4,7 +4,7 @@ page_title: "ciscoise_sxp_local_bindings_bulk_request Data Source - terraform-pr
 subcategory: ""
 description: |-
   It performs update operation on SXPLocalBindings.
-  - This data source action allows the client to submit the bulk request.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_sxp_local_bindings_bulk_request (Data Source)

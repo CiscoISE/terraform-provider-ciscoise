@@ -4,8 +4,7 @@ page_title: "ciscoise_guest_ssid Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on GuestSSID.
-  - This data source allows the client to get a guest SSID by ID.
-  - This data source allows the client to get all the guest SSIDs.
+  This data source allows the client to get a guest SSID by ID.This data source allows the client to get all the guest SSIDs.
   Filter:
   [name]
   Sorting:

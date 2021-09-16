@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Backup And Restore.
 
-Gives the last backup status
+- Gives the last backup status
 
 ## Example Usage
 

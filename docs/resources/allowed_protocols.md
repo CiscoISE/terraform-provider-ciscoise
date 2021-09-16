@@ -4,18 +4,16 @@ page_title: "ciscoise_allowed_protocols Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on AllowedProtocols.
-  This resource allows the client to update an allowed protocol.
-    This resource deletes an allowed protocol.
-    This resource creates an allowed protocol.
+  This resource allows the client to update an allowed protocol.This resource deletes an allowed protocol.This resource creates an allowed protocol.
 ---
 
 # ciscoise_allowed_protocols (Resource)
 
 It manages create, read, update and delete operations on AllowedProtocols.
   
-  This resource allows the client to update an allowed protocol.
-  This resource deletes an allowed protocol.
-  This resource creates an allowed protocol.
+  - This resource allows the client to update an allowed protocol.
+  - This resource deletes an allowed protocol.
+  - This resource creates an allowed protocol.
 
 ## Example Usage
 

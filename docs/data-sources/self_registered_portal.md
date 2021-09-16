@@ -4,8 +4,7 @@ page_title: "ciscoise_self_registered_portal Data Source - terraform-provider-ci
 subcategory: ""
 description: |-
   It performs read operation on SelfRegisteredPortal.
-  - This data source allows the client to get a self registered portal by ID.
-  - This data source allows the client to get all the self registered portals.
+  This data source allows the client to get a self registered portal by ID.This data source allows the client to get all the self registered portals.
   Filter:
   [name]
   Sorting:

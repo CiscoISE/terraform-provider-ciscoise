@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Device Administration - Conditions.
 
-Device Admin Returns list of library conditions for authorization rules.
+- Device Admin Returns list of library conditions for authorization rules.
 
 ## Example Usage
 

@@ -4,16 +4,15 @@ page_title: "ciscoise_network_access_time_date_conditions Data Source - terrafor
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Time/Date Conditions.
-  Network Access Returns a list of time and date conditions.
-  Network Access returns a network condition.
+  Network Access Returns a list of time and date conditions.Network Access Returns a network condition.
 ---
 
 # ciscoise_network_access_time_date_conditions (Data Source)
 
 It performs read operation on Network Access - Time/Date Conditions.
 
-Network Access Returns a list of time and date conditions.
-Network Access returns a network condition.
+- Network Access Returns a list of time and date conditions.
+- Network Access Returns a network condition.
 
 ## Example Usage
 

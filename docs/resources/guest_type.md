@@ -4,18 +4,16 @@ page_title: "ciscoise_guest_type Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on GuestType.
-  This resource allows the client to update a guest type.
-    This resource deletes a guest type.
-    This resource creates a guest type.
+  This resource allows the client to update a guest type.This resource deletes a guest type.This resource creates a guest type.
 ---
 
 # ciscoise_guest_type (Resource)
 
 It manages create, read, update and delete operations on GuestType.
   
-  This resource allows the client to update a guest type.
-  This resource deletes a guest type.
-  This resource creates a guest type.
+  - This resource allows the client to update a guest type.
+  - This resource deletes a guest type.
+  - This resource creates a guest type.
 
 ## Example Usage
 

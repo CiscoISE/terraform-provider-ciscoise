@@ -7,19 +7,18 @@ description: |-
   Get details of all the node groups in the cluster. To detect node failure and to reset all URL-redirected sessions on
   the failed node, two or more Policy Service nodes can be placed in the same node group. When a node that belongs to a
   node group fails, another node in the same node group issues a Change of Authorization (CoA) for all URL-redirected
-  sessions on the failed node.
-  Get details of a node group in the cluster.
+  sessions on the failed node.Get details of a node group in the cluster.
 ---
 
 # ciscoise_node_group (Data Source)
 
 It performs read operation on Node Group.
 
-Get details of all the node groups in the cluster. To detect node failure and to reset all URL-redirected sessions on
+- Get details of all the node groups in the cluster. To detect node failure and to reset all URL-redirected sessions on
 the failed node, two or more Policy Service nodes can be placed in the same node group. When a node that belongs to a
 node group fails, another node in the same node group issues a Change of Authorization (CoA) for all URL-redirected
 sessions on the failed node.
-Get details of a node group in the cluster.
+- Get details of a node group in the cluster.
 
 ## Example Usage
 

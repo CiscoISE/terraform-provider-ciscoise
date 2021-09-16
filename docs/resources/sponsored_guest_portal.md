@@ -4,18 +4,16 @@ page_title: "ciscoise_sponsored_guest_portal Resource - terraform-provider-cisco
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SponsoredGuestPortal.
-  This resource allows the client to update a sponsored guest portal by ID.
-    This resource deletes a sponsored guest portal by ID.
-    This resource creates a sponsored guest portal.
+  This resource allows the client to update a sponsored guest portal by ID.This resource deletes a sponsored guest portal by ID.This resource creates a sponsored guest portal.
 ---
 
 # ciscoise_sponsored_guest_portal (Resource)
 
 It manages create, read, update and delete operations on SponsoredGuestPortal.
   
-  This resource allows the client to update a sponsored guest portal by ID.
-  This resource deletes a sponsored guest portal by ID.
-  This resource creates a sponsored guest portal.
+  - This resource allows the client to update a sponsored guest portal by ID.
+  - This resource deletes a sponsored guest portal by ID.
+  - This resource creates a sponsored guest portal.
 
 ## Example Usage
 

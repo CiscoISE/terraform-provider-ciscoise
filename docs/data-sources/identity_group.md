@@ -4,9 +4,7 @@ page_title: "ciscoise_identity_group Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on IdentityGroups.
-  - This data source allows the client to get an identity group by name.
-  - This data source allows the client to get an identity group by ID.
-  - This data source allows the client to get all the identity groups.
+  This data source allows the client to get an identity group by name.This data source allows the client to get an identity group by ID.This data source allows the client to get all the identity groups.
   Filter:
   [name, description]
   Sorting:

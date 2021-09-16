@@ -4,8 +4,7 @@ page_title: "ciscoise_anc_endpoint Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on ANCEndpoint.
-  - This data source allows the client to get an ANC endpoint by ID.
-  - This data source allows the client to get all the ANC endpoints.
+  This data source allows the client to get an ANC endpoint by ID.This data source allows the client to get all the ANC endpoints.
   Filter:
   [name]
   Sorting:

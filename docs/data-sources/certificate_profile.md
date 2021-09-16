@@ -4,9 +4,7 @@ page_title: "ciscoise_certificate_profile Data Source - terraform-provider-cisco
 subcategory: ""
 description: |-
   It performs read operation on CertificateProfile.
-  - This data source allows the client to get a certificate profile by name.
-  - This data source allows the client to get a certificate profile by ID.
-  - This data source allows the client to get all the certificate profiles.
+  This data source allows the client to get a certificate profile by name.This data source allows the client to get a certificate profile by ID.This data source allows the client to get all the certificate profiles.
 ---
 
 # ciscoise_certificate_profile (Data Source)

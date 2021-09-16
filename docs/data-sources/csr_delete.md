@@ -4,7 +4,7 @@ page_title: "ciscoise_csr_delete Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs delete operation on Certificates.
-  - This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.
+  This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.
 ---
 
 # ciscoise_csr_delete (Data Source)

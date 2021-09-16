@@ -4,7 +4,7 @@ page_title: "ciscoise_active_directory_leave_domain Data Source - terraform-prov
 subcategory: ""
 description: |-
   It performs update operation on ActiveDirectory.
-  - This data source action makes a Cisco ISE node to leave an Active Directory domain.
+  This data source action makes a Cisco ISE node to leave an Active Directory domain.
 ---
 
 # ciscoise_active_directory_leave_domain (Data Source)

@@ -4,18 +4,16 @@ page_title: "ciscoise_anc_policy Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on AncPolicy.
-  This resource allows the client to update an ANC policy.
-    This resource allows the client to delete an ANC policy.
-    This resource allows the client to create an ANC policy.
+  This resource allows the client to update an ANC policy.This resource allows the client to delete an ANC policy.This resource allows the client to create an ANC policy.
 ---
 
 # ciscoise_anc_policy (Resource)
 
 It manages create, read, update and delete operations on AncPolicy.
   
-  This resource allows the client to update an ANC policy.
-  This resource allows the client to delete an ANC policy.
-  This resource allows the client to create an ANC policy.
+  - This resource allows the client to update an ANC policy.
+  - This resource allows the client to delete an ANC policy.
+  - This resource allows the client to create an ANC policy.
 
 ## Example Usage
 

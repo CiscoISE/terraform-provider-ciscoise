@@ -4,11 +4,9 @@ page_title: "ciscoise_endpoint Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on endpoint.
-  - This data source allows the client to get an endpoint by name.
-  - This data source allows the client to get an endpoint by ID.
-  - This data source allows the client to get all the endpoints.
+  This data source allows the client to get an endpoint by name.This data source allows the client to get an endpoint by ID.This data source allows the client to get all the endpoints.
   Filter:
-  Filters can be used to filter out Endpoints based on a set of attributes. - This data source currently provides the
+  Filters can be used to filter out Endpoints based on a set of attributes. This data source currently provides the
   following filters:
   [logicalProfileName, portalUser, staticProfileAssignment, profileId, profile, groupId, staticGroupAssignment, mac]
   Example 1:
@@ -20,7 +18,6 @@ description: |-
   Example:
   https://{ise-ip}:9060/ers/config/endpoint?filter=logicalProfileName.EQ.LP_Apple
   Example 2:
-
   Sorting:
   [name, description]
 ---
@@ -34,7 +31,7 @@ It performs read operation on endpoint.
 - This data source allows the client to get all the endpoints.
 
 Filter:
-Filters can be used to filter out Endpoints based on a set of attributes. - This data source currently provides the
+Filters can be used to filter out Endpoints based on a set of attributes. This data source currently provides the
 following filters:
 [logicalProfileName, portalUser, staticProfileAssignment, profileId, profile, groupId, staticGroupAssignment, mac]
 

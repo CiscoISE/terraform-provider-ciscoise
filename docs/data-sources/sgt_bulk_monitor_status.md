@@ -4,7 +4,7 @@ page_title: "ciscoise_sgt_bulk_monitor_status Data Source - terraform-provider-c
 subcategory: ""
 description: |-
   It performs read operation on SecurityGroups.
-  - This data source allows the client to monitor the bulk request.
+  This data source allows the client to monitor the bulk request.
 ---
 
 # ciscoise_sgt_bulk_monitor_status (Data Source)

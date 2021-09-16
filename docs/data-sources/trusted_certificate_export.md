@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Certificates.
 
-The response of this API carries a trusted certificate file mapped to the requested id
+- The response of this API carries a trusted certificate file mapped to the requested id
 
 ## Example Usage
 

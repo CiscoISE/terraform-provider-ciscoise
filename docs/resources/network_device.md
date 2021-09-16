@@ -4,22 +4,18 @@ page_title: "ciscoise_network_device Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on NetworkDevice.
-  This resource allows the client to update a network device by name.
-    This resource deletes a network device by name.
-    This resource allows the client to update a network device by ID.
-    This resource deletes a network device by ID.
-    This resource creates a network device.
+  This resource allows the client to update a network device by name.This resource deletes a network device by name.This resource allows the client to update a network device by ID.This resource deletes a network device by ID.This resource creates a network device.
 ---
 
 # ciscoise_network_device (Resource)
 
 It manages create, read, update and delete operations on NetworkDevice.
   
-  This resource allows the client to update a network device by name.
-  This resource deletes a network device by name.
-  This resource allows the client to update a network device by ID.
-  This resource deletes a network device by ID.
-  This resource creates a network device.
+  - This resource allows the client to update a network device by name.
+  - This resource deletes a network device by name.
+  - This resource allows the client to update a network device by ID.
+  - This resource deletes a network device by ID.
+  - This resource creates a network device.
 
 ## Example Usage
 

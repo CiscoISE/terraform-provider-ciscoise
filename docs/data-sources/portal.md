@@ -4,8 +4,7 @@ page_title: "ciscoise_portal Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on portal.
-  - This data source allows the client to get a portal by ID.
-  - This data source allows the client to get all the portals.
+  This data source allows the client to get a portal by ID.This data source allows the client to get all the portals.
   Filter:
   [name, description]
   Sorting:

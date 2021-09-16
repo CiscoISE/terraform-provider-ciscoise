@@ -4,9 +4,7 @@ page_title: "ciscoise_internal_user Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on InternalUser.
-  - This data source allows the client to get an internal user by name.
-  - This data source allows the client to get an internal user by ID.
-  - This data source allows the client to get all the internal users.
+  This data source allows the client to get an internal user by name.This data source allows the client to get an internal user by ID.This data source allows the client to get all the internal users.
   Filter:
   [firstName, lastName, identityGroup, name, description, email, enabled]
   Sorting:

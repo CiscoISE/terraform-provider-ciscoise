@@ -4,16 +4,15 @@ page_title: "ciscoise_network_access_local_exception_rules Data Source - terrafo
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Authorization Exception Rules.
-  Network Access Get local exception rules.
-  Network Access Get local exception rule attributes.
+  Network Access Get local exception rules.Network Access Get local exception rule attributes.
 ---
 
 # ciscoise_network_access_local_exception_rules (Data Source)
 
 It performs read operation on Network Access - Authorization Exception Rules.
 
-Network Access Get local exception rules.
-Network Access Get local exception rule attributes.
+- Network Access Get local exception rules.
+- Network Access Get local exception rule attributes.
 
 ## Example Usage
 

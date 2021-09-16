@@ -4,18 +4,16 @@ page_title: "ciscoise_sgt Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SecurityGroups.
-  This resource allows the client to update a security group.
-    This resource deletes a security group.
-    This resource creates a security group.
+  This resource allows the client to update a security group.This resource deletes a security group.This resource creates a security group.
 ---
 
 # ciscoise_sgt (Resource)
 
 It manages create, read, update and delete operations on SecurityGroups.
   
-  This resource allows the client to update a security group.
-  This resource deletes a security group.
-  This resource creates a security group.
+  - This resource allows the client to update a security group.
+  - This resource deletes a security group.
+  - This resource creates a security group.
 
 ## Example Usage
 

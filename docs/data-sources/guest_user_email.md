@@ -4,7 +4,7 @@ page_title: "ciscoise_guest_user_email Data Source - terraform-provider-ciscoise
 subcategory: ""
 description: |-
   It performs update operation on GuestUser.
-  - This data source action allows the client to update a guest user email by ID.
+  This data source action allows the client to update a guest user email by ID.
 ---
 
 # ciscoise_guest_user_email (Data Source)

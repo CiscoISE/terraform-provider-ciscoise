@@ -5,14 +5,14 @@ subcategory: ""
 description: |-
   It performs read operation on Network Access - Profiles.
   Network Access Returns list of profiles.
-   (Other CRUD APIs available throught ERS)
+  (Other CRUD APIs available throught ERS)
 ---
 
 # ciscoise_network_access_profiles (Data Source)
 
 It performs read operation on Network Access - Profiles.
 
-Network Access Returns list of profiles.
+- Network Access Returns list of profiles.
  (Other CRUD APIs available throught ERS)
 
 ## Example Usage

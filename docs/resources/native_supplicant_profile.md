@@ -4,16 +4,15 @@ page_title: "ciscoise_native_supplicant_profile Resource - terraform-provider-ci
 subcategory: ""
 description: |-
   It manages read, update and delete operations on NativeSupplicantProfile.
-  This resource allows the client to update a native supplicant profile
-    This resource deletes a native supplicant profile.
+  This resource allows the client to update a native supplicant profileThis resource deletes a native supplicant profile.
 ---
 
 # ciscoise_native_supplicant_profile (Resource)
 
 It manages read, update and delete operations on NativeSupplicantProfile.
   
-  This resource allows the client to update a native supplicant profile
-  This resource deletes a native supplicant profile.
+  - This resource allows the client to update a native supplicant profile
+  - This resource deletes a native supplicant profile.
 
 ## Example Usage
 

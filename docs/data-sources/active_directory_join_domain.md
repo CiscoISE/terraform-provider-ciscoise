@@ -4,7 +4,7 @@ page_title: "ciscoise_active_directory_join_domain Data Source - terraform-provi
 subcategory: ""
 description: |-
   It performs update operation on ActiveDirectory.
-  - This data source action joins a Cisco ISE node to an Active Directory domain.
+  This data source action joins a Cisco ISE node to an Active Directory domain.
 ---
 
 # ciscoise_active_directory_join_domain (Data Source)

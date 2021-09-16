@@ -4,7 +4,7 @@ page_title: "ciscoise_sms_provider Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on SMSProvider.
-  - This data source allows the client to get all the SMS providers.
+  This data source allows the client to get all the SMS providers.
   Filter:
   [name]
   Sorting:

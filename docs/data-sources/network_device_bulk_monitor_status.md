@@ -4,7 +4,7 @@ page_title: "ciscoise_network_device_bulk_monitor_status Data Source - terraform
 subcategory: ""
 description: |-
   It performs read operation on NetworkDevice.
-  - This data source allows the client to monitor the bulk request.
+  This data source allows the client to monitor the bulk request.
 ---
 
 # ciscoise_network_device_bulk_monitor_status (Data Source)

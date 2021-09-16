@@ -4,18 +4,16 @@ page_title: "ciscoise_network_access_time_date_conditions Resource - terraform-p
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Network Access - Time/Date Conditions.
-  Network Access Creates time/date condition
-    Network Access Update network condition
-    Network Access Delete Time/Date condition.
+  Network Access Creates time/date conditionNetwork Access Update network conditionNetwork Access Delete Time/Date condition.
 ---
 
 # ciscoise_network_access_time_date_conditions (Resource)
 
 It manages create, read, update and delete operations on Network Access - Time/Date Conditions.
   
-  Network Access Creates time/date condition
-  Network Access Update network condition
-  Network Access Delete Time/Date condition.
+  - Network Access Creates time/date condition
+  - Network Access Update network condition
+  - Network Access Delete Time/Date condition.
 
 ## Example Usage
 

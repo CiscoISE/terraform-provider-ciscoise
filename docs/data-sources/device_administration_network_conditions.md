@@ -4,16 +4,15 @@ page_title: "ciscoise_device_administration_network_conditions Data Source - ter
 subcategory: ""
 description: |-
   It performs read operation on Device Administration - Network Conditions.
-  Device Admin Returns a list of network conditions.
-  Device Admin Returns a network condition.
+  Device Admin Returns a list of network conditions.Device Admin Returns a network condition.
 ---
 
 # ciscoise_device_administration_network_conditions (Data Source)
 
 It performs read operation on Device Administration - Network Conditions.
 
-Device Admin Returns a list of network conditions.
-Device Admin Returns a network condition.
+- Device Admin Returns a list of network conditions.
+- Device Admin Returns a network condition.
 
 ## Example Usage
 

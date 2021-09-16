@@ -4,16 +4,15 @@ page_title: "ciscoise_certificate_profile Resource - terraform-provider-ciscoise
 subcategory: ""
 description: |-
   It manages create, read and update operations on CertificateProfile.
-  This resource allows the client to update a certificate profile.
-    This resource allows the client to create a certificate profile.
+  This resource allows the client to update a certificate profile.This resource allows the client to create a certificate profile.
 ---
 
 # ciscoise_certificate_profile (Resource)
 
 It manages create, read and update operations on CertificateProfile.
   
-  This resource allows the client to update a certificate profile.
-  This resource allows the client to create a certificate profile.
+  - This resource allows the client to update a certificate profile.
+  - This resource allows the client to create a certificate profile.
 
 ## Example Usage
 

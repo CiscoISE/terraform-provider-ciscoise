@@ -4,18 +4,16 @@ page_title: "ciscoise_network_device_group Resource - terraform-provider-ciscois
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on NetworkDeviceGroup.
-  This resource allows the client to update a network device group.
-    This resource deletes a network device group.
-    This resource creates a network device group.
+  This resource allows the client to update a network device group.This resource deletes a network device group.This resource creates a network device group.
 ---
 
 # ciscoise_network_device_group (Resource)
 
 It manages create, read, update and delete operations on NetworkDeviceGroup.
   
-  This resource allows the client to update a network device group.
-  This resource deletes a network device group.
-  This resource creates a network device group.
+  - This resource allows the client to update a network device group.
+  - This resource deletes a network device group.
+  - This resource creates a network device group.
 
 ## Example Usage
 

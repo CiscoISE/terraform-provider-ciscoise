@@ -4,7 +4,7 @@ page_title: "ciscoise_trusted_certificate Data Source - terraform-provider-cisco
 subcategory: ""
 description: |-
   It performs read operation on Certificates.
-  - This data source supports Filtering, Sorting and Pagination.
+  This data source supports Filtering, Sorting and Pagination.
   Filtering and Sorting supported on below mentioned attributes:
   friendlyName
   subject
@@ -19,14 +19,14 @@ description: |-
   status
   Allowed values: enabled, disabled
   Supported Operators: EQ, NEQ
-  - This data source can displays details of a Trust Certificate based on a given ID.
+  This data source can displays details of a Trust Certificate based on a given ID.
 ---
 
 # ciscoise_trusted_certificate (Data Source)
 
 It performs read operation on Certificates.
 
- - This data source supports Filtering, Sorting and Pagination.
+ This data source supports Filtering, Sorting and Pagination.
 
 
 Filtering and Sorting supported on below mentioned attributes:

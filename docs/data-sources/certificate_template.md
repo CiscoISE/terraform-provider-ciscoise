@@ -4,9 +4,7 @@ page_title: "ciscoise_certificate_template Data Source - terraform-provider-cisc
 subcategory: ""
 description: |-
   It performs read operation on CertificateTemplate.
-  - This data source allows the client to get a certificate template by name.
-  - This data source allows the client to get a certificate template by ID.
-  - This data source allows the client to get aall the certificate templates.
+  This data source allows the client to get a certificate template by name.This data source allows the client to get a certificate template by ID.This data source allows the client to get aall the certificate templates.
 ---
 
 # ciscoise_certificate_template (Data Source)

@@ -4,7 +4,7 @@ page_title: "ciscoise_deployment Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on PullDeploymentInfo.
-  - This data source allows the client to pull the deployment information.
+  This data source allows the client to pull the deployment information.
 ---
 
 # ciscoise_deployment (Data Source)

@@ -5,21 +5,20 @@ subcategory: ""
 description: |-
   It manages create, read and delete operations on PAN HA.
   To deploy the auto-failover feature, you must have at least three nodes, where two of the nodes assume the
-    Administration persona, and one node acts as the health check node. A health check node is a non-administration node and
-    can be a Policy Service, Monitoring, or pxGrid node, or a combination of these. If the PANs are in different data
-    centers, you must have a health check node for each PAN.
-    Disable the automatic PAN failover
+  Administration persona, and one node acts as the health check node. A health check node is a non-administration node and
+  can be a Policy Service, Monitoring, or pxGrid node, or a combination of these. If the PANs are in different data
+  centers, you must have a health check node for each PAN.Disable the automatic PAN failover
 ---
 
 # ciscoise_pan_ha (Resource)
 
 It manages create, read and delete operations on PAN HA.
   
-  To deploy the auto-failover feature, you must have at least three nodes, where two of the nodes assume the
+  - To deploy the auto-failover feature, you must have at least three nodes, where two of the nodes assume the
   Administration persona, and one node acts as the health check node. A health check node is a non-administration node and
   can be a Policy Service, Monitoring, or pxGrid node, or a combination of these. If the PANs are in different data
   centers, you must have a health check node for each PAN.
-  Disable the automatic PAN failover
+  - Disable the automatic PAN failover
 
 ## Example Usage
 

@@ -4,18 +4,16 @@ page_title: "ciscoise_filter_policy Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on FilterPolicy.
-  This resource allows the client to update a filter policy.
-    This resource deletes a filter policy.
-    This resource creates a filter policy.
+  This resource allows the client to update a filter policy.This resource deletes a filter policy.This resource creates a filter policy.
 ---
 
 # ciscoise_filter_policy (Resource)
 
 It manages create, read, update and delete operations on FilterPolicy.
   
-  This resource allows the client to update a filter policy.
-  This resource deletes a filter policy.
-  This resource creates a filter policy.
+  - This resource allows the client to update a filter policy.
+  - This resource deletes a filter policy.
+  - This resource creates a filter policy.
 
 ## Example Usage
 

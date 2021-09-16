@@ -4,8 +4,7 @@ page_title: "ciscoise_sxp_connections Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on SXPConnections.
-  - This data source allows the client to get a SXP connection by ID.
-  - This data source allows the client to get all the SXP connections.
+  This data source allows the client to get a SXP connection by ID.This data source allows the client to get all the SXP connections.
   Filter:
   [name, description]
   Sorting:

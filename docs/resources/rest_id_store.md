@@ -4,22 +4,18 @@ page_title: "ciscoise_rest_id_store Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on RESTIDStore.
-  This resource allows the client to update a REST ID store by name.
-    This resource deletes a REST ID store by name.
-    This resource allows the client to update a REST ID store.
-    This resource deletes a REST ID store.
-    This resource creates a REST ID store.
+  This resource allows the client to update a REST ID store by name.This resource deletes a REST ID store by name.This resource allows the client to update a REST ID store.This resource deletes a REST ID store.This resource creates a REST ID store.
 ---
 
 # ciscoise_rest_id_store (Resource)
 
 It manages create, read, update and delete operations on RESTIDStore.
   
-  This resource allows the client to update a REST ID store by name.
-  This resource deletes a REST ID store by name.
-  This resource allows the client to update a REST ID store.
-  This resource deletes a REST ID store.
-  This resource creates a REST ID store.
+  - This resource allows the client to update a REST ID store by name.
+  - This resource deletes a REST ID store by name.
+  - This resource allows the client to update a REST ID store.
+  - This resource deletes a REST ID store.
+  - This resource creates a REST ID store.
 
 ## Example Usage
 
