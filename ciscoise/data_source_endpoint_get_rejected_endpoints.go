@@ -12,6 +12,10 @@ import (
 
 func dataSourceEndpointGetRejectedEndpoints() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on endpoint.
+
+This data source allows the client to get the rejected endpoints.`,
+
 		ReadContext: dataSourceEndpointGetRejectedEndpointsRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

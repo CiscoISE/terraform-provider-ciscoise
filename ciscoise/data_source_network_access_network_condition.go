@@ -12,11 +12,17 @@ import (
 
 func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Network Access - Network Conditions.
+
+Network Access Returns a list of network conditions.
+Network Access Returns a network condition.`,
+
 		ReadContext: dataSourceNetworkAccessNetworkConditionRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter. Condition id`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -25,8 +31,9 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"condition_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `This field determines the content of the conditions field`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"conditions": &schema.Schema{
 							Type:     schema.TypeList,
@@ -35,36 +42,41 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"cli_dnis_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"device_group_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"device_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"ip_addr_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"mac_addr_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -102,8 +114,9 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Network Condition name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -115,8 +128,9 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"condition_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `This field determines the content of the conditions field`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"conditions": &schema.Schema{
 							Type:     schema.TypeList,
@@ -125,36 +139,41 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"cli_dnis_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"device_group_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"device_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"ip_addr_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"mac_addr_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
@@ -192,8 +211,9 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Network Condition name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

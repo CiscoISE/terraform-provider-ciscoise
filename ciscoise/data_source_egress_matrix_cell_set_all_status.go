@@ -13,11 +13,16 @@ import (
 // dataSourceAction
 func dataSourceEgressMatrixCellSetAllStatus() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on EgressMatrixCell.
+
+his API allows the client to set status of all the egress matrix cells.`,
+
 		ReadContext: dataSourceEgressMatrixCellSetAllStatusRead,
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `status path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

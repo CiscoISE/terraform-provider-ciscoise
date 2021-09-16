@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridSecurityGroupsInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on TrustSec Configuration.
+
+🚧 getSecurityGroups`,
+
 		ReadContext: dataSourcePxgridSecurityGroupsInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

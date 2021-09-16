@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridAuthorization() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Provider.
+
+🚧 Authorization`,
+
 		ReadContext: dataSourcePxgridAuthorizationRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

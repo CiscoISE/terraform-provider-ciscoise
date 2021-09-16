@@ -12,11 +12,17 @@ import (
 
 func dataSourceRepositoryFiles() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Repository.
+
+This will get the full list of files present in the named repository.
+`,
+
 		ReadContext: dataSourceRepositoryFilesRead,
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `name path parameter. Unique name for a repository`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"items": &schema.Schema{
 				Type:     schema.TypeList,

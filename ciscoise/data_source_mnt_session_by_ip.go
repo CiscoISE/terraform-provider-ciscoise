@@ -12,11 +12,16 @@ import (
 
 func dataSourceMntSessionByIP() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+Sessions by Endpoint IP`,
+
 		ReadContext: dataSourceMntSessionByIPRead,
 		Schema: map[string]*schema.Schema{
 			"endpoint_ipv4": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `endpoint_ipv4 path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

@@ -12,23 +12,33 @@ import (
 
 func dataSourceTacacsExternalServers() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on TACACSExternalServers.
+
+This data source allows the client to get TACACS external servers by name.
+This data source allows the client to get TACACS external servers by ID.
+This data source allows the client to get all the TACACS external servers.`,
+
 		ReadContext: dataSourceTacacsExternalServersRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -37,16 +47,18 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"connection_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `The port to connect the server`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"host_ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The server IPV4 address`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -78,16 +90,19 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 							Computed: true,
 						},
 						"shared_secret": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The server shared secret`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"single_connect": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `Define the use of single connection`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 						"timeout": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `The server timeout`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 					},
 				},
@@ -99,16 +114,18 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"connection_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `The port to connect the server`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"host_ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The server IPV4 address`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -140,16 +157,19 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 							Computed: true,
 						},
 						"shared_secret": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The server shared secret`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"single_connect": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `Define the use of single connection`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 						"timeout": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `The server timeout`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 					},
 				},

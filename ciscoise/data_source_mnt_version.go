@@ -12,6 +12,10 @@ import (
 
 func dataSourceMntVersion() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+MNT Version`,
+
 		ReadContext: dataSourceMntVersionRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

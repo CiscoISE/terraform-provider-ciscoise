@@ -12,11 +12,17 @@ import (
 
 func dataSourceNetworkAccessDictionary() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Network Access - Dictionary.
+
+Get all Dictionaries.
+GET a dictionary by name`,
+
 		ReadContext: dataSourceNetworkAccessDictionaryRead,
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter. the dictionary name`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -25,16 +31,19 @@ func dataSourceNetworkAccessDictionary() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The description of the Dictionary`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"dictionary_attr_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary attribute type`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Identifier for the dictionary`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -58,12 +67,14 @@ func dataSourceNetworkAccessDictionary() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"version": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary version`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -75,16 +86,19 @@ func dataSourceNetworkAccessDictionary() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The description of the Dictionary`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"dictionary_attr_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary attribute type`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Identifier for the dictionary`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -108,12 +122,14 @@ func dataSourceNetworkAccessDictionary() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"version": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary version`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

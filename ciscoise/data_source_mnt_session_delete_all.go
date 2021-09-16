@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourceMntSessionDeleteAll() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs delete operation on Misc.
+
+Delete All Sessions`,
+
 		ReadContext: dataSourceMntSessionDeleteAllRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

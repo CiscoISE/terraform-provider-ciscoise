@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourceBackupCancel() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Backup And Restore.
+
+Cancels the backup job running on the node.`,
+
 		ReadContext: dataSourceBackupCancelRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{
@@ -22,60 +26,74 @@ func dataSourceBackupCancel() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"action": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Whether backup job or restore job`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"details": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Details of the job`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"error": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Error message. False in case of no error`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"host_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Hostname where the job has executed`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"initiated_from": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Whether the job was triggered from CLI / ADMIN UI / OPEN API`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"just_complete": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Whether the job completed now. Possible values - Yes, No`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"message": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `detail message in case of exception`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Backup name given at the time of scheduling the job.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"percent_complete": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `shows the percent completion of the job. Possible value range  1 - 100`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"repository": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `configured repository selected for the backup / restore job`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"scheduled": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `last action performed with respect to backup job. Possible values- BACKUP , CANCEL`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"start_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Start date of the backup job`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"status": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `status of the job - in_progress, complete`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Whether the job is for Operational or Configuration DB`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

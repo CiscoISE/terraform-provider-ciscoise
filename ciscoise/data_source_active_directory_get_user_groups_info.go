@@ -16,11 +16,16 @@ import (
 // dataSourceAction
 func dataSourceActiveDirectoryGetUserGroupsInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on ActiveDirectory.
+
+This data source action allows the client to get groups of which a given user is a member.`,
+
 		ReadContext: dataSourceActiveDirectoryGetUserGroupsInfoRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"additional_data": &schema.Schema{
 				Type:     schema.TypeList,

@@ -13,11 +13,17 @@ import (
 // dataSourceAction
 func dataSourceActiveDirectoryGetTrustedDomainsInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on ActiveDirectory.
+
+This data source action gets the list of domains that are accessible through the given join point via trust
+relationships.`,
+
 		ReadContext: dataSourceActiveDirectoryGetTrustedDomainsInfoRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

@@ -13,6 +13,11 @@ import (
 // dataSourceAction
 func dataSourceSgMappingDeployStatusInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on IPToSGTMapping.
+
+This data source action allows the client to get the IP to SGT mapping deployment status.
+Deploy Status will show last Deploy command output. The information will be saved until the next Deploy command`,
+
 		ReadContext: dataSourceSgMappingDeployStatusInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

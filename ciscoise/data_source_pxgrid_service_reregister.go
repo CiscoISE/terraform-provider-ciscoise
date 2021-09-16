@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridServiceReregister() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Provider.
+
+🚧 ServiceReregister`,
+
 		ReadContext: dataSourcePxgridServiceReregisterRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

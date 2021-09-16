@@ -12,9 +12,71 @@ import (
 
 func dataSourceNetworkDevice() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on NetworkDevice.
+
+This data source allows the client to get a network device by name.
+This data source allows the client to get a network device by ID.
+This data source allows the client to get all the network devices.
+
+Filter:
+
+[ipaddress, name, description, location, type]
+
+To search resources by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
+
+Sorting:
+
+[name, description]`,
+
 		ReadContext: dataSourceNetworkDeviceRead,
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
+				Description: `filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains 
+
+`,
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -22,32 +84,39 @@ func dataSourceNetworkDevice() *schema.Resource {
 				},
 			},
 			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sortasc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortasc query parameter. sort asc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sortdsc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortdsc query parameter. sort desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -56,21 +125,24 @@ func dataSourceNetworkDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"network_device_group_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `List of Network Device Group names for this node`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"network_device_iplist": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `List of IP Subnets for this node`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"get_ipaddress_exclude": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `It can be either single IP address or IP range address`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"ipaddress": &schema.Schema{
 										Type:     schema.TypeString,
@@ -90,8 +162,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"dtls_required": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `This value enforces use of dtls`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"enable_key_wrap": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -110,6 +183,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"key_input_format": &schema.Schema{
+										Description: `Allowed values:
+- ASCII,
+- HEXADECIMAL`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -118,6 +194,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"network_protocol": &schema.Schema{
+										Description: `Allowed values:
+- RADIUS,
+- TACACS_PLUS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -141,8 +220,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 							Computed: true,
 						},
 						"dtls_dns_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `This value is used to verify the client identity contained in the X.509 RADIUS/DTLS client certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -225,6 +305,10 @@ func dataSourceNetworkDevice() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"connect_mode_options": &schema.Schema{
+										Description: `Allowed values:
+- OFF,
+- ON_LEGACY,
+- ON_DRAFT_COMPLIANT`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -322,6 +406,10 @@ func dataSourceNetworkDevice() *schema.Resource {
 													Computed: true,
 												},
 												"send_configuration_to_device_using": &schema.Schema{
+													Description: `Allowed values:
+- ENABLE_USING_COA,
+- ENABLE_USING_CLI,
+- DISABLE_ALL`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -341,21 +429,24 @@ func dataSourceNetworkDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"network_device_group_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `List of Network Device Group names for this node`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"network_device_iplist": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `List of IP Subnets for this node`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"get_ipaddress_exclude": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `It can be either single IP address or IP range address`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"ipaddress": &schema.Schema{
 										Type:     schema.TypeString,
@@ -375,8 +466,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"dtls_required": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `This value enforces use of dtls`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"enable_key_wrap": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -395,6 +487,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"key_input_format": &schema.Schema{
+										Description: `Allowed values:
+- ASCII,
+- HEXADECIMAL`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -403,6 +498,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"network_protocol": &schema.Schema{
+										Description: `Allowed values:
+- RADIUS,
+- TACACS_PLUS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -426,8 +524,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 							Computed: true,
 						},
 						"dtls_dns_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `This value is used to verify the client identity contained in the X.509 RADIUS/DTLS client certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -510,6 +609,10 @@ func dataSourceNetworkDevice() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"connect_mode_options": &schema.Schema{
+										Description: `Allowed values:
+- OFF,
+- ON_LEGACY,
+- ON_DRAFT_COMPLIANT`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -607,6 +710,10 @@ func dataSourceNetworkDevice() *schema.Resource {
 													Computed: true,
 												},
 												"send_configuration_to_device_using": &schema.Schema{
+													Description: `Allowed values:
+- ENABLE_USING_COA,
+- ENABLE_USING_CLI,
+- DISABLE_ALL`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},

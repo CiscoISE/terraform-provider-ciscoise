@@ -16,6 +16,10 @@ import (
 // dataSourceAction
 func dataSourceAncEndpointClear() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on ANCEndpoint.
+
+This data source action allows the client to clear the required configuration.`,
+
 		ReadContext: dataSourceAncEndpointClearRead,
 		Schema: map[string]*schema.Schema{
 			"additional_data": &schema.Schema{

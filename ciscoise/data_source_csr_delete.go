@@ -13,15 +13,21 @@ import (
 // dataSourceAction
 func dataSourceCsrDelete() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs delete operation on Certificates.
+
+This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.`,
+
 		ReadContext: dataSourceCsrDeleteRead,
 		Schema: map[string]*schema.Schema{
 			"host_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `hostName path parameter. Name of the host of which CSR's should be deleted`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `id path parameter. The ID of the Certificate Signing Request to be deleted`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

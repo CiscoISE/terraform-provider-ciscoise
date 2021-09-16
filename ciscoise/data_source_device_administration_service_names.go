@@ -12,6 +12,12 @@ import (
 
 func dataSourceDeviceAdministrationServiceNames() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Device Administration - Service Names.
+
+Returns list of Allowed Protocols and Server Sequences for Device Admin Policy Set results.
+ 'isLocalAuthorization' property is available only for Network Access Policy Set results of type Server Sequence.
+ (Other CRUD APIs available throught ERS)`,
+
 		ReadContext: dataSourceDeviceAdministrationServiceNamesRead,
 		Schema: map[string]*schema.Schema{
 			"items": &schema.Schema{
@@ -33,8 +39,9 @@ func dataSourceDeviceAdministrationServiceNames() *schema.Resource {
 							Computed: true,
 						},
 						"service_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Allowed Protocols OR Server Sequence`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

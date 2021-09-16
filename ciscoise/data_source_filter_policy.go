@@ -12,19 +12,27 @@ import (
 
 func dataSourceFilterPolicy() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on FilterPolicy.
+
+This data source allows the client to get a filter policy by ID.
+This data source allows the client to get all the filter policies.`,
+
 		ReadContext: dataSourceFilterPolicyRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -33,18 +41,24 @@ func dataSourceFilterPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"domains": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `List of SXP Domains, separated with comma`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"sgt": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `SGT name or ID. At least one of subnet or sgt or vn should be defined`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"subnet": &schema.Schema{
+							Description: `Subnet for filter policy (hostname is not supported).
+At least one of subnet or sgt or vn should be defined`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"vn": &schema.Schema{
+							Description: `Virtual Network.
+At least one of subnet or sgt or vn should be defined`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

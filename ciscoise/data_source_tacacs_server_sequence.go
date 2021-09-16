@@ -12,23 +12,33 @@ import (
 
 func dataSourceTacacsServerSequence() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on TacacsServerSequence.
+
+This data source allows the client to get a TACACS server sequence by name.
+This data source allows the client to get a TACACS server sequence by ID.
+This data source allows the client to get all the TACACS server sequences.`,
+
 		ReadContext: dataSourceTacacsServerSequenceRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -74,28 +84,34 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 							Computed: true,
 						},
 						"prefix_delimiter": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The delimiter that will be used for prefix strip`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"prefix_strip": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `Define if a delimiter will be used for prefix strip`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"server_list": &schema.Schema{
+							Description: `The names of Tacacs external servers separated by commas.
+The order of the names in the string is the order of servers that will be used during authentication`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"suffix_delimiter": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The delimiter that will be used for suffix strip`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"suffix_strip": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `Define if a delimiter will be used for suffix strip`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 					},
 				},
@@ -144,28 +160,34 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 							Computed: true,
 						},
 						"prefix_delimiter": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The delimiter that will be used for prefix strip`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"prefix_strip": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `Define if a delimiter will be used for prefix strip`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"server_list": &schema.Schema{
+							Description: `The names of Tacacs external servers separated by commas.
+The order of the names in the string is the order of servers that will be used during authentication`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"suffix_delimiter": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The delimiter that will be used for suffix strip`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"suffix_strip": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `Define if a delimiter will be used for suffix strip`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 					},
 				},

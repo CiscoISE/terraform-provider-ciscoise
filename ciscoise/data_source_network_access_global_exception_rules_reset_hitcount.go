@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourceNetworkAccessGlobalExceptionRulesResetHitcount() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Network Access - Authorization Global Exception Rules.
+
+Network Access Reset HitCount for Global Exceptions`,
+
 		ReadContext: dataSourceNetworkAccessGlobalExceptionRulesResetHitcountRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

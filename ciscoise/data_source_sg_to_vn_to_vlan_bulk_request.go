@@ -14,6 +14,10 @@ import (
 // dataSourceAction
 func dataSourceSgToVnToVLANBulkRequest() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on SecurityGroupToVirtualNetwork.
+
+This data source action allows the client to submit the bulk request.`,
+
 		ReadContext: dataSourceSgToVnToVLANBulkRequestRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

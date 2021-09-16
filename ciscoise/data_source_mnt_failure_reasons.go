@@ -12,6 +12,10 @@ import (
 
 func dataSourceMntFailureReasons() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+FailureReasons`,
+
 		ReadContext: dataSourceMntFailureReasonsRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

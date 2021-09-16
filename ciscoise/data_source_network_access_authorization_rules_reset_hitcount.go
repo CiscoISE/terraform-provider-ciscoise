@@ -13,11 +13,16 @@ import (
 // dataSourceAction
 func dataSourceNetworkAccessAuthorizationRulesResetHitcount() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Network Access - Authorization Rules.
+
+Network Access Reset HitCount for Authorization Rules`,
+
 		ReadContext: dataSourceNetworkAccessAuthorizationRulesResetHitcountRead,
 		Schema: map[string]*schema.Schema{
 			"policy_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `policyId path parameter. Policy id`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

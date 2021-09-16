@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridEgressMatricesInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on TrustSec Configuration.
+
+🚧 getEgressMatrices`,
+
 		ReadContext: dataSourcePxgridEgressMatricesInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

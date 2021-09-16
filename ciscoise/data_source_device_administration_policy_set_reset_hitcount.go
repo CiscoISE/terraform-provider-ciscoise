@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourceDeviceAdministrationPolicySetResetHitcount() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Device Administration - Policy Set.
+
+Device Admin Reset HitCount for PolicySets`,
+
 		ReadContext: dataSourceDeviceAdministrationPolicySetResetHitcountRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

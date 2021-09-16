@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridProfilesInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Profiler.
+
+🚧 getProfiles`,
+
 		ReadContext: dataSourcePxgridProfilesInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

@@ -12,9 +12,71 @@ import (
 
 func dataSourceNetworkDeviceGroup() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on NetworkDeviceGroup.
+
+This data source allows the client to get a network device group by name.
+This data source allows the client to get a network device group by ID.
+This data source allows the client to get all the network device groups.
+
+Filter:
+
+[name, description, type]
+
+To search guest users by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
+
+Sorting:
+
+[name, description]`,
+
 		ReadContext: dataSourceNetworkDeviceGroupRead,
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
+				Description: `filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains 
+
+`,
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -22,32 +84,40 @@ func dataSourceNetworkDeviceGroup() *schema.Resource {
 				},
 			},
 			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
+				Description: `name path parameter. colon is used as a separator instead of (#) in the NDG name.
+For example, if the name is a#b#c it should appear in the request URL as a:b:c`,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sortasc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortasc query parameter. sort asc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sortdsc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortdsc query parameter. sort desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,

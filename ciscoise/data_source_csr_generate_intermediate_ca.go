@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourceCsrGenerateIntermediateCa() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Certificates.
+
+CSR Generation for Intermediate Certificates.`,
+
 		ReadContext: dataSourceCsrGenerateIntermediateCaRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{
@@ -22,8 +26,9 @@ func dataSourceCsrGenerateIntermediateCa() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `ID of the generated CSR`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -47,8 +52,9 @@ func dataSourceCsrGenerateIntermediateCa() *schema.Resource {
 							},
 						},
 						"message": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Response message on generation of CSR`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

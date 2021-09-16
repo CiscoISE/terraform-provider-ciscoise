@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourceNetworkDeviceBulkRequest() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on NetworkDevice.
+
+This data source action allows the client to submit the bulk request.`,
+
 		ReadContext: dataSourceNetworkDeviceBulkRequestRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

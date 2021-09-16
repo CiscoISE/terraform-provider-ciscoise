@@ -12,9 +12,70 @@ import (
 
 func dataSourceGuestSmtpNotificationSettings() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on GuestSMTPNotificationConfiguration.
+
+This data source allows the client to get a guest SMTP notification configuration by ID.
+This data source allows the client to get all the guest SMTP notification configurations.
+
+Filter:
+
+[name]
+
+To search guest users by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
+
+Sorting:
+
+[name, description]`,
+
 		ReadContext: dataSourceGuestSmtpNotificationSettingsRead,
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
+				Description: `filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains 
+
+`,
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -22,28 +83,34 @@ func dataSourceGuestSmtpNotificationSettings() *schema.Resource {
 				},
 			},
 			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sortasc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortasc query parameter. sort asc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sortdsc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortdsc query parameter. sort desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -52,12 +119,14 @@ func dataSourceGuestSmtpNotificationSettings() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"connection_timeout": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Interval in seconds for all the SMTP client connections`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"default_from_address": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The default from email address to be used to send emails from`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -85,37 +154,45 @@ func dataSourceGuestSmtpNotificationSettings() *schema.Resource {
 							},
 						},
 						"notification_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `Indicates if the email notification service is to be enabled`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Sensitive: true,
-							Computed:  true,
+							Description: `Password of Secure SMTP server`,
+							Type:        schema.TypeString,
+							Sensitive:   true,
+							Computed:    true,
 						},
 						"smtp_port": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Port at which SMTP Secure Server is listening`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"smtp_server": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The SMTP server ip address or fqdn such as outbound.mycompany.com`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"use_default_from_address": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `If the default from address should be used rather than using a sponsor user email address`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 						"use_password_authentication": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `If configured to true, SMTP server authentication will happen using username/password`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 						"use_tlsor_ssl_encryption": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
+							Description: `If configured to true, SMTP server authentication will happen using TLS/SSL`,
+							Type:        schema.TypeBool,
+							Computed:    true,
 						},
 						"user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Username of Secure SMTP server`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

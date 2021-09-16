@@ -12,6 +12,11 @@ import (
 
 func dataSourceDeviceAdministrationCommandSet() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Device Administration - Command Set.
+
+Device Admin Return list of command sets.
+ (Other CRUD APIs available throught ERS)`,
+
 		ReadContext: dataSourceDeviceAdministrationCommandSetRead,
 		Schema: map[string]*schema.Schema{
 			"items": &schema.Schema{
@@ -25,8 +30,9 @@ func dataSourceDeviceAdministrationCommandSet() *schema.Resource {
 							Computed: true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Command used in Device Admin authorization policies`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

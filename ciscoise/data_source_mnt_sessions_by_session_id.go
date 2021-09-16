@@ -12,11 +12,16 @@ import (
 
 func dataSourceMntSessionsBySessionID() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+Sessions by SessionID`,
+
 		ReadContext: dataSourceMntSessionsBySessionIDRead,
 		Schema: map[string]*schema.Schema{
 			"session_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `session_id path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

@@ -12,6 +12,10 @@ import (
 
 func dataSourceDeployment() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on PullDeploymentInfo.
+
+This data source allows the client to pull the deployment information.`,
+
 		ReadContext: dataSourceDeploymentRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{
@@ -71,8 +75,9 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
+																Description: `It varies type`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -286,14 +291,16 @@ func dataSourceDeployment() *schema.Resource {
 							},
 						},
 						"network_access_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `networkAccessInfo Details`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"deployment_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Deployment ID`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"is_csn_enabled": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -373,8 +380,9 @@ func dataSourceDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `It varies type`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -383,18 +391,21 @@ func dataSourceDeployment() *schema.Resource {
 							},
 						},
 						"profiler_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `profilerInfo Details`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"deployment_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Deployment ID`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"node_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `Deployment ID`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 

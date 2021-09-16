@@ -15,6 +15,12 @@ import (
 // dataSourceAction
 func dataSourceIseRootCaRegenerate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Certificates.
+
+This data source action will initiate regeneration of ISE root CA certificate chain. Response contains id which can be
+used to track the status.
+  Setting "removeExistingISEIntermediateCSR" to true will remove existing ISE Intermediate CSR`,
+
 		ReadContext: dataSourceIseRootCaRegenerateRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{
@@ -24,8 +30,9 @@ func dataSourceIseRootCaRegenerate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Id which can be used to track status of ISE root CA chain regeneration`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -56,8 +63,9 @@ func dataSourceIseRootCaRegenerate() *schema.Resource {
 				},
 			},
 			"remove_existing_ise_intermediate_csr": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Setting this attribute to true will remove existing ISE Intermediate CSR`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 		},
 	}

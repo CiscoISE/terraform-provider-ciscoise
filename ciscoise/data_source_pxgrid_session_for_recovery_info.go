@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridSessionForRecoveryInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Session Directory.
+
+🚧 getSessionsForRecovery`,
+
 		ReadContext: dataSourcePxgridSessionForRecoveryInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

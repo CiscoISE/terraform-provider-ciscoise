@@ -12,11 +12,16 @@ import (
 
 func dataSourceNodeReplicationStatus() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Replication Status.
+
+Retrives replication status of a node`,
+
 		ReadContext: dataSourceNodeReplicationStatusRead,
 		Schema: map[string]*schema.Schema{
 			"node": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `node path parameter. ID of the existing node.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

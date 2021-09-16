@@ -12,19 +12,26 @@ import (
 
 func dataSourceMntAthenticationStatus() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+AuthenticationStatus by MAC`,
+
 		ReadContext: dataSourceMntAthenticationStatusRead,
 		Schema: map[string]*schema.Schema{
 			"mac": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `MAC path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"rec_ord_s": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `RECORDS path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"sec_ond_s": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `SECONDS path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

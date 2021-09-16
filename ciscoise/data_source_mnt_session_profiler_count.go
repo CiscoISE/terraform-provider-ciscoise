@@ -12,6 +12,10 @@ import (
 
 func dataSourceMntSessionProfilerCount() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+ProfilerCount`,
+
 		ReadContext: dataSourceMntSessionProfilerCountRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

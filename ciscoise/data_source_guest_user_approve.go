@@ -13,11 +13,16 @@ import (
 // dataSourceAction
 func dataSourceGuestUserApprove() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on GuestUser.
+
+This data source action allows the client to approve a guest user by ID.`,
+
 		ReadContext: dataSourceGuestUserApproveRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

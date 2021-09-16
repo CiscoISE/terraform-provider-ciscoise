@@ -12,11 +12,16 @@ import (
 
 func dataSourceSxpConnectionsBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on SXPConnections.
+
+This data source allows the client to monitor the bulk request.`,
+
 		ReadContext: dataSourceSxpConnectionsBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{
 			"bulkid": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `bulkid path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

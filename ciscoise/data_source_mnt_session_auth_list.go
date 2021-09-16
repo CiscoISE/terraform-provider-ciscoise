@@ -12,6 +12,10 @@ import (
 
 func dataSourceMntSessionAuthList() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+Session/AuthList`,
+
 		ReadContext: dataSourceMntSessionAuthListRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

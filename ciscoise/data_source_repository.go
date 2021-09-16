@@ -12,11 +12,19 @@ import (
 
 func dataSourceRepository() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Repository.
+
+This will get the full list of repository definitions on the system.
+
+Get a specific repository identified by the name passed in the URL.
+`,
+
 		ReadContext: dataSourceRepositoryRead,
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter. Unique name for a repository`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -29,17 +37,20 @@ func dataSourceRepository() *schema.Resource {
 							Computed: true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Sensitive: true,
-							Computed:  true,
+							Description: `Password can contain alphanumeric and/or special characters.`,
+							Type:        schema.TypeString,
+							Sensitive:   true,
+							Computed:    true,
 						},
 						"path": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
@@ -50,8 +61,9 @@ func dataSourceRepository() *schema.Resource {
 							Computed: true,
 						},
 						"user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Username can contain alphanumeric characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -67,17 +79,20 @@ func dataSourceRepository() *schema.Resource {
 							Computed: true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Sensitive: true,
-							Computed:  true,
+							Description: `Password can contain alphanumeric and/or special characters.`,
+							Type:        schema.TypeString,
+							Sensitive:   true,
+							Computed:    true,
 						},
 						"path": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
@@ -88,8 +103,9 @@ func dataSourceRepository() *schema.Resource {
 							Computed: true,
 						},
 						"user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Username can contain alphanumeric characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

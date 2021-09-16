@@ -15,11 +15,16 @@ import (
 // dataSourceAction
 func dataSourceSupportBundleDownload() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on SupportBundleDownload.
+
+This data source action allows the client to upload a support bundle.`,
+
 		ReadContext: dataSourceSupportBundleDownloadRead,
 		Schema: map[string]*schema.Schema{
 			"dirpath": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `Directory absolute path in which to save the file.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"file_name": &schema.Schema{
 				Type:     schema.TypeString,

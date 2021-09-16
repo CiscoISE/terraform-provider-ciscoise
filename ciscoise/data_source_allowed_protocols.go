@@ -12,23 +12,33 @@ import (
 
 func dataSourceAllowedProtocols() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on AllowedProtocols.
+
+This data source allows the client to get an allowed protocol by name.
+This data source allows the client to get an allowed protocol by ID.
+This data source allows the client to get all the allowed protocols.`,
+
 		ReadContext: dataSourceAllowedProtocolsRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -93,8 +103,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							Computed: true,
 						},
 						"eap_fast": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `The eapFast is required only if allowEapFast is true, otherwise it must be ignored. The object eapFast contains the settings for EAP FAST protocol`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -103,10 +114,13 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_eap_fast_eap_gtc_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowEapFastEapGtcPwdChange is required only if allowEapFastEapGtc is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_eap_fast_eap_gtc_pwd_change_retries": &schema.Schema{
+										Description: `The allowEapFastEapGtcPwdChangeRetries is required only if allowEapFastEapGtc is true,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -115,28 +129,33 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_eap_fast_eap_ms_chap_v2_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowEapFastEapMsChapV2PwdChange is required only if allowEapFastEapMsChapV2 is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_eap_fast_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The allowEapFastEapMsChapV2PwdChangeRetries is required only if eapTtlsEapMsChapV2 is true, otherwise it must be ignored. Valid range is 0-3`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"allow_eap_fast_eap_tls": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"allow_eap_fast_eap_tls_auth_of_expired_certs": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowEapFastEapTlsAuthOfExpiredCerts is required only if allowEapFastEapTls is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_fast_dont_use_pacs_accept_client_cert": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The eapFastDontUsePacsAcceptClientCert is required only if eapFastUsePacs is FALSE, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_fast_dont_use_pacs_allow_machine_authentication": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The eapFastDontUsePacsAllowMachineAuthentication is required only if eapFastUsePacs is FALSE, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_fast_enable_eap_chaining": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -147,14 +166,20 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"eap_fast_use_pacs_accept_client_cert": &schema.Schema{
+										Description: `The eapFastUsePacsAcceptClientCert is required only if eapFastUsePacsAllowAuthenProvisioning is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_allow_anonym_provisioning": &schema.Schema{
+										Description: `The eapFastUsePacsAllowAnonymProvisioning is required only if eapFastUsePacs is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_allow_authen_provisioning": &schema.Schema{
+										Description: `The eapFastUsePacsAllowAuthenProvisioning is required only if eapFastUsePacs is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
@@ -163,38 +188,71 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"eap_fast_use_pacs_authorization_pac_ttl": &schema.Schema{
+										Description: `The eapFastUsePacsAuthorizationPacTtl is required only if eapFastUsePacsStatelessSessionResume is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_authorization_pac_ttl_units": &schema.Schema{
+										Description: `The eapFastUsePacsAuthorizationPacTtlUnits is required only if eapFastUsePacsStatelessSessionResume is true,
+otherwise it must be ignored.
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_machine_pac_ttl": &schema.Schema{
+										Description: `The eapFastUsePacsMachinePacTtl is required only if eapFastUsePacsAllowMachineAuthentication is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_machine_pac_ttl_units": &schema.Schema{
+										Description: `The eapFastUsePacsMachinePacTtlUnits is required only if eapFastUsePacsAllowMachineAuthentication is true,
+otherwise it must be ignored.
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
+										Description: `The eapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning
+is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_stateless_session_resume": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The eapFastUsePacsStatelessSessionResume is required only if eapFastUsePacs is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_fast_use_pacs_tunnel_pac_ttl": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The eapFastUsePacsTunnelPacTtl is required only if eapFastUsePacs is true, otherwise it must be ignored`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"eap_fast_use_pacs_tunnel_pac_ttl_units": &schema.Schema{
+										Description: `The eapFastUsePacsTunnelPacTtlUnits is required only if eapFastUsePacs is true, otherwise it must be ignored.
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_use_proactive_pac_update_precentage": &schema.Schema{
+										Description: `The eapFastUsePacsUseProactivePacUpdatePrecentage is required only if eapFastUsePacs is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -202,8 +260,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"eap_tls": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `The eapTls is required only if allowEapTls is true, otherwise it must be ignored. The object eapTls contains the settings for EAP TLS protocol`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -216,14 +275,24 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"eap_tls_session_ticket_precentage": &schema.Schema{
+										Description: `The eapTlsSessionTicketPrecentage is required only if eapTlsEnableStatelessSessionResume is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"eap_tls_session_ticket_ttl": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `Time to live. The eapTlsSessionTicketTtl is required only if eapTlsEnableStatelessSessionResume is true, otherwise it must be ignored`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"eap_tls_session_ticket_ttl_units": &schema.Schema{
+										Description: `Time to live time units. The eapTlsSessionTicketTtlUnits is required only if eapTlsEnableStatelessSessionResume is true,
+otherwise it must be ignored. Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -235,6 +304,8 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							Computed: true,
 						},
 						"eap_ttls": &schema.Schema{
+							Description: `The eapTtls is required only if allowEapTtls is true, otherwise it must be ignored.
+The object eapTtls contains the settings for EAP TTLS protocol`,
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -253,10 +324,13 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"eap_ttls_eap_ms_chap_v2_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The eapTtlsEapMsChapV2PwdChange is required only if eapTtlsEapMsChapV2 is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_ttls_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Description: `The eapTtlsEapMsChapV2PwdChangeRetries is required only if eapTtlsEapMsChapV2 is true,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -276,8 +350,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource UUID, Mandatory for update`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -301,8 +376,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"peap": &schema.Schema{
 							Type:     schema.TypeList,
@@ -315,10 +391,13 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_peap_eap_gtc_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowPeapEapGtcPwdChange is required only if allowPeapEapGtc is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_peap_eap_gtc_pwd_change_retries": &schema.Schema{
+										Description: `The allowPeapEapGtcPwdChangeRetries is required only if allowPeapEapGtc is true,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -327,10 +406,14 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_peap_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Description: `The allowPeapEapMsChapV2PwdChange is required only if allowPeapEapMsChapV2 is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"allow_peap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Description: `The allowPeapEapMsChapV2PwdChangeRetries is required only if allowPeapEapMsChapV2 is true,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -339,8 +422,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_peap_eap_tls_auth_of_expired_certs": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowPeapEapTlsAuthOfExpiredCerts is required only if allowPeapEapTls is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_peap_v0": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -354,6 +438,15 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"preferred_eap_protocol": &schema.Schema{
+							Description: `The preferredEapProtocol is required only if allowPreferredEapProtocol is true, otherwise it must be ignored.
+Allowed Values: 
+- EAP_FAST,
+- PEAP,
+- LEAP,
+- EAP_MD5,
+- EAP_TLS,
+- EAP_TTLS,
+- TEAP`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -366,6 +459,8 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							Computed: true,
 						},
 						"teap": &schema.Schema{
+							Description: `The teap is required only if allowTeap is true, otherwise it must be ignored.
+The object teap contains the settings for TEAP protocol`,
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -384,10 +479,14 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_teap_eap_ms_chap_v2_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowTeapEapMsChapV2PwdChange is required only if allowTeapEapMsChapV2 is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_teap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Description: `The allowTeapEapMsChapV2PwdChangeRetries is required only if allowTeapEapMsChapV2 is true,
+otherwise it must be ignored.
+Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -396,8 +495,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_teap_eap_tls_auth_of_expired_certs": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowTeapEapTlsAuthOfExpiredCerts is required only if allowTeapEapTls is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"enable_eap_chaining": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -472,8 +572,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							Computed: true,
 						},
 						"eap_fast": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `The eapFast is required only if allowEapFast is true, otherwise it must be ignored. The object eapFast contains the settings for EAP FAST protocol`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -482,10 +583,13 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_eap_fast_eap_gtc_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowEapFastEapGtcPwdChange is required only if allowEapFastEapGtc is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_eap_fast_eap_gtc_pwd_change_retries": &schema.Schema{
+										Description: `The allowEapFastEapGtcPwdChangeRetries is required only if allowEapFastEapGtc is true,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -494,28 +598,33 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_eap_fast_eap_ms_chap_v2_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowEapFastEapMsChapV2PwdChange is required only if allowEapFastEapMsChapV2 is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_eap_fast_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The allowEapFastEapMsChapV2PwdChangeRetries is required only if eapTtlsEapMsChapV2 is true, otherwise it must be ignored. Valid range is 0-3`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"allow_eap_fast_eap_tls": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"allow_eap_fast_eap_tls_auth_of_expired_certs": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowEapFastEapTlsAuthOfExpiredCerts is required only if allowEapFastEapTls is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_fast_dont_use_pacs_accept_client_cert": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The eapFastDontUsePacsAcceptClientCert is required only if eapFastUsePacs is FALSE, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_fast_dont_use_pacs_allow_machine_authentication": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The eapFastDontUsePacsAllowMachineAuthentication is required only if eapFastUsePacs is FALSE, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_fast_enable_eap_chaining": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -526,14 +635,20 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"eap_fast_use_pacs_accept_client_cert": &schema.Schema{
+										Description: `The eapFastUsePacsAcceptClientCert is required only if eapFastUsePacsAllowAuthenProvisioning is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_allow_anonym_provisioning": &schema.Schema{
+										Description: `The eapFastUsePacsAllowAnonymProvisioning is required only if eapFastUsePacs is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_allow_authen_provisioning": &schema.Schema{
+										Description: `The eapFastUsePacsAllowAuthenProvisioning is required only if eapFastUsePacs is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
@@ -542,38 +657,71 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"eap_fast_use_pacs_authorization_pac_ttl": &schema.Schema{
+										Description: `The eapFastUsePacsAuthorizationPacTtl is required only if eapFastUsePacsStatelessSessionResume is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_authorization_pac_ttl_units": &schema.Schema{
+										Description: `The eapFastUsePacsAuthorizationPacTtlUnits is required only if eapFastUsePacsStatelessSessionResume is true,
+otherwise it must be ignored.
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_machine_pac_ttl": &schema.Schema{
+										Description: `The eapFastUsePacsMachinePacTtl is required only if eapFastUsePacsAllowMachineAuthentication is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_machine_pac_ttl_units": &schema.Schema{
+										Description: `The eapFastUsePacsMachinePacTtlUnits is required only if eapFastUsePacsAllowMachineAuthentication is true,
+otherwise it must be ignored.
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
+										Description: `The eapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning
+is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_stateless_session_resume": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The eapFastUsePacsStatelessSessionResume is required only if eapFastUsePacs is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_fast_use_pacs_tunnel_pac_ttl": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The eapFastUsePacsTunnelPacTtl is required only if eapFastUsePacs is true, otherwise it must be ignored`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"eap_fast_use_pacs_tunnel_pac_ttl_units": &schema.Schema{
+										Description: `The eapFastUsePacsTunnelPacTtlUnits is required only if eapFastUsePacs is true, otherwise it must be ignored.
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_use_proactive_pac_update_precentage": &schema.Schema{
+										Description: `The eapFastUsePacsUseProactivePacUpdatePrecentage is required only if eapFastUsePacs is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -581,8 +729,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"eap_tls": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `The eapTls is required only if allowEapTls is true, otherwise it must be ignored. The object eapTls contains the settings for EAP TLS protocol`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -595,14 +744,24 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"eap_tls_session_ticket_precentage": &schema.Schema{
+										Description: `The eapTlsSessionTicketPrecentage is required only if eapTlsEnableStatelessSessionResume is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"eap_tls_session_ticket_ttl": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `Time to live. The eapTlsSessionTicketTtl is required only if eapTlsEnableStatelessSessionResume is true, otherwise it must be ignored`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"eap_tls_session_ticket_ttl_units": &schema.Schema{
+										Description: `Time to live time units. The eapTlsSessionTicketTtlUnits is required only if eapTlsEnableStatelessSessionResume is true,
+otherwise it must be ignored. Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -614,6 +773,8 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							Computed: true,
 						},
 						"eap_ttls": &schema.Schema{
+							Description: `The eapTtls is required only if allowEapTtls is true, otherwise it must be ignored.
+The object eapTtls contains the settings for EAP TTLS protocol`,
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -632,10 +793,13 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"eap_ttls_eap_ms_chap_v2_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The eapTtlsEapMsChapV2PwdChange is required only if eapTtlsEapMsChapV2 is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"eap_ttls_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Description: `The eapTtlsEapMsChapV2PwdChangeRetries is required only if eapTtlsEapMsChapV2 is true,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -655,8 +819,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource UUID, Mandatory for update`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -680,8 +845,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"peap": &schema.Schema{
 							Type:     schema.TypeList,
@@ -694,10 +860,13 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_peap_eap_gtc_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowPeapEapGtcPwdChange is required only if allowPeapEapGtc is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_peap_eap_gtc_pwd_change_retries": &schema.Schema{
+										Description: `The allowPeapEapGtcPwdChangeRetries is required only if allowPeapEapGtc is true,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -706,10 +875,14 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_peap_eap_ms_chap_v2_pwd_change": &schema.Schema{
+										Description: `The allowPeapEapMsChapV2PwdChange is required only if allowPeapEapMsChapV2 is true,
+otherwise it must be ignored`,
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"allow_peap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Description: `The allowPeapEapMsChapV2PwdChangeRetries is required only if allowPeapEapMsChapV2 is true,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -718,8 +891,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_peap_eap_tls_auth_of_expired_certs": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowPeapEapTlsAuthOfExpiredCerts is required only if allowPeapEapTls is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_peap_v0": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -733,6 +907,15 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"preferred_eap_protocol": &schema.Schema{
+							Description: `The preferredEapProtocol is required only if allowPreferredEapProtocol is true, otherwise it must be ignored.
+Allowed Values: 
+- EAP_FAST,
+- PEAP,
+- LEAP,
+- EAP_MD5,
+- EAP_TLS,
+- EAP_TTLS,
+- TEAP`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -745,6 +928,8 @@ func dataSourceAllowedProtocols() *schema.Resource {
 							Computed: true,
 						},
 						"teap": &schema.Schema{
+							Description: `The teap is required only if allowTeap is true, otherwise it must be ignored.
+The object teap contains the settings for TEAP protocol`,
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
@@ -763,10 +948,14 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_teap_eap_ms_chap_v2_pwd_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowTeapEapMsChapV2PwdChange is required only if allowTeapEapMsChapV2 is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"allow_teap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
+										Description: `The allowTeapEapMsChapV2PwdChangeRetries is required only if allowTeapEapMsChapV2 is true,
+otherwise it must be ignored.
+Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Computed: true,
 									},
@@ -775,8 +964,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 										Computed: true,
 									},
 									"allow_teap_eap_tls_auth_of_expired_certs": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `The allowTeapEapTlsAuthOfExpiredCerts is required only if allowTeapEapTls is true, otherwise it must be ignored`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"enable_eap_chaining": &schema.Schema{
 										Type:     schema.TypeBool,

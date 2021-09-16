@@ -12,19 +12,26 @@ import (
 
 func dataSourceMntSessionReauthentication() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+Session Reauthentication by MAC`,
+
 		ReadContext: dataSourceMntSessionReauthenticationRead,
 		Schema: map[string]*schema.Schema{
 			"end_poi_ntm_ac": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `ENDPOINT_MAC path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"psn_nam_e": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `PSN_NAME path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"rea_uth_typ_e": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `REAUTH_TYPE path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

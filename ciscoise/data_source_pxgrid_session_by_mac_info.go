@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridSessionByMacInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Session Directory.
+
+🚧 getSessionByMacAddress`,
+
 		ReadContext: dataSourcePxgridSessionByMacInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

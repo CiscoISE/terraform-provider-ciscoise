@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridServiceLookup() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Consumer.
+
+🚧 ServiceLookup`,
+
 		ReadContext: dataSourcePxgridServiceLookupRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

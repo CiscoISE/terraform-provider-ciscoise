@@ -15,6 +15,170 @@ import (
 // dataSourceAction
 func dataSourceCsrGenerate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Certificates.
+
+
+
+Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
+IMS Services.
+
+Following Parameters are present in POST request body
+
+
+
+
+PARAMETER
+
+DESCRIPTION
+
+EXAMPLE
+
+
+
+
+
+hostnames
+
+List of ise node hostnames for which CSRs should be generated
+
+[ise-host1, ise-host2]
+
+
+
+allowWildCardCert
+
+Allow use of WildCards in certificates
+
+false
+
+
+
+keyLength
+
+Length of the Key used for CSR generation (required)
+
+512
+
+
+
+keyType
+
+Type of key used for CSR generation either RSA or ECDSA(required)
+
+RSA
+
+
+
+digestType
+
+Hash algorithm used for signing CSR(required)
+
+SHA-256
+
+
+
+usedFor
+
+Certificate Usage(required)
+
+MULTI-USE
+
+
+
+subjectCommonName
+
+Certificate common name(CN)(required)
+
+$FQDN$
+
+
+
+subjectOrgUnit
+
+Certificate organizational unit(OU)
+
+Engineering
+
+
+
+subjectOrg
+
+Certificate organization (O)
+
+Cisco
+
+
+
+subjectCity
+
+Certificate city or locality (L)
+
+San Jose
+
+
+subjectState
+
+Certificate state (ST)
+
+California
+
+
+subjectCountry
+
+Certificate country ( C)
+
+US
+
+
+
+sanDNS
+
+Array of SAN(Subject Alternative Name) DNS entries(optional)
+
+[ise.example.com]
+
+
+sanIP
+
+Array of SAN IP entries(optional)
+
+[1.1.1.1]
+
+
+sanURI
+
+Array of SAN URI entries(optional)
+
+[https://1.1.1.1]
+
+
+
+sanDir
+
+Array of SAN DIR entries(optional)
+
+[CN=AAA,DC=COM,C=IL]
+
+
+
+portalGroupTag
+
+Portal Group Tag when using certificate for PORTAL service
+
+Default Portal Certificate Group
+
+
+
+
+NOTE:
+For allowWildCardCert to be false, the below mentioned parameter is mandatory:
+hostnames
+
+When Certificate is selected to be used for Portal Service, the below mentioned parameter is mandatory:
+portalGroupTag
+
+ `,
+
 		ReadContext: dataSourceCsrGenerateRead,
 		Schema: map[string]*schema.Schema{
 			"allow_wild_card_cert": &schema.Schema{
@@ -43,8 +207,9 @@ func dataSourceCsrGenerate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `ID of the generated CSR`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -68,8 +233,9 @@ func dataSourceCsrGenerate() *schema.Resource {
 							},
 						},
 						"message": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Response message on generation of CSR`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
