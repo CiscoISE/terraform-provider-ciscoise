@@ -3,12 +3,15 @@
 page_title: "ciscoise_anc_endpoint_bulk_monitor_status Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on ANCEndpoint.
+  This data source allows the client to monitor the bulk request.
 ---
 
 # ciscoise_anc_endpoint_bulk_monitor_status (Data Source)
 
+It performs read operation on ANCEndpoint.
 
+This data source allows the client to monitor the bulk request.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **bulkid** (String)
+- **bulkid** (String) bulkid path parameter.
 
 ### Optional
 

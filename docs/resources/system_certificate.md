@@ -3,14 +3,322 @@
 page_title: "ciscoise_system_certificate Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It manages read, update and delete operations on Certificates.
+  Update a System Certificate.
+  NOTE:
+    Renewing a certificate will cause an application server restart on the selected node.
+  NOTE:
+    Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+  Following Parameters are used in POST body
+  PARAMETER
+  DESCRIPTION
+  EXAMPLE
+  name
+  Friendly name of the certificate.
+  System Certificate
+  description
+    Description of the Certificate
+    Default Description
+  admin
+  Use certificate to authenticate the ISE Admin Portal
+  false
+  eap
+  Use certificate for EAP protocols that use SSL/TLS tunneling
+  false
+  radius
+  Use certificate for RADSec server
+  false
+  pxgrid
+  Use certificate for the pxGrid Controller
+  false
+  ims
+  Use certificate for the ISE Messaging Service
+  false
+  saml
+  Use certificate for SAML Signing
+  false
+  portal
+  Use certificate for portal
+  false
+  portalGroupTag
+  Portal Group Tag for using certificate with portal role
+  Default Portal Certificate Group
+  allowReplacementOfPortalGroupTag
+  Allow Replacement of Portal Group Tag (required)
+  false
+  renewSelfSignedCertificate
+  Renew Self Signed Certificate
+  false
+  expirationTTLPeriod
+  Expiration Period
+  365
+  expirationTTLUnits
+  Expiration Units in one of the below formats
+  days / weeks / months / years
+  days
+  Following Roles can be used in any combinations
+  ROLE
+  DEFAULT
+  WARNING
+  Admin
+  False
+  Enabling Admin role for this certificate will cause an application server restart on the selected node.
+    Note:
+     Make sure required Certificate Chain is imported under Trusted Certificates
+  EAP Authentication
+  False
+  Only one system certificate can be used for EAP. Assigning EAP to this certificate will remove the assignment from
+    another certificate.
+    Note:
+     Make sure required Certificate Chain is imported under Trusted Certificates
+  RADIUS DTLS
+  False
+  Only one system certificate can be used for DTLS. Assigning DTLS to this certificate will remove the assignment from
+    another certificate.
+    Note:
+     Make sure required Certificate Chain is imported under Trusted Certificates
+  SAML
+  False
+  SAML cannot be used with other Usage. Enabling SAML will uncheck all other Usage.
+    Note:
+     Make sure required Certificate Chain is imported under Trusted Certificates
+  This resource deletes a System Certificate of a particular node based on a given HostName and ID.
 ---
 
 # ciscoise_system_certificate (Resource)
 
+It manages read, update and delete operations on Certificates.
+  
+  
+  
+  Update a System Certificate.
+  
+  NOTE:
+  Renewing a certificate will cause an application server restart on the selected node.
+  
+  NOTE:
+  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+  
+  Following Parameters are used in POST body
+  
+  
+  
+  
+  PARAMETER
+  
+  DESCRIPTION
+  
+  EXAMPLE
+  
+  
+  
+  
+  
+  name
+  
+  Friendly name of the certificate.
+  
+  System Certificate
+  
+  
+  
+  description
+  Description of the Certificate
+  Default Description
+  
+  
+  admin
+  
+  Use certificate to authenticate the ISE Admin Portal
+  
+  false
+  
+  
+  
+  eap
+  
+  Use certificate for EAP protocols that use SSL/TLS tunneling
+  
+  false
+  
+  
+  
+  radius
+  
+  Use certificate for RADSec server
+  
+  false
+  
+  
+  
+  pxgrid
+  
+  Use certificate for the pxGrid Controller
+  
+  false
+  
+  
+  
+  ims
+  
+  Use certificate for the ISE Messaging Service
+  
+  false
+  
+  
+  
+  saml
+  
+  Use certificate for SAML Signing
+  
+  false
+  
+  
+  
+  portal
+  
+  Use certificate for portal
+  
+  false
+  
+  
+  
+  portalGroupTag
+  
+  Portal Group Tag for using certificate with portal role
+  
+  Default Portal Certificate Group
+  
+  
+  
+  allowReplacementOfPortalGroupTag
+  
+  Allow Replacement of Portal Group Tag (required)
+  
+  false
+  
+  
+  
+  renewSelfSignedCertificate
+  
+  Renew Self Signed Certificate
+  
+  false
+  
+  
+  
+  expirationTTLPeriod
+  
+  Expiration Period
+  
+  365
+  
+  
+  
+  expirationTTLUnits
+  
+  Expiration Units in one of the below formats
+  
+  days / weeks / months / years
+  
+  
+  
+  days
+  
+  
+  
+  
+  
+  Following Roles can be used in any combinations
+  
+  
+  
+  
+  ROLE
+  
+  DEFAULT
+  
+  WARNING
+  
+  
+  
+  
+  
+  Admin
+  
+  False
+  
+  Enabling Admin role for this certificate will cause an application server restart on the selected node.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  
+  
+  
+  EAP Authentication
+  
+  False
+  
+  Only one system certificate can be used for EAP. Assigning EAP to this certificate will remove the assignment from
+  another certificate.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  
+  
+  
+  RADIUS DTLS
+  
+  False
+  
+  Only one system certificate can be used for DTLS. Assigning DTLS to this certificate will remove the assignment from
+  another certificate.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  
+  
+  
+  SAML
+  
+  False
+  
+  SAML cannot be used with other Usage. Enabling SAML will uncheck all other Usage.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  
+  
+  
+  
+  This resource deletes a System Certificate of a particular node based on a given HostName and ID.
 
+## Example Usage
 
+```terraform
+resource "ciscoise_system_certificate" "example" {
+  provider = ciscoise
+  item {
 
+    admin                                 = false
+    allow_replacement_of_portal_group_tag = false
+    description                           = "string"
+    eap                                   = false
+    expiration_ttl_period                 = 1
+    expiration_ttl_units                  = "string"
+    host_name                             = "string"
+    id                                    = "string"
+    ims                                   = false
+    name                                  = "string"
+    portal                                = false
+    portal_group_tag                      = "string"
+    pxgrid                                = false
+    radius                                = false
+    renew_self_signed_certificate         = false
+    saml                                  = false
+  }
+}
+
+output "ciscoise_system_certificate_example" {
+  value = ciscoise_system_certificate.example
+}
+```
 
 <!-- schema generated by tfplugindocs -->
 ## Schema
@@ -29,39 +337,39 @@ description: |-
 
 Optional:
 
-- **admin** (Boolean)
-- **allow_replacement_of_portal_group_tag** (Boolean)
-- **description** (String)
-- **eap** (Boolean)
+- **admin** (Boolean) Use certificate to authenticate the ISE Admin Portal
+- **allow_replacement_of_portal_group_tag** (Boolean) Allow Replacement of Portal Group Tag (required)
+- **description** (String) Description of System Certificate
+- **eap** (Boolean) Use certificate for EAP protocols that use SSL/TLS tunneling
 - **expiration_ttl_period** (Number)
 - **expiration_ttl_units** (String)
-- **host_name** (String)
-- **ims** (Boolean)
-- **name** (String)
-- **portal** (Boolean)
-- **portal_group_tag** (String)
-- **pxgrid** (Boolean)
-- **radius** (Boolean)
-- **renew_self_signed_certificate** (Boolean)
-- **saml** (Boolean)
+- **host_name** (String) hostName path parameter. Name of Host whose certificate needs to be updated
+- **id** (String) ID of system certificate
+- **ims** (Boolean) Use certificate for the ISE Messaging Service
+- **name** (String) Name of the certificate
+- **portal** (Boolean) Use for portal
+- **portal_group_tag** (String) Set Group tag
+- **pxgrid** (Boolean) Use certificate for the pxGrid Controller
+- **radius** (Boolean) Use certificate for the RADSec server
+- **renew_self_signed_certificate** (Boolean) Renew Self Signed Certificate
+- **saml** (Boolean) Use certificate for SAML Signing
 
 Read-Only:
 
-- **expiration_date** (String)
-- **friendly_name** (String)
+- **expiration_date** (String) The time and date past which the certificate is no longer valid
+- **friendly_name** (String) Friendly name of system certificate
 - **group_tag** (String)
-- **id** (String) The ID of this resource.
-- **issued_by** (String)
-- **issued_to** (String)
-- **key_size** (Number)
+- **issued_by** (String) Common Name of the certificate issuer
+- **issued_to** (String) Common Name of the certificate subject
+- **key_size** (Number) The length of key used for encrypting system certificate
 - **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
 - **portals_using_the_tag** (String)
 - **self_signed** (Boolean)
-- **serial_number_decimal_format** (String)
+- **serial_number_decimal_format** (String) Used to uniquely identify the certificate within a CA's systems
 - **sha256_fingerprint** (String)
 - **signature_algorithm** (String)
 - **used_by** (String)
-- **valid_from** (String)
+- **valid_from** (String) The time and date on which the certificate was created, also known as the Not Before certificate attribute
 
 <a id="nestedatt--item--link"></a>
 ### Nested Schema for `item.link`
@@ -72,4 +380,10 @@ Read-Only:
 - **rel** (String)
 - **type** (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import ciscoise_system_certificate.example "host_name=string/id=string"
+```

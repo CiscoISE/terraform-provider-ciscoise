@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_profiles_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Profiler.
+  🚧 getProfiles
 ---
 
 # ciscoise_pxgrid_profiles_info (Data Source)
 
+It performs create operation on Profiler.
 
+🚧 getProfiles
 
 
 

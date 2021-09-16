@@ -3,12 +3,22 @@
 page_title: "ciscoise_node_deployment Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Node Deployment.
+  Discovers all deployment nodes in the cluster.
+  It provides basic information about each of deployed nodes in the cluster like Hostname, personas, status, roles and
+  services.
+  It provides detailed information of the deployed node in the cluster.
 ---
 
 # ciscoise_node_deployment (Data Source)
 
+It performs read operation on Node Deployment.
 
+Discovers all deployment nodes in the cluster.
+It provides basic information about each of deployed nodes in the cluster like Hostname, personas, status, roles and
+services.
+
+It provides detailed information of the deployed node in the cluster.
 
 
 
@@ -17,7 +27,7 @@ description: |-
 
 ### Optional
 
-- **hostname** (String)
+- **hostname** (String) hostname path parameter. ID of the existing deployed node.
 - **id** (String) The ID of this resource.
 
 ### Read-Only

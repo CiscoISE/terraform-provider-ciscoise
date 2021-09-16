@@ -3,12 +3,15 @@
 page_title: "ciscoise_endpoint_certificate Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on EndpointCertificate.
+  This data source action allows the client to create an endpoint certificate.
 ---
 
 # ciscoise_endpoint_certificate (Data Source)
 
+It performs update operation on EndpointCertificate.
 
+This data source action allows the client to create an endpoint certificate.
 
 
 
@@ -17,15 +20,21 @@ description: |-
 
 ### Required
 
-- **dirpath** (String)
+- **dirpath** (String) Directory absolute path in which to save the file.
 
 ### Optional
 
-- **cert_template_name** (String)
-- **certificate_request** (Block List) (see [below for nested schema](#nestedblock--certificate_request))
-- **format** (String)
+- **cert_template_name** (String) Name of an Internal CA template
+- **certificate_request** (Block List) Key value map. Must have CN and SAN entries (see [below for nested schema](#nestedblock--certificate_request))
+- **format** (String) Allowed values:
+- PKCS12,
+- PKCS12_CHAIN,
+- PKCS8,
+- PKCS8_CHAIN
 - **id** (String) The ID of this resource.
-- **password** (String, Sensitive)
+- **password** (String, Sensitive) Protects the private key. Must have more than 8 characters, less than 15 characters,
+at least one upper case letter, at least one lower case letter, at least one digit,
+and can only contain [A-Z][a-z][0-9]_#
 
 ### Read-Only
 
@@ -36,7 +45,8 @@ description: |-
 
 Optional:
 
-- **cn** (String)
-- **san** (String)
+- **cn** (String) Matches the requester's User Name, unless the Requester is an ERS Admin.
+ERS Admins are allowed to create requests for any CN
+- **san** (String) Valid MAC Address, delimited by '-'
 
 

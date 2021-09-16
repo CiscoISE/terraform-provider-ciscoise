@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_authorization Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Provider.
+  🚧 Authorization
 ---
 
 # ciscoise_pxgrid_authorization (Data Source)
 
+It performs create operation on Provider.
 
+🚧 Authorization
 
 
 

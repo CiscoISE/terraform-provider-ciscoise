@@ -3,12 +3,17 @@
 page_title: "ciscoise_network_access_authentication_rules Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Network Access - Authentication Rules.
+  Network Access Get authentication rules.
+  Network Access Get rule attributes.
 ---
 
 # ciscoise_network_access_authentication_rules (Data Source)
 
+It performs read operation on Network Access - Authentication Rules.
 
+Network Access Get authentication rules.
+Network Access Get rule attributes.
 
 
 
@@ -17,8 +22,8 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **policy_id** (String)
+- **id** (String) id path parameter. Rule id
+- **policy_id** (String) policyId path parameter. Policy id
 
 ### Read-Only
 

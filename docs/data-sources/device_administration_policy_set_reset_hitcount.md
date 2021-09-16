@@ -3,12 +3,15 @@
 page_title: "ciscoise_device_administration_policy_set_reset_hitcount Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Device Administration - Policy Set.
+  Device Admin Reset HitCount for PolicySets
 ---
 
 # ciscoise_device_administration_policy_set_reset_hitcount (Data Source)
 
+It performs create operation on Device Administration - Policy Set.
 
+Device Admin Reset HitCount for PolicySets
 
 
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_px_grid_settings_auto_approve Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on PxGridSettings.
+  This data source action allows the client to auto approve the pxGrid settings.
 ---
 
 # ciscoise_px_grid_settings_auto_approve (Data Source)
 
+It performs update operation on PxGridSettings.
 
+This data source action allows the client to auto approve the pxGrid settings.
 
 
 
@@ -17,8 +20,8 @@ description: |-
 
 ### Optional
 
-- **allow_password_based_accounts** (Boolean)
-- **auto_approve_cert_based_accounts** (Boolean)
+- **allow_password_based_accounts** (Boolean) Allow password based accounts when true
+- **auto_approve_cert_based_accounts** (Boolean) Auto approve certificate based accounts when true
 - **id** (String) The ID of this resource.
 
 ### Read-Only

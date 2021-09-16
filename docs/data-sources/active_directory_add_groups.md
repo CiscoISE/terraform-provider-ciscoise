@@ -3,12 +3,15 @@
 page_title: "ciscoise_active_directory_add_groups Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on ActiveDirectory.
+  This data source action loads domain groups configuration from Active Directory into Cisco ISE.
 ---
 
 # ciscoise_active_directory_add_groups (Data Source)
 
+It performs update operation on ActiveDirectory.
 
+This data source action loads domain groups configuration from Active Directory into Cisco ISE.
 
 
 
@@ -17,18 +20,18 @@ description: |-
 
 ### Required
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 
 ### Optional
 
-- **ad_attributes** (Block List) (see [below for nested schema](#nestedblock--ad_attributes))
-- **ad_scopes_names** (String)
-- **adgroups** (Block List) (see [below for nested schema](#nestedblock--adgroups))
+- **ad_attributes** (Block List) Holds list of AD Attributes (see [below for nested schema](#nestedblock--ad_attributes))
+- **ad_scopes_names** (String) String that contains the names of the scopes that the active directory belongs to. Names are separated by comma. Alphanumeric, underscore (_) characters are allowed
+- **adgroups** (Block List) Holds list of AD Groups (see [below for nested schema](#nestedblock--adgroups))
 - **advanced_settings** (Block List) (see [below for nested schema](#nestedblock--advanced_settings))
-- **description** (String)
-- **domain** (String)
+- **description** (String) No character restriction
+- **domain** (String) The AD domain. Alphanumeric, hyphen (-) and dot (.) characters are allowed
 - **enable_domain_white_list** (Boolean)
-- **name** (String)
+- **name** (String) Resource Name. Maximum 32 characters allowed. Allowed characters are alphanumeric and .-_/\\ characters
 
 ### Read-Only
 
@@ -39,17 +42,17 @@ description: |-
 
 Optional:
 
-- **attributes** (Block List) (see [below for nested schema](#nestedblock--ad_attributes--attributes))
+- **attributes** (Block List) List of Attributes (see [below for nested schema](#nestedblock--ad_attributes--attributes))
 
 <a id="nestedblock--ad_attributes--attributes"></a>
 ### Nested Schema for `ad_attributes.attributes`
 
 Optional:
 
-- **default_value** (String)
-- **internal_name** (String)
-- **name** (String)
-- **type** (String)
+- **default_value** (String) Required for each attribute in the attribute list. Can contain an empty string. All characters are allowed except <%"
+- **internal_name** (String) Required for each attribute in the attribute list. All characters are allowed except <%"
+- **name** (String) Required for each attribute in the attribute list with no duplication between attributes. All characters are allowed except <%"
+- **type** (String) Required for each group in the group list. Allowed values: STRING, IP, BOOLEAN, INT, OCTET_STRING
 
 
 
@@ -58,16 +61,16 @@ Optional:
 
 Optional:
 
-- **groups** (Block List) (see [below for nested schema](#nestedblock--adgroups--groups))
+- **groups** (Block List) List of Groups (see [below for nested schema](#nestedblock--adgroups--groups))
 
 <a id="nestedblock--adgroups--groups"></a>
 ### Nested Schema for `adgroups.groups`
 
 Optional:
 
-- **name** (String)
-- **sid** (String)
-- **type** (String)
+- **name** (String) Required for each group in the group list with no duplication between groups. All characters are allowed except %
+- **sid** (String) Cisco ISE uses security identifiers (SIDs) for optimization of group membership evaluation. SIDs are useful for efficiency (speed) when the groups are evaluated. All characters are allowed except %
+- **type** (String) No character restriction
 
 
 
@@ -76,40 +79,49 @@ Optional:
 
 Optional:
 
-- **aging_time** (Number)
-- **auth_protection_type** (String)
-- **country** (String)
-- **department** (String)
-- **email** (String)
+- **aging_time** (Number) Range 1-8760 hours
+- **auth_protection_type** (String) Enable prevent AD account lockout. Allowed values:
+- WIRELESS,
+- WIRED,
+- BOTH
+- **country** (String) User info attribute. All characters are allowed except %
+- **department** (String) User info attribute. All characters are allowed except %
+- **email** (String) User info attribute. All characters are allowed except %
 - **enable_callback_for_dialin_client** (Boolean)
 - **enable_dialin_permission_check** (Boolean)
-- **enable_failed_auth_protection** (Boolean)
+- **enable_failed_auth_protection** (Boolean) Enable prevent AD account lockout due to too many bad password attempts
 - **enable_machine_access** (Boolean)
 - **enable_machine_auth** (Boolean)
 - **enable_pass_change** (Boolean)
 - **enable_rewrites** (Boolean)
-- **failed_auth_threshold** (Number)
-- **first_name** (String)
-- **identity_not_in_ad_behaviour** (String)
-- **job_title** (String)
-- **last_name** (String)
-- **locality** (String)
-- **organizational_unit** (String)
+- **failed_auth_threshold** (Number) Number of bad password attempts
+- **first_name** (String) User info attribute. All characters are allowed except %
+- **identity_not_in_ad_behaviour** (String) Allowed values: REJECT, SEARCH_JOINED_FOREST, SEARCH_ALL
+- **job_title** (String) User info attribute. All characters are allowed except %
+- **last_name** (String) User info attribute. All characters are allowed except %
+- **locality** (String) User info attribute. All characters are allowed except %
+- **organizational_unit** (String) User info attribute. All characters are allowed except %
 - **plaintext_auth** (Boolean)
-- **rewrite_rules** (Block List) (see [below for nested schema](#nestedblock--advanced_settings--rewrite_rules))
-- **schema** (String)
-- **state_or_province** (String)
-- **street_address** (String)
-- **telephone** (String)
-- **unreachable_domains_behaviour** (String)
+- **rewrite_rules** (Block List) Identity rewrite is an advanced feature that directs Cisco ISE to manipulate the identity
+before it is passed to the external Active Directory system. You can create rules to change
+the identity to a desired format that includes or excludes a domain prefix and/or suffix or
+other additional markup of your choice (see [below for nested schema](#nestedblock--advanced_settings--rewrite_rules))
+- **schema** (String) Allowed values: ACTIVE_DIRECTORY, CUSTOM.
+Choose ACTIVE_DIRECTORY schema when the AD attributes defined in AD can be copied to relevant attributes
+in Cisco ISE. If customization is needed, choose CUSTOM schema. All User info attributes are always set to
+default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUSTOM schema
+- **state_or_province** (String) User info attribute. All characters are allowed except %
+- **street_address** (String) User info attribute. All characters are allowed except %
+- **telephone** (String) User info attribute. All characters are allowed except %
+- **unreachable_domains_behaviour** (String) Allowed values: PROCEED, DROP
 
 <a id="nestedblock--advanced_settings--rewrite_rules"></a>
 ### Nested Schema for `advanced_settings.rewrite_rules`
 
 Optional:
 
-- **rewrite_match** (String)
-- **rewrite_result** (String)
-- **row_id** (Number)
+- **rewrite_match** (String) Required for each rule in the list with no duplication between rules. All characters are allowed except %"
+- **rewrite_result** (String) Required for each rule in the list. All characters are allowed except %"
+- **row_id** (Number) Required for each rule in the list in serial order
 
 

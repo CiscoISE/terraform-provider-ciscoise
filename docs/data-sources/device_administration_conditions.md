@@ -3,12 +3,19 @@
 page_title: "ciscoise_device_administration_conditions Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Conditions.
+  Device Admin Returns list of library conditions.
+  Device Admin Returns a library condition.
+  Device Admin Returns a library condition.
 ---
 
 # ciscoise_device_administration_conditions (Data Source)
 
+It performs read operation on Device Administration - Conditions.
 
+Device Admin Returns list of library conditions.
+Device Admin Returns a library condition.
+Device Admin Returns a library condition.
 
 
 
@@ -17,8 +24,8 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **name** (String)
+- **id** (String) id path parameter. Condition id
+- **name** (String) name path parameter. Condition name
 
 ### Read-Only
 

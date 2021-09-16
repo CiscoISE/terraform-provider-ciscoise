@@ -3,12 +3,15 @@
 page_title: "ciscoise_network_access_global_exception_rules_reset_hitcount Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Network Access - Authorization Global Exception Rules.
+  Network Access Reset HitCount for Global Exceptions
 ---
 
 # ciscoise_network_access_global_exception_rules_reset_hitcount (Data Source)
 
+It performs create operation on Network Access - Authorization Global Exception Rules.
 
+Network Access Reset HitCount for Global Exceptions
 
 
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_security_group_acls_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on TrustSec Configuration.
+  🚧 getSecurityGroupAcls
 ---
 
 # ciscoise_pxgrid_security_group_acls_info (Data Source)
 
+It performs create operation on TrustSec Configuration.
 
+🚧 getSecurityGroupAcls
 
 
 

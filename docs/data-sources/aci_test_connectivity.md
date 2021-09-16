@@ -3,12 +3,15 @@
 page_title: "ciscoise_aci_test_connectivity Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on ACISettings.
+  This data source action allows the client to test ACI Domain Manager connection.
 ---
 
 # ciscoise_aci_test_connectivity (Data Source)
 
+It performs update operation on ACISettings.
 
+This data source action allows the client to test ACI Domain Manager connection.
 
 
 

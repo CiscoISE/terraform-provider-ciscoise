@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_session_for_recovery_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Session Directory.
+  🚧 getSessionsForRecovery
 ---
 
 # ciscoise_pxgrid_session_for_recovery_info (Data Source)
 
+It performs create operation on Session Directory.
 
+🚧 getSessionsForRecovery
 
 
 

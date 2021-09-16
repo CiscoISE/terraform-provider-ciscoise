@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_version Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  MNT Version
 ---
 
 # ciscoise_mnt_version (Data Source)
 
+It performs read operation on Misc.
 
+MNT Version
 
 
 

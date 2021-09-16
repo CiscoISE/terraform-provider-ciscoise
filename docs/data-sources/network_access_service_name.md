@@ -3,12 +3,19 @@
 page_title: "ciscoise_network_access_service_name Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Network Access - Service Names.
+  Returns list of Allowed Protocols and Server Sequences for Network Access Policy Set results.
+   'isLocalAuthorization' property is available only for Network Access Policy Set results of type Server Sequence.
+   (Other CRUD APIs available throught ERS)
 ---
 
 # ciscoise_network_access_service_name (Data Source)
 
+It performs read operation on Network Access - Service Names.
 
+Returns list of Allowed Protocols and Server Sequences for Network Access Policy Set results.
+ 'isLocalAuthorization' property is available only for Network Access Policy Set results of type Server Sequence.
+ (Other CRUD APIs available throught ERS)
 
 
 

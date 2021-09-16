@@ -3,12 +3,19 @@
 page_title: "ciscoise_network_access_conditions Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Network Access - Conditions.
+  Network Access Returns all library conditions
+  Network Access Returns a library condition.
+  Network Access Returns a library condition.
 ---
 
 # ciscoise_network_access_conditions (Data Source)
 
+It performs read operation on Network Access - Conditions.
 
+Network Access Returns all library conditions
+Network Access Returns a library condition.
+Network Access Returns a library condition.
 
 
 
@@ -17,8 +24,8 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **name** (String)
+- **id** (String) id path parameter. Condition id
+- **name** (String) name path parameter. Condition name
 
 ### Read-Only
 

@@ -3,12 +3,17 @@
 page_title: "ciscoise_active_directory_get_trusted_domains_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on ActiveDirectory.
+  This data source action gets the list of domains that are accessible through the given join point via trust
+  relationships.
 ---
 
 # ciscoise_active_directory_get_trusted_domains_info (Data Source)
 
+It performs update operation on ActiveDirectory.
 
+This data source action gets the list of domains that are accessible through the given join point via trust
+relationships.
 
 
 
@@ -17,7 +22,7 @@ description: |-
 
 ### Required
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 
 ### Read-Only
 

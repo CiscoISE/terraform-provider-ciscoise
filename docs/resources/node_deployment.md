@@ -3,14 +3,254 @@
 page_title: "ciscoise_node_deployment Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It manages create, read, update and delete operations on Node Deployment.
+  Register ISE node to form a multi-node deployment
+  Updates the deployed ISE node with the information provided
+  The de-register ednode becomes a standalone Cisco ISE node.
+    It retains the last configuration that it received rom the PrimaryPAN and assumes the default personas of a standalone
+    node
+    that are Administration, PolicyService, and Monitoring.
 ---
 
 # ciscoise_node_deployment (Resource)
 
+It manages create, read, update and delete operations on Node Deployment.
+  
+  Register ISE node to form a multi-node deployment
+  
+  Updates the deployed ISE node with the information provided
+  
+  The de-register ednode becomes a standalone Cisco ISE node.
+  It retains the last configuration that it received rom the PrimaryPAN and assumes the default personas of a standalone
+  node
+  that are Administration, PolicyService, and Monitoring.
 
+## Example Usage
 
+```terraform
+resource "ciscoise_node_deployment" "example" {
+  provider = ciscoise
+  item {
 
+    administration {
+
+      is_enabled = false
+      role       = "string"
+    }
+    fdqn = "string"
+    general_settings {
+
+      monitoring {
+
+        enable_pxgrid         = false
+        is_enabled            = false
+        is_mnt_dedicated      = false
+        other_monitoring_node = "string"
+        policyservice {
+
+          enable_device_admin_service     = false
+          enable_nac_service              = false
+          enable_passive_identity_service = false
+          enable_profiling_service        = false
+          enabled                         = false
+          session_service {
+
+            is_enabled = false
+            nodegroup  = "string"
+          }
+          sxpservice {
+
+            is_enabled     = false
+            user_interface = "string"
+          }
+        }
+        role = "string"
+      }
+    }
+    hostname = "string"
+    password = "******"
+    profile_configuration {
+
+      active_directory {
+
+        days_before_rescan = 1
+        description        = "string"
+        enabled            = false
+      }
+      dhcp {
+
+        description = "string"
+        enabled     = false
+        interface   = "string"
+        port        = 1
+      }
+      dhcp_span {
+
+        description = "string"
+        enabled     = false
+        interface   = "string"
+      }
+      dns {
+
+        description = "string"
+        enabled     = false
+      }
+      http {
+
+        description = "string"
+        enabled     = false
+        interface   = "string"
+      }
+      netflow {
+
+        description = "string"
+        enabled     = false
+        interface   = "string"
+        port        = 1
+      }
+      nmap {
+
+        description = "string"
+        enabled     = false
+      }
+      pxgrid {
+
+        description = "string"
+        enabled     = false
+      }
+      radius {
+
+        description = "string"
+        enabled     = false
+      }
+      snmp_query {
+
+        description   = "string"
+        enabled       = false
+        event_timeout = 1
+        retries       = 1
+        timeout       = 1
+      }
+      snmp_trap {
+
+        description     = "string"
+        interface       = "string"
+        link_trap_query = false
+        mac_trap_query  = false
+        port            = 1
+      }
+    }
+    response {
+
+      general_settings {
+
+        monitoring {
+
+          enable_pxgrid         = false
+          is_enabled            = false
+          is_mnt_dedicated      = false
+          other_monitoring_node = "string"
+          policyservice {
+
+            enable_device_admin_service     = false
+            enable_nac_service              = false
+            enable_passive_identity_service = false
+            enable_profiling_service        = false
+            enabled                         = false
+            session_service {
+
+              is_enabled = false
+              nodegroup  = "string"
+            }
+            sxpservice {
+
+              is_enabled     = false
+              user_interface = "string"
+            }
+          }
+          role = "string"
+        }
+      }
+      profile_configuration {
+
+        active_directory {
+
+          days_before_rescan = 1
+          description        = "string"
+          enabled            = false
+        }
+        dhcp {
+
+          description = "string"
+          enabled     = false
+          interface   = "string"
+          port        = 1
+        }
+        dhcp_span {
+
+          description = "string"
+          enabled     = false
+          interface   = "string"
+        }
+        dns {
+
+          description = "string"
+          enabled     = false
+        }
+        http {
+
+          description = "string"
+          enabled     = false
+          interface   = "string"
+        }
+        netflow {
+
+          description = "string"
+          enabled     = false
+          interface   = "string"
+          port        = 1
+        }
+        nmap {
+
+          description = "string"
+          enabled     = false
+        }
+        pxgrid {
+
+          description = "string"
+          enabled     = false
+        }
+        radius {
+
+          description = "string"
+          enabled     = false
+        }
+        snmp_query {
+
+          description   = "string"
+          enabled       = false
+          event_timeout = 1
+          retries       = 1
+          timeout       = 1
+        }
+        snmp_trap {
+
+          description     = "string"
+          interface       = "string"
+          link_trap_query = false
+          mac_trap_query  = false
+          port            = 1
+        }
+      }
+    }
+    user_name = "string"
+  }
+}
+
+output "ciscoise_node_deployment_example" {
+  value = ciscoise_node_deployment.example
+}
+```
 
 <!-- schema generated by tfplugindocs -->
 ## Schema
@@ -27,21 +267,35 @@ description: |-
 <a id="nestedblock--item"></a>
 ### Nested Schema for `item`
 
+Required:
+
+- **hostname** (String)
+
 Optional:
 
+- **administration** (Block List) (see [below for nested schema](#nestedblock--item--administration))
+- **fdqn** (String)
 - **general_settings** (Block List) (see [below for nested schema](#nestedblock--item--general_settings))
-- **is_enabled** (Boolean)
+- **password** (String, Sensitive)
 - **profile_configuration** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--profile_configuration))
-- **role** (String)
+- **response** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response))
+- **user_name** (String)
 
 Read-Only:
 
-- **administration** (List of Object) (see [below for nested schema](#nestedatt--item--administration))
 - **fqdn** (String)
-- **hostname** (String)
 - **ip_address** (String)
 - **node_type** (String)
 - **profiling_configuration** (List of Object) (see [below for nested schema](#nestedatt--item--profiling_configuration))
+
+<a id="nestedblock--item--administration"></a>
+### Nested Schema for `item.administration`
+
+Optional:
+
+- **is_enabled** (Boolean)
+- **role** (String)
+
 
 <a id="nestedblock--item--general_settings"></a>
 ### Nested Schema for `item.general_settings`
@@ -226,13 +480,196 @@ Optional:
 
 
 
-<a id="nestedatt--item--administration"></a>
-### Nested Schema for `item.administration`
+<a id="nestedblock--item--response"></a>
+### Nested Schema for `item.response`
 
-Read-Only:
+Optional:
+
+- **general_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--general_settings))
+- **profile_configuration** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration))
+
+<a id="nestedblock--item--response--general_settings"></a>
+### Nested Schema for `item.response.general_settings`
+
+Optional:
+
+- **monitoring** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--general_settings--monitoring))
+
+<a id="nestedblock--item--response--general_settings--monitoring"></a>
+### Nested Schema for `item.response.general_settings.monitoring`
+
+Optional:
+
+- **enable_pxgrid** (Boolean)
+- **is_enabled** (Boolean)
+- **is_mnt_dedicated** (Boolean)
+- **other_monitoring_node** (String)
+- **policyservice** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--general_settings--monitoring--policyservice))
+- **role** (String)
+
+<a id="nestedblock--item--response--general_settings--monitoring--policyservice"></a>
+### Nested Schema for `item.response.general_settings.monitoring.policyservice`
+
+Optional:
+
+- **enable_device_admin_service** (Boolean)
+- **enable_nac_service** (Boolean)
+- **enable_passive_identity_service** (Boolean)
+- **enable_profiling_service** (Boolean)
+- **enabled** (Boolean)
+- **session_service** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--general_settings--monitoring--policyservice--session_service))
+- **sxpservice** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--general_settings--monitoring--policyservice--sxpservice))
+
+<a id="nestedblock--item--response--general_settings--monitoring--policyservice--session_service"></a>
+### Nested Schema for `item.response.general_settings.monitoring.policyservice.sxpservice`
+
+Optional:
 
 - **is_enabled** (Boolean)
-- **role** (String)
+- **nodegroup** (String)
+
+
+<a id="nestedblock--item--response--general_settings--monitoring--policyservice--sxpservice"></a>
+### Nested Schema for `item.response.general_settings.monitoring.policyservice.sxpservice`
+
+Optional:
+
+- **is_enabled** (Boolean)
+- **user_interface** (String)
+
+
+
+
+
+<a id="nestedblock--item--response--profile_configuration"></a>
+### Nested Schema for `item.response.profile_configuration`
+
+Optional:
+
+- **active_directory** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--active_directory))
+- **dhcp** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--dhcp))
+- **dhcp_span** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--dhcp_span))
+- **dns** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--dns))
+- **http** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--http))
+- **netflow** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--netflow))
+- **nmap** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--nmap))
+- **pxgrid** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--pxgrid))
+- **radius** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--radius))
+- **snmp_query** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--snmp_query))
+- **snmp_trap** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--profile_configuration--snmp_trap))
+
+<a id="nestedblock--item--response--profile_configuration--active_directory"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **days_before_rescan** (Number)
+- **description** (String)
+- **enabled** (Boolean)
+
+
+<a id="nestedblock--item--response--profile_configuration--dhcp"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+- **interface** (String)
+- **port** (Number)
+
+
+<a id="nestedblock--item--response--profile_configuration--dhcp_span"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+- **interface** (String)
+
+
+<a id="nestedblock--item--response--profile_configuration--dns"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+
+
+<a id="nestedblock--item--response--profile_configuration--http"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+- **interface** (String)
+
+
+<a id="nestedblock--item--response--profile_configuration--netflow"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+- **interface** (String)
+- **port** (Number)
+
+
+<a id="nestedblock--item--response--profile_configuration--nmap"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+
+
+<a id="nestedblock--item--response--profile_configuration--pxgrid"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+
+
+<a id="nestedblock--item--response--profile_configuration--radius"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+
+
+<a id="nestedblock--item--response--profile_configuration--snmp_query"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **enabled** (Boolean)
+- **event_timeout** (Number)
+- **retries** (Number)
+- **timeout** (Number)
+
+
+<a id="nestedblock--item--response--profile_configuration--snmp_trap"></a>
+### Nested Schema for `item.response.profile_configuration.snmp_trap`
+
+Optional:
+
+- **description** (String)
+- **interface** (String)
+- **link_trap_query** (Boolean)
+- **mac_trap_query** (Boolean)
+- **port** (Number)
+
+
 
 
 <a id="nestedatt--item--profiling_configuration"></a>
@@ -363,4 +800,10 @@ Read-Only:
 - **mac_trap_query** (Boolean)
 - **port** (Number)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import ciscoise_node_deployment.example "hostname=string"
+```

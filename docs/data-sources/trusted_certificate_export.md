@@ -3,12 +3,15 @@
 page_title: "ciscoise_trusted_certificate_export Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Certificates.
+  The response of this API carries a trusted certificate file mapped to the requested id
 ---
 
 # ciscoise_trusted_certificate_export (Data Source)
 
+It performs read operation on Certificates.
 
+The response of this API carries a trusted certificate file mapped to the requested id
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **dirpath** (String)
-- **id** (String) The ID of this resource.
+- **dirpath** (String) Directory absolute path in which to save the file.
+- **id** (String) id path parameter. The ID of the Trusted Certificate to be exported.
 
 

@@ -3,12 +3,17 @@
 page_title: "ciscoise_device_administration_profiles Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Profiles.
+  Device Admin Returns list of profiles.
+   (Other CRUD APIs available throught ERS)
 ---
 
 # ciscoise_device_administration_profiles (Data Source)
 
+It performs read operation on Device Administration - Profiles.
 
+Device Admin Returns list of profiles.
+ (Other CRUD APIs available throught ERS)
 
 
 

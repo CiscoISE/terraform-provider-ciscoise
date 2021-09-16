@@ -3,12 +3,15 @@
 page_title: "ciscoise_repository_files Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Repository.
+  This will get the full list of files present in the named repository.
 ---
 
 # ciscoise_repository_files (Data Source)
 
+It performs read operation on Repository.
 
+This will get the full list of files present in the named repository.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **name** (String)
+- **name** (String) name path parameter. Unique name for a repository
 
 ### Optional
 

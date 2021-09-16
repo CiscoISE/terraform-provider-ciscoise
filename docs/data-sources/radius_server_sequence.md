@@ -3,12 +3,17 @@
 page_title: "ciscoise_radius_server_sequence Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on RADIUSServerSequence.
+  This data source allows the client to get a RADIUS server sequence by ID.
+  This data source allows the client to get all the RADIUS server sequences.
 ---
 
 # ciscoise_radius_server_sequence (Data Source)
 
+It performs read operation on RADIUSServerSequence.
 
+This data source allows the client to get a RADIUS server sequence by ID.
+This data source allows the client to get all the RADIUS server sequences.
 
 
 
@@ -17,9 +22,9 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **page** (Number)
-- **size** (Number)
+- **id** (String) id path parameter.
+- **page** (Number) page query parameter. Page number
+- **size** (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 

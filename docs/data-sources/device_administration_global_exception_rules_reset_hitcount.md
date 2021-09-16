@@ -3,12 +3,15 @@
 page_title: "ciscoise_device_administration_global_exception_rules_reset_hitcount Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Device Administration - Authorization Global Exception Rules.
+  Device Admin Reset HitCount for Global Exceptions
 ---
 
 # ciscoise_device_administration_global_exception_rules_reset_hitcount (Data Source)
 
+It performs create operation on Device Administration - Authorization Global Exception Rules.
 
+Device Admin Reset HitCount for Global Exceptions
 
 
 

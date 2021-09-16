@@ -3,12 +3,17 @@
 page_title: "ciscoise_device_administration_identity_stores Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Identity Stores.
+  Device Admin Return list of identity stores for authentication.
+   (Other CRUD APIs available throught ERS)
 ---
 
 # ciscoise_device_administration_identity_stores (Data Source)
 
+It performs read operation on Device Administration - Identity Stores.
 
+Device Admin Return list of identity stores for authentication.
+ (Other CRUD APIs available throught ERS)
 
 
 

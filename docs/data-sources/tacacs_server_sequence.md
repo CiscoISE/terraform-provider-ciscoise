@@ -3,12 +3,19 @@
 page_title: "ciscoise_tacacs_server_sequence Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on TacacsServerSequence.
+  This data source allows the client to get a TACACS server sequence by name.
+  This data source allows the client to get a TACACS server sequence by ID.
+  This data source allows the client to get all the TACACS server sequences.
 ---
 
 # ciscoise_tacacs_server_sequence (Data Source)
 
+It performs read operation on TacacsServerSequence.
 
+This data source allows the client to get a TACACS server sequence by name.
+This data source allows the client to get a TACACS server sequence by ID.
+This data source allows the client to get all the TACACS server sequences.
 
 
 
@@ -17,10 +24,10 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **page** (Number)
-- **size** (Number)
+- **id** (String) id path parameter.
+- **name** (String) name path parameter.
+- **page** (Number) page query parameter. Page number
+- **size** (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 

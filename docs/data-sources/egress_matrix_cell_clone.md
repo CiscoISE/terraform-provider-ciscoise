@@ -3,12 +3,15 @@
 page_title: "ciscoise_egress_matrix_cell_clone Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on EgressMatrixCell.
+  This data source action allows the client to clone an egress matrix cell.
 ---
 
 # ciscoise_egress_matrix_cell_clone (Data Source)
 
+It performs update operation on EgressMatrixCell.
 
+This data source action allows the client to clone an egress matrix cell.
 
 
 
@@ -17,9 +20,9 @@ description: |-
 
 ### Required
 
-- **dst_sgt_id** (String)
-- **id** (String) The ID of this resource.
-- **src_sgt_id** (String)
+- **dst_sgt_id** (String) dstSgtId path parameter.
+- **id** (String) id path parameter.
+- **src_sgt_id** (String) srcSgtId path parameter.
 
 ### Read-Only
 

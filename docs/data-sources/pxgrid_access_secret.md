@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_access_secret Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Consumer.
+  🚧 AccessSecret
 ---
 
 # ciscoise_pxgrid_access_secret (Data Source)
 
+It performs create operation on Consumer.
 
+🚧 AccessSecret
 
 
 

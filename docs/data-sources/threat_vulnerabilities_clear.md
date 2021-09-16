@@ -3,12 +3,17 @@
 page_title: "ciscoise_threat_vulnerabilities_clear Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on ClearThreatsAndVulnerabilities.
+  This data source action allows the client to delete the ThreatContext and Threat events that are associated with the
+  given MAC Address.
 ---
 
 # ciscoise_threat_vulnerabilities_clear (Data Source)
 
+It performs update operation on ClearThreatsAndVulnerabilities.
 
+This data source action allows the client to delete the ThreatContext and Threat events that are associated with the
+given MAC Address.
 
 
 

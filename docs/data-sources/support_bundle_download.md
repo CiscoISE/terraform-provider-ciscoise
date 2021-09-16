@@ -3,12 +3,15 @@
 page_title: "ciscoise_support_bundle_download Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on SupportBundleDownload.
+  This data source action allows the client to upload a support bundle.
 ---
 
 # ciscoise_support_bundle_download (Data Source)
 
+It performs update operation on SupportBundleDownload.
 
+This data source action allows the client to upload a support bundle.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **dirpath** (String)
+- **dirpath** (String) Directory absolute path in which to save the file.
 
 ### Optional
 

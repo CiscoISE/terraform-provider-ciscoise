@@ -3,12 +3,17 @@
 page_title: "ciscoise_device_administration_local_exception_rules Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Authorization Exception Rules.
+  Device Admin Get local exception rules.
+  Device Admin Get local exception rule attributes.
 ---
 
 # ciscoise_device_administration_local_exception_rules (Data Source)
 
+It performs read operation on Device Administration - Authorization Exception Rules.
 
+Device Admin Get local exception rules.
+Device Admin Get local exception rule attributes.
 
 
 
@@ -17,8 +22,8 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **policy_id** (String)
+- **id** (String) id path parameter. Rule id
+- **policy_id** (String) policyId path parameter. Policy id
 
 ### Read-Only
 

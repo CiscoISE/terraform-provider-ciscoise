@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_session_auth_list Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  Session/AuthList
 ---
 
 # ciscoise_mnt_session_auth_list (Data Source)
 
+It performs read operation on Misc.
 
+Session/AuthList
 
 
 

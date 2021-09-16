@@ -3,12 +3,43 @@
 page_title: "ciscoise_sg_to_vn_to_vlan Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on SecurityGroupToVirtualNetwork.
+  This data source allows the client to get a security group to virtual network by ID.
+  This data source allows the client to get all the security group ACL to virtual networks.
+  Filter:
+  [sgtId]
+  To search guest users by using
+  toDate
+   column,follow the format:
+  DD-MON-YY (Example:13-SEP-18)
+  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 ---
 
 # ciscoise_sg_to_vn_to_vlan (Data Source)
 
+It performs read operation on SecurityGroupToVirtualNetwork.
 
+This data source allows the client to get a security group to virtual network by ID.
+This data source allows the client to get all the security group ACL to virtual networks.
+
+Filter:
+
+[sgtId]
+
+To search guest users by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 
 
 
@@ -17,11 +48,42 @@ description: |-
 
 ### Optional
 
-- **filter** (List of String)
-- **filter_type** (String)
-- **id** (String) The ID of this resource.
-- **page** (Number)
-- **size** (Number)
+- **filter** (List of String) filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains
+- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- **id** (String) id path parameter.
+- **page** (Number) page query parameter. Page number
+- **size** (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 

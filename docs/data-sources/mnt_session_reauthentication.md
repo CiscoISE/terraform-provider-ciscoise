@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_session_reauthentication Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  Session Reauthentication by MAC
 ---
 
 # ciscoise_mnt_session_reauthentication (Data Source)
 
+It performs read operation on Misc.
 
+Session Reauthentication by MAC
 
 
 
@@ -17,9 +20,9 @@ description: |-
 
 ### Required
 
-- **end_poi_ntm_ac** (String)
-- **psn_nam_e** (String)
-- **rea_uth_typ_e** (String)
+- **end_poi_ntm_ac** (String) ENDPOINT_MAC path parameter.
+- **psn_nam_e** (String) PSN_NAME path parameter.
+- **rea_uth_typ_e** (String) REAUTH_TYPE path parameter.
 
 ### Optional
 

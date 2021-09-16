@@ -3,12 +3,15 @@
 page_title: "ciscoise_network_access_local_exception_rules_reset_hitcounts Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Network Access - Authorization Exception Rules.
+  Network Access Reset HitCount for local exceptions
 ---
 
 # ciscoise_network_access_local_exception_rules_reset_hitcounts (Data Source)
 
+It performs create operation on Network Access - Authorization Exception Rules.
 
+Network Access Reset HitCount for local exceptions
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **policy_id** (String)
+- **policy_id** (String) policyId path parameter. Policy id
 
 ### Optional
 

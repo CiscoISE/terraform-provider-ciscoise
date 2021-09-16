@@ -3,12 +3,327 @@
 page_title: "ciscoise_system_certificate_import Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Certificates.
+  Import an X509 certificate as a system certificate.
+  NOTE:
+  The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
+  NOTE:
+  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+  Following Parameters are used in POST body
+  PARAMETER
+  DESCRIPTION
+  EXAMPLE
+  name
+  Friendly name of the certificate.
+  System Certificate
+  password
+  Password of the certificate to be imported (required).
+  Passw***
+  data
+  Plain-text contents of the certificate file (required)
+  System Certificate in escaped format
+  privateKeyData
+  Plain-text contents of the private key file (required)
+  System Certificate Private Key in escaped format
+  allowOutOfDateCert
+  Allow out of date certificates (required)
+  false
+  allowSHA1Certificates
+  Allow SHA1 based certificates (required)
+  false
+  allowExtendedValidity
+  Allow the certificates greater than validity of 398 days (required)
+  false
+  admin
+  Use certificate to authenticate the ISE Admin Portal
+  false
+  eap
+  Use certificate for EAP protocols that use SSL/TLS tunneling
+  false
+  radius
+  Use certificate for RADSec server
+  false
+  pxgrid
+  Use certificate for the pxGrid Controller
+  false
+  ims
+  Use certificate for the ISE Messaging Service
+  false
+  saml
+  Use certificate for SAML Signing
+  false
+  portal
+  Use certificate for portal
+  false
+  portalGroupTag
+  Portal Group Tag for using certificate with portal role
+  Default Portal Certificate Group
+  allowReplacementOfPortalGroupTag
+  Allow Replacement of Portal Group Tag (required)
+  false
+  allowWildCardCertificates
+  Allow use of WildCards in certificates
+  false
+  validateCertificateExtensions
+  Validate Certificate Extensions
+  false
+  Following Roles can be used in any combinations
+  ROLE
+  DEFAULT
+  WARNING
+  Admin
+  False
+  Enabling Admin role for this certificate will cause an application server restart on the selected node.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  EAP Authentication
+  False
+  Only one system certificate can be used for EAP. Assigning EAP to this certificate will remove the assignment from
+  another certificate.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  RADIUS DTLS
+  False
+  Only one system certificate can be used for DTLS. Assigning DTLS to this certificate will remove the assignment from
+  another certificate.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  SAML
+  False
+  SAML cannot be used with other Usage. Enabling SAML will uncheck all other Usage.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
 ---
 
 # ciscoise_system_certificate_import (Data Source)
 
+It performs create operation on Certificates.
 
+
+
+Import an X509 certificate as a system certificate.
+
+NOTE:
+The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
+
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+
+Following Parameters are used in POST body
+
+
+
+
+PARAMETER
+
+DESCRIPTION
+
+EXAMPLE
+
+
+
+
+
+name
+
+Friendly name of the certificate.
+
+System Certificate
+
+
+
+password
+
+Password of the certificate to be imported (required).
+
+Passw***
+
+
+
+data
+
+Plain-text contents of the certificate file (required)
+
+System Certificate in escaped format
+
+
+
+privateKeyData
+
+Plain-text contents of the private key file (required)
+
+System Certificate Private Key in escaped format
+
+
+
+allowOutOfDateCert
+
+Allow out of date certificates (required)
+
+false
+
+
+
+allowSHA1Certificates
+
+Allow SHA1 based certificates (required)
+
+false
+
+
+
+allowExtendedValidity
+
+Allow the certificates greater than validity of 398 days (required)
+
+false
+
+
+
+admin
+
+Use certificate to authenticate the ISE Admin Portal
+
+false
+
+
+
+eap
+
+Use certificate for EAP protocols that use SSL/TLS tunneling
+
+false
+
+
+
+radius
+
+Use certificate for RADSec server
+
+false
+
+
+
+pxgrid
+
+Use certificate for the pxGrid Controller
+
+false
+
+
+
+ims
+
+Use certificate for the ISE Messaging Service
+
+false
+
+
+
+saml
+
+Use certificate for SAML Signing
+
+false
+
+
+
+portal
+
+Use certificate for portal
+
+false
+
+
+
+portalGroupTag
+
+Portal Group Tag for using certificate with portal role
+
+Default Portal Certificate Group
+
+
+
+allowReplacementOfPortalGroupTag
+
+Allow Replacement of Portal Group Tag (required)
+
+false
+
+
+
+allowWildCardCertificates
+
+Allow use of WildCards in certificates
+
+false
+
+
+
+validateCertificateExtensions
+
+Validate Certificate Extensions
+
+false
+
+
+
+
+
+Following Roles can be used in any combinations
+
+
+
+
+ROLE
+
+DEFAULT
+
+WARNING
+
+
+
+
+
+Admin
+
+False
+
+Enabling Admin role for this certificate will cause an application server restart on the selected node.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+EAP Authentication
+
+False
+
+Only one system certificate can be used for EAP. Assigning EAP to this certificate will remove the assignment from
+another certificate.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+RADIUS DTLS
+
+False
+
+Only one system certificate can be used for DTLS. Assigning DTLS to this certificate will remove the assignment from
+another certificate.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+SAML
+
+False
+
+SAML cannot be used with other Usage. Enabling SAML will uncheck all other Usage.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
 
 
 
@@ -17,26 +332,26 @@ description: |-
 
 ### Optional
 
-- **admin** (Boolean)
-- **allow_extended_validity** (Boolean)
-- **allow_out_of_date_cert** (Boolean)
-- **allow_replacement_of_certificates** (Boolean)
-- **allow_replacement_of_portal_group_tag** (Boolean)
-- **allow_sha1_certificates** (Boolean)
-- **allow_wild_card_certificates** (Boolean)
-- **data** (String)
-- **eap** (Boolean)
+- **admin** (Boolean) Use certificate to authenticate the ISE Admin Portal
+- **allow_extended_validity** (Boolean) Allow import of certificates with validity greater than 398 days
+- **allow_out_of_date_cert** (Boolean) Allow out of date certificates (required)
+- **allow_replacement_of_certificates** (Boolean) Allow Replacement of certificates (required)
+- **allow_replacement_of_portal_group_tag** (Boolean) Allow Replacement of Portal Group Tag (required)
+- **allow_sha1_certificates** (Boolean) Allow SHA1 based certificates (required)
+- **allow_wild_card_certificates** (Boolean) Allow Wildcard Certificates
+- **data** (String) Certificate Content (required)
+- **eap** (Boolean) Use certificate for EAP protocols that use SSL/TLS tunneling
 - **id** (String) The ID of this resource.
-- **ims** (Boolean)
-- **name** (String)
-- **password** (String, Sensitive)
-- **portal** (Boolean)
-- **portal_group_tag** (String)
-- **private_key_data** (String)
-- **pxgrid** (Boolean)
-- **radius** (Boolean)
-- **saml** (Boolean)
-- **validate_certificate_extensions** (Boolean)
+- **ims** (Boolean) Use certificate for the ISE Messaging Service
+- **name** (String) Name of the certificate
+- **password** (String, Sensitive) Certificate Password (required).
+- **portal** (Boolean) Use for portal
+- **portal_group_tag** (String) Set Group tag
+- **private_key_data** (String) Private Key data (required)
+- **pxgrid** (Boolean) Use certificate for the pxGrid Controller
+- **radius** (Boolean) Use certificate for the RADSec server
+- **saml** (Boolean) Use certificate for SAML Signing
+- **validate_certificate_extensions** (Boolean) Validate Certificate Extensions
 
 ### Read-Only
 

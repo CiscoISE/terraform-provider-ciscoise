@@ -3,14 +3,608 @@
 page_title: "ciscoise_trusted_certificate Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It manages read, update and delete operations on Certificates.
+  Update a trusted certificate present in ISE trust store.
+  Following Parameters are used in PUT request body
+  PARAMETER
+  DESCRIPTION
+  EXAMPLE
+  name
+  Friendly name of the certificate(required)
+  Trust Certificate
+  status
+  Status of the certificate
+  Enabled
+  description
+  Description of the certificate
+  Certificate for secure connection to cisco.com
+  trustForIseAuth
+  Trust for authentication within ISE
+  false
+  trustForClientAuth
+  Trust for client authentication and Syslog
+  false
+  trustForCertificateBasedAdminAuth
+  Trust for Certificate based Admin authentication
+  false
+  trustForCiscoServicesAuth
+  Trust for authentication of Cisco Services
+  false
+  enableOCSPValidation
+  Switch to enable/disable OCSP Validation
+  false
+  selectedOCSPService
+  Name of selected OCSP Service
+  INTERNALOCSPSERVICE
+  rejectIfNoStatusFromOCSP
+  Switch to reject certificate if there is no status from OCSP
+  false
+  rejectIfUnreachableFromOCSP
+  Switch to reject certificate if unreachable from OCSP
+  false
+  downloadCRL
+  Switch to enable/disable download of CRL
+  false
+  crlDistributionUrl
+  Certificate Revocation List Distribution URL
+  automaticCRLUpdate
+  Switch to enable/disable automatic CRL update
+  false
+  automaticCRLUpdatePeriod
+  Automatic CRL update period
+  5
+  automaticCRLUpdateUnits
+  Unit of time for automatic CRL update
+  Minutes
+  nonAutomaticCRLUpdatePeriod
+  Non automatic CRL update period
+  1
+  nonAutomaticCRLUpdateUnits
+  Unit of time of non automatic CRL update
+  Hours
+  crlDownloadFailureRetries
+  If CRL download fails, wait time before retry
+  10
+  crlDownloadFailureRetriesUnits
+  Unit of time before retry if CRL download fails
+  Minutes
+  enableServerIdentityCheck
+  Switch to enable/disable verification if HTTPS or LDAP server certificate name fits the configured server URL
+  false
+  authenticateBeforeCRLReceived
+  Switch to enable/disable CRL Verification if CRL is not Received
+  false
+  ignoreCRLExpiration
+  Switch to enable/disable ignore CRL Expiration
+  false
+  Trusted For
+  Usage
+  Authentication within ISE
+  Use
+    "trustForIseAuth":true
+     if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
+  Client authentication and Syslog
+  Use
+    "trustForClientAuth":true
+     if the certificate is to be used for authentication of endpoints that contact ISE over the EAP protocol. Also check
+    this box if certificate is used to trust a Syslog server. Make sure to have keyCertSign bit asserted under KeyUsage
+    extension for this certificate.
+    Note:
+     "trustForClientAuth" can be set true only if the "trustForIseAuth" has been set true.
+  Certificate based admin authentication
+  Use
+    "trustForCertificateBasedAdminAuth":true
+     if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
+    Note:
+     "trustForCertificateBasedAdminAuth" can be set true only if "trustForIseAuth" and "trustForClientAuth" are true.
+  Authentication of Cisco Services
+  Use
+    "trustForCiscoServicesAuth":true
+     if the certificate is to be used for trusting external Cisco services, such as Feed Service.
+  OCSP Configuration
+  Usage
+  Validation against OCSP service
+  Use
+    "enableOCSPValidation":true
+     to validate the certificate against OCSP service mentioned in the field
+    selectedOCSPService
+  OCSP Service name
+  Use
+    "selectedOCSPService":"Name of OCSP Service"
+     Name of the OCSP service against which the certificate should be validated
+    Note:
+     "selectedOCSPService" value will on be used if "enableOCSPValidation" has been set true.
+  Reject the request if OCSP returns UNKNOWN status
+  Use
+    "rejectIfNoStatusFromOCSP":true
+     to reject the certificate if the OCSP service returns UNKNOWN status
+    Note:
+     "rejectIfNoStatusFromOCSP:true" can be used only if "enableOCSPValidation" has been set true.
+  Reject the request if OCSP Responder is unreachable
+  Use
+    "rejectIfUnreachableFromOCSP":true
+     to reject the certificate if the OCSP service is unreachable.
+    Note:
+     "rejectIfUnreachableFromOCSP:true" can be used only if "enableOCSPValidation" has been set true.
+  Certificate Revocation List Configuration
+  Usage
+  Validation against CRL
+  Use
+    "downloadCRL":true
+     to validate the certificate against CRL downloaded from URL mentioned in the field
+    crlDistributionUrl
+  CRL distribution url
+  Use
+    "crlDistributionUrl"
+     to specify the URL from where the CRL should be downloaded
+    Note:
+     "crlDistributionUrl" value will only be used if "downloadCRL" has been set true.
+  Retrieve CRL time
+  Use
+    "automaticCRLUpdate":true and automaticCRLUpdatePeriod, automaticCRLUpdatePeriod
+     to set the time before which CRL is automatically retrieved prior to expiration Use
+    "nonAutomaticCRLUpdatePeriod, nonAutomaticCRLUpdateUnits
+     to set the time period for CRL retrieval in loop.
+  Note:
+     All the above fields can be used only if "downloadCRL" has been set true.
+  If download fails
+  Use
+    "crlDownloadFailureRetries" and "crlDownloadFailureRetriesUnits"
+     to set retry time period if CRL download fails
+    Note:
+     "crlDownloadFailureRetries" and "crlDownloadFailureRetriesUnits" can be used only if "downloadCRL" has been set true.
+  Enable Server Identity Check
+  Use
+    "enableServerIdentityCheck":true
+     to verify that HTTPS or LDAPS server certificate name fits the configured server URL
+    Note:
+     "enableServerIdentityCheck:true" can be used only if "downloadCRL" has been set true.
+  Bypass CRL Verification if CRL is not Received
+  Use
+    "authenticateBeforeCRLReceived":true
+     to bypass CRL Verification if CRL is not Received
+    Note:
+     "authenticateBeforeCRLReceived:true" can be used only if "downloadCRL" has been set true.
+  Ignore that CRL is not yet valid or has expired
+  Use
+    "ignoreCRLExpiration":true
+     to ignore if CRL is not yet valid or expired
+    Note:
+     "ignoreCRLExpiration:true" can be used only if "downloadCRL" has been set true.
+  Note:
+    boolean properties accept integers values as well, with 0 considered as false and other values being considered as true
+  This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
 ---
 
 # ciscoise_trusted_certificate (Resource)
 
+It manages read, update and delete operations on Certificates.
+  
+  
+  
+  Update a trusted certificate present in ISE trust store.
+  
+  Following Parameters are used in PUT request body
+  
+  
+  
+  
+  PARAMETER
+  
+  DESCRIPTION
+  
+  EXAMPLE
+  
+  
+  
+  
+  
+  name
+  
+  Friendly name of the certificate(required)
+  
+  Trust Certificate
+  
+  
+  
+  status
+  
+  Status of the certificate
+  
+  Enabled
+  
+  
+  
+  description
+  
+  Description of the certificate
+  
+  Certificate for secure connection to cisco.com
+  
+  
+  
+  trustForIseAuth
+  
+  Trust for authentication within ISE
+  
+  false
+  
+  
+  
+  trustForClientAuth
+  
+  Trust for client authentication and Syslog
+  
+  false
+  
+  
+  
+  trustForCertificateBasedAdminAuth
+  
+  Trust for Certificate based Admin authentication
+  
+  false
+  
+  
+  
+  trustForCiscoServicesAuth
+  
+  Trust for authentication of Cisco Services
+  
+  false
+  
+  
+  
+  enableOCSPValidation
+  
+  Switch to enable/disable OCSP Validation
+  
+  false
+  
+  
+  
+  selectedOCSPService
+  
+  Name of selected OCSP Service
+  
+  INTERNAL_OCSP_SERVICE
+  
+  
+  
+  rejectIfNoStatusFromOCSP
+  
+  Switch to reject certificate if there is no status from OCSP
+  
+  false
+  
+  
+  
+  rejectIfUnreachableFromOCSP
+  
+  Switch to reject certificate if unreachable from OCSP
+  
+  false
+  
+  
+  
+  downloadCRL
+  
+  Switch to enable/disable download of CRL
+  
+  false
+  
+  
+  
+  crlDistributionUrl
+  
+  Certificate Revocation List Distribution URL
+  
+  
+  
+  
+  automaticCRLUpdate
+  
+  Switch to enable/disable automatic CRL update
+  
+  false
+  
+  
+  
+  automaticCRLUpdatePeriod
+  
+  Automatic CRL update period
+  
+  5
+  
+  
+  
+  automaticCRLUpdateUnits
+  
+  Unit of time for automatic CRL update
+  
+  Minutes
+  
+  
+  
+  nonAutomaticCRLUpdatePeriod
+  
+  Non automatic CRL update period
+  
+  1
+  
+  
+  
+  nonAutomaticCRLUpdateUnits
+  
+  Unit of time of non automatic CRL update
+  
+  Hours
+  
+  
+  
+  crlDownloadFailureRetries
+  
+  If CRL download fails, wait time before retry
+  
+  10
+  
+  
+  
+  crlDownloadFailureRetriesUnits
+  
+  Unit of time before retry if CRL download fails
+  
+  Minutes
+  
+  
+  
+  enableServerIdentityCheck
+  
+  Switch to enable/disable verification if HTTPS or LDAP server certificate name fits the configured server URL
+  
+  false
+  
+  
+  
+  authenticateBeforeCRLReceived
+  
+  Switch to enable/disable CRL Verification if CRL is not Received
+  
+  false
+  
+  
+  
+  ignoreCRLExpiration
+  
+  Switch to enable/disable ignore CRL Expiration
+  
+  false
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Trusted For
+  
+  Usage
+  
+  
+  
+  
+  
+  Authentication within ISE
+  
+  Use
+  "trustForIseAuth":true
+   if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
+  
+  
+  
+  Client authentication and Syslog
+  
+  Use
+  "trustForClientAuth":true
+   if the certificate is to be used for authentication of endpoints that contact ISE over the EAP protocol. Also check
+  this box if certificate is used to trust a Syslog server. Make sure to have keyCertSign bit asserted under KeyUsage
+  extension for this certificate.
+  Note:
+   "trustForClientAuth" can be set true only if the "trustForIseAuth" has been set true.
+  
+  
+  
+  Certificate based admin authentication
+  
+  Use
+  "trustForCertificateBasedAdminAuth":true
+   if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
+  Note:
+   "trustForCertificateBasedAdminAuth" can be set true only if "trustForIseAuth" and "trustForClientAuth" are true.
+  
+  
+  
+  Authentication of Cisco Services
+  
+   Use
+  "trustForCiscoServicesAuth":true
+   if the certificate is to be used for trusting external Cisco services, such as Feed Service.
+  
+  
+  
+  
+  
+  
+  
+  
+  OCSP Configuration
+  
+  Usage
+  
+  
+  
+  
+  
+  Validation against OCSP service
+  
+  Use
+  "enableOCSPValidation":true
+   to validate the certificate against OCSP service mentioned in the field
+  selectedOCSPService
+  
+  
+  
+  OCSP Service name
+  
+  Use
+  "selectedOCSPService":"Name of OCSP Service"
+   Name of the OCSP service against which the certificate should be validated
+  Note:
+   "selectedOCSPService" value will on be used if "enableOCSPValidation" has been set true.
+  
+  
+  
+  Reject the request if OCSP returns UNKNOWN status
+  
+  Use
+  "rejectIfNoStatusFromOCSP":true
+   to reject the certificate if the OCSP service returns UNKNOWN status
+  Note:
+   "rejectIfNoStatusFromOCSP:true" can be used only if "enableOCSPValidation" has been set true.
+  
+  
+  
+  Reject the request if OCSP Responder is unreachable
+  
+   Use
+  "rejectIfUnreachableFromOCSP":true
+   to reject the certificate if the OCSP service is unreachable.
+  Note:
+   "rejectIfUnreachableFromOCSP:true" can be used only if "enableOCSPValidation" has been set true.
+  
+  
+  
+  
+  
+  
+  
+  
+  Certificate Revocation List Configuration
+  
+  Usage
+  
+  
+  
+  
+  
+  Validation against CRL
+  
+  Use
+  "downloadCRL":true
+   to validate the certificate against CRL downloaded from URL mentioned in the field
+  crlDistributionUrl
+  
+  
+  
+  CRL distribution url
+  
+  Use
+  "crlDistributionUrl"
+   to specify the URL from where the CRL should be downloaded
+  Note:
+   "crlDistributionUrl" value will only be used if "downloadCRL" has been set true.
+  
+  
+  
+  Retrieve CRL time
+  
+  Use
+  "automaticCRLUpdate":true and automaticCRLUpdatePeriod, automaticCRLUpdatePeriod
+   to set the time before which CRL is automatically retrieved prior to expiration Use
+  "nonAutomaticCRLUpdatePeriod, nonAutomaticCRLUpdateUnits
+   to set the time period for CRL retrieval in loop.
+  
+  Note:
+   All the above fields can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  If download fails
+  
+  Use
+  "crlDownloadFailureRetries" and "crlDownloadFailureRetriesUnits"
+   to set retry time period if CRL download fails
+  Note:
+   "crlDownloadFailureRetries" and "crlDownloadFailureRetriesUnits" can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  Enable Server Identity Check
+  
+  Use
+  "enableServerIdentityCheck":true
+   to verify that HTTPS or LDAPS server certificate name fits the configured server URL
+  Note:
+   "enableServerIdentityCheck:true" can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  Bypass CRL Verification if CRL is not Received
+  
+  Use
+  "authenticateBeforeCRLReceived":true
+   to bypass CRL Verification if CRL is not Received
+  Note:
+   "authenticateBeforeCRLReceived:true" can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  Ignore that CRL is not yet valid or has expired
+  
+   Use
+  "ignoreCRLExpiration":true
+   to ignore if CRL is not yet valid or expired
+  Note:
+   "ignoreCRLExpiration:true" can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  
+  
+  Note:
+  boolean properties accept integers values as well, with 0 considered as false and other values being considered as true
+  
+  This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
 
+## Example Usage
 
+```terraform
+resource "ciscoise_trusted_certificate" "example" {
+  provider = ciscoise
+  item {
 
+    automatic_crl_update_units             = "string"
+    crl_distribution_url                   = "string"
+    crl_download_failure_retries_units     = "string"
+    description                            = "string"
+    id                                     = "string"
+    name                                   = "string"
+    non_automatic_crl_update_units         = "string"
+    selected_ocsp_service                  = "string"
+    status                                 = "string"
+    trust_for_certificate_based_admin_auth = false
+    trust_for_cisco_services_auth          = false
+    trust_for_client_auth                  = false
+    trust_for_ise_auth                     = false
+  }
+}
+
+output "ciscoise_trusted_certificate_example" {
+  value = ciscoise_trusted_certificate.example
+}
+```
 
 <!-- schema generated by tfplugindocs -->
 ## Schema
@@ -29,36 +623,36 @@ description: |-
 
 Optional:
 
-- **automatic_crl_update_units** (String)
-- **crl_distribution_url** (String)
-- **crl_download_failure_retries_units** (String)
-- **description** (String)
-- **name** (String)
-- **non_automatic_crl_update_units** (String)
-- **selected_ocsp_service** (String)
+- **automatic_crl_update_units** (String) Unit of time for automatic CRL update
+- **crl_distribution_url** (String) CRL Distribution URL
+- **crl_download_failure_retries_units** (String) Unit of time before retry if CRL download fails
+- **description** (String) Description for trust certificate
+- **id** (String) ID of trust certificate
+- **name** (String) Friendly name of the certificate
+- **non_automatic_crl_update_units** (String) Unit of time of non automatic CRL update
+- **selected_ocsp_service** (String) Name of selected OCSP Service
 - **status** (String)
-- **trust_for_certificate_based_admin_auth** (Boolean)
-- **trust_for_cisco_services_auth** (Boolean)
-- **trust_for_client_auth** (Boolean)
-- **trust_for_ise_auth** (Boolean)
+- **trust_for_certificate_based_admin_auth** (Boolean) Trust for Certificate based Admin authentication
+- **trust_for_cisco_services_auth** (Boolean) Trust for authentication of Cisco Services
+- **trust_for_client_auth** (Boolean) Trust for client authentication and Syslog
+- **trust_for_ise_auth** (Boolean) Trust for authentication within ISE
 
 Read-Only:
 
-- **expiration_date** (String)
-- **friendly_name** (String)
-- **id** (String) The ID of this resource.
+- **expiration_date** (String) The time and date past which the certificate is no longer valid
+- **friendly_name** (String) Friendly name of trust certificate
 - **internal_ca** (Boolean)
 - **is_referred_in_policy** (Boolean)
-- **issued_by** (String)
-- **issued_to** (String)
-- **key_size** (String)
+- **issued_by** (String) The entity that verified the information and signed the certificate
+- **issued_to** (String) Entity to which trust certificate is issued
+- **key_size** (String) The length of key used for encrypting trust certificate
 - **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-- **serial_number_decimal_format** (String)
+- **serial_number_decimal_format** (String) Used to uniquely identify the certificate within a CA's systems
 - **sha256_fingerprint** (String)
-- **signature_algorithm** (String)
-- **subject** (String)
-- **trusted_for** (String)
-- **valid_from** (String)
+- **signature_algorithm** (String) Algorithm used for encrypting trust certificate
+- **subject** (String) The Subject or entity with which public key of trust certificate is associated
+- **trusted_for** (String) Different services for which the certificated is trusted
+- **valid_from** (String) The earliest time and date on which the certificate is valid
 
 <a id="nestedatt--item--link"></a>
 ### Nested Schema for `item.link`
@@ -69,4 +663,10 @@ Read-Only:
 - **rel** (String)
 - **type** (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import ciscoise_trusted_certificate.example "id=string"
+```

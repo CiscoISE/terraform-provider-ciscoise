@@ -3,12 +3,71 @@
 page_title: "ciscoise_system_certificate Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Certificates.
+  This data source supports Filtering, Sorting and Pagination.
+  Filtering and Sorting supported on below mentioned attributes:
+  friendlyName
+  issuedTo
+  issuedBy
+  validFrom
+  Supported Date Format: yyyy-MM-dd HH:mm:ss
+  Supported Operators: EQ, NEQ, GT and LT
+  expirationDate
+  Supported Date Format: yyyy-MM-dd HH:mm:ss
+  Supported Operators: EQ, NEQ, GT and LT
+  This data source displays details of a System Certificate of a particular node based on a given HostName and ID.
 ---
 
 # ciscoise_system_certificate (Data Source)
 
+It performs read operation on Certificates.
 
+ This data source supports Filtering, Sorting and Pagination.
+
+
+Filtering and Sorting supported on below mentioned attributes:
+
+
+
+
+friendlyName
+
+
+issuedTo
+
+
+issuedBy
+
+
+validFrom
+
+
+
+
+Supported Date Format: yyyy-MM-dd HH:mm:ss
+
+
+Supported Operators: EQ, NEQ, GT and LT
+
+
+
+
+expirationDate
+
+
+
+
+Supported Date Format: yyyy-MM-dd HH:mm:ss
+
+
+Supported Operators: EQ, NEQ, GT and LT
+
+
+
+
+
+
+This data source displays details of a System Certificate of a particular node based on a given HostName and ID.
 
 
 
@@ -17,14 +76,91 @@ description: |-
 
 ### Optional
 
-- **filter** (List of String)
-- **filter_type** (String)
-- **host_name** (String)
-- **id** (String) The ID of this resource.
-- **page** (Number)
-- **size** (Number)
-- **sort** (String)
-- **sort_by** (String)
+- **filter** (List of String) filter query parameter. 
+ 
+ 
+ 
+Simple filtering
+ should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
+"filterType=or"
+ query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
+ 
+ 
+ 
+ 
+ 
+OPERATOR
+ 
+DESCRIPTION
+ 
+ 
+ 
+ 
+ 
+EQ
+ 
+Equals
+ 
+ 
+ 
+NEQ
+ 
+Not Equals
+ 
+ 
+ 
+GT
+ 
+Greater Than
+ 
+ 
+ 
+LT
+ 
+Less Then
+ 
+ 
+ 
+STARTSW
+ 
+Starts With
+ 
+ 
+ 
+NSTARTSW
+ 
+Not Starts With
+ 
+ 
+ 
+ENDSW
+ 
+Ends With
+ 
+ 
+ 
+NENDSW
+ 
+Not Ends With
+ 
+ 
+ 
+CONTAINS
+ 
+Contains
+ 
+ 
+ 
+NCONTAINS
+ 
+Not Contains
+- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- **host_name** (String) hostName path parameter. Name of the host of which system certificates should be returned
+- **id** (String) id path parameter. The id of the system certificate
+- **page** (Number) page query parameter. Page number
+- **size** (Number) size query parameter. Number of objects returned per page
+- **sort** (String) sort query parameter. sort type asc or desc
+- **sort_by** (String) sortBy query parameter. sort column by which objects needs to be sorted
 
 ### Read-Only
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_network_access_dictionary_attributes_authentication Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Network Access - Dictionary Attributes List.
+  Network Access Returns list of dictionary attributes for authentication.
 ---
 
 # ciscoise_network_access_dictionary_attributes_authentication (Data Source)
 
+It performs read operation on Network Access - Dictionary Attributes List.
 
+Network Access Returns list of dictionary attributes for authentication.
 
 
 

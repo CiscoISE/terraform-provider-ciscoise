@@ -3,12 +3,15 @@
 page_title: "ciscoise_egress_matrix_cell_clear_all Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on EgressMatrixCell.
+  This data source action allows the client to clear all the egress matrix cells.
 ---
 
 # ciscoise_egress_matrix_cell_clear_all (Data Source)
 
+It performs update operation on EgressMatrixCell.
 
+This data source action allows the client to clear all the egress matrix cells.
 
 
 

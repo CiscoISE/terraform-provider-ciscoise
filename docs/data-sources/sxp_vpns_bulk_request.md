@@ -3,12 +3,15 @@
 page_title: "ciscoise_sxp_vpns_bulk_request Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on SXPVPNs.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_sxp_vpns_bulk_request (Data Source)
 
+It performs update operation on SXPVPNs.
 
+This data source action allows the client to submit the bulk request.
 
 
 

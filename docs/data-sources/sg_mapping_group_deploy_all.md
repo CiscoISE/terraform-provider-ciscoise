@@ -3,12 +3,17 @@
 page_title: "ciscoise_sg_mapping_group_deploy_all Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on IPToSGTMappingGroup.
+  This data source action allows the client to deploy all the IP to SGT mapping groups.
+  Only one Deploy process can run at any given time
 ---
 
 # ciscoise_sg_mapping_group_deploy_all (Data Source)
 
+It performs update operation on IPToSGTMappingGroup.
 
+This data source action allows the client to deploy all the IP to SGT mapping groups.
+Only one Deploy process can run at any given time
 
 
 

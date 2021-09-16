@@ -3,12 +3,15 @@
 page_title: "ciscoise_px_grid_node_delete Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs delete operation on pxGridNode.
+  This data source action deletes a pxGrid node by name.
 ---
 
 # ciscoise_px_grid_node_delete (Data Source)
 
+It performs delete operation on pxGridNode.
 
+This data source action deletes a pxGrid node by name.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **name** (String)
+- **name** (String) name path parameter.
 
 ### Optional
 

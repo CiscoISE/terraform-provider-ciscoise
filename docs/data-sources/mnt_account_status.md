@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_account_status Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  AccountStatus by MAC
 ---
 
 # ciscoise_mnt_account_status (Data Source)
 
+It performs read operation on Misc.
 
+AccountStatus by MAC
 
 
 
@@ -17,8 +20,8 @@ description: |-
 
 ### Required
 
-- **duration** (String)
-- **mac** (String)
+- **duration** (String) duration path parameter.
+- **mac** (String) mac path parameter.
 
 ### Optional
 

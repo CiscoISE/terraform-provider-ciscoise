@@ -3,12 +3,300 @@
 page_title: "ciscoise_bind_signed_certificate Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Certificates.
+  Bind CA Signed Certificate.
+  NOTE:
+  This data source action requires an existing Certificate Signing Request, and the root certificate must already be
+  trusted.
+  NOTE:
+  The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
+  NOTE:
+  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+  Following Parameters are used in POST body
+  PARAMETER
+  DESCRIPTION
+  EXAMPLE
+  name
+  Friendly name of the certificate.
+  Signed Certificate
+  data
+  Plain-text contents of the certificate file (required)
+  Signed Certificate in escaped format
+  allowExtendedValidity
+  Allow the certificates greater than validity of 398 days (required)
+  false
+  allowOutOfDateCert
+  Allow out of date certificates (required)
+  false
+  allowReplacementOfCertificates
+  Allow Replacement of certificates (required)
+  false
+  allowReplacementOfPortalGroupTag
+  Allow Replacement of Portal Group Tag (required)
+  false
+  admin
+  Use certificate to authenticate the ISE Admin Portal
+  false
+  eap
+  Use certificate for EAP protocols that use SSL/TLS tunneling
+  false
+  radius
+  Use certificate for RADSec server
+  false
+  pxgrid
+  Use certificate for the pxGrid Controller
+  false
+  ims
+  Use certificate for the ISE Messaging Service
+  false
+  saml
+  Use certificate for SAML Signing
+  false
+  portal
+  Use certificate for portal
+  false
+  portalGroupTag
+  Portal Group Tag for using certificate with portal role
+  Default Portal Certificate Group
+  validateCertificateExtensions
+  Validate Certificate Extensions
+  false
+  Following Roles can be used in any combinations
+  ROLE
+  DEFAULT
+  WARNING
+  Admin
+  False
+  Enabling Admin role for this certificate will cause an application server restart on the selected node.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  EAP Authentication
+  False
+  Only one system certificate can be used for EAP. Assigning EAP to this certificate will remove the assignment from
+  another certificate.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  RADIUS DTLS
+  False
+  Only one system certificate can be used for DTLS. Assigning DTLS to this certificate will remove the assignment from
+  another certificate.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  SAML
+  False
+  SAML cannot be used with other Usage. Enabling SAML will uncheck all other Usage.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
 ---
 
 # ciscoise_bind_signed_certificate (Data Source)
 
+It performs create operation on Certificates.
 
+
+
+Bind CA Signed Certificate.
+
+NOTE:
+This data source action requires an existing Certificate Signing Request, and the root certificate must already be
+trusted.
+
+NOTE:
+The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
+
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+
+
+Following Parameters are used in POST body
+
+
+
+
+PARAMETER
+
+DESCRIPTION
+
+EXAMPLE
+
+
+
+
+
+name
+
+Friendly name of the certificate.
+
+Signed Certificate
+
+
+
+data
+
+Plain-text contents of the certificate file (required)
+
+Signed Certificate in escaped format
+
+
+
+allowExtendedValidity
+
+Allow the certificates greater than validity of 398 days (required)
+
+false
+
+
+
+allowOutOfDateCert
+
+Allow out of date certificates (required)
+
+false
+
+
+
+allowReplacementOfCertificates
+
+Allow Replacement of certificates (required)
+
+false
+
+
+
+allowReplacementOfPortalGroupTag
+
+Allow Replacement of Portal Group Tag (required)
+
+false
+
+
+admin
+
+Use certificate to authenticate the ISE Admin Portal
+
+false
+
+
+eap
+
+Use certificate for EAP protocols that use SSL/TLS tunneling
+
+false
+
+
+
+radius
+
+Use certificate for RADSec server
+
+false
+
+
+
+pxgrid
+
+Use certificate for the pxGrid Controller
+
+false
+
+
+
+ims
+
+Use certificate for the ISE Messaging Service
+
+false
+
+
+
+saml
+
+Use certificate for SAML Signing
+
+false
+
+
+
+portal
+
+Use certificate for portal
+
+false
+
+
+
+portalGroupTag
+
+Portal Group Tag for using certificate with portal role
+
+Default Portal Certificate Group
+
+
+
+validateCertificateExtensions
+
+Validate Certificate Extensions
+
+false
+
+
+
+
+
+Following Roles can be used in any combinations
+
+
+
+
+ROLE
+
+DEFAULT
+
+WARNING
+
+
+
+
+
+Admin
+
+False
+
+Enabling Admin role for this certificate will cause an application server restart on the selected node.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+EAP Authentication
+
+False
+
+Only one system certificate can be used for EAP. Assigning EAP to this certificate will remove the assignment from
+another certificate.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+RADIUS DTLS
+
+False
+
+Only one system certificate can be used for DTLS. Assigning DTLS to this certificate will remove the assignment from
+another certificate.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+SAML
+
+False
+
+SAML cannot be used with other Usage. Enabling SAML will uncheck all other Usage.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
 
 
 
@@ -17,23 +305,23 @@ description: |-
 
 ### Optional
 
-- **admin** (Boolean)
-- **allow_extended_validity** (Boolean)
-- **allow_out_of_date_cert** (Boolean)
-- **allow_replacement_of_certificates** (Boolean)
-- **allow_replacement_of_portal_group_tag** (Boolean)
-- **data** (String)
-- **eap** (Boolean)
-- **host_name** (String)
-- **id** (String) The ID of this resource.
-- **ims** (Boolean)
-- **name** (String)
-- **portal** (Boolean)
-- **portal_group_tag** (String)
-- **pxgrid** (Boolean)
-- **radius** (Boolean)
-- **saml** (Boolean)
-- **validate_certificate_extensions** (Boolean)
+- **admin** (Boolean) Use certificate to authenticate the ISE Admin Portal
+- **allow_extended_validity** (Boolean) Allow import of certificates with validity greater than 398 days
+- **allow_out_of_date_cert** (Boolean) Allow out of date certificates (required)
+- **allow_replacement_of_certificates** (Boolean) Allow Replacement of certificates (required)
+- **allow_replacement_of_portal_group_tag** (Boolean) Allow Replacement of Portal Group Tag (required)
+- **data** (String) Signed Certificate in escaped format
+- **eap** (Boolean) Use certificate for EAP protocols that use SSL/TLS tunneling
+- **host_name** (String) Name of Host whose CSR ID has been provided
+- **id** (String) ID of the generated CSR
+- **ims** (Boolean) Use certificate for the ISE Messaging Service
+- **name** (String) Friendly Name of the certificate
+- **portal** (Boolean) Use for portal
+- **portal_group_tag** (String) Set Group tag
+- **pxgrid** (Boolean) Use certificate for the pxGrid Controller
+- **radius** (Boolean) Use certificate for the RADSec server
+- **saml** (Boolean) Use certificate for SAML Signing
+- **validate_certificate_extensions** (Boolean) Validate Certificate Extensions
 
 ### Read-Only
 

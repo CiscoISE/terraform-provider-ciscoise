@@ -3,12 +3,19 @@
 page_title: "ciscoise_active_directory Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on ActiveDirectory.
+  This data source allows the client to get Active Directory by name.
+  This data source fetchs the join point details by ID. The ID can be retrieved with the Get All operation.
+  This data source lists all the join points for Active Directory domains in Cisco ISE.
 ---
 
 # ciscoise_active_directory (Data Source)
 
+It performs read operation on ActiveDirectory.
 
+This data source allows the client to get Active Directory by name.
+This data source fetchs the join point details by ID. The ID can be retrieved with the Get All operation.
+This data source lists all the join points for Active Directory domains in Cisco ISE.
 
 
 
@@ -17,10 +24,10 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **page** (Number)
-- **size** (Number)
+- **id** (String) id path parameter.
+- **name** (String) name path parameter.
+- **page** (Number) page query parameter. Page number
+- **size** (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 

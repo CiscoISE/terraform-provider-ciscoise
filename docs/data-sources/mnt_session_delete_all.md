@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_session_delete_all Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs delete operation on Misc.
+  Delete All Sessions
 ---
 
 # ciscoise_mnt_session_delete_all (Data Source)
 
+It performs delete operation on Misc.
 
+Delete All Sessions
 
 
 

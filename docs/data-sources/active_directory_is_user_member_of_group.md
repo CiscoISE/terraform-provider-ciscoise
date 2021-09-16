@@ -3,12 +3,15 @@
 page_title: "ciscoise_active_directory_is_user_member_of_group Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on ActiveDirectory.
+  This data source action verifies if the user is a member of the given groups.
 ---
 
 # ciscoise_active_directory_is_user_member_of_group (Data Source)
 
+It performs update operation on ActiveDirectory.
 
+This data source action verifies if the user is a member of the given groups.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 
 ### Optional
 

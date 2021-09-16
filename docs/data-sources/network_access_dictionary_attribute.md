@@ -3,12 +3,17 @@
 page_title: "ciscoise_network_access_dictionary_attribute Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Network Access - Dictionary Attribute.
+  Returns a list of Dictionary Attributes for an existing Dictionary.
+  Get a Dictionary Attribute.
 ---
 
 # ciscoise_network_access_dictionary_attribute (Data Source)
 
+It performs read operation on Network Access - Dictionary Attribute.
 
+Returns a list of Dictionary Attributes for an existing Dictionary.
+Get a Dictionary Attribute.
 
 
 
@@ -17,9 +22,9 @@ description: |-
 
 ### Optional
 
-- **dictionary_name** (String)
+- **dictionary_name** (String) dictionaryName path parameter. the name of the dictionary the dictionary attribute belongs to
 - **id** (String) The ID of this resource.
-- **name** (String)
+- **name** (String) name path parameter. the dictionary attribute name
 
 ### Read-Only
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_guest_type_email Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on GuestType.
+  This data source action allows the client to update a guest type email by ID.
 ---
 
 # ciscoise_guest_type_email (Data Source)
 
+It performs update operation on GuestType.
 
+This data source action allows the client to update a guest type email by ID.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 
 ### Optional
 

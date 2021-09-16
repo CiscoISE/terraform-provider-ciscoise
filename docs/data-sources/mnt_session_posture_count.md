@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_session_posture_count Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  PostureCount
 ---
 
 # ciscoise_mnt_session_posture_count (Data Source)
 
+It performs read operation on Misc.
 
+PostureCount
 
 
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_failure_reasons Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  FailureReasons
 ---
 
 # ciscoise_mnt_failure_reasons (Data Source)
 
+It performs read operation on Misc.
 
+FailureReasons
 
 
 

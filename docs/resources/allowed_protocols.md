@@ -3,14 +3,125 @@
 page_title: "ciscoise_allowed_protocols Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It manages create, read, update and delete operations on AllowedProtocols.
+  This resource allows the client to update an allowed protocol.
+    This resource deletes an allowed protocol.
+    This resource creates an allowed protocol.
 ---
 
 # ciscoise_allowed_protocols (Resource)
 
+It manages create, read, update and delete operations on AllowedProtocols.
+  
+  This resource allows the client to update an allowed protocol.
+  This resource deletes an allowed protocol.
+  This resource creates an allowed protocol.
 
+## Example Usage
 
+```terraform
+resource "ciscoise_allowed_protocols" "example" {
+  provider = ciscoise
+  item {
 
+    allow_chap                   = false
+    allow_eap_fast               = false
+    allow_eap_md5                = false
+    allow_eap_tls                = false
+    allow_eap_ttls               = false
+    allow_leap                   = false
+    allow_ms_chap_v1             = false
+    allow_ms_chap_v2             = false
+    allow_pap_ascii              = false
+    allow_peap                   = false
+    allow_preferred_eap_protocol = false
+    allow_teap                   = false
+    allow_weak_ciphers_for_eap   = false
+    description                  = "string"
+    eap_fast {
+
+      allow_eap_fast_eap_gtc                                                  = false
+      allow_eap_fast_eap_gtc_pwd_change                                       = false
+      allow_eap_fast_eap_gtc_pwd_change_retries                               = 1
+      allow_eap_fast_eap_ms_chap_v2                                           = false
+      allow_eap_fast_eap_ms_chap_v2_pwd_change                                = false
+      allow_eap_fast_eap_ms_chap_v2_pwd_change_retries                        = 1
+      allow_eap_fast_eap_tls                                                  = false
+      allow_eap_fast_eap_tls_auth_of_expired_certs                            = false
+      eap_fast_dont_use_pacs_accept_client_cert                               = false
+      eap_fast_dont_use_pacs_allow_machine_authentication                     = false
+      eap_fast_enable_eap_chaining                                            = false
+      eap_fast_use_pacs                                                       = false
+      eap_fast_use_pacs_accept_client_cert                                    = false
+      eap_fast_use_pacs_allow_anonym_provisioning                             = false
+      eap_fast_use_pacs_allow_authen_provisioning                             = false
+      eap_fast_use_pacs_allow_machine_authentication                          = false
+      eap_fast_use_pacs_authorization_pac_ttl                                 = 1
+      eap_fast_use_pacs_authorization_pac_ttl_units                           = "string"
+      eap_fast_use_pacs_machine_pac_ttl                                       = 1
+      eap_fast_use_pacs_machine_pac_ttl_units                                 = "string"
+      eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning = false
+      eap_fast_use_pacs_stateless_session_resume                              = false
+      eap_fast_use_pacs_tunnel_pac_ttl                                        = 1
+      eap_fast_use_pacs_tunnel_pac_ttl_units                                  = "string"
+      eap_fast_use_pacs_use_proactive_pac_update_precentage                   = 1
+    }
+    eap_tls {
+
+      allow_eap_tls_auth_of_expired_certs     = false
+      eap_tls_enable_stateless_session_resume = false
+      eap_tls_session_ticket_precentage       = 1
+      eap_tls_session_ticket_ttl              = 1
+      eap_tls_session_ticket_ttl_units        = "string"
+    }
+    eap_tls_l_bit = false
+    eap_ttls {
+
+      eap_ttls_chap                              = false
+      eap_ttls_eap_md5                           = false
+      eap_ttls_eap_ms_chap_v2                    = false
+      eap_ttls_eap_ms_chap_v2_pwd_change         = false
+      eap_ttls_eap_ms_chap_v2_pwd_change_retries = 1
+      eap_ttls_ms_chap_v1                        = false
+      eap_ttls_ms_chap_v2                        = false
+      eap_ttls_pap_ascii                         = false
+    }
+    id   = "string"
+    name = "string"
+    peap {
+
+      allow_peap_eap_gtc                           = false
+      allow_peap_eap_gtc_pwd_change                = false
+      allow_peap_eap_gtc_pwd_change_retries        = 1
+      allow_peap_eap_ms_chap_v2                    = false
+      allow_peap_eap_ms_chap_v2_pwd_change         = false
+      allow_peap_eap_ms_chap_v2_pwd_change_retries = 1
+      allow_peap_eap_tls                           = false
+      allow_peap_eap_tls_auth_of_expired_certs     = false
+      allow_peap_v0                                = false
+      require_cryptobinding                        = false
+    }
+    preferred_eap_protocol = "string"
+    process_host_lookup    = false
+    require_message_auth   = false
+    teap {
+
+      accept_client_cert_during_tunnel_est         = false
+      allow_downgrade_msk                          = false
+      allow_teap_eap_ms_chap_v2                    = false
+      allow_teap_eap_ms_chap_v2_pwd_change         = false
+      allow_teap_eap_ms_chap_v2_pwd_change_retries = 1
+      allow_teap_eap_tls                           = false
+      allow_teap_eap_tls_auth_of_expired_certs     = false
+      enable_eap_chaining                          = false
+    }
+  }
+}
+
+output "ciscoise_allowed_protocols_example" {
+  value = ciscoise_allowed_protocols.example
+}
+```
 
 <!-- schema generated by tfplugindocs -->
 ## Schema
@@ -43,17 +154,27 @@ Optional:
 - **allow_teap** (Boolean)
 - **allow_weak_ciphers_for_eap** (Boolean)
 - **description** (String)
-- **eap_fast** (Block List) (see [below for nested schema](#nestedblock--item--eap_fast))
-- **eap_tls** (Block List) (see [below for nested schema](#nestedblock--item--eap_tls))
+- **eap_fast** (Block List) The eapFast is required only if allowEapFast is true, otherwise it must be ignored. The object eapFast contains the settings for EAP FAST protocol (see [below for nested schema](#nestedblock--item--eap_fast))
+- **eap_tls** (Block List) The eapTls is required only if allowEapTls is true, otherwise it must be ignored. The object eapTls contains the settings for EAP TLS protocol (see [below for nested schema](#nestedblock--item--eap_tls))
 - **eap_tls_l_bit** (Boolean)
-- **eap_ttls** (Block List) (see [below for nested schema](#nestedblock--item--eap_ttls))
-- **id** (String) The ID of this resource.
-- **name** (String)
+- **eap_ttls** (Block List) The eapTtls is required only if allowEapTtls is true, otherwise it must be ignored.
+  The object eapTtls contains the settings for EAP TTLS protocol (see [below for nested schema](#nestedblock--item--eap_ttls))
+- **id** (String) Resource UUID, Mandatory for update
+- **name** (String) Resource Name
 - **peap** (Block List) (see [below for nested schema](#nestedblock--item--peap))
-- **preferred_eap_protocol** (String)
+- **preferred_eap_protocol** (String) The preferredEapProtocol is required only if allowPreferredEapProtocol is true, otherwise it must be ignored.
+  Allowed Values: 
+  - EAP_FAST,
+  - PEAP,
+  - LEAP,
+  - EAP_MD5,
+  - EAP_TLS,
+  - EAP_TTLS,
+  - TEAP
 - **process_host_lookup** (Boolean)
 - **require_message_auth** (Boolean)
-- **teap** (Block List) (see [below for nested schema](#nestedblock--item--teap))
+- **teap** (Block List) The teap is required only if allowTeap is true, otherwise it must be ignored.
+  The object teap contains the settings for TEAP protocol (see [below for nested schema](#nestedblock--item--teap))
 
 Read-Only:
 
@@ -65,30 +186,58 @@ Read-Only:
 Optional:
 
 - **allow_eap_fast_eap_gtc** (Boolean)
-- **allow_eap_fast_eap_gtc_pwd_change** (Boolean)
-- **allow_eap_fast_eap_gtc_pwd_change_retries** (Number)
+- **allow_eap_fast_eap_gtc_pwd_change** (Boolean) The allowEapFastEapGtcPwdChange is required only if allowEapFastEapGtc is true, otherwise it must be ignored
+- **allow_eap_fast_eap_gtc_pwd_change_retries** (Number) The allowEapFastEapGtcPwdChangeRetries is required only if allowEapFastEapGtc is true,
+  otherwise it must be ignored. Valid range is 0-3
 - **allow_eap_fast_eap_ms_chap_v2** (Boolean)
-- **allow_eap_fast_eap_ms_chap_v2_pwd_change** (Boolean)
-- **allow_eap_fast_eap_ms_chap_v2_pwd_change_retries** (Number)
+- **allow_eap_fast_eap_ms_chap_v2_pwd_change** (Boolean) The allowEapFastEapMsChapV2PwdChange is required only if allowEapFastEapMsChapV2 is true, otherwise it must be ignored
+- **allow_eap_fast_eap_ms_chap_v2_pwd_change_retries** (Number) The allowEapFastEapMsChapV2PwdChangeRetries is required only if eapTtlsEapMsChapV2 is true, otherwise it must be ignored. Valid range is 0-3
 - **allow_eap_fast_eap_tls** (Boolean)
-- **allow_eap_fast_eap_tls_auth_of_expired_certs** (Boolean)
-- **eap_fast_dont_use_pacs_accept_client_cert** (Boolean)
-- **eap_fast_dont_use_pacs_allow_machine_authentication** (Boolean)
+- **allow_eap_fast_eap_tls_auth_of_expired_certs** (Boolean) The allowEapFastEapTlsAuthOfExpiredCerts is required only if allowEapFastEapTls is true, otherwise it must be ignored
+- **eap_fast_dont_use_pacs_accept_client_cert** (Boolean) The eapFastDontUsePacsAcceptClientCert is required only if eapFastUsePacs is FALSE, otherwise it must be ignored
+- **eap_fast_dont_use_pacs_allow_machine_authentication** (Boolean) The eapFastDontUsePacsAllowMachineAuthentication is required only if eapFastUsePacs is FALSE, otherwise it must be ignored
 - **eap_fast_enable_eap_chaining** (Boolean)
 - **eap_fast_use_pacs** (Boolean)
-- **eap_fast_use_pacs_accept_client_cert** (Boolean)
-- **eap_fast_use_pacs_allow_anonym_provisioning** (Boolean)
-- **eap_fast_use_pacs_allow_authen_provisioning** (Boolean)
+- **eap_fast_use_pacs_accept_client_cert** (Boolean) The eapFastUsePacsAcceptClientCert is required only if eapFastUsePacsAllowAuthenProvisioning is true,
+  otherwise it must be ignored
+- **eap_fast_use_pacs_allow_anonym_provisioning** (Boolean) The eapFastUsePacsAllowAnonymProvisioning is required only if eapFastUsePacs is true,
+  otherwise it must be ignored
+- **eap_fast_use_pacs_allow_authen_provisioning** (Boolean) The eapFastUsePacsAllowAuthenProvisioning is required only if eapFastUsePacs is true,
+  otherwise it must be ignored
 - **eap_fast_use_pacs_allow_machine_authentication** (Boolean)
-- **eap_fast_use_pacs_authorization_pac_ttl** (Number)
-- **eap_fast_use_pacs_authorization_pac_ttl_units** (String)
-- **eap_fast_use_pacs_machine_pac_ttl** (Number)
-- **eap_fast_use_pacs_machine_pac_ttl_units** (String)
-- **eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning** (Boolean)
-- **eap_fast_use_pacs_stateless_session_resume** (Boolean)
-- **eap_fast_use_pacs_tunnel_pac_ttl** (Number)
-- **eap_fast_use_pacs_tunnel_pac_ttl_units** (String)
-- **eap_fast_use_pacs_use_proactive_pac_update_precentage** (Number)
+- **eap_fast_use_pacs_authorization_pac_ttl** (Number) The eapFastUsePacsAuthorizationPacTtl is required only if eapFastUsePacsStatelessSessionResume is true,
+  otherwise it must be ignored
+- **eap_fast_use_pacs_authorization_pac_ttl_units** (String) The eapFastUsePacsAuthorizationPacTtlUnits is required only if eapFastUsePacsStatelessSessionResume is true,
+  otherwise it must be ignored.
+  Allowed Values:
+  - SECONDS,
+  - MINUTES,
+  - HOURS,
+  - DAYS,
+  - WEEKS
+- **eap_fast_use_pacs_machine_pac_ttl** (Number) The eapFastUsePacsMachinePacTtl is required only if eapFastUsePacsAllowMachineAuthentication is true,
+  otherwise it must be ignored
+- **eap_fast_use_pacs_machine_pac_ttl_units** (String) The eapFastUsePacsMachinePacTtlUnits is required only if eapFastUsePacsAllowMachineAuthentication is true,
+  otherwise it must be ignored.
+  Allowed Values:
+  - SECONDS,
+  - MINUTES,
+  - HOURS,
+  - DAYS,
+  - WEEKS
+- **eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning** (Boolean) The eapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning
+  is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored
+- **eap_fast_use_pacs_stateless_session_resume** (Boolean) The eapFastUsePacsStatelessSessionResume is required only if eapFastUsePacs is true, otherwise it must be ignored
+- **eap_fast_use_pacs_tunnel_pac_ttl** (Number) The eapFastUsePacsTunnelPacTtl is required only if eapFastUsePacs is true, otherwise it must be ignored
+- **eap_fast_use_pacs_tunnel_pac_ttl_units** (String) The eapFastUsePacsTunnelPacTtlUnits is required only if eapFastUsePacs is true, otherwise it must be ignored.
+  Allowed Values:
+  - SECONDS,
+  - MINUTES,
+  - HOURS,
+  - DAYS,
+  - WEEKS
+- **eap_fast_use_pacs_use_proactive_pac_update_precentage** (Number) The eapFastUsePacsUseProactivePacUpdatePrecentage is required only if eapFastUsePacs is true,
+  otherwise it must be ignored
 
 
 <a id="nestedblock--item--eap_tls"></a>
@@ -98,9 +247,16 @@ Optional:
 
 - **allow_eap_tls_auth_of_expired_certs** (Boolean)
 - **eap_tls_enable_stateless_session_resume** (Boolean)
-- **eap_tls_session_ticket_precentage** (Number)
-- **eap_tls_session_ticket_ttl** (Number)
-- **eap_tls_session_ticket_ttl_units** (String)
+- **eap_tls_session_ticket_precentage** (Number) The eapTlsSessionTicketPrecentage is required only if eapTlsEnableStatelessSessionResume is true,
+  otherwise it must be ignored
+- **eap_tls_session_ticket_ttl** (Number) Time to live. The eapTlsSessionTicketTtl is required only if eapTlsEnableStatelessSessionResume is true, otherwise it must be ignored
+- **eap_tls_session_ticket_ttl_units** (String) Time to live time units. The eapTlsSessionTicketTtlUnits is required only if eapTlsEnableStatelessSessionResume is true,
+  otherwise it must be ignored. Allowed Values:
+  - SECONDS,
+  - MINUTES,
+  - HOURS,
+  - DAYS,
+  - WEEKS
 
 
 <a id="nestedblock--item--eap_ttls"></a>
@@ -111,8 +267,9 @@ Optional:
 - **eap_ttls_chap** (Boolean)
 - **eap_ttls_eap_md5** (Boolean)
 - **eap_ttls_eap_ms_chap_v2** (Boolean)
-- **eap_ttls_eap_ms_chap_v2_pwd_change** (Boolean)
-- **eap_ttls_eap_ms_chap_v2_pwd_change_retries** (Number)
+- **eap_ttls_eap_ms_chap_v2_pwd_change** (Boolean) The eapTtlsEapMsChapV2PwdChange is required only if eapTtlsEapMsChapV2 is true, otherwise it must be ignored
+- **eap_ttls_eap_ms_chap_v2_pwd_change_retries** (Number) The eapTtlsEapMsChapV2PwdChangeRetries is required only if eapTtlsEapMsChapV2 is true,
+  otherwise it must be ignored. Valid range is 0-3
 - **eap_ttls_ms_chap_v1** (Boolean)
 - **eap_ttls_ms_chap_v2** (Boolean)
 - **eap_ttls_pap_ascii** (Boolean)
@@ -124,13 +281,16 @@ Optional:
 Optional:
 
 - **allow_peap_eap_gtc** (Boolean)
-- **allow_peap_eap_gtc_pwd_change** (Boolean)
-- **allow_peap_eap_gtc_pwd_change_retries** (Number)
+- **allow_peap_eap_gtc_pwd_change** (Boolean) The allowPeapEapGtcPwdChange is required only if allowPeapEapGtc is true, otherwise it must be ignored
+- **allow_peap_eap_gtc_pwd_change_retries** (Number) The allowPeapEapGtcPwdChangeRetries is required only if allowPeapEapGtc is true,
+  otherwise it must be ignored. Valid range is 0-3
 - **allow_peap_eap_ms_chap_v2** (Boolean)
-- **allow_peap_eap_ms_chap_v2_pwd_change** (Boolean)
-- **allow_peap_eap_ms_chap_v2_pwd_change_retries** (Number)
+- **allow_peap_eap_ms_chap_v2_pwd_change** (Boolean) The allowPeapEapMsChapV2PwdChange is required only if allowPeapEapMsChapV2 is true,
+  otherwise it must be ignored
+- **allow_peap_eap_ms_chap_v2_pwd_change_retries** (Number) The allowPeapEapMsChapV2PwdChangeRetries is required only if allowPeapEapMsChapV2 is true,
+  otherwise it must be ignored. Valid range is 0-3
 - **allow_peap_eap_tls** (Boolean)
-- **allow_peap_eap_tls_auth_of_expired_certs** (Boolean)
+- **allow_peap_eap_tls_auth_of_expired_certs** (Boolean) The allowPeapEapTlsAuthOfExpiredCerts is required only if allowPeapEapTls is true, otherwise it must be ignored
 - **allow_peap_v0** (Boolean)
 - **require_cryptobinding** (Boolean)
 
@@ -143,10 +303,12 @@ Optional:
 - **accept_client_cert_during_tunnel_est** (Boolean)
 - **allow_downgrade_msk** (Boolean)
 - **allow_teap_eap_ms_chap_v2** (Boolean)
-- **allow_teap_eap_ms_chap_v2_pwd_change** (Boolean)
-- **allow_teap_eap_ms_chap_v2_pwd_change_retries** (Number)
+- **allow_teap_eap_ms_chap_v2_pwd_change** (Boolean) The allowTeapEapMsChapV2PwdChange is required only if allowTeapEapMsChapV2 is true, otherwise it must be ignored
+- **allow_teap_eap_ms_chap_v2_pwd_change_retries** (Number) The allowTeapEapMsChapV2PwdChangeRetries is required only if allowTeapEapMsChapV2 is true,
+  otherwise it must be ignored.
+  Valid range is 0-3
 - **allow_teap_eap_tls** (Boolean)
-- **allow_teap_eap_tls_auth_of_expired_certs** (Boolean)
+- **allow_teap_eap_tls_auth_of_expired_certs** (Boolean) The allowTeapEapTlsAuthOfExpiredCerts is required only if allowTeapEapTls is true, otherwise it must be ignored
 - **enable_eap_chaining** (Boolean)
 
 
@@ -159,4 +321,10 @@ Read-Only:
 - **rel** (String)
 - **type** (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import ciscoise_allowed_protocols.example "id=string/name=string"
+```

@@ -3,12 +3,15 @@
 page_title: "ciscoise_device_administration_dictionary_attributes_authentication Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Dictionary Attributes List.
+  Network Access Returns list of dictionary attributes for authentication.
 ---
 
 # ciscoise_device_administration_dictionary_attributes_authentication (Data Source)
 
+It performs read operation on Device Administration - Dictionary Attributes List.
 
+Network Access Returns list of dictionary attributes for authentication.
 
 
 

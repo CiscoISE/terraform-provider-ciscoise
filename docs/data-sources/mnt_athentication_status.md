@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_athentication_status Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  AuthenticationStatus by MAC
 ---
 
 # ciscoise_mnt_athentication_status (Data Source)
 
+It performs read operation on Misc.
 
+AuthenticationStatus by MAC
 
 
 
@@ -17,9 +20,9 @@ description: |-
 
 ### Required
 
-- **mac** (String)
-- **rec_ord_s** (String)
-- **sec_ond_s** (String)
+- **mac** (String) MAC path parameter.
+- **rec_ord_s** (String) RECORDS path parameter.
+- **sec_ond_s** (String) SECONDS path parameter.
 
 ### Optional
 

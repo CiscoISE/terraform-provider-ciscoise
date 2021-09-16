@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_endpoint_by_mac_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on MDM.
+  🚧 getEndpointByMacAddress
 ---
 
 # ciscoise_pxgrid_endpoint_by_mac_info (Data Source)
 
+It performs create operation on MDM.
 
+🚧 getEndpointByMacAddress
 
 
 

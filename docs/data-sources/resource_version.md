@@ -3,12 +3,15 @@
 page_title: "ciscoise_resource_version Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on VersionInfo.
+  Get all VersionInfo
 ---
 
 # ciscoise_resource_version (Data Source)
 
+It performs read operation on VersionInfo.
 
+Get all VersionInfo
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **resource** (String)
+- **resource** (String) resource path parameter.
 
 ### Optional
 
