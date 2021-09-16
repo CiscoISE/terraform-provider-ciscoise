@@ -1,8 +1,8 @@
 
 data "ciscoise_aci_settings" "example" {
-    provider = ciscoise
+  provider = ciscoise
 }
 
 output "ciscoise_aci_settings_example" {
-    value = data.ciscoise_aci_settings.example.item
+  value = data.ciscoise_aci_settings.example.item
 }

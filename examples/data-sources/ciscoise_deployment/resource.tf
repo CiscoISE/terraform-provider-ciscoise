@@ -1,8 +1,8 @@
 
 data "ciscoise_deployment" "example" {
-    provider = ciscoise
+  provider = ciscoise
 }
 
 output "ciscoise_deployment_example" {
-    value = data.ciscoise_deployment.example.item
+  value = data.ciscoise_deployment.example.item
 }

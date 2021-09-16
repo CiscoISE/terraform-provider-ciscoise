@@ -1,26 +1,26 @@
 
 data "ciscoise_device_administration_conditions" "example" {
-    provider = ciscoise
-    name = "string"
+  provider = ciscoise
+  name     = "string"
 }
 
 output "ciscoise_device_administration_conditions_example" {
-    value = data.ciscoise_device_administration_conditions.example.item_name
+  value = data.ciscoise_device_administration_conditions.example.item_name
 }
 
 data "ciscoise_device_administration_conditions" "example" {
-    provider = ciscoise
-    id = "string"
+  provider = ciscoise
+  id       = "string"
 }
 
 output "ciscoise_device_administration_conditions_example" {
-    value = data.ciscoise_device_administration_conditions.example.item_id
+  value = data.ciscoise_device_administration_conditions.example.item_id
 }
 
 data "ciscoise_device_administration_conditions" "example" {
-    provider = ciscoise
+  provider = ciscoise
 }
 
 output "ciscoise_device_administration_conditions_example" {
-    value = data.ciscoise_device_administration_conditions.example.items
+  value = data.ciscoise_device_administration_conditions.example.items
 }
