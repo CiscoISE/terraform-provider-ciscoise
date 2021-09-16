@@ -1,17 +1,17 @@
 
 data "ciscoise_device_administration_network_conditions" "example" {
-    provider = ciscoise
+  provider = ciscoise
 }
 
 output "ciscoise_device_administration_network_conditions_example" {
-    value = data.ciscoise_device_administration_network_conditions.example.items
+  value = data.ciscoise_device_administration_network_conditions.example.items
 }
 
 data "ciscoise_device_administration_network_conditions" "example" {
-    provider = ciscoise
-    id = "string"
+  provider = ciscoise
+  id       = "string"
 }
 
 output "ciscoise_device_administration_network_conditions_example" {
-    value = data.ciscoise_device_administration_network_conditions.example.item
+  value = data.ciscoise_device_administration_network_conditions.example.item
 }

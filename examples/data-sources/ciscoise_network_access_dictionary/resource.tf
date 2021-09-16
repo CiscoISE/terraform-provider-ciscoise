@@ -1,17 +1,17 @@
 
 data "ciscoise_network_access_dictionary" "example" {
-    provider = ciscoise
+  provider = ciscoise
 }
 
 output "ciscoise_network_access_dictionary_example" {
-    value = data.ciscoise_network_access_dictionary.example.items
+  value = data.ciscoise_network_access_dictionary.example.items
 }
 
 data "ciscoise_network_access_dictionary" "example" {
-    provider = ciscoise
-    name = "string"
+  provider = ciscoise
+  name     = "string"
 }
 
 output "ciscoise_network_access_dictionary_example" {
-    value = data.ciscoise_network_access_dictionary.example.item
+  value = data.ciscoise_network_access_dictionary.example.item
 }

@@ -1,5 +1,5 @@
 
 data "ciscoise_node_sync" "example" {
-    provider = ciscoise
-    hostname = "string"
+  provider = ciscoise
+  hostname = "string"
 }
