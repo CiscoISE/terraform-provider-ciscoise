@@ -4,9 +4,7 @@ page_title: "ciscoise_guest_user Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on GuestUser.
-  - This data source allows the client to get a guest user by name.
-  - This data source allows the client to get a guest user by ID.
-  - This data source allows the client to get all the guest users.
+  This data source allows the client to get a guest user by name.This data source allows the client to get a guest user by ID.This data source allows the client to get all the guest users.
   Filter:
   [lastName, sponsor, creationTime, personBeingVisited, toDate, userName, firstName, emailAddress, phoneNumber, groupTag,
   name, company, guestType, status]

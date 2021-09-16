@@ -5,14 +5,14 @@ subcategory: ""
 description: |-
   It performs read operation on Network Access - Security Groups.
   Network Access Return list of available security groups for authorization policy definition.
-   (Other CRUD APIs available throught ERS)
+  (Other CRUD APIs available throught ERS)
 ---
 
 # ciscoise_network_access_security_groups (Data Source)
 
 It performs read operation on Network Access - Security Groups.
 
-Network Access Return list of available security groups for authorization policy definition.
+- Network Access Return list of available security groups for authorization policy definition.
  (Other CRUD APIs available throught ERS)
 
 ## Example Usage

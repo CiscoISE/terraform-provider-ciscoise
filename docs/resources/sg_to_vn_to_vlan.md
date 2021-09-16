@@ -4,18 +4,16 @@ page_title: "ciscoise_sg_to_vn_to_vlan Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SecurityGroupToVirtualNetwork.
-  This resource allows the client to update a security group to virtual network.
-    This resource deletes a security group ACL to virtual network.
-    This resource creates a security group to virtual network.
+  This resource allows the client to update a security group to virtual network.This resource deletes a security group ACL to virtual network.This resource creates a security group to virtual network.
 ---
 
 # ciscoise_sg_to_vn_to_vlan (Resource)
 
 It manages create, read, update and delete operations on SecurityGroupToVirtualNetwork.
   
-  This resource allows the client to update a security group to virtual network.
-  This resource deletes a security group ACL to virtual network.
-  This resource creates a security group to virtual network.
+  - This resource allows the client to update a security group to virtual network.
+  - This resource deletes a security group ACL to virtual network.
+  - This resource creates a security group to virtual network.
 
 ## Example Usage
 

@@ -4,16 +4,15 @@ page_title: "ciscoise_tasks Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on tasks.
-  get all task status
-  Monitor task status
+  get all task statusMonitor task status
 ---
 
 # ciscoise_tasks (Data Source)
 
 It performs read operation on tasks.
 
-get all task status
-Monitor task status
+- get all task status
+- Monitor task status
 
 ## Example Usage
 

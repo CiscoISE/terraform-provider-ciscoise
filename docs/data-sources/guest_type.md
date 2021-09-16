@@ -4,8 +4,7 @@ page_title: "ciscoise_guest_type Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on GuestType.
-  - This data source allows the client to get a guest type by ID.
-  - This data source allows the client to get all the guest types.
+  This data source allows the client to get a guest type by ID.This data source allows the client to get all the guest types.
   Filter:
   [name]
   Sorting:

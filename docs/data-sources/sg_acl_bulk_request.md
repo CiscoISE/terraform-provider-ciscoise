@@ -4,7 +4,7 @@ page_title: "ciscoise_sg_acl_bulk_request Data Source - terraform-provider-cisco
 subcategory: ""
 description: |-
   It performs update operation on SecurityGroupsACLs.
-  - This data source action allows the client to submit the bulk request.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_sg_acl_bulk_request (Data Source)

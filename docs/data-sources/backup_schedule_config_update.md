@@ -4,7 +4,7 @@ page_title: "ciscoise_backup_schedule_config_update Data Source - terraform-prov
 subcategory: ""
 description: |-
   It performs update operation on Backup And Restore.
-  Update the Schedule of the configuration backup on the ISE node as per the input parameters. - This data source action
+  Update the Schedule of the configuration backup on the ISE node as per the input parameters. This data source action
   only helps in editing the schedule.
 ---
 
@@ -12,7 +12,7 @@ description: |-
 
 It performs update operation on Backup And Restore.
 
-Update the Schedule of the configuration backup on the ISE node as per the input parameters. - This data source action
+- Update the Schedule of the configuration backup on the ISE node as per the input parameters. This data source action
 only helps in editing the schedule.
 
 ## Example Usage

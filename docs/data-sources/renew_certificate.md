@@ -4,7 +4,7 @@ page_title: "ciscoise_renew_certificate Data Source - terraform-provider-ciscois
 subcategory: ""
 description: |-
   It performs create operation on Certificates.
-  - This data source action will initiate regeneration of certificates. Response contains id which can be used to track the
+  This data source action will initiate regeneration of certificates. Response contains id which can be used to track the
   status
 ---
 

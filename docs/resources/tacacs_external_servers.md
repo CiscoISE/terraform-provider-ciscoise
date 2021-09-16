@@ -4,18 +4,16 @@ page_title: "ciscoise_tacacs_external_servers Resource - terraform-provider-cisc
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on TACACSExternalServers.
-  This resource allows the client to update TACACS external servers.
-    This resource deletes TACACS external servers.
-    This resource creates TACACS external servers.
+  This resource allows the client to update TACACS external servers.This resource deletes TACACS external servers.This resource creates TACACS external servers.
 ---
 
 # ciscoise_tacacs_external_servers (Resource)
 
 It manages create, read, update and delete operations on TACACSExternalServers.
   
-  This resource allows the client to update TACACS external servers.
-  This resource deletes TACACS external servers.
-  This resource creates TACACS external servers.
+  - This resource allows the client to update TACACS external servers.
+  - This resource deletes TACACS external servers.
+  - This resource creates TACACS external servers.
 
 ## Example Usage
 

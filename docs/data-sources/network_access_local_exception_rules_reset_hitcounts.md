@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Network Access - Authorization Exception Rules.
 
-Network Access Reset HitCount for local exceptions
+- Network Access Reset HitCount for local exceptions
 
 ## Example Usage
 

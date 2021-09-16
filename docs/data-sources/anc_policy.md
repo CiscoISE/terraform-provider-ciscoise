@@ -4,9 +4,7 @@ page_title: "ciscoise_anc_policy Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on AncPolicy.
-  - This data source allows the client to get an ANC policy by name.
-  - This data source allows the client to get an ANC policy by ID.
-  - This data source allows the client to get all the ANC policies.
+  This data source allows the client to get an ANC policy by name.This data source allows the client to get an ANC policy by ID.This data source allows the client to get all the ANC policies.
   Filter:
   [name]
   Sorting:

@@ -4,8 +4,7 @@ page_title: "ciscoise_portal_global_setting Data Source - terraform-provider-cis
 subcategory: ""
 description: |-
   It performs read operation on PortalGlobalSetting.
-  - This data source allows the client to get the portal global settings by id.
-  - This data source allows the client to get all the portal global settings.
+  This data source allows the client to get the portal global settings by id.This data source allows the client to get all the portal global settings.
   Filter:
   [name]
   Sorting:

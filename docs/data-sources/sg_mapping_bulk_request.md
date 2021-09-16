@@ -4,7 +4,7 @@ page_title: "ciscoise_sg_mapping_bulk_request Data Source - terraform-provider-c
 subcategory: ""
 description: |-
   It performs update operation on IPToSGTMapping.
-  - This data source action allows the client to submit the bulk request.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_sg_mapping_bulk_request (Data Source)

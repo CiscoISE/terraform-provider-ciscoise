@@ -4,7 +4,7 @@ page_title: "ciscoise_system_certificate_create Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs create operation on SystemCertificate.
-  - This data source action allows the client to create a system certificate.
+  This data source action allows the client to create a system certificate.
 ---
 
 # ciscoise_system_certificate_create (Data Source)

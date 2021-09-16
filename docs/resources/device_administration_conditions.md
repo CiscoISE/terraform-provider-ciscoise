@@ -4,22 +4,18 @@ page_title: "ciscoise_device_administration_conditions Resource - terraform-prov
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Device Administration - Conditions.
-  Device Admin Creates a library condition.
-    Device Admin Update library condition using condition name.
-    NDevice Admin Delete a library condition using condition Name.
-    Device Admin Update library condition.
-    Device Admin Delete a library condition.
+  Device Admin Creates a library condition.Device Admin Update library condition using condition name.Device Admin Delete a library condition using condition Name.Device Admin Update library condition.Device Admin Delete a library condition.
 ---
 
 # ciscoise_device_administration_conditions (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Conditions.
   
-  Device Admin Creates a library condition.
-  Device Admin Update library condition using condition name.
-  NDevice Admin Delete a library condition using condition Name.
-  Device Admin Update library condition.
-  Device Admin Delete a library condition.
+  - Device Admin Creates a library condition.
+  - Device Admin Update library condition using condition name.
+  - Device Admin Delete a library condition using condition Name.
+  - Device Admin Update library condition.
+  - Device Admin Delete a library condition.
 
 ## Example Usage
 

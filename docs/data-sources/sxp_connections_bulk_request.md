@@ -4,7 +4,7 @@ page_title: "ciscoise_sxp_connections_bulk_request Data Source - terraform-provi
 subcategory: ""
 description: |-
   It performs update operation on SXPConnections.
-  - This data source action allows the client to submit the bulk request.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_sxp_connections_bulk_request (Data Source)

@@ -4,7 +4,7 @@ page_title: "ciscoise_guest_user_bulk_monitor_status Data Source - terraform-pro
 subcategory: ""
 description: |-
   It performs read operation on GuestUser.
-  - This data source allows the client to monitor the bulk request.
+  This data source allows the client to monitor the bulk request.
 ---
 
 # ciscoise_guest_user_bulk_monitor_status (Data Source)

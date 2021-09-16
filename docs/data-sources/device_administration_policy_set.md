@@ -4,16 +4,15 @@ page_title: "ciscoise_device_administration_policy_set Data Source - terraform-p
 subcategory: ""
 description: |-
   It performs read operation on Device Administration - Policy Set.
-  Device Admin List of policy sets.
-  Device Admin Get policy set attributes.
+  Device Admin List of policy sets.Device Admin Get policy set attributes.
 ---
 
 # ciscoise_device_administration_policy_set (Data Source)
 
 It performs read operation on Device Administration - Policy Set.
 
-Device Admin List of policy sets.
-Device Admin Get policy set attributes.
+- Device Admin List of policy sets.
+- Device Admin Get policy set attributes.
 
 ## Example Usage
 

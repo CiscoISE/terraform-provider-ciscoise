@@ -4,8 +4,7 @@ page_title: "ciscoise_sponsor_group Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on SponsorGroup.
-  - This data source allows the client to get a sponsor group by ID.
-  - This data source allows the client to get all the sponsor groups.
+  This data source allows the client to get a sponsor group by ID.This data source allows the client to get all the sponsor groups.
   Filter:
   [name]
   Sorting:

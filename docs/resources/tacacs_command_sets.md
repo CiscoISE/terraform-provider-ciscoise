@@ -4,18 +4,16 @@ page_title: "ciscoise_tacacs_command_sets Resource - terraform-provider-ciscoise
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on TACACSCommandSets.
-  This resource allows the client to update TACACS command sets.
-    This resource deletes TACACS command sets.
-    This resource creates TACACS command sets.
+  This resource allows the client to update TACACS command sets.This resource deletes TACACS command sets.This resource creates TACACS command sets.
 ---
 
 # ciscoise_tacacs_command_sets (Resource)
 
 It manages create, read, update and delete operations on TACACSCommandSets.
   
-  This resource allows the client to update TACACS command sets.
-  This resource deletes TACACS command sets.
-  This resource creates TACACS command sets.
+  - This resource allows the client to update TACACS command sets.
+  - This resource deletes TACACS command sets.
+  - This resource creates TACACS command sets.
 
 ## Example Usage
 

@@ -4,18 +4,16 @@ page_title: "ciscoise_downloadable_acl Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on DownloadableACL.
-  This resource allows the client to update a downloadable ACL.
-    This resource deletes a downloadable ACL.
-    This resource creates a downloadable ACL.
+  This resource allows the client to update a downloadable ACL.This resource deletes a downloadable ACL.This resource creates a downloadable ACL.
 ---
 
 # ciscoise_downloadable_acl (Resource)
 
 It manages create, read, update and delete operations on DownloadableACL.
   
-  This resource allows the client to update a downloadable ACL.
-  This resource deletes a downloadable ACL.
-  This resource creates a downloadable ACL.
+  - This resource allows the client to update a downloadable ACL.
+  - This resource deletes a downloadable ACL.
+  - This resource creates a downloadable ACL.
 
 ## Example Usage
 

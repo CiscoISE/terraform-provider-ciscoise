@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Backup And Restore.
 
-Cancels the backup job running on the node.
+- Cancels the backup job running on the node.
 
 ## Example Usage
 

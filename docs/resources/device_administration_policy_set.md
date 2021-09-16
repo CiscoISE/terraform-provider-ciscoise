@@ -4,18 +4,16 @@ page_title: "ciscoise_device_administration_policy_set Resource - terraform-prov
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Device Administration - Policy Set.
-  Device Admin Create a new policy set.
-    Device Admin Update a policy set.
-    Device Admin Delete a policy set.
+  Device Admin Create a new policy set.Device Admin Update a policy set.Device Admin Delete a policy set.
 ---
 
 # ciscoise_device_administration_policy_set (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Policy Set.
   
-  Device Admin Create a new policy set.
-  Device Admin Update a policy set.
-  Device Admin Delete a policy set.
+  - Device Admin Create a new policy set.
+  - Device Admin Update a policy set.
+  - Device Admin Delete a policy set.
 
 ## Example Usage
 

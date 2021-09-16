@@ -4,18 +4,16 @@ page_title: "ciscoise_guest_ssid Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on GuestSSID.
-  This resource allows the client to update a guest SSID by ID.
-    This resource deletes a guest SSID by ID.
-    This resource creates a guest SSID.
+  This resource allows the client to update a guest SSID by ID.This resource deletes a guest SSID by ID.This resource creates a guest SSID.
 ---
 
 # ciscoise_guest_ssid (Resource)
 
 It manages create, read, update and delete operations on GuestSSID.
   
-  This resource allows the client to update a guest SSID by ID.
-  This resource deletes a guest SSID by ID.
-  This resource creates a guest SSID.
+  - This resource allows the client to update a guest SSID by ID.
+  - This resource deletes a guest SSID by ID.
+  - This resource creates a guest SSID.
 
 ## Example Usage
 

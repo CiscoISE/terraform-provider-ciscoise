@@ -4,7 +4,7 @@ page_title: "ciscoise_sg_mapping_deploy Data Source - terraform-provider-ciscois
 subcategory: ""
 description: |-
   It performs update operation on IPToSGTMapping.
-  - This data source action allows the client to deploy an IP to SGT mapping by ID.
+  This data source action allows the client to deploy an IP to SGT mapping by ID.
   Only one Deploy process can run at any given time
 ---
 

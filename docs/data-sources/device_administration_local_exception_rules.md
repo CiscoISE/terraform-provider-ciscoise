@@ -4,16 +4,15 @@ page_title: "ciscoise_device_administration_local_exception_rules Data Source - 
 subcategory: ""
 description: |-
   It performs read operation on Device Administration - Authorization Exception Rules.
-  Device Admin Get local exception rules.
-  Device Admin Get local exception rule attributes.
+  Device Admin Get local exception rules.Device Admin Get local exception rule attributes.
 ---
 
 # ciscoise_device_administration_local_exception_rules (Data Source)
 
 It performs read operation on Device Administration - Authorization Exception Rules.
 
-Device Admin Get local exception rules.
-Device Admin Get local exception rule attributes.
+- Device Admin Get local exception rules.
+- Device Admin Get local exception rule attributes.
 
 ## Example Usage
 

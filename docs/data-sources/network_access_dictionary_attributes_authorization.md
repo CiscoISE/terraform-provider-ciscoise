@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Network Access - Dictionary Attributes List.
 
-Network Access Returns list of dictionary attributes for authorization.
+- Network Access Returns list of dictionary attributes for authorization.
 
 ## Example Usage
 

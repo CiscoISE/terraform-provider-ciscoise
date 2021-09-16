@@ -4,7 +4,7 @@ page_title: "ciscoise_active_directory_add_groups Data Source - terraform-provid
 subcategory: ""
 description: |-
   It performs update operation on ActiveDirectory.
-  - This data source action loads domain groups configuration from Active Directory into Cisco ISE.
+  This data source action loads domain groups configuration from Active Directory into Cisco ISE.
 ---
 
 # ciscoise_active_directory_add_groups (Data Source)

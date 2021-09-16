@@ -4,18 +4,16 @@ page_title: "ciscoise_device_administration_time_date_conditions Resource - terr
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Device Administration - Time/Date Conditions.
-  Device Admin Creates time/date condition.
-    Device Admin Update network condition.
-    Device Admin Delete Time/Date condition.
+  Device Admin Creates time/date condition.Device Admin Update network condition.Device Admin Delete Time/Date condition.
 ---
 
 # ciscoise_device_administration_time_date_conditions (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Time/Date Conditions.
   
-  Device Admin Creates time/date condition.
-  Device Admin Update network condition.
-  Device Admin Delete Time/Date condition.
+  - Device Admin Creates time/date condition.
+  - Device Admin Update network condition.
+  - Device Admin Delete Time/Date condition.
 
 ## Example Usage
 

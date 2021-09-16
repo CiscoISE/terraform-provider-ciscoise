@@ -4,9 +4,7 @@ page_title: "ciscoise_external_radius_server Data Source - terraform-provider-ci
 subcategory: ""
 description: |-
   It performs read operation on ExternalRADIUSServer.
-  - This data source allows the client to get an external RADIUS server by name.
-  - This data source allows the client to get an external RADIUS server by ID.
-  - This data source allows the client to get all the external RADIUS servers.
+  This data source allows the client to get an external RADIUS server by name.This data source allows the client to get an external RADIUS server by ID.This data source allows the client to get all the external RADIUS servers.
 ---
 
 # ciscoise_external_radius_server (Data Source)

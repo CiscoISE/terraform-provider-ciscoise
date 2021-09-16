@@ -4,8 +4,7 @@ page_title: "ciscoise_sg_to_vn_to_vlan Data Source - terraform-provider-ciscoise
 subcategory: ""
 description: |-
   It performs read operation on SecurityGroupToVirtualNetwork.
-  - This data source allows the client to get a security group to virtual network by ID.
-  - This data source allows the client to get all the security group ACL to virtual networks.
+  This data source allows the client to get a security group to virtual network by ID.This data source allows the client to get all the security group ACL to virtual networks.
   Filter:
   [sgtId]
   To search guest users by using

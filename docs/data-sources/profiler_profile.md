@@ -4,8 +4,7 @@ page_title: "ciscoise_profiler_profile Data Source - terraform-provider-ciscoise
 subcategory: ""
 description: |-
   It performs read operation on ProfilerProfile.
-  - This data source allows the client to get a profiler profile by ID.
-  - This data source allows the client to get all the profiler profiles.
+  This data source allows the client to get a profiler profile by ID.This data source allows the client to get all the profiler profiles.
   Filter:
   [name]
   Sorting:

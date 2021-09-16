@@ -4,8 +4,7 @@ page_title: "ciscoise_radius_server_sequence Data Source - terraform-provider-ci
 subcategory: ""
 description: |-
   It performs read operation on RADIUSServerSequence.
-  - This data source allows the client to get a RADIUS server sequence by ID.
-  - This data source allows the client to get all the RADIUS server sequences.
+  This data source allows the client to get a RADIUS server sequence by ID.This data source allows the client to get all the RADIUS server sequences.
 ---
 
 # ciscoise_radius_server_sequence (Data Source)

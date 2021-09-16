@@ -4,18 +4,16 @@ page_title: "ciscoise_device_administration_authentication_rules Resource - terr
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Device Administration - Authentication Rules.
-  Device Admin Create authentication rule.
-    Device Admin Update rule.
-    Device Admin Delete rule.
+  Device Admin Create authentication rule.Device Admin Update rule.Device Admin Delete rule.
 ---
 
 # ciscoise_device_administration_authentication_rules (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Authentication Rules.
   
-  Device Admin Create authentication rule.
-  Device Admin Update rule.
-  Device Admin Delete rule.
+  - Device Admin Create authentication rule.
+  - Device Admin Update rule.
+  - Device Admin Delete rule.
 
 ## Example Usage
 

@@ -13,15 +13,14 @@ description: |-
   or dynamically built conditions which are not stored in the conditions Library, using models
     ConditionAttributes, ConditionAndBlock, ConditionOrBlock
     .
-  Network Access Update local exception rule.
-    Network Access Delete local exception rule.
+  Network Access Update local exception rule.Network Access Delete local exception rule.
 ---
 
 # ciscoise_network_access_local_exception_rules (Resource)
 
 It manages create, read, update and delete operations on Network Access - Authorization Exception Rules.
   
-  Network Access Create local authorization exception rule:
+  - Network Access Create local authorization exception rule:
   
   
   
@@ -42,8 +41,8 @@ It manages create, read, update and delete operations on Network Access - Author
   
   
   
-  Network Access Update local exception rule.
-  Network Access Delete local exception rule.
+  - Network Access Update local exception rule.
+  - Network Access Delete local exception rule.
 
 ## Example Usage
 

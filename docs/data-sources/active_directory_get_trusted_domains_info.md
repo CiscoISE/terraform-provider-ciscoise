@@ -4,7 +4,7 @@ page_title: "ciscoise_active_directory_get_trusted_domains_info Data Source - te
 subcategory: ""
 description: |-
   It performs update operation on ActiveDirectory.
-  - This data source action gets the list of domains that are accessible through the given join point via trust
+  This data source action gets the list of domains that are accessible through the given join point via trust
   relationships.
 ---
 

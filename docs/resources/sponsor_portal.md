@@ -4,18 +4,16 @@ page_title: "ciscoise_sponsor_portal Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SponsorPortal.
-  This resource allows the client to update a sponsor portal by ID.
-    This resource deletes a sponsor portal by ID.
-    This resource creates a sponsor portal.
+  This resource allows the client to update a sponsor portal by ID.This resource deletes a sponsor portal by ID.This resource creates a sponsor portal.
 ---
 
 # ciscoise_sponsor_portal (Resource)
 
 It manages create, read, update and delete operations on SponsorPortal.
   
-  This resource allows the client to update a sponsor portal by ID.
-  This resource deletes a sponsor portal by ID.
-  This resource creates a sponsor portal.
+  - This resource allows the client to update a sponsor portal by ID.
+  - This resource deletes a sponsor portal by ID.
+  - This resource creates a sponsor portal.
 
 ## Example Usage
 

@@ -4,8 +4,7 @@ page_title: "ciscoise_support_bundle_status Data Source - terraform-provider-cis
 subcategory: ""
 description: |-
   It performs read operation on SupportBundleStatus.
-  - This data source allows the client to get a support bundle status by ID.
-  - This data source allows the client to get all the support bundle status.
+  This data source allows the client to get a support bundle status by ID.This data source allows the client to get all the support bundle status.
 ---
 
 # ciscoise_support_bundle_status (Data Source)

@@ -4,7 +4,7 @@ page_title: "ciscoise_sg_acl_bulk_monitor_status Data Source - terraform-provide
 subcategory: ""
 description: |-
   It performs read operation on SecurityGroupsACLs.
-  - This data source allows the client to monitor the bulk request.
+  This data source allows the client to monitor the bulk request.
 ---
 
 # ciscoise_sg_acl_bulk_monitor_status (Data Source)

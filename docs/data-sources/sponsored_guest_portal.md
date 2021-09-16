@@ -4,8 +4,7 @@ page_title: "ciscoise_sponsored_guest_portal Data Source - terraform-provider-ci
 subcategory: ""
 description: |-
   It performs read operation on SponsoredGuestPortal.
-  - This data source allows the client to get a sponsored guest portal by ID.
-  - This data source allows the client to get all the sponsored guest portals.
+  This data source allows the client to get a sponsored guest portal by ID.This data source allows the client to get all the sponsored guest portals.
   Filter:
   [name, description]
   Sorting:

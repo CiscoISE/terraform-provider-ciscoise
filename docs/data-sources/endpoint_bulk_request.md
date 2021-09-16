@@ -4,7 +4,7 @@ page_title: "ciscoise_endpoint_bulk_request Data Source - terraform-provider-cis
 subcategory: ""
 description: |-
   It performs update operation on endpoint.
-  - This data source action allows the client to submit the bulk request.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_endpoint_bulk_request (Data Source)

@@ -4,7 +4,7 @@ page_title: "ciscoise_sponsor_group_member Data Source - terraform-provider-cisc
 subcategory: ""
 description: |-
   It performs read operation on SponsorGroupMember.
-  - This data source allows the client to get all the sponsor group members.
+  This data source allows the client to get all the sponsor group members.
   Filter:
   [name]
   Sorting:

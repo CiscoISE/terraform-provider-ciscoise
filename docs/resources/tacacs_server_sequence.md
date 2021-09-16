@@ -4,18 +4,16 @@ page_title: "ciscoise_tacacs_server_sequence Resource - terraform-provider-cisco
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on TacacsServerSequence.
-  This resource allows the client to update a TACACS server sequence.
-    This resource deletes a TACACS server sequence.
-    This resource creates a TACACS server sequence.
+  This resource allows the client to update a TACACS server sequence.This resource deletes a TACACS server sequence.This resource creates a TACACS server sequence.
 ---
 
 # ciscoise_tacacs_server_sequence (Resource)
 
 It manages create, read, update and delete operations on TacacsServerSequence.
   
-  This resource allows the client to update a TACACS server sequence.
-  This resource deletes a TACACS server sequence.
-  This resource creates a TACACS server sequence.
+  - This resource allows the client to update a TACACS server sequence.
+  - This resource deletes a TACACS server sequence.
+  - This resource creates a TACACS server sequence.
 
 ## Example Usage
 

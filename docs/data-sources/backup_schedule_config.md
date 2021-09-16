@@ -4,7 +4,7 @@ page_title: "ciscoise_backup_schedule_config Data Source - terraform-provider-ci
 subcategory: ""
 description: |-
   It performs create operation on Backup And Restore.
-  Schedules the configuration backup on the ISE node as per the input parameters. - This data source action helps in
+  Schedules the configuration backup on the ISE node as per the input parameters. This data source action helps in
   creating the schedule for the first time.
 ---
 
@@ -12,7 +12,7 @@ description: |-
 
 It performs create operation on Backup And Restore.
 
-Schedules the configuration backup on the ISE node as per the input parameters. - This data source action helps in
+- Schedules the configuration backup on the ISE node as per the input parameters. This data source action helps in
 creating the schedule for the first time.
 
 ## Example Usage

@@ -4,18 +4,16 @@ page_title: "ciscoise_network_access_dictionary_attribute Resource - terraform-p
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Network Access - Dictionary Attribute.
-  Create a new Dictionary Attribute for an existing Dictionary.
-    Update a Dictionary Attribute
-    Delete a Dictionary Attribute.
+  Create a new Dictionary Attribute for an existing Dictionary.Update a Dictionary AttributeDelete a Dictionary Attribute.
 ---
 
 # ciscoise_network_access_dictionary_attribute (Resource)
 
 It manages create, read, update and delete operations on Network Access - Dictionary Attribute.
   
-  Create a new Dictionary Attribute for an existing Dictionary.
-  Update a Dictionary Attribute
-  Delete a Dictionary Attribute.
+  - Create a new Dictionary Attribute for an existing Dictionary.
+  - Update a Dictionary Attribute
+  - Delete a Dictionary Attribute.
 
 ## Example Usage
 

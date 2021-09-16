@@ -4,16 +4,15 @@ page_title: "ciscoise_network_access_policy_set Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Policy Set.
-  Get all network access policy sets.
-  Network Access Get policy set attributes.
+  Get all network access policy sets.Network Access Get policy set attributes.
 ---
 
 # ciscoise_network_access_policy_set (Data Source)
 
 It performs read operation on Network Access - Policy Set.
 
-Get all network access policy sets.
-Network Access Get policy set attributes.
+- Get all network access policy sets.
+- Network Access Get policy set attributes.
 
 ## Example Usage
 

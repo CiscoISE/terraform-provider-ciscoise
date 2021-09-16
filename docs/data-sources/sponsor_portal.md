@@ -4,8 +4,7 @@ page_title: "ciscoise_sponsor_portal Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on SponsorPortal.
-  - This data source allows the client to get a sponsor portal by ID.
-  - This data source allows the client to get all the sponsor portals.
+  This data source allows the client to get a sponsor portal by ID.This data source allows the client to get all the sponsor portals.
   Filter:
   [name, description]
   Sorting:

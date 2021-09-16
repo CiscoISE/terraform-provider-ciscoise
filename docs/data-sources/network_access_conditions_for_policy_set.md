@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Network Access - Conditions.
 
-Network Access Returns list of library conditions for PolicySet scope.
+- Network Access Returns list of library conditions for PolicySet scope.
 
 ## Example Usage
 

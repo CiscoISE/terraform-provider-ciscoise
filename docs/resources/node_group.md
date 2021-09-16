@@ -5,19 +5,18 @@ subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Node Group.
   Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
-    pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
-    API updates an existing node group in the system.
-    Developers need to delete node group in the system.
+  pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
+  API updates an existing node group in the system.Developers need to delete node group in the system.
 ---
 
 # ciscoise_node_group (Resource)
 
 It manages create, read, update and delete operations on Node Group.
   
-  Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
+  - Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
   pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
   API updates an existing node group in the system.
-  Developers need to delete node group in the system.
+  - Developers need to delete node group in the system.
 
 ## Example Usage
 

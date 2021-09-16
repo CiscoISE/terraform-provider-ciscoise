@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on VersionInfo.
 
-Get all VersionInfo
+- Get all VersionInfo
 
 ## Example Usage
 

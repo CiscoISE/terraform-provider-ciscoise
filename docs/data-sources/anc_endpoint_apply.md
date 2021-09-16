@@ -4,7 +4,7 @@ page_title: "ciscoise_anc_endpoint_apply Data Source - terraform-provider-ciscoi
 subcategory: ""
 description: |-
   It performs update operation on ANCEndpoint.
-  - This data source action allows the client to apply the required configuration.
+  This data source action allows the client to apply the required configuration.
 ---
 
 # ciscoise_anc_endpoint_apply (Data Source)

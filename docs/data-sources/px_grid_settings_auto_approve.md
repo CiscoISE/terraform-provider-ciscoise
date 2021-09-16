@@ -4,7 +4,7 @@ page_title: "ciscoise_px_grid_settings_auto_approve Data Source - terraform-prov
 subcategory: ""
 description: |-
   It performs update operation on PxGridSettings.
-  - This data source action allows the client to auto approve the pxGrid settings.
+  This data source action allows the client to auto approve the pxGrid settings.
 ---
 
 # ciscoise_px_grid_settings_auto_approve (Data Source)

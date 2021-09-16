@@ -4,18 +4,16 @@ page_title: "ciscoise_sg_acl Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SecurityGroupsACLs.
-  This resource allows the client to update a security group ACL.
-    This resource deletes a security group ACL.
-    This resource creates a security group ACL.
+  This resource allows the client to update a security group ACL.This resource deletes a security group ACL.This resource creates a security group ACL.
 ---
 
 # ciscoise_sg_acl (Resource)
 
 It manages create, read, update and delete operations on SecurityGroupsACLs.
   
-  This resource allows the client to update a security group ACL.
-  This resource deletes a security group ACL.
-  This resource creates a security group ACL.
+  - This resource allows the client to update a security group ACL.
+  - This resource deletes a security group ACL.
+  - This resource creates a security group ACL.
 
 ## Example Usage
 

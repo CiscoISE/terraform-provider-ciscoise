@@ -4,9 +4,7 @@ page_title: "ciscoise_rest_id_store Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on RESTIDStore.
-  - This data source allows the client to get a REST ID store by name.
-  - This data source allows the client to get a REST ID store by ID.
-  - This data source allows the client to get all the REST ID stores.
+  This data source allows the client to get a REST ID store by name.This data source allows the client to get a REST ID store by ID.This data source allows the client to get all the REST ID stores.
   Filter:
   [name]
   Sorting:

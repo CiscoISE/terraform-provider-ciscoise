@@ -4,18 +4,16 @@ page_title: "ciscoise_sxp_connections Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SXPConnections.
-  This resource allows the client to update a SXP connection.
-    This resource deletes a SXP connection.
-    This resource creates a SXP connection.
+  This resource allows the client to update a SXP connection.This resource deletes a SXP connection.This resource creates a SXP connection.
 ---
 
 # ciscoise_sxp_connections (Resource)
 
 It manages create, read, update and delete operations on SXPConnections.
   
-  This resource allows the client to update a SXP connection.
-  This resource deletes a SXP connection.
-  This resource creates a SXP connection.
+  - This resource allows the client to update a SXP connection.
+  - This resource deletes a SXP connection.
+  - This resource creates a SXP connection.
 
 ## Example Usage
 

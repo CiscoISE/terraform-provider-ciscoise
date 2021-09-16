@@ -4,16 +4,15 @@ page_title: "ciscoise_network_access_authentication_rules Data Source - terrafor
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Authentication Rules.
-  Network Access Get authentication rules.
-  Network Access Get rule attributes.
+  Network Access Get authentication rules.Network Access Get rule attributes.
 ---
 
 # ciscoise_network_access_authentication_rules (Data Source)
 
 It performs read operation on Network Access - Authentication Rules.
 
-Network Access Get authentication rules.
-Network Access Get rule attributes.
+- Network Access Get authentication rules.
+- Network Access Get rule attributes.
 
 ## Example Usage
 

@@ -4,8 +4,7 @@ page_title: "ciscoise_guest_location Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on GuestLocation.
-  - This data source allows the client to get a guest location by ID.
-  - This data source allows the client to get all the guest locations.
+  This data source allows the client to get a guest location by ID.This data source allows the client to get all the guest locations.
   Filter:
   [name]
   Sorting:

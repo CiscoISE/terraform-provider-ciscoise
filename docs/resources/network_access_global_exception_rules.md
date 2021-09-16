@@ -14,8 +14,7 @@ description: |-
   or dynamically built conditions which are not stored in the conditions Library, using models
     ConditionAttributes, ConditionAndBlock, ConditionOrBlock
     .
-  Network Access Update global exception authorization rule.
-    Network Access Delete global exception authorization rule.
+  Network Access Update global exception authorization rule.Network Access Delete global exception authorization rule.
 ---
 
 # ciscoise_network_access_global_exception_rules (Resource)
@@ -23,7 +22,7 @@ description: |-
 It manages create, read, update and delete operations on Network Access - Authorization Global Exception
   Rules.
   
-  Network Access Create global exception authorization rule:
+  - Network Access Create global exception authorization rule:
   
   
   
@@ -44,8 +43,8 @@ It manages create, read, update and delete operations on Network Access - Author
   
   
   
-  Network Access Update global exception authorization rule.
-  Network Access Delete global exception authorization rule.
+  - Network Access Update global exception authorization rule.
+  - Network Access Delete global exception authorization rule.
 
 ## Example Usage
 

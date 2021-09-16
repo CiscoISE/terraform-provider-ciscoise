@@ -4,18 +4,16 @@ page_title: "ciscoise_endpoint_group Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on EndpointIdentityGroup.
-  This resource allows the client to update an endpoint identity group.
-    This resource deletes an endpoint identity group.
-    This resource creates an endpoint identity group.
+  This resource allows the client to update an endpoint identity group.This resource deletes an endpoint identity group.This resource creates an endpoint identity group.
 ---
 
 # ciscoise_endpoint_group (Resource)
 
 It manages create, read, update and delete operations on EndpointIdentityGroup.
   
-  This resource allows the client to update an endpoint identity group.
-  This resource deletes an endpoint identity group.
-  This resource creates an endpoint identity group.
+  - This resource allows the client to update an endpoint identity group.
+  - This resource deletes an endpoint identity group.
+  - This resource creates an endpoint identity group.
 
 ## Example Usage
 

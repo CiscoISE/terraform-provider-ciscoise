@@ -4,18 +4,16 @@ page_title: "ciscoise_device_administration_conditions Data Source - terraform-p
 subcategory: ""
 description: |-
   It performs read operation on Device Administration - Conditions.
-  Device Admin Returns list of library conditions.
-  Device Admin Returns a library condition.
-  Device Admin Returns a library condition.
+  Device Admin Returns list of library conditions.Device Admin Returns a library condition.Device Admin Returns a library condition.
 ---
 
 # ciscoise_device_administration_conditions (Data Source)
 
 It performs read operation on Device Administration - Conditions.
 
-Device Admin Returns list of library conditions.
-Device Admin Returns a library condition.
-Device Admin Returns a library condition.
+- Device Admin Returns list of library conditions.
+- Device Admin Returns a library condition.
+- Device Admin Returns a library condition.
 
 ## Example Usage
 

@@ -12,7 +12,7 @@ description: |-
 
 It performs create operation on Backup And Restore.
 
-Triggers on demand configuration backup on the ISE node. The API returns the task ID. Use the Task Service status API to
+- Triggers on demand configuration backup on the ISE node. The API returns the task ID. Use the Task Service status API to
 get the status of the backup job.
 
 ## Example Usage

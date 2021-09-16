@@ -4,7 +4,7 @@ page_title: "ciscoise_network_device_bulk_request Data Source - terraform-provid
 subcategory: ""
 description: |-
   It performs update operation on NetworkDevice.
-  - This data source action allows the client to submit the bulk request.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_network_device_bulk_request (Data Source)

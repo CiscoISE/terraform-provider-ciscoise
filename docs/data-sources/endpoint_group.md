@@ -4,9 +4,7 @@ page_title: "ciscoise_endpoint_group Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on EndpointIdentityGroup.
-  - This data source allows the client to get an endpoint identity group by name.
-  - This data source allows the client to get an endpoint identity group by ID.
-  - This data source allows the client to get all the endpoint identity groups.
+  This data source allows the client to get an endpoint identity group by name.This data source allows the client to get an endpoint identity group by ID.This data source allows the client to get all the endpoint identity groups.
   Filter:
   [name]
   Sorting:

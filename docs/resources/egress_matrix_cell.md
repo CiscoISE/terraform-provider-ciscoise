@@ -4,18 +4,16 @@ page_title: "ciscoise_egress_matrix_cell Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on EgressMatrixCell.
-  This resource allows the client to update an egress matrix cell.
-    This resource deletes an egress matrix cell.
-    This resource creates an egress matrix cell.
+  This resource allows the client to update an egress matrix cell.This resource deletes an egress matrix cell.This resource creates an egress matrix cell.
 ---
 
 # ciscoise_egress_matrix_cell (Resource)
 
 It manages create, read, update and delete operations on EgressMatrixCell.
   
-  This resource allows the client to update an egress matrix cell.
-  This resource deletes an egress matrix cell.
-  This resource creates an egress matrix cell.
+  - This resource allows the client to update an egress matrix cell.
+  - This resource deletes an egress matrix cell.
+  - This resource creates an egress matrix cell.
 
 ## Example Usage
 

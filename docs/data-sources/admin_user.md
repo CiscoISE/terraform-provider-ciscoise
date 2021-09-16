@@ -4,8 +4,7 @@ page_title: "ciscoise_admin_user Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on AdminUser.
-  - This data source allows the client to get an admin user by ID.
-  - This data source allows the client to get all the admin users.
+  This data source allows the client to get an admin user by ID.This data source allows the client to get all the admin users.
   Filter:
   [firstName, lastName, adminGroups, name, description, inactiveAccountNeverDisabled, includeSystemAlarmsInEmail, email,
   enabled]

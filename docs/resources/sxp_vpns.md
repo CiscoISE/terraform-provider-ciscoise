@@ -4,16 +4,15 @@ page_title: "ciscoise_sxp_vpns Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read and delete operations on SXPVPNs.
-  This resource deletes a SXP VPN.
-    This resource creates a SXP VPN.
+  This resource deletes a SXP VPN.This resource creates a SXP VPN.
 ---
 
 # ciscoise_sxp_vpns (Resource)
 
 It manages create, read and delete operations on SXPVPNs.
   
-  This resource deletes a SXP VPN.
-  This resource creates a SXP VPN.
+  - This resource deletes a SXP VPN.
+  - This resource creates a SXP VPN.
 
 ## Example Usage
 

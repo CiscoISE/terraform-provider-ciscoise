@@ -4,16 +4,15 @@ page_title: "ciscoise_guest_smtp_notification_settings Resource - terraform-prov
 subcategory: ""
 description: |-
   It manages create, read and update operations on GuestSMTPNotificationConfiguration.
-  This resource allows the client to update a SMTP configuration setting.
-    This resource creates a guest SMTP notification configuration.
+  This resource allows the client to update a SMTP configuration setting.This resource creates a guest SMTP notification configuration.
 ---
 
 # ciscoise_guest_smtp_notification_settings (Resource)
 
 It manages create, read and update operations on GuestSMTPNotificationConfiguration.
   
-  This resource allows the client to update a SMTP configuration setting.
-  This resource creates a guest SMTP notification configuration.
+  - This resource allows the client to update a SMTP configuration setting.
+  - This resource creates a guest SMTP notification configuration.
 
 ## Example Usage
 

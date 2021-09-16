@@ -4,7 +4,7 @@ page_title: "ciscoise_anc_endpoint_bulk_request Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs update operation on ANCEndpoint.
-  - This data source action allows the client to submit the bulk request.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_anc_endpoint_bulk_request (Data Source)

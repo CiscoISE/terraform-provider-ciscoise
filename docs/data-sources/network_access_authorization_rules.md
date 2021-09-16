@@ -4,16 +4,15 @@ page_title: "ciscoise_network_access_authorization_rules Data Source - terraform
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Authorization Rules.
-  Network Access Get authorization rules.
-  Network Access Get authorization rule attributes.
+  Network Access Get authorization rules.Network Access Get authorization rule attributes.
 ---
 
 # ciscoise_network_access_authorization_rules (Data Source)
 
 It performs read operation on Network Access - Authorization Rules.
 
-Network Access Get authorization rules.
-Network Access Get authorization rule attributes.
+- Network Access Get authorization rules.
+- Network Access Get authorization rule attributes.
 
 ## Example Usage
 

@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Certificates.
 
-The response of this API carries a CSR corresponding to the requested ID
+- The response of this API carries a CSR corresponding to the requested ID
 
 ## Example Usage
 

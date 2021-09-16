@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Network Access - Policy Set.
 
-Network Access Reset HitCount for PolicySets
+- Network Access Reset HitCount for PolicySets
 
 ## Example Usage
 

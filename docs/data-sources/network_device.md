@@ -4,9 +4,7 @@ page_title: "ciscoise_network_device Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on NetworkDevice.
-  - This data source allows the client to get a network device by name.
-  - This data source allows the client to get a network device by ID.
-  - This data source allows the client to get all the network devices.
+  This data source allows the client to get a network device by name.This data source allows the client to get a network device by ID.This data source allows the client to get all the network devices.
   Filter:
   [ipaddress, name, description, location, type]
   Sorting:

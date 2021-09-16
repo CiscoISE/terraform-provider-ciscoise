@@ -4,9 +4,7 @@ page_title: "ciscoise_session_service_node Data Source - terraform-provider-cisc
 subcategory: ""
 description: |-
   It performs read operation on PsnNodeDetailsWithRadiusService.
-  - This data source allows the client to get a PSN node details by name.
-  - This data source allows the client to get a PSN node details by ID.
-  - This data source allows the client to get all the PSN node details.
+  This data source allows the client to get a PSN node details by name.This data source allows the client to get a PSN node details by ID.This data source allows the client to get all the PSN node details.
 ---
 
 # ciscoise_session_service_node (Data Source)

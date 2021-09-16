@@ -4,18 +4,16 @@ page_title: "ciscoise_sponsor_group Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on SponsorGroup.
-  This resource allows the client to update a sponsor group by ID.
-    This resource deletes a sponsor group by ID.
-    This resource creates a sponsor group.
+  This resource allows the client to update a sponsor group by ID.This resource deletes a sponsor group by ID.This resource creates a sponsor group.
 ---
 
 # ciscoise_sponsor_group (Resource)
 
 It manages create, read, update and delete operations on SponsorGroup.
   
-  This resource allows the client to update a sponsor group by ID.
-  This resource deletes a sponsor group by ID.
-  This resource creates a sponsor group.
+  - This resource allows the client to update a sponsor group by ID.
+  - This resource deletes a sponsor group by ID.
+  - This resource creates a sponsor group.
 
 ## Example Usage
 

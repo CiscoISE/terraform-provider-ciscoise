@@ -4,18 +4,16 @@ page_title: "ciscoise_sg_mapping Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on IPToSGTMapping.
-  This resource allows the client to update an IP to SGT mapping by ID.
-    This resource deletes an IP to SGT mapping.
-    This resource creates an IP to SGT mapping.
+  This resource allows the client to update an IP to SGT mapping by ID.This resource deletes an IP to SGT mapping.This resource creates an IP to SGT mapping.
 ---
 
 # ciscoise_sg_mapping (Resource)
 
 It manages create, read, update and delete operations on IPToSGTMapping.
   
-  This resource allows the client to update an IP to SGT mapping by ID.
-  This resource deletes an IP to SGT mapping.
-  This resource creates an IP to SGT mapping.
+  - This resource allows the client to update an IP to SGT mapping by ID.
+  - This resource deletes an IP to SGT mapping.
+  - This resource creates an IP to SGT mapping.
 
 ## Example Usage
 

@@ -11,7 +11,7 @@ description: |-
 
 It manages read and update operations on PortalGlobalSetting.
   
-  This resource allows the client to update the portal global settings by id.
+  - This resource allows the client to update the portal global settings by id.
 
 ## Example Usage
 

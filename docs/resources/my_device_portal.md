@@ -4,18 +4,16 @@ page_title: "ciscoise_my_device_portal Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on MyDevicePortal.
-  This resource allows the client to update a my device portal by ID.
-    This resource deletes a my device portal by ID.
-    This resource creates a my device portal.
+  This resource allows the client to update a my device portal by ID.This resource deletes a my device portal by ID.This resource creates a my device portal.
 ---
 
 # ciscoise_my_device_portal (Resource)
 
 It manages create, read, update and delete operations on MyDevicePortal.
   
-  This resource allows the client to update a my device portal by ID.
-  This resource deletes a my device portal by ID.
-  This resource creates a my device portal.
+  - This resource allows the client to update a my device portal by ID.
+  - This resource deletes a my device portal by ID.
+  - This resource creates a my device portal.
 
 ## Example Usage
 

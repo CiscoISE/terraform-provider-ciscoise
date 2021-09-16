@@ -5,9 +5,7 @@ subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Device Administration - Authorization Global
     Exception Rules.
-  Device Admin Create global exception authorization rule.
-    Device Admin Update global exception authorization rule.
-    Device Admin Delete global exception authorization rule.
+  Device Admin Create global exception authorization rule.Device Admin Update global exception authorization rule.Device Admin Delete global exception authorization rule.
 ---
 
 # ciscoise_device_administration_global_exception_rules (Resource)
@@ -15,9 +13,9 @@ description: |-
 It manages create, read, update and delete operations on Device Administration - Authorization Global
   Exception Rules.
   
-  Device Admin Create global exception authorization rule.
-  Device Admin Update global exception authorization rule.
-  Device Admin Delete global exception authorization rule.
+  - Device Admin Create global exception authorization rule.
+  - Device Admin Update global exception authorization rule.
+  - Device Admin Delete global exception authorization rule.
 
 ## Example Usage
 

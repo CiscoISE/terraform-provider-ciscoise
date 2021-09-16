@@ -4,11 +4,16 @@ page_title: "ciscoise_telemetry_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on TelemetryInformation.
-  - This data source allows the client to get telemetry information by ID.
-  - This data source allows the client to get all the telemetry information.
+  This data source allows the client to get telemetry information by ID.This data source allows the client to get all the telemetry information.
   Filter:
   [deploymentId]
-
+  To search resources by using
+  toDate
+   column,follow the format:
+  DD-MON-YY (Example:13-SEP-18)
+  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 ---
 
 # ciscoise_telemetry_info (Data Source)
@@ -21,6 +26,20 @@ It performs read operation on TelemetryInformation.
 Filter:
 
 [deploymentId]
+
+To search resources by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
 ## Example Usage
 
 ```terraform
