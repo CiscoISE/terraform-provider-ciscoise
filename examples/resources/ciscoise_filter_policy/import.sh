@@ -1,0 +1,1 @@
+terraform import ciscoise_filter_policy.example "id=string"

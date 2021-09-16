@@ -1,0 +1,1 @@
+terraform import ciscoise_sgt.example "id=string"

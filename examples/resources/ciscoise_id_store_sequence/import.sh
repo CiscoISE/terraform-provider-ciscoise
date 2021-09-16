@@ -1,0 +1,1 @@
+terraform import ciscoise_id_store_sequence.example "id=string/name=string"

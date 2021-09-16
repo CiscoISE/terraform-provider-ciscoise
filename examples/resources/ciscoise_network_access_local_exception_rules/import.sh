@@ -1,0 +1,1 @@
+terraform import ciscoise_network_access_local_exception_rules.example "id=string/policy_id=string"

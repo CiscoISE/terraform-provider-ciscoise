@@ -1,0 +1,1 @@
+terraform import ciscoise_downloadable_acl.example "id=string"

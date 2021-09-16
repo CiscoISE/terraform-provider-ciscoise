@@ -1,0 +1,1 @@
+terraform import ciscoise_sponsor_group.example "id=string"

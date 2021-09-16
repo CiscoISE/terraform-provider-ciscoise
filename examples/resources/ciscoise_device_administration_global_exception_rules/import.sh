@@ -1,0 +1,1 @@
+terraform import ciscoise_device_administration_global_exception_rules.example "id=string"

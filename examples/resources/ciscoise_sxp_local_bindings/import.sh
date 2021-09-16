@@ -1,0 +1,1 @@
+terraform import ciscoise_sxp_local_bindings.example "id=string"
