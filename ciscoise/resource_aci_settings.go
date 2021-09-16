@@ -198,7 +198,10 @@ func resourceAciSettingsUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 	var diags diag.Diagnostics
 
-	var vvID string
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vID, _ := resourceMap["id"]
+	vvID := vID
 	if d.HasChange("item") {
 		log.Printf("[DEBUG] vvID %s", vvID)
 		request1 := expandRequestAciSettingsUpdateAciSettingsByID(ctx, "item.0", d)
