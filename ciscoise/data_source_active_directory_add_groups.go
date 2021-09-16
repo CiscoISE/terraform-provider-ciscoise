@@ -18,7 +18,7 @@ func dataSourceActiveDirectoryAddGroups() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
 
-This data source action loads domain groups configuration from Active Directory into Cisco ISE.`,
+- This data source action loads domain groups configuration from Active Directory into Cisco ISE.`,
 
 		ReadContext: dataSourceActiveDirectoryAddGroupsRead,
 		Schema: map[string]*schema.Schema{

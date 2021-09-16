@@ -14,7 +14,7 @@ func dataSourceNetworkDeviceBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on NetworkDevice.
 
-This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.`,
 
 		ReadContext: dataSourceNetworkDeviceBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{

@@ -4,14 +4,14 @@ page_title: "ciscoise_sxp_local_bindings_bulk_monitor_status Data Source - terra
 subcategory: ""
 description: |-
   It performs read operation on SXPLocalBindings.
-  This data source allows the client to monitor the bulk request.
+  - This data source allows the client to monitor the bulk request.
 ---
 
 # ciscoise_sxp_local_bindings_bulk_monitor_status (Data Source)
 
 It performs read operation on SXPLocalBindings.
 
-This data source allows the client to monitor the bulk request.
+- This data source allows the client to monitor the bulk request.
 
 ## Example Usage
 

@@ -18,7 +18,7 @@ func dataSourceGuestUserChangeSponsorPassword() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on GuestUser.
 
-This data source action allows the client to change the sponsor password.`,
+- This data source action allows the client to change the sponsor password.`,
 
 		ReadContext: dataSourceGuestUserChangeSponsorPasswordRead,
 		Schema: map[string]*schema.Schema{

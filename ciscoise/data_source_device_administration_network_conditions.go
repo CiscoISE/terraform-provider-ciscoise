@@ -14,8 +14,8 @@ func dataSourceDeviceAdministrationNetworkConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Network Conditions.
 
-Device Admin Returns a list of network conditions.
-Device Admin Returns a network condition.`,
+- Device Admin Returns a list of network conditions.
+- Device Admin Returns a network condition.`,
 
 		ReadContext: dataSourceDeviceAdministrationNetworkConditionsRead,
 		Schema: map[string]*schema.Schema{

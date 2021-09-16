@@ -14,9 +14,9 @@ func dataSourceAllowedProtocols() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on AllowedProtocols.
 
-This data source allows the client to get an allowed protocol by name.
-This data source allows the client to get an allowed protocol by ID.
-This data source allows the client to get all the allowed protocols.`,
+- This data source allows the client to get an allowed protocol by name.
+- This data source allows the client to get an allowed protocol by ID.
+- This data source allows the client to get all the allowed protocols.`,
 
 		ReadContext: dataSourceAllowedProtocolsRead,
 		Schema: map[string]*schema.Schema{

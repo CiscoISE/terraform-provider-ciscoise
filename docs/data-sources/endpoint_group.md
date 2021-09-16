@@ -4,18 +4,11 @@ page_title: "ciscoise_endpoint_group Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on EndpointIdentityGroup.
-  This data source allows the client to get an endpoint identity group by name.
-  This data source allows the client to get an endpoint identity group by ID.
-  This data source allows the client to get all the endpoint identity groups.
+  - This data source allows the client to get an endpoint identity group by name.
+  - This data source allows the client to get an endpoint identity group by ID.
+  - This data source allows the client to get all the endpoint identity groups.
   Filter:
   [name]
-  To search resources by using
-  toDate
-   column,follow the format:
-  DD-MON-YY (Example:13-SEP-18)
-  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
   Sorting:
   [name, description]
 ---
@@ -24,27 +17,13 @@ description: |-
 
 It performs read operation on EndpointIdentityGroup.
 
-This data source allows the client to get an endpoint identity group by name.
-This data source allows the client to get an endpoint identity group by ID.
-This data source allows the client to get all the endpoint identity groups.
+- This data source allows the client to get an endpoint identity group by name.
+- This data source allows the client to get an endpoint identity group by ID.
+- This data source allows the client to get all the endpoint identity groups.
 
 Filter:
 
 [name]
-
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
-
 
 Sorting:
 

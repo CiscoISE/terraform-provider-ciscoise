@@ -17,7 +17,7 @@ func dataSourceEndpointRegister() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on endpoint.
 
-This data source action allows the client to register an endpoint.`,
+- This data source action allows the client to register an endpoint.`,
 
 		ReadContext: dataSourceEndpointRegisterRead,
 		Schema: map[string]*schema.Schema{

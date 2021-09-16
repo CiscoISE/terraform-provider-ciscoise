@@ -14,8 +14,8 @@ func dataSourceFilterPolicy() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on FilterPolicy.
 
-This data source allows the client to get a filter policy by ID.
-This data source allows the client to get all the filter policies.`,
+- This data source allows the client to get a filter policy by ID.
+- This data source allows the client to get all the filter policies.`,
 
 		ReadContext: dataSourceFilterPolicyRead,
 		Schema: map[string]*schema.Schema{

@@ -14,8 +14,8 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Policy Set.
 
-Device Admin List of policy sets.
-Device Admin Get policy set attributes.`,
+- Device Admin List of policy sets.
+- Device Admin Get policy set attributes.`,
 
 		ReadContext: dataSourceDeviceAdministrationPolicySetRead,
 		Schema: map[string]*schema.Schema{

@@ -14,8 +14,8 @@ func dataSourceSupportBundleStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on SupportBundleStatus.
 
-This data source allows the client to get a support bundle status by ID.
-This data source allows the client to get all the support bundle status.`,
+- This data source allows the client to get a support bundle status by ID.
+- This data source allows the client to get all the support bundle status.`,
 
 		ReadContext: dataSourceSupportBundleStatusRead,
 		Schema: map[string]*schema.Schema{

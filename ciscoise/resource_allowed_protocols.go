@@ -15,9 +15,9 @@ func resourceAllowedProtocols() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on AllowedProtocols.
   
-  This resource allows the client to update an allowed protocol.
-  This resource deletes an allowed protocol.
-  This resource creates an allowed protocol.`,
+  - This resource allows the client to update an allowed protocol.
+  - This resource deletes an allowed protocol.
+  - This resource creates an allowed protocol.`,
 
 		CreateContext: resourceAllowedProtocolsCreate,
 		ReadContext:   resourceAllowedProtocolsRead,

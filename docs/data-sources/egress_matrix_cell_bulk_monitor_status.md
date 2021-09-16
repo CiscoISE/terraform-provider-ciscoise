@@ -4,14 +4,14 @@ page_title: "ciscoise_egress_matrix_cell_bulk_monitor_status Data Source - terra
 subcategory: ""
 description: |-
   It performs read operation on EgressMatrixCell.
-  This data source allows the client to monitor the bulk request.
+  - This data source allows the client to monitor the bulk request.
 ---
 
 # ciscoise_egress_matrix_cell_bulk_monitor_status (Data Source)
 
 It performs read operation on EgressMatrixCell.
 
-This data source allows the client to monitor the bulk request.
+- This data source allows the client to monitor the bulk request.
 
 ## Example Usage
 

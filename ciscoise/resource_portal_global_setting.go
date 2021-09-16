@@ -16,7 +16,7 @@ func resourcePortalGlobalSetting() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read and update operations on PortalGlobalSetting.
   
-  This resource allows the client to update the portal global settings by id.`,
+  - This resource allows the client to update the portal global settings by id.`,
 
 		CreateContext: resourcePortalGlobalSettingCreate,
 		ReadContext:   resourcePortalGlobalSettingRead,

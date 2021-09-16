@@ -16,9 +16,9 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Network Conditions.
   
-  Network Access Creates network condition.
-  Network Access Update network condition.
-  Network Access Delete network condition.`,
+  - Network Access Creates network condition.
+  - Network Access Update network condition.
+  - Network Access Delete network condition.`,
 
 		CreateContext: resourceNetworkAccessNetworkConditionCreate,
 		ReadContext:   resourceNetworkAccessNetworkConditionRead,

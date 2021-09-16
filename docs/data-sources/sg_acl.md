@@ -4,8 +4,8 @@ page_title: "ciscoise_sg_acl Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on SecurityGroupsACLs.
-  This data source allows the client to get a security group ACL by ID.
-  This data source allows the client to get all the security group ACLs.
+  - This data source allows the client to get a security group ACL by ID.
+  - This data source allows the client to get all the security group ACLs.
   Filter:
   [ipVersion, name, description]
   To search guest users by using
@@ -23,8 +23,8 @@ description: |-
 
 It performs read operation on SecurityGroupsACLs.
 
-This data source allows the client to get a security group ACL by ID.
-This data source allows the client to get all the security group ACLs.
+- This data source allows the client to get a security group ACL by ID.
+- This data source allows the client to get all the security group ACLs.
 
 Filter:
 

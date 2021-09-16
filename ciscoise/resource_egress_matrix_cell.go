@@ -16,9 +16,9 @@ func resourceEgressMatrixCell() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on EgressMatrixCell.
   
-  This resource allows the client to update an egress matrix cell.
-  This resource deletes an egress matrix cell.
-  This resource creates an egress matrix cell.`,
+  - This resource allows the client to update an egress matrix cell.
+  - This resource deletes an egress matrix cell.
+  - This resource creates an egress matrix cell.`,
 
 		CreateContext: resourceEgressMatrixCellCreate,
 		ReadContext:   resourceEgressMatrixCellRead,

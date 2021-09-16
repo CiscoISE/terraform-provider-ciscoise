@@ -17,7 +17,7 @@ func resourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 		Description: `It manages create, read, update and delete operations on Network Access - Authorization Global Exception
   Rules.
   
-  Network Access Create global exception authorization rule:
+  - Network Access Create global exception authorization rule:
   
   
   
@@ -38,8 +38,8 @@ func resourceNetworkAccessGlobalExceptionRules() *schema.Resource {
   
   
   
-  Network Access Update global exception authorization rule.
-  Network Access Delete global exception authorization rule.`,
+  - Network Access Update global exception authorization rule.
+  - Network Access Delete global exception authorization rule.`,
 
 		CreateContext: resourceNetworkAccessGlobalExceptionRulesCreate,
 		ReadContext:   resourceNetworkAccessGlobalExceptionRulesRead,

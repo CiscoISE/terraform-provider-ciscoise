@@ -14,7 +14,7 @@ func dataSourceDeviceAdministrationIDentityStores() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Identity Stores.
 
-Device Admin Return list of identity stores for authentication.
+- Device Admin Return list of identity stores for authentication.
  (Other CRUD APIs available throught ERS)`,
 
 		ReadContext: dataSourceDeviceAdministrationIDentityStoresRead,

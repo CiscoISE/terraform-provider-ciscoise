@@ -17,7 +17,7 @@ func dataSourceEgressMatrixCellBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on EgressMatrixCell.
 
-This data source action allows the client to submit the bulk request.`,
+- This data source action allows the client to submit the bulk request.`,
 
 		ReadContext: dataSourceEgressMatrixCellBulkRequestRead,
 		Schema: map[string]*schema.Schema{

@@ -16,8 +16,8 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on GuestSMTPNotificationConfiguration.
   
-  This resource allows the client to update a SMTP configuration setting.
-  This resource creates a guest SMTP notification configuration.`,
+  - This resource allows the client to update a SMTP configuration setting.
+  - This resource creates a guest SMTP notification configuration.`,
 
 		CreateContext: resourceGuestSmtpNotificationSettingsCreate,
 		ReadContext:   resourceGuestSmtpNotificationSettingsRead,

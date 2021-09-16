@@ -15,7 +15,7 @@ func dataSourceSgMappingDeployAll() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on IPToSGTMapping.
 
-This data source action allows the client to deploy all the IP to SGT mappings.
+- This data source action allows the client to deploy all the IP to SGT mappings.
 Only one Deploy process can run at any given time`,
 
 		ReadContext: dataSourceSgMappingDeployAllRead,

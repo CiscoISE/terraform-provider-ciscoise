@@ -14,9 +14,9 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on AuthorizationProfile.
 
-This data source allows the client to get an authorization profile by name.
-This data source allows the client to get an authorization profile by ID.
-This data source allows the client to get all authorization profiles.`,
+- This data source allows the client to get an authorization profile by name.
+- This data source allows the client to get an authorization profile by ID.
+- This data source allows the client to get all authorization profiles.`,
 
 		ReadContext: dataSourceAuthorizationProfileRead,
 		Schema: map[string]*schema.Schema{

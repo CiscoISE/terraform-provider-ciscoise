@@ -14,8 +14,8 @@ func dataSourceTasks() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on tasks.
 
-get all task status
-Monitor task status`,
+- get all task status
+- Monitor task status`,
 
 		ReadContext: dataSourceTasksRead,
 		Schema: map[string]*schema.Schema{

@@ -4,14 +4,14 @@ page_title: "ciscoise_egress_matrix_cell_bulk_request Data Source - terraform-pr
 subcategory: ""
 description: |-
   It performs update operation on EgressMatrixCell.
-  This data source action allows the client to submit the bulk request.
+  - This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_egress_matrix_cell_bulk_request (Data Source)
 
 It performs update operation on EgressMatrixCell.
 
-This data source action allows the client to submit the bulk request.
+- This data source action allows the client to submit the bulk request.
 
 ## Example Usage
 

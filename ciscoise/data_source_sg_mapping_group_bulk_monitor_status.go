@@ -14,7 +14,7 @@ func dataSourceSgMappingGroupBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on IPToSGTMappingGroup.
 
-This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.`,
 
 		ReadContext: dataSourceSgMappingGroupBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{

@@ -15,7 +15,7 @@ func dataSourceGuestUserSms() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on GuestUser.
 
-This data source action allows the client to update a guest user sms by ID.`,
+- This data source action allows the client to update a guest user sms by ID.`,
 
 		ReadContext: dataSourceGuestUserSmsRead,
 		Schema: map[string]*schema.Schema{

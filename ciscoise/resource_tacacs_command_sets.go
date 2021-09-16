@@ -16,9 +16,9 @@ func resourceTacacsCommandSets() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on TACACSCommandSets.
   
-  This resource allows the client to update TACACS command sets.
-  This resource deletes TACACS command sets.
-  This resource creates TACACS command sets.`,
+  - This resource allows the client to update TACACS command sets.
+  - This resource deletes TACACS command sets.
+  - This resource creates TACACS command sets.`,
 
 		CreateContext: resourceTacacsCommandSetsCreate,
 		ReadContext:   resourceTacacsCommandSetsRead,

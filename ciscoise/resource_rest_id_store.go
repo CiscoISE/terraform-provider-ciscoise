@@ -16,11 +16,11 @@ func resourceRestIDStore() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on RESTIDStore.
   
-  This resource allows the client to update a REST ID store by name.
-  This resource deletes a REST ID store by name.
-  This resource allows the client to update a REST ID store.
-  This resource deletes a REST ID store.
-  This resource creates a REST ID store.`,
+  - This resource allows the client to update a REST ID store by name.
+  - This resource deletes a REST ID store by name.
+  - This resource allows the client to update a REST ID store.
+  - This resource deletes a REST ID store.
+  - This resource creates a REST ID store.`,
 
 		CreateContext: resourceRestIDStoreCreate,
 		ReadContext:   resourceRestIDStoreRead,

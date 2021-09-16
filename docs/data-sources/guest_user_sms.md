@@ -4,14 +4,14 @@ page_title: "ciscoise_guest_user_sms Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs update operation on GuestUser.
-  This data source action allows the client to update a guest user sms by ID.
+  - This data source action allows the client to update a guest user sms by ID.
 ---
 
 # ciscoise_guest_user_sms (Data Source)
 
 It performs update operation on GuestUser.
 
-This data source action allows the client to update a guest user sms by ID.
+- This data source action allows the client to update a guest user sms by ID.
 
 ## Example Usage
 

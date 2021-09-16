@@ -4,14 +4,14 @@ page_title: "ciscoise_active_directory_get_groups_by_domain_info Data Source - t
 subcategory: ""
 description: |-
   It performs update operation on ActiveDirectory.
-  This data source action lists the groups of the given domain.
+  - This data source action lists the groups of the given domain.
 ---
 
 # ciscoise_active_directory_get_groups_by_domain_info (Data Source)
 
 It performs update operation on ActiveDirectory.
 
-This data source action lists the groups of the given domain.
+- This data source action lists the groups of the given domain.
 
 ## Example Usage
 

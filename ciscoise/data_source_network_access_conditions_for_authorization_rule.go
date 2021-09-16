@@ -14,7 +14,7 @@ func dataSourceNetworkAccessConditionsForAuthorizationRule() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Conditions.
 
-Network Access Returns list of library conditions for Authorization rules scope.`,
+- Network Access Returns list of library conditions for Authorization rules scope.`,
 
 		ReadContext: dataSourceNetworkAccessConditionsForAuthorizationRuleRead,
 		Schema: map[string]*schema.Schema{

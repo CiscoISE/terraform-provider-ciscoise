@@ -14,7 +14,7 @@ func dataSourceNetworkAccessDictionaryAttributesAuthorization() *schema.Resource
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Dictionary Attributes List.
 
-Network Access Returns list of dictionary attributes for authorization.`,
+- Network Access Returns list of dictionary attributes for authorization.`,
 
 		ReadContext: dataSourceNetworkAccessDictionaryAttributesAuthorizationRead,
 		Schema: map[string]*schema.Schema{

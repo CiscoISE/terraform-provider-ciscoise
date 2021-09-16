@@ -16,9 +16,9 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Dictionary Attribute.
   
-  Create a new Dictionary Attribute for an existing Dictionary.
-  Update a Dictionary Attribute
-  Delete a Dictionary Attribute.`,
+  - Create a new Dictionary Attribute for an existing Dictionary.
+  - Update a Dictionary Attribute
+  - Delete a Dictionary Attribute.`,
 
 		CreateContext: resourceNetworkAccessDictionaryAttributeCreate,
 		ReadContext:   resourceNetworkAccessDictionaryAttributeRead,

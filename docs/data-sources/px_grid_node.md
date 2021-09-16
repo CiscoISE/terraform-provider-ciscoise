@@ -4,18 +4,18 @@ page_title: "ciscoise_px_grid_node Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on pxGridNode.
-  This data source allows the client to get a pxGrid node by name.
-  This data source allows the client to get a pxGrid node by ID.
-  This data source allows the client to get all the npxGrid nodes.
+  - This data source allows the client to get a pxGrid node by name.
+  - This data source allows the client to get a pxGrid node by ID.
+  - This data source allows the client to get all the npxGrid nodes.
 ---
 
 # ciscoise_px_grid_node (Data Source)
 
 It performs read operation on pxGridNode.
 
-This data source allows the client to get a pxGrid node by name.
-This data source allows the client to get a pxGrid node by ID.
-This data source allows the client to get all the npxGrid nodes.
+- This data source allows the client to get a pxGrid node by name.
+- This data source allows the client to get a pxGrid node by ID.
+- This data source allows the client to get all the npxGrid nodes.
 
 ## Example Usage
 

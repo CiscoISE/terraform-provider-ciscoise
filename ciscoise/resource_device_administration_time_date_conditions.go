@@ -16,9 +16,9 @@ func resourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Time/Date Conditions.
   
-  Device Admin Creates time/date condition.
-  Device Admin Update network condition.
-  Device Admin Delete Time/Date condition.`,
+  - Device Admin Creates time/date condition.
+  - Device Admin Update network condition.
+  - Device Admin Delete Time/Date condition.`,
 
 		CreateContext: resourceDeviceAdministrationTimeDateConditionsCreate,
 		ReadContext:   resourceDeviceAdministrationTimeDateConditionsRead,

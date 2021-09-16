@@ -14,8 +14,8 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Authentication Rules.
 
-Device Admin Get authentication rules.
-Device Admin Get rule attributes.`,
+- Device Admin Get authentication rules.
+- Device Admin Get rule attributes.`,
 
 		ReadContext: dataSourceDeviceAdministrationAuthenticationRulesRead,
 		Schema: map[string]*schema.Schema{

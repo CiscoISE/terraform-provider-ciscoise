@@ -14,7 +14,7 @@ func dataSourceTrustedCertificateExport() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Certificates.
 
-The response of this API carries a trusted certificate file mapped to the requested id`,
+- The response of this API carries a trusted certificate file mapped to the requested id`,
 
 		ReadContext: dataSourceTrustedCertificateExportRead,
 		Schema: map[string]*schema.Schema{

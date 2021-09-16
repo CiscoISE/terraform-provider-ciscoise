@@ -14,8 +14,8 @@ func dataSourceTelemetryInfo() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on TelemetryInformation.
 
-This data source allows the client to get telemetry information by ID.
-This data source allows the client to get all the telemetry information.
+- This data source allows the client to get telemetry information by ID.
+- This data source allows the client to get all the telemetry information.
 
 Filter:
 

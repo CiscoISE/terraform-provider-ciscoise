@@ -14,8 +14,8 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on SecurityGroupToVirtualNetwork.
 
-This data source allows the client to get a security group to virtual network by ID.
-This data source allows the client to get all the security group ACL to virtual networks.
+- This data source allows the client to get a security group to virtual network by ID.
+- This data source allows the client to get all the security group ACL to virtual networks.
 
 Filter:
 

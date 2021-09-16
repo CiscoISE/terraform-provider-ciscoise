@@ -15,9 +15,9 @@ func resourceTacacsServerSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on TacacsServerSequence.
   
-  This resource allows the client to update a TACACS server sequence.
-  This resource deletes a TACACS server sequence.
-  This resource creates a TACACS server sequence.`,
+  - This resource allows the client to update a TACACS server sequence.
+  - This resource deletes a TACACS server sequence.
+  - This resource creates a TACACS server sequence.`,
 
 		CreateContext: resourceTacacsServerSequenceCreate,
 		ReadContext:   resourceTacacsServerSequenceRead,

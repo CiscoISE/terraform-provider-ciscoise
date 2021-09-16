@@ -17,71 +17,7 @@ func dataSourceSystemCertificateExportInfo() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-
-
-Export System Certificate.
-
-Following Parameters are used in POST body
-
-
-
-
-PARAMETER
-
-DESCRIPTION
-
-EXAMPLE
-
-
-
-
-
-id
-
-ID of a System Certificate(required)
-
-< SYSTEM_CERT_ID >
-
-
-
-export
-
- One of the below option is required
-
-"CERTIFICATE" :
-Export only Certificate without Private Key
-
-"CERTIFICATE_WITH_PRIVATE_KEY" :
-Export both Certificate and Private Key(
-"certificatePassword"
- is required)
-
-
-
-CERTIFICATE_WITH_PRIVATE_KEY
-
-
-
-password
-
-Certificate Password (required if
-"export" : CERTIFICATE_WITH_PRIVATE_KEY
-)
-Password Constraints:
-
-
-Alphanumeric
-
-Minimum of 8 Characters
-
-Maximum of 100 Characters
-
-
-
-Passw***
-
-
-
+- Export System Certificate.
 
 
 NOTE:

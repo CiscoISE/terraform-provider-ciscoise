@@ -15,7 +15,7 @@ func dataSourceEgressMatrixCellClearAll() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on EgressMatrixCell.
 
-This data source action allows the client to clear all the egress matrix cells.`,
+- This data source action allows the client to clear all the egress matrix cells.`,
 
 		ReadContext: dataSourceEgressMatrixCellClearAllRead,
 		Schema: map[string]*schema.Schema{

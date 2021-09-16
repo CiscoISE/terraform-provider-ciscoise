@@ -17,7 +17,7 @@ func dataSourceSystemCertificateCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on SystemCertificate.
 
-This data source action allows the client to create a system certificate.`,
+- This data source action allows the client to create a system certificate.`,
 
 		ReadContext: dataSourceSystemCertificateCreateRead,
 		Schema: map[string]*schema.Schema{

@@ -15,11 +15,11 @@ func resourceGuestUser() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on GuestUser.
   
-  This resource allows the client to update a guest user by name.
-  This resource deletes a guest user.
-  This resource allows the client to update a guest user by ID.
-  This resource deletes a guest user by ID.
-  This resource creates a guest user.`,
+  - This resource allows the client to update a guest user by name.
+  - This resource deletes a guest user.
+  - This resource allows the client to update a guest user by ID.
+  - This resource deletes a guest user by ID.
+  - This resource creates a guest user.`,
 
 		CreateContext: resourceGuestUserCreate,
 		ReadContext:   resourceGuestUserRead,

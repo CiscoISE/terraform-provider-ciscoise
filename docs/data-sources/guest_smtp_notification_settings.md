@@ -4,8 +4,8 @@ page_title: "ciscoise_guest_smtp_notification_settings Data Source - terraform-p
 subcategory: ""
 description: |-
   It performs read operation on GuestSMTPNotificationConfiguration.
-  This data source allows the client to get a guest SMTP notification configuration by ID.
-  This data source allows the client to get all the guest SMTP notification configurations.
+  - This data source allows the client to get a guest SMTP notification configuration by ID.
+  - This data source allows the client to get all the guest SMTP notification configurations.
   Filter:
   [name]
   To search guest users by using
@@ -23,8 +23,8 @@ description: |-
 
 It performs read operation on GuestSMTPNotificationConfiguration.
 
-This data source allows the client to get a guest SMTP notification configuration by ID.
-This data source allows the client to get all the guest SMTP notification configurations.
+- This data source allows the client to get a guest SMTP notification configuration by ID.
+- This data source allows the client to get all the guest SMTP notification configurations.
 
 Filter:
 

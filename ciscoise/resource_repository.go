@@ -16,12 +16,11 @@ func resourceRepository() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Repository.
   
-  Create a new repository in the system. The name provided for the
+  - Create a new repository in the system. The name provided for the
   repository must be unique.
   
-  Update the definition of a specific repository, providing ALL parameters for the repository.
+  - Update the definition of a specific repository, providing ALL parameters for the repository.
   
-  Long description TBD
   `,
 
 		CreateContext: resourceRepositoryCreate,

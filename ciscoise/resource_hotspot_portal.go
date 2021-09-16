@@ -16,9 +16,9 @@ func resourceHotspotPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on HotspotPortal.
   
-  This resource allows the client to update a hotspot portal by ID.
-  This resource deletes a hotspot portal by ID.
-  This resource creates a hotspot portal.`,
+  - This resource allows the client to update a hotspot portal by ID.
+  - This resource deletes a hotspot portal by ID.
+  - This resource creates a hotspot portal.`,
 
 		CreateContext: resourceHotspotPortalCreate,
 		ReadContext:   resourceHotspotPortalRead,

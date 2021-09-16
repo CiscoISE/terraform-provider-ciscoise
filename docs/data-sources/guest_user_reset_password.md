@@ -4,14 +4,14 @@ page_title: "ciscoise_guest_user_reset_password Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs update operation on GuestUser.
-  This data source action allows the client to reset the guest user password.
+  - This data source action allows the client to reset the guest user password.
 ---
 
 # ciscoise_guest_user_reset_password (Data Source)
 
 It performs update operation on GuestUser.
 
-This data source action allows the client to reset the guest user password.
+- This data source action allows the client to reset the guest user password.
 
 ## Example Usage
 

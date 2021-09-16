@@ -16,9 +16,9 @@ func resourceDeviceAdministrationPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Policy Set.
   
-  Device Admin Create a new policy set.
-  Device Admin Update a policy set.
-  Device Admin Delete a policy set.`,
+  - Device Admin Create a new policy set.
+  - Device Admin Update a policy set.
+  - Device Admin Delete a policy set.`,
 
 		CreateContext: resourceDeviceAdministrationPolicySetCreate,
 		ReadContext:   resourceDeviceAdministrationPolicySetRead,

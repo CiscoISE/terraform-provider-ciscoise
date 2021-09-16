@@ -15,7 +15,7 @@ func dataSourceNetworkAccessPolicySetResetHitcount() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Network Access - Policy Set.
 
-Network Access Reset HitCount for PolicySets`,
+- Network Access Reset HitCount for PolicySets`,
 
 		ReadContext: dataSourceNetworkAccessPolicySetResetHitcountRead,
 		Schema: map[string]*schema.Schema{

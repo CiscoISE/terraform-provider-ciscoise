@@ -16,9 +16,9 @@ func resourcePortalTheme() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on PortalTheme.
   
-  This resource allows the client to update a portal theme by ID.
-  This resource deletes a portal theme by ID.
-  This resource creates a portal theme.`,
+  - This resource allows the client to update a portal theme by ID.
+  - This resource deletes a portal theme by ID.
+  - This resource creates a portal theme.`,
 
 		CreateContext: resourcePortalThemeCreate,
 		ReadContext:   resourcePortalThemeRead,

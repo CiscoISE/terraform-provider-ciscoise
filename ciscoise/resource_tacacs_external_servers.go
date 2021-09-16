@@ -15,9 +15,9 @@ func resourceTacacsExternalServers() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on TACACSExternalServers.
   
-  This resource allows the client to update TACACS external servers.
-  This resource deletes TACACS external servers.
-  This resource creates TACACS external servers.`,
+  - This resource allows the client to update TACACS external servers.
+  - This resource deletes TACACS external servers.
+  - This resource creates TACACS external servers.`,
 
 		CreateContext: resourceTacacsExternalServersCreate,
 		ReadContext:   resourceTacacsExternalServersRead,

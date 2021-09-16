@@ -16,8 +16,8 @@ func resourceActiveDirectory() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and delete operations on ActiveDirectory.
   
-  This resource deletes an AD join point from Cisco ISE.
-  This resource creates an AD join point in Cisco ISE.`,
+  - This resource deletes an AD join point from Cisco ISE.
+  - This resource creates an AD join point in Cisco ISE.`,
 
 		CreateContext: resourceActiveDirectoryCreate,
 		ReadContext:   resourceActiveDirectoryRead,

@@ -14,9 +14,9 @@ func dataSourceSessionServiceNode() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on PsnNodeDetailsWithRadiusService.
 
-This data source allows the client to get a PSN node details by name.
-This data source allows the client to get a PSN node details by ID.
-This data source allows the client to get all the PSN node details.`,
+- This data source allows the client to get a PSN node details by name.
+- This data source allows the client to get a PSN node details by ID.
+- This data source allows the client to get all the PSN node details.`,
 
 		ReadContext: dataSourceSessionServiceNodeRead,
 		Schema: map[string]*schema.Schema{

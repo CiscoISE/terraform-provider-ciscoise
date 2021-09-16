@@ -59,7 +59,7 @@ Supported Operators: EQ, NEQ, GT and LT
 
 
 
-This data source displays details of a System Certificate of a particular node based on a given HostName and ID.`,
+- This data source displays details of a System Certificate of a particular node based on a given HostName and ID.`,
 
 		ReadContext: dataSourceSystemCertificateRead,
 		Schema: map[string]*schema.Schema{

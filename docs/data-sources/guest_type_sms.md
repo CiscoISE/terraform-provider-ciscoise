@@ -4,14 +4,14 @@ page_title: "ciscoise_guest_type_sms Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs update operation on GuestType.
-  This data source action allows the client to update a guest type sms by ID.
+  - This data source action allows the client to update a guest type sms by ID.
 ---
 
 # ciscoise_guest_type_sms (Data Source)
 
 It performs update operation on GuestType.
 
-This data source action allows the client to update a guest type sms by ID.
+- This data source action allows the client to update a guest type sms by ID.
 
 ## Example Usage
 

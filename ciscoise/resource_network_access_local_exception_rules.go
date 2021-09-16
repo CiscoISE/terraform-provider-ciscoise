@@ -16,7 +16,7 @@ func resourceNetworkAccessLocalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Authorization Exception Rules.
   
-  Network Access Create local authorization exception rule:
+  - Network Access Create local authorization exception rule:
   
   
   
@@ -37,8 +37,8 @@ func resourceNetworkAccessLocalExceptionRules() *schema.Resource {
   
   
   
-  Network Access Update local exception rule.
-  Network Access Delete local exception rule.`,
+  - Network Access Update local exception rule.
+  - Network Access Delete local exception rule.`,
 
 		CreateContext: resourceNetworkAccessLocalExceptionRulesCreate,
 		ReadContext:   resourceNetworkAccessLocalExceptionRulesRead,

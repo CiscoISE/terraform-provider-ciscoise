@@ -14,7 +14,7 @@ func dataSourceAciTestConnectivity() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ACISettings.
 
-This data source action allows the client to test ACI Domain Manager connection.`,
+- This data source action allows the client to test ACI Domain Manager connection.`,
 
 		ReadContext: dataSourceAciTestConnectivityRead,
 		Schema: map[string]*schema.Schema{

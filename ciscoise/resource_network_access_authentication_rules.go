@@ -16,7 +16,7 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Authentication Rules.
   
-  Network Access Create authentication rule:
+  - Network Access Create authentication rule:
   
   
   
@@ -37,8 +37,8 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
   
   
   
-  Network Access Update rule.
-  Network Access Delete rule.`,
+  - Network Access Update rule.
+  - Network Access Delete rule.`,
 
 		CreateContext: resourceNetworkAccessAuthenticationRulesCreate,
 		ReadContext:   resourceNetworkAccessAuthenticationRulesRead,

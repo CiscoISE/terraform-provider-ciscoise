@@ -14,9 +14,9 @@ func dataSourceNode() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on NodeDetails.
 
-This data source allows the client to get node details by name.
-This data source allows the client to get node details by ID.
-This data source allows the client to get all the node details.
+- This data source allows the client to get node details by name.
+- This data source allows the client to get node details by ID.
+- This data source allows the client to get all the node details.
 
 Filter:
 

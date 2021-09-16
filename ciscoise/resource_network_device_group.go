@@ -15,9 +15,9 @@ func resourceNetworkDeviceGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on NetworkDeviceGroup.
   
-  This resource allows the client to update a network device group.
-  This resource deletes a network device group.
-  This resource creates a network device group.`,
+  - This resource allows the client to update a network device group.
+  - This resource deletes a network device group.
+  - This resource creates a network device group.`,
 
 		CreateContext: resourceNetworkDeviceGroupCreate,
 		ReadContext:   resourceNetworkDeviceGroupRead,

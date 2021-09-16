@@ -14,9 +14,9 @@ func dataSourceCertificateProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on CertificateProfile.
 
-This data source allows the client to get a certificate profile by name.
-This data source allows the client to get a certificate profile by ID.
-This data source allows the client to get all the certificate profiles.`,
+- This data source allows the client to get a certificate profile by name.
+- This data source allows the client to get a certificate profile by ID.
+- This data source allows the client to get all the certificate profiles.`,
 
 		ReadContext: dataSourceCertificateProfileRead,
 		Schema: map[string]*schema.Schema{

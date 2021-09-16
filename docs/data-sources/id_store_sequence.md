@@ -4,18 +4,18 @@ page_title: "ciscoise_id_store_sequence Data Source - terraform-provider-ciscois
 subcategory: ""
 description: |-
   It performs read operation on IdentitySequence.
-  This data source allows the client to get an identity sequence by name.
-  This data source allows the client to get an identity sequence by ID.
-  This data source allows the client to get all the identity sequences.
+  - This data source allows the client to get an identity sequence by name.
+  - This data source allows the client to get an identity sequence by ID.
+  - This data source allows the client to get all the identity sequences.
 ---
 
 # ciscoise_id_store_sequence (Data Source)
 
 It performs read operation on IdentitySequence.
 
-This data source allows the client to get an identity sequence by name.
-This data source allows the client to get an identity sequence by ID.
-This data source allows the client to get all the identity sequences.
+- This data source allows the client to get an identity sequence by name.
+- This data source allows the client to get an identity sequence by ID.
+- This data source allows the client to get all the identity sequences.
 
 ## Example Usage
 

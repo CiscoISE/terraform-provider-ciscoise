@@ -15,9 +15,9 @@ func resourceAncPolicy() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on AncPolicy.
   
-  This resource allows the client to update an ANC policy.
-  This resource allows the client to delete an ANC policy.
-  This resource allows the client to create an ANC policy.`,
+  - This resource allows the client to update an ANC policy.
+  - This resource allows the client to delete an ANC policy.
+  - This resource allows the client to create an ANC policy.`,
 
 		CreateContext: resourceAncPolicyCreate,
 		ReadContext:   resourceAncPolicyRead,

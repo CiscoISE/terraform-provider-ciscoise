@@ -16,7 +16,7 @@ func dataSourceRenewCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-This data source action will initiate regeneration of certificates. Response contains id which can be used to track the
+- This data source action will initiate regeneration of certificates. Response contains id which can be used to track the
 status`,
 
 		ReadContext: dataSourceRenewCertificateRead,

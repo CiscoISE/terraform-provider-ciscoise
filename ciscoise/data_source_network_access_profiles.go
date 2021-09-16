@@ -14,7 +14,7 @@ func dataSourceNetworkAccessProfiles() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Profiles.
 
-Network Access Returns list of profiles.
+- Network Access Returns list of profiles.
  (Other CRUD APIs available throught ERS)`,
 
 		ReadContext: dataSourceNetworkAccessProfilesRead,

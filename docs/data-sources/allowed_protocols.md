@@ -4,18 +4,18 @@ page_title: "ciscoise_allowed_protocols Data Source - terraform-provider-ciscois
 subcategory: ""
 description: |-
   It performs read operation on AllowedProtocols.
-  This data source allows the client to get an allowed protocol by name.
-  This data source allows the client to get an allowed protocol by ID.
-  This data source allows the client to get all the allowed protocols.
+  - This data source allows the client to get an allowed protocol by name.
+  - This data source allows the client to get an allowed protocol by ID.
+  - This data source allows the client to get all the allowed protocols.
 ---
 
 # ciscoise_allowed_protocols (Data Source)
 
 It performs read operation on AllowedProtocols.
 
-This data source allows the client to get an allowed protocol by name.
-This data source allows the client to get an allowed protocol by ID.
-This data source allows the client to get all the allowed protocols.
+- This data source allows the client to get an allowed protocol by name.
+- This data source allows the client to get an allowed protocol by ID.
+- This data source allows the client to get all the allowed protocols.
 
 ## Example Usage
 

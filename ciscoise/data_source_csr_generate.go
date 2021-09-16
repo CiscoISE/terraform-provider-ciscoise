@@ -19,7 +19,7 @@ func dataSourceCsrGenerate() *schema.Resource {
 
 
 
-Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
+- Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
 IMS Services.
 
 Following Parameters are present in POST request body

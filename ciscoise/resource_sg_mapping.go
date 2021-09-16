@@ -16,9 +16,9 @@ func resourceSgMapping() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on IPToSGTMapping.
   
-  This resource allows the client to update an IP to SGT mapping by ID.
-  This resource deletes an IP to SGT mapping.
-  This resource creates an IP to SGT mapping.`,
+  - This resource allows the client to update an IP to SGT mapping by ID.
+  - This resource deletes an IP to SGT mapping.
+  - This resource creates an IP to SGT mapping.`,
 
 		CreateContext: resourceSgMappingCreate,
 		ReadContext:   resourceSgMappingRead,

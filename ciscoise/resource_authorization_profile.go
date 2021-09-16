@@ -16,9 +16,9 @@ func resourceAuthorizationProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on AuthorizationProfile.
   
-  This resource allows the client to update an authorization profile.
-  This resource deletes an authorization profile.
-  This resource creates an authorization profile.`,
+  - This resource allows the client to update an authorization profile.
+  - This resource deletes an authorization profile.
+  - This resource creates an authorization profile.`,
 
 		CreateContext: resourceAuthorizationProfileCreate,
 		ReadContext:   resourceAuthorizationProfileRead,

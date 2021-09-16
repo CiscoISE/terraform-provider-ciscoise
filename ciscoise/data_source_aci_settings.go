@@ -14,7 +14,7 @@ func dataSourceAciSettings() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on ACISettings.
 
-This data source allows the client to get ACI Settings.`,
+- This data source allows the client to get ACI Settings.`,
 
 		ReadContext: dataSourceAciSettingsRead,
 		Schema: map[string]*schema.Schema{

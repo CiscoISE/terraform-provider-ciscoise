@@ -16,9 +16,9 @@ func resourceRadiusServerSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on RADIUSServerSequence.
   
-  This resource allows the client to update a RADIUS server sequence.
-  This resource deletes a RADIUS server sequence.
-  This resource creates a RADIUS server sequence.`,
+  - This resource allows the client to update a RADIUS server sequence.
+  - This resource deletes a RADIUS server sequence.
+  - This resource creates a RADIUS server sequence.`,
 
 		CreateContext: resourceRadiusServerSequenceCreate,
 		ReadContext:   resourceRadiusServerSequenceRead,

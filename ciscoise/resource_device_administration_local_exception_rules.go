@@ -17,9 +17,9 @@ func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 		Description: `It manages create, read, update and delete operations on Device Administration - Authorization Exception
   Rules.
   
-  Device Admin Create local authorization exception rule.
-  Device Admin Update local exception rule.
-  Device Admin Delete local exception rule.`,
+  - Device Admin Create local authorization exception rule.
+  - Device Admin Update local exception rule.
+  - Device Admin Delete local exception rule.`,
 
 		CreateContext: resourceDeviceAdministrationLocalExceptionRulesCreate,
 		ReadContext:   resourceDeviceAdministrationLocalExceptionRulesRead,

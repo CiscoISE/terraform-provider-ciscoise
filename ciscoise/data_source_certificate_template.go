@@ -14,9 +14,9 @@ func dataSourceCertificateTemplate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on CertificateTemplate.
 
-This data source allows the client to get a certificate template by name.
-This data source allows the client to get a certificate template by ID.
-This data source allows the client to get aall the certificate templates.`,
+- This data source allows the client to get a certificate template by name.
+- This data source allows the client to get a certificate template by ID.
+- This data source allows the client to get aall the certificate templates.`,
 
 		ReadContext: dataSourceCertificateTemplateRead,
 		Schema: map[string]*schema.Schema{

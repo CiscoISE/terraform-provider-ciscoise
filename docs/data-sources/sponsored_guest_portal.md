@@ -4,17 +4,10 @@ page_title: "ciscoise_sponsored_guest_portal Data Source - terraform-provider-ci
 subcategory: ""
 description: |-
   It performs read operation on SponsoredGuestPortal.
-  This data source allows the client to get a sponsored guest portal by ID.
-  This data source allows the client to get all the sponsored guest portals.
+  - This data source allows the client to get a sponsored guest portal by ID.
+  - This data source allows the client to get all the sponsored guest portals.
   Filter:
   [name, description]
-  To search resources by using
-  toDate
-   column,follow the format:
-  DD-MON-YY (Example:13-SEP-18)
-  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
   Sorting:
   [name, description]
 ---
@@ -23,26 +16,12 @@ description: |-
 
 It performs read operation on SponsoredGuestPortal.
 
-This data source allows the client to get a sponsored guest portal by ID.
-This data source allows the client to get all the sponsored guest portals.
+- This data source allows the client to get a sponsored guest portal by ID.
+- This data source allows the client to get all the sponsored guest portals.
 
 Filter:
 
 [name, description]
-
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
-
 
 Sorting:
 

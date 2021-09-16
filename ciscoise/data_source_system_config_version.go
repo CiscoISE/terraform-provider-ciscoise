@@ -14,7 +14,7 @@ func dataSourceSystemConfigVersion() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on VersionAndPatch.
 
-This data source allows the client to get Cisco ISE version and patch information.`,
+- This data source allows the client to get Cisco ISE version and patch information.`,
 
 		ReadContext: dataSourceSystemConfigVersionRead,
 		Schema: map[string]*schema.Schema{

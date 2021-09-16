@@ -14,7 +14,7 @@ func dataSourceSgACLBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on SecurityGroupsACLs.
 
-This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.`,
 
 		ReadContext: dataSourceSgACLBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{

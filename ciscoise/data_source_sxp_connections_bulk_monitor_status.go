@@ -14,7 +14,7 @@ func dataSourceSxpConnectionsBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on SXPConnections.
 
-This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.`,
 
 		ReadContext: dataSourceSxpConnectionsBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{

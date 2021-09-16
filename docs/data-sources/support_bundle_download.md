@@ -4,14 +4,14 @@ page_title: "ciscoise_support_bundle_download Data Source - terraform-provider-c
 subcategory: ""
 description: |-
   It performs update operation on SupportBundleDownload.
-  This data source action allows the client to upload a support bundle.
+  - This data source action allows the client to upload a support bundle.
 ---
 
 # ciscoise_support_bundle_download (Data Source)
 
 It performs update operation on SupportBundleDownload.
 
-This data source action allows the client to upload a support bundle.
+- This data source action allows the client to upload a support bundle.
 
 ## Example Usage
 

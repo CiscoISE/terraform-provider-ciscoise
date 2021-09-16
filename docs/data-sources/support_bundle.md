@@ -4,14 +4,14 @@ page_title: "ciscoise_support_bundle Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs create operation on SupportBundleTriggerConfiguration.
-  This data source action allows the client to create a support bundle trigger configuration.
+  - This data source action allows the client to create a support bundle trigger configuration.
 ---
 
 # ciscoise_support_bundle (Data Source)
 
 It performs create operation on SupportBundleTriggerConfiguration.
 
-This data source action allows the client to create a support bundle trigger configuration.
+- This data source action allows the client to create a support bundle trigger configuration.
 
 ## Example Usage
 

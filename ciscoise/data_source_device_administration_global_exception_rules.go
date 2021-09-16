@@ -14,8 +14,8 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Authorization Global Exception Rules.
 
-Device Admin Get global execption rules.
-Device Admin Get global exception rule attribute`,
+- Device Admin Get global execption rules.
+- Device Admin Get global exception rule attribute`,
 
 		ReadContext: dataSourceDeviceAdministrationGlobalExceptionRulesRead,
 		Schema: map[string]*schema.Schema{
