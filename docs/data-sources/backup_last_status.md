@@ -3,12 +3,15 @@
 page_title: "ciscoise_backup_last_status Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Backup And Restore.
+  Gives the last backup status
 ---
 
 # ciscoise_backup_last_status (Data Source)
 
+It performs read operation on Backup And Restore.
 
+Gives the last backup status
 
 
 

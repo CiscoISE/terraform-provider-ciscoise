@@ -3,12 +3,15 @@
 page_title: "ciscoise_active_directory_get_groups_by_domain_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on ActiveDirectory.
+  This data source action lists the groups of the given domain.
 ---
 
 # ciscoise_active_directory_get_groups_by_domain_info (Data Source)
 
+It performs update operation on ActiveDirectory.
 
+This data source action lists the groups of the given domain.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 
 ### Optional
 

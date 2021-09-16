@@ -3,12 +3,15 @@
 page_title: "ciscoise_csr_generate_intermediate_ca Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Certificates.
+  CSR Generation for Intermediate Certificates.
 ---
 
 # ciscoise_csr_generate_intermediate_ca (Data Source)
 
+It performs create operation on Certificates.
 
+CSR Generation for Intermediate Certificates.
 
 
 

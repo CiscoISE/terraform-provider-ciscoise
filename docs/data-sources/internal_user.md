@@ -3,12 +3,52 @@
 page_title: "ciscoise_internal_user Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on InternalUser.
+  This data source allows the client to get an internal user by name.
+  This data source allows the client to get an internal user by ID.
+  This data source allows the client to get all the internal users.
+  Filter:
+  [firstName, lastName, identityGroup, name, description, email, enabled]
+  To search resources by using
+  toDate
+   column,follow the format:
+  DD-MON-YY (Example:13-SEP-18)
+  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+  Sorting:
+  [name, description]
 ---
 
 # ciscoise_internal_user (Data Source)
 
+It performs read operation on InternalUser.
 
+This data source allows the client to get an internal user by name.
+This data source allows the client to get an internal user by ID.
+This data source allows the client to get all the internal users.
+
+Filter:
+
+[firstName, lastName, identityGroup, name, description, email, enabled]
+
+To search resources by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
+
+Sorting:
+
+[name, description]
 
 
 
@@ -17,14 +57,45 @@ description: |-
 
 ### Optional
 
-- **filter** (List of String)
-- **filter_type** (String)
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **page** (Number)
-- **size** (Number)
-- **sortasc** (String)
-- **sortdsc** (String)
+- **filter** (List of String) filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains
+- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- **id** (String) id path parameter.
+- **name** (String) name path parameter.
+- **page** (Number) page query parameter. Page number
+- **size** (Number) size query parameter. Number of objects returned per page
+- **sortasc** (String) sortasc query parameter. sort asc
+- **sortdsc** (String) sortdsc query parameter. sort desc
 
 ### Read-Only
 

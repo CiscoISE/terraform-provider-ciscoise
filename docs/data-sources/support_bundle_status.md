@@ -3,12 +3,17 @@
 page_title: "ciscoise_support_bundle_status Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on SupportBundleStatus.
+  This data source allows the client to get a support bundle status by ID.
+  This data source allows the client to get all the support bundle status.
 ---
 
 # ciscoise_support_bundle_status (Data Source)
 
+It performs read operation on SupportBundleStatus.
 
+This data source allows the client to get a support bundle status by ID.
+This data source allows the client to get all the support bundle status.
 
 
 
@@ -17,9 +22,9 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **page** (Number)
-- **size** (Number)
+- **id** (String) id path parameter.
+- **page** (Number) page query parameter. Page number
+- **size** (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 

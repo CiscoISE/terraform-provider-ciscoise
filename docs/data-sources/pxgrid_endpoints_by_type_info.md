@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_endpoints_by_type_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on MDM.
+  🚧 getEndpointsByType
 ---
 
 # ciscoise_pxgrid_endpoints_by_type_info (Data Source)
 
+It performs create operation on MDM.
 
+🚧 getEndpointsByType
 
 
 

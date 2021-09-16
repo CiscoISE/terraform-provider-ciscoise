@@ -3,12 +3,17 @@
 page_title: "ciscoise_device_administration_global_exception_rules Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Authorization Global Exception Rules.
+  Device Admin Get global execption rules.
+  Device Admin Get global exception rule attribute
 ---
 
 # ciscoise_device_administration_global_exception_rules (Data Source)
 
+It performs read operation on Device Administration - Authorization Global Exception Rules.
 
+Device Admin Get global execption rules.
+Device Admin Get global exception rule attribute
 
 
 
@@ -17,7 +22,7 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter. Rule id
 
 ### Read-Only
 

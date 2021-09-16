@@ -3,12 +3,15 @@
 page_title: "ciscoise_guest_user_change_sponsor_password Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on GuestUser.
+  This data source action allows the client to change the sponsor password.
 ---
 
 # ciscoise_guest_user_change_sponsor_password (Data Source)
 
+It performs update operation on GuestUser.
 
+This data source action allows the client to change the sponsor password.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **portal_id** (String)
+- **portal_id** (String) portalId path parameter.
 
 ### Optional
 

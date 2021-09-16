@@ -3,12 +3,17 @@
 page_title: "ciscoise_backup_schedule_config Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Backup And Restore.
+  Schedules the configuration backup on the ISE node as per the input parameters. This data source action helps in
+  creating the schedule for the first time.
 ---
 
 # ciscoise_backup_schedule_config (Data Source)
 
+It performs create operation on Backup And Restore.
 
+Schedules the configuration backup on the ISE node as per the input parameters. This data source action helps in
+creating the schedule for the first time.
 
 
 
@@ -17,18 +22,18 @@ description: |-
 
 ### Optional
 
-- **backup_description** (String)
-- **backup_encryption_key** (String)
-- **backup_name** (String)
-- **end_date** (String)
-- **frequency** (String)
+- **backup_description** (String) Description of the backup.
+- **backup_encryption_key** (String) The encyption key for the backed up file. Encryption key must satisfy the following criteria - Contains at least one uppercase letter [A-Z], Contains at least one lowercase letter [a-z], Contains at least one digit [0-9], Contain only [A-Z][a-z][0-9]_#, Has at least 8 characters, Has not more than 15 characters, Must not contain 'CcIiSsCco', Must not begin with
+- **backup_name** (String) The backup file will get saved with this name.
+- **end_date** (String) End date of the scheduled backup job. Allowed format MM/DD/YYYY. End date is not required in case of ONE_TIME frequency.
+- **frequency** (String) Frequency with which the backup will get scheduled in the ISE node. Allowed values - ONCE, DAILY, WEEKLY, MONTHLY
 - **id** (String) The ID of this resource.
-- **month_day** (String)
-- **repository_name** (String)
-- **start_date** (String)
-- **status** (String)
-- **time** (String)
-- **week_day** (String)
+- **month_day** (String) Day of month you want backup to be performed on when scheduled frequency is MONTHLY. Allowed values - from 1 to 28.
+- **repository_name** (String) Name of the configured repository where the generated backup file will get copied.
+- **start_date** (String) Start date for scheduling the backup job. Allowed format MM/DD/YYYY.
+- **status** (String) Enable or disable scheduled backup.
+- **time** (String) Time at which backup job get scheduled. example- 12:00 AM
+- **week_day** (String) Day of week you want backup to be performed on when scheduled frequency is WEEKLY. Allowed values - MON, TUE, WED, THU, FRI, SAT, SUN.
 
 ### Read-Only
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_session_by_mac_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Session Directory.
+  🚧 getSessionByMacAddress
 ---
 
 # ciscoise_pxgrid_session_by_mac_info (Data Source)
 
+It performs create operation on Session Directory.
 
+🚧 getSessionByMacAddress
 
 
 

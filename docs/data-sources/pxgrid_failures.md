@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_failures Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on RADIUS Failure.
+  🚧 getFailures
 ---
 
 # ciscoise_pxgrid_failures (Data Source)
 
+It performs read operation on RADIUS Failure.
 
+🚧 getFailures
 
 
 

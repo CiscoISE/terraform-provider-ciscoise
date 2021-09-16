@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_session_by_ip Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  Sessions by Endpoint IP
 ---
 
 # ciscoise_mnt_session_by_ip (Data Source)
 
+It performs read operation on Misc.
 
+Sessions by Endpoint IP
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **endpoint_ipv4** (String)
+- **endpoint_ipv4** (String) endpoint_ipv4 path parameter.
 
 ### Optional
 

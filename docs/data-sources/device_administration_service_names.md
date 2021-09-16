@@ -3,12 +3,19 @@
 page_title: "ciscoise_device_administration_service_names Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Service Names.
+  Returns list of Allowed Protocols and Server Sequences for Device Admin Policy Set results.
+   'isLocalAuthorization' property is available only for Network Access Policy Set results of type Server Sequence.
+   (Other CRUD APIs available throught ERS)
 ---
 
 # ciscoise_device_administration_service_names (Data Source)
 
+It performs read operation on Device Administration - Service Names.
 
+Returns list of Allowed Protocols and Server Sequences for Device Admin Policy Set results.
+ 'isLocalAuthorization' property is available only for Network Access Policy Set results of type Server Sequence.
+ (Other CRUD APIs available throught ERS)
 
 
 

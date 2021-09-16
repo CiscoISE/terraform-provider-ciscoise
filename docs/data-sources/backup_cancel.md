@@ -3,12 +3,15 @@
 page_title: "ciscoise_backup_cancel Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Backup And Restore.
+  Cancels the backup job running on the node.
 ---
 
 # ciscoise_backup_cancel (Data Source)
 
+It performs create operation on Backup And Restore.
 
+Cancels the backup job running on the node.
 
 
 

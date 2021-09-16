@@ -3,12 +3,19 @@
 page_title: "ciscoise_certificate_profile Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on CertificateProfile.
+  This data source allows the client to get a certificate profile by name.
+  This data source allows the client to get a certificate profile by ID.
+  This data source allows the client to get all the certificate profiles.
 ---
 
 # ciscoise_certificate_profile (Data Source)
 
+It performs read operation on CertificateProfile.
 
+This data source allows the client to get a certificate profile by name.
+This data source allows the client to get a certificate profile by ID.
+This data source allows the client to get all the certificate profiles.
 
 
 
@@ -17,10 +24,10 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **page** (Number)
-- **size** (Number)
+- **id** (String) id path parameter.
+- **name** (String) name path parameter.
+- **page** (Number) page query parameter. Page number
+- **size** (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 

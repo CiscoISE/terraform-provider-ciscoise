@@ -3,12 +3,17 @@
 page_title: "ciscoise_network_access_dictionary Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Network Access - Dictionary.
+  Get all Dictionaries.
+  GET a dictionary by name
 ---
 
 # ciscoise_network_access_dictionary (Data Source)
 
+It performs read operation on Network Access - Dictionary.
 
+Get all Dictionaries.
+GET a dictionary by name
 
 
 
@@ -18,7 +23,7 @@ description: |-
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **name** (String)
+- **name** (String) name path parameter. the dictionary name
 
 ### Read-Only
 

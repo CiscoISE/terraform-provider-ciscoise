@@ -3,12 +3,15 @@
 page_title: "ciscoise_device_administration_authorization_reset_hitcount Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Device Administration - Authorization Rules.
+  Device Admin Reset HitCount for Authorization Rules
 ---
 
 # ciscoise_device_administration_authorization_reset_hitcount (Data Source)
 
+It performs create operation on Device Administration - Authorization Rules.
 
+Device Admin Reset HitCount for Authorization Rules
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **policy_id** (String)
+- **policy_id** (String) policyId path parameter. Policy id
 
 ### Optional
 

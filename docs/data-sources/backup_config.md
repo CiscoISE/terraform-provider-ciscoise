@@ -3,12 +3,17 @@
 page_title: "ciscoise_backup_config Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Backup And Restore.
+  Triggers on demand configuration backup on the ISE node. The API returns the task ID. Use the Task Service status API to
+  get the status of the backup job.
 ---
 
 # ciscoise_backup_config (Data Source)
 
+It performs create operation on Backup And Restore.
 
+Triggers on demand configuration backup on the ISE node. The API returns the task ID. Use the Task Service status API to
+get the status of the backup job.
 
 
 
@@ -17,10 +22,10 @@ description: |-
 
 ### Optional
 
-- **backup_encryption_key** (String)
-- **backup_name** (String)
+- **backup_encryption_key** (String) The encyption key for the backed up file. Encryption key must satisfy the following criteria - Contains at least one uppercase letter [A-Z], Contains at least one lowercase letter [a-z], Contains at least one digit [0-9], Contain only [A-Z][a-z][0-9]_#, Has at least 8 characters, Has not more than 15 characters, Must not contain 'CcIiSsCco', Must not begin with
+- **backup_name** (String) The backup file will get saved with this name.
 - **id** (String) The ID of this resource.
-- **repository_name** (String)
+- **repository_name** (String) Name of the configured repository where the generated backup file will get copied.
 
 ### Read-Only
 

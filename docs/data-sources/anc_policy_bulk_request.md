@@ -3,12 +3,15 @@
 page_title: "ciscoise_anc_policy_bulk_request Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on AncPolicy.
+  This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_anc_policy_bulk_request (Data Source)
 
+It performs update operation on AncPolicy.
 
+This data source action allows the client to submit the bulk request.
 
 
 

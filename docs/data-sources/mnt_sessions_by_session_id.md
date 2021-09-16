@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_sessions_by_session_id Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  Sessions by SessionID
 ---
 
 # ciscoise_mnt_sessions_by_session_id (Data Source)
 
+It performs read operation on Misc.
 
+Sessions by SessionID
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **session_id** (String)
+- **session_id** (String) session_id path parameter.
 
 ### Optional
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_endpoint_release_rejected_endpoint Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on endpoint.
+  This data source action allows the client to release a rejected endpoint.
 ---
 
 # ciscoise_endpoint_release_rejected_endpoint (Data Source)
 
+It performs update operation on endpoint.
 
+This data source action allows the client to release a rejected endpoint.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 
 ### Read-Only
 

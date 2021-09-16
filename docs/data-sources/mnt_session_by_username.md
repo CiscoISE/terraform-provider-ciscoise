@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_session_by_username Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  Sessions by Username
 ---
 
 # ciscoise_mnt_session_by_username (Data Source)
 
+It performs read operation on Misc.
 
+Sessions by Username
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **username** (String)
+- **username** (String) username path parameter.
 
 ### Optional
 

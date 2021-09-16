@@ -3,12 +3,17 @@
 page_title: "ciscoise_network_access_identity_stores Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Network Access - Identity Stores.
+  Network Access Return list of identity stores for authentication policy definition.
+   (Other CRUD APIs available throught ERS)
 ---
 
 # ciscoise_network_access_identity_stores (Data Source)
 
+It performs read operation on Network Access - Identity Stores.
 
+Network Access Return list of identity stores for authentication policy definition.
+ (Other CRUD APIs available throught ERS)
 
 
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_pxgrid_security_groups_info Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on TrustSec Configuration.
+  🚧 getSecurityGroups
 ---
 
 # ciscoise_pxgrid_security_groups_info (Data Source)
 
+It performs create operation on TrustSec Configuration.
 
+🚧 getSecurityGroups
 
 
 

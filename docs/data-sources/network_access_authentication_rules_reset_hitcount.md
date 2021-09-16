@@ -3,12 +3,15 @@
 page_title: "ciscoise_network_access_authentication_rules_reset_hitcount Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Network Access - Authentication Rules.
+  Network Access Reset HitCount for Authentication Rules
 ---
 
 # ciscoise_network_access_authentication_rules_reset_hitcount (Data Source)
 
+It performs create operation on Network Access - Authentication Rules.
 
+Network Access Reset HitCount for Authentication Rules
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **policy_id** (String)
+- **policy_id** (String) policyId path parameter. Policy id
 
 ### Optional
 

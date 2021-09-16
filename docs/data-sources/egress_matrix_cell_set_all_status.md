@@ -3,12 +3,15 @@
 page_title: "ciscoise_egress_matrix_cell_set_all_status Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on EgressMatrixCell.
+  his API allows the client to set status of all the egress matrix cells.
 ---
 
 # ciscoise_egress_matrix_cell_set_all_status (Data Source)
 
+It performs update operation on EgressMatrixCell.
 
+his API allows the client to set status of all the egress matrix cells.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **status** (String)
+- **status** (String) status path parameter.
 
 ### Optional
 

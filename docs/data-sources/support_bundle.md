@@ -3,12 +3,15 @@
 page_title: "ciscoise_support_bundle Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on SupportBundleTriggerConfiguration.
+  This data source action allows the client to create a support bundle trigger configuration.
 ---
 
 # ciscoise_support_bundle (Data Source)
 
+It performs create operation on SupportBundleTriggerConfiguration.
 
+This data source action allows the client to create a support bundle trigger configuration.
 
 
 
@@ -18,9 +21,9 @@ description: |-
 ### Optional
 
 - **description** (String)
-- **host_name** (String)
+- **host_name** (String) This parameter is hostName only, xxxx of xxxx.yyy.zz
 - **id** (String) The ID of this resource.
-- **name** (String)
+- **name** (String) Resource Name
 - **support_bundle_include_options** (Block List) (see [below for nested schema](#nestedblock--support_bundle_include_options))
 
 ### Read-Only
@@ -32,14 +35,14 @@ description: |-
 
 Optional:
 
-- **from_date** (String)
-- **include_config_db** (Boolean)
-- **include_core_files** (Boolean)
-- **include_debug_logs** (Boolean)
-- **include_local_logs** (Boolean)
-- **include_system_logs** (Boolean)
-- **mnt_logs** (Boolean)
-- **policy_xml** (Boolean)
-- **to_date** (String)
+- **from_date** (String) Date from where support bundle should include the logs
+- **include_config_db** (Boolean) Set to include Config DB in Support Bundle
+- **include_core_files** (Boolean) Set to include Core files in Support Bundle
+- **include_debug_logs** (Boolean) Set to include Debug logs in Support Bundle
+- **include_local_logs** (Boolean) Set to include Local logs in Support Bundle
+- **include_system_logs** (Boolean) Set to include System logs in Support Bundle
+- **mnt_logs** (Boolean) Set to include Monitoring and troublshooting logs in Support Bundle
+- **policy_xml** (Boolean) Set to include Policy XML in Support Bundle
+- **to_date** (String) Date upto where support bundle should include the logs
 
 

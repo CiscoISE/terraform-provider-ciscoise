@@ -3,14 +3,297 @@
 page_title: "ciscoise_self_registered_portal Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It manages create, read, update and delete operations on SelfRegisteredPortal.
+  This resource allows the client to update a self registered portal by ID.
+    This resource deletes a self registered portal by ID.
+    This resource creates a self registered portal.
 ---
 
 # ciscoise_self_registered_portal (Resource)
 
+It manages create, read, update and delete operations on SelfRegisteredPortal.
+  
+  This resource allows the client to update a self registered portal by ID.
+  This resource deletes a self registered portal by ID.
+  This resource creates a self registered portal.
 
+## Example Usage
 
+```terraform
+resource "ciscoise_self_registered_portal" "example" {
+  provider = ciscoise
+  item {
 
+    customizations {
+
+      global_customizations {
+
+        background_image {
+
+          data = "string"
+        }
+        banner_image {
+
+          data = "string"
+        }
+        banner_title = "string"
+        contact_text = "string"
+        desktop_logo_image {
+
+          data = "string"
+        }
+        footer_element = "string"
+        mobile_logo_image {
+
+          data = "string"
+        }
+      }
+      language {
+
+        view_language = "string"
+      }
+      page_customizations {
+
+        data {
+
+          key   = "string"
+          value = "string"
+        }
+      }
+      portal_theme {
+
+        id         = "string"
+        name       = "string"
+        theme_data = "string"
+      }
+      portal_tweak_settings {
+
+        banner_color              = "string"
+        banner_text_color         = "string"
+        page_background_color     = "string"
+        page_label_and_text_color = "string"
+      }
+    }
+    description     = "string"
+    id              = "string"
+    name            = "string"
+    portal_test_url = "string"
+    portal_type     = "string"
+    settings {
+
+      aup_settings {
+
+        display_frequency               = "string"
+        display_frequency_interval_days = 1
+        include_aup                     = false
+        require_aup_scrolling           = false
+        require_scrolling               = false
+        skip_aup_for_employees          = false
+        use_diff_aup_for_employees      = false
+      }
+      auth_success_settings {
+
+        redirect_url     = "string"
+        success_redirect = "string"
+      }
+      byod_settings {
+
+        byod_registration_settings {
+
+          end_point_identity_group_id = "string"
+          show_device_id              = false
+        }
+        byod_registration_success_settings {
+
+          redirect_url     = "string"
+          success_redirect = "string"
+        }
+        byod_welcome_settings {
+
+          aup_display            = "string"
+          enable_byo_d           = false
+          enable_guest_access    = false
+          include_aup            = false
+          require_aup_acceptance = false
+          require_mdm            = false
+          require_scrolling      = false
+        }
+      }
+      guest_change_password_settings {
+
+        allow_change_passwd_at_first_login = false
+      }
+      guest_device_registration_settings {
+
+        allow_guests_to_register_devices = false
+        auto_register_guest_devices      = false
+      }
+      login_page_settings {
+
+        access_code                           = "string"
+        allow_alternate_guest_portal          = false
+        allow_forgot_password                 = false
+        allow_guest_to_change_password        = false
+        allow_guest_to_create_accounts        = false
+        allow_guest_to_use_social_accounts    = false
+        allow_show_guest_form                 = false
+        alternate_guest_portal                = "string"
+        aup_display                           = "string"
+        include_aup                           = false
+        max_failed_attempts_before_rate_limit = 1
+        require_access_code                   = false
+        require_aup_acceptance                = false
+        social_configs {
+
+          social_media_type  = "string"
+          social_media_value = "string"
+        }
+        time_between_logins_during_rate_limit = 1
+      }
+      portal_settings {
+
+        allowed_interfaces               = "string"
+        always_used_language             = "string"
+        assigned_guest_type_for_employee = "string"
+        authentication_method            = "string"
+        certificate_group_tag            = "string"
+        display_lang                     = "string"
+        fallback_language                = "string"
+        https_port                       = 1
+      }
+      post_access_banner_settings {
+
+        include_post_access_banner = false
+      }
+      post_login_banner_settings {
+
+        include_post_access_banner = false
+      }
+      self_reg_page_settings {
+
+        account_validity_duration               = 1
+        account_validity_time_units             = "string"
+        allow_grace_access                      = false
+        approval_email_addresses                = "string"
+        approve_deny_links_time_units           = "string"
+        approve_deny_links_valid_for            = 1
+        assign_guests_to_guest_type             = "string"
+        aup_display                             = "string"
+        authenticate_sponsors_using_portal_list = "string"
+        auto_login_self_wait                    = false
+        auto_login_time_period                  = 1
+        credential_notification_using_email     = false
+        credential_notification_using_sms       = false
+        enable_guest_email_blacklist            = false
+        enable_guest_email_whitelist            = false
+        field_company {
+
+          include = false
+          require = false
+        }
+        field_email_addr {
+
+          include = false
+          require = false
+        }
+        field_first_name {
+
+          include = false
+          require = false
+        }
+        field_last_name {
+
+          include = false
+          require = false
+        }
+        field_location {
+
+          include = false
+          require = false
+        }
+        field_person_being_visited {
+
+          include = false
+          require = false
+        }
+        field_phone_no {
+
+          include = false
+          require = false
+        }
+        field_reason_for_visit {
+
+          include = false
+          require = false
+        }
+        field_sms_provider {
+
+          include = false
+          require = false
+        }
+        field_user_name {
+
+          include = false
+          require = false
+        }
+        grace_access_expire_interval         = 1
+        grace_access_send_account_expiration = false
+        guest_email_blacklist_domains        = "string"
+        guest_email_whitelist_domains        = "string"
+        include_aup                          = false
+        post_registration_redirect           = "string"
+        post_registration_redirect_url       = "string"
+        registration_code                    = "string"
+        require_approver_to_authenticate     = false
+        require_aup_acceptance               = false
+        require_guest_approval               = false
+        require_registration_code            = false
+        selectable_locations                 = ["string"]
+        selectable_sms_providers             = ["string"]
+        send_approval_request_to             = "string"
+        sponsor_portal_list                  = ["string"]
+      }
+      self_reg_success_settings {
+
+        allow_guest_login_from_selfreg_success_page = false
+        allow_guest_send_self_using_email           = false
+        allow_guest_send_self_using_print           = false
+        allow_guest_send_self_using_sms             = false
+        aup_on_page                                 = false
+        include_aup                                 = false
+        include_company                             = false
+        include_email_addr                          = false
+        include_first_name                          = false
+        include_last_name                           = false
+        include_location                            = false
+        include_password                            = false
+        include_person_being_visited                = false
+        include_phone_no                            = false
+        include_reason_for_visit                    = false
+        include_sms_provider                        = false
+        include_user_name                           = false
+        require_aup_acceptance                      = false
+        require_aup_scrolling                       = false
+      }
+      support_info_settings {
+
+        default_empty_field_value  = "string"
+        empty_field_display        = "string"
+        include_browser_user_agent = false
+        include_failure_code       = false
+        include_ip_address         = false
+        include_mac_addr           = false
+        include_policy_server      = false
+        include_support_info_page  = false
+      }
+    }
+  }
+}
+
+output "ciscoise_self_registered_portal_example" {
+  value = ciscoise_self_registered_portal.example
+}
+```
 
 <!-- schema generated by tfplugindocs -->
 ## Schema
@@ -29,13 +312,19 @@ description: |-
 
 Optional:
 
-- **customizations** (Block List) (see [below for nested schema](#nestedblock--item--customizations))
+- **customizations** (Block List) Defines all of the Portal Customizations available (see [below for nested schema](#nestedblock--item--customizations))
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
-- **portal_test_url** (String)
-- **portal_type** (String)
-- **settings** (Block List) (see [below for nested schema](#nestedblock--item--settings))
+- **portal_test_url** (String) URL to bring up a test page for this portal
+- **portal_type** (String) Allowed values:
+  - BYOD,
+  - HOTSPOTGUEST,
+  - MYDEVICE,
+  - SELFREGGUEST,
+  - SPONSOR,
+  - SPONSOREDGUEST
+- **settings** (Block List) Defines all of the settings groups available for a portal (see [below for nested schema](#nestedblock--item--settings))
 
 Read-Only:
 
@@ -47,10 +336,12 @@ Read-Only:
 Optional:
 
 - **global_customizations** (Block List) (see [below for nested schema](#nestedblock--item--customizations--global_customizations))
-- **language** (Block List) (see [below for nested schema](#nestedblock--item--customizations--language))
-- **page_customizations** (Block List) (see [below for nested schema](#nestedblock--item--customizations--page_customizations))
+- **language** (Block List) This property is supported only for Read operation and it allows to show the customizations in English. Other languages are not supported (see [below for nested schema](#nestedblock--item--customizations--language))
+- **page_customizations** (Block List) Represent the entire page customization as a giant dictionary (see [below for nested schema](#nestedblock--item--customizations--page_customizations))
 - **portal_theme** (Block List) (see [below for nested schema](#nestedblock--item--customizations--portal_theme))
-- **portal_tweak_settings** (Block List) (see [below for nested schema](#nestedblock--item--customizations--portal_tweak_settings))
+- **portal_tweak_settings** (Block List) The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+  The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--item--customizations--portal_tweak_settings))
 
 <a id="nestedblock--item--customizations--global_customizations"></a>
 ### Nested Schema for `item.customizations.global_customizations`
@@ -70,7 +361,7 @@ Optional:
 
 Optional:
 
-- **data** (String)
+- **data** (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--item--customizations--global_customizations--banner_image"></a>
@@ -78,7 +369,7 @@ Optional:
 
 Optional:
 
-- **data** (String)
+- **data** (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--item--customizations--global_customizations--desktop_logo_image"></a>
@@ -86,7 +377,7 @@ Optional:
 
 Optional:
 
-- **data** (String)
+- **data** (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--item--customizations--global_customizations--mobile_logo_image"></a>
@@ -94,7 +385,7 @@ Optional:
 
 Optional:
 
-- **data** (String)
+- **data** (String) Represented as base 64 encoded string of the image byte array
 
 
 
@@ -111,7 +402,7 @@ Optional:
 
 Optional:
 
-- **data** (Block List) (see [below for nested schema](#nestedblock--item--customizations--page_customizations--data))
+- **data** (Block List) The Dictionary will be exposed here as key value pair (see [below for nested schema](#nestedblock--item--customizations--page_customizations--data))
 
 <a id="nestedblock--item--customizations--page_customizations--data"></a>
 ### Nested Schema for `item.customizations.page_customizations.data`
@@ -129,8 +420,8 @@ Optional:
 Optional:
 
 - **id** (String) The ID of this resource.
-- **name** (String)
-- **theme_data** (String)
+- **name** (String) The system- or user-assigned name of the portal theme
+- **theme_data** (String) A CSS file, represented as a Base64-encoded byte array
 
 
 <a id="nestedblock--item--customizations--portal_tweak_settings"></a>
@@ -138,7 +429,7 @@ Optional:
 
 Optional:
 
-- **banner_color** (String)
+- **banner_color** (String) Hex value of color
 - **banner_text_color** (String)
 - **page_background_color** (String)
 - **page_label_and_text_color** (String)
@@ -152,11 +443,11 @@ Optional:
 
 - **aup_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--aup_settings))
 - **auth_success_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--auth_success_settings))
-- **byod_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--byod_settings))
+- **byod_settings** (Block List) Configuration of BYOD Device Welcome, Registration and Success steps (see [below for nested schema](#nestedblock--item--settings--byod_settings))
 - **guest_change_password_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--guest_change_password_settings))
 - **guest_device_registration_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--guest_device_registration_settings))
-- **login_page_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--login_page_settings))
-- **portal_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--portal_settings))
+- **login_page_settings** (Block List) Portal Login Page settings groups follow (see [below for nested schema](#nestedblock--item--settings--login_page_settings))
+- **portal_settings** (Block List) The port, interface, certificate, and other basic settings of a portal (see [below for nested schema](#nestedblock--item--settings--portal_settings))
 - **post_access_banner_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--post_access_banner_settings))
 - **post_login_banner_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--post_login_banner_settings))
 - **self_reg_page_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--self_reg_page_settings))
@@ -168,13 +459,19 @@ Optional:
 
 Optional:
 
-- **display_frequency** (String)
-- **display_frequency_interval_days** (Number)
-- **include_aup** (Boolean)
-- **require_aup_scrolling** (Boolean)
+- **display_frequency** (String) How the AUP should be displayed, either on page or as a link.
+  Only valid if includeAup = true.
+  Allowed Values:
+  - FIRSTLOGIN,
+  - EVERYLOGIN,
+  - RECURRING
+- **display_frequency_interval_days** (Number) Number of days between AUP confirmations (when displayFrequency = recurring)
+- **include_aup** (Boolean) Require the portal user to read and accept an AUP
+- **require_aup_scrolling** (Boolean) Require the portal user to scroll to the end of the AUP.
+  Only valid if requireAupAcceptance = true
 - **require_scrolling** (Boolean)
-- **skip_aup_for_employees** (Boolean)
-- **use_diff_aup_for_employees** (Boolean)
+- **skip_aup_for_employees** (Boolean) Only valid if requireAupAcceptance = trueG
+- **use_diff_aup_for_employees** (Boolean) Only valid if requireAupAcceptance = trueG
 
 
 <a id="nestedblock--item--settings--auth_success_settings"></a>
@@ -191,17 +488,17 @@ Optional:
 
 Optional:
 
-- **byod_registration_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--byod_settings--byod_registration_settings))
-- **byod_registration_success_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--byod_settings--byod_registration_success_settings))
-- **byod_welcome_settings** (Block List) (see [below for nested schema](#nestedblock--item--settings--byod_settings--byod_welcome_settings))
+- **byod_registration_settings** (Block List) Configuration of BYOD endpoint Registration step configuration (see [below for nested schema](#nestedblock--item--settings--byod_settings--byod_registration_settings))
+- **byod_registration_success_settings** (Block List) Configuration of BYOD endpoint Registration Success step configuration (see [below for nested schema](#nestedblock--item--settings--byod_settings--byod_registration_success_settings))
+- **byod_welcome_settings** (Block List) Configuration of BYOD endpoint welcome step configuration (see [below for nested schema](#nestedblock--item--settings--byod_settings--byod_welcome_settings))
 
 <a id="nestedblock--item--settings--byod_settings--byod_registration_settings"></a>
 ### Nested Schema for `item.settings.byod_settings.byod_welcome_settings`
 
 Optional:
 
-- **end_point_identity_group_id** (String)
-- **show_device_id** (Boolean)
+- **end_point_identity_group_id** (String) Identity group id for which endpoint belongs
+- **show_device_id** (Boolean) Display Device ID field during registration
 
 
 <a id="nestedblock--item--settings--byod_settings--byod_registration_success_settings"></a>
@@ -209,8 +506,12 @@ Optional:
 
 Optional:
 
-- **redirect_url** (String)
-- **success_redirect** (String)
+- **redirect_url** (String) Target URL for redirection, used when successRedirect = URL
+- **success_redirect** (String) After an Authentication Success where should device be redirected.
+  Allowed values:
+  - AUTHSUCCESSPAGE,
+  - ORIGINATINGURL,
+  - URL
 
 
 <a id="nestedblock--item--settings--byod_settings--byod_welcome_settings"></a>
@@ -218,13 +519,18 @@ Optional:
 
 Optional:
 
-- **aup_display** (String)
+- **aup_display** (String) How the AUP should be displayed, either on page or as a link.
+  Only valid if includeAup = true.
+  Allowed values:
+  - ONPAGE,
+  - ASLINK
 - **enable_byo_d** (Boolean)
 - **enable_guest_access** (Boolean)
 - **include_aup** (Boolean)
 - **require_aup_acceptance** (Boolean)
 - **require_mdm** (Boolean)
-- **require_scrolling** (Boolean)
+- **require_scrolling** (Boolean) Require BYOD devices to scroll down to the bottom of the AUP, 
+  Only valid if includeAup = true
 
 
 
@@ -233,7 +539,7 @@ Optional:
 
 Optional:
 
-- **allow_change_passwd_at_first_login** (Boolean)
+- **allow_change_passwd_at_first_login** (Boolean) Allow guest to change their own passwords
 
 
 <a id="nestedblock--item--settings--guest_device_registration_settings"></a>
@@ -241,8 +547,8 @@ Optional:
 
 Optional:
 
-- **allow_guests_to_register_devices** (Boolean)
-- **auto_register_guest_devices** (Boolean)
+- **allow_guests_to_register_devices** (Boolean) Allow guests to register devices
+- **auto_register_guest_devices** (Boolean) Automatically register guest devices
 
 
 <a id="nestedblock--item--settings--login_page_settings"></a>
@@ -250,21 +556,25 @@ Optional:
 
 Optional:
 
-- **access_code** (String)
+- **access_code** (String) Access code that must be entered by the portal user (only valid if requireAccessCode = true)
 - **allow_alternate_guest_portal** (Boolean)
 - **allow_forgot_password** (Boolean)
-- **allow_guest_to_change_password** (Boolean)
+- **allow_guest_to_change_password** (Boolean) Require the portal user to enter an access code
 - **allow_guest_to_create_accounts** (Boolean)
 - **allow_guest_to_use_social_accounts** (Boolean)
 - **allow_show_guest_form** (Boolean)
 - **alternate_guest_portal** (String)
-- **aup_display** (String)
-- **include_aup** (Boolean)
-- **max_failed_attempts_before_rate_limit** (Number)
-- **require_access_code** (Boolean)
-- **require_aup_acceptance** (Boolean)
+- **aup_display** (String) How the AUP should be displayed, either on page or as a link.
+  Only valid if includeAup = true.
+  Allowed values:
+  -  ONPAGE,
+  - ASLINK
+- **include_aup** (Boolean) Include an Acceptable Use Policy (AUP) that should be displayed during login
+- **max_failed_attempts_before_rate_limit** (Number) Maximum failed login attempts before rate limiting
+- **require_access_code** (Boolean) Require the portal user to enter an access code
+- **require_aup_acceptance** (Boolean) Require the portal user to accept the AUP. Only valid if includeAup = true
 - **social_configs** (Block List) (see [below for nested schema](#nestedblock--item--settings--login_page_settings--social_configs))
-- **time_between_logins_during_rate_limit** (Number)
+- **time_between_logins_during_rate_limit** (Number) Time between login attempts when rate limiting
 
 <a id="nestedblock--item--settings--login_page_settings--social_configs"></a>
 ### Nested Schema for `item.settings.login_page_settings.time_between_logins_during_rate_limit`
@@ -281,14 +591,28 @@ Optional:
 
 Optional:
 
-- **allowed_interfaces** (String)
+- **allowed_interfaces** (String) Interfaces that the portal will be reachable on.
+  Allowed values:
+  - eth0,
+  - eth1,
+  - eth2,
+  - eth3,
+  - eth4,
+  - eth5,
+  - bond0,
+  - bond1,
+  - bond2
 - **always_used_language** (String)
-- **assigned_guest_type_for_employee** (String)
-- **authentication_method** (String)
-- **certificate_group_tag** (String)
-- **display_lang** (String)
-- **fallback_language** (String)
-- **https_port** (Number)
+- **assigned_guest_type_for_employee** (String) Unique Id of a guest type.
+  Employees using this portal as a guest inherit login options from the guest type
+- **authentication_method** (String) Unique Id of the identity source sequence
+- **certificate_group_tag** (String) Logical name of the x.509 server certificate that will be used for the portal
+- **display_lang** (String) Allowed values:
+  - USEBROWSERLOCALE,
+  - ALWAYSUSE
+- **fallback_language** (String) Used when displayLang = USEBROWSERLOCALE
+- **https_port** (Number) The port number that the allowed interfaces will listen on.
+  Range from 8000 to 8999
 
 
 <a id="nestedblock--item--settings--post_access_banner_settings"></a>
@@ -304,7 +628,7 @@ Optional:
 
 Optional:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (Boolean) Include a Post-Login Banner page
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings"></a>
@@ -312,21 +636,40 @@ Optional:
 
 Optional:
 
-- **account_validity_duration** (Number)
-- **account_validity_time_units** (String)
+- **account_validity_duration** (Number) Self-registered guest account is valid for this many account_validity_time_units
+- **account_validity_time_units** (String) Time units for account_validity_duration.
+  Allowed Values:
+  - DAYS,
+  - HOURS,
+  - MINUTES
 - **allow_grace_access** (Boolean)
-- **approval_email_addresses** (String)
-- **approve_deny_links_time_units** (String)
-- **approve_deny_links_valid_for** (Number)
-- **assign_guests_to_guest_type** (String)
-- **aup_display** (String)
+- **approval_email_addresses** (String) Only valid if requireGuestApproval = true and sendApprovalRequestTo = SELECTEDEMAILADDRESSES
+- **approve_deny_links_time_units** (String) This attribute, along with approveDenyLinksValidFor, specifies how long the link can be used.
+  Only valid if requireGuestApproval = true.
+  Allowed Values:
+  - DAYS,
+  - HOURS,
+  - MINUTES
+- **approve_deny_links_valid_for** (Number) This attribute, along with approveDenyLinksTimeUnits, specifies how long the link can be used.
+  Only valid if requireGuestApproval = true
+- **assign_guests_to_guest_type** (String) Guests are assigned to this guest type
+- **aup_display** (String) How the AUP should be displayed, either on page or as a link.
+  Only valid if includeAup = true.
+  Allowed values:
+  - ONPAGE,
+  - ASLINK
 - **authenticate_sponsors_using_portal_list** (String)
-- **auto_login_self_wait** (Boolean)
-- **auto_login_time_period** (Number)
-- **credential_notification_using_email** (Boolean)
-- **credential_notification_using_sms** (Boolean)
-- **enable_guest_email_blacklist** (Boolean)
-- **enable_guest_email_whitelist** (Boolean)
+- **auto_login_self_wait** (Boolean) Allow guests to login automatically from self-registration after sponsor's approval.
+  No need to provide the credentials by guest to login
+- **auto_login_time_period** (Number) Waiting period for auto login until sponsor's approval.
+  If time exceeds, guest has to login manually by providing the credentials.
+  Default value is 5 minutes
+- **credential_notification_using_email** (Boolean) If true, send credential notification upon approval using email.
+  Only valid if requireGuestApproval = true
+- **credential_notification_using_sms** (Boolean) If true, send credential notification upon approval using SMS.
+  Only valid if requireGuestApproval = true
+- **enable_guest_email_blacklist** (Boolean) Disallow guests with an e-mail address from selected domains
+- **enable_guest_email_whitelist** (Boolean) Allow guests with an e-mail address from selected domains
 - **field_company** (Block List) (see [below for nested schema](#nestedblock--item--settings--self_reg_page_settings--field_company))
 - **field_email_addr** (Block List) (see [below for nested schema](#nestedblock--item--settings--self_reg_page_settings--field_email_addr))
 - **field_first_name** (Block List) (see [below for nested schema](#nestedblock--item--settings--self_reg_page_settings--field_first_name))
@@ -339,19 +682,33 @@ Optional:
 - **field_user_name** (Block List) (see [below for nested schema](#nestedblock--item--settings--self_reg_page_settings--field_user_name))
 - **grace_access_expire_interval** (Number)
 - **grace_access_send_account_expiration** (Boolean)
-- **guest_email_blacklist_domains** (String)
-- **guest_email_whitelist_domains** (String)
-- **include_aup** (Boolean)
-- **post_registration_redirect** (String)
-- **post_registration_redirect_url** (String)
-- **registration_code** (String)
-- **require_approver_to_authenticate** (Boolean)
-- **require_aup_acceptance** (Boolean)
-- **require_guest_approval** (Boolean)
-- **require_registration_code** (Boolean)
-- **selectable_locations** (List of String)
-- **selectable_sms_providers** (List of String)
-- **send_approval_request_to** (String)
+- **guest_email_blacklist_domains** (String) Disallow guests with an e-mail address from selected domains
+- **guest_email_whitelist_domains** (String) Self-registered guests whose e-mail address is in one of these domains will be allowed.
+  Only valid if enableGuestEmailWhitelist = true
+- **include_aup** (Boolean) Include an Acceptable Use Policy (AUP) that should be displayed during login
+- **post_registration_redirect** (String) After the registration submission direct the guest user to one of the following pages.
+  Only valid if requireGuestApproval = true.
+  Allowed Values:
+  - SELFREGISTRATIONSUCCESS,
+  - LOGINPAGEWITHINSTRUCTIONS
+  - URL
+- **post_registration_redirect_url** (String) URL where guest user is redirected after registration.
+  Only valid if requireGuestApproval = true and postRegistrationRedirect = URL
+- **registration_code** (String) The registration code that the guest user must enter
+- **require_approver_to_authenticate** (Boolean) When self-registered guests require approval, an approval request is e-mailed to one or more sponsor users.
+  If the Cisco ISE Administrator chooses to include an approval link in the e-mail,
+  a sponsor user who clicks the link will be required to enter their username and password if this attribute is true.
+  Only valid if requireGuestApproval = true
+- **require_aup_acceptance** (Boolean) Require the portal user to accept the AUP. Only valid if includeAup = true
+- **require_guest_approval** (Boolean) Require self-registered guests to be approved if true
+- **require_registration_code** (Boolean) Self-registered guests are required to enter a registration code
+- **selectable_locations** (List of String) Guests can choose from these locations to set their time zone
+- **selectable_sms_providers** (List of String) This attribute is an array of SMS provider names
+- **send_approval_request_to** (String) Specifies where approval requests are sent.
+  Only valid if requireGuestApproval = true.
+  Allowed Values:
+  - SELECTEDEMAILADDRESSES,
+  - PERSONBEINGVISITED
 - **sponsor_portal_list** (List of String)
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_company"></a>
@@ -360,7 +717,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_email_addr"></a>
@@ -369,7 +726,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_first_name"></a>
@@ -378,7 +735,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_last_name"></a>
@@ -387,7 +744,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_location"></a>
@@ -396,7 +753,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_person_being_visited"></a>
@@ -405,7 +762,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_phone_no"></a>
@@ -414,7 +771,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_reason_for_visit"></a>
@@ -423,7 +780,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_sms_provider"></a>
@@ -432,7 +789,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 <a id="nestedblock--item--settings--self_reg_page_settings--field_user_name"></a>
@@ -441,7 +798,7 @@ Optional:
 Optional:
 
 - **include** (Boolean)
-- **require** (Boolean)
+- **require** (Boolean) Only applicable if include = true
 
 
 
@@ -476,8 +833,12 @@ Optional:
 
 Optional:
 
-- **default_empty_field_value** (String)
-- **empty_field_display** (String)
+- **default_empty_field_value** (String) The default value displayed for an empty field.
+  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
+- **empty_field_display** (String) Specifies how empty fields are handled on the Support Information Page. Allowed values:
+  - HIDE,
+  - DISPLAYWITHNOVALUE,
+  - DISPLAYWITHDEFAULTVALUE
 - **include_browser_user_agent** (Boolean)
 - **include_failure_code** (Boolean)
 - **include_ip_address** (Boolean)
@@ -496,4 +857,10 @@ Read-Only:
 - **rel** (String)
 - **type** (String)
 
+## Import
 
+Import is supported using the following syntax:
+
+```shell
+terraform import ciscoise_self_registered_portal.example "id=string"
+```

@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_session_disconnect Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  Session Disconnect
 ---
 
 # ciscoise_mnt_session_disconnect (Data Source)
 
+It performs read operation on Misc.
 
+Session Disconnect
 
 
 
@@ -17,11 +20,11 @@ description: |-
 
 ### Required
 
-- **dis_con_nec_tty_pe** (String)
-- **end_poi_nti_p** (String)
-- **mac** (String)
-- **nas_ipv4** (String)
-- **psn_nam_e** (String)
+- **dis_con_nec_tty_pe** (String) DISCONNECT_TYPE path parameter.
+- **end_poi_nti_p** (String) ENDPOINT_IP path parameter.
+- **mac** (String) MAC path parameter.
+- **nas_ipv4** (String) NAS_IPV4 path parameter.
+- **psn_nam_e** (String) PSN_NAME path parameter.
 
 ### Optional
 

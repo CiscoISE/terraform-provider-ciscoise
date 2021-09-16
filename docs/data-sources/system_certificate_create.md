@@ -3,12 +3,15 @@
 page_title: "ciscoise_system_certificate_create Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on SystemCertificate.
+  This data source action allows the client to create a system certificate.
 ---
 
 # ciscoise_system_certificate_create (Data Source)
 
+It performs create operation on SystemCertificate.
 
+This data source action allows the client to create a system certificate.
 
 
 
@@ -17,9 +20,9 @@ description: |-
 
 ### Optional
 
-- **ers_local_cert_stub** (Block List) (see [below for nested schema](#nestedblock--ers_local_cert_stub))
+- **ers_local_cert_stub** (Block List) Inputs for certificate creation (see [below for nested schema](#nestedblock--ers_local_cert_stub))
 - **id** (String) The ID of this resource.
-- **node_id** (String)
+- **node_id** (String) NodeId of Cisco ISE application
 
 ### Read-Only
 
@@ -36,7 +39,7 @@ Optional:
 - **certificate_san_ip** (String)
 - **certificate_san_uri** (String)
 - **digest** (String)
-- **ers_subject_stub** (Block List) (see [below for nested schema](#nestedblock--ers_local_cert_stub--ers_subject_stub))
+- **ers_subject_stub** (Block List) Subject data of certificate (see [below for nested schema](#nestedblock--ers_local_cert_stub--ers_subject_stub))
 - **expiration_ttl** (Number)
 - **friendly_name** (String)
 - **group_tag_dd** (String)

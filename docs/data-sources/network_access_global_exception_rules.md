@@ -3,12 +3,17 @@
 page_title: "ciscoise_network_access_global_exception_rules Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Network Access - Authorization Global Exception Rules.
+  Network Access Get global execption rules.
+  Network Access Get global exception rule attributes.
 ---
 
 # ciscoise_network_access_global_exception_rules (Data Source)
 
+It performs read operation on Network Access - Authorization Global Exception Rules.
 
+Network Access Get global execption rules.
+Network Access Get global exception rule attributes.
 
 
 
@@ -17,7 +22,7 @@ description: |-
 
 ### Optional
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter. Rule id
 
 ### Read-Only
 

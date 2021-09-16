@@ -3,12 +3,15 @@
 page_title: "ciscoise_mnt_session_by_mac Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Misc.
+  Sessions by MAC
 ---
 
 # ciscoise_mnt_session_by_mac (Data Source)
 
+It performs read operation on Misc.
 
+Sessions by MAC
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **mac** (String)
+- **mac** (String) mac path parameter.
 
 ### Optional
 

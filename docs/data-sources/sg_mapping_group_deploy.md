@@ -3,12 +3,17 @@
 page_title: "ciscoise_sg_mapping_group_deploy Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on IPToSGTMappingGroup.
+  This data source action allows the client to deploy an IP to SGT mapping group by ID.
+  Only one Deploy process can run at any given time
 ---
 
 # ciscoise_sg_mapping_group_deploy (Data Source)
 
+It performs update operation on IPToSGTMappingGroup.
 
+This data source action allows the client to deploy an IP to SGT mapping group by ID.
+Only one Deploy process can run at any given time
 
 
 
@@ -17,7 +22,7 @@ description: |-
 
 ### Required
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 
 ### Read-Only
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_device_administration_conditions_for_authorization_rule Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Conditions.
+  Device Admin Returns list of library conditions for authorization rules.
 ---
 
 # ciscoise_device_administration_conditions_for_authorization_rule (Data Source)
 
+It performs read operation on Device Administration - Conditions.
 
+Device Admin Returns list of library conditions for authorization rules.
 
 
 

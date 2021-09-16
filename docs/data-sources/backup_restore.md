@@ -3,12 +3,17 @@
 page_title: "ciscoise_backup_restore Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Backup And Restore.
+  Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API to
+  get the status of the backup job
 ---
 
 # ciscoise_backup_restore (Data Source)
 
+It performs create operation on Backup And Restore.
 
+Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API to
+get the status of the backup job
 
 
 
@@ -17,11 +22,11 @@ description: |-
 
 ### Optional
 
-- **backup_encryption_key** (String)
+- **backup_encryption_key** (String) The encryption key which was provided at the time of taking backup.
 - **id** (String) The ID of this resource.
-- **repository_name** (String)
-- **restore_file** (String)
-- **restore_include_adeos** (String)
+- **repository_name** (String) Name of the configred repository where the backup file exists.
+- **restore_file** (String) Name of the backup file to be restored on ISE node.
+- **restore_include_adeos** (String) Determines whether the ADE-OS configure is restored. Possible values true, false
 
 ### Read-Only
 

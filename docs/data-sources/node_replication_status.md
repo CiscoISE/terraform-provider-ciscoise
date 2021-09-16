@@ -3,12 +3,15 @@
 page_title: "ciscoise_node_replication_status Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Replication Status.
+  Retrives replication status of a node
 ---
 
 # ciscoise_node_replication_status (Data Source)
 
+It performs read operation on Replication Status.
 
+Retrives replication status of a node
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **node** (String)
+- **node** (String) node path parameter. ID of the existing node.
 
 ### Optional
 

@@ -3,12 +3,15 @@
 page_title: "ciscoise_anc_endpoint_clear Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on ANCEndpoint.
+  This data source action allows the client to clear the required configuration.
 ---
 
 # ciscoise_anc_endpoint_clear (Data Source)
 
+It performs update operation on ANCEndpoint.
 
+This data source action allows the client to clear the required configuration.
 
 
 

@@ -3,12 +3,17 @@
 page_title: "ciscoise_node_sync Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs create operation on Sync ISE Node.
+  Performing a manual sync will involve a reload of the target node, but not the primary PAN. There might be situations
+  where if the node has been out of sync for a long time, it may not be possible to recover via a manual sync.
 ---
 
 # ciscoise_node_sync (Data Source)
 
+It performs create operation on Sync ISE Node.
 
+Performing a manual sync will involve a reload of the target node, but not the primary PAN. There might be situations
+where if the node has been out of sync for a long time, it may not be possible to recover via a manual sync.
 
 
 

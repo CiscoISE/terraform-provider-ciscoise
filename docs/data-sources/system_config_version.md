@@ -3,12 +3,15 @@
 page_title: "ciscoise_system_config_version Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on VersionAndPatch.
+  This data source allows the client to get Cisco ISE version and patch information.
 ---
 
 # ciscoise_system_config_version (Data Source)
 
+It performs read operation on VersionAndPatch.
 
+This data source allows the client to get Cisco ISE version and patch information.
 
 
 

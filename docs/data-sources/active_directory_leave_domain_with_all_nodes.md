@@ -3,12 +3,15 @@
 page_title: "ciscoise_active_directory_leave_domain_with_all_nodes Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on ActiveDirectory.
+  This data source action joins makes all Cisco ISE nodes leave an Active Directory domain.
 ---
 
 # ciscoise_active_directory_leave_domain_with_all_nodes (Data Source)
 
+It performs update operation on ActiveDirectory.
 
+This data source action joins makes all Cisco ISE nodes leave an Active Directory domain.
 
 
 
@@ -17,7 +20,7 @@ description: |-
 
 ### Required
 
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 
 ### Optional
 

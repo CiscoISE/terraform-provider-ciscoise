@@ -3,12 +3,15 @@
 page_title: "ciscoise_device_administration_conditions_for_policy_set Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on Device Administration - Conditions.
+  Device Admin Returns list of library conditions for policy sets.
 ---
 
 # ciscoise_device_administration_conditions_for_policy_set (Data Source)
 
+It performs read operation on Device Administration - Conditions.
 
+Device Admin Returns list of library conditions for policy sets.
 
 
 

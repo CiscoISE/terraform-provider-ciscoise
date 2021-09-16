@@ -3,12 +3,17 @@
 page_title: "ciscoise_px_grid_node_approve Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs update operation on pxGridNode.
+  This data source action allows the client to approve a pxGrid node.
+  Only pending pxGrid nodes can be approved
 ---
 
 # ciscoise_px_grid_node_approve (Data Source)
 
+It performs update operation on pxGridNode.
 
+This data source action allows the client to approve a pxGrid node.
+Only pending pxGrid nodes can be approved
 
 
 
@@ -17,7 +22,7 @@ description: |-
 
 ### Required
 
-- **name** (String)
+- **name** (String) name path parameter.
 
 ### Optional
 

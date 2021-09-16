@@ -3,12 +3,17 @@
 page_title: "ciscoise_tasks Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  
+  It performs read operation on tasks.
+  get all task status
+  Monitor task status
 ---
 
 # ciscoise_tasks (Data Source)
 
+It performs read operation on tasks.
 
+get all task status
+Monitor task status
 
 
 
@@ -18,7 +23,7 @@ description: |-
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **task_id** (String)
+- **task_id** (String) taskId path parameter. The id of the task executed before
 
 ### Read-Only
 
