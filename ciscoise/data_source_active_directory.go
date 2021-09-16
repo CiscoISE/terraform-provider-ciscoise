@@ -14,9 +14,9 @@ func dataSourceActiveDirectory() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on ActiveDirectory.
 
-This data source allows the client to get Active Directory by name.
-This data source fetchs the join point details by ID. The ID can be retrieved with the Get All operation.
-This data source lists all the join points for Active Directory domains in Cisco ISE.`,
+- This data source allows the client to get Active Directory by name.
+- This data source fetchs the join point details by ID. The ID can be retrieved with the Get All operation.
+- This data source lists all the join points for Active Directory domains in Cisco ISE.`,
 
 		ReadContext: dataSourceActiveDirectoryRead,
 		Schema: map[string]*schema.Schema{

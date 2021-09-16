@@ -14,7 +14,7 @@ func dataSourceCsr() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Certificates.
 
- This data source supports Filtering, Sorting and Pagination.
+- This data source supports Filtering, Sorting and Pagination.
 
 
 Filtering and Sorting supported on below mentioned attributes:
@@ -43,7 +43,7 @@ Supported Operators: EQ, NEQ, GT and LT
 
 
 
-This data source displays details of a Certificate Signing Request of a particular node based on a given HostName and
+- This data source displays details of a Certificate Signing Request of a particular node based on a given HostName and
 ID.`,
 
 		ReadContext: dataSourceCsrRead,

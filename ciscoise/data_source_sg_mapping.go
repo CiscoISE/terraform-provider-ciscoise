@@ -14,25 +14,12 @@ func dataSourceSgMapping() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on IPToSGTMapping.
 
-This data source allows the client to get an IP to SGT mapping by ID.
-This data source allows the client to get all the IP to SGT mappings.
+- This data source allows the client to get an IP to SGT mapping by ID.
+- This data source allows the client to get all the IP to SGT mappings.
 
 Filter:
 
 [hostName, groupName, ip, sgtName]
-
-To search guest users by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 
 
 Sorting:

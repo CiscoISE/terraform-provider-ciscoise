@@ -15,7 +15,7 @@ func dataSourceEgressMatrixCellSetAllStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on EgressMatrixCell.
 
-his API allows the client to set status of all the egress matrix cells.`,
+- This data source action allows the client to set status of all the egress matrix cells.`,
 
 		ReadContext: dataSourceEgressMatrixCellSetAllStatusRead,
 		Schema: map[string]*schema.Schema{

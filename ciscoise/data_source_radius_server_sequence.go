@@ -14,8 +14,8 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on RADIUSServerSequence.
 
-This data source allows the client to get a RADIUS server sequence by ID.
-This data source allows the client to get all the RADIUS server sequences.`,
+- This data source allows the client to get a RADIUS server sequence by ID.
+- This data source allows the client to get all the RADIUS server sequences.`,
 
 		ReadContext: dataSourceRadiusServerSequenceRead,
 		Schema: map[string]*schema.Schema{

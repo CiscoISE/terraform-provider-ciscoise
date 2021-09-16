@@ -4,16 +4,16 @@ page_title: "ciscoise_native_supplicant_profile Data Source - terraform-provider
 subcategory: ""
 description: |-
   It performs read operation on NativeSupplicantProfile.
-  This data source allows the client to get a native supplicant profile by ID.
-  This data source allows the client to get all the native supplicant profiles.
+  - This data source allows the client to get a native supplicant profile by ID.
+  - This data source allows the client to get all the native supplicant profiles.
 ---
 
 # ciscoise_native_supplicant_profile (Data Source)
 
 It performs read operation on NativeSupplicantProfile.
 
-This data source allows the client to get a native supplicant profile by ID.
-This data source allows the client to get all the native supplicant profiles.
+- This data source allows the client to get a native supplicant profile by ID.
+- This data source allows the client to get all the native supplicant profiles.
 
 ## Example Usage
 

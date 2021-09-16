@@ -4,17 +4,10 @@ page_title: "ciscoise_anc_endpoint Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on ANCEndpoint.
-  This data source allows the client to get an ANC endpoint by ID.
-  This data source allows the client to get all the ANC endpoints.
+  - This data source allows the client to get an ANC endpoint by ID.
+  - This data source allows the client to get all the ANC endpoints.
   Filter:
   [name]
-  To search resources by using
-  toDate
-   column,follow the format:
-  DD-MON-YY (Example:13-SEP-18)
-  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
   Sorting:
   [name]
 ---
@@ -23,25 +16,11 @@ description: |-
 
 It performs read operation on ANCEndpoint.
 
-This data source allows the client to get an ANC endpoint by ID.
-This data source allows the client to get all the ANC endpoints.
+- This data source allows the client to get an ANC endpoint by ID.
+- This data source allows the client to get all the ANC endpoints.
 
 Filter:
 [name]
-
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
-
 
 Sorting:
 [name]

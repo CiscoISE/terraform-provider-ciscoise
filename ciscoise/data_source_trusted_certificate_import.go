@@ -22,106 +22,6 @@ func dataSourceTrustedCertificateImport() *schema.Resource {
 Import an X509 certificate as a trust certificate.
 
 NOTE:
-Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
-
-Following Parameters are used in POST body
-
-
-
-
-PARAMETER
-
-DESCRIPTION
-
-EXAMPLE
-
-
-
-
-
-name
-
-Friendly name of the certificate
-
-Trust Certificate
-
-
-
-description
-
-Description of the certificate
-
-Passw***
-
-
-
-data
-
-Plain-text contents of the certificate file (required)
-
-Trust Certificate in escaped format
-
-
-
-allowOutOfDateCert
-
-Allow out of date certificates (required)
-
-false
-
-
-
-allowSHA1Certificates
-
-Allow SHA1 based certificates (required)
-
-false
-
-
-
-
-trustForIseAuth
-
-Trust for authentication within ISE
-
-false
-
-
-
-trustForClientAuth
-
-Trust for client authentication and Syslog
-
-false
-
-
-
-trustForCertificateBasedAdminAuth
-
-Trust for Certificate based Admin authentication
-
-false
-
-
-
-trustForCiscoServicesAuth
-
-Trust for authentication of Cisco Services
-
-false
-
-
-
-validateCertificateExtensions
-
-Validate extensions for trust certificate
-
-false
-
-
-
-
-NOTE:
 If name is not set, a default name of the following format will be generated:
 common-name#issuer#nnnnn
 
@@ -135,14 +35,7 @@ certificates that are used for trust within an ISE deployment and public certifi
 services. Typically, you will not want to use a given certificate for both purposes.
 
 
-
-
-Trusted For
-
-Usage
-
-
-
+Trusted For - Usage
 
 
 Authentication within ISE

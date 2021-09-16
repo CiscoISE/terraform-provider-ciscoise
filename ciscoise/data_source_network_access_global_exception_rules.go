@@ -14,8 +14,8 @@ func dataSourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Authorization Global Exception Rules.
 
-Network Access Get global execption rules.
-Network Access Get global exception rule attributes.`,
+- Network Access Get global execption rules.
+- Network Access Get global exception rule attributes.`,
 
 		ReadContext: dataSourceNetworkAccessGlobalExceptionRulesRead,
 		Schema: map[string]*schema.Schema{

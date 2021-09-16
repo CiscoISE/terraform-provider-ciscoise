@@ -18,7 +18,7 @@ func dataSourceActiveDirectoryGetGroupsByDomainInfo() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
 
-This data source action lists the groups of the given domain.`,
+- This data source action lists the groups of the given domain.`,
 
 		ReadContext: dataSourceActiveDirectoryGetGroupsByDomainInfoRead,
 		Schema: map[string]*schema.Schema{

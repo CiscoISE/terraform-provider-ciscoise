@@ -16,9 +16,9 @@ func resourceSponsorPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SponsorPortal.
   
-  This resource allows the client to update a sponsor portal by ID.
-  This resource deletes a sponsor portal by ID.
-  This resource creates a sponsor portal.`,
+  - This resource allows the client to update a sponsor portal by ID.
+  - This resource deletes a sponsor portal by ID.
+  - This resource creates a sponsor portal.`,
 
 		CreateContext: resourceSponsorPortalCreate,
 		ReadContext:   resourceSponsorPortalRead,

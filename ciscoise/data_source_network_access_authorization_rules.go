@@ -14,8 +14,8 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Authorization Rules.
 
-Network Access Get authorization rules.
-Network Access Get authorization rule attributes.`,
+- Network Access Get authorization rules.
+- Network Access Get authorization rule attributes.`,
 
 		ReadContext: dataSourceNetworkAccessAuthorizationRulesRead,
 		Schema: map[string]*schema.Schema{

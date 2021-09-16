@@ -14,7 +14,7 @@ func dataSourceDeployment() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on PullDeploymentInfo.
 
-This data source allows the client to pull the deployment information.`,
+- This data source allows the client to pull the deployment information.`,
 
 		ReadContext: dataSourceDeploymentRead,
 		Schema: map[string]*schema.Schema{

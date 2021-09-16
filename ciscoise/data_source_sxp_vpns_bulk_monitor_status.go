@@ -14,7 +14,7 @@ func dataSourceSxpVpnsBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on SXPVPNs.
 
-This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.`,
 
 		ReadContext: dataSourceSxpVpnsBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{

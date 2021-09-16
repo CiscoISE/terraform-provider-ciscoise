@@ -16,9 +16,9 @@ func resourceByodPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on BYODPortal.
   
-  This resource allows the client to update a BYOD portal by ID.
-  This resource deletes a BYOD portal by ID.
-  This resource creates a BYOD portal.`,
+  - This resource allows the client to update a BYOD portal by ID.
+  - This resource deletes a BYOD portal by ID.
+  - This resource creates a BYOD portal.`,
 
 		CreateContext: resourceByodPortalCreate,
 		ReadContext:   resourceByodPortalRead,

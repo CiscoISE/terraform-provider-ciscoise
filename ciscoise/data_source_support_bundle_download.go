@@ -17,7 +17,7 @@ func dataSourceSupportBundleDownload() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on SupportBundleDownload.
 
-This data source action allows the client to upload a support bundle.`,
+- This data source action allows the client to upload a support bundle.`,
 
 		ReadContext: dataSourceSupportBundleDownloadRead,
 		Schema: map[string]*schema.Schema{

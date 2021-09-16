@@ -4,9 +4,9 @@ page_title: "ciscoise_network_device_group Data Source - terraform-provider-cisc
 subcategory: ""
 description: |-
   It performs read operation on NetworkDeviceGroup.
-  This data source allows the client to get a network device group by name.
-  This data source allows the client to get a network device group by ID.
-  This data source allows the client to get all the network device groups.
+  - This data source allows the client to get a network device group by name.
+  - This data source allows the client to get a network device group by ID.
+  - This data source allows the client to get all the network device groups.
   Filter:
   [name, description, type]
   To search guest users by using
@@ -24,9 +24,9 @@ description: |-
 
 It performs read operation on NetworkDeviceGroup.
 
-This data source allows the client to get a network device group by name.
-This data source allows the client to get a network device group by ID.
-This data source allows the client to get all the network device groups.
+- This data source allows the client to get a network device group by name.
+- This data source allows the client to get a network device group by ID.
+- This data source allows the client to get all the network device groups.
 
 Filter:
 

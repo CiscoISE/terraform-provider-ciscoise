@@ -16,11 +16,11 @@ func resourceNodeDeployment() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Node Deployment.
   
-  Register ISE node to form a multi-node deployment
+  - Register ISE node to form a multi-node deployment
   
-  Updates the deployed ISE node with the information provided
+  - Updates the deployed ISE node with the information provided
   
-  The de-register ednode becomes a standalone Cisco ISE node.
+  - The de-register ednode becomes a standalone Cisco ISE node.
   It retains the last configuration that it received rom the PrimaryPAN and assumes the default personas of a standalone
   node
   that are Administration, PolicyService, and Monitoring.

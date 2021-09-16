@@ -4,17 +4,10 @@ page_title: "ciscoise_egress_matrix_cell Data Source - terraform-provider-ciscoi
 subcategory: ""
 description: |-
   It performs read operation on EgressMatrixCell.
-  This data source allows the client to get an egress matrix cell by ID.
-  This data source allows the client to get all the egress matrix cell.
+  - This data source allows the client to get an egress matrix cell by ID.
+  - This data source allows the client to get all the egress matrix cell.
   Filter:
   [sgtSrcValue, matrixStatus, description, sgtSrcName, sgtDstName, sgtDstValue]
-  To search resources by using
-  toDate
-   column,follow the format:
-  DD-MON-YY (Example:13-SEP-18)
-  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
   Sorting:
   [description, sgtSrcName, sgtDstName, sgtDstValue]
 ---
@@ -23,26 +16,12 @@ description: |-
 
 It performs read operation on EgressMatrixCell.
 
-This data source allows the client to get an egress matrix cell by ID.
-This data source allows the client to get all the egress matrix cell.
+- This data source allows the client to get an egress matrix cell by ID.
+- This data source allows the client to get all the egress matrix cell.
 
 Filter:
 
 [sgtSrcValue, matrixStatus, description, sgtSrcName, sgtDstName, sgtDstValue]
-
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
-
 
 Sorting:
 

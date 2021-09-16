@@ -4,18 +4,18 @@ page_title: "ciscoise_authorization_profile Data Source - terraform-provider-cis
 subcategory: ""
 description: |-
   It performs read operation on AuthorizationProfile.
-  This data source allows the client to get an authorization profile by name.
-  This data source allows the client to get an authorization profile by ID.
-  This data source allows the client to get all authorization profiles.
+  - This data source allows the client to get an authorization profile by name.
+  - This data source allows the client to get an authorization profile by ID.
+  - This data source allows the client to get all authorization profiles.
 ---
 
 # ciscoise_authorization_profile (Data Source)
 
 It performs read operation on AuthorizationProfile.
 
-This data source allows the client to get an authorization profile by name.
-This data source allows the client to get an authorization profile by ID.
-This data source allows the client to get all authorization profiles.
+- This data source allows the client to get an authorization profile by name.
+- This data source allows the client to get an authorization profile by ID.
+- This data source allows the client to get all authorization profiles.
 
 ## Example Usage
 

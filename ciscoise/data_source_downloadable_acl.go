@@ -14,8 +14,8 @@ func dataSourceDownloadableACL() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on DownloadableACL.
 
-This data source allows the client to get a downloadable ACL by ID.
-This data source allows the client to get all downloadable ACLs.`,
+- This data source allows the client to get a downloadable ACL by ID.
+- This data source allows the client to get all downloadable ACLs.`,
 
 		ReadContext: dataSourceDownloadableACLRead,
 		Schema: map[string]*schema.Schema{

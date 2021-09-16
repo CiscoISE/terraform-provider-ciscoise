@@ -15,7 +15,7 @@ func resourceAciSettings() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read and update operations on ACISettings.
   
-  This resource allows the client to update ACI settings.`,
+  - This resource allows the client to update ACI settings.`,
 
 		CreateContext: resourceAciSettingsCreate,
 		ReadContext:   resourceAciSettingsRead,

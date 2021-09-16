@@ -14,7 +14,7 @@ func dataSourceGuestUserBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on GuestUser.
 
-This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.`,
 
 		ReadContext: dataSourceGuestUserBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{

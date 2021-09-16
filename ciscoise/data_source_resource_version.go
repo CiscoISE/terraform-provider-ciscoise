@@ -14,7 +14,7 @@ func dataSourceResourceVersion() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on VersionInfo.
 
-Get all VersionInfo`,
+- Get all VersionInfo`,
 
 		ReadContext: dataSourceResourceVersionRead,
 		Schema: map[string]*schema.Schema{

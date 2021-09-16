@@ -15,8 +15,8 @@ func resourceIDentityGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on IdentityGroups.
   
-  This resource allows the client to update an identity group.
-  This resource creates an identity group.`,
+  - This resource allows the client to update an identity group.
+  - This resource creates an identity group.`,
 
 		CreateContext: resourceIDentityGroupCreate,
 		ReadContext:   resourceIDentityGroupRead,

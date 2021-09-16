@@ -14,7 +14,7 @@ func dataSourceNetworkAccessConditionsForPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Conditions.
 
-Network Access Returns list of library conditions for PolicySet scope.`,
+- Network Access Returns list of library conditions for PolicySet scope.`,
 
 		ReadContext: dataSourceNetworkAccessConditionsForPolicySetRead,
 		Schema: map[string]*schema.Schema{

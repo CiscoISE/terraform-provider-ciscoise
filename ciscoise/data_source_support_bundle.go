@@ -17,7 +17,7 @@ func dataSourceSupportBundle() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on SupportBundleTriggerConfiguration.
 
-This data source action allows the client to create a support bundle trigger configuration.`,
+- This data source action allows the client to create a support bundle trigger configuration.`,
 
 		ReadContext: dataSourceSupportBundleRead,
 		Schema: map[string]*schema.Schema{

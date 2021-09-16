@@ -17,7 +17,7 @@ func dataSourceEndpointCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on EndpointCertificate.
 
-This data source action allows the client to create an endpoint certificate.`,
+- This data source action allows the client to create an endpoint certificate.`,
 
 		ReadContext: dataSourceEndpointCertificateRead,
 		Schema: map[string]*schema.Schema{

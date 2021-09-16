@@ -15,9 +15,9 @@ func resourceEndpoint() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on endpoint.
   
-  This resource allows the client to update an endpoint.
-  This resource deletes an endpoint.
-  This resource creates an endpoint.`,
+  - This resource allows the client to update an endpoint.
+  - This resource deletes an endpoint.
+  - This resource creates an endpoint.`,
 
 		CreateContext: resourceEndpointCreate,
 		ReadContext:   resourceEndpointRead,

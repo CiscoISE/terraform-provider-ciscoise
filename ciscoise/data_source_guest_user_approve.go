@@ -15,7 +15,7 @@ func dataSourceGuestUserApprove() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on GuestUser.
 
-This data source action allows the client to approve a guest user by ID.`,
+- This data source action allows the client to approve a guest user by ID.`,
 
 		ReadContext: dataSourceGuestUserApproveRead,
 		Schema: map[string]*schema.Schema{

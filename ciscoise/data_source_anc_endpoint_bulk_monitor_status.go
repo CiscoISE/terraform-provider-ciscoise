@@ -14,7 +14,7 @@ func dataSourceAncEndpointBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on ANCEndpoint.
 
-This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.`,
 
 		ReadContext: dataSourceAncEndpointBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{

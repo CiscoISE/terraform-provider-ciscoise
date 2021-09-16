@@ -14,9 +14,9 @@ func dataSourceNetworkAccessConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Conditions.
 
-Network Access Returns all library conditions
-Network Access Returns a library condition.
-Network Access Returns a library condition.`,
+- Network Access Returns all library conditions
+- Network Access Returns a library condition.
+- Network Access Returns a library condition.`,
 
 		ReadContext: dataSourceNetworkAccessConditionsRead,
 		Schema: map[string]*schema.Schema{

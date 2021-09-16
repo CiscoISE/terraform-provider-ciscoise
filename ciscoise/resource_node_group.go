@@ -16,10 +16,10 @@ func resourceNodeGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Node Group.
   
-  Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
+  - Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
   pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
   API updates an existing node group in the system.
-  Developers need to delete node group in the system.`,
+  - Developers need to delete node group in the system.`,
 
 		CreateContext: resourceNodeGroupCreate,
 		ReadContext:   resourceNodeGroupRead,

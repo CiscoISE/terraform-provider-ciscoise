@@ -15,7 +15,7 @@ func dataSourceGuestUserResetPassword() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on GuestUser.
 
-This data source action allows the client to reset the guest user password.`,
+- This data source action allows the client to reset the guest user password.`,
 
 		ReadContext: dataSourceGuestUserResetPasswordRead,
 		Schema: map[string]*schema.Schema{

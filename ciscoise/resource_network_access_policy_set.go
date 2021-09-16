@@ -16,7 +16,7 @@ func resourceNetworkAccessPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Policy Set.
   
-  Network Access Create a new policy set:
+  - Network Access Create a new policy set:
   
   
   
@@ -36,8 +36,8 @@ func resourceNetworkAccessPolicySet() *schema.Resource {
   
   
   
-  Network Access Update a policy set.
-  Network Access Delete a policy set.`,
+  - Network Access Update a policy set.
+  - Network Access Delete a policy set.`,
 
 		CreateContext: resourceNetworkAccessPolicySetCreate,
 		ReadContext:   resourceNetworkAccessPolicySetRead,

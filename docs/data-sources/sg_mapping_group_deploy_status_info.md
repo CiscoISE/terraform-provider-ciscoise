@@ -4,7 +4,7 @@ page_title: "ciscoise_sg_mapping_group_deploy_status_info Data Source - terrafor
 subcategory: ""
 description: |-
   It performs update operation on IPToSGTMappingGroup.
-  This data source action allows the client to get the IP to SGT mapping group deployment status.
+  - This data source action allows the client to get the IP to SGT mapping group deployment status.
   Deploy Status will show last Deploy command output. The information will be saved until the next Deploy command
 ---
 
@@ -12,7 +12,7 @@ description: |-
 
 It performs update operation on IPToSGTMappingGroup.
 
-This data source action allows the client to get the IP to SGT mapping group deployment status.
+- This data source action allows the client to get the IP to SGT mapping group deployment status.
 Deploy Status will show last Deploy command output. The information will be saved until the next Deploy command
 
 ## Example Usage

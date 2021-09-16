@@ -16,9 +16,9 @@ func resourceDeviceAdministrationNetworkConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Network Conditions.
   
-  Device AdminCreates network condition.
-  Device Admin Update network condition.
-  Device Admin Delete network condition.`,
+  - Device Admin Creates network condition.
+  - Device Admin Update network condition.
+  - Device Admin Delete network condition.`,
 
 		CreateContext: resourceDeviceAdministrationNetworkConditionsCreate,
 		ReadContext:   resourceDeviceAdministrationNetworkConditionsRead,

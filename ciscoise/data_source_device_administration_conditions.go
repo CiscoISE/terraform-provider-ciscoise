@@ -14,9 +14,9 @@ func dataSourceDeviceAdministrationConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Conditions.
 
-Device Admin Returns list of library conditions.
-Device Admin Returns a library condition.
-Device Admin Returns a library condition.`,
+- Device Admin Returns list of library conditions.
+- Device Admin Returns a library condition.
+- Device Admin Returns a library condition.`,
 
 		ReadContext: dataSourceDeviceAdministrationConditionsRead,
 		Schema: map[string]*schema.Schema{

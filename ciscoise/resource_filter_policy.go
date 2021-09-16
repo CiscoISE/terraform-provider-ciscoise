@@ -16,9 +16,9 @@ func resourceFilterPolicy() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on FilterPolicy.
   
-  This resource allows the client to update a filter policy.
-  This resource deletes a filter policy.
-  This resource creates a filter policy.`,
+  - This resource allows the client to update a filter policy.
+  - This resource deletes a filter policy.
+  - This resource creates a filter policy.`,
 
 		CreateContext: resourceFilterPolicyCreate,
 		ReadContext:   resourceFilterPolicyRead,

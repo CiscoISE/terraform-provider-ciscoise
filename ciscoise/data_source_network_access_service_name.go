@@ -14,7 +14,7 @@ func dataSourceNetworkAccessServiceName() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Service Names.
 
-Returns list of Allowed Protocols and Server Sequences for Network Access Policy Set results.
+- Returns list of Allowed Protocols and Server Sequences for Network Access Policy Set results.
  'isLocalAuthorization' property is available only for Network Access Policy Set results of type Server Sequence.
  (Other CRUD APIs available throught ERS)`,
 

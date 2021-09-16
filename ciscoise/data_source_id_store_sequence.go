@@ -14,9 +14,9 @@ func dataSourceIDStoreSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on IdentitySequence.
 
-This data source allows the client to get an identity sequence by name.
-This data source allows the client to get an identity sequence by ID.
-This data source allows the client to get all the identity sequences.`,
+- This data source allows the client to get an identity sequence by name.
+- This data source allows the client to get an identity sequence by ID.
+- This data source allows the client to get all the identity sequences.`,
 
 		ReadContext: dataSourceIDStoreSequenceRead,
 		Schema: map[string]*schema.Schema{

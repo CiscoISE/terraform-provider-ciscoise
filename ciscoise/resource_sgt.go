@@ -16,9 +16,9 @@ func resourceSgt() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SecurityGroups.
   
-  This resource allows the client to update a security group.
-  This resource deletes a security group.
-  This resource creates a security group.`,
+  - This resource allows the client to update a security group.
+  - This resource deletes a security group.
+  - This resource creates a security group.`,
 
 		CreateContext: resourceSgtCreate,
 		ReadContext:   resourceSgtRead,

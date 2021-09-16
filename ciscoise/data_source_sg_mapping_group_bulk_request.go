@@ -16,7 +16,7 @@ func dataSourceSgMappingGroupBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on IPToSGTMappingGroup.
 
-This data source action allows the client to submit the bulk request.`,
+- This data source action allows the client to submit the bulk request.`,
 
 		ReadContext: dataSourceSgMappingGroupBulkRequestRead,
 		Schema: map[string]*schema.Schema{

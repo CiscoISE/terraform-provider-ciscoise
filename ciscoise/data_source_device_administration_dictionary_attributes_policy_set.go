@@ -14,7 +14,7 @@ func dataSourceDeviceAdministrationDictionaryAttributesPolicySet() *schema.Resou
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Dictionary Attributes List.
 
-Network Access Returns list of dictionary attributes for policyset.`,
+- Network Access Returns list of dictionary attributes for policyset.`,
 
 		ReadContext: dataSourceDeviceAdministrationDictionaryAttributesPolicySetRead,
 		Schema: map[string]*schema.Schema{

@@ -14,9 +14,9 @@ func dataSourceTacacsProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on TACACSProfile.
 
-This data source allows the client to get a TACACS profile by name.
-This data source allows the client to get a TACACS profile by ID.
-This data source allows the client to get all the TACACS profiles.`,
+- This data source allows the client to get a TACACS profile by name.
+- This data source allows the client to get a TACACS profile by ID.
+- This data source allows the client to get all the TACACS profiles.`,
 
 		ReadContext: dataSourceTacacsProfileRead,
 		Schema: map[string]*schema.Schema{

@@ -14,9 +14,9 @@ func dataSourceTacacsCommandSets() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on TACACSCommandSets.
 
-This data source allows the client to get TACACS command sets by name.
-This data source allows the client to get TACACS command sets by ID.
-This data source allows the client to get all the TACACS command sets.`,
+- This data source allows the client to get TACACS command sets by name.
+- This data source allows the client to get TACACS command sets by ID.
+- This data source allows the client to get all the TACACS command sets.`,
 
 		ReadContext: dataSourceTacacsCommandSetsRead,
 		Schema: map[string]*schema.Schema{

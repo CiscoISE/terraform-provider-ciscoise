@@ -14,27 +14,13 @@ func dataSourceAdminUser() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on AdminUser.
 
-This data source allows the client to get an admin user by ID.
-This data source allows the client to get all the admin users.
+- This data source allows the client to get an admin user by ID.
+- This data source allows the client to get all the admin users.
 
 Filter:
 
 [firstName, lastName, adminGroups, name, description, inactiveAccountNeverDisabled, includeSystemAlarmsInEmail, email,
 enabled]
-
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
-
 
 Sorting:
 

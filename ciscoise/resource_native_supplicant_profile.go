@@ -16,8 +16,8 @@ func resourceNativeSupplicantProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read, update and delete operations on NativeSupplicantProfile.
   
-  This resource allows the client to update a native supplicant profile
-  This resource deletes a native supplicant profile.`,
+  - This resource allows the client to update a native supplicant profile
+  - This resource deletes a native supplicant profile.`,
 
 		CreateContext: resourceNativeSupplicantProfileCreate,
 		ReadContext:   resourceNativeSupplicantProfileRead,

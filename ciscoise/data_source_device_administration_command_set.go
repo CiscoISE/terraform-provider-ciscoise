@@ -14,7 +14,7 @@ func dataSourceDeviceAdministrationCommandSet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Command Set.
 
-Device Admin Return list of command sets.
+- Device Admin Return list of command sets.
  (Other CRUD APIs available throught ERS)`,
 
 		ReadContext: dataSourceDeviceAdministrationCommandSetRead,

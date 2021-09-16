@@ -15,7 +15,7 @@ func dataSourceDeviceAdministrationAuthorizationResetHitcount() *schema.Resource
 	return &schema.Resource{
 		Description: `It performs create operation on Device Administration - Authorization Rules.
 
-Device Admin Reset HitCount for Authorization Rules`,
+- Device Admin Reset HitCount for Authorization Rules`,
 
 		ReadContext: dataSourceDeviceAdministrationAuthorizationResetHitcountRead,
 		Schema: map[string]*schema.Schema{

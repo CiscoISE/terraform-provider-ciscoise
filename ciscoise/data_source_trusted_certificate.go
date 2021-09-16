@@ -75,7 +75,7 @@ Supported Operators: EQ, NEQ
 
 
 
-This data source can displays details of a Trust Certificate based on a given ID.`,
+- This data source can displays details of a Trust Certificate based on a given ID.`,
 
 		ReadContext: dataSourceTrustedCertificateRead,
 		Schema: map[string]*schema.Schema{

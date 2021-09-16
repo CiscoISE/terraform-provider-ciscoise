@@ -17,7 +17,7 @@ func dataSourceBackupScheduleConfig() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Backup And Restore.
 
-Schedules the configuration backup on the ISE node as per the input parameters. This data source action helps in
+- Schedules the configuration backup on the ISE node as per the input parameters. This data source action helps in
 creating the schedule for the first time.`,
 
 		ReadContext: dataSourceBackupScheduleConfigRead,

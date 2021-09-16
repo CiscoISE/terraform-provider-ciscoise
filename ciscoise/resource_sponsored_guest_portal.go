@@ -16,9 +16,9 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SponsoredGuestPortal.
   
-  This resource allows the client to update a sponsored guest portal by ID.
-  This resource deletes a sponsored guest portal by ID.
-  This resource creates a sponsored guest portal.`,
+  - This resource allows the client to update a sponsored guest portal by ID.
+  - This resource deletes a sponsored guest portal by ID.
+  - This resource creates a sponsored guest portal.`,
 
 		CreateContext: resourceSponsoredGuestPortalCreate,
 		ReadContext:   resourceSponsoredGuestPortalRead,

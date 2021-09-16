@@ -15,7 +15,7 @@ func dataSourceDeviceAdministrationLocalExceptionRulesResetHitcount() *schema.Re
 	return &schema.Resource{
 		Description: `It performs create operation on Device Administration - Authorization Exception Rules.
 
-Device Admin Reset HitCount for local exceptions`,
+- Device Admin Reset HitCount for local exceptions`,
 
 		ReadContext: dataSourceDeviceAdministrationLocalExceptionRulesResetHitcountRead,
 		Schema: map[string]*schema.Schema{

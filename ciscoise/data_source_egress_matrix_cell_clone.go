@@ -15,7 +15,7 @@ func dataSourceEgressMatrixCellClone() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on EgressMatrixCell.
 
-This data source action allows the client to clone an egress matrix cell.`,
+- This data source action allows the client to clone an egress matrix cell.`,
 
 		ReadContext: dataSourceEgressMatrixCellCloneRead,
 		Schema: map[string]*schema.Schema{

@@ -4,18 +4,18 @@ page_title: "ciscoise_tacacs_external_servers Data Source - terraform-provider-c
 subcategory: ""
 description: |-
   It performs read operation on TACACSExternalServers.
-  This data source allows the client to get TACACS external servers by name.
-  This data source allows the client to get TACACS external servers by ID.
-  This data source allows the client to get all the TACACS external servers.
+  - This data source allows the client to get TACACS external servers by name.
+  - This data source allows the client to get TACACS external servers by ID.
+  - This data source allows the client to get all the TACACS external servers.
 ---
 
 # ciscoise_tacacs_external_servers (Data Source)
 
 It performs read operation on TACACSExternalServers.
 
-This data source allows the client to get TACACS external servers by name.
-This data source allows the client to get TACACS external servers by ID.
-This data source allows the client to get all the TACACS external servers.
+- This data source allows the client to get TACACS external servers by name.
+- This data source allows the client to get TACACS external servers by ID.
+- This data source allows the client to get all the TACACS external servers.
 
 ## Example Usage
 

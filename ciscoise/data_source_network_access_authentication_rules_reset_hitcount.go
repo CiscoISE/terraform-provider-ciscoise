@@ -15,7 +15,7 @@ func dataSourceNetworkAccessAuthenticationRulesResetHitcount() *schema.Resource 
 	return &schema.Resource{
 		Description: `It performs create operation on Network Access - Authentication Rules.
 
-Network Access Reset HitCount for Authentication Rules`,
+- Network Access Reset HitCount for Authentication Rules`,
 
 		ReadContext: dataSourceNetworkAccessAuthenticationRulesResetHitcountRead,
 		Schema: map[string]*schema.Schema{

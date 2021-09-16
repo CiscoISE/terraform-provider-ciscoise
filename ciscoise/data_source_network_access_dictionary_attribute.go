@@ -14,8 +14,8 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Dictionary Attribute.
 
-Returns a list of Dictionary Attributes for an existing Dictionary.
-Get a Dictionary Attribute.`,
+- Returns a list of Dictionary Attributes for an existing Dictionary.
+- Get a Dictionary Attribute.`,
 
 		ReadContext: dataSourceNetworkAccessDictionaryAttributeRead,
 		Schema: map[string]*schema.Schema{

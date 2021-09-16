@@ -14,7 +14,7 @@ func dataSourceDeviceAdministrationDictionaryAttributesAuthentication() *schema.
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Dictionary Attributes List.
 
-Network Access Returns list of dictionary attributes for authentication.`,
+- Network Access Returns list of dictionary attributes for authentication.`,
 
 		ReadContext: dataSourceDeviceAdministrationDictionaryAttributesAuthenticationRead,
 		Schema: map[string]*schema.Schema{

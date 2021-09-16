@@ -4,14 +4,14 @@ page_title: "ciscoise_aci_settings Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on ACISettings.
-  This data source allows the client to get ACI Settings.
+  - This data source allows the client to get ACI Settings.
 ---
 
 # ciscoise_aci_settings (Data Source)
 
 It performs read operation on ACISettings.
 
-This data source allows the client to get ACI Settings.
+- This data source allows the client to get ACI Settings.
 
 ## Example Usage
 

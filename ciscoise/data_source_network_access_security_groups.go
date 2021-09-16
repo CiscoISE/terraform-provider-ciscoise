@@ -14,7 +14,7 @@ func dataSourceNetworkAccessSecurityGroups() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Security Groups.
 
-Network Access Return list of available security groups for authorization policy definition.
+- Network Access Return list of available security groups for authorization policy definition.
  (Other CRUD APIs available throught ERS)`,
 
 		ReadContext: dataSourceNetworkAccessSecurityGroupsRead,

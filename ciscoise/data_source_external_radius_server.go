@@ -14,9 +14,9 @@ func dataSourceExternalRadiusServer() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on ExternalRADIUSServer.
 
-This data source allows the client to get an external RADIUS server by name.
-This data source allows the client to get an external RADIUS server by ID.
-This data source allows the client to get all the external RADIUS servers.`,
+- This data source allows the client to get an external RADIUS server by name.
+- This data source allows the client to get an external RADIUS server by ID.
+- This data source allows the client to get all the external RADIUS servers.`,
 
 		ReadContext: dataSourceExternalRadiusServerRead,
 		Schema: map[string]*schema.Schema{

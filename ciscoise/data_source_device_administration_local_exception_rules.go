@@ -14,8 +14,8 @@ func dataSourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Authorization Exception Rules.
 
-Device Admin Get local exception rules.
-Device Admin Get local exception rule attributes.`,
+- Device Admin Get local exception rules.
+- Device Admin Get local exception rule attributes.`,
 
 		ReadContext: dataSourceDeviceAdministrationLocalExceptionRulesRead,
 		Schema: map[string]*schema.Schema{

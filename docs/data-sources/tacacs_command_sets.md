@@ -4,18 +4,18 @@ page_title: "ciscoise_tacacs_command_sets Data Source - terraform-provider-cisco
 subcategory: ""
 description: |-
   It performs read operation on TACACSCommandSets.
-  This data source allows the client to get TACACS command sets by name.
-  This data source allows the client to get TACACS command sets by ID.
-  This data source allows the client to get all the TACACS command sets.
+  - This data source allows the client to get TACACS command sets by name.
+  - This data source allows the client to get TACACS command sets by ID.
+  - This data source allows the client to get all the TACACS command sets.
 ---
 
 # ciscoise_tacacs_command_sets (Data Source)
 
 It performs read operation on TACACSCommandSets.
 
-This data source allows the client to get TACACS command sets by name.
-This data source allows the client to get TACACS command sets by ID.
-This data source allows the client to get all the TACACS command sets.
+- This data source allows the client to get TACACS command sets by name.
+- This data source allows the client to get TACACS command sets by ID.
+- This data source allows the client to get all the TACACS command sets.
 
 ## Example Usage
 

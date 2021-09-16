@@ -14,25 +14,11 @@ func dataSourceSmsProvider() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on SMSProvider.
 
-This data source allows the client to get all the SMS providers.
+- This data source allows the client to get all the SMS providers.
 
 Filter:
 
 [name]
-
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
-
 
 Sorting:
 

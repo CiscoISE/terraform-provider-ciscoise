@@ -15,9 +15,9 @@ func resourceExternalRadiusServer() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on ExternalRADIUSServer.
   
-  This resource allows the client to update an external RADIUS server.
-  This resource deletes an external RADIUS server.
-  This resource creates an external RADIUS server.`,
+  - This resource allows the client to update an external RADIUS server.
+  - This resource deletes an external RADIUS server.
+  - This resource creates an external RADIUS server.`,
 
 		CreateContext: resourceExternalRadiusServerCreate,
 		ReadContext:   resourceExternalRadiusServerRead,

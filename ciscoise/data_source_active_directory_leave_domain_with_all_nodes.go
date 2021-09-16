@@ -18,7 +18,7 @@ func dataSourceActiveDirectoryLeaveDomainWithAllNodes() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
 
-This data source action joins makes all Cisco ISE nodes leave an Active Directory domain.`,
+- This data source action joins makes all Cisco ISE nodes leave an Active Directory domain.`,
 
 		ReadContext: dataSourceActiveDirectoryLeaveDomainWithAllNodesRead,
 		Schema: map[string]*schema.Schema{

@@ -4,14 +4,14 @@ page_title: "ciscoise_egress_matrix_cell_clone Data Source - terraform-provider-
 subcategory: ""
 description: |-
   It performs update operation on EgressMatrixCell.
-  This data source action allows the client to clone an egress matrix cell.
+  - This data source action allows the client to clone an egress matrix cell.
 ---
 
 # ciscoise_egress_matrix_cell_clone (Data Source)
 
 It performs update operation on EgressMatrixCell.
 
-This data source action allows the client to clone an egress matrix cell.
+- This data source action allows the client to clone an egress matrix cell.
 
 ## Example Usage
 

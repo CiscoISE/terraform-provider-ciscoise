@@ -16,9 +16,9 @@ func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Authentication Rules.
   
-  Device Admin Create authentication rule.
-  Device Admin Update rule.
-  Device Admin Delete rule.`,
+  - Device Admin Create authentication rule.
+  - Device Admin Update rule.
+  - Device Admin Delete rule.`,
 
 		CreateContext: resourceDeviceAdministrationAuthenticationRulesCreate,
 		ReadContext:   resourceDeviceAdministrationAuthenticationRulesRead,

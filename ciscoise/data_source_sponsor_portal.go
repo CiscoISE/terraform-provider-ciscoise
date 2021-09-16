@@ -14,26 +14,12 @@ func dataSourceSponsorPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on SponsorPortal.
 
-This data source allows the client to get a sponsor portal by ID.
-This data source allows the client to get all the sponsor portals.
+- This data source allows the client to get a sponsor portal by ID.
+- This data source allows the client to get all the sponsor portals.
 
 Filter:
 
 [name, description]
-
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
-
 
 Sorting:
 

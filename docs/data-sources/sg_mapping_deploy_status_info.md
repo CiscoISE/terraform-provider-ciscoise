@@ -4,7 +4,7 @@ page_title: "ciscoise_sg_mapping_deploy_status_info Data Source - terraform-prov
 subcategory: ""
 description: |-
   It performs update operation on IPToSGTMapping.
-  This data source action allows the client to get the IP to SGT mapping deployment status.
+  - This data source action allows the client to get the IP to SGT mapping deployment status.
   Deploy Status will show last Deploy command output. The information will be saved until the next Deploy command
 ---
 
@@ -12,7 +12,7 @@ description: |-
 
 It performs update operation on IPToSGTMapping.
 
-This data source action allows the client to get the IP to SGT mapping deployment status.
+- This data source action allows the client to get the IP to SGT mapping deployment status.
 Deploy Status will show last Deploy command output. The information will be saved until the next Deploy command
 
 ## Example Usage

@@ -14,9 +14,9 @@ func dataSourceRepository() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Repository.
 
-This will get the full list of repository definitions on the system.
+- This will get the full list of repository definitions on the system.
 
-Get a specific repository identified by the name passed in the URL.
+- Get a specific repository identified by the name passed in the URL.
 `,
 
 		ReadContext: dataSourceRepositoryRead,

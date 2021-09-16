@@ -4,14 +4,14 @@ page_title: "ciscoise_endpoint_get_rejected_endpoints Data Source - terraform-pr
 subcategory: ""
 description: |-
   It performs read operation on endpoint.
-  This data source allows the client to get the rejected endpoints.
+  - This data source allows the client to get the rejected endpoints.
 ---
 
 # ciscoise_endpoint_get_rejected_endpoints (Data Source)
 
 It performs read operation on endpoint.
 
-This data source allows the client to get the rejected endpoints.
+- This data source allows the client to get the rejected endpoints.
 
 ## Example Usage
 

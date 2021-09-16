@@ -16,9 +16,9 @@ func resourceSgACL() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SecurityGroupsACLs.
   
-  This resource allows the client to update a security group ACL.
-  This resource deletes a security group ACL.
-  This resource creates a security group ACL.`,
+  - This resource allows the client to update a security group ACL.
+  - This resource deletes a security group ACL.
+  - This resource creates a security group ACL.`,
 
 		CreateContext: resourceSgACLCreate,
 		ReadContext:   resourceSgACLRead,

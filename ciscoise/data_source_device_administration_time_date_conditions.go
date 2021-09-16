@@ -14,8 +14,8 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Time/Date Conditions.
 
-Device Admin Returns a list of time and date conditions.
-Device Admin Returns a network condition.`,
+- Device Admin Returns a list of time and date conditions.
+- Device Admin Returns a network condition.`,
 
 		ReadContext: dataSourceDeviceAdministrationTimeDateConditionsRead,
 		Schema: map[string]*schema.Schema{

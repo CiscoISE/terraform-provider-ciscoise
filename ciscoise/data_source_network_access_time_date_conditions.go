@@ -14,8 +14,8 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Time/Date Conditions.
 
-Network Access Returns a list of time and date conditions.
-Network Access returns a network condition.`,
+- Network Access Returns a list of time and date conditions.
+- Network Access Returns a network condition.`,
 
 		ReadContext: dataSourceNetworkAccessTimeDateConditionsRead,
 		Schema: map[string]*schema.Schema{

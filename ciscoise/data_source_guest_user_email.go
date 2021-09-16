@@ -18,7 +18,7 @@ func dataSourceGuestUserEmail() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on GuestUser.
 
-This data source action allows the client to update a guest user email by ID.`,
+- This data source action allows the client to update a guest user email by ID.`,
 
 		ReadContext: dataSourceGuestUserEmailRead,
 		Schema: map[string]*schema.Schema{

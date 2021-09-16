@@ -18,7 +18,7 @@ func dataSourceActiveDirectoryGetUserGroupsInfo() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
 
-This data source action allows the client to get groups of which a given user is a member.`,
+- This data source action allows the client to get groups of which a given user is a member.`,
 
 		ReadContext: dataSourceActiveDirectoryGetUserGroupsInfoRead,
 		Schema: map[string]*schema.Schema{

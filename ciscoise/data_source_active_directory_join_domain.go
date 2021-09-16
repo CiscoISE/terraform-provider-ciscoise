@@ -18,7 +18,7 @@ func dataSourceActiveDirectoryJoinDomain() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
 
-This data source action joins a Cisco ISE node to an Active Directory domain.`,
+- This data source action joins a Cisco ISE node to an Active Directory domain.`,
 
 		ReadContext: dataSourceActiveDirectoryJoinDomainRead,
 		Schema: map[string]*schema.Schema{

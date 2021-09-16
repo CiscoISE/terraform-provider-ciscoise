@@ -14,8 +14,8 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Authorization Exception Rules.
 
-Network Access Get local exception rules.
-Network Access Get local exception rule attributes.`,
+- Network Access Get local exception rules.
+- Network Access Get local exception rule attributes.`,
 
 		ReadContext: dataSourceNetworkAccessLocalExceptionRulesRead,
 		Schema: map[string]*schema.Schema{

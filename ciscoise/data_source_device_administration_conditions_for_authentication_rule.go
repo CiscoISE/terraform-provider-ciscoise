@@ -14,7 +14,7 @@ func dataSourceDeviceAdministrationConditionsForAuthenticationRule() *schema.Res
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Conditions.
 
-Device Admin Returns list of library conditions for authentication rules.`,
+- Device Admin Returns list of library conditions for authentication rules.`,
 
 		ReadContext: dataSourceDeviceAdministrationConditionsForAuthenticationRuleRead,
 		Schema: map[string]*schema.Schema{

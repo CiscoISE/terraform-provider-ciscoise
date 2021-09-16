@@ -15,8 +15,8 @@ func resourceCertificateProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on CertificateProfile.
   
-  This resource allows the client to update a certificate profile.
-  This resource allows the client to create a certificate profile.`,
+  - This resource allows the client to update a certificate profile.
+  - This resource allows the client to create a certificate profile.`,
 
 		CreateContext: resourceCertificateProfileCreate,
 		ReadContext:   resourceCertificateProfileRead,

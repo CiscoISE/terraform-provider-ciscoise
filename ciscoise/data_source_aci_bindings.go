@@ -14,7 +14,7 @@ func dataSourceAciBindings() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on ACIBindings.
 
-This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI from
+- This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI from
 Cisco ISE.The binding information will be identical to the information on ACI bindings page in the Cisco ISE UI.
 Filtering will be based on one attribute only, such as ip/sgt/vn/psn/learnedFrom/learnedBy with CONTAINS mode of
 search.`,

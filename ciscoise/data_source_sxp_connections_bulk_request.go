@@ -17,7 +17,7 @@ func dataSourceSxpConnectionsBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on SXPConnections.
 
-This data source action allows the client to submit the bulk request.`,
+- This data source action allows the client to submit the bulk request.`,
 
 		ReadContext: dataSourceSxpConnectionsBulkRequestRead,
 		Schema: map[string]*schema.Schema{

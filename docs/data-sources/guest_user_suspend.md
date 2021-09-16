@@ -4,16 +4,16 @@ page_title: "ciscoise_guest_user_suspend Data Source - terraform-provider-ciscoi
 subcategory: ""
 description: |-
   It performs update operation on GuestUser.
-  This data source action allows the client to suspend a guest user by name.
-  This data source action allows the client to suspend a guest user by ID.
+  - This data source action allows the client to suspend a guest user by name.
+  - This data source action allows the client to suspend a guest user by ID.
 ---
 
 # ciscoise_guest_user_suspend (Data Source)
 
 It performs update operation on GuestUser.
 
-This data source action allows the client to suspend a guest user by name.
-This data source action allows the client to suspend a guest user by ID.
+- This data source action allows the client to suspend a guest user by name.
+- This data source action allows the client to suspend a guest user by ID.
 
 ## Example Usage
 

@@ -14,8 +14,8 @@ func dataSourceNativeSupplicantProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on NativeSupplicantProfile.
 
-This data source allows the client to get a native supplicant profile by ID.
-This data source allows the client to get all the native supplicant profiles.`,
+- This data source allows the client to get a native supplicant profile by ID.
+- This data source allows the client to get all the native supplicant profiles.`,
 
 		ReadContext: dataSourceNativeSupplicantProfileRead,
 		Schema: map[string]*schema.Schema{

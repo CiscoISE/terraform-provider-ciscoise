@@ -4,14 +4,14 @@ page_title: "ciscoise_sg_to_vn_to_vlan_bulk_request Data Source - terraform-prov
 subcategory: ""
 description: |-
   It performs update operation on SecurityGroupToVirtualNetwork.
-  This data source action allows the client to submit the bulk request.
+  - This data source action allows the client to submit the bulk request.
 ---
 
 # ciscoise_sg_to_vn_to_vlan_bulk_request (Data Source)
 
 It performs update operation on SecurityGroupToVirtualNetwork.
 
-This data source action allows the client to submit the bulk request.
+- This data source action allows the client to submit the bulk request.
 
 ## Example Usage
 

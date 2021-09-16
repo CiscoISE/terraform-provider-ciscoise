@@ -15,7 +15,7 @@ func dataSourceCsrDelete() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs delete operation on Certificates.
 
-This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.`,
+- This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.`,
 
 		ReadContext: dataSourceCsrDeleteRead,
 		Schema: map[string]*schema.Schema{

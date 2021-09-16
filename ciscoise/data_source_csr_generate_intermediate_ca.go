@@ -15,7 +15,7 @@ func dataSourceCsrGenerateIntermediateCa() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-CSR Generation for Intermediate Certificates.`,
+- CSR Generation for Intermediate Certificates.`,
 
 		ReadContext: dataSourceCsrGenerateIntermediateCaRead,
 		Schema: map[string]*schema.Schema{

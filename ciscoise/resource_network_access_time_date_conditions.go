@@ -16,9 +16,9 @@ func resourceNetworkAccessTimeDateConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Time/Date Conditions.
   
-  Network Access Creates time/date condition
-  Network Access Update network condition
-  Network Access Delete Time/Date condition.`,
+  - Network Access Creates time/date condition
+  - Network Access Update network condition
+  - Network Access Delete Time/Date condition.`,
 
 		CreateContext: resourceNetworkAccessTimeDateConditionsCreate,
 		ReadContext:   resourceNetworkAccessTimeDateConditionsRead,

@@ -16,9 +16,9 @@ func resourceDownloadableACL() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on DownloadableACL.
   
-  This resource allows the client to update a downloadable ACL.
-  This resource deletes a downloadable ACL.
-  This resource creates a downloadable ACL.`,
+  - This resource allows the client to update a downloadable ACL.
+  - This resource deletes a downloadable ACL.
+  - This resource creates a downloadable ACL.`,
 
 		CreateContext: resourceDownloadableACLCreate,
 		ReadContext:   resourceDownloadableACLRead,

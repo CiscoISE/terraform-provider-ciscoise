@@ -16,9 +16,9 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SelfRegisteredPortal.
   
-  This resource allows the client to update a self registered portal by ID.
-  This resource deletes a self registered portal by ID.
-  This resource creates a self registered portal.`,
+  - This resource allows the client to update a self registered portal by ID.
+  - This resource deletes a self registered portal by ID.
+  - This resource creates a self registered portal.`,
 
 		CreateContext: resourceSelfRegisteredPortalCreate,
 		ReadContext:   resourceSelfRegisteredPortalRead,

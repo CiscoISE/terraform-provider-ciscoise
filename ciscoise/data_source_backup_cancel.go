@@ -15,7 +15,7 @@ func dataSourceBackupCancel() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Backup And Restore.
 
-Cancels the backup job running on the node.`,
+- Cancels the backup job running on the node.`,
 
 		ReadContext: dataSourceBackupCancelRead,
 		Schema: map[string]*schema.Schema{

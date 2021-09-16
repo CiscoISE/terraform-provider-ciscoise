@@ -14,8 +14,8 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Policy Set.
 
-Get all network access policy sets.
-Network Access Get policy set attributes.`,
+- Get all network access policy sets.
+- Network Access Get policy set attributes.`,
 
 		ReadContext: dataSourceNetworkAccessPolicySetRead,
 		Schema: map[string]*schema.Schema{

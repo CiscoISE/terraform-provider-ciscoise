@@ -6,7 +6,7 @@ description: |-
   It performs create operation on Certificates.
   Bind CA Signed Certificate.
   NOTE:
-  This data source action requires an existing Certificate Signing Request, and the root certificate must already be
+  - This data source action requires an existing Certificate Signing Request, and the root certificate must already be
   trusted.
   NOTE:
   The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
@@ -98,7 +98,7 @@ It performs create operation on Certificates.
 Bind CA Signed Certificate.
 
 NOTE:
-This data source action requires an existing Certificate Signing Request, and the root certificate must already be
+- This data source action requires an existing Certificate Signing Request, and the root certificate must already be
 trusted.
 
 NOTE:

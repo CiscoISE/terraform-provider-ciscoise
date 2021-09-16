@@ -4,8 +4,8 @@ page_title: "ciscoise_sg_mapping Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on IPToSGTMapping.
-  This data source allows the client to get an IP to SGT mapping by ID.
-  This data source allows the client to get all the IP to SGT mappings.
+  - This data source allows the client to get an IP to SGT mapping by ID.
+  - This data source allows the client to get all the IP to SGT mappings.
   Filter:
   [hostName, groupName, ip, sgtName]
   To search guest users by using
@@ -23,8 +23,8 @@ description: |-
 
 It performs read operation on IPToSGTMapping.
 
-This data source allows the client to get an IP to SGT mapping by ID.
-This data source allows the client to get all the IP to SGT mappings.
+- This data source allows the client to get an IP to SGT mapping by ID.
+- This data source allows the client to get all the IP to SGT mappings.
 
 Filter:
 

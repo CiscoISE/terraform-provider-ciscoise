@@ -16,9 +16,9 @@ func resourceGuestType() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on GuestType.
   
-  This resource allows the client to update a guest type.
-  This resource deletes a guest type.
-  This resource creates a guest type.`,
+  - This resource allows the client to update a guest type.
+  - This resource deletes a guest type.
+  - This resource creates a guest type.`,
 
 		CreateContext: resourceGuestTypeCreate,
 		ReadContext:   resourceGuestTypeRead,

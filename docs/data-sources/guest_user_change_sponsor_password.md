@@ -4,14 +4,14 @@ page_title: "ciscoise_guest_user_change_sponsor_password Data Source - terraform
 subcategory: ""
 description: |-
   It performs update operation on GuestUser.
-  This data source action allows the client to change the sponsor password.
+  - This data source action allows the client to change the sponsor password.
 ---
 
 # ciscoise_guest_user_change_sponsor_password (Data Source)
 
 It performs update operation on GuestUser.
 
-This data source action allows the client to change the sponsor password.
+- This data source action allows the client to change the sponsor password.
 
 ## Example Usage
 

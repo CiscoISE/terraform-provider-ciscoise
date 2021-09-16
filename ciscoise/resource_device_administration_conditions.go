@@ -16,11 +16,11 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Conditions.
   
-  Device Admin Creates a library condition.
-  Device Admin Update library condition using condition name.
-  NDevice Admin Delete a library condition using condition Name.
-  Device Admin Update library condition.
-  Device Admin Delete a library condition.`,
+  - Device Admin Creates a library condition.
+  - Device Admin Update library condition using condition name.
+  - Device Admin Delete a library condition using condition Name.
+  - Device Admin Update library condition.
+  - Device Admin Delete a library condition.`,
 
 		CreateContext: resourceDeviceAdministrationConditionsCreate,
 		ReadContext:   resourceDeviceAdministrationConditionsRead,

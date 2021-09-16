@@ -14,9 +14,9 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on TacacsServerSequence.
 
-This data source allows the client to get a TACACS server sequence by name.
-This data source allows the client to get a TACACS server sequence by ID.
-This data source allows the client to get all the TACACS server sequences.`,
+- This data source allows the client to get a TACACS server sequence by name.
+- This data source allows the client to get a TACACS server sequence by ID.
+- This data source allows the client to get all the TACACS server sequences.`,
 
 		ReadContext: dataSourceTacacsServerSequenceRead,
 		Schema: map[string]*schema.Schema{

@@ -17,7 +17,7 @@ func dataSourceSxpVpnsBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on SXPVPNs.
 
-This data source action allows the client to submit the bulk request.`,
+- This data source action allows the client to submit the bulk request.`,
 
 		ReadContext: dataSourceSxpVpnsBulkRequestRead,
 		Schema: map[string]*schema.Schema{

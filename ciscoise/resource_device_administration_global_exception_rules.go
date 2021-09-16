@@ -17,9 +17,9 @@ func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 		Description: `It manages create, read, update and delete operations on Device Administration - Authorization Global
   Exception Rules.
   
-  Device Admin Create global exception authorization rule.
-  Device Admin Update global exception authorization rule.
-  Device Admin Delete global exception authorization rule.`,
+  - Device Admin Create global exception authorization rule.
+  - Device Admin Update global exception authorization rule.
+  - Device Admin Delete global exception authorization rule.`,
 
 		CreateContext: resourceDeviceAdministrationGlobalExceptionRulesCreate,
 		ReadContext:   resourceDeviceAdministrationGlobalExceptionRulesRead,
