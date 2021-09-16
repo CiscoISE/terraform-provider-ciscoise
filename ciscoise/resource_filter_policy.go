@@ -52,10 +52,11 @@ func resourceFilterPolicy() *schema.Resource {
 							Optional:    true,
 						},
 						"sgt": &schema.Schema{
-							Description: `SGT name or ID. At least one of subnet or sgt or vn should be defined`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Description:      `SGT name or ID. At least one of subnet or sgt or vn should be defined`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							Computed:         true,
+							DiffSuppressFunc: diffSuppressSgt(),
 						},
 						"subnet": &schema.Schema{
 							Description: `Subnet for filter policy (hostname is not supported).
