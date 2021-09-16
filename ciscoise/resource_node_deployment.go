@@ -14,6 +14,17 @@ import (
 
 func resourceNodeDeployment() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on Node Deployment.
+  
+  Register ISE node to form a multi-node deployment
+  
+  Updates the deployed ISE node with the information provided
+  
+  The de-register ednode becomes a standalone Cisco ISE node.
+  It retains the last configuration that it received rom the PrimaryPAN and assumes the default personas of a standalone
+  node
+  that are Administration, PolicyService, and Monitoring.
+  `,
 
 		CreateContext: resourceNodeDeploymentCreate,
 		ReadContext:   resourceNodeDeploymentRead,
@@ -37,20 +48,27 @@ func resourceNodeDeployment() *schema.Resource {
 
 						"administration": &schema.Schema{
 							Type:     schema.TypeList,
+							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"is_enabled": &schema.Schema{
 										Type:     schema.TypeBool,
+										Optional: true,
 										Computed: true,
 									},
 									"role": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 								},
 							},
+						},
+						"fdqn": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"fqdn": &schema.Schema{
 							Type:     schema.TypeString,
@@ -184,13 +202,14 @@ func resourceNodeDeployment() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"is_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-						},
 						"node_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Optional:  true,
+							Sensitive: true,
 						},
 						"profile_configuration": &schema.Schema{
 							Type:     schema.TypeList,
@@ -700,7 +719,383 @@ func resourceNodeDeployment() *schema.Resource {
 								},
 							},
 						},
-						"role": &schema.Schema{
+						"response": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"general_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"monitoring": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"enable_pxgrid": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"is_enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"is_mnt_dedicated": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"other_monitoring_node": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"policyservice": &schema.Schema{
+																Type:     schema.TypeList,
+																Optional: true,
+																MaxItems: 1,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"enable_device_admin_service": &schema.Schema{
+																			Type:     schema.TypeBool,
+																			Optional: true,
+																		},
+																		"enable_nac_service": &schema.Schema{
+																			Type:     schema.TypeBool,
+																			Optional: true,
+																		},
+																		"enable_passive_identity_service": &schema.Schema{
+																			Type:     schema.TypeBool,
+																			Optional: true,
+																		},
+																		"enable_profiling_service": &schema.Schema{
+																			Type:     schema.TypeBool,
+																			Optional: true,
+																		},
+																		"enabled": &schema.Schema{
+																			Type:     schema.TypeBool,
+																			Optional: true,
+																		},
+																		"session_service": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Optional: true,
+																			MaxItems: 1,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"is_enabled": &schema.Schema{
+																						Type:     schema.TypeBool,
+																						Optional: true,
+																					},
+																					"nodegroup": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Optional: true,
+																					},
+																				},
+																			},
+																		},
+																		"sxpservice": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Optional: true,
+																			MaxItems: 1,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"is_enabled": &schema.Schema{
+																						Type:     schema.TypeBool,
+																						Optional: true,
+																					},
+																					"user_interface": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Optional: true,
+																					},
+																				},
+																			},
+																		},
+																	},
+																},
+															},
+															"role": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"profile_configuration": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"active_directory": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"days_before_rescan": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+															},
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"dhcp": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"interface": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"port": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"dhcp_span": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"interface": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"dns": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"http": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"interface": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"netflow": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"interface": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"port": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"nmap": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"pxgrid": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"radius": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"snmp_query": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enabled": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"event_timeout": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+															},
+															"retries": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+															},
+															"timeout": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"snmp_trap": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"description": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"interface": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"link_trap_query": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"mac_trap_query": &schema.Schema{
+																Type:     schema.TypeBool,
+																Optional: true,
+															},
+															"port": &schema.Schema{
+																Type:     schema.TypeInt,
+																Optional: true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"user_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 						},

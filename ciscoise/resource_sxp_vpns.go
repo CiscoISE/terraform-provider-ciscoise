@@ -14,6 +14,10 @@ import (
 
 func resourceSxpVpns() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read and delete operations on SXPVPNs.
+  
+  This resource deletes a SXP VPN.
+  This resource creates a SXP VPN.`,
 
 		CreateContext: resourceSxpVpnsCreate,
 		ReadContext:   resourceSxpVpnsRead,

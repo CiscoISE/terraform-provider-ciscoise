@@ -14,6 +14,9 @@ import (
 
 func resourcePortalGlobalSetting() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages read and update operations on PortalGlobalSetting.
+  
+  This resource allows the client to update the portal global settings by id.`,
 
 		CreateContext: resourcePortalGlobalSettingCreate,
 		ReadContext:   resourcePortalGlobalSettingRead,
@@ -36,6 +39,9 @@ func resourcePortalGlobalSetting() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"customization": &schema.Schema{
+							Description: `Allowed values:
+  - HTML,
+  - HTMLANDJAVASCRIPT`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,

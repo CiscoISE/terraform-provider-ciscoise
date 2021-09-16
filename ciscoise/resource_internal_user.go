@@ -13,6 +13,13 @@ import (
 
 func resourceInternalUser() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on InternalUser.
+  
+  This resource allows the client to update an internal user by name.
+  This resource deletes an internal user by name.
+  This resource allows the client to update an internal user by ID.
+  This resource deletes an internal user by ID.
+  This resource creates an internal user.`,
 
 		CreateContext: resourceInternalUserCreate,
 		ReadContext:   resourceInternalUserRead,
@@ -40,9 +47,10 @@ func resourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
-							Optional: true,
-							Computed: true,
+							Description: `Key value map`,
+							Type:        schema.TypeMap,
+							Optional:    true,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -60,14 +68,17 @@ func resourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
+							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
+  The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
 							Type:     schema.TypeBool,
 							Optional: true,
 							Computed: true,
 						},
 						"expiry_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -85,9 +96,10 @@ func resourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"identity_groups": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `CSV of identity group IDs`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"last_name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -127,10 +139,11 @@ func resourceInternalUser() *schema.Resource {
 							Computed:  true,
 						},
 						"password_idstore": &schema.Schema{
-							Type:      schema.TypeString,
-							Optional:  true,
-							Sensitive: true,
-							Computed:  true,
+							Description: `The id store where the internal user's password is kept`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Sensitive:   true,
+							Computed:    true,
 						},
 					},
 				},

@@ -13,6 +13,11 @@ import (
 
 func resourceEndpointGroup() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on EndpointIdentityGroup.
+  
+  This resource allows the client to update an endpoint identity group.
+  This resource deletes an endpoint identity group.
+  This resource creates an endpoint identity group.`,
 
 		CreateContext: resourceEndpointGroupCreate,
 		ReadContext:   resourceEndpointGroupRead,

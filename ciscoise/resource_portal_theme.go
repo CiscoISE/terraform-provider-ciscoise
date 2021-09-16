@@ -14,6 +14,11 @@ import (
 
 func resourcePortalTheme() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on PortalTheme.
+  
+  This resource allows the client to update a portal theme by ID.
+  This resource deletes a portal theme by ID.
+  This resource creates a portal theme.`,
 
 		CreateContext: resourcePortalThemeCreate,
 		ReadContext:   resourcePortalThemeRead,
@@ -72,9 +77,10 @@ func resourcePortalTheme() *schema.Resource {
 							Computed: true,
 						},
 						"theme_data": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Portal Theme for all portals`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

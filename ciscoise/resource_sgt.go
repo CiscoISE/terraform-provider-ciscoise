@@ -14,6 +14,11 @@ import (
 
 func resourceSgt() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on SecurityGroups.
+  
+  This resource allows the client to update a security group.
+  This resource deletes a security group.
+  This resource creates a security group.`,
 
 		CreateContext: resourceSgtCreate,
 		ReadContext:   resourceSgtRead,
@@ -95,9 +100,10 @@ func resourceSgt() *schema.Resource {
 							Computed: true,
 						},
 						"value": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `Value range: 2 ot 65519 or -1 to auto-generate`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

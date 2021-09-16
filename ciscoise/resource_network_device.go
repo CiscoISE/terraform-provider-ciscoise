@@ -14,6 +14,13 @@ import (
 
 func resourceNetworkDevice() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on NetworkDevice.
+  
+  This resource allows the client to update a network device by name.
+  This resource deletes a network device by name.
+  This resource allows the client to update a network device by ID.
+  This resource deletes a network device by ID.
+  This resource creates a network device.`,
 
 		CreateContext: resourceNetworkDeviceCreate,
 		ReadContext:   resourceNetworkDeviceRead,
@@ -36,24 +43,27 @@ func resourceNetworkDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"network_device_group_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `List of Network Device Group names for this node`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"network_device_iplist": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `List of IP Subnets for this node`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"get_ipaddress_exclude": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Description: `It can be either single IP address or IP range address`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"ipaddress": &schema.Schema{
 										Type:     schema.TypeString,
@@ -76,9 +86,10 @@ func resourceNetworkDevice() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"dtls_required": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										Description: `This value enforces use of dtls`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"enable_key_wrap": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -101,6 +112,9 @@ func resourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"key_input_format": &schema.Schema{
+										Description: `Allowed values:
+  - ASCII,
+  - HEXADECIMAL`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -111,6 +125,9 @@ func resourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"network_protocol": &schema.Schema{
+										Description: `Allowed values:
+  - RADIUS,
+  - TACACS_PLUS`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -139,9 +156,10 @@ func resourceNetworkDevice() *schema.Resource {
 							Computed: true,
 						},
 						"dtls_dns_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `This value is used to verify the client identity contained in the X.509 RADIUS/DTLS client certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -237,6 +255,10 @@ func resourceNetworkDevice() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"connect_mode_options": &schema.Schema{
+										Description: `Allowed values:
+  - OFF,
+  - ON_LEGACY,
+  - ON_DRAFT_COMPLIANT`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -354,6 +376,10 @@ func resourceNetworkDevice() *schema.Resource {
 													Computed: true,
 												},
 												"send_configuration_to_device_using": &schema.Schema{
+													Description: `Allowed values:
+  - ENABLE_USING_COA,
+  - ENABLE_USING_CLI,
+  - DISABLE_ALL`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,

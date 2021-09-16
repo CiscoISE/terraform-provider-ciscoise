@@ -13,6 +13,11 @@ import (
 
 func resourceAncPolicy() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on AncPolicy.
+  
+  This resource allows the client to update an ANC policy.
+  This resource allows the client to delete an ANC policy.
+  This resource allows the client to create an ANC policy.`,
 
 		CreateContext: resourceAncPolicyCreate,
 		ReadContext:   resourceAncPolicyRead,
@@ -35,6 +40,10 @@ func resourceAncPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"actions": &schema.Schema{
+							Description: `- QUARANTINE: Allows you to use Exception policies (authorization policies) to limit or deny an endpoint access to the network.
+  - PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
+  - SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
+  - RE_AUTHENTICATE: Re-authenticates the session from the endpoint.`,
 							Type:     schema.TypeList,
 							Optional: true,
 							Computed: true,

@@ -14,6 +14,11 @@ import (
 
 func resourceDownloadableACL() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on DownloadableACL.
+  
+  This resource allows the client to update a downloadable ACL.
+  This resource deletes a downloadable ACL.
+  This resource creates a downloadable ACL.`,
 
 		CreateContext: resourceDownloadableACLCreate,
 		ReadContext:   resourceDownloadableACLRead,
@@ -36,19 +41,25 @@ func resourceDownloadableACL() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"dacl": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `The DACL Content. Use the string \\n for a newline`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"dacl_type": &schema.Schema{
+							Description: `Allowed values:
+  - IPV4,
+  - IPV6,
+  - IP_AGNOSTIC`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Use the string \\n for a newline`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -77,9 +88,10 @@ func resourceDownloadableACL() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

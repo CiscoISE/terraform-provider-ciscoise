@@ -14,6 +14,11 @@ import (
 
 func resourceTacacsProfile() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on TACACSProfile.
+  
+  This resource allows the client to update a TACACS profile.
+  This resource deletes a TACACS profile.
+  This resource creates a TACACS profile.`,
 
 		CreateContext: resourceTacacsProfileCreate,
 		ReadContext:   resourceTacacsProfileRead,
@@ -72,9 +77,10 @@ func resourceTacacsProfile() *schema.Resource {
 							Computed: true,
 						},
 						"session_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `Holds list of session attributes. View type for GUI is Shell by default`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -91,9 +97,10 @@ func resourceTacacsProfile() *schema.Resource {
 													Computed: true,
 												},
 												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Allowed values: MANDATORY, OPTIONAL`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,

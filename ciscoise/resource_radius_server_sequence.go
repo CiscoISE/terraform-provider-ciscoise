@@ -14,6 +14,11 @@ import (
 
 func resourceRadiusServerSequence() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on RADIUSServerSequence.
+  
+  This resource allows the client to update a RADIUS server sequence.
+  This resource deletes a RADIUS server sequence.
+  This resource creates a RADIUS server sequence.`,
 
 		CreateContext: resourceRadiusServerSequenceCreate,
 		ReadContext:   resourceRadiusServerSequenceRead,
@@ -36,13 +41,19 @@ func resourceRadiusServerSequence() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"before_accept_attr_manipulators_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"action": &schema.Schema{
+										Description: `Allowed Values:
+  - ADD,
+  - UPDATE,
+  - REMOVE,
+  - REMOVEANY`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -53,9 +64,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 										Computed: true,
 									},
 									"changed_val": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"dictionary_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -71,13 +83,19 @@ func resourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"on_request_attr_manipulator_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `The onRequestAttrManipulators is required only if useAttrSetOnRequest is true`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"action": &schema.Schema{
+										Description: `Allowed Values:
+  - ADD,
+  - UPDATE,
+  - REMOVE,
+  - REMOVEANY`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -88,9 +106,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 										Computed: true,
 									},
 									"changed_val": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"dictionary_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -160,9 +179,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 							Computed: true,
 						},
 						"prefix_separator": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `The prefixSeparator is required only if stripPrefix is true. The maximum length is 1 character`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -180,9 +200,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 							Computed: true,
 						},
 						"suffix_separator": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"use_attr_set_before_acc": &schema.Schema{
 							Type:     schema.TypeBool,

@@ -13,6 +13,11 @@ import (
 
 func resourceTacacsExternalServers() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on TACACSExternalServers.
+  
+  This resource allows the client to update TACACS external servers.
+  This resource deletes TACACS external servers.
+  This resource creates TACACS external servers.`,
 
 		CreateContext: resourceTacacsExternalServersCreate,
 		ReadContext:   resourceTacacsExternalServersRead,
@@ -35,9 +40,10 @@ func resourceTacacsExternalServers() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"connection_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `The port to connect the server`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -45,9 +51,10 @@ func resourceTacacsExternalServers() *schema.Resource {
 							Computed: true,
 						},
 						"host_ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `The server IPV4 address`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -81,19 +88,22 @@ func resourceTacacsExternalServers() *schema.Resource {
 							Computed: true,
 						},
 						"shared_secret": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `The server shared secret`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"single_connect": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							Description: `Define the use of single connection`,
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
 						},
 						"timeout": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `The server timeout`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

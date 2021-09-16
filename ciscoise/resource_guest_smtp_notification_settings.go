@@ -14,6 +14,10 @@ import (
 
 func resourceGuestSmtpNotificationSettings() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read and update operations on GuestSMTPNotificationConfiguration.
+  
+  This resource allows the client to update a SMTP configuration setting.
+  This resource creates a guest SMTP notification configuration.`,
 
 		CreateContext: resourceGuestSmtpNotificationSettingsCreate,
 		ReadContext:   resourceGuestSmtpNotificationSettingsRead,
@@ -36,14 +40,16 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"connection_timeout": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Interval in seconds for all the SMTP client connections`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"default_from_address": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `The default from email address to be used to send emails from`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -72,45 +78,53 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 							},
 						},
 						"notification_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							Description: `Indicates if the email notification service is to be enabled`,
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
 						},
 						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Optional:  true,
-							Sensitive: true,
-							Computed:  true,
+							Description: `Password of Secure SMTP server`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Sensitive:   true,
+							Computed:    true,
 						},
 						"smtp_port": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Port at which SMTP Secure Server is listening`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"smtp_server": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `The SMTP server ip address or fqdn such as outbound.mycompany.com`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"use_default_from_address": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							Description: `If the default from address should be used rather than using a sponsor user email address`,
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
 						},
 						"use_password_authentication": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							Description: `If configured to true, SMTP server authentication will happen using username/password`,
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
 						},
 						"use_tlsor_ssl_encryption": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							Description: `If configured to true, SMTP server authentication will happen using TLS/SSL`,
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
 						},
 						"user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Username of Secure SMTP server`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

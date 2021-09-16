@@ -14,6 +14,11 @@ import (
 
 func resourceSgMappingGroup() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on IPToSGTMappingGroup.
+  
+  This resource allows the client to update an IP to SGT mapping group by ID.
+  This resource deletes an IP to SGT mapping group.
+  This resource creates an IP to SGT mapping group.`,
 
 		CreateContext: resourceSgMappingGroupCreate,
 		ReadContext:   resourceSgMappingGroupRead,
@@ -36,18 +41,24 @@ func resourceSgMappingGroup() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"deploy_to": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Mandatory unless mappingGroup is set or unless deployType=ALL`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"deploy_type": &schema.Schema{
+							Description: `Allowed values:
+  - ALL,
+  - ND,
+  - NDG`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `id path parameter.`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -76,9 +87,10 @@ func resourceSgMappingGroup() *schema.Resource {
 							Computed: true,
 						},
 						"sgt": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Mandatory unless mappingGroup is set`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

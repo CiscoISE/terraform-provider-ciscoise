@@ -14,6 +14,11 @@ import (
 
 func resourceSponsorGroup() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on SponsorGroup.
+  
+  This resource allows the client to update a sponsor group by ID.
+  This resource deletes a sponsor group by ID.
+  This resource creates a sponsor group.`,
 
 		CreateContext: resourceSponsorGroupCreate,
 		ReadContext:   resourceSponsorGroupRead,
