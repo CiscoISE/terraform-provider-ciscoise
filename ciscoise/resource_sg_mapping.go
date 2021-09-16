@@ -14,6 +14,11 @@ import (
 
 func resourceSgMapping() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on IPToSGTMapping.
+  
+  This resource allows the client to update an IP to SGT mapping by ID.
+  This resource deletes an IP to SGT mapping.
+  This resource creates an IP to SGT mapping.`,
 
 		CreateContext: resourceSgMappingCreate,
 		ReadContext:   resourceSgMappingRead,
@@ -36,24 +41,31 @@ func resourceSgMapping() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"deploy_to": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Mandatory unless mappingGroup is set or unless deployType=ALL`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"deploy_type": &schema.Schema{
+							Description: `Allowed values:
+  - ALL,
+  - ND,
+  - NDG`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"host_ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Mandatory if hostName is empty -- valid IP`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"host_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Mandatory if hostIp is empty`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -82,9 +94,10 @@ func resourceSgMapping() *schema.Resource {
 							},
 						},
 						"mapping_group": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Mapping Group Id. Mandatory unless sgt and deployTo and deployType are set`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -92,9 +105,10 @@ func resourceSgMapping() *schema.Resource {
 							Computed: true,
 						},
 						"sgt": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Mandatory unless mappingGroup is set`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

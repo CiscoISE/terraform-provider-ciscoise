@@ -13,6 +13,11 @@ import (
 
 func resourceExternalRadiusServer() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on ExternalRADIUSServer.
+  
+  This resource allows the client to update an external RADIUS server.
+  This resource deletes an external RADIUS server.
+  This resource creates an external RADIUS server.`,
 
 		CreateContext: resourceExternalRadiusServerCreate,
 		ReadContext:   resourceExternalRadiusServerRead,
@@ -35,16 +40,20 @@ func resourceExternalRadiusServer() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"accounting_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `Valid Range 1 to 65535`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 						"authentication_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `Valid Range 1 to 65535`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 						"authenticator_key": &schema.Schema{
+							Description: `The authenticatorKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
+  The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -55,19 +64,24 @@ func resourceExternalRadiusServer() *schema.Resource {
 							Computed: true,
 						},
 						"enable_key_wrap": &schema.Schema{
+							Description: `KeyWrap may only be enabled if it is supported on the device.
+  When running in FIPS mode this option should be enabled for such devices`,
 							Type:     schema.TypeBool,
 							Optional: true,
 							Computed: true,
 						},
 						"encryption_key": &schema.Schema{
+							Description: `The encryptionKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
+  The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"host_ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `The IP of the host - must be a valid IPV4 address`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -75,6 +89,10 @@ func resourceExternalRadiusServer() *schema.Resource {
 							Computed: true,
 						},
 						"key_input_format": &schema.Schema{
+							Description: `Specifies the format of the input for fields 'encryptionKey' and 'authenticatorKey'.
+  Allowed Values:
+  - ASCII
+  - HEXADECIMAL`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -101,29 +119,34 @@ func resourceExternalRadiusServer() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Resource Name. Allowed charactera are alphanumeric and _ (underscore).`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"proxy_timeout": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `Valid Range 1 to 600`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 						"retries": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `Valid Range 1 to 9`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 						"shared_secret": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Shared secret maximum length is 128 characters`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"timeout": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `Valid Range 1 to 120`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

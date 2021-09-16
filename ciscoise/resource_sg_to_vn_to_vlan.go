@@ -14,6 +14,11 @@ import (
 
 func resourceSgToVnToVLAN() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on SecurityGroupToVirtualNetwork.
+  
+  This resource allows the client to update a security group to virtual network.
+  This resource deletes a security group ACL to virtual network.
+  This resource creates a security group to virtual network.`,
 
 		CreateContext: resourceSgToVnToVLANCreate,
 		ReadContext:   resourceSgToVnToVLANRead,

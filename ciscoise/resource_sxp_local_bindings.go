@@ -14,6 +14,11 @@ import (
 
 func resourceSxpLocalBindings() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on SXPLocalBindings.
+  
+  This resource allows the client to update a SXP local binding.
+  This resource deletes a SXP local binding.
+  This resource creates a SXP local binding.`,
 
 		CreateContext: resourceSxpLocalBindingsCreate,
 		ReadContext:   resourceSxpLocalBindingsRead,
@@ -36,9 +41,10 @@ func resourceSxpLocalBindings() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"binding_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `This field is depricated from Cisco ISE 3.0`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -51,9 +57,10 @@ func resourceSxpLocalBindings() *schema.Resource {
 							Computed: true,
 						},
 						"ip_address_or_host": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `IP address for static mapping (hostname is not supported)`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -77,19 +84,22 @@ func resourceSxpLocalBindings() *schema.Resource {
 							},
 						},
 						"sgt": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `SGT name or ID`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"sxp_vpn": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"vns": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `List of Virtual Networks, separated with comma. At least one of: sxpVpn or vns should be defined`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

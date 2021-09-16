@@ -13,6 +13,13 @@ import (
 
 func resourceGuestUser() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on GuestUser.
+  
+  This resource allows the client to update a guest user by name.
+  This resource deletes a guest user.
+  This resource allows the client to update a guest user by ID.
+  This resource deletes a guest user by ID.
+  This resource creates a guest user.`,
 
 		CreateContext: resourceGuestUserCreate,
 		ReadContext:   resourceGuestUserRead,
@@ -35,9 +42,10 @@ func resourceGuestUser() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"custom_fields": &schema.Schema{
-							Type:     schema.TypeMap,
-							Optional: true,
-							Computed: true,
+							Description: `Key value map`,
+							Type:        schema.TypeMap,
+							Optional:    true,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -107,9 +115,10 @@ func resourceGuestUser() *schema.Resource {
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										Description: `This field is only for Get operation not applicable for Create, Update operations`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"first_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -133,9 +142,10 @@ func resourceGuestUser() *schema.Resource {
 										Computed:  true,
 									},
 									"phone_number": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Description: `Phone number should be E.164 format`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"sms_service_provider": &schema.Schema{
 										Type:     schema.TypeString,
@@ -143,9 +153,10 @@ func resourceGuestUser() *schema.Resource {
 										Computed: true,
 									},
 									"user_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Description: `If account needs be created with mobile number, please provide mobile number here`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 								},
 							},

@@ -14,6 +14,405 @@ import (
 
 func resourceTrustedCertificate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages read, update and delete operations on Certificates.
+  
+  
+  
+  Update a trusted certificate present in ISE trust store.
+  
+  Following Parameters are used in PUT request body
+  
+  
+  
+  
+  PARAMETER
+  
+  DESCRIPTION
+  
+  EXAMPLE
+  
+  
+  
+  
+  
+  name
+  
+  Friendly name of the certificate(required)
+  
+  Trust Certificate
+  
+  
+  
+  status
+  
+  Status of the certificate
+  
+  Enabled
+  
+  
+  
+  description
+  
+  Description of the certificate
+  
+  Certificate for secure connection to cisco.com
+  
+  
+  
+  trustForIseAuth
+  
+  Trust for authentication within ISE
+  
+  false
+  
+  
+  
+  trustForClientAuth
+  
+  Trust for client authentication and Syslog
+  
+  false
+  
+  
+  
+  trustForCertificateBasedAdminAuth
+  
+  Trust for Certificate based Admin authentication
+  
+  false
+  
+  
+  
+  trustForCiscoServicesAuth
+  
+  Trust for authentication of Cisco Services
+  
+  false
+  
+  
+  
+  enableOCSPValidation
+  
+  Switch to enable/disable OCSP Validation
+  
+  false
+  
+  
+  
+  selectedOCSPService
+  
+  Name of selected OCSP Service
+  
+  INTERNAL_OCSP_SERVICE
+  
+  
+  
+  rejectIfNoStatusFromOCSP
+  
+  Switch to reject certificate if there is no status from OCSP
+  
+  false
+  
+  
+  
+  rejectIfUnreachableFromOCSP
+  
+  Switch to reject certificate if unreachable from OCSP
+  
+  false
+  
+  
+  
+  downloadCRL
+  
+  Switch to enable/disable download of CRL
+  
+  false
+  
+  
+  
+  crlDistributionUrl
+  
+  Certificate Revocation List Distribution URL
+  
+  
+  
+  
+  automaticCRLUpdate
+  
+  Switch to enable/disable automatic CRL update
+  
+  false
+  
+  
+  
+  automaticCRLUpdatePeriod
+  
+  Automatic CRL update period
+  
+  5
+  
+  
+  
+  automaticCRLUpdateUnits
+  
+  Unit of time for automatic CRL update
+  
+  Minutes
+  
+  
+  
+  nonAutomaticCRLUpdatePeriod
+  
+  Non automatic CRL update period
+  
+  1
+  
+  
+  
+  nonAutomaticCRLUpdateUnits
+  
+  Unit of time of non automatic CRL update
+  
+  Hours
+  
+  
+  
+  crlDownloadFailureRetries
+  
+  If CRL download fails, wait time before retry
+  
+  10
+  
+  
+  
+  crlDownloadFailureRetriesUnits
+  
+  Unit of time before retry if CRL download fails
+  
+  Minutes
+  
+  
+  
+  enableServerIdentityCheck
+  
+  Switch to enable/disable verification if HTTPS or LDAP server certificate name fits the configured server URL
+  
+  false
+  
+  
+  
+  authenticateBeforeCRLReceived
+  
+  Switch to enable/disable CRL Verification if CRL is not Received
+  
+  false
+  
+  
+  
+  ignoreCRLExpiration
+  
+  Switch to enable/disable ignore CRL Expiration
+  
+  false
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Trusted For
+  
+  Usage
+  
+  
+  
+  
+  
+  Authentication within ISE
+  
+  Use
+  "trustForIseAuth":true
+   if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
+  
+  
+  
+  Client authentication and Syslog
+  
+  Use
+  "trustForClientAuth":true
+   if the certificate is to be used for authentication of endpoints that contact ISE over the EAP protocol. Also check
+  this box if certificate is used to trust a Syslog server. Make sure to have keyCertSign bit asserted under KeyUsage
+  extension for this certificate.
+  Note:
+   "trustForClientAuth" can be set true only if the "trustForIseAuth" has been set true.
+  
+  
+  
+  Certificate based admin authentication
+  
+  Use
+  "trustForCertificateBasedAdminAuth":true
+   if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
+  Note:
+   "trustForCertificateBasedAdminAuth" can be set true only if "trustForIseAuth" and "trustForClientAuth" are true.
+  
+  
+  
+  Authentication of Cisco Services
+  
+   Use
+  "trustForCiscoServicesAuth":true
+   if the certificate is to be used for trusting external Cisco services, such as Feed Service.
+  
+  
+  
+  
+  
+  
+  
+  
+  OCSP Configuration
+  
+  Usage
+  
+  
+  
+  
+  
+  Validation against OCSP service
+  
+  Use
+  "enableOCSPValidation":true
+   to validate the certificate against OCSP service mentioned in the field
+  selectedOCSPService
+  
+  
+  
+  OCSP Service name
+  
+  Use
+  "selectedOCSPService":"Name of OCSP Service"
+   Name of the OCSP service against which the certificate should be validated
+  Note:
+   "selectedOCSPService" value will on be used if "enableOCSPValidation" has been set true.
+  
+  
+  
+  Reject the request if OCSP returns UNKNOWN status
+  
+  Use
+  "rejectIfNoStatusFromOCSP":true
+   to reject the certificate if the OCSP service returns UNKNOWN status
+  Note:
+   "rejectIfNoStatusFromOCSP:true" can be used only if "enableOCSPValidation" has been set true.
+  
+  
+  
+  Reject the request if OCSP Responder is unreachable
+  
+   Use
+  "rejectIfUnreachableFromOCSP":true
+   to reject the certificate if the OCSP service is unreachable.
+  Note:
+   "rejectIfUnreachableFromOCSP:true" can be used only if "enableOCSPValidation" has been set true.
+  
+  
+  
+  
+  
+  
+  
+  
+  Certificate Revocation List Configuration
+  
+  Usage
+  
+  
+  
+  
+  
+  Validation against CRL
+  
+  Use
+  "downloadCRL":true
+   to validate the certificate against CRL downloaded from URL mentioned in the field
+  crlDistributionUrl
+  
+  
+  
+  CRL distribution url
+  
+  Use
+  "crlDistributionUrl"
+   to specify the URL from where the CRL should be downloaded
+  Note:
+   "crlDistributionUrl" value will only be used if "downloadCRL" has been set true.
+  
+  
+  
+  Retrieve CRL time
+  
+  Use
+  "automaticCRLUpdate":true and automaticCRLUpdatePeriod, automaticCRLUpdatePeriod
+   to set the time before which CRL is automatically retrieved prior to expiration Use
+  "nonAutomaticCRLUpdatePeriod, nonAutomaticCRLUpdateUnits
+   to set the time period for CRL retrieval in loop.
+  
+  Note:
+   All the above fields can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  If download fails
+  
+  Use
+  "crlDownloadFailureRetries" and "crlDownloadFailureRetriesUnits"
+   to set retry time period if CRL download fails
+  Note:
+   "crlDownloadFailureRetries" and "crlDownloadFailureRetriesUnits" can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  Enable Server Identity Check
+  
+  Use
+  "enableServerIdentityCheck":true
+   to verify that HTTPS or LDAPS server certificate name fits the configured server URL
+  Note:
+   "enableServerIdentityCheck:true" can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  Bypass CRL Verification if CRL is not Received
+  
+  Use
+  "authenticateBeforeCRLReceived":true
+   to bypass CRL Verification if CRL is not Received
+  Note:
+   "authenticateBeforeCRLReceived:true" can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  Ignore that CRL is not yet valid or has expired
+  
+   Use
+  "ignoreCRLExpiration":true
+   to ignore if CRL is not yet valid or expired
+  Note:
+   "ignoreCRLExpiration:true" can be used only if "downloadCRL" has been set true.
+  
+  
+  
+  
+  
+  Note:
+  boolean properties accept integers values as well, with 0 considered as false and other values being considered as true
+  
+  This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.`,
 
 		CreateContext: resourceTrustedCertificateCreate,
 		ReadContext:   resourceTrustedCertificateRead,
@@ -36,36 +435,43 @@ func resourceTrustedCertificate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"automatic_crl_update_units": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Unit of time for automatic CRL update`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"crl_distribution_url": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `CRL Distribution URL`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"crl_download_failure_retries_units": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Unit of time before retry if CRL download fails`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Description for trust certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"expiration_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The time and date past which the certificate is no longer valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"friendly_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Friendly name of trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `ID of trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"internal_ca": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -76,16 +482,19 @@ func resourceTrustedCertificate() *schema.Resource {
 							Computed: true,
 						},
 						"issued_by": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The entity that verified the information and signed the certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"issued_to": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Entity to which trust certificate is issued`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The length of key used for encrypting trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -109,30 +518,35 @@ func resourceTrustedCertificate() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `Friendly name of the certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"non_automatic_crl_update_units": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Unit of time of non automatic CRL update`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"selected_ocsp_service": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Name of selected OCSP Service`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"serial_number_decimal_format": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Used to uniquely identify the certificate within a CA's systems`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"sha256_fingerprint": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"signature_algorithm": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Algorithm used for encrypting trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -140,32 +554,39 @@ func resourceTrustedCertificate() *schema.Resource {
 							Computed: true,
 						},
 						"subject": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The Subject or entity with which public key of trust certificate is associated`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"trust_for_certificate_based_admin_auth": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Trust for Certificate based Admin authentication`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"trust_for_cisco_services_auth": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Trust for authentication of Cisco Services`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"trust_for_client_auth": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Trust for client authentication and Syslog`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"trust_for_ise_auth": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Trust for authentication within ISE`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"trusted_for": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Different services for which the certificated is trusted`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"valid_from": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The earliest time and date on which the certificate is valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

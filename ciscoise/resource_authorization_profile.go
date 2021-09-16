@@ -14,6 +14,11 @@ import (
 
 func resourceAuthorizationProfile() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on AuthorizationProfile.
+  
+  This resource allows the client to update an authorization profile.
+  This resource deletes an authorization profile.
+  This resource creates an authorization profile.`,
 
 		CreateContext: resourceAuthorizationProfileCreate,
 		ReadContext:   resourceAuthorizationProfileRead,
@@ -36,6 +41,9 @@ func resourceAuthorizationProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"access_type": &schema.Schema{
+							Description: `Allowed Values:
+  - ACCESS_ACCEPT,
+  - ACCESS_REJECT`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -83,6 +91,9 @@ func resourceAuthorizationProfile() *schema.Resource {
 										},
 									},
 									"right_hand_side_attribue_value": &schema.Schema{
+										Description: `Attribute value can be of type AttributeValue or AdvancedDictionaryAttribute.
+  For AttributeValue the value is String,
+  For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -136,6 +147,11 @@ func resourceAuthorizationProfile() *schema.Resource {
 							Computed: true,
 						},
 						"authz_profile_type": &schema.Schema{
+							Description: `Allowed Values:
+  - SWITCH,
+  - TRUSTSEC,
+  - TACACS
+  SWITCH is used for Standard Authorization Profiles`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -166,9 +182,10 @@ func resourceAuthorizationProfile() *schema.Resource {
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Resource UUID value`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"interface_template": &schema.Schema{
 							Type:     schema.TypeString,
@@ -207,14 +224,19 @@ func resourceAuthorizationProfile() *schema.Resource {
 							},
 						},
 						"mac_sec_policy": &schema.Schema{
+							Description: `Allowed Values:
+  - MUST_SECURE,
+  - MUST_NOT_SECURE,
+  - SHOULD_SECURE`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Resource Name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"neat": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -234,14 +256,18 @@ func resourceAuthorizationProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"connectivity": &schema.Schema{
+										Description: `Allowed Values:
+  - DEFAULT,
+  - RADIUS_REQUEST`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"timer": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-										Computed: true,
+										Description: `Valid range is 1-65535`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -269,9 +295,10 @@ func resourceAuthorizationProfile() *schema.Resource {
 										Computed: true,
 									},
 									"tag_id": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-										Computed: true,
+										Description: `Valid range is 0-31`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -294,6 +321,8 @@ func resourceAuthorizationProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"web_redirection_type": &schema.Schema{
+										Description: `Value MUST be one of the following:CentralizedWebAuth, HotSpot, NativeSupplicanProvisioning, ClientProvisioning. 
+  The WebRedirectionType must fit the portalName`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -304,14 +333,17 @@ func resourceAuthorizationProfile() *schema.Resource {
 										Computed: true,
 									},
 									"display_certificates_renewal_messages": &schema.Schema{
+										Description: `The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
+  For all other 'WebRedirectionType' values the field must be ignored`,
 										Type:     schema.TypeBool,
 										Optional: true,
 										Computed: true,
 									},
 									"portal_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Description: `A portal that exist in the DB and fits the WebRedirectionType`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"static_iphost_name_fqd_n": &schema.Schema{
 										Type:     schema.TypeString,

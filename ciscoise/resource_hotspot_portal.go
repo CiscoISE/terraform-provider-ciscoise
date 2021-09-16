@@ -14,6 +14,11 @@ import (
 
 func resourceHotspotPortal() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on HotspotPortal.
+  
+  This resource allows the client to update a hotspot portal by ID.
+  This resource deletes a hotspot portal by ID.
+  This resource creates a hotspot portal.`,
 
 		CreateContext: resourceHotspotPortalCreate,
 		ReadContext:   resourceHotspotPortalRead,
@@ -36,9 +41,10 @@ func resourceHotspotPortal() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"customizations": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `Defines all of the Portal Customizations available`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -57,9 +63,10 @@ func resourceHotspotPortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -72,9 +79,10 @@ func resourceHotspotPortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -97,9 +105,10 @@ func resourceHotspotPortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -117,9 +126,10 @@ func resourceHotspotPortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -128,6 +138,8 @@ func resourceHotspotPortal() *schema.Resource {
 										},
 									},
 									"language": &schema.Schema{
+										Description: `This property is supported only for Read operation and it allows to show the customizations in English.
+  Other languages are not supported`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -173,31 +185,38 @@ func resourceHotspotPortal() *schema.Resource {
 										},
 									},
 									"portal_theme": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `Defines the configuration for portal theme`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `The unique internal identifier of the portal theme`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `The system- or user-assigned name of the portal theme`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"theme_data": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `A CSS file, represented as a Base64-encoded byte array`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"portal_tweak_settings": &schema.Schema{
+										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+  The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -205,9 +224,10 @@ func resourceHotspotPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"banner_color": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Hex value of color`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"banner_text_color": &schema.Schema{
 													Type:     schema.TypeString,
@@ -267,48 +287,63 @@ func resourceHotspotPortal() *schema.Resource {
 							Computed: true,
 						},
 						"portal_test_url": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `URL to bring up a test page for this portal`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"portal_type": &schema.Schema{
+							Description: `Allowed values:
+  - BYOD,
+  - HOTSPOTGUEST,
+  - MYDEVICE,
+  - SELFREGGUEST,
+  - SPONSOR,
+  - SPONSOREDGUEST`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"settings": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `Defines all of the settings groups available for a BYOD`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"aup_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `Configuration of the Acceptable Use Policy (AUP) for a portal`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"access_code": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Access code that must be entered by the portal user (only valid if requireAccessCode = true)`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Require the portal user to read and accept an AUP`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"require_access_code": &schema.Schema{
+													Description: `Require the portal user to enter an access code.
+  Only used in Hotspot portal`,
 													Type:     schema.TypeBool,
 													Optional: true,
 													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -321,11 +356,16 @@ func resourceHotspotPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"redirect_url": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Target URL for redirection, used when successRedirect = URL`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"success_redirect": &schema.Schema{
+													Description: `After an Authentication Success where should device be redirected. Allowed values:
+  - AUTHSUCCESSPAGE,
+  - ORIGINATINGURL,
+  - URL`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -334,48 +374,72 @@ func resourceHotspotPortal() *schema.Resource {
 										},
 									},
 									"portal_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `The port, interface, certificate, and other basic settings of a portal`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"allowed_interfaces": &schema.Schema{
+													Description: `Interfaces that the portal will be reachable on.
+  Allowed values:
+  - eth0
+  - eth1
+  - eth2
+  - eth3
+  - eth4
+  - eth5
+  - bond0
+  - bond1
+  - bond2`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"always_used_language": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Used when displayLang = ALWAYSUSE`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"certificate_group_tag": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"coa_type": &schema.Schema{
+													Description: `Allowed Values:
+  - COAREAUTHENTICATE,
+  - COATERMINATE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"display_lang": &schema.Schema{
+													Description: `Allowed values:
+  - USEBROWSERLOCALE,
+  - ALWAYSUSE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"endpoint_identity_group": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"fallback_language": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Used when displayLang = USEBROWSERLOCALE`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"https_port": &schema.Schema{
+													Description: `The port number that the allowed interfaces will listen on.
+  Range from 8000 to 8999`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													Computed: true,
@@ -406,26 +470,35 @@ func resourceHotspotPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Include a Post-Login Banner page`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"support_info_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `Portal Support Information Settings`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"default_empty_field_value": &schema.Schema{
+													Description: `The default value displayed for an empty field.
+  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
+													Description: `Specifies how empty fields are handled on the Support Information Page.
+  Allowed values:
+  - HIDE,
+  - DISPLAYWITHNOVALUE,
+  - DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,

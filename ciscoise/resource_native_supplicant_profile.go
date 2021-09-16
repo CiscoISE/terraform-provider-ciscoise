@@ -14,6 +14,10 @@ import (
 
 func resourceNativeSupplicantProfile() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages read, update and delete operations on NativeSupplicantProfile.
+  
+  This resource allows the client to update a native supplicant profile
+  This resource deletes a native supplicant profile.`,
 
 		CreateContext: resourceNativeSupplicantProfileCreate,
 		ReadContext:   resourceNativeSupplicantProfileRead,
@@ -79,6 +83,12 @@ func resourceNativeSupplicantProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"action_type": &schema.Schema{
+										Description: `Action type for WifiProfile.
+  Allowed values:
+  - ADD,
+  - UPDATE,
+  - DELETE
+  (required for updating existing WirelessProfile)`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -94,9 +104,10 @@ func resourceNativeSupplicantProfile() *schema.Resource {
 										Computed: true,
 									},
 									"previous_ssid": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Description: `Previous ssid for WifiProfile (required for updating existing WirelessProfile)`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"ssid": &schema.Schema{
 										Type:     schema.TypeString,

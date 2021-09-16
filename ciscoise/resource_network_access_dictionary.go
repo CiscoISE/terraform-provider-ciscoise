@@ -14,6 +14,11 @@ import (
 
 func resourceNetworkAccessDictionary() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on Network Access - Dictionary.
+  
+  Network Access Create a new Dictionary.
+  Network Access Update a Dictionary.
+  Network Access Delete a Dictionary.`,
 
 		CreateContext: resourceNetworkAccessDictionaryCreate,
 		ReadContext:   resourceNetworkAccessDictionaryRead,
@@ -36,57 +41,34 @@ func resourceNetworkAccessDictionary() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The description of the Dictionary`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"dictionary_attr_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"href": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `The dictionary attribute type`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
+							Description: `Identifier for the dictionary`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"rel": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"type": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `The dictionary name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"version": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary version`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

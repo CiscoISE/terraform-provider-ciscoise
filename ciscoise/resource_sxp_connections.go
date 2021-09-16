@@ -14,6 +14,11 @@ import (
 
 func resourceSxpConnections() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on SXPConnections.
+  
+  This resource allows the client to update a SXP connection.
+  This resource deletes a SXP connection.
+  This resource creates a SXP connection.`,
 
 		CreateContext: resourceSxpConnectionsCreate,
 		ReadContext:   resourceSxpConnectionsRead,

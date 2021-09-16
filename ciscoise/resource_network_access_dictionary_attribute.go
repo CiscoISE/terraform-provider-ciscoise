@@ -14,6 +14,11 @@ import (
 
 func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on Network Access - Dictionary Attribute.
+  
+  Create a new Dictionary Attribute for an existing Dictionary.
+  Update a Dictionary Attribute
+  Delete a Dictionary Attribute.`,
 
 		CreateContext: resourceNetworkAccessDictionaryAttributeCreate,
 		ReadContext:   resourceNetworkAccessDictionaryAttributeRead,
@@ -36,65 +41,73 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allowed_values": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `all of the allowed values for the dictionary attribute`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"is_default": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 									"value": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 								},
 							},
 						},
 						"data_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the data type for the dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The description of the Dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"dictionary_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the name of the dictionary which the dictionary attribute belongs to`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"direction_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the direction for the useage of the dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Identifier for the dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"internal_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"is_default": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-						},
-						"key": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `the internal name of the dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"value": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `The dictionary attribute's name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

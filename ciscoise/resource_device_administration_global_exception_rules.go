@@ -14,6 +14,12 @@ import (
 
 func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on Device Administration - Authorization Global
+  Exception Rules.
+  
+  Device Admin Create global exception authorization rule.
+  Device Admin Update global exception authorization rule.
+  Device Admin Delete global exception authorization rule.`,
 
 		CreateContext: resourceDeviceAdministrationGlobalExceptionRulesCreate,
 		ReadContext:   resourceDeviceAdministrationGlobalExceptionRulesRead,
@@ -36,190 +42,184 @@ func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"commands": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Command sets enforce the specified list of commands that can be executed by a device administrator`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
-						"href": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
+							Description: `id path parameter. Rule id`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"profile": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"rel": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `Device admin profiles control the initial login session of the device administrator`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"rule": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Common attributes in rule authentication/authorization`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"condition": &schema.Schema{
 										Type:     schema.TypeList,
+										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"attribute_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Dictionary attribute id (Optional), used for additional verification`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"attribute_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Dictionary attribute name`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"attribute_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"children": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
+													Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"condition_type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
+																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 															"is_negate": &schema.Schema{
-																Type:     schema.TypeBool,
-																Computed: true,
-															},
-															"link": &schema.Schema{
-																Type:     schema.TypeList,
-																Computed: true,
-																Elem: &schema.Resource{
-																	Schema: map[string]*schema.Schema{
-
-																		"href": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																		"rel": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																		"type": &schema.Schema{
-																			Type:     schema.TypeString,
-																			Computed: true,
-																		},
-																	},
-																},
+																Description: `Indicates whereas this condition is in negate mode`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
 												},
 												"condition_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"end_date": &schema.Schema{
 																Type:     schema.TypeString,
+																Optional: true,
 																Computed: true,
 															},
 															"start_date": &schema.Schema{
 																Type:     schema.TypeString,
+																Optional: true,
 																Computed: true,
 															},
 														},
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"end_date": &schema.Schema{
 																Type:     schema.TypeString,
+																Optional: true,
 																Computed: true,
 															},
 															"start_date": &schema.Schema{
 																Type:     schema.TypeString,
+																Optional: true,
 																Computed: true,
 															},
 														},
 													},
 												},
 												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Condition description`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"dictionary_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Dictionary name`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"dictionary_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Dictionary value`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"end_time": &schema.Schema{
 																Type:     schema.TypeString,
+																Optional: true,
 																Computed: true,
 															},
 															"start_time": &schema.Schema{
 																Type:     schema.TypeString,
+																Optional: true,
 																Computed: true,
 															},
 														},
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"end_time": &schema.Schema{
 																Type:     schema.TypeString,
+																Optional: true,
 																Computed: true,
 															},
 															"start_time": &schema.Schema{
 																Type:     schema.TypeString,
+																Optional: true,
 																Computed: true,
 															},
 														},
@@ -227,51 +227,41 @@ func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 												},
 												"id": &schema.Schema{
 													Type:     schema.TypeString,
+													Optional: true,
 													Computed: true,
 												},
 												"is_negate": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
-												},
-												"link": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"href": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"rel": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-															"type": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
-															},
-														},
-													},
+													Description: `Indicates whereas this condition is in negate mode`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Condition name`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"operator": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Equality operator`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"week_days": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
+													Description: `<p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
 												},
 												"week_days_exception": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
+													Description: `<p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
@@ -280,35 +270,43 @@ func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 										},
 									},
 									"default": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `Indicates if this rule is the default one`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"hit_counts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The amount of times the rule was matched`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Computed:    true,
 									},
 									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `The identifier of the rule`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Rule name, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"rank": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The rank(priority) in relation to other rules. Lower rank is higher priority.`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Computed:    true,
 									},
 									"state": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `The state that the rule is in. A disabled rule cannot be matched.`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 								},
 							},
-						},
-						"type": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
 						},
 					},
 				},

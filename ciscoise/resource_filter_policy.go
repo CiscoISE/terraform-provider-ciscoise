@@ -14,6 +14,11 @@ import (
 
 func resourceFilterPolicy() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on FilterPolicy.
+  
+  This resource allows the client to update a filter policy.
+  This resource deletes a filter policy.
+  This resource creates a filter policy.`,
 
 		CreateContext: resourceFilterPolicyCreate,
 		ReadContext:   resourceFilterPolicyRead,
@@ -34,27 +39,34 @@ func resourceFilterPolicy() *schema.Resource {
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
 						"domains": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `List of SXP Domains, separated with comma`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `id path parameter.`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"sgt": &schema.Schema{
-							Type:             schema.TypeString,
-							Optional:         true,
-							Computed:         true,
-							DiffSuppressFunc: diffSuppressSgt(),
+							Description: `SGT name or ID. At least one of subnet or sgt or vn should be defined`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"subnet": &schema.Schema{
+							Description: `Subnet for filter policy (hostname is not supported).
+  At least one of subnet or sgt or vn should be defined`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vn": &schema.Schema{
+							Description: `Virtual Network.
+  At least one of subnet or sgt or vn should be defined`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,

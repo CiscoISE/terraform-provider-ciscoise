@@ -14,6 +14,11 @@ import (
 
 func resourceGuestType() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on GuestType.
+  
+  This resource allows the client to update a guest type.
+  This resource deletes a guest type.
+  This resource creates a guest type.`,
 
 		CreateContext: resourceGuestTypeCreate,
 		ReadContext:   resourceGuestTypeRead,
@@ -48,13 +53,24 @@ func resourceGuestType() *schema.Resource {
 										Computed: true,
 									},
 									"day_time_limits": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `List of Time Ranges for account access`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"days": &schema.Schema{
+													Description: `List of Days
+  Values should be one of Week day.
+  Allowed values are:
+  - Sunday,
+  - Monday,
+  - Tuesday,
+  - Wednesday,
+  - Thursday,
+  - Friday,
+  - Saturday`,
 													Type:     schema.TypeList,
 													Optional: true,
 													Computed: true,
@@ -63,14 +79,16 @@ func resourceGuestType() *schema.Resource {
 													},
 												},
 												"end_time": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `End time in HH:mm format`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"start_time": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Start time in HH:mm format`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -81,19 +99,25 @@ func resourceGuestType() *schema.Resource {
 										Computed: true,
 									},
 									"duration_time_unit": &schema.Schema{
+										Description: `Allowed values are:
+  - DAYS,
+  - HOURS,
+  - MINUTES`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"from_first_login": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										Description: `When Account Duration starts from first login or specified date`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"max_account_duration": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-										Computed: true,
+										Description: `Maximum value of Account Duration`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Computed:    true,
 									},
 								},
 							},
@@ -104,18 +128,24 @@ func resourceGuestType() *schema.Resource {
 							Computed: true,
 						},
 						"expiration_notification": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `Expiration Notification Settings`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"advance_notification_duration": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-										Computed: true,
+										Description: `Send Account Expiration Notification Duration before ( Days, Hours, Minutes )`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Computed:    true,
 									},
 									"advance_notification_units": &schema.Schema{
+										Description: `Allowed values are:
+  - DAYS,
+  - HOURS,
+  - MINUTES`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -126,19 +156,22 @@ func resourceGuestType() *schema.Resource {
 										Computed: true,
 									},
 									"enable_notification": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										Description: `Enable Notification settings`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"send_email_notification": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										Description: `Enable Email Notification`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"send_sms_notification": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										Description: `Maximum devices guests can register`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"sms_text": &schema.Schema{
 										Type:     schema.TypeString,
@@ -192,6 +225,10 @@ func resourceGuestType() *schema.Resource {
 										Computed: true,
 									},
 									"failure_action": &schema.Schema{
+										Description: `When Guest Exceeds limit this action will be invoked.
+  Allowed values are:
+  - Disconnect_Oldest_Connection,
+  - Disconnect_Newest_Connection`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -202,19 +239,22 @@ func resourceGuestType() *schema.Resource {
 										Computed: true,
 									},
 									"limit_simultaneous_logins": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										Description: `Enable Simultaneous Logins`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 									"max_registered_devices": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-										Computed: true,
+										Description: `Maximum devices guests can register`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Computed:    true,
 									},
 									"max_simultaneous_logins": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
-										Computed: true,
+										Description: `Number of Simultaneous Logins`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+										Computed:    true,
 									},
 								},
 							},

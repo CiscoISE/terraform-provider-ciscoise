@@ -14,6 +14,15 @@ import (
 
 func resourceRepository() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on Repository.
+  
+  Create a new repository in the system. The name provided for the
+  repository must be unique.
+  
+  Update the definition of a specific repository, providing ALL parameters for the repository.
+  
+  Long description TBD
+  `,
 
 		CreateContext: resourceRepositoryCreate,
 		ReadContext:   resourceRepositoryRead,
@@ -41,20 +50,23 @@ func resourceRepository() *schema.Resource {
 							Computed: true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Optional:  true,
-							Sensitive: true,
-							Computed:  true,
+							Description: `Password can contain alphanumeric and/or special characters.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Sensitive:   true,
+							Computed:    true,
 						},
 						"path": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
@@ -67,9 +79,10 @@ func resourceRepository() *schema.Resource {
 							Computed: true,
 						},
 						"user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Username can contain alphanumeric characters.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

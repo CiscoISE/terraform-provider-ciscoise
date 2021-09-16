@@ -14,6 +14,11 @@ import (
 
 func resourceGuestSSID() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on GuestSSID.
+  
+  This resource allows the client to update a guest SSID by ID.
+  This resource deletes a guest SSID by ID.
+  This resource creates a guest SSID.`,
 
 		CreateContext: resourceGuestSSIDCreate,
 		ReadContext:   resourceGuestSSIDRead,
@@ -62,9 +67,10 @@ func resourceGuestSSID() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},

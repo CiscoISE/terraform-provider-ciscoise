@@ -14,6 +14,207 @@ import (
 
 func resourceSystemCertificate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages read, update and delete operations on Certificates.
+  
+  
+  
+  Update a System Certificate.
+  
+  NOTE:
+  Renewing a certificate will cause an application server restart on the selected node.
+  
+  NOTE:
+  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+  
+  Following Parameters are used in POST body
+  
+  
+  
+  
+  PARAMETER
+  
+  DESCRIPTION
+  
+  EXAMPLE
+  
+  
+  
+  
+  
+  name
+  
+  Friendly name of the certificate.
+  
+  System Certificate
+  
+  
+  
+  description
+  Description of the Certificate
+  Default Description
+  
+  
+  admin
+  
+  Use certificate to authenticate the ISE Admin Portal
+  
+  false
+  
+  
+  
+  eap
+  
+  Use certificate for EAP protocols that use SSL/TLS tunneling
+  
+  false
+  
+  
+  
+  radius
+  
+  Use certificate for RADSec server
+  
+  false
+  
+  
+  
+  pxgrid
+  
+  Use certificate for the pxGrid Controller
+  
+  false
+  
+  
+  
+  ims
+  
+  Use certificate for the ISE Messaging Service
+  
+  false
+  
+  
+  
+  saml
+  
+  Use certificate for SAML Signing
+  
+  false
+  
+  
+  
+  portal
+  
+  Use certificate for portal
+  
+  false
+  
+  
+  
+  portalGroupTag
+  
+  Portal Group Tag for using certificate with portal role
+  
+  Default Portal Certificate Group
+  
+  
+  
+  allowReplacementOfPortalGroupTag
+  
+  Allow Replacement of Portal Group Tag (required)
+  
+  false
+  
+  
+  
+  renewSelfSignedCertificate
+  
+  Renew Self Signed Certificate
+  
+  false
+  
+  
+  
+  expirationTTLPeriod
+  
+  Expiration Period
+  
+  365
+  
+  
+  
+  expirationTTLUnits
+  
+  Expiration Units in one of the below formats
+  
+  days / weeks / months / years
+  
+  
+  
+  days
+  
+  
+  
+  
+  
+  Following Roles can be used in any combinations
+  
+  
+  
+  
+  ROLE
+  
+  DEFAULT
+  
+  WARNING
+  
+  
+  
+  
+  
+  Admin
+  
+  False
+  
+  Enabling Admin role for this certificate will cause an application server restart on the selected node.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  
+  
+  
+  EAP Authentication
+  
+  False
+  
+  Only one system certificate can be used for EAP. Assigning EAP to this certificate will remove the assignment from
+  another certificate.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  
+  
+  
+  RADIUS DTLS
+  
+  False
+  
+  Only one system certificate can be used for DTLS. Assigning DTLS to this certificate will remove the assignment from
+  another certificate.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  
+  
+  
+  SAML
+  
+  False
+  
+  SAML cannot be used with other Usage. Enabling SAML will uncheck all other Usage.
+  Note:
+   Make sure required Certificate Chain is imported under Trusted Certificates
+  
+  
+  
+  
+  This resource deletes a System Certificate of a particular node based on a given HostName and ID.`,
 
 		CreateContext: resourceSystemCertificateCreate,
 		ReadContext:   resourceSystemCertificateRead,
@@ -36,24 +237,29 @@ func resourceSystemCertificate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"admin": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Use certificate to authenticate the ISE Admin Portal`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"allow_replacement_of_portal_group_tag": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Allow Replacement of Portal Group Tag (required)`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `Description of System Certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"eap": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Use certificate for EAP protocols that use SSL/TLS tunneling`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"expiration_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The time and date past which the certificate is no longer valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"expiration_ttl_period": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -64,36 +270,43 @@ func resourceSystemCertificate() *schema.Resource {
 							Optional: true,
 						},
 						"friendly_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Friendly name of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"group_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"host_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `hostName path parameter. Name of Host whose certificate needs to be updated`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `ID of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"ims": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Use certificate for the ISE Messaging Service`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"issued_by": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Common Name of the certificate issuer`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"issued_to": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Common Name of the certificate subject`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `The length of key used for encrypting system certificate`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -117,44 +330,52 @@ func resourceSystemCertificate() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `Name of the certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"portal": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Use for portal`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"portal_group_tag": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `Set Group tag`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"portals_using_the_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"pxgrid": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Use certificate for the pxGrid Controller`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"radius": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Use certificate for the RADSec server`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"renew_self_signed_certificate": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Renew Self Signed Certificate`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"saml": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Use certificate for SAML Signing`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"self_signed": &schema.Schema{
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"serial_number_decimal_format": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Used to uniquely identify the certificate within a CA's systems`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"sha256_fingerprint": &schema.Schema{
 							Type:     schema.TypeString,
@@ -169,8 +390,9 @@ func resourceSystemCertificate() *schema.Resource {
 							Computed: true,
 						},
 						"valid_from": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The time and date on which the certificate was created, also known as the Not Before certificate attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

@@ -14,6 +14,11 @@ import (
 
 func resourceSelfRegisteredPortal() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on SelfRegisteredPortal.
+  
+  This resource allows the client to update a self registered portal by ID.
+  This resource deletes a self registered portal by ID.
+  This resource creates a self registered portal.`,
 
 		CreateContext: resourceSelfRegisteredPortalCreate,
 		ReadContext:   resourceSelfRegisteredPortalRead,
@@ -36,9 +41,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"customizations": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `Defines all of the Portal Customizations available`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -57,9 +63,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -72,9 +79,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -97,9 +105,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -117,9 +126,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -128,9 +138,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 										},
 									},
 									"language": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `This property is supported only for Read operation and it allows to show the customizations in English. Other languages are not supported`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -143,16 +154,18 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 										},
 									},
 									"page_customizations": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `Represent the entire page customization as a giant dictionary`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Computed: true,
+													Description: `The Dictionary will be exposed here as key value pair`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -185,19 +198,24 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													Computed: true,
 												},
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `The system- or user-assigned name of the portal theme`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"theme_data": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `A CSS file, represented as a Base64-encoded byte array`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"portal_tweak_settings": &schema.Schema{
+										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+  The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -205,9 +223,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"banner_color": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Hex value of color`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"banner_text_color": &schema.Schema{
 													Type:     schema.TypeString,
@@ -267,19 +286,28 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 							Computed: true,
 						},
 						"portal_test_url": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `URL to bring up a test page for this portal`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"portal_type": &schema.Schema{
+							Description: `Allowed values:
+  - BYOD,
+  - HOTSPOTGUEST,
+  - MYDEVICE,
+  - SELFREGGUEST,
+  - SPONSOR,
+  - SPONSOREDGUEST`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"settings": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							Computed: true,
+							Description: `Defines all of the settings groups available for a portal`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -291,21 +319,31 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"display_frequency": &schema.Schema{
+													Description: `How the AUP should be displayed, either on page or as a link.
+  Only valid if includeAup = true.
+  Allowed Values:
+  - FIRSTLOGIN,
+  - EVERYLOGIN,
+  - RECURRING`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"display_frequency_interval_days": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													Computed: true,
+													Description: `Number of days between AUP confirmations (when displayFrequency = recurring)`,
+													Type:        schema.TypeInt,
+													Optional:    true,
+													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Require the portal user to read and accept an AUP`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"require_aup_scrolling": &schema.Schema{
+													Description: `Require the portal user to scroll to the end of the AUP.
+  Only valid if requireAupAcceptance = true`,
 													Type:     schema.TypeBool,
 													Optional: true,
 													Computed: true,
@@ -316,14 +354,16 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													Computed: true,
 												},
 												"skip_aup_for_employees": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Only valid if requireAupAcceptance = trueG`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"use_diff_aup_for_employees": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Only valid if requireAupAcceptance = trueG`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -349,45 +389,56 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 										},
 									},
 									"byod_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `Configuration of BYOD Device Welcome, Registration and Success steps`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"byod_registration_settings": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Computed: true,
+													Description: `Configuration of BYOD endpoint Registration step configuration`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"end_point_identity_group_id": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Identity group id for which endpoint belongs`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 															"show_device_id": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Display Device ID field during registration`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
 												},
 												"byod_registration_success_settings": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Computed: true,
+													Description: `Configuration of BYOD endpoint Registration Success step configuration`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"redirect_url": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-																Computed: true,
+																Description: `Target URL for redirection, used when successRedirect = URL`,
+																Type:        schema.TypeString,
+																Optional:    true,
+																Computed:    true,
 															},
 															"success_redirect": &schema.Schema{
+																Description: `After an Authentication Success where should device be redirected.
+  Allowed values:
+  - AUTHSUCCESSPAGE,
+  - ORIGINATINGURL,
+  - URL`,
 																Type:     schema.TypeString,
 																Optional: true,
 																Computed: true,
@@ -396,13 +447,19 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													},
 												},
 												"byod_welcome_settings": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Computed: true,
+													Description: `Configuration of BYOD endpoint welcome step configuration`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"aup_display": &schema.Schema{
+																Description: `How the AUP should be displayed, either on page or as a link.
+  Only valid if includeAup = true.
+  Allowed values:
+  - ONPAGE,
+  - ASLINK`,
 																Type:     schema.TypeString,
 																Optional: true,
 																Computed: true,
@@ -433,6 +490,8 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require_scrolling": &schema.Schema{
+																Description: `Require BYOD devices to scroll down to the bottom of the AUP, 
+  Only valid if includeAup = true`,
 																Type:     schema.TypeBool,
 																Optional: true,
 																Computed: true,
@@ -451,9 +510,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"allow_change_passwd_at_first_login": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Allow guest to change their own passwords`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -466,29 +526,33 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"allow_guests_to_register_devices": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Allow guests to register devices`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"auto_register_guest_devices": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Automatically register guest devices`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"login_page_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `Portal Login Page settings groups follow`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"access_code": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Access code that must be entered by the portal user (only valid if requireAccessCode = true)`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"allow_alternate_guest_portal": &schema.Schema{
 													Type:     schema.TypeBool,
@@ -501,9 +565,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													Computed: true,
 												},
 												"allow_guest_to_change_password": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Require the portal user to enter an access code`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"allow_guest_to_create_accounts": &schema.Schema{
 													Type:     schema.TypeBool,
@@ -526,29 +591,38 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													Computed: true,
 												},
 												"aup_display": &schema.Schema{
+													Description: `How the AUP should be displayed, either on page or as a link.
+  Only valid if includeAup = true.
+  Allowed values:
+  -  ONPAGE,
+  - ASLINK`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													Computed: true,
+													Description: `Maximum failed login attempts before rate limiting`,
+													Type:        schema.TypeInt,
+													Optional:    true,
+													Computed:    true,
 												},
 												"require_access_code": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Require the portal user to enter an access code`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"require_aup_acceptance": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Require the portal user to accept the AUP. Only valid if includeAup = true`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"social_configs": &schema.Schema{
 													Type:     schema.TypeList,
@@ -571,21 +645,34 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													},
 												},
 												"time_between_logins_during_rate_limit": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													Computed: true,
+													Description: `Time between login attempts when rate limiting`,
+													Type:        schema.TypeInt,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"portal_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										Computed: true,
+										Description: `The port, interface, certificate, and other basic settings of a portal`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"allowed_interfaces": &schema.Schema{
+													Description: `Interfaces that the portal will be reachable on.
+  Allowed values:
+  - eth0,
+  - eth1,
+  - eth2,
+  - eth3,
+  - eth4,
+  - eth5,
+  - bond0,
+  - bond1,
+  - bond2`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -596,31 +683,41 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													Computed: true,
 												},
 												"assigned_guest_type_for_employee": &schema.Schema{
+													Description: `Unique Id of a guest type.
+  Employees using this portal as a guest inherit login options from the guest type`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"authentication_method": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Unique Id of the identity source sequence`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"certificate_group_tag": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"display_lang": &schema.Schema{
+													Description: `Allowed values:
+  - USEBROWSERLOCALE,
+  - ALWAYSUSE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"fallback_language": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Used when displayLang = USEBROWSERLOCALE`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"https_port": &schema.Schema{
+													Description: `The port number that the allowed interfaces will listen on.
+  Range from 8000 to 8999`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													Computed: true,
@@ -651,9 +748,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Include a Post-Login Banner page`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},
@@ -666,11 +764,17 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"account_validity_duration": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
-													Computed: true,
+													Description: `Self-registered guest account is valid for this many account_validity_time_units`,
+													Type:        schema.TypeInt,
+													Optional:    true,
+													Computed:    true,
 												},
 												"account_validity_time_units": &schema.Schema{
+													Description: `Time units for account_validity_duration.
+  Allowed Values:
+  - DAYS,
+  - HOURS,
+  - MINUTES`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -681,26 +785,41 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													Computed: true,
 												},
 												"approval_email_addresses": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Only valid if requireGuestApproval = true and sendApprovalRequestTo = SELECTEDEMAILADDRESSES`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"approve_deny_links_time_units": &schema.Schema{
+													Description: `This attribute, along with approveDenyLinksValidFor, specifies how long the link can be used.
+  Only valid if requireGuestApproval = true.
+  Allowed Values:
+  - DAYS,
+  - HOURS,
+  - MINUTES`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"approve_deny_links_valid_for": &schema.Schema{
+													Description: `This attribute, along with approveDenyLinksTimeUnits, specifies how long the link can be used.
+  Only valid if requireGuestApproval = true`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													Computed: true,
 												},
 												"assign_guests_to_guest_type": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Guests are assigned to this guest type`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"aup_display": &schema.Schema{
+													Description: `How the AUP should be displayed, either on page or as a link.
+  Only valid if includeAup = true.
+  Allowed values:
+  - ONPAGE,
+  - ASLINK`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -711,34 +830,45 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													Computed: true,
 												},
 												"auto_login_self_wait": &schema.Schema{
+													Description: `Allow guests to login automatically from self-registration after sponsor's approval.
+  No need to provide the credentials by guest to login`,
 													Type:     schema.TypeBool,
 													Optional: true,
 													Computed: true,
 												},
 												"auto_login_time_period": &schema.Schema{
+													Description: `Waiting period for auto login until sponsor's approval.
+  If time exceeds, guest has to login manually by providing the credentials.
+  Default value is 5 minutes`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													Computed: true,
 												},
 												"credential_notification_using_email": &schema.Schema{
+													Description: `If true, send credential notification upon approval using email.
+  Only valid if requireGuestApproval = true`,
 													Type:     schema.TypeBool,
 													Optional: true,
 													Computed: true,
 												},
 												"credential_notification_using_sms": &schema.Schema{
+													Description: `If true, send credential notification upon approval using SMS.
+  Only valid if requireGuestApproval = true`,
 													Type:     schema.TypeBool,
 													Optional: true,
 													Computed: true,
 												},
 												"enable_guest_email_blacklist": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Disallow guests with an e-mail address from selected domains`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"enable_guest_email_whitelist": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Allow guests with an e-mail address from selected domains`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"field_company": &schema.Schema{
 													Type:     schema.TypeList,
@@ -753,9 +883,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -773,9 +904,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -793,9 +925,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -813,9 +946,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -833,9 +967,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -853,9 +988,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -873,9 +1009,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -893,9 +1030,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -913,9 +1051,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -933,9 +1072,10 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 																Computed: true,
 															},
 															"require": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																Description: `Only applicable if include = true`,
+																Type:        schema.TypeBool,
+																Optional:    true,
+																Computed:    true,
 															},
 														},
 													},
@@ -951,72 +1091,99 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 													Computed: true,
 												},
 												"guest_email_blacklist_domains": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Disallow guests with an e-mail address from selected domains`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"guest_email_whitelist_domains": &schema.Schema{
+													Description: `Self-registered guests whose e-mail address is in one of these domains will be allowed.
+  Only valid if enableGuestEmailWhitelist = true`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"post_registration_redirect": &schema.Schema{
+													Description: `After the registration submission direct the guest user to one of the following pages.
+  Only valid if requireGuestApproval = true.
+  Allowed Values:
+  - SELFREGISTRATIONSUCCESS,
+  - LOGINPAGEWITHINSTRUCTIONS
+  - URL`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"post_registration_redirect_url": &schema.Schema{
+													Description: `URL where guest user is redirected after registration.
+  Only valid if requireGuestApproval = true and postRegistrationRedirect = URL`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"registration_code": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `The registration code that the guest user must enter`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 												"require_approver_to_authenticate": &schema.Schema{
+													Description: `When self-registered guests require approval, an approval request is e-mailed to one or more sponsor users.
+  If the Cisco ISE Administrator chooses to include an approval link in the e-mail,
+  a sponsor user who clicks the link will be required to enter their username and password if this attribute is true.
+  Only valid if requireGuestApproval = true`,
 													Type:     schema.TypeBool,
 													Optional: true,
 													Computed: true,
 												},
 												"require_aup_acceptance": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Require the portal user to accept the AUP. Only valid if includeAup = true`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"require_guest_approval": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Require self-registered guests to be approved if true`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"require_registration_code": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													Description: `Self-registered guests are required to enter a registration code`,
+													Type:        schema.TypeBool,
+													Optional:    true,
+													Computed:    true,
 												},
 												"selectable_locations": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Computed: true,
+													Description: `Guests can choose from these locations to set their time zone`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
 												},
 												"selectable_sms_providers": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													Computed: true,
+													Description: `This attribute is an array of SMS provider names`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Computed:    true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
 												},
 												"send_approval_request_to": &schema.Schema{
+													Description: `Specifies where approval requests are sent.
+  Only valid if requireGuestApproval = true.
+  Allowed Values:
+  - SELECTEDEMAILADDRESSES,
+  - PERSONBEINGVISITED`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -1145,11 +1312,17 @@ func resourceSelfRegisteredPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"default_empty_field_value": &schema.Schema{
+													Description: `The default value displayed for an empty field.
+  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
+													Description: `Specifies how empty fields are handled on the Support Information Page. Allowed values:
+  - HIDE,
+  - DISPLAYWITHNOVALUE,
+  - DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,

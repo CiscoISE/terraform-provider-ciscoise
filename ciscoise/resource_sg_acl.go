@@ -14,6 +14,11 @@ import (
 
 func resourceSgACL() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on SecurityGroupsACLs.
+  
+  This resource allows the client to update a security group ACL.
+  This resource deletes a security group ACL.
+  This resource creates a security group ACL.`,
 
 		CreateContext: resourceSgACLCreate,
 		ReadContext:   resourceSgACLRead,
@@ -56,6 +61,10 @@ func resourceSgACL() *schema.Resource {
 							Computed: true,
 						},
 						"ip_version": &schema.Schema{
+							Description: `Allowed values:
+  - IPV4,
+  - IPV6,
+  - IP_AGNOSTIC`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -87,9 +96,10 @@ func resourceSgACL() *schema.Resource {
 							},
 						},
 						"modelled_content": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Modelled content of contract`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,

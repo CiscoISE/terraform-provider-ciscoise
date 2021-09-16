@@ -14,6 +14,11 @@ import (
 
 func resourceTacacsCommandSets() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on TACACSCommandSets.
+  
+  This resource allows the client to update TACACS command sets.
+  This resource deletes TACACS command sets.
+  This resource creates TACACS command sets.`,
 
 		CreateContext: resourceTacacsCommandSetsCreate,
 		ReadContext:   resourceTacacsCommandSetsRead,
@@ -60,9 +65,10 @@ func resourceTacacsCommandSets() *schema.Resource {
 													Computed: true,
 												},
 												"grant": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													Description: `Allowed values: PERMIT, DENY, DENY_ALWAYS`,
+													Type:        schema.TypeString,
+													Optional:    true,
+													Computed:    true,
 												},
 											},
 										},

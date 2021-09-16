@@ -13,6 +13,9 @@ import (
 
 func resourceAciSettings() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages read and update operations on ACISettings.
+  
+  This resource allows the client to update ACI settings.`,
 
 		CreateContext: resourceAciSettingsCreate,
 		ReadContext:   resourceAciSettingsRead,
@@ -34,33 +37,40 @@ func resourceAciSettings() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"aci50": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Enable 5.0 ACI Version`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"aci51": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Enable 5.1 ACI Version`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"aciipaddress": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `ACI Domain manager Ip Address.`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"acipassword": &schema.Schema{
-							Type:      schema.TypeString,
-							Optional:  true,
-							Sensitive: true,
+							Description: `ACI Domain manager Password.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Sensitive:   true,
 						},
 						"aciuser_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `ACI Domain manager Username.`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"admin_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `ACI Cluster Admin name`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"admin_password": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `ACI Cluster Admin password`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"all_sxp_domain": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -71,8 +81,9 @@ func resourceAciSettings() *schema.Resource {
 							Optional: true,
 						},
 						"enable_aci": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							Description: `Enable ACI Integration`,
+							Type:        schema.TypeBool,
+							Optional:    true,
 						},
 						"enable_data_plane": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -83,12 +94,14 @@ func resourceAciSettings() *schema.Resource {
 							Optional: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Required: true,
+							Description: `Resource UUID value`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"ip_address_host_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `ACI Cluster IP Address / Host name`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"l3_route_network": &schema.Schema{
 							Type:     schema.TypeString,

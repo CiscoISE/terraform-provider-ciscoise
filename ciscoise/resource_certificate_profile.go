@@ -13,6 +13,10 @@ import (
 
 func resourceCertificateProfile() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read and update operations on CertificateProfile.
+  
+  This resource allows the client to update a certificate profile.
+  This resource allows the client to create a certificate profile.`,
 
 		CreateContext: resourceCertificateProfileCreate,
 		ReadContext:   resourceCertificateProfileRead,
@@ -40,6 +44,16 @@ func resourceCertificateProfile() *schema.Resource {
 							Computed: true,
 						},
 						"certificate_attribute_name": &schema.Schema{
+							Description: `Attribute name of the Certificate Profile - used only when CERTIFICATE is chosen in usernameFrom.
+  Allowed values:
+  - SUBJECT_COMMON_NAME
+  - SUBJECT_ALTERNATIVE_NAME
+  - SUBJECT_SERIAL_NUMBER
+  - SUBJECT
+  - SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
+  - SUBJECT_ALTERNATIVE_NAME_EMAIL
+  - SUBJECT_ALTERNATIVE_NAME_DNS.
+  - Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -50,9 +64,10 @@ func resourceCertificateProfile() *schema.Resource {
 							Computed: true,
 						},
 						"external_identity_store_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Description: `Referred IDStore name for the Certificate Profile or [not applicable] in case no identity store is chosen`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -81,6 +96,11 @@ func resourceCertificateProfile() *schema.Resource {
 							},
 						},
 						"match_mode": &schema.Schema{
+							Description: `Match mode of the Certificate Profile.
+  Allowed values:
+  - NEVER
+  - RESOLVE_IDENTITY_AMBIGUITY
+  - BINARY_COMPARISON`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -91,6 +111,10 @@ func resourceCertificateProfile() *schema.Resource {
 							Computed: true,
 						},
 						"username_from": &schema.Schema{
+							Description: `The attribute in the certificate where the user name should be taken from.
+  Allowed values:
+  - CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
+  - UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,

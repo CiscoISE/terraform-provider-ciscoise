@@ -14,6 +14,63 @@ import (
 
 func resourceNetworkAccessConditions() *schema.Resource {
 	return &schema.Resource{
+		Description: `It manages create, read, update and delete operations on Network Access - Conditions.
+  
+  Network Access Creates a library condition:
+  
+  
+  
+   Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
+  policy rules could be match.
+  
+  
+   Condition can be compose from single dictionary attribute name and value using model
+  LibraryConditionAttributes
+   , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
+  LibraryConditionAndBlock
+   or
+  LibraryConditionOrBlock
+  .
+  
+  
+   When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
+  inner condition models:
+  ConditionAttributes
+  ,
+  ConditionAndBlock
+  ,
+  ConditionOrBlock
+  , that represent dynamically built Conditions which are not stored in the conditions Library, or using
+  ConditionReference
+  , which includes an ID to existing stored condition in the library.
+  
+  
+   The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
+  the condition name.
+  
+  
+   When using one of the 3 inner condition models (
+  ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+  ), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
+  only as inner members of the root condition.
+  
+  
+   When using
+  ConditionReference
+   model in inner layers, the condition name is not required.
+  
+  
+   ConditionReference objects can also include a reference ID to a condition of type
+  TimeAndDate
+  .
+  
+  
+  
+  
+  Network Access Update library condition using condition name.
+  Network Access Delete a library condition using condition Name.
+  Network Access Update library condition.
+  Network Access Delete a library condition.`,
 
 		CreateContext: resourceNetworkAccessConditionsCreate,
 		ReadContext:   resourceNetworkAccessConditionsRead,
@@ -36,198 +93,191 @@ func resourceNetworkAccessConditions() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"attribute_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Dictionary attribute id (Optional), used for additional verification`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"attribute_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Dictionary attribute name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"attribute_value": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"children": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"condition_type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+										Type:        schema.TypeString,
+										Optional:    true,
+										Computed:    true,
 									},
 									"is_negate": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
+										Description: `Indicates whereas this condition is in negate mode`,
+										Type:        schema.TypeBool,
+										Optional:    true,
+										Computed:    true,
 									},
 								},
 							},
 						},
 						"condition_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"dates_range": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"end_date": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 									"start_date": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 								},
 							},
 						},
 						"dates_range_exception": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"end_date": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 									"start_date": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 								},
 							},
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Condition description`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"dictionary_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Dictionary name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"dictionary_value": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Dictionary value`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"hours_range": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"end_time": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 									"start_time": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 								},
 							},
 						},
 						"hours_range_exception": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"end_time": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 									"start_time": &schema.Schema{
 										Type:     schema.TypeString,
+										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},
-						"href": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
+							Optional: true,
 							Computed: true,
 						},
 						"is_negate": &schema.Schema{
-							Type:     schema.TypeBool,
-							Computed: true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
+							Description: `Indicates whereas this condition is in negate mode`,
+							Type:        schema.TypeBool,
+							Optional:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Condition name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"operator": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"rel": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"type": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `Equality operator`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Computed:    true,
 						},
 						"week_days": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `<p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"week_days_exception": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `<p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
