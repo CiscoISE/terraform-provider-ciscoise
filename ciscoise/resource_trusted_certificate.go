@@ -472,6 +472,7 @@ func resourceTrustedCertificate() *schema.Resource {
 							Description: `ID of trust certificate`,
 							Type:        schema.TypeString,
 							Computed:    true,
+							Optional:    true,
 						},
 						"internal_ca": &schema.Schema{
 							Type:     schema.TypeBool,

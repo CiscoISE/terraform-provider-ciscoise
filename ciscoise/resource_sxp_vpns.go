@@ -42,6 +42,7 @@ func resourceSxpVpns() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+							Optional: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,

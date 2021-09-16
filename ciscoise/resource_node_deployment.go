@@ -196,7 +196,7 @@ func resourceNodeDeployment() *schema.Resource {
 						},
 						"hostname": &schema.Schema{
 							Type:     schema.TypeString,
-							Computed: true,
+							Required: true,
 						},
 						"ip_address": &schema.Schema{
 							Type:     schema.TypeString,

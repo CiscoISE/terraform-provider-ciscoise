@@ -287,6 +287,7 @@ func resourceSystemCertificate() *schema.Resource {
 							Description: `ID of system certificate`,
 							Type:        schema.TypeString,
 							Computed:    true,
+							Optional:    true,
 						},
 						"ims": &schema.Schema{
 							Description: `Use certificate for the ISE Messaging Service`,
