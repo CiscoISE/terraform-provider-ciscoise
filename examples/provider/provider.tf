@@ -1,14 +1,14 @@
-# Configure provider with your {{config.client}} {{config.api}} SDK credentials
+# Configure provider with your  Cisco Identity Services Engine SDK credentials
 provider "ciscoise" {
-  # {{config.client}} {{config.api}} user name
+  #  Cisco Identity Services Engine user name
   username = "admin"
   # it can be set using the environment variable ISE_BASE_URL
 
-  # {{config.client}} {{config.api}} password
+  #  Cisco Identity Services Engine password
   password = "admin123"
   # it can be set using the environment variable ISE_USERNAME
 
-  # {{config.client}} {{config.api}} base URL, FQDN or IP
+  #  Cisco Identity Services Engine base URL, FQDN or IP
   base_url = "https://172.168.196.2"
   # it can be set using the environment variable ISE_PASSWORD
 
