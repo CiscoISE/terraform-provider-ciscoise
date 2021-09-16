@@ -12,6 +12,13 @@ import (
 
 func dataSourcePanHa() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on PAN HA.
+
+In a high availability configuration, the Primary Administration Node (PAN) is in the active state. The Secondary PAN
+(backup PAN) is in the standby state, which means it receives all configuration updates from the Primary PAN, but is not
+active in the ISE network. You can configure ISE to automatically the promote the secondary PAN when the primary PAN
+becomes unavailable.`,
+
 		ReadContext: dataSourcePanHaRead,
 		Schema: map[string]*schema.Schema{
 			"items": &schema.Schema{

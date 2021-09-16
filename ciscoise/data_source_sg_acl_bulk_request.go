@@ -14,6 +14,10 @@ import (
 // dataSourceAction
 func dataSourceSgACLBulkRequest() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on SecurityGroupsACLs.
+
+This data source action allows the client to submit the bulk request.`,
+
 		ReadContext: dataSourceSgACLBulkRequestRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

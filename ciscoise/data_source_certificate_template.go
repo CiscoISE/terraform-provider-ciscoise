@@ -12,23 +12,33 @@ import (
 
 func dataSourceCertificateTemplate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on CertificateTemplate.
+
+This data source allows the client to get a certificate template by name.
+This data source allows the client to get a certificate template by ID.
+This data source allows the client to get aall the certificate templates.`,
+
 		ReadContext: dataSourceCertificateTemplateRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -45,20 +55,23 @@ func dataSourceCertificateTemplate() *schema.Resource {
 							Computed: true,
 						},
 						"key_size": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `Key Size of the Certificate Template`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"raprofile": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `RA profile for the Certificate template`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"validity_period": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `Validity period of the Certificate Template: Valid Range 21 - 3652`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 					},
 				},
@@ -78,20 +91,23 @@ func dataSourceCertificateTemplate() *schema.Resource {
 							Computed: true,
 						},
 						"key_size": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `Key Size of the Certificate Template`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"raprofile": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `RA profile for the Certificate template`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"validity_period": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `Validity period of the Certificate Template: Valid Range 21 - 3652`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 					},
 				},

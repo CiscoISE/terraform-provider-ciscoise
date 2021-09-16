@@ -12,19 +12,27 @@ import (
 
 func dataSourceNativeSupplicantProfile() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on NativeSupplicantProfile.
+
+This data source allows the client to get a native supplicant profile by ID.
+This data source allows the client to get all the native supplicant profiles.`,
+
 		ReadContext: dataSourceNativeSupplicantProfileRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -72,6 +80,12 @@ func dataSourceNativeSupplicantProfile() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"action_type": &schema.Schema{
+										Description: `Action type for WifiProfile.
+Allowed values:
+- ADD,
+- UPDATE,
+- DELETE
+(required for updating existing WirelessProfile)`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -84,8 +98,9 @@ func dataSourceNativeSupplicantProfile() *schema.Resource {
 										Computed: true,
 									},
 									"previous_ssid": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Previous ssid for WifiProfile (required for updating existing WirelessProfile)`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"ssid": &schema.Schema{
 										Type:     schema.TypeString,

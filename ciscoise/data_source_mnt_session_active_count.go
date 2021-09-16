@@ -12,6 +12,10 @@ import (
 
 func dataSourceMntSessionActiveCount() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+ActiveCount`,
+
 		ReadContext: dataSourceMntSessionActiveCountRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

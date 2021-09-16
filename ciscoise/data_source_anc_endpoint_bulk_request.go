@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourceAncEndpointBulkRequest() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on ANCEndpoint.
+
+This data source action allows the client to submit the bulk request.`,
+
 		ReadContext: dataSourceAncEndpointBulkRequestRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

@@ -12,37 +12,50 @@ import (
 
 func dataSourceAciBindings() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on ACIBindings.
+
+This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI from
+Cisco ISE.The binding information will be identical to the information on ACI bindings page in the Cisco ISE UI.
+Filtering will be based on one attribute only, such as ip/sgt/vn/psn/learnedFrom/learnedBy with CONTAINS mode of
+search.`,
+
 		ReadContext: dataSourceAciBindingsRead,
 		Schema: map[string]*schema.Schema{
 			"filter_by": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
+				Description: `filterBy query parameter.`,
+				Type:        schema.TypeList,
+				Optional:    true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"filter_value": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
+				Description: `filterValue query parameter.`,
+				Type:        schema.TypeList,
+				Optional:    true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sort": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sort query parameter. sort type asc or desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sort_by": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortBy query parameter. sort column by which objects needs to be sorted`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -55,36 +68,44 @@ func dataSourceAciBindings() *schema.Resource {
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource UUID value`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Binding IPv4 address. Each binding will be exclusively identified by its IP address and virtual network`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"learned_by": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Binding Type`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"learned_from": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Binding Source`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource Name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"psn": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Cisco ISE Policy Service node (PSN) IP address`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"sgt_value": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Security Group Tag (SGT) value. The valid range for SGT values is 0-65534`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"vn": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Virtual network. Each binding will be exclusively identified by its IP address and virtual network`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

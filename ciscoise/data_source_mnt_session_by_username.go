@@ -12,11 +12,16 @@ import (
 
 func dataSourceMntSessionByUsername() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+Sessions by Username`,
+
 		ReadContext: dataSourceMntSessionByUsernameRead,
 		Schema: map[string]*schema.Schema{
 			"username": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `username path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

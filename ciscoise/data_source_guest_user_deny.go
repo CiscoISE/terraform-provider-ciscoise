@@ -13,11 +13,16 @@ import (
 // dataSourceAction
 func dataSourceGuestUserDeny() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on GuestUser.
+
+This data source action allows the client to deny a guest user by ID.`,
+
 		ReadContext: dataSourceGuestUserDenyRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

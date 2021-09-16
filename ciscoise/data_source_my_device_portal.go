@@ -12,9 +12,70 @@ import (
 
 func dataSourceMyDevicePortal() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on MyDevicePortal.
+
+This data source allows the client to get a my device portal by ID.
+This data source allows the client to get all the my device portals.
+
+Filter:
+
+[name, description]
+
+To search resources by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
+
+Sorting:
+
+[name, description]`,
+
 		ReadContext: dataSourceMyDevicePortalRead,
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
+				Description: `filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains 
+
+`,
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -22,28 +83,34 @@ func dataSourceMyDevicePortal() *schema.Resource {
 				},
 			},
 			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sortasc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortasc query parameter. sort asc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sortdsc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortdsc query parameter. sort desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -52,8 +119,9 @@ func dataSourceMyDevicePortal() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"customizations": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Defines all of the Portal Customizations available`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -70,8 +138,9 @@ func dataSourceMyDevicePortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -83,8 +152,9 @@ func dataSourceMyDevicePortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -104,8 +174,9 @@ func dataSourceMyDevicePortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -121,8 +192,9 @@ func dataSourceMyDevicePortal() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Type:     schema.TypeString,
-																Computed: true,
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -131,8 +203,9 @@ func dataSourceMyDevicePortal() *schema.Resource {
 										},
 									},
 									"language": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `This property is supported only for Read operation and it allows to show the customizations in English. Other languages are not supported`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
@@ -144,14 +217,16 @@ func dataSourceMyDevicePortal() *schema.Resource {
 										},
 									},
 									"page_customizations": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `Represent the entire page customization as a giant dictionary`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
-													Type:     schema.TypeList,
-													Computed: true,
+													Description: `The Dictionary will be exposed here as key value pair`,
+													Type:        schema.TypeList,
+													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
@@ -180,25 +255,31 @@ func dataSourceMyDevicePortal() *schema.Resource {
 													Computed: true,
 												},
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `The system- or user-assigned name of the portal theme`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"theme_data": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `A CSS file, represented as a Base64-encoded byte array`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"portal_tweak_settings": &schema.Schema{
+										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"banner_color": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Hex value of color`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"banner_text_color": &schema.Schema{
 													Type:     schema.TypeString,
@@ -252,40 +333,58 @@ func dataSourceMyDevicePortal() *schema.Resource {
 							Computed: true,
 						},
 						"portal_test_url": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `URL to bring up a test page for this portal`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"portal_type": &schema.Schema{
+							Description: `Allowed values:
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"settings": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Defines all of the settings groups available for a Mydevice portal`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"aup_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `Configuration of the Acceptable Use Policy (AUP) for a portal`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"display_frequency": &schema.Schema{
+													Description: `How the AUP should be displayed, either on page or as a link. Only valid if includeAup = true.
+Allowed Values:
+- FIRSTLOGIN,
+- EVERYLOGIN,
+- RECURRING`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"display_frequency_interval_days": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
+													Description: `Number of days between AUP confirmations (when displayFrequency = recurring)`,
+													Type:        schema.TypeInt,
+													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
+													Description: `Require the portal user to read and accept an AUP`,
+													Type:        schema.TypeBool,
+													Computed:    true,
 												},
 												"require_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
+													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
+													Type:        schema.TypeBool,
+													Computed:    true,
 												},
 											},
 										},
@@ -310,24 +409,34 @@ func dataSourceMyDevicePortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"aup_display": &schema.Schema{
+													Description: `How the AUP should be displayed, either on page or as a link.
+Only valid if includeAup = true.
+Allowed values:
+-  ONPAGE,
+- ASLINK`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
+													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
+													Type:        schema.TypeBool,
+													Computed:    true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
+													Description: `Maximum failed login attempts before rate limiting`,
+													Type:        schema.TypeInt,
+													Computed:    true,
 												},
 												"require_aup_acceptance": &schema.Schema{
+													Description: `Require the portal user to accept the AUP.
+Only valid if includeAup = true`,
 													Type:     schema.TypeBool,
 													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
+													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
+													Type:        schema.TypeBool,
+													Computed:    true,
 												},
 												"social_configs": &schema.Schema{
 													Type:     schema.TypeList,
@@ -337,19 +446,32 @@ func dataSourceMyDevicePortal() *schema.Resource {
 													},
 												},
 												"time_between_logins_during_rate_limit": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
+													Description: `Time between login attempts when rate limiting`,
+													Type:        schema.TypeInt,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"portal_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `The port, interface, certificate, and other basic settings of a portal`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"allowed_interfaces": &schema.Schema{
+													Description: `Interfaces that the portal will be reachable on.
+Allowed values:
+- eth0,
+- eth1,
+- eth2,
+- eth3,
+- eth4,
+- eth5,
+- bond0,
+- bond1,
+- bond2`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -358,24 +480,31 @@ func dataSourceMyDevicePortal() *schema.Resource {
 													Computed: true,
 												},
 												"certificate_group_tag": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"display_lang": &schema.Schema{
+													Description: `Allowed values:
+- USEBROWSERLOCALE,
+- ALWAYSUSE`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"endpoint_identity_group": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"fallback_language": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Used when displayLang = USEBROWSERLOCALE`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"https_port": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
+													Description: `The port number that the allowed interfaces will listen on. Range from 8000 to 8999`,
+													Type:        schema.TypeInt,
+													Computed:    true,
 												},
 											},
 										},
@@ -400,8 +529,9 @@ func dataSourceMyDevicePortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
-													Computed: true,
+													Description: `Include a Post-Login Banner page`,
+													Type:        schema.TypeBool,
+													Computed:    true,
 												},
 											},
 										},
@@ -413,10 +543,16 @@ func dataSourceMyDevicePortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"default_empty_field_value": &schema.Schema{
+													Description: `The default value displayed for an empty field.
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
+													Description: `Specifies how empty fields are handled on the Support Information Page. Allowed values:
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Computed: true,
 												},

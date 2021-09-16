@@ -15,11 +15,17 @@ import (
 // dataSourceAction
 func dataSourceBackupRestore() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Backup And Restore.
+
+Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API to
+get the status of the backup job`,
+
 		ReadContext: dataSourceBackupRestoreRead,
 		Schema: map[string]*schema.Schema{
 			"backup_encryption_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `The encryption key which was provided at the time of taking backup.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -28,8 +34,9 @@ func dataSourceBackupRestore() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Id which can be used to track the status of backup / restore of config DB.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -60,16 +67,19 @@ func dataSourceBackupRestore() *schema.Resource {
 				},
 			},
 			"repository_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Name of the configred repository where the backup file exists.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"restore_file": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Name of the backup file to be restored on ISE node.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"restore_include_adeos": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Determines whether the ADE-OS configure is restored. Possible values true, false`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 		},
 	}

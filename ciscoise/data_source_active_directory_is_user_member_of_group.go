@@ -16,11 +16,16 @@ import (
 // dataSourceAction
 func dataSourceActiveDirectoryIsUserMemberOfGroup() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on ActiveDirectory.
+
+This data source action verifies if the user is a member of the given groups.`,
+
 		ReadContext: dataSourceActiveDirectoryIsUserMemberOfGroupRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"additional_data": &schema.Schema{
 				Type:     schema.TypeList,

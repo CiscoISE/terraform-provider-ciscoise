@@ -13,15 +13,22 @@ import (
 // dataSourceAction
 func dataSourceGuestUserReinstate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on GuestUser.
+
+This data source action allows the client to reinstate a guest user by name.
+This data source action allows the client to reinstate a guest user by ID.`,
+
 		ReadContext: dataSourceGuestUserReinstateRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

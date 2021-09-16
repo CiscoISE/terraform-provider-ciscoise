@@ -12,23 +12,33 @@ import (
 
 func dataSourceActiveDirectory() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on ActiveDirectory.
+
+This data source allows the client to get Active Directory by name.
+This data source fetchs the join point details by ID. The ID can be retrieved with the Get All operation.
+This data source lists all the join points for Active Directory domains in Cisco ISE.`,
+
 		ReadContext: dataSourceActiveDirectoryRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -37,32 +47,38 @@ func dataSourceActiveDirectory() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"ad_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Holds list of AD Attributes`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"attributes": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `List of Attributes`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"default_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each attribute in the attribute list. Can contain an empty string. All characters are allowed except <%"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"internal_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each attribute in the attribute list. All characters are allowed except <%"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each attribute in the attribute list with no duplication between attributes. All characters are allowed except <%"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each group in the group list. Allowed values: STRING, IP, BOOLEAN, INT, OCTET_STRING`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -71,32 +87,38 @@ func dataSourceActiveDirectory() *schema.Resource {
 							},
 						},
 						"ad_scopes_names": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `String that contains the names of the scopes that the active directory belongs to. Names are separated by comma. Alphanumeric, underscore (_) characters are allowed`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"adgroups": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Holds list of AD Groups`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"groups": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `List of Groups`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each group in the group list with no duplication between groups. All characters are allowed except %`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"sid": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Cisco ISE uses security identifiers (SIDs) for optimization of group membership evaluation. SIDs are useful for efficiency (speed) when the groups are evaluated. All characters are allowed except %`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `No character restriction`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -111,24 +133,32 @@ func dataSourceActiveDirectory() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"aging_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `Range 1-8760 hours`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"auth_protection_type": &schema.Schema{
+										Description: `Enable prevent AD account lockout. Allowed values:
+- WIRELESS,
+- WIRED,
+- BOTH`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"country": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"department": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"email": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"enable_callback_for_dialin_client": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -139,8 +169,9 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Computed: true,
 									},
 									"enable_failed_auth_protection": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `Enable prevent AD account lockout due to too many bad password attempts`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"enable_machine_access": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -159,88 +190,112 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Computed: true,
 									},
 									"failed_auth_threshold": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `Number of bad password attempts`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"first_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"identity_not_in_ad_behaviour": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Allowed values: REJECT, SEARCH_JOINED_FOREST, SEARCH_ALL`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"job_title": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"last_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"locality": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"organizational_unit": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"plaintext_auth": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"rewrite_rules": &schema.Schema{
+										Description: `Identity rewrite is an advanced feature that directs Cisco ISE to manipulate the identity
+before it is passed to the external Active Directory system. You can create rules to change
+the identity to a desired format that includes or excludes a domain prefix and/or suffix or
+other additional markup of your choice`,
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"rewrite_match": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each rule in the list with no duplication between rules. All characters are allowed except %"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"rewrite_result": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each rule in the list. All characters are allowed except %"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"row_id": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
+													Description: `Required for each rule in the list in serial order`,
+													Type:        schema.TypeInt,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"schema": &schema.Schema{
+										Description: `Allowed values: ACTIVE_DIRECTORY, CUSTOM.
+Choose ACTIVE_DIRECTORY schema when the AD attributes defined in AD can be copied to relevant attributes
+in Cisco ISE. If customization is needed, choose CUSTOM schema. All User info attributes are always set to
+default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUSTOM schema`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"state_or_province": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"street_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"telephone": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"unreachable_domains_behaviour": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Allowed values: PROCEED, DROP`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `No character restriction`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"domain": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The AD domain. Alphanumeric, hyphen (-) and dot (.) characters are allowed`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"enable_domain_allowed_list": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -251,8 +306,9 @@ func dataSourceActiveDirectory() *schema.Resource {
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource UUID value`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -276,8 +332,9 @@ func dataSourceActiveDirectory() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource Name. Maximum 32 characters allowed. Allowed characters are alphanumeric and .-_/\\ characters`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -289,32 +346,38 @@ func dataSourceActiveDirectory() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"ad_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Holds list of AD Attributes`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"attributes": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `List of Attributes`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"default_value": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each attribute in the attribute list. Can contain an empty string. All characters are allowed except <%"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"internal_name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each attribute in the attribute list. All characters are allowed except <%"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each attribute in the attribute list with no duplication between attributes. All characters are allowed except <%"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each group in the group list. Allowed values: STRING, IP, BOOLEAN, INT, OCTET_STRING`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -323,32 +386,38 @@ func dataSourceActiveDirectory() *schema.Resource {
 							},
 						},
 						"ad_scopes_names": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `String that contains the names of the scopes that the active directory belongs to. Names are separated by comma. Alphanumeric, underscore (_) characters are allowed`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"adgroups": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Holds list of AD Groups`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"groups": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Description: `List of Groups`,
+										Type:        schema.TypeList,
+										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each group in the group list with no duplication between groups. All characters are allowed except %`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"sid": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Cisco ISE uses security identifiers (SIDs) for optimization of group membership evaluation. SIDs are useful for efficiency (speed) when the groups are evaluated. All characters are allowed except %`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `No character restriction`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -363,24 +432,32 @@ func dataSourceActiveDirectory() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"aging_time": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `Range 1-8760 hours`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"auth_protection_type": &schema.Schema{
+										Description: `Enable prevent AD account lockout. Allowed values:
+- WIRELESS,
+- WIRED,
+- BOTH`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"country": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"department": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"email": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"enable_callback_for_dialin_client": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -391,8 +468,9 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Computed: true,
 									},
 									"enable_failed_auth_protection": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `Enable prevent AD account lockout due to too many bad password attempts`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"enable_machine_access": &schema.Schema{
 										Type:     schema.TypeBool,
@@ -411,88 +489,112 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Computed: true,
 									},
 									"failed_auth_threshold": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `Number of bad password attempts`,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"first_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"identity_not_in_ad_behaviour": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Allowed values: REJECT, SEARCH_JOINED_FOREST, SEARCH_ALL`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"job_title": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"last_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"locality": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"organizational_unit": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"plaintext_auth": &schema.Schema{
 										Type:     schema.TypeBool,
 										Computed: true,
 									},
 									"rewrite_rules": &schema.Schema{
+										Description: `Identity rewrite is an advanced feature that directs Cisco ISE to manipulate the identity
+before it is passed to the external Active Directory system. You can create rules to change
+the identity to a desired format that includes or excludes a domain prefix and/or suffix or
+other additional markup of your choice`,
 										Type:     schema.TypeList,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"rewrite_match": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each rule in the list with no duplication between rules. All characters are allowed except %"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"rewrite_result": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Required for each rule in the list. All characters are allowed except %"`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"row_id": &schema.Schema{
-													Type:     schema.TypeInt,
-													Computed: true,
+													Description: `Required for each rule in the list in serial order`,
+													Type:        schema.TypeInt,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"schema": &schema.Schema{
+										Description: `Allowed values: ACTIVE_DIRECTORY, CUSTOM.
+Choose ACTIVE_DIRECTORY schema when the AD attributes defined in AD can be copied to relevant attributes
+in Cisco ISE. If customization is needed, choose CUSTOM schema. All User info attributes are always set to
+default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUSTOM schema`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"state_or_province": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"street_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"telephone": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `User info attribute. All characters are allowed except %`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"unreachable_domains_behaviour": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Allowed values: PROCEED, DROP`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `No character restriction`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"domain": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The AD domain. Alphanumeric, hyphen (-) and dot (.) characters are allowed`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"enable_domain_allowed_list": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -503,8 +605,9 @@ func dataSourceActiveDirectory() *schema.Resource {
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource UUID value`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -528,8 +631,9 @@ func dataSourceActiveDirectory() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource Name. Maximum 32 characters allowed. Allowed characters are alphanumeric and .-_/\\ characters`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

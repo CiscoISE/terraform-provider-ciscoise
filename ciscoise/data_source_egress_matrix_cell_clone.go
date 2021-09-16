@@ -13,19 +13,26 @@ import (
 // dataSourceAction
 func dataSourceEgressMatrixCellClone() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on EgressMatrixCell.
+
+This data source action allows the client to clone an egress matrix cell.`,
+
 		ReadContext: dataSourceEgressMatrixCellCloneRead,
 		Schema: map[string]*schema.Schema{
 			"dst_sgt_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `dstSgtId path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"src_sgt_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `srcSgtId path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

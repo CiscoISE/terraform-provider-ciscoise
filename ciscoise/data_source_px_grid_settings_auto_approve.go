@@ -15,15 +15,21 @@ import (
 // dataSourceAction
 func dataSourcePxGridSettingsAutoApprove() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on PxGridSettings.
+
+This data source action allows the client to auto approve the pxGrid settings.`,
+
 		ReadContext: dataSourcePxGridSettingsAutoApproveRead,
 		Schema: map[string]*schema.Schema{
 			"allow_password_based_accounts": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Allow password based accounts when true`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"auto_approve_cert_based_accounts": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Auto approve certificate based accounts when true`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

@@ -12,15 +12,22 @@ import (
 
 func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Network Access - Dictionary Attribute.
+
+Returns a list of Dictionary Attributes for an existing Dictionary.
+Get a Dictionary Attribute.`,
+
 		ReadContext: dataSourceNetworkAccessDictionaryAttributeRead,
 		Schema: map[string]*schema.Schema{
 			"dictionary_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `dictionaryName path parameter. the name of the dictionary the dictionary attribute belongs to`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter. the dictionary attribute name`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -29,14 +36,16 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allowed_values": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `all of the allowed values for the dictionary attribute`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"is_default": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,
@@ -50,32 +59,39 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 							},
 						},
 						"data_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the data type for the dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The description of the Dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"dictionary_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the name of the dictionary which the dictionary attribute belongs to`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"direction_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the direction for the useage of the dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Identifier for the dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"internal_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the internal name of the dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary attribute's name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -87,14 +103,16 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allowed_values": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `all of the allowed values for the dictionary attribute`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"is_default": &schema.Schema{
-										Type:     schema.TypeBool,
-										Computed: true,
+										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
+										Type:        schema.TypeBool,
+										Computed:    true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,
@@ -108,32 +126,39 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 							},
 						},
 						"data_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the data type for the dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The description of the Dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"dictionary_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the name of the dictionary which the dictionary attribute belongs to`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"direction_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the direction for the useage of the dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Identifier for the dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"internal_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `the internal name of the dictionary attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The dictionary attribute's name`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

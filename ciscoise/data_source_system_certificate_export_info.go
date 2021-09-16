@@ -15,11 +15,95 @@ import (
 // dataSourceAction
 func dataSourceSystemCertificateExportInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Certificates.
+
+
+
+Export System Certificate.
+
+Following Parameters are used in POST body
+
+
+
+
+PARAMETER
+
+DESCRIPTION
+
+EXAMPLE
+
+
+
+
+
+id
+
+ID of a System Certificate(required)
+
+< SYSTEM_CERT_ID >
+
+
+
+export
+
+ One of the below option is required
+
+"CERTIFICATE" :
+Export only Certificate without Private Key
+
+"CERTIFICATE_WITH_PRIVATE_KEY" :
+Export both Certificate and Private Key(
+"certificatePassword"
+ is required)
+
+
+
+CERTIFICATE_WITH_PRIVATE_KEY
+
+
+
+password
+
+Certificate Password (required if
+"export" : CERTIFICATE_WITH_PRIVATE_KEY
+)
+Password Constraints:
+
+
+Alphanumeric
+
+Minimum of 8 Characters
+
+Maximum of 100 Characters
+
+
+
+Passw***
+
+
+
+
+
+NOTE:
+The response of this API carries a ZIP file containing the certificate and private key if
+"export" : "CERTIFICATE_WITH_PRIVATE_KEY"
+ in the request. If
+"export" : "CERTIFICATE"
+ in request body, the response carries a ZIP file containing only the certificate.
+
+
+
+WARNING:
+Exporting a private key is not a secure operation. It could lead to possible exposure of the private key.
+
+ `,
+
 		ReadContext: dataSourceSystemCertificateExportInfoRead,
 		Schema: map[string]*schema.Schema{
 			"dirpath": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `Directory absolute path in which to save the file.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"export": &schema.Schema{
 				Type:     schema.TypeString,

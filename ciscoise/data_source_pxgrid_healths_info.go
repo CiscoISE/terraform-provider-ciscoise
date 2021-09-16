@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridHealthsInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on System Health.
+
+🚧 getHealths`,
+
 		ReadContext: dataSourcePxgridHealthsInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

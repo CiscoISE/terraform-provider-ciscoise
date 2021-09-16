@@ -15,15 +15,22 @@ import (
 // dataSourceAction
 func dataSourceBackupConfig() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Backup And Restore.
+
+Triggers on demand configuration backup on the ISE node. The API returns the task ID. Use the Task Service status API to
+get the status of the backup job.`,
+
 		ReadContext: dataSourceBackupConfigRead,
 		Schema: map[string]*schema.Schema{
 			"backup_encryption_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `The encyption key for the backed up file. Encryption key must satisfy the following criteria - Contains at least one uppercase letter [A-Z], Contains at least one lowercase letter [a-z], Contains at least one digit [0-9], Contain only [A-Z][a-z][0-9]_#, Has at least 8 characters, Has not more than 15 characters, Must not contain 'CcIiSsCco', Must not begin with`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"backup_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `The backup file will get saved with this name.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -32,8 +39,9 @@ func dataSourceBackupConfig() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Id which can be used to track the status of backup / restore of config DB.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -64,8 +72,9 @@ func dataSourceBackupConfig() *schema.Resource {
 				},
 			},
 			"repository_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Name of the configured repository where the generated backup file will get copied.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 		},
 	}

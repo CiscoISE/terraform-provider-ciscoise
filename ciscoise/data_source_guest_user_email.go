@@ -16,15 +16,21 @@ import (
 // dataSourceAction
 func dataSourceGuestUserEmail() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on GuestUser.
+
+This data source action allows the client to update a guest user email by ID.`,
+
 		ReadContext: dataSourceGuestUserEmailRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"portal_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `portalId path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"additional_data": &schema.Schema{
 				Type:     schema.TypeList,

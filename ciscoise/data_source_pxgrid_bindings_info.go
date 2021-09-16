@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridBindingsInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on TrustSec SXP.
+
+🚧 getBindings`,
+
 		ReadContext: dataSourcePxgridBindingsInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

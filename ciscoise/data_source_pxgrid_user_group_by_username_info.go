@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridUserGroupByUsernameInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Session Directory.
+
+🚧 getUserGroupByUserName`,
+
 		ReadContext: dataSourcePxgridUserGroupByUsernameInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

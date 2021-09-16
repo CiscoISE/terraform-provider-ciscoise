@@ -15,47 +15,268 @@ import (
 // dataSourceAction
 func dataSourceBindSignedCertificate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Certificates.
+
+
+
+Bind CA Signed Certificate.
+
+NOTE:
+This data source action requires an existing Certificate Signing Request, and the root certificate must already be
+trusted.
+
+NOTE:
+The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
+
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+
+
+Following Parameters are used in POST body
+
+
+
+
+PARAMETER
+
+DESCRIPTION
+
+EXAMPLE
+
+
+
+
+
+name
+
+Friendly name of the certificate.
+
+Signed Certificate
+
+
+
+data
+
+Plain-text contents of the certificate file (required)
+
+Signed Certificate in escaped format
+
+
+
+allowExtendedValidity
+
+Allow the certificates greater than validity of 398 days (required)
+
+false
+
+
+
+allowOutOfDateCert
+
+Allow out of date certificates (required)
+
+false
+
+
+
+allowReplacementOfCertificates
+
+Allow Replacement of certificates (required)
+
+false
+
+
+
+allowReplacementOfPortalGroupTag
+
+Allow Replacement of Portal Group Tag (required)
+
+false
+
+
+admin
+
+Use certificate to authenticate the ISE Admin Portal
+
+false
+
+
+eap
+
+Use certificate for EAP protocols that use SSL/TLS tunneling
+
+false
+
+
+
+radius
+
+Use certificate for RADSec server
+
+false
+
+
+
+pxgrid
+
+Use certificate for the pxGrid Controller
+
+false
+
+
+
+ims
+
+Use certificate for the ISE Messaging Service
+
+false
+
+
+
+saml
+
+Use certificate for SAML Signing
+
+false
+
+
+
+portal
+
+Use certificate for portal
+
+false
+
+
+
+portalGroupTag
+
+Portal Group Tag for using certificate with portal role
+
+Default Portal Certificate Group
+
+
+
+validateCertificateExtensions
+
+Validate Certificate Extensions
+
+false
+
+
+
+
+
+Following Roles can be used in any combinations
+
+
+
+
+ROLE
+
+DEFAULT
+
+WARNING
+
+
+
+
+
+Admin
+
+False
+
+Enabling Admin role for this certificate will cause an application server restart on the selected node.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+EAP Authentication
+
+False
+
+Only one system certificate can be used for EAP. Assigning EAP to this certificate will remove the assignment from
+another certificate.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+RADIUS DTLS
+
+False
+
+Only one system certificate can be used for DTLS. Assigning DTLS to this certificate will remove the assignment from
+another certificate.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+SAML
+
+False
+
+SAML cannot be used with other Usage. Enabling SAML will uncheck all other Usage.
+Note:
+ Make sure required Certificate Chain is imported under Trusted Certificates
+
+
+
+ `,
+
 		ReadContext: dataSourceBindSignedCertificateRead,
 		Schema: map[string]*schema.Schema{
 			"admin": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: ` Use certificate to authenticate the ISE Admin Portal`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"allow_extended_validity": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Allow import of certificates with validity greater than 398 days`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"allow_out_of_date_cert": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Allow out of date certificates (required)`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"allow_replacement_of_certificates": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Allow Replacement of certificates (required)`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"allow_replacement_of_portal_group_tag": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Allow Replacement of Portal Group Tag (required)`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"data": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Signed Certificate in escaped format`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"eap": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Use certificate for EAP protocols that use SSL/TLS tunneling`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"host_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Name of Host whose CSR ID has been provided`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `ID of the generated CSR`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"ims": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Use certificate for the ISE Messaging Service`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -68,39 +289,47 @@ func dataSourceBindSignedCertificate() *schema.Resource {
 							Computed: true,
 						},
 						"status": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Response status after import`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Friendly Name of the certificate`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"portal": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Use for portal`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"portal_group_tag": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Set Group tag`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"pxgrid": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Use certificate for the pxGrid Controller`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"radius": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Use certificate for the RADSec server`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"saml": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Use certificate for SAML Signing`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 			"validate_certificate_extensions": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				Description: `Validate Certificate Extensions`,
+				Type:        schema.TypeBool,
+				Optional:    true,
 			},
 		},
 	}

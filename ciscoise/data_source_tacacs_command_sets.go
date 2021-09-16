@@ -12,23 +12,33 @@ import (
 
 func dataSourceTacacsCommandSets() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on TACACSCommandSets.
+
+This data source allows the client to get TACACS command sets by name.
+This data source allows the client to get TACACS command sets by ID.
+This data source allows the client to get all the TACACS command sets.`,
+
 		ReadContext: dataSourceTacacsCommandSetsRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -57,8 +67,9 @@ func dataSourceTacacsCommandSets() *schema.Resource {
 													Computed: true,
 												},
 												"grant": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Allowed values: PERMIT, DENY, DENY_ALWAYS`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -133,8 +144,9 @@ func dataSourceTacacsCommandSets() *schema.Resource {
 													Computed: true,
 												},
 												"grant": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Allowed values: PERMIT, DENY, DENY_ALWAYS`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},

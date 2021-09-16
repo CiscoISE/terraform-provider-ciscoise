@@ -12,9 +12,70 @@ import (
 
 func dataSourceSgMapping() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on IPToSGTMapping.
+
+This data source allows the client to get an IP to SGT mapping by ID.
+This data source allows the client to get all the IP to SGT mappings.
+
+Filter:
+
+[hostName, groupName, ip, sgtName]
+
+To search guest users by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
+
+Sorting:
+
+[hostName, groupName, ip, sgtName]`,
+
 		ReadContext: dataSourceSgMappingRead,
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
+				Description: `filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains 
+
+`,
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -22,28 +83,34 @@ func dataSourceSgMapping() *schema.Resource {
 				},
 			},
 			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sortasc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortasc query parameter. sort asc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sortdsc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortdsc query parameter. sort desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -52,20 +119,27 @@ func dataSourceSgMapping() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"deploy_to": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Mandatory unless mappingGroup is set or unless deployType=ALL`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"deploy_type": &schema.Schema{
+							Description: `Allowed values:
+- ALL,
+- ND,
+- NDG`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"host_ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Mandatory if hostName is empty -- valid IP`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"host_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Mandatory if hostIp is empty`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -93,16 +167,18 @@ func dataSourceSgMapping() *schema.Resource {
 							},
 						},
 						"mapping_group": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Mapping Group Id. Mandatory unless sgt and deployTo and deployType are set`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"sgt": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Mandatory unless mappingGroup is set`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

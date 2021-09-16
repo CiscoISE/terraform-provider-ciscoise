@@ -12,23 +12,33 @@ import (
 
 func dataSourceTacacsProfile() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on TACACSProfile.
+
+This data source allows the client to get a TACACS profile by name.
+This data source allows the client to get a TACACS profile by ID.
+This data source allows the client to get all the TACACS profiles.`,
+
 		ReadContext: dataSourceTacacsProfileRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -70,8 +80,9 @@ func dataSourceTacacsProfile() *schema.Resource {
 							Computed: true,
 						},
 						"session_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Holds list of session attributes. View type for GUI is Shell by default`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -86,8 +97,9 @@ func dataSourceTacacsProfile() *schema.Resource {
 													Computed: true,
 												},
 												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Allowed values: MANDATORY, OPTIONAL`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
@@ -142,8 +154,9 @@ func dataSourceTacacsProfile() *schema.Resource {
 							Computed: true,
 						},
 						"session_attributes": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `Holds list of session attributes. View type for GUI is Shell by default`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -158,8 +171,9 @@ func dataSourceTacacsProfile() *schema.Resource {
 													Computed: true,
 												},
 												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Description: `Allowed values: MANDATORY, OPTIONAL`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,

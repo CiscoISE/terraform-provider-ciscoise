@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridAccountActivate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Consumer.
+
+🚧 AccountActivate`,
+
 		ReadContext: dataSourcePxgridAccountActivateRead,
 		Schema: map[string]*schema.Schema{
 			"description": &schema.Schema{

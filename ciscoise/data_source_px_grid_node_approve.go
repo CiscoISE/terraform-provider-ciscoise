@@ -13,11 +13,17 @@ import (
 // dataSourceAction
 func dataSourcePxGridNodeApprove() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on pxGridNode.
+
+This data source action allows the client to approve a pxGrid node.
+Only pending pxGrid nodes can be approved`,
+
 		ReadContext: dataSourcePxGridNodeApproveRead,
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

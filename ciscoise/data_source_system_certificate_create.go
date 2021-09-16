@@ -15,11 +15,16 @@ import (
 // dataSourceAction
 func dataSourceSystemCertificateCreate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on SystemCertificate.
+
+This data source action allows the client to create a system certificate.`,
+
 		ReadContext: dataSourceSystemCertificateCreateRead,
 		Schema: map[string]*schema.Schema{
 			"ers_local_cert_stub": &schema.Schema{
-				Type:     schema.TypeList,
-				Optional: true,
+				Description: `Inputs for certificate creation`,
+				Type:        schema.TypeList,
+				Optional:    true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -48,8 +53,9 @@ func dataSourceSystemCertificateCreate() *schema.Resource {
 							Optional: true,
 						},
 						"ers_subject_stub": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
+							Description: `Subject data of certificate`,
+							Type:        schema.TypeList,
+							Optional:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -120,8 +126,9 @@ func dataSourceSystemCertificateCreate() *schema.Resource {
 				Computed: true,
 			},
 			"node_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `NodeId of Cisco ISE application`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 		},
 	}

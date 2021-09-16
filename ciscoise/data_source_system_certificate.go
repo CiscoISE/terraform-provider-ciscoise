@@ -12,9 +12,140 @@ import (
 
 func dataSourceSystemCertificate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Certificates.
+
+ This data source supports Filtering, Sorting and Pagination.
+
+
+Filtering and Sorting supported on below mentioned attributes:
+
+
+
+
+friendlyName
+
+
+issuedTo
+
+
+issuedBy
+
+
+validFrom
+
+
+
+
+Supported Date Format: yyyy-MM-dd HH:mm:ss
+
+
+Supported Operators: EQ, NEQ, GT and LT
+
+
+
+
+expirationDate
+
+
+
+
+Supported Date Format: yyyy-MM-dd HH:mm:ss
+
+
+Supported Operators: EQ, NEQ, GT and LT
+
+
+
+
+
+
+This data source displays details of a System Certificate of a particular node based on a given HostName and ID.`,
+
 		ReadContext: dataSourceSystemCertificateRead,
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
+				Description: `filter query parameter. 
+ 
+ 
+ 
+Simple filtering
+ should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
+"filterType=or"
+ query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
+ 
+ 
+ 
+ 
+ 
+OPERATOR
+ 
+DESCRIPTION
+ 
+ 
+ 
+ 
+ 
+EQ
+ 
+Equals
+ 
+ 
+ 
+NEQ
+ 
+Not Equals
+ 
+ 
+ 
+GT
+ 
+Greater Than
+ 
+ 
+ 
+LT
+ 
+Less Then
+ 
+ 
+ 
+STARTSW
+ 
+Starts With
+ 
+ 
+ 
+NSTARTSW
+ 
+Not Starts With
+ 
+ 
+ 
+ENDSW
+ 
+Ends With
+ 
+ 
+ 
+NENDSW
+ 
+Not Ends With
+ 
+ 
+ 
+CONTAINS
+ 
+Contains
+ 
+ 
+ 
+NCONTAINS
+ 
+Not Contains
+ 
+ 
+ 
+ `,
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -22,32 +153,39 @@ func dataSourceSystemCertificate() *schema.Resource {
 				},
 			},
 			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"host_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `hostName path parameter. Name of the host of which system certificates should be returned`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter. The id of the system certificate`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sort": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sort query parameter. sort type asc or desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sort_by": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortBy query parameter. sort column by which objects needs to be sorted`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -56,32 +194,38 @@ func dataSourceSystemCertificate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"expiration_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The time and date past which the certificate is no longer valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"friendly_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Friendly name of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"group_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `ID of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"issued_by": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Common Name of the certificate issuer`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"issued_to": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Common Name of the certificate subject`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `The length of key used for encrypting system certificate`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -113,8 +257,9 @@ func dataSourceSystemCertificate() *schema.Resource {
 							Computed: true,
 						},
 						"serial_number_decimal_format": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Used to uniquely identify the certificate within a CA's systems`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"sha256_fingerprint": &schema.Schema{
 							Type:     schema.TypeString,
@@ -129,8 +274,9 @@ func dataSourceSystemCertificate() *schema.Resource {
 							Computed: true,
 						},
 						"valid_from": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The time and date on which the certificate was created, also known as the Not Before certificate attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -142,32 +288,38 @@ func dataSourceSystemCertificate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"expiration_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The time and date past which the certificate is no longer valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"friendly_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Friendly name of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"group_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `ID of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"issued_by": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Common Name of the certificate issuer`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"issued_to": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Common Name of the certificate subject`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `The length of key used for encrypting system certificate`,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -199,8 +351,9 @@ func dataSourceSystemCertificate() *schema.Resource {
 							Computed: true,
 						},
 						"serial_number_decimal_format": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Used to uniquely identify the certificate within a CA's systems`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"sha256_fingerprint": &schema.Schema{
 							Type:     schema.TypeString,
@@ -215,8 +368,9 @@ func dataSourceSystemCertificate() *schema.Resource {
 							Computed: true,
 						},
 						"valid_from": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The time and date on which the certificate was created, also known as the Not Before certificate attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

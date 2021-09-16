@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourceDeviceAdministrationGlobalExceptionRulesResetHitcount() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Device Administration - Authorization Global Exception Rules.
+
+Device Admin Reset HitCount for Global Exceptions`,
+
 		ReadContext: dataSourceDeviceAdministrationGlobalExceptionRulesResetHitcountRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

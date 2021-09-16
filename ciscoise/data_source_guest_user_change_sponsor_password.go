@@ -16,11 +16,16 @@ import (
 // dataSourceAction
 func dataSourceGuestUserChangeSponsorPassword() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on GuestUser.
+
+This data source action allows the client to change the sponsor password.`,
+
 		ReadContext: dataSourceGuestUserChangeSponsorPasswordRead,
 		Schema: map[string]*schema.Schema{
 			"portal_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `portalId path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"additional_data": &schema.Schema{
 				Type:     schema.TypeList,

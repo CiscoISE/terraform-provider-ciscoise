@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridServiceRegister() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Provider.
+
+🚧 ServiceRegister`,
+
 		ReadContext: dataSourcePxgridServiceRegisterRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

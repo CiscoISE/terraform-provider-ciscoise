@@ -16,6 +16,10 @@ import (
 // dataSourceAction
 func dataSourceAncEndpointApply() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on ANCEndpoint.
+
+This data source action allows the client to apply the required configuration.`,
+
 		ReadContext: dataSourceAncEndpointApplyRead,
 		Schema: map[string]*schema.Schema{
 			"additional_data": &schema.Schema{

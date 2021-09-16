@@ -12,6 +12,10 @@ import (
 
 func dataSourceMntSessionPostureCount() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+PostureCount`,
+
 		ReadContext: dataSourceMntSessionPostureCountRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

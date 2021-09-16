@@ -12,6 +12,11 @@ import (
 
 func dataSourceNetworkAccessIDentityStores() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Network Access - Identity Stores.
+
+Network Access Return list of identity stores for authentication policy definition.
+ (Other CRUD APIs available throught ERS)`,
+
 		ReadContext: dataSourceNetworkAccessIDentityStoresRead,
 		Schema: map[string]*schema.Schema{
 			"items": &schema.Schema{

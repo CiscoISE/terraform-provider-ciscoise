@@ -12,6 +12,11 @@ import (
 
 func dataSourceDeviceAdministrationProfiles() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Device Administration - Profiles.
+
+Device Admin Returns list of profiles.
+ (Other CRUD APIs available throught ERS)`,
+
 		ReadContext: dataSourceDeviceAdministrationProfilesRead,
 		Schema: map[string]*schema.Schema{
 			"items": &schema.Schema{

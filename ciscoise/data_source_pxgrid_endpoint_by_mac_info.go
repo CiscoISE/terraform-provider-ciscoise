@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridEndpointByMacInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on MDM.
+
+🚧 getEndpointByMacAddress`,
+
 		ReadContext: dataSourcePxgridEndpointByMacInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridAccessSecret() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Consumer.
+
+🚧 AccessSecret`,
+
 		ReadContext: dataSourcePxgridAccessSecretRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

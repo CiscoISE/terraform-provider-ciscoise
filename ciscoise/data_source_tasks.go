@@ -12,11 +12,17 @@ import (
 
 func dataSourceTasks() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on tasks.
+
+get all task status
+Monitor task status`,
+
 		ReadContext: dataSourceTasksRead,
 		Schema: map[string]*schema.Schema{
 			"task_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `taskId path parameter. The id of the task executed before`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

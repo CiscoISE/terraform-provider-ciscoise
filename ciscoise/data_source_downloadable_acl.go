@@ -12,19 +12,27 @@ import (
 
 func dataSourceDownloadableACL() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on DownloadableACL.
+
+This data source allows the client to get a downloadable ACL by ID.
+This data source allows the client to get all downloadable ACLs.`,
+
 		ReadContext: dataSourceDownloadableACLRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -33,16 +41,22 @@ func dataSourceDownloadableACL() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"dacl": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The DACL Content. Use the string \\n for a newline`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"dacl_type": &schema.Schema{
+							Description: `Allowed values:
+- IPV4,
+- IPV6,
+- IP_AGNOSTIC`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Use the string \\n for a newline`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -70,8 +84,9 @@ func dataSourceDownloadableACL() *schema.Resource {
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

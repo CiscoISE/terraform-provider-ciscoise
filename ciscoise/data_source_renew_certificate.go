@@ -14,6 +14,11 @@ import (
 // dataSourceAction
 func dataSourceRenewCertificate() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Certificates.
+
+This data source action will initiate regeneration of certificates. Response contains id which can be used to track the
+status`,
+
 		ReadContext: dataSourceRenewCertificateRead,
 		Schema: map[string]*schema.Schema{
 			"cert_type": &schema.Schema{
@@ -27,8 +32,9 @@ func dataSourceRenewCertificate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Id which can be used to track status of certificate regeneration`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,

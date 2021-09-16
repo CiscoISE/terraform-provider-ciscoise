@@ -12,27 +12,36 @@ import (
 
 func dataSourceMntSessionDisconnect() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Misc.
+
+Session Disconnect`,
+
 		ReadContext: dataSourceMntSessionDisconnectRead,
 		Schema: map[string]*schema.Schema{
 			"dis_con_nec_tty_pe": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `DISCONNECT_TYPE path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"end_poi_nti_p": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `ENDPOINT_IP path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"mac": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `MAC path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"nas_ipv4": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `NAS_IPV4 path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"psn_nam_e": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `PSN_NAME path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

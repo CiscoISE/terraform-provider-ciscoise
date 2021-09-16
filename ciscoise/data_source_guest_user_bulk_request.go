@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourceGuestUserBulkRequest() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on GuestUser.
+
+This data source action allows the client to submit the bulk request.`,
+
 		ReadContext: dataSourceGuestUserBulkRequestRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

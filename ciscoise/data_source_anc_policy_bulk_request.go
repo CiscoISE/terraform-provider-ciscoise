@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourceAncPolicyBulkRequest() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on AncPolicy.
+
+This data source action allows the client to submit the bulk request.`,
+
 		ReadContext: dataSourceAncPolicyBulkRequestRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

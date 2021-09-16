@@ -13,11 +13,16 @@ import (
 // dataSourceAction
 func dataSourcePxGridNodeDelete() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs delete operation on pxGridNode.
+
+This data source action deletes a pxGrid node by name.`,
+
 		ReadContext: dataSourcePxGridNodeDeleteRead,
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,

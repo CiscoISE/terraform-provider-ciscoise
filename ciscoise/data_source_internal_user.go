@@ -12,9 +12,71 @@ import (
 
 func dataSourceInternalUser() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on InternalUser.
+
+This data source allows the client to get an internal user by name.
+This data source allows the client to get an internal user by ID.
+This data source allows the client to get all the internal users.
+
+Filter:
+
+[firstName, lastName, identityGroup, name, description, email, enabled]
+
+To search resources by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
+
+Sorting:
+
+[name, description]`,
+
 		ReadContext: dataSourceInternalUserRead,
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
+				Description: `filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains 
+
+`,
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -22,32 +84,39 @@ func dataSourceInternalUser() *schema.Resource {
 				},
 			},
 			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sortasc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortasc query parameter. sort asc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sortdsc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortdsc query parameter. sort desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -60,8 +129,9 @@ func dataSourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
-							Computed: true,
+							Description: `Key value map`,
+							Type:        schema.TypeMap,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -76,12 +146,15 @@ func dataSourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
+							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
+The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"expiry_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -96,8 +169,9 @@ func dataSourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"identity_groups": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `CSV of identity group IDs`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"last_name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -134,9 +208,10 @@ func dataSourceInternalUser() *schema.Resource {
 							Computed:  true,
 						},
 						"password_idstore": &schema.Schema{
-							Type:      schema.TypeString,
-							Sensitive: true,
-							Computed:  true,
+							Description: `The id store where the internal user's password is kept`,
+							Type:        schema.TypeString,
+							Sensitive:   true,
+							Computed:    true,
 						},
 					},
 				},
@@ -152,8 +227,9 @@ func dataSourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
-							Computed: true,
+							Description: `Key value map`,
+							Type:        schema.TypeMap,
+							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -168,12 +244,15 @@ func dataSourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
+							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
+The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
 							Type:     schema.TypeBool,
 							Computed: true,
 						},
 						"expiry_date": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -188,8 +267,9 @@ func dataSourceInternalUser() *schema.Resource {
 							Computed: true,
 						},
 						"identity_groups": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `CSV of identity group IDs`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"last_name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -226,9 +306,10 @@ func dataSourceInternalUser() *schema.Resource {
 							Computed:  true,
 						},
 						"password_idstore": &schema.Schema{
-							Type:      schema.TypeString,
-							Sensitive: true,
-							Computed:  true,
+							Description: `The id store where the internal user's password is kept`,
+							Type:        schema.TypeString,
+							Sensitive:   true,
+							Computed:    true,
 						},
 					},
 				},

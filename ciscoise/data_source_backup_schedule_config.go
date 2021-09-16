@@ -15,27 +15,37 @@ import (
 // dataSourceAction
 func dataSourceBackupScheduleConfig() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Backup And Restore.
+
+Schedules the configuration backup on the ISE node as per the input parameters. This data source action helps in
+creating the schedule for the first time.`,
+
 		ReadContext: dataSourceBackupScheduleConfigRead,
 		Schema: map[string]*schema.Schema{
 			"backup_description": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Description of the backup.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"backup_encryption_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `The encyption key for the backed up file. Encryption key must satisfy the following criteria - Contains at least one uppercase letter [A-Z], Contains at least one lowercase letter [a-z], Contains at least one digit [0-9], Contain only [A-Z][a-z][0-9]_#, Has at least 8 characters, Has not more than 15 characters, Must not contain 'CcIiSsCco', Must not begin with`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"backup_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `The backup file will get saved with this name.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"end_date": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `End date of the scheduled backup job. Allowed format MM/DD/YYYY. End date is not required in case of ONE_TIME frequency.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"frequency": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Frequency with which the backup will get scheduled in the ISE node. Allowed values - ONCE, DAILY, WEEKLY, MONTHLY`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -65,35 +75,42 @@ func dataSourceBackupScheduleConfig() *schema.Resource {
 							},
 						},
 						"message": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `Response message on successful scheduling the backup job.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
 			},
 			"month_day": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Day of month you want backup to be performed on when scheduled frequency is MONTHLY. Allowed values - from 1 to 28.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"repository_name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Name of the configured repository where the generated backup file will get copied.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"start_date": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Start date for scheduling the backup job. Allowed format MM/DD/YYYY.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"status": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Enable or disable scheduled backup.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"time": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Time at which backup job get scheduled. example- 12:00 AM`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"week_day": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `Day of week you want backup to be performed on when scheduled frequency is WEEKLY. Allowed values - MON, TUE, WED, THU, FRI, SAT, SUN.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 		},
 	}

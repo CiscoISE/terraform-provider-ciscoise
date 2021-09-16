@@ -15,6 +15,10 @@ import (
 // dataSourceAction
 func dataSourceSxpLocalBindingsBulkRequest() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on SXPLocalBindings.
+
+This data source action allows the client to submit the bulk request.`,
+
 		ReadContext: dataSourceSxpLocalBindingsBulkRequestRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

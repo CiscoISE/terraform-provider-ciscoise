@@ -12,19 +12,27 @@ import (
 
 func dataSourceRadiusServerSequence() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on RADIUSServerSequence.
+
+This data source allows the client to get a RADIUS server sequence by ID.
+This data source allows the client to get all the RADIUS server sequences.`,
+
 		ReadContext: dataSourceRadiusServerSequenceRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -33,12 +41,18 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"before_accept_attr_manipulators_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"action": &schema.Schema{
+										Description: `Allowed Values:
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -47,8 +61,9 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 										Computed: true,
 									},
 									"changed_val": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"dictionary_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -62,12 +77,18 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"on_request_attr_manipulator_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
+							Description: `The onRequestAttrManipulators is required only if useAttrSetOnRequest is true`,
+							Type:        schema.TypeList,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"action": &schema.Schema{
+										Description: `Allowed Values:
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -76,8 +97,9 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 										Computed: true,
 									},
 									"changed_val": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"dictionary_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -139,8 +161,9 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 							Computed: true,
 						},
 						"prefix_separator": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The prefixSeparator is required only if stripPrefix is true. The maximum length is 1 character`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
 							Type:     schema.TypeBool,
@@ -155,8 +178,9 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 							Computed: true,
 						},
 						"suffix_separator": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+							Description: `The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"use_attr_set_before_acc": &schema.Schema{
 							Type:     schema.TypeBool,

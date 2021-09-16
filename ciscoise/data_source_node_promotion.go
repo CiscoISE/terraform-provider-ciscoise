@@ -15,6 +15,12 @@ import (
 // dataSourceAction
 func dataSourceNodePromotion() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs update operation on Node Deployment.
+
+Changes the cluster setting by promoting a node to primary when exceuted on standalone or secondary node.
+It could also be used to convert a deployment node to standalone node.
+`,
+
 		ReadContext: dataSourceNodePromotionRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

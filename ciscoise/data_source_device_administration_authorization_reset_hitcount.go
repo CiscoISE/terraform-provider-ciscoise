@@ -13,11 +13,16 @@ import (
 // dataSourceAction
 func dataSourceDeviceAdministrationAuthorizationResetHitcount() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on Device Administration - Authorization Rules.
+
+Device Admin Reset HitCount for Authorization Rules`,
+
 		ReadContext: dataSourceDeviceAdministrationAuthorizationResetHitcountRead,
 		Schema: map[string]*schema.Schema{
 			"policy_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `policyId path parameter. Policy id`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

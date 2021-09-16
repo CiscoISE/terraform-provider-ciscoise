@@ -12,9 +12,71 @@ import (
 
 func dataSourceRestIDStore() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on RESTIDStore.
+
+This data source allows the client to get a REST ID store by name.
+This data source allows the client to get a REST ID store by ID.
+This data source allows the client to get all the REST ID stores.
+
+Filter:
+
+[name]
+
+To search resources by using
+toDate
+ column,follow the format:
+
+DD-MON-YY (Example:13-SEP-18)
+
+
+Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
+
+Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
+
+Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
+
+
+Sorting:
+
+[name]`,
+
 		ReadContext: dataSourceRestIDStoreRead,
 		Schema: map[string]*schema.Schema{
 			"filter": &schema.Schema{
+				Description: `filter query parameter. 
+
+**Simple filtering** should be available through the filter query string parameter. The structure of a filter is
+a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
+common to ALL filter criteria will be by default AND, and can be changed by using the "filterType=or" query
+string parameter. Each resource Data model description should specify if an attribute is a filtered field.
+
+
+
+              Operator    | Description 
+
+              ------------|----------------
+
+              EQ          | Equals 
+
+              NEQ         | Not Equals 
+
+              GT          | Greater Than 
+
+              LT          | Less Then 
+
+              STARTSW     | Starts With 
+
+              NSTARTSW    | Not Starts With 
+
+              ENDSW       | Ends With 
+
+              NENDSW      | Not Ends With 
+
+              CONTAINS	  | Contains 
+
+              NCONTAINS	  | Not Contains 
+
+`,
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
@@ -22,32 +84,39 @@ func dataSourceRestIDStore() *schema.Resource {
 				},
 			},
 			"filter_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `name path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"sortasc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortasc query parameter. sort asc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"sortdsc": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `sortdsc query parameter. sort desc`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -83,16 +152,23 @@ func dataSourceRestIDStore() *schema.Resource {
 										},
 									},
 									"predefined": &schema.Schema{
+										Description: `The cloud provider connected to of the RestIDStore.
+Options are:
+- Azure,
+- Okta,
+- None`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"root_url": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `url of the root of the RestIDStore`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"username_suffix": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Suffix of the username domain`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},
@@ -163,16 +239,23 @@ func dataSourceRestIDStore() *schema.Resource {
 										},
 									},
 									"predefined": &schema.Schema{
+										Description: `The cloud provider connected to of the RestIDStore.
+Options are:
+- Azure,
+- Okta,
+- None`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"root_url": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `url of the root of the RestIDStore`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"username_suffix": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
+										Description: `Suffix of the username domain`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},

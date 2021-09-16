@@ -12,11 +12,16 @@ import (
 
 func dataSourceResourceVersion() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on VersionInfo.
+
+Get all VersionInfo`,
+
 		ReadContext: dataSourceResourceVersionRead,
 		Schema: map[string]*schema.Schema{
 			"resource": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Description: `resource path parameter.`,
+				Type:        schema.TypeString,
+				Required:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

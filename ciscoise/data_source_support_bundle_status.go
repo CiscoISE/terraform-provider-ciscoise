@@ -12,19 +12,27 @@ import (
 
 func dataSourceSupportBundleStatus() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on SupportBundleStatus.
+
+This data source allows the client to get a support bundle status by ID.
+This data source allows the client to get all the support bundle status.`,
+
 		ReadContext: dataSourceSupportBundleStatusRead,
 		Schema: map[string]*schema.Schema{
 			"id": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `id path parameter.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"page": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `page query parameter. Page number`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"size": &schema.Schema{
-				Type:     schema.TypeInt,
-				Optional: true,
+				Description: `size query parameter. Number of objects returned per page`,
+				Type:        schema.TypeInt,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

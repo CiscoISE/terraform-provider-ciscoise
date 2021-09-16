@@ -12,11 +12,21 @@ import (
 
 func dataSourceNodeDeployment() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on Node Deployment.
+
+Discovers all deployment nodes in the cluster.
+It provides basic information about each of deployed nodes in the cluster like Hostname, personas, status, roles and
+services.
+
+It provides detailed information of the deployed node in the cluster.
+`,
+
 		ReadContext: dataSourceNodeDeploymentRead,
 		Schema: map[string]*schema.Schema{
 			"hostname": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Description: `hostname path parameter. ID of the existing deployed node.`,
+				Type:        schema.TypeString,
+				Optional:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,

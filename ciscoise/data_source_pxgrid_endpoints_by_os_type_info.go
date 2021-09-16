@@ -13,6 +13,10 @@ import (
 // dataSourceAction
 func dataSourcePxgridEndpointsByOsTypeInfo() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs create operation on MDM.
+
+🚧 getEndpointsByOsType`,
+
 		ReadContext: dataSourcePxgridEndpointsByOsTypeInfoRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{

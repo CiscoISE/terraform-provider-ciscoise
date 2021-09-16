@@ -12,6 +12,10 @@ import (
 
 func dataSourcePxgridFailures() *schema.Resource {
 	return &schema.Resource{
+		Description: `It performs read operation on RADIUS Failure.
+
+🚧 getFailures`,
+
 		ReadContext: dataSourcePxgridFailuresRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{
