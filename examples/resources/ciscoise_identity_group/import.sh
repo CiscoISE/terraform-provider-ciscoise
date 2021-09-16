@@ -1,0 +1,1 @@
+terraform import ciscoise_identity_group.example "id=string/name=string"

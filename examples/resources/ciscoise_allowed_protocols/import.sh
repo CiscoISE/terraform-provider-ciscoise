@@ -1,0 +1,1 @@
+terraform import ciscoise_allowed_protocols.example "id=string/name=string"

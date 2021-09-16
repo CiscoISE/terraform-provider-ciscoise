@@ -1,0 +1,1 @@
+terraform import ciscoise_authorization_profile.example "id=string/name=string"

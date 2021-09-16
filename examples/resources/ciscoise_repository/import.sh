@@ -1,0 +1,1 @@
+terraform import ciscoise_repository.example "name=string"

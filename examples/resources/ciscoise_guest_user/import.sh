@@ -1,0 +1,1 @@
+terraform import ciscoise_guest_user.example "id=string/name=string"

@@ -1,0 +1,1 @@
+terraform import ciscoise_sxp_connections.example "id=string"

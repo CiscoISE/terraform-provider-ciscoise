@@ -1,0 +1,1 @@
+terraform import ciscoise_node_group.example "node_group_name=string"

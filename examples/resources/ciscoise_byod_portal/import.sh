@@ -1,0 +1,1 @@
+terraform import ciscoise_byod_portal.example "id=string"

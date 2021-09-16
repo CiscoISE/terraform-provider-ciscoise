@@ -1,0 +1,1 @@
+terraform import ciscoise_trusted_certificate.example "id=string"

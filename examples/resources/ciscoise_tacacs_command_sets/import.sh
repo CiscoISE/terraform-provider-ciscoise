@@ -1,0 +1,1 @@
+terraform import ciscoise_tacacs_command_sets.example "id=string/name=string"

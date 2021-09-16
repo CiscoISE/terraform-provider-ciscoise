@@ -1,0 +1,1 @@
+terraform import ciscoise_device_administration_authorization_rules.example "id=string/policy_id=string"

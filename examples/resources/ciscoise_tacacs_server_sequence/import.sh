@@ -1,0 +1,1 @@
+terraform import ciscoise_tacacs_server_sequence.example "id=string/name=string"
