@@ -824,6 +824,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsItemsChildren(items
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionsItemsChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -954,6 +955,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionByNameItemNameChildr
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionByNameItemNameChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -1084,6 +1086,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionByIDItemIDChildren(i
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionByIDItemIDChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

@@ -537,6 +537,7 @@ func flattenRestidStoreGetRestIDStoreByNameItemNameErsRestIDStoreAttributesHeade
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -597,6 +598,7 @@ func flattenRestidStoreGetRestIDStoreByIDItemIDErsRestIDStoreAttributesHeaders(i
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

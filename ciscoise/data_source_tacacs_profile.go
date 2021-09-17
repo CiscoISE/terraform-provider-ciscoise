@@ -429,6 +429,7 @@ func flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributesSessionA
 		respItem["type"] = item.Type
 		respItem["name"] = item.Name
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -487,6 +488,7 @@ func flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributesSessionAttri
 		respItem["type"] = item.Type
 		respItem["name"] = item.Name
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

@@ -325,6 +325,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRul
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionsForAuthorizationRulesItemsChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

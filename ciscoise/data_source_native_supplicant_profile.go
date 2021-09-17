@@ -313,6 +313,7 @@ func flattenNativeSupplicantProfileGetNativeSupplicantProfileByIDItemWirelessPro
 		respItem["certificate_template_id"] = item.CertificateTemplateID
 		respItem["action_type"] = item.ActionType
 		respItem["previous_ssid"] = item.PreviousSSID
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

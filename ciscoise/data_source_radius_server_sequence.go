@@ -405,6 +405,7 @@ func flattenRadiusServerSequenceGetRadiusServerSequenceByIDItemOnRequestAttrMani
 		respItem["attribute_name"] = item.AttributeName
 		respItem["value"] = item.Value
 		respItem["changed_val"] = item.ChangedVal
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -422,6 +423,7 @@ func flattenRadiusServerSequenceGetRadiusServerSequenceByIDItemBeforeAcceptAttrM
 		respItem["attribute_name"] = item.AttributeName
 		respItem["value"] = item.Value
 		respItem["changed_val"] = item.ChangedVal
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

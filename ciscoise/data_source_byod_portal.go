@@ -1029,6 +1029,7 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizationsData(
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

@@ -333,6 +333,7 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions
 		respItem["mac_addr_list"] = item.MacAddrList
 		respItem["device_group_list"] = item.DeviceGroupList
 		respItem["device_list"] = item.DeviceList
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -381,6 +382,7 @@ func flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionB
 		respItem["mac_addr_list"] = item.MacAddrList
 		respItem["device_group_list"] = item.DeviceGroupList
 		respItem["device_list"] = item.DeviceList
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

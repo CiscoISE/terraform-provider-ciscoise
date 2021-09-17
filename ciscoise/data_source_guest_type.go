@@ -546,6 +546,7 @@ func flattenGuestTypeGetGuestTypeByIDItemAccessTimeDayTimeLimits(items *[]isegos
 		respItem["start_time"] = item.StartTime
 		respItem["end_time"] = item.EndTime
 		respItem["days"] = item.Days
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

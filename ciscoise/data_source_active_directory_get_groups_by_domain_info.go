@@ -178,6 +178,7 @@ func flattenActiveDirectoryGetGroupsByDomainItemGroups(items *[]isegosdk.Respons
 		respItem["group_name"] = item.GroupName
 		respItem["sid"] = item.Sid
 		respItem["type"] = item.Type
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

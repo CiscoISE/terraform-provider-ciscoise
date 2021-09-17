@@ -749,6 +749,7 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionC
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -917,6 +918,7 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

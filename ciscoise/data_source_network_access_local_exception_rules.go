@@ -800,6 +800,7 @@ func flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExcepti
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRulesItemsRuleConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -980,6 +981,7 @@ func flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExcepti
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRuleByIDItemRuleConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

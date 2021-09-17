@@ -749,6 +749,7 @@ func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetsItemsConditionChildr
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessPolicySetGetNetworkAccessPolicySetsItemsConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -917,6 +918,7 @@ func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetByIDItemConditionChil
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessPolicySetGetNetworkAccessPolicySetByIDItemConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

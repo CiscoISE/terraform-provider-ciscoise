@@ -841,6 +841,7 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAtt
 		respItem := make(map[string]interface{})
 		respItem["left_hand_side_dictionary_attribue"] = flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesLeftHandSideDictionaryAttribue(item.LeftHandSideDictionaryAttribue)
 		respItem["right_hand_side_attribue_value"] = flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesRightHandSideAttribueValue(item.RightHandSideAttribueValue)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -986,6 +987,7 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttribu
 		respItem := make(map[string]interface{})
 		respItem["left_hand_side_dictionary_attribue"] = flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesLeftHandSideDictionaryAttribue(item.LeftHandSideDictionaryAttribue)
 		respItem["right_hand_side_attribue_value"] = flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesRightHandSideAttribueValue(item.RightHandSideAttribueValue)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

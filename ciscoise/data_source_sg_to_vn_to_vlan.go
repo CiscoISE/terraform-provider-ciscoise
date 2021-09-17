@@ -412,6 +412,7 @@ func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirt
 		respItem["description"] = item.Description
 		respItem["default_virtual_network"] = item.DefaultVirtualNetwork
 		respItem["vlans"] = flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirtualnetworklistVLANs(item.VLANs)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -430,6 +431,7 @@ func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirt
 		respItem["default_vlan"] = item.DefaultVLAN
 		respItem["max_value"] = item.MaxValue
 		respItem["data"] = item.Data
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

@@ -164,6 +164,7 @@ func flattenSxpConnectionsMonitorBulkStatusSxpConnectionsItemResourcesStatus(ite
 		respItem["description"] = item.Description
 		respItem["resource_execution_status"] = item.ResourceExecutionStatus
 		respItem["status"] = item.Status
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

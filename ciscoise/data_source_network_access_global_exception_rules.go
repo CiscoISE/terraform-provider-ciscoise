@@ -792,6 +792,7 @@ func flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicy
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRulesItemsRuleConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -972,6 +973,7 @@ func flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicy
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItemRuleConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

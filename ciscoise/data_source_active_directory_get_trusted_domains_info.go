@@ -116,6 +116,7 @@ func flattenActiveDirectoryGetTrustedDomainsItemDomains(items *[]isegosdk.Respon
 		respItem["dns_name"] = item.DNSName
 		respItem["forest"] = item.Forest
 		respItem["unusable_reason"] = item.UnusableReason
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

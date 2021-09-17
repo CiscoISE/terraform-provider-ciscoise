@@ -412,6 +412,7 @@ func flattenIDentitySequenceGetIDentitySequenceByNameItemNameIDSeqItem(items *[]
 		respItem := make(map[string]interface{})
 		respItem["idstore"] = item.IDstore
 		respItem["order"] = item.Order
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -459,6 +460,7 @@ func flattenIDentitySequenceGetIDentitySequenceByIDItemIDIDSeqItem(items *[]iseg
 		respItem := make(map[string]interface{})
 		respItem["idstore"] = item.IDstore
 		respItem["order"] = item.Order
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
