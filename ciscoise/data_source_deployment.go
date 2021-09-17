@@ -568,6 +568,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeListNode(item
 		respItem["last_applied_feed_date_time"] = item.LastAppliedFeedDateTime
 		respItem["scope"] = item.Scope
 		respItem["profiles"] = responseInterfaceToString(item.Profiles)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -599,6 +600,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoVersionHistoryI
 		respItem["op_type"] = item.OpType
 		respItem["main_version"] = item.MainVersion
 		respItem["epoch_time"] = item.EpochTime
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -631,6 +633,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeListNodeAnd
 		respItem["nil"] = item.Nil
 		respItem["global_scope"] = item.GlobalScope
 		respItem["type_substituted"] = item.TypeSubstituted
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -760,6 +763,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfoContent(items *[]i
 		respItem["nil"] = item.Nil
 		respItem["global_scope"] = item.GlobalScope
 		respItem["type_substituted"] = item.TypeSubstituted
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -801,6 +805,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNode(items *[
 		respItem := make(map[string]interface{})
 		respItem["sn"] = item.Sn
 		respItem["service"] = flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeService(item.Service)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -815,6 +820,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeService(i
 		respItem := make(map[string]interface{})
 		respItem["service_name"] = item.ServiceName
 		respItem["route"] = flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeServiceRoute(item.Route)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -831,6 +837,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemKongInfoNodeListNodeServiceRo
 		respItem["http_count"] = responseInterfaceToString(item.HTTPCount)
 		respItem["latency_count"] = responseInterfaceToString(item.LatencyCount)
 		respItem["latency_sum"] = responseInterfaceToString(item.LatencySum)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

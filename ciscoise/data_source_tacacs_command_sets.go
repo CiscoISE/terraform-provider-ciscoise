@@ -436,6 +436,7 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommandsCommandLi
 		respItem["grant"] = item.Grant
 		respItem["command"] = item.Command
 		respItem["arguments"] = item.Arguments
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -495,6 +496,7 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommandsCommandList(i
 		respItem["grant"] = item.Grant
 		respItem["command"] = item.Command
 		respItem["arguments"] = item.Arguments
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

@@ -1046,6 +1046,7 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPage
 		respItem := make(map[string]interface{})
 		respItem["social_media_type"] = item.SocialMediaType
 		respItem["social_media_value"] = item.SocialMediaValue
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -1373,6 +1374,7 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPag
 		respItem := make(map[string]interface{})
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

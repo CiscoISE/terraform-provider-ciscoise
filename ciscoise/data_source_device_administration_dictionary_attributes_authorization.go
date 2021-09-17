@@ -153,6 +153,7 @@ func flattenDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionari
 		respItem["is_default"] = item.IsDefault
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

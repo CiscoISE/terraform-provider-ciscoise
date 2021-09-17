@@ -885,6 +885,7 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroupsGroups(items 
 		respItem["name"] = item.Name
 		respItem["sid"] = item.Sid
 		respItem["type"] = item.Type
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -938,6 +939,7 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettingsRewri
 		respItem["row_id"] = item.RowID
 		respItem["rewrite_match"] = item.RewriteMatch
 		respItem["rewrite_result"] = item.RewriteResult
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -967,6 +969,7 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributesAttribute
 		respItem["type"] = item.Type
 		respItem["internal_name"] = item.InternalName
 		respItem["default_value"] = item.DefaultValue
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -1031,6 +1034,7 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroupsGroups(items *[]i
 		respItem["name"] = item.Name
 		respItem["sid"] = item.Sid
 		respItem["type"] = item.Type
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -1084,6 +1088,7 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettingsRewriteRu
 		respItem["row_id"] = item.RowID
 		respItem["rewrite_match"] = item.RewriteMatch
 		respItem["rewrite_result"] = item.RewriteResult
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -1113,6 +1118,7 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributesAttributes(it
 		respItem["type"] = item.Type
 		respItem["internal_name"] = item.InternalName
 		respItem["default_value"] = item.DefaultValue
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

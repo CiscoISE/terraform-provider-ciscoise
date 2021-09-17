@@ -827,6 +827,7 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRulesItemsRuleConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -1010,6 +1011,7 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItemRuleConditionChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

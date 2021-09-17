@@ -325,6 +325,7 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthorizati
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthorizationRulesItemsChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

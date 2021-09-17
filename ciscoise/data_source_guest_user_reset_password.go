@@ -110,6 +110,7 @@ func flattenGuestUserResetGuestUserPasswordByIDItemResultValue(items *[]isegosdk
 		respItem := make(map[string]interface{})
 		respItem["value"] = item.Value
 		respItem["name"] = item.Name
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

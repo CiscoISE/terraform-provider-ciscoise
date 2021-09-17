@@ -266,6 +266,7 @@ func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributes
 		respItem["is_default"] = item.IsDefault
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -299,6 +300,7 @@ func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeB
 		respItem["is_default"] = item.IsDefault
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

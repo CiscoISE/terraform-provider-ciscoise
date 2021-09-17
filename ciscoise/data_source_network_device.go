@@ -1086,6 +1086,7 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameNetworkDeviceIPList(items
 		respItem["ipaddress"] = item.IPaddress
 		respItem["mask"] = item.Mask
 		respItem["get_ipaddress_exclude"] = item.GetIPaddressExclude
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -1261,6 +1262,7 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDNetworkDeviceIPList(items *[]
 		respItem["ipaddress"] = item.IPaddress
 		respItem["mask"] = item.Mask
 		respItem["get_ipaddress_exclude"] = item.GetIPaddressExclude
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

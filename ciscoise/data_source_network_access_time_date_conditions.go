@@ -576,6 +576,7 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsCh
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -706,6 +707,7 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 

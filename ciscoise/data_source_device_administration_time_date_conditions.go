@@ -576,6 +576,7 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
@@ -706,6 +707,7 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = item.IsNegate
 		respItem["link"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemChildrenLink(item.Link)
+		respItems = append(respItems, respItem)
 	}
 	return respItems
 
