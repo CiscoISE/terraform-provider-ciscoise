@@ -14,7 +14,7 @@ resource "ciscoise_allowed_protocols" "response" {
   provider = ciscoise
   item {
     name                         = "New Network Access 1"
-    description                  = "New Allowed Protocol Service 03"
+    description                  = "New Allowed Protocol Service 01"
     process_host_lookup          = false
     allow_pap_ascii              = false
     allow_chap                   = false
