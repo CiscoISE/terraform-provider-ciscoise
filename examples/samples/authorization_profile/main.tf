@@ -15,7 +15,7 @@ data "ciscoise_authorization_profile" "response" {
   page     = 1
   size     = 20
 }
-output "ciscoise__authorization_profile_response" {
+output "ciscoise_authorization_profile_response" {
   value = data.ciscoise_authorization_profile.response
 }
 
@@ -24,7 +24,7 @@ data "ciscoise_authorization_profile" "single_response_id" {
   id       = data.ciscoise_authorization_profile.response.items[0].id
 }
 
-output "ciscoise__authorization_profile_single_response_id" {
+output "ciscoise_authorization_profile_single_response_id" {
   value = data.ciscoise_authorization_profile.single_response_id
 }
 
@@ -33,6 +33,6 @@ data "ciscoise_authorization_profile" "single_response_name" {
   provider = ciscoise
   name     = data.ciscoise_authorization_profile.single_response_id.item_id[0].name
 }
-output "ciscoise__authorization_profile_single_response_name" {
+output "ciscoise_authorization_profile_single_response_name" {
   value = data.ciscoise_authorization_profile.single_response_name
 }

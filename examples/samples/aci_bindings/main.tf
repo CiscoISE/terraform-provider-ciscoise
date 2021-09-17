@@ -13,6 +13,6 @@ provider "ciscoise" {
 data "ciscoise_aci_bindings" "response" {
   provider = ciscoise
 }
-output "ciscoise__aci_bindings_response" {
+output "ciscoise_aci_bindings_response" {
   value = data.ciscoise_aci_bindings.response
 }

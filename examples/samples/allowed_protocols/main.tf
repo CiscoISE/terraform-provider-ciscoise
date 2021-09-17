@@ -25,5 +25,5 @@ data "ciscoise_allowed_protocols" "single_response" {
 }
 
 output "ciscoise__allowed_protocols_single_response" {
-  value = data.ciscoise_allowed_protocols.single_response
+  value = data.ciscoise_allowed_protocols.single_response.item_id
 }
