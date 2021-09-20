@@ -63,18 +63,21 @@ func dataSourceEndpointRegister() *schema.Resource {
 
 						"mdm_compliance_status": &schema.Schema{
 							// Type:     schema.TypeBool,
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"mdm_encrypted": &schema.Schema{
 							// Type:     schema.TypeBool,
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"mdm_enrolled": &schema.Schema{
 							// Type:     schema.TypeBool,
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"mdm_ime_i": &schema.Schema{
 							Type:     schema.TypeString,
@@ -82,8 +85,9 @@ func dataSourceEndpointRegister() *schema.Resource {
 						},
 						"mdm_jail_broken": &schema.Schema{
 							// Type:     schema.TypeBool,
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"mdm_manufacturer": &schema.Schema{
 							Type:     schema.TypeString,
@@ -103,13 +107,15 @@ func dataSourceEndpointRegister() *schema.Resource {
 						},
 						"mdm_pinlock": &schema.Schema{
 							// Type:     schema.TypeBool,
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"mdm_reachable": &schema.Schema{
 							// Type:     schema.TypeBool,
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"mdm_serial": &schema.Schema{
 							Type:     schema.TypeString,
@@ -136,13 +142,15 @@ func dataSourceEndpointRegister() *schema.Resource {
 			},
 			"static_group_assignment": &schema.Schema{
 				// Type:     schema.TypeBool,
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"static_profile_assignment": &schema.Schema{
 				// Type:     schema.TypeBool,
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 		},
 	}
