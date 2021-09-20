@@ -183,8 +183,9 @@ portalGroupTag
 		Schema: map[string]*schema.Schema{
 			"allow_wild_card_cert": &schema.Schema{
 				// Type:     schema.TypeBool,
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"certificate_policies": &schema.Schema{
 				Type:     schema.TypeString,
