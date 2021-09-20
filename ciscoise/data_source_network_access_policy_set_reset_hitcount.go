@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,8 @@ func dataSourceNetworkAccessPolicySetResetHitcount() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Network Access - Policy Set.
 
-- Network Access Reset HitCount for PolicySets`,
+- Network Access Reset HitCount for PolicySets
+`,
 
 		ReadContext: dataSourceNetworkAccessPolicySetResetHitcountRead,
 		Schema: map[string]*schema.Schema{

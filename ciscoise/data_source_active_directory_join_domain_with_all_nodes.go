@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +19,8 @@ func dataSourceActiveDirectoryJoinDomainWithAllNodes() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
 
-- This data source action joins all Cisco ISE Nodes to an Active Directory domain.`,
+- This data source action joins all Cisco ISE Nodes to an Active Directory domain.
+`,
 
 		ReadContext: dataSourceActiveDirectoryJoinDomainWithAllNodesRead,
 		Schema: map[string]*schema.Schema{

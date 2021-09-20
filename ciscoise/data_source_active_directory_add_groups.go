@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +19,8 @@ func dataSourceActiveDirectoryAddGroups() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
 
-- This data source action loads domain groups configuration from Active Directory into Cisco ISE.`,
+- This data source action loads domain groups configuration from Active Directory into Cisco ISE.
+`,
 
 		ReadContext: dataSourceActiveDirectoryAddGroupsRead,
 		Schema: map[string]*schema.Schema{
@@ -142,32 +144,39 @@ func dataSourceActiveDirectoryAddGroups() *schema.Resource {
 							Optional:    true,
 						},
 						"enable_callback_for_dialin_client": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"enable_dialin_permission_check": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"enable_failed_auth_protection": &schema.Schema{
 							Description: `Enable prevent AD account lockout due to too many bad password attempts`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"enable_machine_access": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"enable_machine_auth": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"enable_pass_change": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"enable_rewrites": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"failed_auth_threshold": &schema.Schema{
@@ -206,7 +215,8 @@ func dataSourceActiveDirectoryAddGroups() *schema.Resource {
 							Optional:    true,
 						},
 						"plaintext_auth": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"rewrite_rules": &schema.Schema{
@@ -279,7 +289,8 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 				Optional:    true,
 			},
 			"enable_domain_white_list": &schema.Schema{
-				Type:     schema.TypeBool,
+				// Type:     schema.TypeBool,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"item": &schema.Schema{

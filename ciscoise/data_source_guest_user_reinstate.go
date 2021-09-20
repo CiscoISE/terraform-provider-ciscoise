@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +17,9 @@ func dataSourceGuestUserReinstate() *schema.Resource {
 		Description: `It performs update operation on GuestUser.
 
 - This data source action allows the client to reinstate a guest user by name.
-- This data source action allows the client to reinstate a guest user by ID.`,
+
+- This data source action allows the client to reinstate a guest user by ID.
+`,
 
 		ReadContext: dataSourceGuestUserReinstateRead,
 		Schema: map[string]*schema.Schema{
@@ -46,7 +49,10 @@ func dataSourceGuestUserReinstateRead(ctx context.Context, d *schema.ResourceDat
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: ReinstateGuestUserByName")

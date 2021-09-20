@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceAdminUser() *schema.Resource {
 		Description: `It performs read operation on AdminUser.
 
 - This data source allows the client to get an admin user by ID.
+
 - This data source allows the client to get all the admin users.
 
 Filter:
@@ -24,7 +26,8 @@ enabled]
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceAdminUserRead,
 		Schema: map[string]*schema.Schema{
@@ -110,7 +113,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"change_password": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"custom_attributes": &schema.Schema{
@@ -122,11 +126,13 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"external_user": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
@@ -134,11 +140,13 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"inactive_account_never_disabled": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"include_system_alarms_in_email": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -233,9 +241,9 @@ func dataSourceAdminUserRead(ctx context.Context, d *schema.ResourceData, m inte
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -372,12 +380,12 @@ func flattenAdminUserGetAdminUserByIDItem(item *isegosdk.ResponseAdminUserGetAdm
 	respItem["name"] = item.Name
 	respItem["id"] = item.ID
 	respItem["description"] = item.Description
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["password"] = item.Password
-	respItem["change_password"] = item.ChangePassword
-	respItem["include_system_alarms_in_email"] = item.IncludeSystemAlarmsInEmail
-	respItem["external_user"] = item.ExternalUser
-	respItem["inactive_account_never_disabled"] = item.InactiveAccountNeverDisabled
+	respItem["change_password"] = boolPtrToString(item.ChangePassword)
+	respItem["include_system_alarms_in_email"] = boolPtrToString(item.IncludeSystemAlarmsInEmail)
+	respItem["external_user"] = boolPtrToString(item.ExternalUser)
+	respItem["inactive_account_never_disabled"] = boolPtrToString(item.InactiveAccountNeverDisabled)
 	respItem["admin_groups"] = item.AdminGroups
 	respItem["custom_attributes"] = item.CustomAttributes
 	respItem["link"] = flattenAdminUserGetAdminUserByIDItemLink(item.Link)

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,11 +15,11 @@ func dataSourceNodeDeployment() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Node Deployment.
 
-Discovers all deployment nodes in the cluster.
+- Discovers all deployment nodes in the cluster.
 It provides basic information about each of deployed nodes in the cluster like Hostname, personas, status, roles and
 services.
 
-It provides detailed information of the deployed node in the cluster.
+- It provides detailed information of the deployed node in the cluster.
 `,
 
 		ReadContext: dataSourceNodeDeploymentRead,
@@ -41,7 +42,8 @@ It provides detailed information of the deployed node in the cluster.
 								Schema: map[string]*schema.Schema{
 
 									"is_enabled": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"role": &schema.Schema{
@@ -68,15 +70,18 @@ It provides detailed information of the deployed node in the cluster.
 											Schema: map[string]*schema.Schema{
 
 												"enable_pxgrid": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"is_enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"is_mnt_dedicated": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"other_monitoring_node": &schema.Schema{
@@ -90,23 +95,28 @@ It provides detailed information of the deployed node in the cluster.
 														Schema: map[string]*schema.Schema{
 
 															"enable_device_admin_service": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_nac_service": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_passive_identity_service": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_profiling_service": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"session_service": &schema.Schema{
@@ -116,7 +126,8 @@ It provides detailed information of the deployed node in the cluster.
 																	Schema: map[string]*schema.Schema{
 
 																		"is_enabled": &schema.Schema{
-																			Type:     schema.TypeBool,
+																			// Type:     schema.TypeBool,
+																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
 																		"nodegroup": &schema.Schema{
@@ -133,7 +144,8 @@ It provides detailed information of the deployed node in the cluster.
 																	Schema: map[string]*schema.Schema{
 
 																		"is_enabled": &schema.Schema{
-																			Type:     schema.TypeBool,
+																			// Type:     schema.TypeBool,
+																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
 																		"user_interface": &schema.Schema{
@@ -189,7 +201,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -206,7 +219,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"interface": &schema.Schema{
@@ -231,7 +245,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"interface": &schema.Schema{
@@ -252,7 +267,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -269,7 +285,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"interface": &schema.Schema{
@@ -290,7 +307,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"interface": &schema.Schema{
@@ -315,7 +333,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -332,7 +351,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -349,7 +369,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -366,7 +387,8 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"event_timeout": &schema.Schema{
@@ -399,11 +421,13 @@ It provides detailed information of the deployed node in the cluster.
 													Computed: true,
 												},
 												"link_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"mac_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"port": &schema.Schema{
@@ -468,9 +492,9 @@ func dataSourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m
 	vHostname, okHostname := d.GetOk("hostname")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okHostname}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -566,7 +590,7 @@ func flattenNodeDeploymentGetNodeDetailsItemAdministration(item *isegosdk.Respon
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["is_enabled"] = item.IsEnabled
+	respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
 	respItem["role"] = item.Role
 
 	return []map[string]interface{}{
@@ -593,12 +617,12 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoring(item *iseg
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["is_enabled"] = item.IsEnabled
+	respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
 	respItem["role"] = item.Role
 	respItem["other_monitoring_node"] = item.OtherMonitoringNode
-	respItem["is_mnt_dedicated"] = item.IsMntDedicated
+	respItem["is_mnt_dedicated"] = boolPtrToString(item.IsMntDedicated)
 	respItem["policyservice"] = flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservice(item.Policyservice)
-	respItem["enable_pxgrid"] = item.EnablePXGrid
+	respItem["enable_pxgrid"] = boolPtrToString(item.EnablePXGrid)
 
 	return []map[string]interface{}{
 		respItem,
@@ -611,13 +635,13 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservi
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["session_service"] = flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyserviceSessionService(item.SessionService)
-	respItem["enable_profiling_service"] = item.EnableProfilingService
-	respItem["enable_nac_service"] = item.EnableNACService
+	respItem["enable_profiling_service"] = boolPtrToString(item.EnableProfilingService)
+	respItem["enable_nac_service"] = boolPtrToString(item.EnableNACService)
 	respItem["sxpservice"] = flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyserviceSxpservice(item.Sxpservice)
-	respItem["enable_device_admin_service"] = item.EnableDeviceAdminService
-	respItem["enable_passive_identity_service"] = item.EnablePassiveIDentityService
+	respItem["enable_device_admin_service"] = boolPtrToString(item.EnableDeviceAdminService)
+	respItem["enable_passive_identity_service"] = boolPtrToString(item.EnablePassiveIDentityService)
 
 	return []map[string]interface{}{
 		respItem,
@@ -630,7 +654,7 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservi
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["is_enabled"] = item.IsEnabled
+	respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
 	respItem["nodegroup"] = item.Nodegroup
 
 	return []map[string]interface{}{
@@ -644,7 +668,7 @@ func flattenNodeDeploymentGetNodeDetailsItemGeneralSettingsMonitoringPolicyservi
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["is_enabled"] = item.IsEnabled
+	respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
 	respItem["user_interface"] = item.UserInterface
 
 	return []map[string]interface{}{
@@ -681,7 +705,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNetflow(item *
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["interface"] = item.Interface
 	respItem["port"] = item.Port
 	respItem["description"] = item.Description
@@ -697,7 +721,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcp(item *ise
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["interface"] = item.Interface
 	respItem["port"] = item.Port
 	respItem["description"] = item.Description
@@ -713,7 +737,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDhcpSpan(item 
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["interface"] = item.Interface
 	respItem["description"] = item.Description
 
@@ -728,7 +752,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationHTTP(item *ise
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["interface"] = item.Interface
 	respItem["description"] = item.Description
 
@@ -743,7 +767,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationRadius(item *i
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["description"] = item.Description
 
 	return []map[string]interface{}{
@@ -757,7 +781,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationNmap(item *ise
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["description"] = item.Description
 
 	return []map[string]interface{}{
@@ -771,7 +795,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationDNS(item *iseg
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["description"] = item.Description
 
 	return []map[string]interface{}{
@@ -785,7 +809,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationSNMPQuery(item
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["description"] = item.Description
 	respItem["retries"] = item.Retries
 	respItem["timeout"] = item.Timeout
@@ -802,8 +826,8 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationSNMPTrap(item 
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["link_trap_query"] = item.LinkTrapQuery
-	respItem["mac_trap_query"] = item.MacTrapQuery
+	respItem["link_trap_query"] = boolPtrToString(item.LinkTrapQuery)
+	respItem["mac_trap_query"] = boolPtrToString(item.MacTrapQuery)
 	respItem["interface"] = item.Interface
 	respItem["port"] = item.Port
 	respItem["description"] = item.Description
@@ -819,7 +843,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationActiveDirector
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["days_before_rescan"] = item.DaysBeforeRescan
 	respItem["description"] = item.Description
 
@@ -834,7 +858,7 @@ func flattenNodeDeploymentGetNodeDetailsItemProfilingConfigurationPxgrid(item *i
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["description"] = item.Description
 
 	return []map[string]interface{}{

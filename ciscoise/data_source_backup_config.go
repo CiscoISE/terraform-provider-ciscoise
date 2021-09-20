@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,8 +18,9 @@ func dataSourceBackupConfig() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Backup And Restore.
 
-- Triggers on demand configuration backup on the ISE node. The API returns the task ID. Use the Task Service status API to
-get the status of the backup job.`,
+- Triggers on demand configuration backup on the ISE node. The API returns the task ID. Use the Task Service status API
+to get the status of the backup job.
+`,
 
 		ReadContext: dataSourceBackupConfigRead,
 		Schema: map[string]*schema.Schema{

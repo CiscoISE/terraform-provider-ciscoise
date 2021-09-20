@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,26 +16,16 @@ func dataSourceNode() *schema.Resource {
 		Description: `It performs read operation on NodeDetails.
 
 - This data source allows the client to get node details by name.
+
 - This data source allows the client to get node details by ID.
+
 - This data source allows the client to get all the node details.
 
 Filter:
 
 [nodeservicetypes]
 
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
- `,
+`,
 
 		ReadContext: dataSourceNodeRead,
 		Schema: map[string]*schema.Schema{
@@ -127,7 +118,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"in_deployment": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"ip_address": &schema.Schema{
@@ -175,7 +167,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"pap_node": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"pass_word": &schema.Schema{
@@ -183,11 +176,13 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"primary_pap_node": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"px_grid_node": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"sxp_ip_address": &schema.Schema{
@@ -224,7 +219,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"in_deployment": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"ip_address": &schema.Schema{
@@ -272,7 +268,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"pap_node": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"pass_word": &schema.Schema{
@@ -280,11 +277,13 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"primary_pap_node": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"px_grid_node": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"sxp_ip_address": &schema.Schema{
@@ -356,11 +355,11 @@ func dataSourceNodeRead(ctx context.Context, d *schema.ResourceData, m interface
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -520,16 +519,16 @@ func flattenNodeDetailsGetNodeDetailByNameItemName(item *isegosdk.ResponseNodeDe
 	respItem["user_name"] = item.UserName
 	respItem["pass_word"] = item.PassWord
 	respItem["display_name"] = item.DisplayName
-	respItem["in_deployment"] = item.InDeployment
+	respItem["in_deployment"] = boolPtrToString(item.InDeployment)
 	respItem["other_pap_fqdn"] = item.OtherPapFqdn
 	respItem["ip_addresses"] = item.IPAddresses
 	respItem["ip_address"] = item.IPAddress
 	respItem["sxp_ip_address"] = item.SxpIPAddress
 	respItem["node_service_types"] = item.NodeServiceTypes
 	respItem["fqdn"] = item.Fqdn
-	respItem["pap_node"] = item.PapNode
-	respItem["primary_pap_node"] = item.PrimaryPapNode
-	respItem["px_grid_node"] = item.PxGridNode
+	respItem["pap_node"] = boolPtrToString(item.PapNode)
+	respItem["primary_pap_node"] = boolPtrToString(item.PrimaryPapNode)
+	respItem["px_grid_node"] = boolPtrToString(item.PxGridNode)
 	respItem["link"] = flattenNodeDetailsGetNodeDetailByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -562,16 +561,16 @@ func flattenNodeDetailsGetNodeDetailByIDItemID(item *isegosdk.ResponseNodeDetail
 	respItem["user_name"] = item.UserName
 	respItem["pass_word"] = item.PassWord
 	respItem["display_name"] = item.DisplayName
-	respItem["in_deployment"] = item.InDeployment
+	respItem["in_deployment"] = boolPtrToString(item.InDeployment)
 	respItem["other_pap_fqdn"] = item.OtherPapFqdn
 	respItem["ip_addresses"] = item.IPAddresses
 	respItem["ip_address"] = item.IPAddress
 	respItem["sxp_ip_address"] = item.SxpIPAddress
 	respItem["node_service_types"] = item.NodeServiceTypes
 	respItem["fqdn"] = item.Fqdn
-	respItem["pap_node"] = item.PapNode
-	respItem["primary_pap_node"] = item.PrimaryPapNode
-	respItem["px_grid_node"] = item.PxGridNode
+	respItem["pap_node"] = boolPtrToString(item.PapNode)
+	respItem["primary_pap_node"] = boolPtrToString(item.PrimaryPapNode)
+	respItem["px_grid_node"] = boolPtrToString(item.PxGridNode)
 	respItem["link"] = flattenNodeDetailsGetNodeDetailByIDItemIDLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

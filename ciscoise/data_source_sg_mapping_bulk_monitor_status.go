@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceSgMappingBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on IPToSGTMapping.
 
-- This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.
+`,
 
 		ReadContext: dataSourceSgMappingBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,16 +16,17 @@ func dataSourceSgACL() *schema.Resource {
 		Description: `It performs read operation on SecurityGroupsACLs.
 
 - This data source allows the client to get a security group ACL by ID.
+
 - This data source allows the client to get all the security group ACLs.
 
 Filter:
 
 [ipVersion, name, description]
 
-
 Sorting:
 
-[ipVersion, name, description]`,
+[ipVersion, name, description]
+`,
 
 		ReadContext: dataSourceSgACLRead,
 		Schema: map[string]*schema.Schema{
@@ -130,7 +132,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"is_read_only": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -225,9 +228,9 @@ func dataSourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interfac
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -366,7 +369,7 @@ func flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItem(item *isegosdk.Respon
 	respItem["description"] = item.Description
 	respItem["generation_id"] = item.GenerationID
 	respItem["aclcontent"] = item.ACLcontent
-	respItem["is_read_only"] = item.IsReadOnly
+	respItem["is_read_only"] = boolPtrToString(item.IsReadOnly)
 	respItem["modelled_content"] = responseInterfaceToString(item.ModelledContent)
 	respItem["ip_version"] = item.IPVersion
 	respItem["link"] = flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItemLink(item.Link)

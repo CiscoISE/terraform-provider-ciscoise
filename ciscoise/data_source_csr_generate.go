@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,8 +17,6 @@ import (
 func dataSourceCsrGenerate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
-
-
 
 - Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
 IMS Services.
@@ -177,12 +176,14 @@ hostnames
 When Certificate is selected to be used for Portal Service, the below mentioned parameter is mandatory:
 portalGroupTag
 
- `,
+
+`,
 
 		ReadContext: dataSourceCsrGenerateRead,
 		Schema: map[string]*schema.Schema{
 			"allow_wild_card_cert": &schema.Schema{
-				Type:     schema.TypeBool,
+				// Type:     schema.TypeBool,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"certificate_policies": &schema.Schema{
@@ -316,9 +317,55 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
+	vPage, okPage := d.GetOk("page")
+	vSize, okSize := d.GetOk("size")
+	vSort, okSort := d.GetOk("sort")
+	vSortBy, okSortBy := d.GetOk("sort_by")
+	vFilter, okFilter := d.GetOk("filter")
+	vFilterType, okFilterType := d.GetOk("filter_type")
 
-	selectedMethod := 1
+	method1 := []bool{okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	method2 := []bool{}
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: GetCsrs")
+		queryParams1 := isegosdk.GetCsrsQueryParams{}
+
+		if okPage {
+			queryParams1.Page = vPage.(int)
+		}
+		if okSize {
+			queryParams1.Size = vSize.(int)
+		}
+		if okSort {
+			queryParams1.Sort = vSort.(string)
+		}
+		if okSortBy {
+			queryParams1.SortBy = vSortBy.(string)
+		}
+		if okFilter {
+			queryParams1.Filter = interfaceToSliceString(vFilter)
+		}
+		if okFilterType {
+			queryParams1.FilterType = vFilterType.(string)
+		}
+
+		response1, _, err := client.Certificates.GetCsrs(&queryParams1)
+
+		if err != nil || response1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetCsrs", err,
+				"Failure at GetCsrs, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+
+	}
+	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method 2: GenerateCsr")
 		request2 := expandRequestCsrGenerateGenerateCsr(ctx, "", d)
 

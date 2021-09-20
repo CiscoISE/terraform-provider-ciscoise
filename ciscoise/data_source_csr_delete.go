@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,8 @@ func dataSourceCsrDelete() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs delete operation on Certificates.
 
-- This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.`,
+- This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.
+`,
 
 		ReadContext: dataSourceCsrDeleteRead,
 		Schema: map[string]*schema.Schema{
@@ -50,10 +52,33 @@ func dataSourceCsrDeleteRead(ctx context.Context, d *schema.ResourceData, m inte
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	vHostName := d.Get("host_name")
-	vID := d.Get("id")
-	selectedMethod := 1
+	vHostName, okHostName := d.GetOk("host_name")
+	vID, okID := d.GetOk("id")
+
+	method1 := []bool{okHostName, okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	method2 := []bool{okHostName, okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: GetCsrByID")
+		vvHostName := vHostName.(string)
+		vvID := vID.(string)
+
+		response1, _, err := client.Certificates.GetCsrByID(vvHostName, vvID)
+
+		if err != nil || response1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetCsrByID", err,
+				"Failure at GetCsrByID, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+
+	}
+	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method 2: DeleteCsrByID")
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)
@@ -78,6 +103,7 @@ func dataSourceCsrDeleteRead(ctx context.Context, d *schema.ResourceData, m inte
 		}
 		d.SetId(getUnixTimeString())
 		return diags
+
 	}
 	return diags
 }

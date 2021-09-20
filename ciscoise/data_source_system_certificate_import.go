@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,51 +18,59 @@ func dataSourceSystemCertificateImport() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-
-
 - Import an X509 certificate as a system certificate.
 
 NOTE:
 The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
 
- `,
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+
+`,
 
 		ReadContext: dataSourceSystemCertificateImportRead,
 		Schema: map[string]*schema.Schema{
 			"admin": &schema.Schema{
 				Description: `Use certificate to authenticate the ISE Admin Portal`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"allow_extended_validity": &schema.Schema{
 				Description: `Allow import of certificates with validity greater than 398 days`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"allow_out_of_date_cert": &schema.Schema{
 				Description: `Allow out of date certificates (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"allow_replacement_of_certificates": &schema.Schema{
 				Description: `Allow Replacement of certificates (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"allow_replacement_of_portal_group_tag": &schema.Schema{
 				Description: `Allow Replacement of Portal Group Tag (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"allow_sha1_certificates": &schema.Schema{
 				Description: `Allow SHA1 based certificates (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"allow_wild_card_certificates": &schema.Schema{
 				Description: `Allow Wildcard Certificates`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"data": &schema.Schema{
 				Description: `Certificate Content (required)`,
@@ -70,13 +79,15 @@ The certificate may have a validity period longer than 398 days. It may be untru
 			},
 			"eap": &schema.Schema{
 				Description: `Use certificate for EAP protocols that use SSL/TLS tunneling`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"ims": &schema.Schema{
 				Description: `Use certificate for the ISE Messaging Service`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -115,8 +126,9 @@ The certificate may have a validity period longer than 398 days. It may be untru
 			},
 			"portal": &schema.Schema{
 				Description: `Use for portal`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"portal_group_tag": &schema.Schema{
 				Description: `Set Group tag`,
@@ -130,23 +142,27 @@ The certificate may have a validity period longer than 398 days. It may be untru
 			},
 			"pxgrid": &schema.Schema{
 				Description: `Use certificate for the pxGrid Controller`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"radius": &schema.Schema{
 				Description: `Use certificate for the RADSec server`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"saml": &schema.Schema{
 				Description: `Use certificate for SAML Signing`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"validate_certificate_extensions": &schema.Schema{
 				Description: `Validate Certificate Extensions`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 		},
 	}

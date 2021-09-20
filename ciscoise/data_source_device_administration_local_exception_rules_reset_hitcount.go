@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,8 @@ func dataSourceDeviceAdministrationLocalExceptionRulesResetHitcount() *schema.Re
 	return &schema.Resource{
 		Description: `It performs create operation on Device Administration - Authorization Exception Rules.
 
-- Device Admin Reset HitCount for local exceptions`,
+- Device Admin Reset HitCount for local exceptions
+`,
 
 		ReadContext: dataSourceDeviceAdministrationLocalExceptionRulesResetHitcountRead,
 		Schema: map[string]*schema.Schema{

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceTrustedCertificateExport() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Certificates.
 
-- The response of this API carries a trusted certificate file mapped to the requested id`,
+- The response of this API carries a trusted certificate file mapped to the requested id
+`,
 
 		ReadContext: dataSourceTrustedCertificateExportRead,
 		Schema: map[string]*schema.Schema{

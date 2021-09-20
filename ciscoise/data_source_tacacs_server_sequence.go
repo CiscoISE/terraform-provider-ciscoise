@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 		Description: `It performs read operation on TacacsServerSequence.
 
 - This data source allows the client to get a TACACS server sequence by name.
+
 - This data source allows the client to get a TACACS server sequence by ID.
-- This data source allows the client to get all the TACACS server sequences.`,
+
+- This data source allows the client to get all the TACACS server sequences.
+`,
 
 		ReadContext: dataSourceTacacsServerSequenceRead,
 		Schema: map[string]*schema.Schema{
@@ -76,7 +80,8 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"name": &schema.Schema{
@@ -90,11 +95,13 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 						},
 						"prefix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for prefix strip`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"server_list": &schema.Schema{
@@ -110,8 +117,9 @@ The order of the names in the string is the order of servers that will be used d
 						},
 						"suffix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for suffix strip`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -152,7 +160,8 @@ The order of the names in the string is the order of servers that will be used d
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"name": &schema.Schema{
@@ -166,11 +175,13 @@ The order of the names in the string is the order of servers that will be used d
 						},
 						"prefix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for prefix strip`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"server_list": &schema.Schema{
@@ -186,8 +197,9 @@ The order of the names in the string is the order of servers that will be used d
 						},
 						"suffix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for suffix strip`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -248,11 +260,11 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -404,11 +416,11 @@ func flattenTacacsServerSequenceGetTacacsServerSequenceByNameItemName(item *iseg
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
 	respItem["server_list"] = item.ServerList
-	respItem["local_accounting"] = item.LocalAccounting
-	respItem["remote_accounting"] = item.RemoteAccounting
-	respItem["prefix_strip"] = item.PrefixStrip
+	respItem["local_accounting"] = boolPtrToString(item.LocalAccounting)
+	respItem["remote_accounting"] = boolPtrToString(item.RemoteAccounting)
+	respItem["prefix_strip"] = boolPtrToString(item.PrefixStrip)
 	respItem["prefix_delimiter"] = item.PrefixDelimiter
-	respItem["suffix_strip"] = item.SuffixStrip
+	respItem["suffix_strip"] = boolPtrToString(item.SuffixStrip)
 	respItem["suffix_delimiter"] = item.SuffixDelimiter
 	respItem["link"] = flattenTacacsServerSequenceGetTacacsServerSequenceByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
@@ -440,11 +452,11 @@ func flattenTacacsServerSequenceGetTacacsServerSequenceByIDItemID(item *isegosdk
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
 	respItem["server_list"] = item.ServerList
-	respItem["local_accounting"] = item.LocalAccounting
-	respItem["remote_accounting"] = item.RemoteAccounting
-	respItem["prefix_strip"] = item.PrefixStrip
+	respItem["local_accounting"] = boolPtrToString(item.LocalAccounting)
+	respItem["remote_accounting"] = boolPtrToString(item.RemoteAccounting)
+	respItem["prefix_strip"] = boolPtrToString(item.PrefixStrip)
 	respItem["prefix_delimiter"] = item.PrefixDelimiter
-	respItem["suffix_strip"] = item.SuffixStrip
+	respItem["suffix_strip"] = boolPtrToString(item.SuffixStrip)
 	respItem["suffix_delimiter"] = item.SuffixDelimiter
 	respItem["link"] = flattenTacacsServerSequenceGetTacacsServerSequenceByIDItemIDLink(item.Link)
 	return []map[string]interface{}{

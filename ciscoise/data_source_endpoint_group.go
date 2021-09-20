@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceEndpointGroup() *schema.Resource {
 		Description: `It performs read operation on EndpointIdentityGroup.
 
 - This data source allows the client to get an endpoint identity group by name.
+
 - This data source allows the client to get an endpoint identity group by ID.
+
 - This data source allows the client to get all the endpoint identity groups.
 
 Filter:
@@ -24,7 +27,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceEndpointGroupRead,
 		Schema: map[string]*schema.Schema{
@@ -144,7 +148,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"system_defined": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -190,7 +195,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"system_defined": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -256,11 +262,11 @@ func dataSourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m 
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -423,7 +429,7 @@ func flattenEndpointIDentityGroupGetEndpointGroupByNameItemName(item *isegosdk.R
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["system_defined"] = item.SystemDefined
+	respItem["system_defined"] = boolPtrToString(item.SystemDefined)
 	respItem["link"] = flattenEndpointIDentityGroupGetEndpointGroupByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -453,7 +459,7 @@ func flattenEndpointIDentityGroupGetEndpointGroupByIDItemID(item *isegosdk.Respo
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["system_defined"] = item.SystemDefined
+	respItem["system_defined"] = boolPtrToString(item.SystemDefined)
 	respItem["link"] = flattenEndpointIDentityGroupGetEndpointGroupByIDItemIDLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

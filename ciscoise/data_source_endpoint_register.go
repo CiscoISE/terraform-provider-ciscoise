@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,7 +18,8 @@ func dataSourceEndpointRegister() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on endpoint.
 
-- This data source action allows the client to register an endpoint.`,
+- This data source action allows the client to register an endpoint.
+`,
 
 		ReadContext: dataSourceEndpointRegisterRead,
 		Schema: map[string]*schema.Schema{
@@ -60,15 +62,18 @@ func dataSourceEndpointRegister() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"mdm_compliance_status": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"mdm_encrypted": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"mdm_enrolled": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"mdm_ime_i": &schema.Schema{
@@ -76,7 +81,8 @@ func dataSourceEndpointRegister() *schema.Resource {
 							Optional: true,
 						},
 						"mdm_jail_broken": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"mdm_manufacturer": &schema.Schema{
@@ -96,11 +102,13 @@ func dataSourceEndpointRegister() *schema.Resource {
 							Optional: true,
 						},
 						"mdm_pinlock": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"mdm_reachable": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"mdm_serial": &schema.Schema{
@@ -127,11 +135,13 @@ func dataSourceEndpointRegister() *schema.Resource {
 				Optional: true,
 			},
 			"static_group_assignment": &schema.Schema{
-				Type:     schema.TypeBool,
+				// Type:     schema.TypeBool,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"static_profile_assignment": &schema.Schema{
-				Type:     schema.TypeBool,
+				// Type:     schema.TypeBool,
+				Type:     schema.TypeString,
 				Optional: true,
 			},
 		},
@@ -217,8 +227,8 @@ func expandRequestEndpointRegisterRegisterEndpointERSEndPoint(ctx context.Contex
 		request.MdmAttributes = expandRequestEndpointRegisterRegisterEndpointERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists("custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get("custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get("custom_attributes"))) {
-		customAttributes := v.([]interface{})[0].(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+		vCustomAttributes := v.([]interface{})[0].(map[string]interface{})
+		request.CustomAttributes = &vCustomAttributes
 	}
 	return &request
 }

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceSponsorGroup() *schema.Resource {
 		Description: `It performs read operation on SponsorGroup.
 
 - This data source allows the client to get a sponsor group by ID.
+
 - This data source allows the client to get all the sponsor groups.
 
 Filter:
@@ -23,7 +25,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceSponsorGroupRead,
 		Schema: map[string]*schema.Schema{
@@ -105,7 +108,8 @@ string parameter. Each resource Data model description should specify if an attr
 					Schema: map[string]*schema.Schema{
 
 						"auto_notification": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"create_permissions": &schema.Schema{
@@ -115,19 +119,23 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"can_create_random_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_import_multiple_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_set_future_start_date": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_specify_username_prefix": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"default_username_prefix": &schema.Schema{
@@ -165,11 +173,13 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"is_default_group": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -222,51 +232,63 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"can_access_via_rest": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_approve_selfreg_guests": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_delete_guest_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_extend_guest_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_reinstate_suspended_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_reset_guest_passwords": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_send_sms_notifications": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_suspend_guest_accounts": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_update_guest_contact_info": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"can_view_guest_passwords": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"limit_approval_to_sponsors_guests": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"require_suspension_reason": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 								},
@@ -334,9 +356,9 @@ func dataSourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m i
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -473,12 +495,12 @@ func flattenSponsorGroupGetSponsorGroupByIDItem(item *isegosdk.ResponseSponsorGr
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["is_enabled"] = item.IsEnabled
-	respItem["is_default_group"] = item.IsDefaultGroup
+	respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
+	respItem["is_default_group"] = boolPtrToString(item.IsDefaultGroup)
 	respItem["member_groups"] = item.MemberGroups
 	respItem["guest_types"] = item.GuestTypes
 	respItem["locations"] = item.Locations
-	respItem["auto_notification"] = item.AutoNotification
+	respItem["auto_notification"] = boolPtrToString(item.AutoNotification)
 	respItem["create_permissions"] = flattenSponsorGroupGetSponsorGroupByIDItemCreatePermissions(item.CreatePermissions)
 	respItem["manage_permission"] = item.ManagePermission
 	respItem["other_permissions"] = flattenSponsorGroupGetSponsorGroupByIDItemOtherPermissions(item.OtherPermissions)
@@ -493,13 +515,13 @@ func flattenSponsorGroupGetSponsorGroupByIDItemCreatePermissions(item *isegosdk.
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["can_import_multiple_accounts"] = item.CanImportMultipleAccounts
+	respItem["can_import_multiple_accounts"] = boolPtrToString(item.CanImportMultipleAccounts)
 	respItem["import_batch_size_limit"] = item.ImportBatchSizeLimit
-	respItem["can_create_random_accounts"] = item.CanCreateRandomAccounts
+	respItem["can_create_random_accounts"] = boolPtrToString(item.CanCreateRandomAccounts)
 	respItem["random_batch_size_limit"] = item.RandomBatchSizeLimit
 	respItem["default_username_prefix"] = item.DefaultUsernamePrefix
-	respItem["can_specify_username_prefix"] = item.CanSpecifyUsernamePrefix
-	respItem["can_set_future_start_date"] = item.CanSetFutureStartDate
+	respItem["can_specify_username_prefix"] = boolPtrToString(item.CanSpecifyUsernamePrefix)
+	respItem["can_set_future_start_date"] = boolPtrToString(item.CanSetFutureStartDate)
 	respItem["start_date_future_limit_days"] = item.StartDateFutureLimitDays
 
 	return []map[string]interface{}{
@@ -513,18 +535,18 @@ func flattenSponsorGroupGetSponsorGroupByIDItemOtherPermissions(item *isegosdk.R
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["can_update_guest_contact_info"] = item.CanUpdateGuestContactInfo
-	respItem["can_view_guest_passwords"] = item.CanViewGuestPasswords
-	respItem["can_send_sms_notifications"] = item.CanSendSmsNotifications
-	respItem["can_reset_guest_passwords"] = item.CanResetGuestPasswords
-	respItem["can_extend_guest_accounts"] = item.CanExtendGuestAccounts
-	respItem["can_delete_guest_accounts"] = item.CanDeleteGuestAccounts
-	respItem["can_suspend_guest_accounts"] = item.CanSuspendGuestAccounts
-	respItem["require_suspension_reason"] = item.RequireSuspensionReason
-	respItem["can_reinstate_suspended_accounts"] = item.CanReinstateSuspendedAccounts
-	respItem["can_approve_selfreg_guests"] = item.CanApproveSelfregGuests
-	respItem["limit_approval_to_sponsors_guests"] = item.LimitApprovalToSponsorsGuests
-	respItem["can_access_via_rest"] = item.CanAccessViaRest
+	respItem["can_update_guest_contact_info"] = boolPtrToString(item.CanUpdateGuestContactInfo)
+	respItem["can_view_guest_passwords"] = boolPtrToString(item.CanViewGuestPasswords)
+	respItem["can_send_sms_notifications"] = boolPtrToString(item.CanSendSmsNotifications)
+	respItem["can_reset_guest_passwords"] = boolPtrToString(item.CanResetGuestPasswords)
+	respItem["can_extend_guest_accounts"] = boolPtrToString(item.CanExtendGuestAccounts)
+	respItem["can_delete_guest_accounts"] = boolPtrToString(item.CanDeleteGuestAccounts)
+	respItem["can_suspend_guest_accounts"] = boolPtrToString(item.CanSuspendGuestAccounts)
+	respItem["require_suspension_reason"] = boolPtrToString(item.RequireSuspensionReason)
+	respItem["can_reinstate_suspended_accounts"] = boolPtrToString(item.CanReinstateSuspendedAccounts)
+	respItem["can_approve_selfreg_guests"] = boolPtrToString(item.CanApproveSelfregGuests)
+	respItem["limit_approval_to_sponsors_guests"] = boolPtrToString(item.LimitApprovalToSponsorsGuests)
+	respItem["can_access_via_rest"] = boolPtrToString(item.CanAccessViaRest)
 
 	return []map[string]interface{}{
 		respItem,

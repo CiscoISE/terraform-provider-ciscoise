@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceTacacsCommandSets() *schema.Resource {
 		Description: `It performs read operation on TACACSCommandSets.
 
 - This data source allows the client to get TACACS command sets by name.
+
 - This data source allows the client to get TACACS command sets by ID.
-- This data source allows the client to get all the TACACS command sets.`,
+
+- This data source allows the client to get all the TACACS command sets.
+`,
 
 		ReadContext: dataSourceTacacsCommandSetsRead,
 		Schema: map[string]*schema.Schema{
@@ -111,7 +115,8 @@ func dataSourceTacacsCommandSets() *schema.Resource {
 							Computed: true,
 						},
 						"permit_unmatched": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -188,7 +193,8 @@ func dataSourceTacacsCommandSets() *schema.Resource {
 							Computed: true,
 						},
 						"permit_unmatched": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -250,11 +256,11 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -405,7 +411,7 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemName(item *isegosdk.R
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["permit_unmatched"] = item.PermitUnmatched
+	respItem["permit_unmatched"] = boolPtrToString(item.PermitUnmatched)
 	respItem["commands"] = flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommands(item.Commands)
 	respItem["link"] = flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
@@ -465,7 +471,7 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemID(item *isegosdk.Respo
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["permit_unmatched"] = item.PermitUnmatched
+	respItem["permit_unmatched"] = boolPtrToString(item.PermitUnmatched)
 	respItem["commands"] = flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommands(item.Commands)
 	respItem["link"] = flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDLink(item.Link)
 	return []map[string]interface{}{

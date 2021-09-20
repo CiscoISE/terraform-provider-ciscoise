@@ -2,8 +2,10 @@ package ciscoise
 
 import (
 	"context"
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
+
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +16,8 @@ func dataSourceAciTestConnectivity() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ACISettings.
 
-- This data source action allows the client to test ACI Domain Manager connection.`,
+- This data source action allows the client to test ACI Domain Manager connection.
+`,
 
 		ReadContext: dataSourceAciTestConnectivityRead,
 		Schema: map[string]*schema.Schema{
@@ -25,7 +28,8 @@ func dataSourceAciTestConnectivity() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"result": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -74,7 +78,7 @@ func flattenAciSettingsTestAciConnectivityItem(item *isegosdk.ResponseAciSetting
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["result"] = item.Result
+	respItem["result"] = boolPtrToString(item.Result)
 	return []map[string]interface{}{
 		respItem,
 	}

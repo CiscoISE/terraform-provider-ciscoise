@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,8 @@ func dataSourceNetworkAccessGlobalExceptionRulesResetHitcount() *schema.Resource
 	return &schema.Resource{
 		Description: `It performs create operation on Network Access - Authorization Global Exception Rules.
 
-- Network Access Reset HitCount for Global Exceptions`,
+- Network Access Reset HitCount for Global Exceptions
+`,
 
 		ReadContext: dataSourceNetworkAccessGlobalExceptionRulesResetHitcountRead,
 		Schema: map[string]*schema.Schema{

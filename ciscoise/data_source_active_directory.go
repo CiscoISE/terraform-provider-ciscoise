@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceActiveDirectory() *schema.Resource {
 		Description: `It performs read operation on ActiveDirectory.
 
 - This data source allows the client to get Active Directory by name.
+
 - This data source fetchs the join point details by ID. The ID can be retrieved with the Get All operation.
-- This data source lists all the join points for Active Directory domains in Cisco ISE.`,
+
+- This data source lists all the join points for Active Directory domains in Cisco ISE.
+`,
 
 		ReadContext: dataSourceActiveDirectoryRead,
 		Schema: map[string]*schema.Schema{
@@ -161,32 +165,39 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Computed:    true,
 									},
 									"enable_callback_for_dialin_client": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_dialin_permission_check": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_failed_auth_protection": &schema.Schema{
 										Description: `Enable prevent AD account lockout due to too many bad password attempts`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"enable_machine_access": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_machine_auth": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_pass_change": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_rewrites": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"failed_auth_threshold": &schema.Schema{
@@ -225,7 +236,8 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Computed:    true,
 									},
 									"plaintext_auth": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"rewrite_rules": &schema.Schema{
@@ -298,11 +310,13 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 							Computed:    true,
 						},
 						"enable_domain_allowed_list": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"enable_domain_white_list": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
@@ -460,32 +474,39 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 										Computed:    true,
 									},
 									"enable_callback_for_dialin_client": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_dialin_permission_check": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_failed_auth_protection": &schema.Schema{
 										Description: `Enable prevent AD account lockout due to too many bad password attempts`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"enable_machine_access": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_machine_auth": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_pass_change": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_rewrites": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"failed_auth_threshold": &schema.Schema{
@@ -524,7 +545,8 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 										Computed:    true,
 									},
 									"plaintext_auth": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"rewrite_rules": &schema.Schema{
@@ -597,11 +619,13 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 							Computed:    true,
 						},
 						"enable_domain_allowed_list": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"enable_domain_white_list": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
@@ -694,11 +718,11 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -850,8 +874,8 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemName(item *isegosdk.Respo
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
 	respItem["domain"] = item.Domain
-	respItem["enable_domain_allowed_list"] = item.EnableDomainAllowedList
-	respItem["enable_domain_white_list"] = item.EnableDomainWhiteList
+	respItem["enable_domain_allowed_list"] = boolPtrToString(item.EnableDomainAllowedList)
+	respItem["enable_domain_white_list"] = boolPtrToString(item.EnableDomainWhiteList)
 	respItem["adgroups"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroups(item.Adgroups)
 	respItem["advanced_settings"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettings(item.AdvancedSettings)
 	respItem["ad_attributes"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributes(item.AdAttributes)
@@ -896,19 +920,19 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettings(item
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enable_pass_change"] = item.EnablePassChange
-	respItem["enable_machine_auth"] = item.EnableMachineAuth
-	respItem["enable_machine_access"] = item.EnableMachineAccess
+	respItem["enable_pass_change"] = boolPtrToString(item.EnablePassChange)
+	respItem["enable_machine_auth"] = boolPtrToString(item.EnableMachineAuth)
+	respItem["enable_machine_access"] = boolPtrToString(item.EnableMachineAccess)
 	respItem["aging_time"] = item.AgingTime
-	respItem["enable_dialin_permission_check"] = item.EnableDialinPermissionCheck
-	respItem["enable_callback_for_dialin_client"] = item.EnableCallbackForDialinClient
-	respItem["plaintext_auth"] = item.PlaintextAuth
-	respItem["enable_failed_auth_protection"] = item.EnableFailedAuthProtection
+	respItem["enable_dialin_permission_check"] = boolPtrToString(item.EnableDialinPermissionCheck)
+	respItem["enable_callback_for_dialin_client"] = boolPtrToString(item.EnableCallbackForDialinClient)
+	respItem["plaintext_auth"] = boolPtrToString(item.PlaintextAuth)
+	respItem["enable_failed_auth_protection"] = boolPtrToString(item.EnableFailedAuthProtection)
 	respItem["auth_protection_type"] = item.AuthProtectionType
 	respItem["failed_auth_threshold"] = item.FailedAuthThreshold
 	respItem["identity_not_in_ad_behaviour"] = item.IDentityNotInAdBehaviour
 	respItem["unreachable_domains_behaviour"] = item.UnreachableDomainsBehaviour
-	respItem["enable_rewrites"] = item.EnableRewrites
+	respItem["enable_rewrites"] = boolPtrToString(item.EnableRewrites)
 	respItem["rewrite_rules"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettingsRewriteRules(item.RewriteRules)
 	respItem["first_name"] = item.FirstName
 	respItem["department"] = item.Department
@@ -999,8 +1023,8 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemID(item *isegosdk.ResponseA
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
 	respItem["domain"] = item.Domain
-	respItem["enable_domain_white_list"] = item.EnableDomainWhiteList
-	respItem["enable_domain_allowed_list"] = item.EnableDomainAllowedList
+	respItem["enable_domain_white_list"] = boolPtrToString(item.EnableDomainWhiteList)
+	respItem["enable_domain_allowed_list"] = boolPtrToString(item.EnableDomainAllowedList)
 	respItem["adgroups"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroups(item.Adgroups)
 	respItem["advanced_settings"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettings(item.AdvancedSettings)
 	respItem["ad_attributes"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributes(item.AdAttributes)
@@ -1045,19 +1069,19 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettings(item *is
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enable_pass_change"] = item.EnablePassChange
-	respItem["enable_machine_auth"] = item.EnableMachineAuth
-	respItem["enable_machine_access"] = item.EnableMachineAccess
+	respItem["enable_pass_change"] = boolPtrToString(item.EnablePassChange)
+	respItem["enable_machine_auth"] = boolPtrToString(item.EnableMachineAuth)
+	respItem["enable_machine_access"] = boolPtrToString(item.EnableMachineAccess)
 	respItem["aging_time"] = item.AgingTime
-	respItem["enable_dialin_permission_check"] = item.EnableDialinPermissionCheck
-	respItem["enable_callback_for_dialin_client"] = item.EnableCallbackForDialinClient
-	respItem["plaintext_auth"] = item.PlaintextAuth
-	respItem["enable_failed_auth_protection"] = item.EnableFailedAuthProtection
+	respItem["enable_dialin_permission_check"] = boolPtrToString(item.EnableDialinPermissionCheck)
+	respItem["enable_callback_for_dialin_client"] = boolPtrToString(item.EnableCallbackForDialinClient)
+	respItem["plaintext_auth"] = boolPtrToString(item.PlaintextAuth)
+	respItem["enable_failed_auth_protection"] = boolPtrToString(item.EnableFailedAuthProtection)
 	respItem["auth_protection_type"] = item.AuthProtectionType
 	respItem["failed_auth_threshold"] = item.FailedAuthThreshold
 	respItem["identity_not_in_ad_behaviour"] = item.IDentityNotInAdBehaviour
 	respItem["unreachable_domains_behaviour"] = item.UnreachableDomainsBehaviour
-	respItem["enable_rewrites"] = item.EnableRewrites
+	respItem["enable_rewrites"] = boolPtrToString(item.EnableRewrites)
 	respItem["rewrite_rules"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettingsRewriteRules(item.RewriteRules)
 	respItem["first_name"] = item.FirstName
 	respItem["department"] = item.Department

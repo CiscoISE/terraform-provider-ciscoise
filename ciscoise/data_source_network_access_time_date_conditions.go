@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 		Description: `It performs read operation on Network Access - Time/Date Conditions.
 
 - Network Access Returns a list of time and date conditions.
-- Network Access Returns a network condition.`,
+
+- Network Access returns a network condition.
+`,
 
 		ReadContext: dataSourceNetworkAccessTimeDateConditionsRead,
 		Schema: map[string]*schema.Schema{
@@ -59,8 +62,9 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -184,8 +188,9 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -272,8 +277,9 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -397,8 +403,9 @@ func dataSourceNetworkAccessTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -461,9 +468,9 @@ func dataSourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schem
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -528,7 +535,7 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItems(i
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsLink(item.Link)
 		respItem["description"] = item.Description
 		respItem["id"] = item.ID
@@ -574,7 +581,7 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsCh
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsItemsChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}
@@ -659,7 +666,7 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -705,7 +712,7 @@ func flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItemChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceCertificateProfile() *schema.Resource {
 		Description: `It performs read operation on CertificateProfile.
 
 - This data source allows the client to get a certificate profile by name.
+
 - This data source allows the client to get a certificate profile by ID.
-- This data source allows the client to get all the certificate profiles.`,
+
+- This data source allows the client to get all the certificate profiles.
+`,
 
 		ReadContext: dataSourceCertificateProfileRead,
 		Schema: map[string]*schema.Schema{
@@ -47,7 +51,8 @@ func dataSourceCertificateProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allowed_as_user_name": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"certificate_attribute_name": &schema.Schema{
@@ -109,7 +114,8 @@ func dataSourceCertificateProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allowed_as_user_name": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"certificate_attribute_name": &schema.Schema{
@@ -220,11 +226,11 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -377,7 +383,7 @@ func flattenCertificateProfileGetCertificateProfileByNameItemName(item *isegosdk
 	respItem["description"] = item.Description
 	respItem["external_identity_store_name"] = item.ExternalIDentityStoreName
 	respItem["certificate_attribute_name"] = item.CertificateAttributeName
-	respItem["allowed_as_user_name"] = item.AllowedAsUserName
+	respItem["allowed_as_user_name"] = boolPtrToString(item.AllowedAsUserName)
 	respItem["match_mode"] = item.MatchMode
 	respItem["username_from"] = item.UsernameFrom
 	respItem["link"] = flattenCertificateProfileGetCertificateProfileByNameItemNameLink(item.Link)
@@ -411,7 +417,7 @@ func flattenCertificateProfileGetCertificateProfileByIDItemID(item *isegosdk.Res
 	respItem["description"] = item.Description
 	respItem["external_identity_store_name"] = item.ExternalIDentityStoreName
 	respItem["certificate_attribute_name"] = item.CertificateAttributeName
-	respItem["allowed_as_user_name"] = item.AllowedAsUserName
+	respItem["allowed_as_user_name"] = boolPtrToString(item.AllowedAsUserName)
 	respItem["match_mode"] = item.MatchMode
 	respItem["username_from"] = item.UsernameFrom
 	respItem["link"] = flattenCertificateProfileGetCertificateProfileByIDItemIDLink(item.Link)

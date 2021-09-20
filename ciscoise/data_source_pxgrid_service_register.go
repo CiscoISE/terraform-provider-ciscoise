@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,7 +18,7 @@ func dataSourcePxgridServiceRegister() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Provider.
 
-🚧 ServiceRegister`,
+- 🚧 ServiceRegister`,
 
 		ReadContext: dataSourcePxgridServiceRegisterRead,
 		Schema: map[string]*schema.Schema{

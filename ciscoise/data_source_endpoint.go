@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceEndpoint() *schema.Resource {
 		Description: `It performs read operation on endpoint.
 
 - This data source allows the client to get an endpoint by name.
+
 - This data source allows the client to get an endpoint by ID.
+
 - This data source allows the client to get all the endpoints.
 
 Filter:
@@ -39,7 +42,8 @@ https://{ise-ip}:9060/ers/config/endpoint?filter=logicalProfileName.EQ.LP_Apple
 Example 2:
 
 Sorting:
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceEndpointRead,
 		Schema: map[string]*schema.Schema{
@@ -181,15 +185,18 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"mdm_compliance_status": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_encrypted": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_enrolled": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_ime_i": &schema.Schema{
@@ -197,7 +204,8 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"mdm_jail_broken": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_manufacturer": &schema.Schema{
@@ -217,11 +225,13 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"mdm_pinlock": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_reachable": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_serial": &schema.Schema{
@@ -248,11 +258,13 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"static_group_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"static_profile_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -320,15 +332,18 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"mdm_compliance_status": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_encrypted": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_enrolled": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_ime_i": &schema.Schema{
@@ -336,7 +351,8 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"mdm_jail_broken": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_manufacturer": &schema.Schema{
@@ -356,11 +372,13 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"mdm_pinlock": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_reachable": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_serial": &schema.Schema{
@@ -387,11 +405,13 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"static_group_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"static_profile_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -457,11 +477,11 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -626,9 +646,9 @@ func flattenEndpointGetEndpointByNameItemName(item *isegosdk.ResponseEndpointGet
 	respItem["description"] = item.Description
 	respItem["mac"] = item.Mac
 	respItem["profile_id"] = item.ProfileID
-	respItem["static_profile_assignment"] = item.StaticProfileAssignment
+	respItem["static_profile_assignment"] = boolPtrToString(item.StaticProfileAssignment)
 	respItem["group_id"] = item.GroupID
-	respItem["static_group_assignment"] = item.StaticGroupAssignment
+	respItem["static_group_assignment"] = boolPtrToString(item.StaticGroupAssignment)
 	respItem["portal_user"] = item.PortalUser
 	respItem["identity_store"] = item.IDentityStore
 	respItem["identity_store_id"] = item.IDentityStoreID
@@ -646,16 +666,16 @@ func flattenEndpointGetEndpointByNameItemNameMdmAttributes(item *isegosdk.Respon
 	}
 	respItem := make(map[string]interface{})
 	respItem["mdm_server_name"] = item.MdmServerName
-	respItem["mdm_reachable"] = item.MdmReachable
-	respItem["mdm_enrolled"] = item.MdmEnrolled
-	respItem["mdm_compliance_status"] = item.MdmComplianceStatus
+	respItem["mdm_reachable"] = boolPtrToString(item.MdmReachable)
+	respItem["mdm_enrolled"] = boolPtrToString(item.MdmEnrolled)
+	respItem["mdm_compliance_status"] = boolPtrToString(item.MdmComplianceStatus)
 	respItem["mdm_os"] = item.MdmOS
 	respItem["mdm_manufacturer"] = item.MdmManufacturer
 	respItem["mdm_model"] = item.MdmModel
 	respItem["mdm_serial"] = item.MdmSerial
-	respItem["mdm_encrypted"] = item.MdmEncrypted
-	respItem["mdm_pinlock"] = item.MdmPinlock
-	respItem["mdm_jail_broken"] = item.MdmJailBroken
+	respItem["mdm_encrypted"] = boolPtrToString(item.MdmEncrypted)
+	respItem["mdm_pinlock"] = boolPtrToString(item.MdmPinlock)
+	respItem["mdm_jail_broken"] = boolPtrToString(item.MdmJailBroken)
 	respItem["mdm_ime_i"] = item.MdmIMEI
 	respItem["mdm_phone_number"] = item.MdmPhoneNumber
 
@@ -690,9 +710,9 @@ func flattenEndpointGetEndpointByIDItemID(item *isegosdk.ResponseEndpointGetEndp
 	respItem["description"] = item.Description
 	respItem["mac"] = item.Mac
 	respItem["profile_id"] = item.ProfileID
-	respItem["static_profile_assignment"] = item.StaticProfileAssignment
+	respItem["static_profile_assignment"] = boolPtrToString(item.StaticProfileAssignment)
 	respItem["group_id"] = item.GroupID
-	respItem["static_group_assignment"] = item.StaticGroupAssignment
+	respItem["static_group_assignment"] = boolPtrToString(item.StaticGroupAssignment)
 	respItem["portal_user"] = item.PortalUser
 	respItem["identity_store"] = item.IDentityStore
 	respItem["identity_store_id"] = item.IDentityStoreID
@@ -710,16 +730,16 @@ func flattenEndpointGetEndpointByIDItemIDMdmAttributes(item *isegosdk.ResponseEn
 	}
 	respItem := make(map[string]interface{})
 	respItem["mdm_server_name"] = item.MdmServerName
-	respItem["mdm_reachable"] = item.MdmReachable
-	respItem["mdm_enrolled"] = item.MdmEnrolled
-	respItem["mdm_compliance_status"] = item.MdmComplianceStatus
+	respItem["mdm_reachable"] = boolPtrToString(item.MdmReachable)
+	respItem["mdm_enrolled"] = boolPtrToString(item.MdmEnrolled)
+	respItem["mdm_compliance_status"] = boolPtrToString(item.MdmComplianceStatus)
 	respItem["mdm_os"] = item.MdmOS
 	respItem["mdm_manufacturer"] = item.MdmManufacturer
 	respItem["mdm_model"] = item.MdmModel
 	respItem["mdm_serial"] = item.MdmSerial
-	respItem["mdm_encrypted"] = item.MdmEncrypted
-	respItem["mdm_pinlock"] = item.MdmPinlock
-	respItem["mdm_jail_broken"] = item.MdmJailBroken
+	respItem["mdm_encrypted"] = boolPtrToString(item.MdmEncrypted)
+	respItem["mdm_pinlock"] = boolPtrToString(item.MdmPinlock)
+	respItem["mdm_jail_broken"] = boolPtrToString(item.MdmJailBroken)
 	respItem["mdm_ime_i"] = item.MdmIMEI
 	respItem["mdm_phone_number"] = item.MdmPhoneNumber
 

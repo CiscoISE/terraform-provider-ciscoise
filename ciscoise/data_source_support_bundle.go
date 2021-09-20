@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,7 +18,8 @@ func dataSourceSupportBundle() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on SupportBundleTriggerConfiguration.
 
-- This data source action allows the client to create a support bundle trigger configuration.`,
+- This data source action allows the client to create a support bundle trigger configuration.
+`,
 
 		ReadContext: dataSourceSupportBundleRead,
 		Schema: map[string]*schema.Schema{
@@ -52,38 +54,45 @@ func dataSourceSupportBundle() *schema.Resource {
 						},
 						"include_config_db": &schema.Schema{
 							Description: `Set to include Config DB in Support Bundle`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"include_core_files": &schema.Schema{
 							Description: `Set to include Core files in Support Bundle`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"include_debug_logs": &schema.Schema{
 							Description: `Set to include Debug logs in Support Bundle`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"include_local_logs": &schema.Schema{
 							Description: `Set to include Local logs in Support Bundle`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"include_system_logs": &schema.Schema{
 							Description: `Set to include System logs in Support Bundle`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"mnt_logs": &schema.Schema{
 							Description: `Set to include Monitoring and troublshooting logs in Support Bundle`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"policy_xml": &schema.Schema{
 							Description: `Set to include Policy XML in Support Bundle`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"to_date": &schema.Schema{
 							Description: `Date upto where support bundle should include the logs`,

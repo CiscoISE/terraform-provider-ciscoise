@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceMntSessionByMac() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Misc.
 
-Sessions by MAC`,
+- Sessions by MAC
+`,
 
 		ReadContext: dataSourceMntSessionByMacRead,
 		Schema: map[string]*schema.Schema{

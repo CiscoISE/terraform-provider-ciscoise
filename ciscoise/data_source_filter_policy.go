@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceFilterPolicy() *schema.Resource {
 		Description: `It performs read operation on FilterPolicy.
 
 - This data source allows the client to get a filter policy by ID.
-- This data source allows the client to get all the filter policies.`,
+
+- This data source allows the client to get all the filter policies.
+`,
 
 		ReadContext: dataSourceFilterPolicyRead,
 		Schema: map[string]*schema.Schema{
@@ -120,9 +123,9 @@ func dataSourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m i
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {

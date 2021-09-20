@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +19,8 @@ func dataSourceGuestTypeEmail() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on GuestType.
 
-- This data source action allows the client to update a guest type email by ID.`,
+- This data source action allows the client to update a guest type email by ID.
+`,
 
 		ReadContext: dataSourceGuestTypeEmailRead,
 		Schema: map[string]*schema.Schema{
