@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceByodPortal() *schema.Resource {
 		Description: `It performs read operation on BYODPortal.
 
 - This data source allows the client to get a BYOD portal by ID.
+
 - This data source allows the client to get all the BYOD portals.
 
 Filter:
@@ -23,7 +25,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceByodPortalRead,
 		Schema: map[string]*schema.Schema{
@@ -365,7 +368,8 @@ The Tweak Settings can subsequently be changed by the user`,
 																Computed: true,
 															},
 															"show_device_id": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 														},
@@ -407,29 +411,35 @@ Allowed values:
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_guest_access": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"include_aup": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_mdm": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_scrolling": &schema.Schema{
 																Description: `Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -519,27 +529,33 @@ Allowed values:
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -610,9 +626,9 @@ func dataSourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m int
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -813,13 +829,13 @@ func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodWelcomeSettin
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enable_byo_d"] = item.EnableByod
-	respItem["enable_guest_access"] = item.EnableGuestAccess
-	respItem["require_mdm"] = item.RequireMdm
-	respItem["include_aup"] = item.IncludeAup
+	respItem["enable_byo_d"] = boolPtrToString(item.EnableByod)
+	respItem["enable_guest_access"] = boolPtrToString(item.EnableGuestAccess)
+	respItem["require_mdm"] = boolPtrToString(item.RequireMdm)
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
 	respItem["aup_display"] = item.AupDisplay
-	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
-	respItem["require_scrolling"] = item.RequireScrolling
+	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
+	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
 
 	return []map[string]interface{}{
 		respItem,
@@ -832,7 +848,7 @@ func flattenByodPortalGetByodPortalByIDItemSettingsByodSettingsByodRegistrationS
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["show_device_id"] = item.ShowDeviceID
+	respItem["show_device_id"] = boolPtrToString(item.ShowDeviceID)
 	respItem["end_point_identity_group_id"] = item.EndPointIDentityGroupID
 
 	return []map[string]interface{}{
@@ -860,12 +876,12 @@ func flattenByodPortalGetByodPortalByIDItemSettingsSupportInfoSettings(item *ise
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
-	respItem["include_mac_addr"] = item.IncludeMacAddr
-	respItem["include_ip_address"] = item.IncludeIPAddress
-	respItem["include_browser_user_agent"] = item.IncludeBrowserUserAgent
-	respItem["include_policy_server"] = item.IncludePolicyServer
-	respItem["include_failure_code"] = item.IncludeFailureCode
+	respItem["include_support_info_page"] = boolPtrToString(item.IncludeSupportInfoPage)
+	respItem["include_mac_addr"] = boolPtrToString(item.IncludeMacAddr)
+	respItem["include_ip_address"] = boolPtrToString(item.IncludeIPAddress)
+	respItem["include_browser_user_agent"] = boolPtrToString(item.IncludeBrowserUserAgent)
+	respItem["include_policy_server"] = boolPtrToString(item.IncludePolicyServer)
+	respItem["include_failure_code"] = boolPtrToString(item.IncludeFailureCode)
 	respItem["empty_field_display"] = item.EmptyFieldDisplay
 	respItem["default_empty_field_value"] = item.DefaultEmptyFieldValue
 

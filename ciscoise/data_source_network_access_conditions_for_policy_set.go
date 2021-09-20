@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceNetworkAccessConditionsForPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Conditions.
 
-- Network Access Returns list of library conditions for PolicySet scope.`,
+- Network Access Returns list of library conditions for PolicySet scope.
+`,
 
 		ReadContext: dataSourceNetworkAccessConditionsForPolicySetRead,
 		Schema: map[string]*schema.Schema{
@@ -53,8 +55,9 @@ func dataSourceNetworkAccessConditionsForPolicySet() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -178,8 +181,9 @@ func dataSourceNetworkAccessConditionsForPolicySet() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -277,7 +281,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForPolicySetsItems(
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionsForPolicySetsItemsLink(item.Link)
 		respItem["description"] = item.Description
 		respItem["id"] = item.ID
@@ -323,7 +327,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsForPolicySetsItemsC
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionsForPolicySetsItemsChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

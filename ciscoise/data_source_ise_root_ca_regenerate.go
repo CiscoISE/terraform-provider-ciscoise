@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -19,7 +20,8 @@ func dataSourceIseRootCaRegenerate() *schema.Resource {
 
 - This data source action will initiate regeneration of ISE root CA certificate chain. Response contains id which can be
 used to track the status.
-  Setting "removeExistingISEIntermediateCSR" to true will remove existing ISE Intermediate CSR`,
+  Setting "removeExistingISEIntermediateCSR" to true will remove existing ISE Intermediate CSR
+`,
 
 		ReadContext: dataSourceIseRootCaRegenerateRead,
 		Schema: map[string]*schema.Schema{
@@ -64,8 +66,9 @@ used to track the status.
 			},
 			"remove_existing_ise_intermediate_csr": &schema.Schema{
 				Description: `Setting this attribute to true will remove existing ISE Intermediate CSR`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 		},
 	}

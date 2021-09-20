@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceGuestUser() *schema.Resource {
 		Description: `It performs read operation on GuestUser.
 
 - This data source allows the client to get a guest user by name.
+
 - This data source allows the client to get a guest user by ID.
+
 - This data source allows the client to get all the guest users.
 
 Filter:
@@ -25,7 +28,8 @@ name, company, guestType, status]
 
 Sorting:
 
-[firstName, lastName, emailAddress, name, description]`,
+[firstName, lastName, emailAddress, name, description]
+`,
 
 		ReadContext: dataSourceGuestUserRead,
 		Schema: map[string]*schema.Schema{
@@ -173,8 +177,9 @@ string parameter. Each resource Data model description should specify if an attr
 									},
 									"enabled": &schema.Schema{
 										Description: `This field is only for Get operation not applicable for Create, Update operations`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"first_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -338,8 +343,9 @@ string parameter. Each resource Data model description should specify if an attr
 									},
 									"enabled": &schema.Schema{
 										Description: `This field is only for Get operation not applicable for Create, Update operations`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"first_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -495,11 +501,11 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -692,7 +698,7 @@ func flattenGuestUserGetGuestUserByNameItemNameGuestInfo(item *isegosdk.Response
 	respItem["email_address"] = item.EmailAddress
 	respItem["phone_number"] = item.PhoneNumber
 	respItem["password"] = item.Password
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["sms_service_provider"] = item.SmsServiceProvider
 
 	return []map[string]interface{}{
@@ -772,7 +778,7 @@ func flattenGuestUserGetGuestUserByIDItemIDGuestInfo(item *isegosdk.ResponseGues
 	respItem["email_address"] = item.EmailAddress
 	respItem["phone_number"] = item.PhoneNumber
 	respItem["password"] = item.Password
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["sms_service_provider"] = item.SmsServiceProvider
 
 	return []map[string]interface{}{

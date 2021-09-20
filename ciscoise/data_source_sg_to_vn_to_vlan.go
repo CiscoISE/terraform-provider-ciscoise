@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,25 +16,14 @@ func dataSourceSgToVnToVLAN() *schema.Resource {
 		Description: `It performs read operation on SecurityGroupToVirtualNetwork.
 
 - This data source allows the client to get a security group to virtual network by ID.
+
 - This data source allows the client to get all the security group ACL to virtual networks.
 
 Filter:
 
 [sgtId]
 
-To search guest users by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
- `,
+`,
 
 		ReadContext: dataSourceSgToVnToVLANRead,
 		Schema: map[string]*schema.Schema{
@@ -148,7 +138,8 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"default_virtual_network": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"description": &schema.Schema{
@@ -170,11 +161,13 @@ string parameter. Each resource Data model description should specify if an attr
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"default_vlan": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"description": &schema.Schema{
@@ -259,9 +252,9 @@ func dataSourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m i
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -410,7 +403,7 @@ func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirt
 		respItem["id"] = item.ID
 		respItem["name"] = item.Name
 		respItem["description"] = item.Description
-		respItem["default_virtual_network"] = item.DefaultVirtualNetwork
+		respItem["default_virtual_network"] = boolPtrToString(item.DefaultVirtualNetwork)
 		respItem["vlans"] = flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirtualnetworklistVLANs(item.VLANs)
 		respItems = append(respItems, respItem)
 	}
@@ -428,9 +421,9 @@ func flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItemVirt
 		respItem["id"] = item.ID
 		respItem["name"] = item.Name
 		respItem["description"] = item.Description
-		respItem["default_vlan"] = item.DefaultVLAN
+		respItem["default_vlan"] = boolPtrToString(item.DefaultVLAN)
 		respItem["max_value"] = item.MaxValue
-		respItem["data"] = item.Data
+		respItem["data"] = boolPtrToString(item.Data)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

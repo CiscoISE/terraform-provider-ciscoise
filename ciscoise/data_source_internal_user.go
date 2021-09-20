@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceInternalUser() *schema.Resource {
 		Description: `It performs read operation on InternalUser.
 
 - This data source allows the client to get an internal user by name.
+
 - This data source allows the client to get an internal user by ID.
+
 - This data source allows the client to get all the internal users.
 
 Filter:
@@ -24,7 +27,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceInternalUserRead,
 		Schema: map[string]*schema.Schema{
@@ -111,7 +115,8 @@ string parameter. Each resource Data model description should specify if an attr
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"custom_attributes": &schema.Schema{
@@ -134,7 +139,8 @@ string parameter. Each resource Data model description should specify if an attr
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
 The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							Type:     schema.TypeBool,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"expiry_date": &schema.Schema{
@@ -143,7 +149,8 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"first_name": &schema.Schema{
@@ -209,7 +216,8 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"custom_attributes": &schema.Schema{
@@ -232,7 +240,8 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
 The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							Type:     schema.TypeBool,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"expiry_date": &schema.Schema{
@@ -241,7 +250,8 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"first_name": &schema.Schema{
@@ -360,11 +370,11 @@ func dataSourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m i
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -527,14 +537,14 @@ func flattenInternalUserGetInternalUserByNameItemName(item *isegosdk.ResponseInt
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["email"] = item.Email
 	respItem["password"] = item.Password
 	respItem["first_name"] = item.FirstName
 	respItem["last_name"] = item.LastName
-	respItem["change_password"] = item.ChangePassword
+	respItem["change_password"] = boolPtrToString(item.ChangePassword)
 	respItem["identity_groups"] = item.IDentityGroups
-	respItem["expiry_date_enabled"] = item.ExpiryDateEnabled
+	respItem["expiry_date_enabled"] = boolPtrToString(item.ExpiryDateEnabled)
 	respItem["expiry_date"] = item.ExpiryDate
 	respItem["enable_password"] = item.EnablePassword
 	respItem["custom_attributes"] = item.CustomAttributes
@@ -568,14 +578,14 @@ func flattenInternalUserGetInternalUserByIDItemID(item *isegosdk.ResponseInterna
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["email"] = item.Email
 	respItem["password"] = item.Password
 	respItem["first_name"] = item.FirstName
 	respItem["last_name"] = item.LastName
-	respItem["change_password"] = item.ChangePassword
+	respItem["change_password"] = boolPtrToString(item.ChangePassword)
 	respItem["identity_groups"] = item.IDentityGroups
-	respItem["expiry_date_enabled"] = item.ExpiryDateEnabled
+	respItem["expiry_date_enabled"] = boolPtrToString(item.ExpiryDateEnabled)
 	respItem["expiry_date"] = item.ExpiryDate
 	respItem["enable_password"] = item.EnablePassword
 	respItem["custom_attributes"] = item.CustomAttributes

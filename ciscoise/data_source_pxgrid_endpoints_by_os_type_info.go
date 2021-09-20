@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,8 @@ func dataSourcePxgridEndpointsByOsTypeInfo() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on MDM.
 
-🚧 getEndpointsByOsType`,
+- 🚧 getEndpointsByOsType
+`,
 
 		ReadContext: dataSourcePxgridEndpointsByOsTypeInfoRead,
 		Schema: map[string]*schema.Schema{

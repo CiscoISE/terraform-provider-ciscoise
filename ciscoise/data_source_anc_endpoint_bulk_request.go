@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,7 +18,8 @@ func dataSourceAncEndpointBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ANCEndpoint.
 
-- This data source action allows the client to submit the bulk request.`,
+- This data source action allows the client to submit the bulk request.
+`,
 
 		ReadContext: dataSourceAncEndpointBulkRequestRead,
 		Schema: map[string]*schema.Schema{

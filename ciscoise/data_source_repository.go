@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -33,7 +34,8 @@ func dataSourceRepository() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"enable_pki": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"name": &schema.Schema{
@@ -75,7 +77,8 @@ func dataSourceRepository() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"enable_pki": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"name": &schema.Schema{
@@ -121,9 +124,9 @@ func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m int
 	vName, okName := d.GetOk("name")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -193,7 +196,7 @@ func flattenRepositoryGetRepositoriesItems(items *[]isegosdk.ResponseRepositoryG
 		respItem["password"] = item.Password
 		respItem["server_name"] = item.ServerName
 		respItem["user_name"] = item.UserName
-		respItem["enable_pki"] = item.EnablePki
+		respItem["enable_pki"] = boolPtrToString(item.EnablePki)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -210,7 +213,7 @@ func flattenRepositoryGetRepositoryItem(item *isegosdk.ResponseRepositoryGetRepo
 	respItem["password"] = item.Password
 	respItem["server_name"] = item.ServerName
 	respItem["user_name"] = item.UserName
-	respItem["enable_pki"] = item.EnablePki
+	respItem["enable_pki"] = boolPtrToString(item.EnablePki)
 	return []map[string]interface{}{
 		respItem,
 	}

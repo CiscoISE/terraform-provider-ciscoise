@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceAciSettings() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on ACISettings.
 
-- This data source allows the client to get ACI Settings.`,
+- This data source allows the client to get ACI Settings.
+`,
 
 		ReadContext: dataSourceAciSettingsRead,
 		Schema: map[string]*schema.Schema{
@@ -26,13 +28,15 @@ func dataSourceAciSettings() *schema.Resource {
 
 						"aci50": &schema.Schema{
 							Description: `Enable 5.0 ACI Version`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"aci51": &schema.Schema{
 							Description: `Enable 5.1 ACI Version`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"aciipaddress": &schema.Schema{
 							Description: `ACI Domain manager Ip Address.`,
@@ -61,7 +65,8 @@ func dataSourceAciSettings() *schema.Resource {
 							Computed:    true,
 						},
 						"all_sxp_domain": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"default_sgt_name": &schema.Schema{
@@ -70,15 +75,18 @@ func dataSourceAciSettings() *schema.Resource {
 						},
 						"enable_aci": &schema.Schema{
 							Description: `Enable ACI Integration`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"enable_data_plane": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"enable_elements_limit": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
@@ -104,7 +112,8 @@ func dataSourceAciSettings() *schema.Resource {
 							Computed: true,
 						},
 						"specific_sxp_domain": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"specifix_sxp_domain_list": &schema.Schema{
@@ -177,7 +186,7 @@ func flattenAciSettingsGetAciSettingsItem(item *isegosdk.ResponseAciSettingsGetA
 	}
 	respItem := make(map[string]interface{})
 	respItem["id"] = item.ID
-	respItem["enable_aci"] = item.EnableAci
+	respItem["enable_aci"] = boolPtrToString(item.EnableAci)
 	respItem["ip_address_host_name"] = item.IPAddressHostName
 	respItem["admin_name"] = item.AdminName
 	respItem["admin_password"] = item.AdminPassword
@@ -188,17 +197,17 @@ func flattenAciSettingsGetAciSettingsItem(item *isegosdk.ResponseAciSettingsGetA
 	respItem["l3_route_network"] = item.L3RouteNetwork
 	respItem["suffix_to_epg"] = item.SuffixToEpg
 	respItem["suffix_to_sgt"] = item.SuffixToSgt
-	respItem["all_sxp_domain"] = item.AllSxpDomain
-	respItem["specific_sxp_domain"] = item.SpecificSxpDomain
+	respItem["all_sxp_domain"] = boolPtrToString(item.AllSxpDomain)
+	respItem["specific_sxp_domain"] = boolPtrToString(item.SpecificSxpDomain)
 	respItem["specifix_sxp_domain_list"] = item.SpecifixSxpDomainList
-	respItem["enable_data_plane"] = item.EnableDataPlane
+	respItem["enable_data_plane"] = boolPtrToString(item.EnableDataPlane)
 	respItem["untagged_packet_iepg_name"] = item.UntaggedPacketIepgName
 	respItem["default_sgt_name"] = item.DefaultSgtName
-	respItem["enable_elements_limit"] = item.EnableElementsLimit
+	respItem["enable_elements_limit"] = boolPtrToString(item.EnableElementsLimit)
 	respItem["max_num_iepg_from_aci"] = item.MaxNumIepgFromAci
 	respItem["max_num_sgt_to_aci"] = item.MaxNumSgtToAci
-	respItem["aci50"] = item.Aci50
-	respItem["aci51"] = item.Aci51
+	respItem["aci50"] = boolPtrToString(item.Aci50)
+	respItem["aci51"] = boolPtrToString(item.Aci51)
 	return []map[string]interface{}{
 		respItem,
 	}

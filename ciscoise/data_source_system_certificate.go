@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,7 @@ func dataSourceSystemCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Certificates.
 
- This data source supports Filtering, Sorting and Pagination.
+- This data source supports Filtering, Sorting and Pagination.
 
 
 Filtering and Sorting supported on below mentioned attributes:
@@ -59,7 +60,8 @@ Supported Operators: EQ, NEQ, GT and LT
 
 
 
-- This data source displays details of a System Certificate of a particular node based on a given HostName and ID.`,
+- This data source displays details of a System Certificate of a particular node based on a given HostName and ID.
+`,
 
 		ReadContext: dataSourceSystemCertificateRead,
 		Schema: map[string]*schema.Schema{
@@ -253,7 +255,8 @@ Not Contains
 							Computed: true,
 						},
 						"self_signed": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"serial_number_decimal_format": &schema.Schema{
@@ -347,7 +350,8 @@ Not Contains
 							Computed: true,
 						},
 						"self_signed": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"serial_number_decimal_format": &schema.Schema{
@@ -393,9 +397,9 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okHostName, okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okHostName, okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -511,7 +515,7 @@ func flattenCertificatesGetSystemCertificatesItems(items *[]isegosdk.ResponseCer
 		respItem["key_size"] = item.KeySize
 		respItem["link"] = flattenCertificatesGetSystemCertificatesItemsLink(item.Link)
 		respItem["portals_using_the_tag"] = item.PortalsUsingTheTag
-		respItem["self_signed"] = item.SelfSigned
+		respItem["self_signed"] = boolPtrToString(item.SelfSigned)
 		respItem["serial_number_decimal_format"] = item.SerialNumberDecimalFormat
 		respItem["sha256_fingerprint"] = item.Sha256Fingerprint
 		respItem["signature_algorithm"] = item.SignatureAlgorithm
@@ -551,7 +555,7 @@ func flattenCertificatesGetSystemCertificateByIDItem(item *isegosdk.ResponseCert
 	respItem["key_size"] = item.KeySize
 	respItem["link"] = flattenCertificatesGetSystemCertificateByIDItemLink(item.Link)
 	respItem["portals_using_the_tag"] = item.PortalsUsingTheTag
-	respItem["self_signed"] = item.SelfSigned
+	respItem["self_signed"] = boolPtrToString(item.SelfSigned)
 	respItem["serial_number_decimal_format"] = item.SerialNumberDecimalFormat
 	respItem["sha256_fingerprint"] = item.Sha256Fingerprint
 	respItem["signature_algorithm"] = item.SignatureAlgorithm

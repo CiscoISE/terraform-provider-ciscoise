@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceSelfRegisteredPortal() *schema.Resource {
 		Description: `It performs read operation on SelfRegisteredPortal.
 
 - This data source allows the client to get a self registered portal by ID.
+
 - This data source allows the client to get all the self registered portals.
 
 Filter:
@@ -23,7 +25,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceSelfRegisteredPortalRead,
 		Schema: map[string]*schema.Schema{
@@ -364,28 +367,33 @@ Allowed Values:
 												},
 												"include_aup": &schema.Schema{
 													Description: `Require the portal user to read and accept an AUP`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_aup_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP.
 Only valid if requireAupAcceptance = true`,
-													Type:     schema.TypeBool,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"skip_aup_for_employees": &schema.Schema{
 													Description: `Only valid if requireAupAcceptance = trueG`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"use_diff_aup_for_employees": &schema.Schema{
 													Description: `Only valid if requireAupAcceptance = trueG`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -428,8 +436,9 @@ Only valid if requireAupAcceptance = true`,
 															},
 															"show_device_id": &schema.Schema{
 																Description: `Display Device ID field during registration`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -475,29 +484,35 @@ Allowed values:
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_guest_access": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"include_aup": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_mdm": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_scrolling": &schema.Schema{
 																Description: `Require BYOD devices to scroll down to the bottom of the AUP, 
 Only valid if includeAup = true`,
-																Type:     schema.TypeBool,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 														},
@@ -514,8 +529,9 @@ Only valid if includeAup = true`,
 
 												"allow_change_passwd_at_first_login": &schema.Schema{
 													Description: `Allow guest to change their own passwords`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -528,13 +544,15 @@ Only valid if includeAup = true`,
 
 												"allow_guests_to_register_devices": &schema.Schema{
 													Description: `Allow guests to register devices`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"auto_register_guest_devices": &schema.Schema{
 													Description: `Automatically register guest devices`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -552,28 +570,34 @@ Only valid if includeAup = true`,
 													Computed:    true,
 												},
 												"allow_alternate_guest_portal": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_forgot_password": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_to_change_password": &schema.Schema{
 													Description: `Require the portal user to enter an access code`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"allow_guest_to_create_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_to_use_social_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_show_guest_form": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"alternate_guest_portal": &schema.Schema{
@@ -591,8 +615,9 @@ Allowed values:
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
 													Description: `Maximum failed login attempts before rate limiting`,
@@ -601,13 +626,15 @@ Allowed values:
 												},
 												"require_access_code": &schema.Schema{
 													Description: `Require the portal user to enter an access code`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP. Only valid if includeAup = true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"social_configs": &schema.Schema{
 													Type:     schema.TypeList,
@@ -704,7 +731,8 @@ Range from 8000 to 8999`,
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -718,8 +746,9 @@ Range from 8000 to 8999`,
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -745,7 +774,8 @@ Allowed Values:
 													Computed: true,
 												},
 												"allow_grace_access": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"approval_email_addresses": &schema.Schema{
@@ -790,7 +820,8 @@ Allowed values:
 												"auto_login_self_wait": &schema.Schema{
 													Description: `Allow guests to login automatically from self-registration after sponsor's approval.
 No need to provide the credentials by guest to login`,
-													Type:     schema.TypeBool,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"auto_login_time_period": &schema.Schema{
@@ -803,24 +834,28 @@ Default value is 5 minutes`,
 												"credential_notification_using_email": &schema.Schema{
 													Description: `If true, send credential notification upon approval using email.
 Only valid if requireGuestApproval = true`,
-													Type:     schema.TypeBool,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"credential_notification_using_sms": &schema.Schema{
 													Description: `If true, send credential notification upon approval using SMS.
 Only valid if requireGuestApproval = true`,
-													Type:     schema.TypeBool,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"enable_guest_email_blacklist": &schema.Schema{
 													Description: `Disallow guests with an e-mail address from selected domains`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"enable_guest_email_whitelist": &schema.Schema{
 													Description: `Allow guests with an e-mail address from selected domains`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"field_company": &schema.Schema{
 													Type:     schema.TypeList,
@@ -829,13 +864,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -847,13 +884,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -865,13 +904,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -883,13 +924,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -901,13 +944,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -919,13 +964,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -937,13 +984,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -955,13 +1004,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -973,13 +1024,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -991,13 +1044,15 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -1007,7 +1062,8 @@ Only valid if requireGuestApproval = true`,
 													Computed: true,
 												},
 												"grace_access_send_account_expiration": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"guest_email_blacklist_domains": &schema.Schema{
@@ -1023,8 +1079,9 @@ Only valid if enableGuestEmailWhitelist = true`,
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"post_registration_redirect": &schema.Schema{
 													Description: `After the registration submission direct the guest user to one of the following pages.
@@ -1052,23 +1109,27 @@ Only valid if requireGuestApproval = true and postRegistrationRedirect = URL`,
 If the Cisco ISE Administrator chooses to include an approval link in the e-mail,
 a sponsor user who clicks the link will be required to enter their username and password if this attribute is true.
 Only valid if requireGuestApproval = true`,
-													Type:     schema.TypeBool,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP. Only valid if includeAup = true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_guest_approval": &schema.Schema{
 													Description: `Require self-registered guests to be approved if true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_registration_code": &schema.Schema{
 													Description: `Self-registered guests are required to enter a registration code`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"selectable_locations": &schema.Schema{
 													Description: `Guests can choose from these locations to set their time zone`,
@@ -1112,79 +1173,98 @@ Allowed Values:
 											Schema: map[string]*schema.Schema{
 
 												"allow_guest_login_from_selfreg_success_page": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_send_self_using_email": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_send_self_using_print": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_send_self_using_sms": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"aup_on_page": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_company": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_email_addr": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_first_name": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_last_name": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_location": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_password": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_person_being_visited": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_phone_no": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_reason_for_visit": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_sms_provider": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_user_name": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_aup_acceptance": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_aup_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -1211,27 +1291,33 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -1302,9 +1388,9 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -1500,20 +1586,20 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPage
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["require_access_code"] = item.RequireAccessCode
+	respItem["require_access_code"] = boolPtrToString(item.RequireAccessCode)
 	respItem["max_failed_attempts_before_rate_limit"] = item.MaxFailedAttemptsBeforeRateLimit
 	respItem["time_between_logins_during_rate_limit"] = item.TimeBetweenLoginsDuringRateLimit
-	respItem["include_aup"] = item.IncludeAup
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
 	respItem["aup_display"] = item.AupDisplay
-	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
+	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
 	respItem["access_code"] = item.AccessCode
-	respItem["allow_guest_to_create_accounts"] = item.AllowGuestToCreateAccounts
-	respItem["allow_forgot_password"] = item.AllowForgotPassword
-	respItem["allow_guest_to_change_password"] = item.AllowGuestToChangePassword
-	respItem["allow_alternate_guest_portal"] = item.AllowAlternateGuestPortal
+	respItem["allow_guest_to_create_accounts"] = boolPtrToString(item.AllowGuestToCreateAccounts)
+	respItem["allow_forgot_password"] = boolPtrToString(item.AllowForgotPassword)
+	respItem["allow_guest_to_change_password"] = boolPtrToString(item.AllowGuestToChangePassword)
+	respItem["allow_alternate_guest_portal"] = boolPtrToString(item.AllowAlternateGuestPortal)
 	respItem["alternate_guest_portal"] = item.AlternateGuestPortal
-	respItem["allow_guest_to_use_social_accounts"] = item.AllowGuestToUseSocialAccounts
-	respItem["allow_show_guest_form"] = item.AllowShowGuestForm
+	respItem["allow_guest_to_use_social_accounts"] = boolPtrToString(item.AllowGuestToUseSocialAccounts)
+	respItem["allow_show_guest_form"] = boolPtrToString(item.AllowShowGuestForm)
 	respItem["social_configs"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPageSettingsSocialConfigs(item.SocialConfigs)
 
 	return []map[string]interface{}{
@@ -1545,7 +1631,7 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 	respItem["assign_guests_to_guest_type"] = item.AssignGuestsToGuestType
 	respItem["account_validity_duration"] = item.AccountValidityDuration
 	respItem["account_validity_time_units"] = item.AccountValidityTimeUnits
-	respItem["require_registration_code"] = item.RequireRegistrationCode
+	respItem["require_registration_code"] = boolPtrToString(item.RequireRegistrationCode)
 	respItem["registration_code"] = item.RegistrationCode
 	respItem["field_user_name"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldUserName(item.FieldUserName)
 	respItem["field_first_name"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldFirstName(item.FieldFirstName)
@@ -1559,28 +1645,28 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 	respItem["selectable_sms_providers"] = item.SelectableSmsProviders
 	respItem["field_person_being_visited"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldPersonBeingVisited(item.FieldPersonBeingVisited)
 	respItem["field_reason_for_visit"] = flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettingsFieldReasonForVisit(item.FieldReasonForVisit)
-	respItem["include_aup"] = item.IncludeAup
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
 	respItem["aup_display"] = item.AupDisplay
-	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
-	respItem["enable_guest_email_whitelist"] = item.EnableGuestEmailWhitelist
+	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
+	respItem["enable_guest_email_whitelist"] = boolPtrToString(item.EnableGuestEmailWhitelist)
 	respItem["guest_email_whitelist_domains"] = item.GuestEmailWhitelistDomains
-	respItem["enable_guest_email_blacklist"] = item.EnableGuestEmailBlacklist
+	respItem["enable_guest_email_blacklist"] = boolPtrToString(item.EnableGuestEmailBlacklist)
 	respItem["guest_email_blacklist_domains"] = item.GuestEmailBlacklistDomains
-	respItem["require_guest_approval"] = item.RequireGuestApproval
-	respItem["auto_login_self_wait"] = item.AutoLoginSelfWait
+	respItem["require_guest_approval"] = boolPtrToString(item.RequireGuestApproval)
+	respItem["auto_login_self_wait"] = boolPtrToString(item.AutoLoginSelfWait)
 	respItem["auto_login_time_period"] = item.AutoLoginTimePeriod
-	respItem["allow_grace_access"] = item.AllowGraceAccess
+	respItem["allow_grace_access"] = boolPtrToString(item.AllowGraceAccess)
 	respItem["grace_access_expire_interval"] = item.GraceAccessExpireInterval
-	respItem["grace_access_send_account_expiration"] = item.GraceAccessSendAccountExpiration
+	respItem["grace_access_send_account_expiration"] = boolPtrToString(item.GraceAccessSendAccountExpiration)
 	respItem["send_approval_request_to"] = item.SendApprovalRequestTo
 	respItem["approval_email_addresses"] = item.ApprovalEmailAddresses
 	respItem["post_registration_redirect"] = item.PostRegistrationRedirect
 	respItem["post_registration_redirect_url"] = item.PostRegistrationRedirectURL
-	respItem["credential_notification_using_email"] = item.CredentialNotificationUsingEmail
-	respItem["credential_notification_using_sms"] = item.CredentialNotificationUsingSms
+	respItem["credential_notification_using_email"] = boolPtrToString(item.CredentialNotificationUsingEmail)
+	respItem["credential_notification_using_sms"] = boolPtrToString(item.CredentialNotificationUsingSms)
 	respItem["approve_deny_links_valid_for"] = item.ApproveDenyLinksValidFor
 	respItem["approve_deny_links_time_units"] = item.ApproveDenyLinksTimeUnits
-	respItem["require_approver_to_authenticate"] = item.RequireApproverToAuthenticate
+	respItem["require_approver_to_authenticate"] = boolPtrToString(item.RequireApproverToAuthenticate)
 	respItem["authenticate_sponsors_using_portal_list"] = item.AuthenticateSponsorsUsingPortalList
 	respItem["sponsor_portal_list"] = responseInterfaceToSliceString(item.SponsorPortalList)
 
@@ -1595,8 +1681,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1609,8 +1695,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1623,8 +1709,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1637,8 +1723,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1651,8 +1737,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1665,8 +1751,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1679,8 +1765,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1693,8 +1779,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1707,8 +1793,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1721,8 +1807,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include"] = item.Include
-	respItem["require"] = item.Require
+	respItem["include"] = boolPtrToString(item.Include)
+	respItem["require"] = boolPtrToString(item.Require)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1735,25 +1821,25 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegSu
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_user_name"] = item.IncludeUserName
-	respItem["include_password"] = item.IncludePassword
-	respItem["include_first_name"] = item.IncludeFirstName
-	respItem["include_last_name"] = item.IncludeLastName
-	respItem["include_email_addr"] = item.IncludeEmailAddr
-	respItem["include_phone_no"] = item.IncludePhoneNo
-	respItem["include_company"] = item.IncludeCompany
-	respItem["include_location"] = item.IncludeLocation
-	respItem["include_sms_provider"] = item.IncludeSmsProvider
-	respItem["include_person_being_visited"] = item.IncludePersonBeingVisited
-	respItem["include_reason_for_visit"] = item.IncludeReasonForVisit
-	respItem["allow_guest_send_self_using_print"] = item.AllowGuestSendSelfUsingPrint
-	respItem["allow_guest_send_self_using_email"] = item.AllowGuestSendSelfUsingEmail
-	respItem["allow_guest_send_self_using_sms"] = item.AllowGuestSendSelfUsingSms
-	respItem["include_aup"] = item.IncludeAup
-	respItem["aup_on_page"] = item.AupOnPage
-	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
-	respItem["require_aup_scrolling"] = item.RequireAupScrolling
-	respItem["allow_guest_login_from_selfreg_success_page"] = item.AllowGuestLoginFromSelfregSuccessPage
+	respItem["include_user_name"] = boolPtrToString(item.IncludeUserName)
+	respItem["include_password"] = boolPtrToString(item.IncludePassword)
+	respItem["include_first_name"] = boolPtrToString(item.IncludeFirstName)
+	respItem["include_last_name"] = boolPtrToString(item.IncludeLastName)
+	respItem["include_email_addr"] = boolPtrToString(item.IncludeEmailAddr)
+	respItem["include_phone_no"] = boolPtrToString(item.IncludePhoneNo)
+	respItem["include_company"] = boolPtrToString(item.IncludeCompany)
+	respItem["include_location"] = boolPtrToString(item.IncludeLocation)
+	respItem["include_sms_provider"] = boolPtrToString(item.IncludeSmsProvider)
+	respItem["include_person_being_visited"] = boolPtrToString(item.IncludePersonBeingVisited)
+	respItem["include_reason_for_visit"] = boolPtrToString(item.IncludeReasonForVisit)
+	respItem["allow_guest_send_self_using_print"] = boolPtrToString(item.AllowGuestSendSelfUsingPrint)
+	respItem["allow_guest_send_self_using_email"] = boolPtrToString(item.AllowGuestSendSelfUsingEmail)
+	respItem["allow_guest_send_self_using_sms"] = boolPtrToString(item.AllowGuestSendSelfUsingSms)
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
+	respItem["aup_on_page"] = boolPtrToString(item.AupOnPage)
+	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
+	respItem["require_aup_scrolling"] = boolPtrToString(item.RequireAupScrolling)
+	respItem["allow_guest_login_from_selfreg_success_page"] = boolPtrToString(item.AllowGuestLoginFromSelfregSuccessPage)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1766,11 +1852,11 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsAupSettin
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_aup"] = item.IncludeAup
-	respItem["use_diff_aup_for_employees"] = item.UseDiffAupForEmployees
-	respItem["skip_aup_for_employees"] = item.SkipAupForEmployees
-	respItem["require_scrolling"] = item.RequireScrolling
-	respItem["require_aup_scrolling"] = item.RequireAupScrolling
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
+	respItem["use_diff_aup_for_employees"] = boolPtrToString(item.UseDiffAupForEmployees)
+	respItem["skip_aup_for_employees"] = boolPtrToString(item.SkipAupForEmployees)
+	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
+	respItem["require_aup_scrolling"] = boolPtrToString(item.RequireAupScrolling)
 	respItem["display_frequency"] = item.DisplayFrequency
 	respItem["display_frequency_interval_days"] = item.DisplayFrequencyIntervalDays
 
@@ -1785,7 +1871,7 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsGuestChan
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["allow_change_passwd_at_first_login"] = item.AllowChangePasswdAtFirstLogin
+	respItem["allow_change_passwd_at_first_login"] = boolPtrToString(item.AllowChangePasswdAtFirstLogin)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1798,8 +1884,8 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsGuestDevi
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["auto_register_guest_devices"] = item.AutoRegisterGuestDevices
-	respItem["allow_guests_to_register_devices"] = item.AllowGuestsToRegisterDevices
+	respItem["auto_register_guest_devices"] = boolPtrToString(item.AutoRegisterGuestDevices)
+	respItem["allow_guests_to_register_devices"] = boolPtrToString(item.AllowGuestsToRegisterDevices)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1827,13 +1913,13 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSetti
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enable_byo_d"] = item.EnableByod
-	respItem["enable_guest_access"] = item.EnableGuestAccess
-	respItem["require_mdm"] = item.RequireMdm
-	respItem["include_aup"] = item.IncludeAup
+	respItem["enable_byo_d"] = boolPtrToString(item.EnableByod)
+	respItem["enable_guest_access"] = boolPtrToString(item.EnableGuestAccess)
+	respItem["require_mdm"] = boolPtrToString(item.RequireMdm)
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
 	respItem["aup_display"] = item.AupDisplay
-	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
-	respItem["require_scrolling"] = item.RequireScrolling
+	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
+	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1846,7 +1932,7 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsByodSetti
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["show_device_id"] = item.ShowDeviceID
+	respItem["show_device_id"] = boolPtrToString(item.ShowDeviceID)
 	respItem["end_point_identity_group_id"] = item.EndPointIDentityGroupID
 
 	return []map[string]interface{}{
@@ -1874,7 +1960,7 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPostLogin
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
+	respItem["include_post_access_banner"] = boolPtrToString(item.IncludePostAccessBanner)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1887,7 +1973,7 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsPostAcces
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
+	respItem["include_post_access_banner"] = boolPtrToString(item.IncludePostAccessBanner)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1914,12 +2000,12 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSupportIn
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
-	respItem["include_mac_addr"] = item.IncludeMacAddr
-	respItem["include_ip_address"] = item.IncludeIPAddress
-	respItem["include_browser_user_agent"] = item.IncludeBrowserUserAgent
-	respItem["include_policy_server"] = item.IncludePolicyServer
-	respItem["include_failure_code"] = item.IncludeFailureCode
+	respItem["include_support_info_page"] = boolPtrToString(item.IncludeSupportInfoPage)
+	respItem["include_mac_addr"] = boolPtrToString(item.IncludeMacAddr)
+	respItem["include_ip_address"] = boolPtrToString(item.IncludeIPAddress)
+	respItem["include_browser_user_agent"] = boolPtrToString(item.IncludeBrowserUserAgent)
+	respItem["include_policy_server"] = boolPtrToString(item.IncludePolicyServer)
+	respItem["include_failure_code"] = boolPtrToString(item.IncludeFailureCode)
 	respItem["empty_field_display"] = item.EmptyFieldDisplay
 	respItem["default_empty_field_value"] = item.DefaultEmptyFieldValue
 

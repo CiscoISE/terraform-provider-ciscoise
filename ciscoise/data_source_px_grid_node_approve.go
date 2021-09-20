@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +17,8 @@ func dataSourcePxGridNodeApprove() *schema.Resource {
 		Description: `It performs update operation on pxGridNode.
 
 - This data source action allows the client to approve a pxGrid node.
-Only pending pxGrid nodes can be approved`,
+Only pending pxGrid nodes can be approved
+`,
 
 		ReadContext: dataSourcePxGridNodeApproveRead,
 		Schema: map[string]*schema.Schema{

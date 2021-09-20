@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +17,8 @@ func dataSourceSgMappingDeploy() *schema.Resource {
 		Description: `It performs update operation on IPToSGTMapping.
 
 - This data source action allows the client to deploy an IP to SGT mapping by ID.
-Only one Deploy process can run at any given time`,
+Only one Deploy process can run at any given time
+`,
 
 		ReadContext: dataSourceSgMappingDeployRead,
 		Schema: map[string]*schema.Schema{

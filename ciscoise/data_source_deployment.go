@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceDeployment() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on PullDeploymentInfo.
 
-- This data source allows the client to pull the deployment information.`,
+- This data source allows the client to pull the deployment information.
+`,
 
 		ReadContext: dataSourceDeploymentRead,
 		Schema: map[string]*schema.Schema{
@@ -55,7 +57,8 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"global_scope": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"name": &schema.Schema{
@@ -63,7 +66,8 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"nil": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"scope": &schema.Schema{
@@ -71,7 +75,8 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"type_substituted": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"value": &schema.Schema{
@@ -303,7 +308,8 @@ func dataSourceDeployment() *schema.Resource {
 										Computed:    true,
 									},
 									"is_csn_enabled": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"node_list": &schema.Schema{
@@ -360,7 +366,8 @@ func dataSourceDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"global_scope": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"name": &schema.Schema{
@@ -368,7 +375,8 @@ func dataSourceDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"nil": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"scope": &schema.Schema{
@@ -376,7 +384,8 @@ func dataSourceDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"type_substituted": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"value": &schema.Schema{
@@ -420,7 +429,8 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"online_subscription_enabled": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"profiles": &schema.Schema{
@@ -505,7 +515,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfo(item *isego
 	}
 	respItem := make(map[string]interface{})
 	respItem["deployment_id"] = item.DeploymentID
-	respItem["is_csn_enabled"] = item.IsCsnEnabled
+	respItem["is_csn_enabled"] = boolPtrToString(item.IsCsnEnabled)
 	respItem["node_list"] = flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfoNodeList(item.NodeList)
 	respItem["sda_vns"] = responseInterfaceToSliceString(item.SdaVns)
 	respItem["trust_sec_control"] = item.TrustSecControl
@@ -564,7 +574,7 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemProfilerInfoNodeListNode(item
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["online_subscription_enabled"] = item.OnlineSubscriptionEnabled
+		respItem["online_subscription_enabled"] = boolPtrToString(item.OnlineSubscriptionEnabled)
 		respItem["last_applied_feed_date_time"] = item.LastAppliedFeedDateTime
 		respItem["scope"] = item.Scope
 		respItem["profiles"] = responseInterfaceToString(item.Profiles)
@@ -630,9 +640,9 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemDeploymentInfoNodeListNodeAnd
 		respItem["value"] = responseInterfaceToString(item.Value)
 		respItem["declared_type"] = item.DeclaredType
 		respItem["scope"] = item.Scope
-		respItem["nil"] = item.Nil
-		respItem["global_scope"] = item.GlobalScope
-		respItem["type_substituted"] = item.TypeSubstituted
+		respItem["nil"] = boolPtrToString(item.Nil)
+		respItem["global_scope"] = boolPtrToString(item.GlobalScope)
+		respItem["type_substituted"] = boolPtrToString(item.TypeSubstituted)
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -760,9 +770,9 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemPostureInfoContent(items *[]i
 		respItem["value"] = responseInterfaceToString(item.Value)
 		respItem["declared_type"] = item.DeclaredType
 		respItem["scope"] = item.Scope
-		respItem["nil"] = item.Nil
-		respItem["global_scope"] = item.GlobalScope
-		respItem["type_substituted"] = item.TypeSubstituted
+		respItem["nil"] = boolPtrToString(item.Nil)
+		respItem["global_scope"] = boolPtrToString(item.GlobalScope)
+		respItem["type_substituted"] = boolPtrToString(item.TypeSubstituted)
 		respItems = append(respItems, respItem)
 	}
 	return respItems

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,7 @@ func dataSourceTrustedCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Certificates.
 
- This data source supports Filtering, Sorting and Pagination.
+- This data source supports Filtering, Sorting and Pagination.
 
 
 Filtering and Sorting supported on below mentioned attributes:
@@ -75,7 +76,8 @@ Supported Operators: EQ, NEQ
 
 
 
-- This data source can displays details of a Trust Certificate based on a given ID.`,
+- This data source can displays details of a Trust Certificate based on a given ID.
+`,
 
 		ReadContext: dataSourceTrustedCertificateRead,
 		Schema: map[string]*schema.Schema{
@@ -280,11 +282,13 @@ Not Contains
 							Computed:    true,
 						},
 						"internal_ca": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_referred_in_policy": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"issued_by": &schema.Schema{
@@ -466,11 +470,13 @@ Not Contains
 							Computed:    true,
 						},
 						"internal_ca": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_referred_in_policy": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"issued_by": &schema.Schema{
@@ -587,9 +593,9 @@ func dataSourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceDat
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -709,8 +715,8 @@ func flattenCertificatesGetTrustedCertificatesItems(items *[]isegosdk.ResponseCe
 		respItem["friendly_name"] = item.FriendlyName
 		respItem["id"] = item.ID
 		respItem["ignore_crl_expiration"] = item.IgnoreCRLExpiration
-		respItem["internal_ca"] = item.InternalCa
-		respItem["is_referred_in_policy"] = item.IsReferredInPolicy
+		respItem["internal_ca"] = boolPtrToString(item.InternalCa)
+		respItem["is_referred_in_policy"] = boolPtrToString(item.IsReferredInPolicy)
 		respItem["issued_by"] = item.IssuedBy
 		respItem["issued_to"] = item.IssuedTo
 		respItem["key_size"] = item.KeySize
@@ -767,8 +773,8 @@ func flattenCertificatesGetTrustedCertificateByIDItem(item *isegosdk.ResponseCer
 	respItem["friendly_name"] = item.FriendlyName
 	respItem["id"] = item.ID
 	respItem["ignore_crl_expiration"] = item.IgnoreCRLExpiration
-	respItem["internal_ca"] = item.InternalCa
-	respItem["is_referred_in_policy"] = item.IsReferredInPolicy
+	respItem["internal_ca"] = boolPtrToString(item.InternalCa)
+	respItem["is_referred_in_policy"] = boolPtrToString(item.IsReferredInPolicy)
 	respItem["issued_by"] = item.IssuedBy
 	respItem["issued_to"] = item.IssuedTo
 	respItem["key_size"] = item.KeySize

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceTacacsProfile() *schema.Resource {
 		Description: `It performs read operation on TACACSProfile.
 
 - This data source allows the client to get a TACACS profile by name.
+
 - This data source allows the client to get a TACACS profile by ID.
-- This data source allows the client to get all the TACACS profiles.`,
+
+- This data source allows the client to get all the TACACS profiles.
+`,
 
 		ReadContext: dataSourceTacacsProfileRead,
 		Schema: map[string]*schema.Schema{
@@ -244,11 +248,11 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {

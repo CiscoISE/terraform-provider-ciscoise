@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,19 +18,22 @@ func dataSourcePxGridSettingsAutoApprove() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on PxGridSettings.
 
-- This data source action allows the client to auto approve the pxGrid settings.`,
+- This data source action allows the client to auto approve the pxGrid settings.
+`,
 
 		ReadContext: dataSourcePxGridSettingsAutoApproveRead,
 		Schema: map[string]*schema.Schema{
 			"allow_password_based_accounts": &schema.Schema{
 				Description: `Allow password based accounts when true`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"auto_approve_cert_based_accounts": &schema.Schema{
 				Description: `Auto approve certificate based accounts when true`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeString,
