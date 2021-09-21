@@ -453,7 +453,7 @@ func expandRequestInternalUserCreateInternalUserInternalUser(ctx context.Context
 		request.EnablePassword = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.([]interface{})[0].(map[string]interface{})
+		customAttributes := v.(map[string]interface{})
 		request.CustomAttributes = &customAttributes
 	}
 	if v, ok := d.GetOkExists(key + ".password_idstore"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password_idstore"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password_idstore"))) {
@@ -516,7 +516,7 @@ func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Con
 		request.EnablePassword = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.([]interface{})[0].(map[string]interface{})
+		customAttributes := v.(map[string]interface{})
 		request.CustomAttributes = &customAttributes
 	}
 	if v, ok := d.GetOkExists(key + ".password_idstore"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password_idstore"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password_idstore"))) {

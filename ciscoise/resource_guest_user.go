@@ -526,7 +526,7 @@ func expandRequestGuestUserCreateGuestUserGuestUser(ctx context.Context, key str
 		request.PortalID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_fields"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_fields"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_fields"))) {
-		customFields := v.([]interface{})[0].(map[string]interface{})
+		customFields := v.(map[string]interface{})
 		request.CustomFields = &customFields
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -650,7 +650,7 @@ func expandRequestGuestUserUpdateGuestUserByIDGuestUser(ctx context.Context, key
 		request.PortalID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_fields"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_fields"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_fields"))) {
-		customFields := v.([]interface{})[0].(map[string]interface{})
+		customFields := v.(map[string]interface{})
 		request.CustomFields = &customFields
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
