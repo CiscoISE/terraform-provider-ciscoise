@@ -16,7 +16,7 @@ resource "ciscoise_authorization_profile" "example" {
     access_type                 = "ACCESS_ACCEPT"
     authz_profile_type          = "SWITCH"
     dacl_name                   = "PERMIT_ALL_IPV4_TRAFFIC"
-    description                 = "Onboard the device with Cisco temp agent"
+    description                 = "Onboard the device with Cisco temporal agent"
     easywired_session_candidate = "false"
     name                        = "Cisco_Temporal_Onboard"
     profile_name                = "Cisco"
