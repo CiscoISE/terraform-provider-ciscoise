@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceExternalRadiusServer() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on ExternalRADIUSServer.
-  
-  - This resource allows the client to update an external RADIUS server.
-  - This resource deletes an external RADIUS server.
-  - This resource creates an external RADIUS server.`,
+
+- This resource allows the client to update an external RADIUS server.
+
+- This resource deletes an external RADIUS server.
+
+- This resource creates an external RADIUS server.
+`,
 
 		CreateContext: resourceExternalRadiusServerCreate,
 		ReadContext:   resourceExternalRadiusServerRead,
@@ -53,7 +57,7 @@ func resourceExternalRadiusServer() *schema.Resource {
 						},
 						"authenticator_key": &schema.Schema{
 							Description: `The authenticatorKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-  The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
+The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -65,14 +69,16 @@ func resourceExternalRadiusServer() *schema.Resource {
 						},
 						"enable_key_wrap": &schema.Schema{
 							Description: `KeyWrap may only be enabled if it is supported on the device.
-  When running in FIPS mode this option should be enabled for such devices`,
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+When running in FIPS mode this option should be enabled for such devices`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"encryption_key": &schema.Schema{
 							Description: `The encryptionKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-  The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
+The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -90,9 +96,9 @@ func resourceExternalRadiusServer() *schema.Resource {
 						},
 						"key_input_format": &schema.Schema{
 							Description: `Specifies the format of the input for fields 'encryptionKey' and 'authenticatorKey'.
-  Allowed Values:
-  - ASCII
-  - HEXADECIMAL`,
+Allowed Values:
+- ASCII
+- HEXADECIMAL`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,

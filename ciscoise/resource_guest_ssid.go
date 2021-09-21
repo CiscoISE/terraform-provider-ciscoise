@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceGuestSSID() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on GuestSSID.
-  
-  - This resource allows the client to update a guest SSID by ID.
-  - This resource deletes a guest SSID by ID.
-  - This resource creates a guest SSID.`,
+
+- This resource allows the client to update a guest SSID by ID.
+
+- This resource deletes a guest SSID by ID.
+
+- This resource creates a guest SSID.
+`,
 
 		CreateContext: resourceGuestSSIDCreate,
 		ReadContext:   resourceGuestSSIDRead,

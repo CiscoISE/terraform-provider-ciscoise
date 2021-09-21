@@ -3,11 +3,10 @@ package ciscoise
 import (
 	"context"
 	"fmt"
+	"log"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
-	"log"
-
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -15,10 +14,13 @@ import (
 func resourceByodPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on BYODPortal.
-  
-  - This resource allows the client to update a BYOD portal by ID.
-  - This resource deletes a BYOD portal by ID.
-  - This resource creates a BYOD portal.`,
+
+- This resource allows the client to update a BYOD portal by ID.
+
+- This resource deletes a BYOD portal by ID.
+
+- This resource creates a BYOD portal.
+`,
 
 		CreateContext: resourceByodPortalCreate,
 		ReadContext:   resourceByodPortalRead,
@@ -140,7 +142,7 @@ func resourceByodPortal() *schema.Resource {
 									},
 									"language": &schema.Schema{
 										Description: `This property is supported only for Read operation and it allows to show the customizations in English.
-  Other languages are not supported`,
+Other languages are not supported`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -218,8 +220,8 @@ func resourceByodPortal() *schema.Resource {
 									},
 									"portal_tweak_settings": &schema.Schema{
 										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-  The Tweak Settings can subsequently be changed by the user`,
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -299,12 +301,12 @@ func resourceByodPortal() *schema.Resource {
 						},
 						"portal_type": &schema.Schema{
 							Description: `Allowed values:
-  - BYOD,
-  - HOTSPOTGUEST,
-  - MYDEVICE,
-  - SELFREGGUEST,
-  - SPONSOR,
-  - SPONSOREDGUEST`,
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -338,9 +340,11 @@ func resourceByodPortal() *schema.Resource {
 																Computed: true,
 															},
 															"show_device_id": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 														},
 													},
@@ -377,44 +381,56 @@ func resourceByodPortal() *schema.Resource {
 
 															"aup_display": &schema.Schema{
 																Description: `How the AUP should be displayed, either on page or as a link.
-  Only valid if includeAup = true.
-  Allowed values:
-  - ONPAGE,
-  - ASLINK`,
+Only valid if includeAup = true.
+Allowed values:
+- ONPAGE,
+- ASLINK`,
 																Type:     schema.TypeString,
 																Optional: true,
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"enable_guest_access": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"include_aup": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"require_mdm": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"require_scrolling": &schema.Schema{
 																Description: `Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 														},
 													},
@@ -432,16 +448,16 @@ func resourceByodPortal() *schema.Resource {
 
 												"allowed_interfaces": &schema.Schema{
 													Description: `Interfaces that the portal will be reachable on.
-  Allowed values:
-  - eth0,
-  - eth1,
-  - eth2,
-  - eth3,
-  - eth4,
-  - eth5,
-  - bond0,
-  - bond1,
-  - bond2`,
+Allowed values:
+- eth0,
+- eth1,
+- eth2,
+- eth3,
+- eth4,
+- eth5,
+- bond0,
+- bond1,
+- bond2`,
 													Type:     schema.TypeList,
 													Optional: true,
 													Computed: true,
@@ -463,8 +479,8 @@ func resourceByodPortal() *schema.Resource {
 												},
 												"display_lang": &schema.Schema{
 													Description: `Allowed values:
-  - USEBROWSERLOCALE,
-  - ALWAYSUSE`,
+- USEBROWSERLOCALE,
+- ALWAYSUSE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -499,50 +515,62 @@ func resourceByodPortal() *schema.Resource {
 
 												"default_empty_field_value": &schema.Schema{
 													Description: `The default value displayed for an empty field.
-  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
 													Description: `Specifies how empty fields are handled on the Support Information Page.
-  Allowed values:
-  - HIDE,
-  - DISPLAYWITHNOVALUE,
-  - DISPLAYWITHDEFAULTVALUE`,
+Allowed values:
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},

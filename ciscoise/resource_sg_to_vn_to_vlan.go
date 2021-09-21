@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceSgToVnToVLAN() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SecurityGroupToVirtualNetwork.
-  
-  - This resource allows the client to update a security group to virtual network.
-  - This resource deletes a security group ACL to virtual network.
-  - This resource creates a security group to virtual network.`,
+
+- This resource allows the client to update a security group to virtual network.
+
+- This resource deletes a security group ACL to virtual network.
+
+- This resource creates a security group to virtual network.
+`,
 
 		CreateContext: resourceSgToVnToVLANCreate,
 		ReadContext:   resourceSgToVnToVLANRead,
@@ -89,9 +93,11 @@ func resourceSgToVnToVLAN() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"default_virtual_network": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"description": &schema.Schema{
 										Type:     schema.TypeString,
@@ -116,14 +122,18 @@ func resourceSgToVnToVLAN() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"default_vlan": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"description": &schema.Schema{
 													Type:     schema.TypeString,

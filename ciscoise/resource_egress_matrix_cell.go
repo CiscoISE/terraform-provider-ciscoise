@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceEgressMatrixCell() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on EgressMatrixCell.
-  
-  - This resource allows the client to update an egress matrix cell.
-  - This resource deletes an egress matrix cell.
-  - This resource creates an egress matrix cell.`,
+
+- This resource allows the client to update an egress matrix cell.
+
+- This resource deletes an egress matrix cell.
+
+- This resource creates an egress matrix cell.
+`,
 
 		CreateContext: resourceEgressMatrixCellCreate,
 		ReadContext:   resourceEgressMatrixCellRead,
@@ -42,9 +46,9 @@ func resourceEgressMatrixCell() *schema.Resource {
 
 						"default_rule": &schema.Schema{
 							Description: `Allowed values:
-  - NONE,
-  - DENY_IP,
-  - PERMIT_IP`,
+- NONE,
+- DENY_IP,
+- PERMIT_IP`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -87,9 +91,9 @@ func resourceEgressMatrixCell() *schema.Resource {
 						},
 						"matrix_cell_status": &schema.Schema{
 							Description: `Allowed values:
-  - DISABLED,
-  - ENABLED,
-  - MONITOR`,
+- DISABLED,
+- ENABLED,
+- MONITOR`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,

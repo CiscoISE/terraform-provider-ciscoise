@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceTacacsServerSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on TacacsServerSequence.
-  
-  - This resource allows the client to update a TACACS server sequence.
-  - This resource deletes a TACACS server sequence.
-  - This resource creates a TACACS server sequence.`,
+
+- This resource allows the client to update a TACACS server sequence.
+
+- This resource deletes a TACACS server sequence.
+
+- This resource creates a TACACS server sequence.
+`,
 
 		CreateContext: resourceTacacsServerSequenceCreate,
 		ReadContext:   resourceTacacsServerSequenceRead,
@@ -71,9 +75,11 @@ func resourceTacacsServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -88,18 +94,22 @@ func resourceTacacsServerSequence() *schema.Resource {
 						},
 						"prefix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for prefix strip`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"server_list": &schema.Schema{
 							Description: `The names of Tacacs external servers separated by commas.
-  The order of the names in the string is the order of servers that will be used during authentication`,
+The order of the names in the string is the order of servers that will be used during authentication`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -112,9 +122,11 @@ func resourceTacacsServerSequence() *schema.Resource {
 						},
 						"suffix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for suffix strip`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},

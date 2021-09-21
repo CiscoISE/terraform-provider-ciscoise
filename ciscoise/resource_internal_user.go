@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,12 +15,17 @@ import (
 func resourceInternalUser() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on InternalUser.
-  
-  - This resource allows the client to update an internal user by name.
-  - This resource deletes an internal user by name.
-  - This resource allows the client to update an internal user by ID.
-  - This resource deletes an internal user by ID.
-  - This resource creates an internal user.`,
+
+- This resource allows the client to update an internal user by name.
+
+- This resource deletes an internal user by name.
+
+- This resource allows the client to update an internal user by ID.
+
+- This resource deletes an internal user by ID.
+
+- This resource creates an internal user.
+`,
 
 		CreateContext: resourceInternalUserCreate,
 		ReadContext:   resourceInternalUserRead,
@@ -42,9 +48,11 @@ func resourceInternalUser() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"custom_attributes": &schema.Schema{
 							Description: `Key value map`,
@@ -69,10 +77,12 @@ func resourceInternalUser() *schema.Resource {
 						},
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
-  The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"expiry_date": &schema.Schema{
 							Description: `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
@@ -81,9 +91,11 @@ func resourceInternalUser() *schema.Resource {
 							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"first_name": &schema.Schema{
 							Type:     schema.TypeString,

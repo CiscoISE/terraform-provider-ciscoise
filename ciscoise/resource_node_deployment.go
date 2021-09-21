@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,16 +16,16 @@ import (
 func resourceNodeDeployment() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Node Deployment.
-  
-  - Register ISE node to form a multi-node deployment
-  
-  - Updates the deployed ISE node with the information provided
-  
-  - The de-register ednode becomes a standalone Cisco ISE node.
-  It retains the last configuration that it received rom the PrimaryPAN and assumes the default personas of a standalone
-  node
-  that are Administration, PolicyService, and Monitoring.
-  `,
+
+- Register ISE node to form a multi-node deployment
+
+- Updates the deployed ISE node with the information provided
+
+- The de-register ednode becomes a standalone Cisco ISE node.
+It retains the last configuration that it received rom the PrimaryPAN and assumes the default personas of a standalone
+node
+that are Administration, PolicyService, and Monitoring.
+`,
 
 		CreateContext: resourceNodeDeploymentCreate,
 		ReadContext:   resourceNodeDeploymentRead,
@@ -54,9 +55,11 @@ func resourceNodeDeployment() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"is_enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"role": &schema.Schema{
 										Type:     schema.TypeString,
@@ -89,19 +92,25 @@ func resourceNodeDeployment() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"enable_pxgrid": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"is_enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"is_mnt_dedicated": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"other_monitoring_node": &schema.Schema{
 													Type:     schema.TypeString,
@@ -116,29 +125,39 @@ func resourceNodeDeployment() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"enable_device_admin_service": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"enable_nac_service": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"enable_passive_identity_service": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"enable_profiling_service": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"session_service": &schema.Schema{
 																Type:     schema.TypeList,
@@ -148,9 +167,11 @@ func resourceNodeDeployment() *schema.Resource {
 																	Schema: map[string]*schema.Schema{
 
 																		"is_enabled": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Optional: true,
-																			Computed: true,
+																			// Type:     schema.TypeBool,
+																			Type:         schema.TypeString,
+																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																			Optional:     true,
+																			Computed:     true,
 																		},
 																		"nodegroup": &schema.Schema{
 																			Type:     schema.TypeString,
@@ -168,9 +189,11 @@ func resourceNodeDeployment() *schema.Resource {
 																	Schema: map[string]*schema.Schema{
 
 																		"is_enabled": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Optional: true,
-																			Computed: true,
+																			// Type:     schema.TypeBool,
+																			Type:         schema.TypeString,
+																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																			Optional:     true,
+																			Computed:     true,
 																		},
 																		"user_interface": &schema.Schema{
 																			Type:     schema.TypeString,
@@ -196,7 +219,7 @@ func resourceNodeDeployment() *schema.Resource {
 						},
 						"hostname": &schema.Schema{
 							Type:     schema.TypeString,
-							Required: true,
+							Computed: true,
 						},
 						"ip_address": &schema.Schema{
 							Type:     schema.TypeString,
@@ -234,8 +257,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 											},
 										},
@@ -252,8 +277,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
@@ -278,8 +305,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
@@ -300,8 +329,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 											},
 										},
@@ -318,8 +349,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
@@ -340,8 +373,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
@@ -366,8 +401,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 											},
 										},
@@ -384,8 +421,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 											},
 										},
@@ -402,8 +441,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 											},
 										},
@@ -420,8 +461,10 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 												"event_timeout": &schema.Schema{
 													Type:     schema.TypeInt,
@@ -454,12 +497,16 @@ func resourceNodeDeployment() *schema.Resource {
 													Optional: true,
 												},
 												"link_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 												"mac_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
 												},
 												"port": &schema.Schema{
 													Type:     schema.TypeInt,
@@ -492,7 +539,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -509,7 +557,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"interface": &schema.Schema{
@@ -534,7 +583,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"interface": &schema.Schema{
@@ -555,7 +605,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -572,7 +623,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"interface": &schema.Schema{
@@ -593,7 +645,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"interface": &schema.Schema{
@@ -618,7 +671,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -635,7 +689,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -652,7 +707,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -669,7 +725,8 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"event_timeout": &schema.Schema{
@@ -702,11 +759,13 @@ func resourceNodeDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"link_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"mac_trap_query": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"port": &schema.Schema{
@@ -741,16 +800,22 @@ func resourceNodeDeployment() *schema.Resource {
 														Schema: map[string]*schema.Schema{
 
 															"enable_pxgrid": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"is_enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"is_mnt_dedicated": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"other_monitoring_node": &schema.Schema{
 																Type:     schema.TypeString,
@@ -764,24 +829,34 @@ func resourceNodeDeployment() *schema.Resource {
 																	Schema: map[string]*schema.Schema{
 
 																		"enable_device_admin_service": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Optional: true,
+																			// Type:     schema.TypeBool,
+																			Type:         schema.TypeString,
+																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																			Optional:     true,
 																		},
 																		"enable_nac_service": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Optional: true,
+																			// Type:     schema.TypeBool,
+																			Type:         schema.TypeString,
+																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																			Optional:     true,
 																		},
 																		"enable_passive_identity_service": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Optional: true,
+																			// Type:     schema.TypeBool,
+																			Type:         schema.TypeString,
+																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																			Optional:     true,
 																		},
 																		"enable_profiling_service": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Optional: true,
+																			// Type:     schema.TypeBool,
+																			Type:         schema.TypeString,
+																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																			Optional:     true,
 																		},
 																		"enabled": &schema.Schema{
-																			Type:     schema.TypeBool,
-																			Optional: true,
+																			// Type:     schema.TypeBool,
+																			Type:         schema.TypeString,
+																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																			Optional:     true,
 																		},
 																		"session_service": &schema.Schema{
 																			Type:     schema.TypeList,
@@ -791,8 +866,10 @@ func resourceNodeDeployment() *schema.Resource {
 																				Schema: map[string]*schema.Schema{
 
 																					"is_enabled": &schema.Schema{
-																						Type:     schema.TypeBool,
-																						Optional: true,
+																						// Type:     schema.TypeBool,
+																						Type:         schema.TypeString,
+																						ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																						Optional:     true,
 																					},
 																					"nodegroup": &schema.Schema{
 																						Type:     schema.TypeString,
@@ -809,8 +886,10 @@ func resourceNodeDeployment() *schema.Resource {
 																				Schema: map[string]*schema.Schema{
 
 																					"is_enabled": &schema.Schema{
-																						Type:     schema.TypeBool,
-																						Optional: true,
+																						// Type:     schema.TypeBool,
+																						Type:         schema.TypeString,
+																						ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																						Optional:     true,
 																					},
 																					"user_interface": &schema.Schema{
 																						Type:     schema.TypeString,
@@ -855,8 +934,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 														},
 													},
@@ -873,8 +954,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"interface": &schema.Schema{
 																Type:     schema.TypeString,
@@ -899,8 +982,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"interface": &schema.Schema{
 																Type:     schema.TypeString,
@@ -921,8 +1006,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 														},
 													},
@@ -939,8 +1026,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"interface": &schema.Schema{
 																Type:     schema.TypeString,
@@ -961,8 +1050,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"interface": &schema.Schema{
 																Type:     schema.TypeString,
@@ -987,8 +1078,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 														},
 													},
@@ -1005,8 +1098,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 														},
 													},
@@ -1023,8 +1118,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 														},
 													},
@@ -1041,8 +1138,10 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"event_timeout": &schema.Schema{
 																Type:     schema.TypeInt,
@@ -1075,12 +1174,16 @@ func resourceNodeDeployment() *schema.Resource {
 																Optional: true,
 															},
 															"link_trap_query": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"mac_trap_query": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
 															},
 															"port": &schema.Schema{
 																Type:     schema.TypeInt,

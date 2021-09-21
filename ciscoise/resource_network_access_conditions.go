@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,62 +16,66 @@ import (
 func resourceNetworkAccessConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Conditions.
-  
-  - Network Access Creates a library condition:
-  
-  
-  
-   Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
-  policy rules could be match.
-  
-  
-   Condition can be compose from single dictionary attribute name and value using model
-  LibraryConditionAttributes
-   , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
-  LibraryConditionAndBlock
-   or
-  LibraryConditionOrBlock
-  .
-  
-  
-   When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
-  inner condition models:
-  ConditionAttributes
-  ,
-  ConditionAndBlock
-  ,
-  ConditionOrBlock
-  , that represent dynamically built Conditions which are not stored in the conditions Library, or using
-  ConditionReference
-  , which includes an ID to existing stored condition in the library.
-  
-  
-   The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
-  the condition name.
-  
-  
-   When using one of the 3 inner condition models (
-  ConditionAttributes, ConditionAndBlock, ConditionOrBlock
-  ), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
-  only as inner members of the root condition.
-  
-  
-   When using
-  ConditionReference
-   model in inner layers, the condition name is not required.
-  
-  
-   ConditionReference objects can also include a reference ID to a condition of type
-  TimeAndDate
-  .
-  
-  
-  
-  
-  - Network Access Update library condition using condition name.
-  - Network Access Delete a library condition using condition Name.
-  - Network Access Update library condition.
-  - Network Access Delete a library condition.`,
+
+- Network Access Creates a library condition:
+
+
+
+ Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
+policy rules could be match.
+
+
+ Condition can be compose from single dictionary attribute name and value using model
+LibraryConditionAttributes
+ , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
+LibraryConditionAndBlock
+ or
+LibraryConditionOrBlock
+.
+
+
+ When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
+inner condition models:
+ConditionAttributes
+,
+ConditionAndBlock
+,
+ConditionOrBlock
+, that represent dynamically built Conditions which are not stored in the conditions Library, or using
+ConditionReference
+, which includes an ID to existing stored condition in the library.
+
+
+ The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
+the condition name.
+
+
+ When using one of the 3 inner condition models (
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
+only as inner members of the root condition.
+
+
+ When using
+ConditionReference
+ model in inner layers, the condition name is not required.
+
+
+ ConditionReference objects can also include a reference ID to a condition of type
+TimeAndDate
+.
+
+
+
+
+- Network Access Update library condition using condition name.
+
+- Network Access Delete a library condition using condition Name.
+
+- Network Access Update library condition.
+
+- Network Access Delete a library condition.
+`,
 
 		CreateContext: resourceNetworkAccessConditionsCreate,
 		ReadContext:   resourceNetworkAccessConditionsRead,
@@ -126,9 +131,11 @@ func resourceNetworkAccessConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -248,9 +255,11 @@ func resourceNetworkAccessConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Description: `Condition name`,

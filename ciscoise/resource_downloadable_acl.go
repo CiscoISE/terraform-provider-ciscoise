@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceDownloadableACL() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on DownloadableACL.
-  
-  - This resource allows the client to update a downloadable ACL.
-  - This resource deletes a downloadable ACL.
-  - This resource creates a downloadable ACL.`,
+
+- This resource allows the client to update a downloadable ACL.
+
+- This resource deletes a downloadable ACL.
+
+- This resource creates a downloadable ACL.
+`,
 
 		CreateContext: resourceDownloadableACLCreate,
 		ReadContext:   resourceDownloadableACLRead,
@@ -48,9 +52,9 @@ func resourceDownloadableACL() *schema.Resource {
 						},
 						"dacl_type": &schema.Schema{
 							Description: `Allowed values:
-  - IPV4,
-  - IPV6,
-  - IP_AGNOSTIC`,
+- IPV4,
+- IPV6,
+- IP_AGNOSTIC`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,

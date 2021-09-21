@@ -2,11 +2,10 @@ package ciscoise
 
 import (
 	"context"
+	"log"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
-	"log"
-
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -14,12 +13,17 @@ import (
 func resourceGuestUser() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on GuestUser.
-  
-  - This resource allows the client to update a guest user by name.
-  - This resource deletes a guest user.
-  - This resource allows the client to update a guest user by ID.
-  - This resource deletes a guest user by ID.
-  - This resource creates a guest user.`,
+
+- This resource allows the client to update a guest user by name.
+
+- This resource deletes a guest user.
+
+- This resource allows the client to update a guest user by ID.
+
+- This resource deletes a guest user by ID.
+
+- This resource creates a guest user.
+`,
 
 		CreateContext: resourceGuestUserCreate,
 		ReadContext:   resourceGuestUserRead,
@@ -116,9 +120,11 @@ func resourceGuestUser() *schema.Resource {
 									},
 									"enabled": &schema.Schema{
 										Description: `This field is only for Get operation not applicable for Create, Update operations`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"first_name": &schema.Schema{
 										Type:     schema.TypeString,

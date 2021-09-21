@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceEndpoint() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on endpoint.
-  
-  - This resource allows the client to update an endpoint.
-  - This resource deletes an endpoint.
-  - This resource creates an endpoint.`,
+
+- This resource allows the client to update an endpoint.
+
+- This resource deletes an endpoint.
+
+- This resource creates an endpoint.
+`,
 
 		CreateContext: resourceEndpointCreate,
 		ReadContext:   resourceEndpointRead,
@@ -103,19 +107,25 @@ func resourceEndpoint() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"mdm_compliance_status": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"mdm_encrypted": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"mdm_enrolled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"mdm_ime_i": &schema.Schema{
 										Type:     schema.TypeString,
@@ -123,9 +133,11 @@ func resourceEndpoint() *schema.Resource {
 										Computed: true,
 									},
 									"mdm_jail_broken": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"mdm_manufacturer": &schema.Schema{
 										Type:     schema.TypeString,
@@ -148,14 +160,18 @@ func resourceEndpoint() *schema.Resource {
 										Computed: true,
 									},
 									"mdm_pinlock": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"mdm_reachable": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"mdm_serial": &schema.Schema{
 										Type:     schema.TypeString,
@@ -186,14 +202,18 @@ func resourceEndpoint() *schema.Resource {
 							Computed: true,
 						},
 						"static_group_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"static_profile_assignment": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceTacacsProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on TACACSProfile.
-  
-  - This resource allows the client to update a TACACS profile.
-  - This resource deletes a TACACS profile.
-  - This resource creates a TACACS profile.`,
+
+- This resource allows the client to update a TACACS profile.
+
+- This resource deletes a TACACS profile.
+
+- This resource creates a TACACS profile.
+`,
 
 		CreateContext: resourceTacacsProfileCreate,
 		ReadContext:   resourceTacacsProfileRead,

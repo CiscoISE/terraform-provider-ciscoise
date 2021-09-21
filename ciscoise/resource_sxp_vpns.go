@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,9 +16,11 @@ import (
 func resourceSxpVpns() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and delete operations on SXPVPNs.
-  
-  - This resource deletes a SXP VPN.
-  - This resource creates a SXP VPN.`,
+
+- This resource deletes a SXP VPN.
+
+- This resource creates a SXP VPN.
+`,
 
 		CreateContext: resourceSxpVpnsCreate,
 		ReadContext:   resourceSxpVpnsRead,
@@ -42,7 +45,6 @@ func resourceSxpVpns() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
-							Optional: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,

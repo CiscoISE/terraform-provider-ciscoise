@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,8 +15,9 @@ import (
 func resourceAciSettings() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read and update operations on ACISettings.
-  
-  - This resource allows the client to update ACI settings.`,
+
+- This resource allows the client to update ACI settings.
+`,
 
 		CreateContext: resourceAciSettingsCreate,
 		ReadContext:   resourceAciSettingsRead,
@@ -38,13 +40,17 @@ func resourceAciSettings() *schema.Resource {
 
 						"aci50": &schema.Schema{
 							Description: `Enable 5.0 ACI Version`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"aci51": &schema.Schema{
 							Description: `Enable 5.1 ACI Version`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"aciipaddress": &schema.Schema{
 							Description: `ACI Domain manager Ip Address.`,
@@ -73,8 +79,10 @@ func resourceAciSettings() *schema.Resource {
 							Optional:    true,
 						},
 						"all_sxp_domain": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"default_sgt_name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -82,16 +90,22 @@ func resourceAciSettings() *schema.Resource {
 						},
 						"enable_aci": &schema.Schema{
 							Description: `Enable ACI Integration`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"enable_data_plane": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"enable_elements_limit": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"id": &schema.Schema{
 							Description: `Resource UUID value`,
@@ -116,8 +130,10 @@ func resourceAciSettings() *schema.Resource {
 							Optional: true,
 						},
 						"specific_sxp_domain": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"specifix_sxp_domain_list": &schema.Schema{
 							Type:     schema.TypeList,

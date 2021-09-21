@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceTacacsExternalServers() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on TACACSExternalServers.
-  
-  - This resource allows the client to update TACACS external servers.
-  - This resource deletes TACACS external servers.
-  - This resource creates TACACS external servers.`,
+
+- This resource allows the client to update TACACS external servers.
+
+- This resource deletes TACACS external servers.
+
+- This resource creates TACACS external servers.
+`,
 
 		CreateContext: resourceTacacsExternalServersCreate,
 		ReadContext:   resourceTacacsExternalServersRead,
@@ -95,9 +99,11 @@ func resourceTacacsExternalServers() *schema.Resource {
 						},
 						"single_connect": &schema.Schema{
 							Description: `Define the use of single connection`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"timeout": &schema.Schema{
 							Description: `The server timeout`,

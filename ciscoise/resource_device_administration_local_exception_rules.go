@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,11 +16,14 @@ import (
 func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Authorization Exception
-  Rules.
-  
-  - Device Admin Create local authorization exception rule.
-  - Device Admin Update local exception rule.
-  - Device Admin Delete local exception rule.`,
+Rules.
+
+- Device Admin Create local authorization exception rule.
+
+- Device Admin Update local exception rule.
+
+- Device Admin Delete local exception rule.
+`,
 
 		CreateContext: resourceDeviceAdministrationLocalExceptionRulesCreate,
 		ReadContext:   resourceDeviceAdministrationLocalExceptionRulesRead,
@@ -115,9 +119,11 @@ func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 														},
 													},
@@ -237,9 +243,11 @@ func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -276,9 +284,11 @@ func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,

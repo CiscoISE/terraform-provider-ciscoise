@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceDeviceAdministrationPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Policy Set.
-  
-  - Device Admin Create a new policy set.
-  - Device Admin Update a policy set.
-  - Device Admin Delete a policy set.`,
+
+- Device Admin Create a new policy set.
+
+- Device Admin Update a policy set.
+
+- Device Admin Delete a policy set.
+`,
 
 		CreateContext: resourceDeviceAdministrationPolicySetCreate,
 		ReadContext:   resourceDeviceAdministrationPolicySetRead,
@@ -81,9 +85,11 @@ func resourceDeviceAdministrationPolicySet() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -203,9 +209,11 @@ func resourceDeviceAdministrationPolicySet() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"name": &schema.Schema{
 										Description: `Condition name`,
@@ -242,9 +250,11 @@ func resourceDeviceAdministrationPolicySet() *schema.Resource {
 						},
 						"default": &schema.Schema{
 							Description: `Flag which indicates if this policy set is the default one`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Description: `The description for the policy set`,
@@ -266,9 +276,11 @@ func resourceDeviceAdministrationPolicySet() *schema.Resource {
 						},
 						"is_proxy": &schema.Schema{
 							Description: `Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Description: `Given name for the policy set, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,

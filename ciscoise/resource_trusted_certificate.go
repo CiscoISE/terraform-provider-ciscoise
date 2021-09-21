@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,8 +17,11 @@ func resourceTrustedCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read, update and delete operations on Certificates.
 
-  - Update a trusted certificate present in ISE trust store.
-  - This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.`,
+- Update a trusted certificate present in ISE trust store.
+
+
+- This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
+`,
 
 		CreateContext: resourceTrustedCertificateCreate,
 		ReadContext:   resourceTrustedCertificateRead,
@@ -77,14 +81,15 @@ func resourceTrustedCertificate() *schema.Resource {
 							Description: `ID of trust certificate`,
 							Type:        schema.TypeString,
 							Computed:    true,
-							Optional:    true,
 						},
 						"internal_ca": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_referred_in_policy": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"issued_by": &schema.Schema{
@@ -166,23 +171,31 @@ func resourceTrustedCertificate() *schema.Resource {
 						},
 						"trust_for_certificate_based_admin_auth": &schema.Schema{
 							Description: `Trust for Certificate based Admin authentication`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"trust_for_cisco_services_auth": &schema.Schema{
 							Description: `Trust for authentication of Cisco Services`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"trust_for_client_auth": &schema.Schema{
 							Description: `Trust for client authentication and Syslog`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"trust_for_ise_auth": &schema.Schema{
 							Description: `Trust for authentication within ISE`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"trusted_for": &schema.Schema{
 							Description: `Different services for which the certificated is trusted`,

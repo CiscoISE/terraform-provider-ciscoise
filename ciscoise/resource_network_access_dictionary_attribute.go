@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Dictionary Attribute.
-  
-  - Create a new Dictionary Attribute for an existing Dictionary.
-  - Update a Dictionary Attribute
-  - Delete a Dictionary Attribute.`,
+
+- Create a new Dictionary Attribute for an existing Dictionary.
+
+- Update a Dictionary Attribute
+
+- Delete a Dictionary Attribute.
+`,
 
 		CreateContext: resourceNetworkAccessDictionaryAttributeCreate,
 		ReadContext:   resourceNetworkAccessDictionaryAttributeRead,
@@ -50,9 +54,11 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 
 									"is_default": &schema.Schema{
 										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,

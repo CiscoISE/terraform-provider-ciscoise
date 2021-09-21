@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceNetworkAccessDictionary() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Dictionary.
-  
-  - Network Access Create a new Dictionary.
-  - Network Access Update a Dictionary.
-  - Network Access Delete a Dictionary.`,
+
+- Network Access Create a new Dictionary.
+
+- Network Access Update a Dictionary.
+
+- Network Access Delete a Dictionary.
+`,
 
 		CreateContext: resourceNetworkAccessDictionaryCreate,
 		ReadContext:   resourceNetworkAccessDictionaryRead,

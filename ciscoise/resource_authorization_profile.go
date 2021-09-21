@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceAuthorizationProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on AuthorizationProfile.
-  
-  - This resource allows the client to update an authorization profile.
-  - This resource deletes an authorization profile.
-  - This resource creates an authorization profile.`,
+
+- This resource allows the client to update an authorization profile.
+
+- This resource deletes an authorization profile.
+
+- This resource creates an authorization profile.
+`,
 
 		CreateContext: resourceAuthorizationProfileCreate,
 		ReadContext:   resourceAuthorizationProfileRead,
@@ -42,8 +46,8 @@ func resourceAuthorizationProfile() *schema.Resource {
 
 						"access_type": &schema.Schema{
 							Description: `Allowed Values:
-  - ACCESS_ACCEPT,
-  - ACCESS_REJECT`,
+- ACCESS_ACCEPT,
+- ACCESS_REJECT`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -92,8 +96,8 @@ func resourceAuthorizationProfile() *schema.Resource {
 									},
 									"right_hand_side_attribue_value": &schema.Schema{
 										Description: `Attribute value can be of type AttributeValue or AdvancedDictionaryAttribute.
-  For AttributeValue the value is String,
-  For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties`,
+For AttributeValue the value is String,
+For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -129,9 +133,9 @@ func resourceAuthorizationProfile() *schema.Resource {
 						"agentless_posture": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 						"airespace_acl": &schema.Schema{
 							Type:     schema.TypeString,
@@ -150,10 +154,10 @@ func resourceAuthorizationProfile() *schema.Resource {
 						},
 						"authz_profile_type": &schema.Schema{
 							Description: `Allowed Values:
-  - SWITCH,
-  - TRUSTSEC,
-  - TACACS
-  SWITCH is used for Standard Authorization Profiles`,
+- SWITCH,
+- TRUSTSEC,
+- TACACS
+SWITCH is used for Standard Authorization Profiles`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -181,9 +185,9 @@ func resourceAuthorizationProfile() *schema.Resource {
 						"easywired_session_candidate": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 						"id": &schema.Schema{
 							Description: `Resource UUID value`,
@@ -229,9 +233,9 @@ func resourceAuthorizationProfile() *schema.Resource {
 						},
 						"mac_sec_policy": &schema.Schema{
 							Description: `Allowed Values:
-  - MUST_SECURE,
-  - MUST_NOT_SECURE,
-  - SHOULD_SECURE`,
+- MUST_SECURE,
+- MUST_NOT_SECURE,
+- SHOULD_SECURE`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -245,9 +249,9 @@ func resourceAuthorizationProfile() *schema.Resource {
 						"neat": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 						"profile_name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -263,8 +267,8 @@ func resourceAuthorizationProfile() *schema.Resource {
 
 									"connectivity": &schema.Schema{
 										Description: `Allowed Values:
-  - DEFAULT,
-  - RADIUS_REQUEST`,
+- DEFAULT,
+- RADIUS_REQUEST`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -281,16 +285,16 @@ func resourceAuthorizationProfile() *schema.Resource {
 						"service_template": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 						"track_movement": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 						"vlan": &schema.Schema{
 							Type:     schema.TypeList,
@@ -316,16 +320,16 @@ func resourceAuthorizationProfile() *schema.Resource {
 						"voice_domain_permission": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 						"web_auth": &schema.Schema{
 							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 						},
 						"web_redirection": &schema.Schema{
 							Type:     schema.TypeList,
@@ -336,7 +340,7 @@ func resourceAuthorizationProfile() *schema.Resource {
 
 									"web_redirection_type": &schema.Schema{
 										Description: `Value MUST be one of the following:CentralizedWebAuth, HotSpot, NativeSupplicanProvisioning, ClientProvisioning. 
-  The WebRedirectionType must fit the portalName`,
+The WebRedirectionType must fit the portalName`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -348,12 +352,12 @@ func resourceAuthorizationProfile() *schema.Resource {
 									},
 									"display_certificates_renewal_messages": &schema.Schema{
 										Description: `The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
-  For all other 'WebRedirectionType' values the field must be ignored`,
-										// Type:     schema.TypeBool,
+For all other 'WebRedirectionType' values the field must be ignored`,
+										// Type:        schema.TypeBool,
 										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 									},
 									"portal_name": &schema.Schema{
 										Description: `A portal that exist in the DB and fits the WebRedirectionType`,

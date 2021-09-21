@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,29 +16,31 @@ import (
 func resourceNetworkAccessPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Policy Set.
-  
-  - Network Access Create a new policy set:
-  
-  
-  
-   Policy must include name , service identifier (either server sequence or allowed protocol) and a condition.
-  
-  
-   Condition has hierarchical structure which define a set of condition for which policy could be match.
-  
-  
-   Condition can be either reference to a stored Library condition, using model
-  ConditionReference
-  ,
-  or, dynamically built conditions which are not stored in the conditions Library, using models
-  ConditionAttributes, ConditionAndBlock, ConditionOrBlock
-  .
-  
-  
-  
-  
-  - Network Access Update a policy set.
-  - Network Access Delete a policy set.`,
+
+- Network Access Create a new policy set:
+
+
+
+ Policy must include name , service identifier (either server sequence or allowed protocol) and a condition.
+
+
+ Condition has hierarchical structure which define a set of condition for which policy could be match.
+
+
+ Condition can be either reference to a stored Library condition, using model
+ConditionReference
+,
+or, dynamically built conditions which are not stored in the conditions Library, using models
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+.
+
+
+
+
+- Network Access Update a policy set.
+
+- Network Access Delete a policy set.
+`,
 
 		CreateContext: resourceNetworkAccessPolicySetCreate,
 		ReadContext:   resourceNetworkAccessPolicySetRead,
@@ -100,9 +103,11 @@ func resourceNetworkAccessPolicySet() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -222,9 +227,11 @@ func resourceNetworkAccessPolicySet() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"name": &schema.Schema{
 										Description: `Condition name`,
@@ -261,9 +268,11 @@ func resourceNetworkAccessPolicySet() *schema.Resource {
 						},
 						"default": &schema.Schema{
 							Description: `Flag which indicates if this policy set is the default one`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Description: `The description for the policy set`,
@@ -285,9 +294,11 @@ func resourceNetworkAccessPolicySet() *schema.Resource {
 						},
 						"is_proxy": &schema.Schema{
 							Description: `Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Description: `Given name for the policy set, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
