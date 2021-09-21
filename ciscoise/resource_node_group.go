@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,11 +16,14 @@ import (
 func resourceNodeGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Node Group.
-  
-  - Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
-  pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
-  API updates an existing node group in the system.
-  - Developers need to delete node group in the system.`,
+
+- Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
+pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
+
+- API updates an existing node group in the system.
+
+- Developers need to delete node group in the system.
+`,
 
 		CreateContext: resourceNodeGroupCreate,
 		ReadContext:   resourceNodeGroupRead,
@@ -54,9 +58,11 @@ func resourceNodeGroup() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"query_attempts": &schema.Schema{
 										Type:     schema.TypeInt,

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,9 @@ import (
 func resourcePortalGlobalSetting() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read and update operations on PortalGlobalSetting.
-  
-  - This resource allows the client to update the portal global settings by id.`,
+
+- This resource allows the client to update the portal global settings by id.
+`,
 
 		CreateContext: resourcePortalGlobalSettingCreate,
 		ReadContext:   resourcePortalGlobalSettingRead,
@@ -40,8 +42,8 @@ func resourcePortalGlobalSetting() *schema.Resource {
 
 						"customization": &schema.Schema{
 							Description: `Allowed values:
-  - HTML,
-  - HTMLANDJAVASCRIPT`,
+- HTML,
+- HTMLANDJAVASCRIPT`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,

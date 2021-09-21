@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceDeviceAdministrationNetworkConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Network Conditions.
-  
-  - Device Admin Creates network condition.
-  - Device Admin Update network condition.
-  - Device Admin Delete network condition.`,
+
+- Device AdminCreates network condition.
+
+- Device Admin Update network condition.
+
+- Device Admin Delete network condition.
+`,
 
 		CreateContext: resourceDeviceAdministrationNetworkConditionsCreate,
 		ReadContext:   resourceDeviceAdministrationNetworkConditionsRead,

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,9 +16,11 @@ import (
 func resourceNativeSupplicantProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read, update and delete operations on NativeSupplicantProfile.
-  
-  - This resource allows the client to update a native supplicant profile
-  - This resource deletes a native supplicant profile.`,
+
+- This resource allows the client to update a native supplicant profile
+
+- This resource deletes a native supplicant profile.
+`,
 
 		CreateContext: resourceNativeSupplicantProfileCreate,
 		ReadContext:   resourceNativeSupplicantProfileRead,
@@ -84,11 +87,11 @@ func resourceNativeSupplicantProfile() *schema.Resource {
 
 									"action_type": &schema.Schema{
 										Description: `Action type for WifiProfile.
-  Allowed values:
-  - ADD,
-  - UPDATE,
-  - DELETE
-  (required for updating existing WirelessProfile)`,
+Allowed values:
+- ADD,
+- UPDATE,
+- DELETE
+(required for updating existing WirelessProfile)`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,

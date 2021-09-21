@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceSponsoredGuestPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SponsoredGuestPortal.
-  
-  - This resource allows the client to update a sponsored guest portal by ID.
-  - This resource deletes a sponsored guest portal by ID.
-  - This resource creates a sponsored guest portal.`,
+
+- This resource allows the client to update a sponsored guest portal by ID.
+
+- This resource deletes a sponsored guest portal by ID.
+
+- This resource creates a sponsored guest portal.
+`,
 
 		CreateContext: resourceSponsoredGuestPortalCreate,
 		ReadContext:   resourceSponsoredGuestPortalRead,
@@ -214,8 +218,8 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 									},
 									"portal_tweak_settings": &schema.Schema{
 										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-  The Tweak Settings can subsequently be changed by the user`,
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -293,12 +297,12 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 						},
 						"portal_type": &schema.Schema{
 							Description: `Allowed values:
-  - BYOD,
-  - HOTSPOTGUEST,
-  - MYDEVICE,
-  - SELFREGGUEST,
-  - SPONSOR,
-  - SPONSOREDGUEST`,
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -320,9 +324,9 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 
 												"display_frequency": &schema.Schema{
 													Description: `How the AUP should be displayed, either on page or as a link. Only valid if includeAup = true. Allowed Values:
-  - FIRSTLOGIN,
-  - EVERYLOGIN,
-  - RECURRING`,
+- FIRSTLOGIN,
+- EVERYLOGIN,
+- RECURRING`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -334,32 +338,42 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"require_aup_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"require_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"skip_aup_for_employees": &schema.Schema{
 													Description: `Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"use_diff_aup_for_employees": &schema.Schema{
 													Description: `Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -379,10 +393,10 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 												},
 												"success_redirect": &schema.Schema{
 													Description: `After an Authentication Success where should device be redirected.
-  Allowed values:
-  - AUTHSUCCESSPAGE,
-  - ORIGINATINGURL,
-  - URL`,
+Allowed values:
+- AUTHSUCCESSPAGE,
+- ORIGINATINGURL,
+- URL`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -413,9 +427,11 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 															},
 															"show_device_id": &schema.Schema{
 																Description: `Display Device ID field during registration`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 														},
 													},
@@ -435,9 +451,9 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 															},
 															"success_redirect": &schema.Schema{
 																Description: `After an Authentication Success where should device be redirected. Allowed values:
-  - AUTHSUCCESSPAGE,
-  - ORIGINATINGURL,
-  - URL`,
+- AUTHSUCCESSPAGE,
+- ORIGINATINGURL,
+- URL`,
 																Type:     schema.TypeString,
 																Optional: true,
 																Computed: true,
@@ -454,45 +470,57 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 
 															"aup_display": &schema.Schema{
 																Description: `How the AUP should be displayed, either on page or as a link.
-  Only valid if includeAup = true.
-  Allowed values:
-  - ONPAGE,
-  - ASLINK`,
+Only valid if includeAup = true.
+Allowed values:
+- ONPAGE,
+- ASLINK`,
 																Type:     schema.TypeString,
 																Optional: true,
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"enable_guest_access": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"include_aup": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"require_mdm": &schema.Schema{
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+																// Type:     schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 															"require_scrolling": &schema.Schema{
 																Description: `Require BYOD devices to scroll down to the bottom of the AUP.
-  Only valid if includeAup = true`,
-																Type:     schema.TypeBool,
-																Optional: true,
-																Computed: true,
+Only valid if includeAup = true`,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 														},
 													},
@@ -509,9 +537,11 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 
 												"allow_change_passwd_at_first_login": &schema.Schema{
 													Description: `Allow guest to change their own passwords`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -525,15 +555,19 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 
 												"allow_guests_to_register_devices": &schema.Schema{
 													Description: `Allow guests to register devices`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"auto_register_guest_devices": &schema.Schema{
 													Description: `Automatically register guest devices`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -553,41 +587,51 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 													Computed:    true,
 												},
 												"allow_alternate_guest_portal": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"allow_forgot_password": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"allow_guest_to_change_password": &schema.Schema{
 													Description: `Require the portal user to enter an access code`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"allow_guest_to_create_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"aup_display": &schema.Schema{
 													Description: `How the AUP should be displayed, either on page or as a link.
-  Only valid if includeAup = true.
-  Allowed values:
-  -  ONPAGE,
-  - ASLINK`,
+Only valid if includeAup = true.
+Allowed values:
+-  ONPAGE,
+- ASLINK`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
 													Description: `Maximum failed login attempts before rate limiting`,
@@ -596,16 +640,20 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 													Computed:    true,
 												},
 												"require_access_code": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP.
-  Only valid if includeAup = true`,
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+Only valid if includeAup = true`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"social_configs": &schema.Schema{
 													Type:     schema.TypeList,
@@ -646,16 +694,16 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 
 												"allowed_interfaces": &schema.Schema{
 													Description: `Interfaces that the portal will be reachable on.
-  Allowed values:
-  - eth0,
-  - eth1,
-  - eth2,
-  - eth3,
-  - eth4,
-  - eth5,
-  - bond0,
-  - bond1,
-  - bond2`,
+Allowed values:
+- eth0,
+- eth1,
+- eth2,
+- eth3,
+- eth4,
+- eth5,
+- bond0,
+- bond1,
+- bond2`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -667,7 +715,7 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 												},
 												"assigned_guest_type_for_employee": &schema.Schema{
 													Description: `Unique Id of a guest type.
-  Employees using this portal as a guest inherit login options from the guest type`,
+Employees using this portal as a guest inherit login options from the guest type`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -686,8 +734,8 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 												},
 												"display_lang": &schema.Schema{
 													Description: `Allowed values:
-  - USEBROWSERLOCALE,
-  - ALWAYSUSE`,
+- USEBROWSERLOCALE,
+- ALWAYSUSE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -700,7 +748,7 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 												},
 												"https_port": &schema.Schema{
 													Description: `The port number that the allowed interfaces will listen on.
-  Range from 8000 to 8999`,
+Range from 8000 to 8999`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													Computed: true,
@@ -716,9 +764,11 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -732,9 +782,11 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -748,49 +800,61 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 
 												"default_empty_field_value": &schema.Schema{
 													Description: `The default value displayed for an empty field.
-  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
 													Description: `Specifies how empty fields are handled on the Support Information Page. Allowed values:
-  - HIDE,
-  - DISPLAYWITHNOVALUE,
-  - DISPLAYWITHDEFAULTVALUE`,
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},

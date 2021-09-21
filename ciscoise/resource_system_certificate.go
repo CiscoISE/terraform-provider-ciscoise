@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,15 +16,18 @@ import (
 func resourceSystemCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read, update and delete operations on Certificates.
-  
-  
 
-  - Update a System Certificate.
-  
-  NOTE:
-  Renewing a certificate will cause an application server restart on the selected node. 
-  
-  - This resource deletes a System Certificate of a particular node based on a given HostName and ID.`,
+- Update a System Certificate.
+
+NOTE:
+Renewing a certificate will cause an application server restart on the selected node.
+
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+
+
+- This resource deletes a System Certificate of a particular node based on a given HostName and ID.
+`,
 
 		CreateContext: resourceSystemCertificateCreate,
 		ReadContext:   resourceSystemCertificateRead,
@@ -47,13 +51,17 @@ func resourceSystemCertificate() *schema.Resource {
 
 						"admin": &schema.Schema{
 							Description: `Use certificate to authenticate the ISE Admin Portal`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"allow_replacement_of_portal_group_tag": &schema.Schema{
 							Description: `Allow Replacement of Portal Group Tag (required)`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"description": &schema.Schema{
 							Description: `Description of System Certificate`,
@@ -62,8 +70,10 @@ func resourceSystemCertificate() *schema.Resource {
 						},
 						"eap": &schema.Schema{
 							Description: `Use certificate for EAP protocols that use SSL/TLS tunneling`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"expiration_date": &schema.Schema{
 							Description: `The time and date past which the certificate is no longer valid`,
@@ -96,12 +106,13 @@ func resourceSystemCertificate() *schema.Resource {
 							Description: `ID of system certificate`,
 							Type:        schema.TypeString,
 							Computed:    true,
-							Optional:    true,
 						},
 						"ims": &schema.Schema{
 							Description: `Use certificate for the ISE Messaging Service`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"issued_by": &schema.Schema{
 							Description: `Common Name of the certificate issuer`,
@@ -146,8 +157,10 @@ func resourceSystemCertificate() *schema.Resource {
 						},
 						"portal": &schema.Schema{
 							Description: `Use for portal`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"portal_group_tag": &schema.Schema{
 							Description: `Set Group tag`,
@@ -160,26 +173,35 @@ func resourceSystemCertificate() *schema.Resource {
 						},
 						"pxgrid": &schema.Schema{
 							Description: `Use certificate for the pxGrid Controller`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"radius": &schema.Schema{
 							Description: `Use certificate for the RADSec server`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"renew_self_signed_certificate": &schema.Schema{
 							Description: `Renew Self Signed Certificate`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"saml": &schema.Schema{
 							Description: `Use certificate for SAML Signing`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"self_signed": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"serial_number_decimal_format": &schema.Schema{

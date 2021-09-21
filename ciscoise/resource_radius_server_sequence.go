@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceRadiusServerSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on RADIUSServerSequence.
-  
-  - This resource allows the client to update a RADIUS server sequence.
-  - This resource deletes a RADIUS server sequence.
-  - This resource creates a RADIUS server sequence.`,
+
+- This resource allows the client to update a RADIUS server sequence.
+
+- This resource deletes a RADIUS server sequence.
+
+- This resource creates a RADIUS server sequence.
+`,
 
 		CreateContext: resourceRadiusServerSequenceCreate,
 		ReadContext:   resourceRadiusServerSequenceRead,
@@ -50,10 +54,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 
 									"action": &schema.Schema{
 										Description: `Allowed Values:
-  - ADD,
-  - UPDATE,
-  - REMOVE,
-  - REMOVEANY`,
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -92,10 +96,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 
 									"action": &schema.Schema{
 										Description: `Allowed Values:
-  - ADD,
-  - UPDATE,
-  - REMOVE,
-  - REMOVEANY`,
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -133,9 +137,11 @@ func resourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"continue_authorz_policy": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -169,9 +175,11 @@ func resourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -185,19 +193,25 @@ func resourceRadiusServerSequence() *schema.Resource {
 							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"strip_prefix": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"strip_suffix": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"suffix_separator": &schema.Schema{
 							Description: `The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character`,
@@ -206,14 +220,18 @@ func resourceRadiusServerSequence() *schema.Resource {
 							Computed:    true,
 						},
 						"use_attr_set_before_acc": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"use_attr_set_on_request": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},

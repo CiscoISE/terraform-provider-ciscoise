@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,30 +16,32 @@ import (
 func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Authentication Rules.
-  
-  - Network Access Create authentication rule:
-  
-  
-  
-   Rule must include name and condition.
-  
-  
-   Condition has hierarchical structure which define a set of conditions for which authentication policy rule could be
-  match.
-  
-  
-   Condition can be either reference to a stored Library condition, using model
-  ConditionReference
-  
-  
-  or dynamically built conditions which are not stored in the conditions Library, using models
-  ConditionAttributes, ConditionAndBlock, ConditionOrBlock
-  .
-  
-  
-  
-  - Network Access Update rule.
-  - Network Access Delete rule.`,
+
+- Network Access Create authentication rule:
+
+
+
+ Rule must include name and condition.
+
+
+ Condition has hierarchical structure which define a set of conditions for which authentication policy rule could be
+match.
+
+
+ Condition can be either reference to a stored Library condition, using model
+ConditionReference
+
+
+or dynamically built conditions which are not stored in the conditions Library, using models
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+.
+
+
+
+- Network Access Update rule.
+
+- Network Access Delete rule.
+`,
 
 		CreateContext: resourceNetworkAccessAuthenticationRulesCreate,
 		ReadContext:   resourceNetworkAccessAuthenticationRulesRead,
@@ -149,9 +152,11 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
 															},
 														},
 													},
@@ -271,9 +276,11 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -310,9 +317,11 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,

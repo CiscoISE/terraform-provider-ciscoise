@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,13 +16,14 @@ import (
 func resourceRepository() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Repository.
-  
-  - Create a new repository in the system. The name provided for the
-  repository must be unique.
-  
-  - Update the definition of a specific repository, providing ALL parameters for the repository.
-  
-  `,
+
+- Create a new repository in the system. The name provided for the
+repository must be unique.
+
+- Update the definition of a specific repository, providing ALL parameters for the repository.
+
+- Long description TBD
+`,
 
 		CreateContext: resourceRepositoryCreate,
 		ReadContext:   resourceRepositoryRead,
@@ -44,9 +46,11 @@ func resourceRepository() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"enable_pki": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,

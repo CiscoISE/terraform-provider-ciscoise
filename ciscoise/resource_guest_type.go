@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceGuestType() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on GuestType.
-  
-  - This resource allows the client to update a guest type.
-  - This resource deletes a guest type.
-  - This resource creates a guest type.`,
+
+- This resource allows the client to update a guest type.
+
+- This resource deletes a guest type.
+
+- This resource creates a guest type.
+`,
 
 		CreateContext: resourceGuestTypeCreate,
 		ReadContext:   resourceGuestTypeRead,
@@ -48,9 +52,11 @@ func resourceGuestType() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"allow_access_on_specific_days_times": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"day_time_limits": &schema.Schema{
 										Description: `List of Time Ranges for account access`,
@@ -62,15 +68,15 @@ func resourceGuestType() *schema.Resource {
 
 												"days": &schema.Schema{
 													Description: `List of Days
-  Values should be one of Week day.
-  Allowed values are:
-  - Sunday,
-  - Monday,
-  - Tuesday,
-  - Wednesday,
-  - Thursday,
-  - Friday,
-  - Saturday`,
+Values should be one of Week day.
+Allowed values are:
+- Sunday,
+- Monday,
+- Tuesday,
+- Wednesday,
+- Thursday,
+- Friday,
+- Saturday`,
 													Type:     schema.TypeList,
 													Optional: true,
 													Computed: true,
@@ -100,18 +106,20 @@ func resourceGuestType() *schema.Resource {
 									},
 									"duration_time_unit": &schema.Schema{
 										Description: `Allowed values are:
-  - DAYS,
-  - HOURS,
-  - MINUTES`,
+- DAYS,
+- HOURS,
+- MINUTES`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"from_first_login": &schema.Schema{
 										Description: `When Account Duration starts from first login or specified date`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"max_account_duration": &schema.Schema{
 										Description: `Maximum value of Account Duration`,
@@ -143,9 +151,9 @@ func resourceGuestType() *schema.Resource {
 									},
 									"advance_notification_units": &schema.Schema{
 										Description: `Allowed values are:
-  - DAYS,
-  - HOURS,
-  - MINUTES`,
+- DAYS,
+- HOURS,
+- MINUTES`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -157,21 +165,27 @@ func resourceGuestType() *schema.Resource {
 									},
 									"enable_notification": &schema.Schema{
 										Description: `Enable Notification settings`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"send_email_notification": &schema.Schema{
 										Description: `Enable Email Notification`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"send_sms_notification": &schema.Schema{
 										Description: `Maximum devices guests can register`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"sms_text": &schema.Schema{
 										Type:     schema.TypeString,
@@ -187,9 +201,11 @@ func resourceGuestType() *schema.Resource {
 							Computed: true,
 						},
 						"is_default_type": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -220,15 +236,17 @@ func resourceGuestType() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"allow_guest_portal_bypass": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"failure_action": &schema.Schema{
 										Description: `When Guest Exceeds limit this action will be invoked.
-  Allowed values are:
-  - Disconnect_Oldest_Connection,
-  - Disconnect_Newest_Connection`,
+Allowed values are:
+- Disconnect_Oldest_Connection,
+- Disconnect_Newest_Connection`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -240,9 +258,11 @@ func resourceGuestType() *schema.Resource {
 									},
 									"limit_simultaneous_logins": &schema.Schema{
 										Description: `Enable Simultaneous Logins`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"max_registered_devices": &schema.Schema{
 										Description: `Maximum devices guests can register`,

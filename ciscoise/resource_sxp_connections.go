@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceSxpConnections() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SXPConnections.
-  
-  - This resource allows the client to update a SXP connection.
-  - This resource deletes a SXP connection.
-  - This resource creates a SXP connection.`,
+
+- This resource allows the client to update a SXP connection.
+
+- This resource deletes a SXP connection.
+
+- This resource creates a SXP connection.
+`,
 
 		CreateContext: resourceSxpConnectionsCreate,
 		ReadContext:   resourceSxpConnectionsRead,
@@ -46,9 +50,11 @@ func resourceSxpConnections() *schema.Resource {
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,

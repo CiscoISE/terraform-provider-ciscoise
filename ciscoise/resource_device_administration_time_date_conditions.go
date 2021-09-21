@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Time/Date Conditions.
-  
-  - Device Admin Creates time/date condition.
-  - Device Admin Update network condition.
-  - Device Admin Delete Time/Date condition.`,
+
+- Device Admin Creates time/date condition.
+
+- Device Admin Update network condition.
+
+- Device Admin Delete Time/Date condition.
+`,
 
 		CreateContext: resourceDeviceAdministrationTimeDateConditionsCreate,
 		ReadContext:   resourceDeviceAdministrationTimeDateConditionsRead,
@@ -74,9 +78,11 @@ func resourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -196,9 +202,11 @@ func resourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Description: `Condition name`,

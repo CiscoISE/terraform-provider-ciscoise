@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,12 +16,17 @@ import (
 func resourceDeviceAdministrationConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Conditions.
-  
-  - Device Admin Creates a library condition.
-  - Device Admin Update library condition using condition name.
-  - Device Admin Delete a library condition using condition Name.
-  - Device Admin Update library condition.
-  - Device Admin Delete a library condition.`,
+
+- Device Admin Creates a library condition.
+
+- Device Admin Update library condition using condition name.
+
+- NDevice Admin Delete a library condition using condition Name.
+
+- Device Admin Update library condition.
+
+- Device Admin Delete a library condition.
+`,
 
 		CreateContext: resourceDeviceAdministrationConditionsCreate,
 		ReadContext:   resourceDeviceAdministrationConditionsRead,
@@ -76,9 +82,11 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -198,9 +206,11 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Description: `Condition name`,

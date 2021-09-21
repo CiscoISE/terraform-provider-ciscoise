@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,9 +16,11 @@ import (
 func resourceGuestSmtpNotificationSettings() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on GuestSMTPNotificationConfiguration.
-  
-  - This resource allows the client to update a SMTP configuration setting.
-  - This resource creates a guest SMTP notification configuration.`,
+
+- This resource allows the client to update a SMTP configuration setting.
+
+- This resource creates a guest SMTP notification configuration.
+`,
 
 		CreateContext: resourceGuestSmtpNotificationSettingsCreate,
 		ReadContext:   resourceGuestSmtpNotificationSettingsRead,
@@ -79,9 +82,11 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 						},
 						"notification_enabled": &schema.Schema{
 							Description: `Indicates if the email notification service is to be enabled`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"password": &schema.Schema{
 							Description: `Password of Secure SMTP server`,
@@ -104,21 +109,27 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 						},
 						"use_default_from_address": &schema.Schema{
 							Description: `If the default from address should be used rather than using a sponsor user email address`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"use_password_authentication": &schema.Schema{
 							Description: `If configured to true, SMTP server authentication will happen using username/password`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"use_tlsor_ssl_encryption": &schema.Schema{
 							Description: `If configured to true, SMTP server authentication will happen using TLS/SSL`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"user_name": &schema.Schema{
 							Description: `Username of Secure SMTP server`,

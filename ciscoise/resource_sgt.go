@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceSgt() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SecurityGroups.
-  
-  - This resource allows the client to update a security group.
-  - This resource deletes a security group.
-  - This resource creates a security group.`,
+
+- This resource allows the client to update a security group.
+
+- This resource deletes a security group.
+
+- This resource creates a security group.
+`,
 
 		CreateContext: resourceSgtCreate,
 		ReadContext:   resourceSgtRead,
@@ -64,9 +68,11 @@ func resourceSgt() *schema.Resource {
 							Computed: true,
 						},
 						"is_read_only": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -95,9 +101,11 @@ func resourceSgt() *schema.Resource {
 							Computed: true,
 						},
 						"propogate_to_apic": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"value": &schema.Schema{
 							Description: `Value range: 2 ot 65519 or -1 to auto-generate`,

@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceEndpointGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on EndpointIdentityGroup.
-  
-  - This resource allows the client to update an endpoint identity group.
-  - This resource deletes an endpoint identity group.
-  - This resource creates an endpoint identity group.`,
+
+- This resource allows the client to update an endpoint identity group.
+
+- This resource deletes an endpoint identity group.
+
+- This resource creates an endpoint identity group.
+`,
 
 		CreateContext: resourceEndpointGroupCreate,
 		ReadContext:   resourceEndpointGroupRead,
@@ -76,9 +80,11 @@ func resourceEndpointGroup() *schema.Resource {
 							Computed: true,
 						},
 						"system_defined": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
