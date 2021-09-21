@@ -20,11 +20,11 @@ output "ciscoise_csr_response" {
 }
 
 data "ciscoise_csr_export" "single_response" {
-  provider = ciscoise
+  provider   = ciscoise
   depends_on = [data.ciscoise_csr.response]
-  hostname = "ise"
-  dirpath  = "/tmp/ise"
-  id       = data.ciscoise_csr.response.items[0].id
+  hostname   = "ise"
+  dirpath    = "/tmp/ise"
+  id         = data.ciscoise_csr.response.items[0].id
 }
 
 output "ciscoise__csr_export_single_response" {

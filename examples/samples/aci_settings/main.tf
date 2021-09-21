@@ -48,6 +48,6 @@ resource "ciscoise_aci_settings" "example" {
 }
 
 output "ciscoise_aci_settings_example" {
-  value = ciscoise_aci_settings.example
+  value     = ciscoise_aci_settings.example
   sensitive = true
 }

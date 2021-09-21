@@ -35,5 +35,5 @@ data "ciscoise_network_access_conditions" "found" {
 }
 
 output "ciscoise_network_access_conditions_found" {
-    value = data.ciscoise_network_access_conditions.found
+  value = data.ciscoise_network_access_conditions.found
 }
