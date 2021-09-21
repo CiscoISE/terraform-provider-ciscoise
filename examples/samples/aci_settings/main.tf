@@ -21,8 +21,8 @@ output "ciscoise_aci_settings_response" {
 resource "ciscoise_aci_settings" "example" {
   provider = ciscoise
   item {
-    aci50 = data.ciscoise_aci_settings.response.item[0].aci50
-    aci51 = data.ciscoise_aci_settings.response.item[0].aci51
+    aci50                     = data.ciscoise_aci_settings.response.item[0].aci50
+    aci51                     = data.ciscoise_aci_settings.response.item[0].aci51
     aciipaddress              = data.ciscoise_aci_settings.response.item[0].aciipaddress
     acipassword               = data.ciscoise_aci_settings.response.item[0].acipassword
     aciuser_name              = data.ciscoise_aci_settings.response.item[0].aciuser_name
