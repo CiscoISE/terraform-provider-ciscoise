@@ -653,7 +653,7 @@ func flattenEndpointGetEndpointByNameItemName(item *isegosdk.ResponseEndpointGet
 	respItem["identity_store"] = item.IDentityStore
 	respItem["identity_store_id"] = item.IDentityStoreID
 	respItem["mdm_attributes"] = flattenEndpointGetEndpointByNameItemNameMdmAttributes(item.MdmAttributes)
-	respItem["custom_attributes"] = item.CustomAttributes
+	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
 	respItem["link"] = flattenEndpointGetEndpointByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -717,7 +717,7 @@ func flattenEndpointGetEndpointByIDItemID(item *isegosdk.ResponseEndpointGetEndp
 	respItem["identity_store"] = item.IDentityStore
 	respItem["identity_store_id"] = item.IDentityStoreID
 	respItem["mdm_attributes"] = flattenEndpointGetEndpointByIDItemIDMdmAttributes(item.MdmAttributes)
-	respItem["custom_attributes"] = item.CustomAttributes
+	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
 	respItem["link"] = flattenEndpointGetEndpointByIDItemIDLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

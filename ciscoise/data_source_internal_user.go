@@ -547,7 +547,7 @@ func flattenInternalUserGetInternalUserByNameItemName(item *isegosdk.ResponseInt
 	respItem["expiry_date_enabled"] = boolPtrToString(item.ExpiryDateEnabled)
 	respItem["expiry_date"] = item.ExpiryDate
 	respItem["enable_password"] = item.EnablePassword
-	respItem["custom_attributes"] = item.CustomAttributes
+	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
 	respItem["password_idstore"] = item.PasswordIDStore
 	respItem["link"] = flattenInternalUserGetInternalUserByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
@@ -588,7 +588,7 @@ func flattenInternalUserGetInternalUserByIDItemID(item *isegosdk.ResponseInterna
 	respItem["expiry_date_enabled"] = boolPtrToString(item.ExpiryDateEnabled)
 	respItem["expiry_date"] = item.ExpiryDate
 	respItem["enable_password"] = item.EnablePassword
-	respItem["custom_attributes"] = item.CustomAttributes
+	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
 	respItem["password_idstore"] = item.PasswordIDStore
 	respItem["link"] = flattenInternalUserGetInternalUserByIDItemIDLink(item.Link)
 	return []map[string]interface{}{
