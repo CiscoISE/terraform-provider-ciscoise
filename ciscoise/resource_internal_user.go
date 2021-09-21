@@ -476,6 +476,8 @@ func expandRequestInternalUserUpdateInternalUserByID(ctx context.Context, key st
 
 func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUser {
 	request := isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUser{}
+	vChangePassword, okChangePassword := d.GetOk(key + ".change_password")
+	vvChangePassword := interfaceToBoolPtr(vChangePassword)
 	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
@@ -491,8 +493,13 @@ func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Con
 	if v, ok := d.GetOkExists(key + ".email"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email"))) {
 		request.Email = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
-		request.Password = interfaceToString(v)
+	if okChangePassword && vvChangePassword != nil && *vvChangePassword {
+		if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+			request.Password = interfaceToString(v)
+		}
+		if v, ok := d.GetOkExists(key + ".enable_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_password"))) {
+			request.EnablePassword = interfaceToString(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".first_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".first_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".first_name"))) {
 		request.FirstName = interfaceToString(v)
@@ -511,9 +518,6 @@ func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Con
 	}
 	if v, ok := d.GetOkExists(key + ".expiry_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiry_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiry_date"))) {
 		request.ExpiryDate = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".enable_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_password"))) {
-		request.EnablePassword = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
 		customAttributes := v.(map[string]interface{})
