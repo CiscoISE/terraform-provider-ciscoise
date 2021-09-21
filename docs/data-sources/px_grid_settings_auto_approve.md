@@ -18,8 +18,8 @@ It performs update operation on PxGridSettings.
 ```terraform
 data "ciscoise_px_grid_settings_auto_approve" "example" {
   provider                         = ciscoise
-  allow_password_based_accounts    = false
-  auto_approve_cert_based_accounts = false
+  allow_password_based_accounts    = "false"
+  auto_approve_cert_based_accounts = "false"
 }
 ```
 
@@ -28,8 +28,8 @@ data "ciscoise_px_grid_settings_auto_approve" "example" {
 
 ### Optional
 
-- **allow_password_based_accounts** (Boolean) Allow password based accounts when true
-- **auto_approve_cert_based_accounts** (Boolean) Auto approve certificate based accounts when true
+- **allow_password_based_accounts** (String) Allow password based accounts when true
+- **auto_approve_cert_based_accounts** (String) Auto approve certificate based accounts when true
 - **id** (String) The ID of this resource.
 
 ### Read-Only

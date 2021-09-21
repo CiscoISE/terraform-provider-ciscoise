@@ -27,7 +27,9 @@ description: |-
 It performs read operation on endpoint.
 
 - This data source allows the client to get an endpoint by name.
+
 - This data source allows the client to get an endpoint by ID.
+
 - This data source allows the client to get all the endpoints.
 
 Filter:
@@ -157,8 +159,8 @@ Read-Only:
 - **name** (String)
 - **portal_user** (String)
 - **profile_id** (String)
-- **static_group_assignment** (Boolean)
-- **static_profile_assignment** (Boolean)
+- **static_group_assignment** (String)
+- **static_profile_assignment** (String)
 
 <a id="nestedobjatt--item_id--link"></a>
 ### Nested Schema for `item_id.link`
@@ -175,17 +177,17 @@ Read-Only:
 
 Read-Only:
 
-- **mdm_compliance_status** (Boolean)
-- **mdm_encrypted** (Boolean)
-- **mdm_enrolled** (Boolean)
+- **mdm_compliance_status** (String)
+- **mdm_encrypted** (String)
+- **mdm_enrolled** (String)
 - **mdm_ime_i** (String)
-- **mdm_jail_broken** (Boolean)
+- **mdm_jail_broken** (String)
 - **mdm_manufacturer** (String)
 - **mdm_model** (String)
 - **mdm_os** (String)
 - **mdm_phone_number** (String)
-- **mdm_pinlock** (Boolean)
-- **mdm_reachable** (Boolean)
+- **mdm_pinlock** (String)
+- **mdm_reachable** (String)
 - **mdm_serial** (String)
 - **mdm_server_name** (String)
 
@@ -208,8 +210,8 @@ Read-Only:
 - **name** (String)
 - **portal_user** (String)
 - **profile_id** (String)
-- **static_group_assignment** (Boolean)
-- **static_profile_assignment** (Boolean)
+- **static_group_assignment** (String)
+- **static_profile_assignment** (String)
 
 <a id="nestedobjatt--item_name--link"></a>
 ### Nested Schema for `item_name.link`
@@ -226,17 +228,17 @@ Read-Only:
 
 Read-Only:
 
-- **mdm_compliance_status** (Boolean)
-- **mdm_encrypted** (Boolean)
-- **mdm_enrolled** (Boolean)
+- **mdm_compliance_status** (String)
+- **mdm_encrypted** (String)
+- **mdm_enrolled** (String)
 - **mdm_ime_i** (String)
-- **mdm_jail_broken** (Boolean)
+- **mdm_jail_broken** (String)
 - **mdm_manufacturer** (String)
 - **mdm_model** (String)
 - **mdm_os** (String)
 - **mdm_phone_number** (String)
-- **mdm_pinlock** (Boolean)
-- **mdm_reachable** (Boolean)
+- **mdm_pinlock** (String)
+- **mdm_reachable** (String)
 - **mdm_serial** (String)
 - **mdm_server_name** (String)
 

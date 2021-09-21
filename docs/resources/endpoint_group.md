@@ -10,10 +10,12 @@ description: |-
 # ciscoise_endpoint_group (Resource)
 
 It manages create, read, update and delete operations on EndpointIdentityGroup.
-  
-  - This resource allows the client to update an endpoint identity group.
-  - This resource deletes an endpoint identity group.
-  - This resource creates an endpoint identity group.
+
+- This resource allows the client to update an endpoint identity group.
+
+- This resource deletes an endpoint identity group.
+
+- This resource creates an endpoint identity group.
 
 ## Example Usage
 
@@ -25,7 +27,7 @@ resource "ciscoise_endpoint_group" "example" {
     description    = "string"
     id             = "string"
     name           = "string"
-    system_defined = false
+    system_defined = "false"
   }
 }
 
@@ -54,7 +56,7 @@ Optional:
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
-- **system_defined** (Boolean)
+- **system_defined** (String)
 
 Read-Only:
 

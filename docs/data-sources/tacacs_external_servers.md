@@ -12,7 +12,9 @@ description: |-
 It performs read operation on TACACSExternalServers.
 
 - This data source allows the client to get TACACS external servers by name.
+
 - This data source allows the client to get TACACS external servers by ID.
+
 - This data source allows the client to get all the TACACS external servers.
 
 ## Example Usage
@@ -75,7 +77,7 @@ Read-Only:
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
 - **name** (String)
 - **shared_secret** (String)
-- **single_connect** (Boolean)
+- **single_connect** (String)
 - **timeout** (Number)
 
 <a id="nestedobjatt--item_id--link"></a>
@@ -101,7 +103,7 @@ Read-Only:
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
 - **name** (String)
 - **shared_secret** (String)
-- **single_connect** (Boolean)
+- **single_connect** (String)
 - **timeout** (Number)
 
 <a id="nestedobjatt--item_name--link"></a>

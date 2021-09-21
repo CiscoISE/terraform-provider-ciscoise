@@ -16,6 +16,7 @@ description: |-
 It performs read operation on SXPVPNs.
 
 - This data source allows the client to get a SXP VPN by ID.
+
 - This data source allows the client to get all the SXP VPNs.
 
 Filter:

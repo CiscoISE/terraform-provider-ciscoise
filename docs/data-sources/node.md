@@ -7,13 +7,6 @@ description: |-
   This data source allows the client to get node details by name.This data source allows the client to get node details by ID.This data source allows the client to get all the node details.
   Filter:
   [nodeservicetypes]
-  To search resources by using
-  toDate
-   column,follow the format:
-  DD-MON-YY (Example:13-SEP-18)
-  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 ---
 
 # ciscoise_node (Data Source)
@@ -21,25 +14,14 @@ description: |-
 It performs read operation on NodeDetails.
 
 - This data source allows the client to get node details by name.
+
 - This data source allows the client to get node details by ID.
+
 - This data source allows the client to get all the node details.
 
 Filter:
 
 [nodeservicetypes]
-
-To search resources by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 
 ## Example Usage
 
@@ -133,17 +115,17 @@ Read-Only:
 - **fqdn** (String)
 - **gate_way** (String)
 - **id** (String)
-- **in_deployment** (Boolean)
+- **in_deployment** (String)
 - **ip_address** (String)
 - **ip_addresses** (List of String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
 - **name** (String)
 - **node_service_types** (String)
 - **other_pap_fqdn** (String)
-- **pap_node** (Boolean)
+- **pap_node** (String)
 - **pass_word** (String)
-- **primary_pap_node** (Boolean)
-- **px_grid_node** (Boolean)
+- **primary_pap_node** (String)
+- **px_grid_node** (String)
 - **sxp_ip_address** (String)
 - **user_name** (String)
 
@@ -167,17 +149,17 @@ Read-Only:
 - **fqdn** (String)
 - **gate_way** (String)
 - **id** (String)
-- **in_deployment** (Boolean)
+- **in_deployment** (String)
 - **ip_address** (String)
 - **ip_addresses** (List of String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
 - **name** (String)
 - **node_service_types** (String)
 - **other_pap_fqdn** (String)
-- **pap_node** (Boolean)
+- **pap_node** (String)
 - **pass_word** (String)
-- **primary_pap_node** (Boolean)
-- **px_grid_node** (Boolean)
+- **primary_pap_node** (String)
+- **px_grid_node** (String)
 - **sxp_ip_address** (String)
 - **user_name** (String)
 

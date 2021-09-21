@@ -6,22 +6,26 @@ description: |-
   It manages read, update and delete operations on Certificates.
   Update a System Certificate.
   NOTE:
-    Renewing a certificate will cause an application server restart on the selected node.
+  Renewing a certificate will cause an application server restart on the selected node.
+  NOTE:
+  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
   This resource deletes a System Certificate of a particular node based on a given HostName and ID.
 ---
 
 # ciscoise_system_certificate (Resource)
 
 It manages read, update and delete operations on Certificates.
-  
-  
 
-  - Update a System Certificate.
-  
-  NOTE:
-  Renewing a certificate will cause an application server restart on the selected node. 
-  
-  - This resource deletes a System Certificate of a particular node based on a given HostName and ID.
+- Update a System Certificate.
+
+NOTE:
+Renewing a certificate will cause an application server restart on the selected node.
+
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+
+
+- This resource deletes a System Certificate of a particular node based on a given HostName and ID.
 
 ## Example Usage
 
@@ -30,22 +34,22 @@ resource "ciscoise_system_certificate" "example" {
   provider = ciscoise
   item {
 
-    admin                                 = false
-    allow_replacement_of_portal_group_tag = false
+    admin                                 = "false"
+    allow_replacement_of_portal_group_tag = "false"
     description                           = "string"
-    eap                                   = false
+    eap                                   = "false"
     expiration_ttl_period                 = 1
     expiration_ttl_units                  = "string"
     host_name                             = "string"
     id                                    = "string"
-    ims                                   = false
+    ims                                   = "false"
     name                                  = "string"
-    portal                                = false
+    portal                                = "false"
     portal_group_tag                      = "string"
-    pxgrid                                = false
-    radius                                = false
-    renew_self_signed_certificate         = false
-    saml                                  = false
+    pxgrid                                = "false"
+    radius                                = "false"
+    renew_self_signed_certificate         = "false"
+    saml                                  = "false"
   }
 }
 
@@ -71,34 +75,34 @@ output "ciscoise_system_certificate_example" {
 
 Optional:
 
-- **admin** (Boolean) Use certificate to authenticate the ISE Admin Portal
-- **allow_replacement_of_portal_group_tag** (Boolean) Allow Replacement of Portal Group Tag (required)
+- **admin** (String) Use certificate to authenticate the ISE Admin Portal
+- **allow_replacement_of_portal_group_tag** (String) Allow Replacement of Portal Group Tag (required)
 - **description** (String) Description of System Certificate
-- **eap** (Boolean) Use certificate for EAP protocols that use SSL/TLS tunneling
+- **eap** (String) Use certificate for EAP protocols that use SSL/TLS tunneling
 - **expiration_ttl_period** (Number)
 - **expiration_ttl_units** (String)
 - **host_name** (String) hostName path parameter. Name of Host whose certificate needs to be updated
-- **id** (String) ID of system certificate
-- **ims** (Boolean) Use certificate for the ISE Messaging Service
+- **ims** (String) Use certificate for the ISE Messaging Service
 - **name** (String) Name of the certificate
-- **portal** (Boolean) Use for portal
+- **portal** (String) Use for portal
 - **portal_group_tag** (String) Set Group tag
-- **pxgrid** (Boolean) Use certificate for the pxGrid Controller
-- **radius** (Boolean) Use certificate for the RADSec server
-- **renew_self_signed_certificate** (Boolean) Renew Self Signed Certificate
-- **saml** (Boolean) Use certificate for SAML Signing
+- **pxgrid** (String) Use certificate for the pxGrid Controller
+- **radius** (String) Use certificate for the RADSec server
+- **renew_self_signed_certificate** (String) Renew Self Signed Certificate
+- **saml** (String) Use certificate for SAML Signing
 
 Read-Only:
 
 - **expiration_date** (String) The time and date past which the certificate is no longer valid
 - **friendly_name** (String) Friendly name of system certificate
 - **group_tag** (String)
+- **id** (String) ID of system certificate
 - **issued_by** (String) Common Name of the certificate issuer
 - **issued_to** (String) Common Name of the certificate subject
 - **key_size** (Number) The length of key used for encrypting system certificate
 - **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
 - **portals_using_the_tag** (String)
-- **self_signed** (Boolean)
+- **self_signed** (String)
 - **serial_number_decimal_format** (String) Used to uniquely identify the certificate within a CA's systems
 - **sha256_fingerprint** (String)
 - **signature_algorithm** (String)

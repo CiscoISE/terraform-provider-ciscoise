@@ -18,6 +18,7 @@ It performs read operation on Node Group.
 the failed node, two or more Policy Service nodes can be placed in the same node group. When a node that belongs to a
 node group fails, another node in the same node group issues a Change of Authorization (CoA) for all URL-redirected
 sessions on the failed node.
+
 - Get details of a node group in the cluster.
 
 ## Example Usage
@@ -68,7 +69,7 @@ Read-Only:
 
 Read-Only:
 
-- **enabled** (Boolean)
+- **enabled** (String)
 - **query_attempts** (Number)
 - **query_timeout** (Number)
 - **replication_attempts** (Number)
@@ -90,7 +91,7 @@ Read-Only:
 
 Read-Only:
 
-- **enabled** (Boolean)
+- **enabled** (String)
 - **query_attempts** (Number)
 - **query_timeout** (Number)
 - **replication_attempts** (Number)

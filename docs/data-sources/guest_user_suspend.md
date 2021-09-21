@@ -12,6 +12,7 @@ description: |-
 It performs update operation on GuestUser.
 
 - This data source action allows the client to suspend a guest user by name.
+
 - This data source action allows the client to suspend a guest user by ID.
 
 ## Example Usage

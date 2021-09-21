@@ -16,6 +16,7 @@ description: |-
 It performs read operation on GuestType.
 
 - This data source allows the client to get a guest type by ID.
+
 - This data source allows the client to get all the guest types.
 
 Filter:
@@ -111,7 +112,7 @@ Read-Only:
 - **description** (String)
 - **expiration_notification** (List of Object) (see [below for nested schema](#nestedobjatt--item--expiration_notification))
 - **id** (String)
-- **is_default_type** (Boolean)
+- **is_default_type** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **login_options** (List of Object) (see [below for nested schema](#nestedobjatt--item--login_options))
 - **name** (String)
@@ -122,11 +123,11 @@ Read-Only:
 
 Read-Only:
 
-- **allow_access_on_specific_days_times** (Boolean)
+- **allow_access_on_specific_days_times** (String)
 - **day_time_limits** (List of Object) (see [below for nested schema](#nestedobjatt--item--access_time--day_time_limits))
 - **default_duration** (Number)
 - **duration_time_unit** (String)
-- **from_first_login** (Boolean)
+- **from_first_login** (String)
 - **max_account_duration** (Number)
 
 <a id="nestedobjatt--item--access_time--day_time_limits"></a>
@@ -148,9 +149,9 @@ Read-Only:
 - **advance_notification_duration** (Number)
 - **advance_notification_units** (String)
 - **email_text** (String)
-- **enable_notification** (Boolean)
-- **send_email_notification** (Boolean)
-- **send_sms_notification** (Boolean)
+- **enable_notification** (String)
+- **send_email_notification** (String)
+- **send_sms_notification** (String)
 - **sms_text** (String)
 
 
@@ -169,10 +170,10 @@ Read-Only:
 
 Read-Only:
 
-- **allow_guest_portal_bypass** (Boolean)
+- **allow_guest_portal_bypass** (String)
 - **failure_action** (String)
 - **identity_group_id** (String)
-- **limit_simultaneous_logins** (Boolean)
+- **limit_simultaneous_logins** (String)
 - **max_registered_devices** (Number)
 - **max_simultaneous_logins** (Number)
 

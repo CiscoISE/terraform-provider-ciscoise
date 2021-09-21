@@ -54,7 +54,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
 - **name** (String)
 - **operator** (String)
@@ -67,7 +67,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--children--link))
 
 <a id="nestedobjatt--items--children--link"></a>

@@ -16,12 +16,12 @@ description: |-
 It performs read operation on SecurityGroupsACLs.
 
 - This data source allows the client to get a security group ACL by ID.
+
 - This data source allows the client to get all the security group ACLs.
 
 Filter:
 
 [ipVersion, name, description]
-
 
 Sorting:
 
@@ -113,7 +113,7 @@ Read-Only:
 - **generation_id** (String)
 - **id** (String)
 - **ip_version** (String)
-- **is_read_only** (Boolean)
+- **is_read_only** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **modelled_content** (String)
 - **name** (String)

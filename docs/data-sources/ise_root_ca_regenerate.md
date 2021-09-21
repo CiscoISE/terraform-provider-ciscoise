@@ -22,7 +22,7 @@ used to track the status.
 ```terraform
 data "ciscoise_ise_root_ca_regenerate" "example" {
   provider                             = ciscoise
-  remove_existing_ise_intermediate_csr = false
+  remove_existing_ise_intermediate_csr = "false"
 }
 ```
 
@@ -32,7 +32,7 @@ data "ciscoise_ise_root_ca_regenerate" "example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **remove_existing_ise_intermediate_csr** (Boolean) Setting this attribute to true will remove existing ISE Intermediate CSR
+- **remove_existing_ise_intermediate_csr** (String) Setting this attribute to true will remove existing ISE Intermediate CSR
 
 ### Read-Only
 

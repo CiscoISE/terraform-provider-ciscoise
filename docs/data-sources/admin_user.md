@@ -17,6 +17,7 @@ description: |-
 It performs read operation on AdminUser.
 
 - This data source allows the client to get an admin user by ID.
+
 - This data source allows the client to get all the admin users.
 
 Filter:
@@ -110,14 +111,14 @@ string parameter. Each resource Data model description should specify if an attr
 Read-Only:
 
 - **admin_groups** (String)
-- **change_password** (Boolean)
+- **change_password** (String)
 - **custom_attributes** (Map of String)
 - **description** (String)
-- **enabled** (Boolean)
-- **external_user** (Boolean)
+- **enabled** (String)
+- **external_user** (String)
 - **id** (String)
-- **inactive_account_never_disabled** (Boolean)
-- **include_system_alarms_in_email** (Boolean)
+- **inactive_account_never_disabled** (String)
+- **include_system_alarms_in_email** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **name** (String)
 - **password** (String)

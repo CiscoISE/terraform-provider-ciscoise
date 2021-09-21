@@ -4,20 +4,18 @@ page_title: "ciscoise_aci_bindings Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on ACIBindings.
-  This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI from
-  Cisco ISE.The binding information will be identical to the information on ACI bindings page in the Cisco ISE UI.
-  Filtering will be based on one attribute only, such as ip/sgt/vn/psn/learnedFrom/learnedBy with CONTAINS mode of
-  search.
+  This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI
+  from Cisco ISE.The binding information will be identical to the information on ACI bindings page in the Cisco ISE UI.
+  Filtering will be based on one attribute only, such as ip/sgt/vn/psn/learnedFrom/learnedBy with CONTAINS mode of search.
 ---
 
 # ciscoise_aci_bindings (Data Source)
 
 It performs read operation on ACIBindings.
 
-- This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI from
-Cisco ISE.The binding information will be identical to the information on ACI bindings page in the Cisco ISE UI.
-Filtering will be based on one attribute only, such as ip/sgt/vn/psn/learnedFrom/learnedBy with CONTAINS mode of
-search.
+- This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI
+from Cisco ISE.The binding information will be identical to the information on ACI bindings page in the Cisco ISE UI.
+Filtering will be based on one attribute only, such as ip/sgt/vn/psn/learnedFrom/learnedBy with CONTAINS mode of search.
 
 ## Example Usage
 

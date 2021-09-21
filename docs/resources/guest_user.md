@@ -10,12 +10,16 @@ description: |-
 # ciscoise_guest_user (Resource)
 
 It manages create, read, update and delete operations on GuestUser.
-  
-  - This resource allows the client to update a guest user by name.
-  - This resource deletes a guest user.
-  - This resource allows the client to update a guest user by ID.
-  - This resource deletes a guest user by ID.
-  - This resource creates a guest user.
+
+- This resource allows the client to update a guest user by name.
+
+- This resource deletes a guest user.
+
+- This resource allows the client to update a guest user by ID.
+
+- This resource deletes a guest user by ID.
+
+- This resource creates a guest user.
 
 ## Example Usage
 
@@ -40,7 +44,7 @@ resource "ciscoise_guest_user" "example" {
       company               = "string"
       creation_time         = "string"
       email_address         = "string"
-      enabled               = false
+      enabled               = "false"
       first_name            = "string"
       last_name             = "string"
       notification_language = "string"
@@ -122,7 +126,7 @@ Optional:
 - **company** (String)
 - **creation_time** (String)
 - **email_address** (String)
-- **enabled** (Boolean) This field is only for Get operation not applicable for Create, Update operations
+- **enabled** (String) This field is only for Get operation not applicable for Create, Update operations
 - **first_name** (String)
 - **last_name** (String)
 - **notification_language** (String)

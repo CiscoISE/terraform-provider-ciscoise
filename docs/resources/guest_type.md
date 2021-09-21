@@ -10,10 +10,12 @@ description: |-
 # ciscoise_guest_type (Resource)
 
 It manages create, read, update and delete operations on GuestType.
-  
-  - This resource allows the client to update a guest type.
-  - This resource deletes a guest type.
-  - This resource creates a guest type.
+
+- This resource allows the client to update a guest type.
+
+- This resource deletes a guest type.
+
+- This resource creates a guest type.
 
 ## Example Usage
 
@@ -24,7 +26,7 @@ resource "ciscoise_guest_type" "example" {
 
     access_time {
 
-      allow_access_on_specific_days_times = false
+      allow_access_on_specific_days_times = "false"
       day_time_limits {
 
         days       = ["string"]
@@ -33,7 +35,7 @@ resource "ciscoise_guest_type" "example" {
       }
       default_duration     = 1
       duration_time_unit   = "string"
-      from_first_login     = false
+      from_first_login     = "false"
       max_account_duration = 1
     }
     description = "string"
@@ -42,19 +44,19 @@ resource "ciscoise_guest_type" "example" {
       advance_notification_duration = 1
       advance_notification_units    = "string"
       email_text                    = "string"
-      enable_notification           = false
-      send_email_notification       = false
-      send_sms_notification         = false
+      enable_notification           = "false"
+      send_email_notification       = "false"
+      send_sms_notification         = "false"
       sms_text                      = "string"
     }
     id              = "string"
-    is_default_type = false
+    is_default_type = "false"
     login_options {
 
-      allow_guest_portal_bypass = false
+      allow_guest_portal_bypass = "false"
       failure_action            = "string"
       identity_group_id         = "string"
-      limit_simultaneous_logins = false
+      limit_simultaneous_logins = "false"
       max_registered_devices    = 1
       max_simultaneous_logins   = 1
     }
@@ -89,7 +91,7 @@ Optional:
 - **description** (String)
 - **expiration_notification** (Block List) Expiration Notification Settings (see [below for nested schema](#nestedblock--item--expiration_notification))
 - **id** (String) The ID of this resource.
-- **is_default_type** (Boolean)
+- **is_default_type** (String)
 - **login_options** (Block List) (see [below for nested schema](#nestedblock--item--login_options))
 - **name** (String)
 - **sponsor_groups** (List of String)
@@ -103,14 +105,14 @@ Read-Only:
 
 Optional:
 
-- **allow_access_on_specific_days_times** (Boolean)
+- **allow_access_on_specific_days_times** (String)
 - **day_time_limits** (Block List) List of Time Ranges for account access (see [below for nested schema](#nestedblock--item--access_time--day_time_limits))
 - **default_duration** (Number)
 - **duration_time_unit** (String) Allowed values are:
-  - DAYS,
-  - HOURS,
-  - MINUTES
-- **from_first_login** (Boolean) When Account Duration starts from first login or specified date
+- DAYS,
+- HOURS,
+- MINUTES
+- **from_first_login** (String) When Account Duration starts from first login or specified date
 - **max_account_duration** (Number) Maximum value of Account Duration
 
 <a id="nestedblock--item--access_time--day_time_limits"></a>
@@ -119,15 +121,15 @@ Optional:
 Optional:
 
 - **days** (List of String) List of Days
-  Values should be one of Week day.
-  Allowed values are:
-  - Sunday,
-  - Monday,
-  - Tuesday,
-  - Wednesday,
-  - Thursday,
-  - Friday,
-  - Saturday
+Values should be one of Week day.
+Allowed values are:
+- Sunday,
+- Monday,
+- Tuesday,
+- Wednesday,
+- Thursday,
+- Friday,
+- Saturday
 - **end_time** (String) End time in HH:mm format
 - **start_time** (String) Start time in HH:mm format
 
@@ -140,13 +142,13 @@ Optional:
 
 - **advance_notification_duration** (Number) Send Account Expiration Notification Duration before ( Days, Hours, Minutes )
 - **advance_notification_units** (String) Allowed values are:
-  - DAYS,
-  - HOURS,
-  - MINUTES
+- DAYS,
+- HOURS,
+- MINUTES
 - **email_text** (String)
-- **enable_notification** (Boolean) Enable Notification settings
-- **send_email_notification** (Boolean) Enable Email Notification
-- **send_sms_notification** (Boolean) Maximum devices guests can register
+- **enable_notification** (String) Enable Notification settings
+- **send_email_notification** (String) Enable Email Notification
+- **send_sms_notification** (String) Maximum devices guests can register
 - **sms_text** (String)
 
 
@@ -155,13 +157,13 @@ Optional:
 
 Optional:
 
-- **allow_guest_portal_bypass** (Boolean)
+- **allow_guest_portal_bypass** (String)
 - **failure_action** (String) When Guest Exceeds limit this action will be invoked.
-  Allowed values are:
-  - Disconnect_Oldest_Connection,
-  - Disconnect_Newest_Connection
+Allowed values are:
+- Disconnect_Oldest_Connection,
+- Disconnect_Newest_Connection
 - **identity_group_id** (String)
-- **limit_simultaneous_logins** (Boolean) Enable Simultaneous Logins
+- **limit_simultaneous_logins** (String) Enable Simultaneous Logins
 - **max_registered_devices** (Number) Maximum devices guests can register
 - **max_simultaneous_logins** (Number) Number of Simultaneous Logins
 

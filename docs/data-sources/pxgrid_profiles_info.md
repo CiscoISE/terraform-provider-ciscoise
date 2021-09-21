@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Profiler.
 
-🚧 getProfiles
+- 🚧 getProfiles
 
 ## Example Usage
 

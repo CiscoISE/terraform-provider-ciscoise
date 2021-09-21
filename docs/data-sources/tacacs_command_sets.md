@@ -12,7 +12,9 @@ description: |-
 It performs read operation on TACACSCommandSets.
 
 - This data source allows the client to get TACACS command sets by name.
+
 - This data source allows the client to get TACACS command sets by ID.
+
 - This data source allows the client to get all the TACACS command sets.
 
 ## Example Usage
@@ -73,7 +75,7 @@ Read-Only:
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
 - **name** (String)
-- **permit_unmatched** (Boolean)
+- **permit_unmatched** (String)
 
 <a id="nestedobjatt--item_id--commands"></a>
 ### Nested Schema for `item_id.commands`
@@ -114,7 +116,7 @@ Read-Only:
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
 - **name** (String)
-- **permit_unmatched** (Boolean)
+- **permit_unmatched** (String)
 
 <a id="nestedobjatt--item_name--commands"></a>
 ### Nested Schema for `item_name.commands`

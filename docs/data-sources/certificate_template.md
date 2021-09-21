@@ -12,7 +12,9 @@ description: |-
 It performs read operation on CertificateTemplate.
 
 - This data source allows the client to get a certificate template by name.
+
 - This data source allows the client to get a certificate template by ID.
+
 - This data source allows the client to get aall the certificate templates.
 
 ## Example Usage

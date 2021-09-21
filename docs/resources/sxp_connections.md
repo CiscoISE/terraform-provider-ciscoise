@@ -10,10 +10,12 @@ description: |-
 # ciscoise_sxp_connections (Resource)
 
 It manages create, read, update and delete operations on SXPConnections.
-  
-  - This resource allows the client to update a SXP connection.
-  - This resource deletes a SXP connection.
-  - This resource creates a SXP connection.
+
+- This resource allows the client to update a SXP connection.
+
+- This resource deletes a SXP connection.
+
+- This resource creates a SXP connection.
 
 ## Example Usage
 
@@ -23,7 +25,7 @@ resource "ciscoise_sxp_connections" "example" {
   item {
 
     description = "string"
-    enabled     = false
+    enabled     = "false"
     id          = "string"
     ip_address  = "string"
     sxp_mode    = "string"
@@ -57,7 +59,7 @@ output "ciscoise_sxp_connections_example" {
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **id** (String) The ID of this resource.
 - **ip_address** (String)
 - **sxp_mode** (String)

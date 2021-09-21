@@ -12,6 +12,7 @@ description: |-
 It performs read operation on tasks.
 
 - get all task status
+
 - Monitor task status
 
 ## Example Usage

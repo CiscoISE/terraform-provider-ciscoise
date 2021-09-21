@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on System Health.
 
-🚧 getHealths
+- 🚧 getHealths
 
 ## Example Usage
 

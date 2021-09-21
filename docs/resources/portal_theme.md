@@ -10,10 +10,12 @@ description: |-
 # ciscoise_portal_theme (Resource)
 
 It manages create, read, update and delete operations on PortalTheme.
-  
-  - This resource allows the client to update a portal theme by ID.
-  - This resource deletes a portal theme by ID.
-  - This resource creates a portal theme.
+
+- This resource allows the client to update a portal theme by ID.
+
+- This resource deletes a portal theme by ID.
+
+- This resource creates a portal theme.
 
 ## Example Usage
 

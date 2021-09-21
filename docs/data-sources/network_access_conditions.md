@@ -12,7 +12,9 @@ description: |-
 It performs read operation on Network Access - Conditions.
 
 - Network Access Returns all library conditions
+
 - Network Access Returns a library condition.
+
 - Network Access Returns a library condition.
 
 ## Example Usage
@@ -77,7 +79,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
 - **name** (String)
 - **operator** (String)
@@ -90,7 +92,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--children--link))
 
 <a id="nestedobjatt--item_id--children--link"></a>
@@ -169,7 +171,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
 - **name** (String)
 - **operator** (String)
@@ -182,7 +184,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--children--link))
 
 <a id="nestedobjatt--item_name--children--link"></a>
@@ -261,7 +263,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
 - **name** (String)
 - **operator** (String)
@@ -274,7 +276,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--children--link))
 
 <a id="nestedobjatt--items--children--link"></a>

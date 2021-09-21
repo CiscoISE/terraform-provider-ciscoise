@@ -16,12 +16,12 @@ description: |-
 It performs read operation on IPToSGTMappingGroup.
 
 - This data source allows the client to get an IP to SGT mapping group by ID.
+
 - This data source allows the client to get all the IP to SGT mapping groups.
 
 Filter:
 
 [name, sgtName]
-
 
 Sorting:
 

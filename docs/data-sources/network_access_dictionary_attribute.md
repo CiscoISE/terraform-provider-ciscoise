@@ -12,6 +12,7 @@ description: |-
 It performs read operation on Network Access - Dictionary Attribute.
 
 - Returns a list of Dictionary Attributes for an existing Dictionary.
+
 - Get a Dictionary Attribute.
 
 ## Example Usage
@@ -69,7 +70,7 @@ Read-Only:
 
 Read-Only:
 
-- **is_default** (Boolean)
+- **is_default** (String)
 - **key** (String)
 - **value** (String)
 
@@ -94,7 +95,7 @@ Read-Only:
 
 Read-Only:
 
-- **is_default** (Boolean)
+- **is_default** (String)
 - **key** (String)
 - **value** (String)
 

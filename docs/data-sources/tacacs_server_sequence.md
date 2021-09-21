@@ -12,7 +12,9 @@ description: |-
 It performs read operation on TacacsServerSequence.
 
 - This data source allows the client to get a TACACS server sequence by name.
+
 - This data source allows the client to get a TACACS server sequence by ID.
+
 - This data source allows the client to get all the TACACS server sequences.
 
 ## Example Usage
@@ -71,14 +73,14 @@ Read-Only:
 - **description** (String)
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **local_accounting** (Boolean)
+- **local_accounting** (String)
 - **name** (String)
 - **prefix_delimiter** (String)
-- **prefix_strip** (Boolean)
-- **remote_accounting** (Boolean)
+- **prefix_strip** (String)
+- **remote_accounting** (String)
 - **server_list** (String)
 - **suffix_delimiter** (String)
-- **suffix_strip** (Boolean)
+- **suffix_strip** (String)
 
 <a id="nestedobjatt--item_id--link"></a>
 ### Nested Schema for `item_id.link`
@@ -99,14 +101,14 @@ Read-Only:
 - **description** (String)
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **local_accounting** (Boolean)
+- **local_accounting** (String)
 - **name** (String)
 - **prefix_delimiter** (String)
-- **prefix_strip** (Boolean)
-- **remote_accounting** (Boolean)
+- **prefix_strip** (String)
+- **remote_accounting** (String)
 - **server_list** (String)
 - **suffix_delimiter** (String)
-- **suffix_strip** (Boolean)
+- **suffix_strip** (String)
 
 <a id="nestedobjatt--item_name--link"></a>
 ### Nested Schema for `item_name.link`

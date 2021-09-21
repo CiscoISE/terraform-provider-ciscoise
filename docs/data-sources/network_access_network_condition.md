@@ -12,6 +12,7 @@ description: |-
 It performs read operation on Network Access - Network Conditions.
 
 - Network Access Returns a list of network conditions.
+
 - Network Access Returns a network condition.
 
 ## Example Usage

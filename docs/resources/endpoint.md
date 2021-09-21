@@ -10,10 +10,12 @@ description: |-
 # ciscoise_endpoint (Resource)
 
 It manages create, read, update and delete operations on endpoint.
-  
-  - This resource allows the client to update an endpoint.
-  - This resource deletes an endpoint.
-  - This resource creates an endpoint.
+
+- This resource allows the client to update an endpoint.
+
+- This resource deletes an endpoint.
+
+- This resource creates an endpoint.
 
 ## Example Usage
 
@@ -31,25 +33,25 @@ resource "ciscoise_endpoint" "example" {
     mac               = "string"
     mdm_attributes {
 
-      mdm_compliance_status = false
-      mdm_encrypted         = false
-      mdm_enrolled          = false
+      mdm_compliance_status = "false"
+      mdm_encrypted         = "false"
+      mdm_enrolled          = "false"
       mdm_ime_i             = "string"
-      mdm_jail_broken       = false
+      mdm_jail_broken       = "false"
       mdm_manufacturer      = "string"
       mdm_model             = "string"
       mdm_os                = "string"
       mdm_phone_number      = "string"
-      mdm_pinlock           = false
-      mdm_reachable         = false
+      mdm_pinlock           = "false"
+      mdm_reachable         = "false"
       mdm_serial            = "string"
       mdm_server_name       = "string"
     }
     name                      = "string"
     portal_user               = "string"
     profile_id                = "string"
-    static_group_assignment   = false
-    static_profile_assignment = false
+    static_group_assignment   = "false"
+    static_profile_assignment = "false"
   }
 }
 
@@ -86,8 +88,8 @@ Optional:
 - **name** (String)
 - **portal_user** (String)
 - **profile_id** (String)
-- **static_group_assignment** (Boolean)
-- **static_profile_assignment** (Boolean)
+- **static_group_assignment** (String)
+- **static_profile_assignment** (String)
 
 Read-Only:
 
@@ -98,17 +100,17 @@ Read-Only:
 
 Optional:
 
-- **mdm_compliance_status** (Boolean)
-- **mdm_encrypted** (Boolean)
-- **mdm_enrolled** (Boolean)
+- **mdm_compliance_status** (String)
+- **mdm_encrypted** (String)
+- **mdm_enrolled** (String)
 - **mdm_ime_i** (String)
-- **mdm_jail_broken** (Boolean)
+- **mdm_jail_broken** (String)
 - **mdm_manufacturer** (String)
 - **mdm_model** (String)
 - **mdm_os** (String)
 - **mdm_phone_number** (String)
-- **mdm_pinlock** (Boolean)
-- **mdm_reachable** (Boolean)
+- **mdm_pinlock** (String)
+- **mdm_reachable** (String)
 - **mdm_serial** (String)
 - **mdm_server_name** (String)
 

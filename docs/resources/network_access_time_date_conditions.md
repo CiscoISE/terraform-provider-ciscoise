@@ -10,10 +10,12 @@ description: |-
 # ciscoise_network_access_time_date_conditions (Resource)
 
 It manages create, read, update and delete operations on Network Access - Time/Date Conditions.
-  
-  - Network Access Creates time/date condition
-  - Network Access Update network condition
-  - Network Access Delete Time/Date condition.
+
+- Network Access Creates time/date condition
+
+- Network Access Update network condition
+
+- Network Access Delete Time/Date condition.
 
 ## Example Usage
 
@@ -28,7 +30,7 @@ resource "ciscoise_network_access_time_date_conditions" "example" {
     children {
 
       condition_type = "string"
-      is_negate      = false
+      is_negate      = "false"
     }
     condition_type = "string"
     dates_range {
@@ -55,7 +57,7 @@ resource "ciscoise_network_access_time_date_conditions" "example" {
       start_time = "string"
     }
     id                  = "string"
-    is_negate           = false
+    is_negate           = "false"
     name                = "string"
     operator            = "string"
     week_days           = ["string"]
@@ -98,7 +100,7 @@ Optional:
 - **hours_range** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--hours_range))
 - **hours_range_exception** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--hours_range_exception))
 - **id** (String) The ID of this resource.
-- **is_negate** (Boolean) Indicates whereas this condition is in negate mode
+- **is_negate** (String) Indicates whereas this condition is in negate mode
 - **name** (String) Condition name
 - **operator** (String) Equality operator
 - **week_days** (List of String) <p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>
@@ -110,7 +112,7 @@ Optional:
 Optional:
 
 - **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
-- **is_negate** (Boolean) Indicates whereas this condition is in negate mode
+- **is_negate** (String) Indicates whereas this condition is in negate mode
 
 
 <a id="nestedblock--item--dates_range"></a>

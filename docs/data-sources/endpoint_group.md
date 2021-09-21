@@ -16,7 +16,9 @@ description: |-
 It performs read operation on EndpointIdentityGroup.
 
 - This data source allows the client to get an endpoint identity group by name.
+
 - This data source allows the client to get an endpoint identity group by ID.
+
 - This data source allows the client to get all the endpoint identity groups.
 
 Filter:
@@ -123,7 +125,7 @@ Read-Only:
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
 - **name** (String)
-- **system_defined** (Boolean)
+- **system_defined** (String)
 
 <a id="nestedobjatt--item_id--link"></a>
 ### Nested Schema for `item_id.link`
@@ -145,7 +147,7 @@ Read-Only:
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
 - **name** (String)
-- **system_defined** (Boolean)
+- **system_defined** (String)
 
 <a id="nestedobjatt--item_name--link"></a>
 ### Nested Schema for `item_name.link`

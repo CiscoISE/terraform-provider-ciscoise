@@ -10,10 +10,12 @@ description: |-
 # ciscoise_external_radius_server (Resource)
 
 It manages create, read, update and delete operations on ExternalRADIUSServer.
-  
-  - This resource allows the client to update an external RADIUS server.
-  - This resource deletes an external RADIUS server.
-  - This resource creates an external RADIUS server.
+
+- This resource allows the client to update an external RADIUS server.
+
+- This resource deletes an external RADIUS server.
+
+- This resource creates an external RADIUS server.
 
 ## Example Usage
 
@@ -26,7 +28,7 @@ resource "ciscoise_external_radius_server" "example" {
     authentication_port = 1
     authenticator_key   = "string"
     description         = "string"
-    enable_key_wrap     = false
+    enable_key_wrap     = "false"
     encryption_key      = "string"
     host_ip             = "string"
     id                  = "string"
@@ -64,18 +66,18 @@ Optional:
 - **accounting_port** (Number) Valid Range 1 to 65535
 - **authentication_port** (Number) Valid Range 1 to 65535
 - **authenticator_key** (String) The authenticatorKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-  The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')
+The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')
 - **description** (String)
-- **enable_key_wrap** (Boolean) KeyWrap may only be enabled if it is supported on the device.
-  When running in FIPS mode this option should be enabled for such devices
+- **enable_key_wrap** (String) KeyWrap may only be enabled if it is supported on the device.
+When running in FIPS mode this option should be enabled for such devices
 - **encryption_key** (String) The encryptionKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-  The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')
+The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')
 - **host_ip** (String) The IP of the host - must be a valid IPV4 address
 - **id** (String) The ID of this resource.
 - **key_input_format** (String) Specifies the format of the input for fields 'encryptionKey' and 'authenticatorKey'.
-  Allowed Values:
-  - ASCII
-  - HEXADECIMAL
+Allowed Values:
+- ASCII
+- HEXADECIMAL
 - **name** (String) Resource Name. Allowed charactera are alphanumeric and _ (underscore).
 - **proxy_timeout** (Number) Valid Range 1 to 600
 - **retries** (Number) Valid Range 1 to 9

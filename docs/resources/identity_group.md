@@ -10,9 +10,10 @@ description: |-
 # ciscoise_identity_group (Resource)
 
 It manages create, read and update operations on IdentityGroups.
-  
-  - This resource allows the client to update an identity group.
-  - This resource creates an identity group.
+
+- This resource allows the client to update an identity group.
+
+- This resource creates an identity group.
 
 ## Example Usage
 

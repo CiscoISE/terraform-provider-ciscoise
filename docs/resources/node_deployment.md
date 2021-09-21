@@ -13,15 +13,15 @@ description: |-
 # ciscoise_node_deployment (Resource)
 
 It manages create, read, update and delete operations on Node Deployment.
-  
-  - Register ISE node to form a multi-node deployment
-  
-  - Updates the deployed ISE node with the information provided
-  
-  - The de-register ednode becomes a standalone Cisco ISE node.
-  It retains the last configuration that it received rom the PrimaryPAN and assumes the default personas of a standalone
-  node
-  that are Administration, PolicyService, and Monitoring.
+
+- Register ISE node to form a multi-node deployment
+
+- Updates the deployed ISE node with the information provided
+
+- The de-register ednode becomes a standalone Cisco ISE node.
+It retains the last configuration that it received rom the PrimaryPAN and assumes the default personas of a standalone
+node
+that are Administration, PolicyService, and Monitoring.
 
 ## Example Usage
 
@@ -32,7 +32,7 @@ resource "ciscoise_node_deployment" "example" {
 
     administration {
 
-      is_enabled = false
+      is_enabled = "false"
       role       = "string"
     }
     fdqn = "string"
@@ -40,25 +40,25 @@ resource "ciscoise_node_deployment" "example" {
 
       monitoring {
 
-        enable_pxgrid         = false
-        is_enabled            = false
-        is_mnt_dedicated      = false
+        enable_pxgrid         = "false"
+        is_enabled            = "false"
+        is_mnt_dedicated      = "false"
         other_monitoring_node = "string"
         policyservice {
 
-          enable_device_admin_service     = false
-          enable_nac_service              = false
-          enable_passive_identity_service = false
-          enable_profiling_service        = false
-          enabled                         = false
+          enable_device_admin_service     = "false"
+          enable_nac_service              = "false"
+          enable_passive_identity_service = "false"
+          enable_profiling_service        = "false"
+          enabled                         = "false"
           session_service {
 
-            is_enabled = false
+            is_enabled = "false"
             nodegroup  = "string"
           }
           sxpservice {
 
-            is_enabled     = false
+            is_enabled     = "false"
             user_interface = "string"
           }
         }
@@ -73,58 +73,58 @@ resource "ciscoise_node_deployment" "example" {
 
         days_before_rescan = 1
         description        = "string"
-        enabled            = false
+        enabled            = "false"
       }
       dhcp {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
         interface   = "string"
         port        = 1
       }
       dhcp_span {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
         interface   = "string"
       }
       dns {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
       }
       http {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
         interface   = "string"
       }
       netflow {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
         interface   = "string"
         port        = 1
       }
       nmap {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
       }
       pxgrid {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
       }
       radius {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
       }
       snmp_query {
 
         description   = "string"
-        enabled       = false
+        enabled       = "false"
         event_timeout = 1
         retries       = 1
         timeout       = 1
@@ -133,8 +133,8 @@ resource "ciscoise_node_deployment" "example" {
 
         description     = "string"
         interface       = "string"
-        link_trap_query = false
-        mac_trap_query  = false
+        link_trap_query = "false"
+        mac_trap_query  = "false"
         port            = 1
       }
     }
@@ -144,25 +144,25 @@ resource "ciscoise_node_deployment" "example" {
 
         monitoring {
 
-          enable_pxgrid         = false
-          is_enabled            = false
-          is_mnt_dedicated      = false
+          enable_pxgrid         = "false"
+          is_enabled            = "false"
+          is_mnt_dedicated      = "false"
           other_monitoring_node = "string"
           policyservice {
 
-            enable_device_admin_service     = false
-            enable_nac_service              = false
-            enable_passive_identity_service = false
-            enable_profiling_service        = false
-            enabled                         = false
+            enable_device_admin_service     = "false"
+            enable_nac_service              = "false"
+            enable_passive_identity_service = "false"
+            enable_profiling_service        = "false"
+            enabled                         = "false"
             session_service {
 
-              is_enabled = false
+              is_enabled = "false"
               nodegroup  = "string"
             }
             sxpservice {
 
-              is_enabled     = false
+              is_enabled     = "false"
               user_interface = "string"
             }
           }
@@ -175,58 +175,58 @@ resource "ciscoise_node_deployment" "example" {
 
           days_before_rescan = 1
           description        = "string"
-          enabled            = false
+          enabled            = "false"
         }
         dhcp {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
           interface   = "string"
           port        = 1
         }
         dhcp_span {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
           interface   = "string"
         }
         dns {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
         }
         http {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
           interface   = "string"
         }
         netflow {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
           interface   = "string"
           port        = 1
         }
         nmap {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
         }
         pxgrid {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
         }
         radius {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
         }
         snmp_query {
 
           description   = "string"
-          enabled       = false
+          enabled       = "false"
           event_timeout = 1
           retries       = 1
           timeout       = 1
@@ -235,8 +235,8 @@ resource "ciscoise_node_deployment" "example" {
 
           description     = "string"
           interface       = "string"
-          link_trap_query = false
-          mac_trap_query  = false
+          link_trap_query = "false"
+          mac_trap_query  = "false"
           port            = 1
         }
       }
@@ -265,10 +265,6 @@ output "ciscoise_node_deployment_example" {
 <a id="nestedblock--item"></a>
 ### Nested Schema for `item`
 
-Required:
-
-- **hostname** (String)
-
 Optional:
 
 - **administration** (Block List) (see [below for nested schema](#nestedblock--item--administration))
@@ -282,6 +278,7 @@ Optional:
 Read-Only:
 
 - **fqdn** (String)
+- **hostname** (String)
 - **ip_address** (String)
 - **node_type** (String)
 - **profiling_configuration** (List of Object) (see [below for nested schema](#nestedatt--item--profiling_configuration))
@@ -291,7 +288,7 @@ Read-Only:
 
 Optional:
 
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **role** (String)
 
 
@@ -307,9 +304,9 @@ Optional:
 
 Optional:
 
-- **enable_pxgrid** (Boolean)
-- **is_enabled** (Boolean)
-- **is_mnt_dedicated** (Boolean)
+- **enable_pxgrid** (String)
+- **is_enabled** (String)
+- **is_mnt_dedicated** (String)
 - **other_monitoring_node** (String)
 - **policyservice** (Block List) (see [below for nested schema](#nestedblock--item--general_settings--monitoring--policyservice))
 - **role** (String)
@@ -319,11 +316,11 @@ Optional:
 
 Optional:
 
-- **enable_device_admin_service** (Boolean)
-- **enable_nac_service** (Boolean)
-- **enable_passive_identity_service** (Boolean)
-- **enable_profiling_service** (Boolean)
-- **enabled** (Boolean)
+- **enable_device_admin_service** (String)
+- **enable_nac_service** (String)
+- **enable_passive_identity_service** (String)
+- **enable_profiling_service** (String)
+- **enabled** (String)
 - **session_service** (Block List) (see [below for nested schema](#nestedblock--item--general_settings--monitoring--role--session_service))
 - **sxpservice** (Block List) (see [below for nested schema](#nestedblock--item--general_settings--monitoring--role--sxpservice))
 
@@ -332,7 +329,7 @@ Optional:
 
 Optional:
 
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **nodegroup** (String)
 
 
@@ -341,7 +338,7 @@ Optional:
 
 Optional:
 
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **user_interface** (String)
 
 
@@ -372,7 +369,7 @@ Optional:
 
 - **days_before_rescan** (Number)
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--profile_configuration--dhcp"></a>
@@ -381,7 +378,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 - **port** (Number)
 
@@ -392,7 +389,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 
 
@@ -402,7 +399,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--profile_configuration--http"></a>
@@ -411,7 +408,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 
 
@@ -421,7 +418,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 - **port** (Number)
 
@@ -432,7 +429,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--profile_configuration--pxgrid"></a>
@@ -441,7 +438,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--profile_configuration--radius"></a>
@@ -450,7 +447,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--profile_configuration--snmp_query"></a>
@@ -459,7 +456,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **event_timeout** (Number)
 - **retries** (Number)
 - **timeout** (Number)
@@ -472,8 +469,8 @@ Optional:
 
 - **description** (String)
 - **interface** (String)
-- **link_trap_query** (Boolean)
-- **mac_trap_query** (Boolean)
+- **link_trap_query** (String)
+- **mac_trap_query** (String)
 - **port** (Number)
 
 
@@ -498,9 +495,9 @@ Optional:
 
 Optional:
 
-- **enable_pxgrid** (Boolean)
-- **is_enabled** (Boolean)
-- **is_mnt_dedicated** (Boolean)
+- **enable_pxgrid** (String)
+- **is_enabled** (String)
+- **is_mnt_dedicated** (String)
 - **other_monitoring_node** (String)
 - **policyservice** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--general_settings--monitoring--policyservice))
 - **role** (String)
@@ -510,11 +507,11 @@ Optional:
 
 Optional:
 
-- **enable_device_admin_service** (Boolean)
-- **enable_nac_service** (Boolean)
-- **enable_passive_identity_service** (Boolean)
-- **enable_profiling_service** (Boolean)
-- **enabled** (Boolean)
+- **enable_device_admin_service** (String)
+- **enable_nac_service** (String)
+- **enable_passive_identity_service** (String)
+- **enable_profiling_service** (String)
+- **enabled** (String)
 - **session_service** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--general_settings--monitoring--policyservice--session_service))
 - **sxpservice** (Block List, Max: 1) (see [below for nested schema](#nestedblock--item--response--general_settings--monitoring--policyservice--sxpservice))
 
@@ -523,7 +520,7 @@ Optional:
 
 Optional:
 
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **nodegroup** (String)
 
 
@@ -532,7 +529,7 @@ Optional:
 
 Optional:
 
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **user_interface** (String)
 
 
@@ -563,7 +560,7 @@ Optional:
 
 - **days_before_rescan** (Number)
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--response--profile_configuration--dhcp"></a>
@@ -572,7 +569,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 - **port** (Number)
 
@@ -583,7 +580,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 
 
@@ -593,7 +590,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--response--profile_configuration--http"></a>
@@ -602,7 +599,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 
 
@@ -612,7 +609,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 - **port** (Number)
 
@@ -623,7 +620,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--response--profile_configuration--pxgrid"></a>
@@ -632,7 +629,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--response--profile_configuration--radius"></a>
@@ -641,7 +638,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedblock--item--response--profile_configuration--snmp_query"></a>
@@ -650,7 +647,7 @@ Optional:
 Optional:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **event_timeout** (Number)
 - **retries** (Number)
 - **timeout** (Number)
@@ -663,8 +660,8 @@ Optional:
 
 - **description** (String)
 - **interface** (String)
-- **link_trap_query** (Boolean)
-- **mac_trap_query** (Boolean)
+- **link_trap_query** (String)
+- **mac_trap_query** (String)
 - **port** (Number)
 
 
@@ -694,7 +691,7 @@ Read-Only:
 
 - **days_before_rescan** (Number)
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--dhcp"></a>
@@ -703,7 +700,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 - **port** (Number)
 
@@ -714,7 +711,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 
 
@@ -724,7 +721,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--http"></a>
@@ -733,7 +730,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 
 
@@ -743,7 +740,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 - **port** (Number)
 
@@ -754,7 +751,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--pxgrid"></a>
@@ -763,7 +760,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--radius"></a>
@@ -772,7 +769,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--snmp_query"></a>
@@ -781,7 +778,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **event_timeout** (Number)
 - **retries** (Number)
 - **timeout** (Number)
@@ -794,8 +791,8 @@ Read-Only:
 
 - **description** (String)
 - **interface** (String)
-- **link_trap_query** (Boolean)
-- **mac_trap_query** (Boolean)
+- **link_trap_query** (String)
+- **mac_trap_query** (String)
 - **port** (Number)
 
 ## Import

@@ -4,16 +4,16 @@ page_title: "ciscoise_backup_restore Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs create operation on Backup And Restore.
-  Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API to
-  get the status of the backup job
+  Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API
+  to get the status of the backup job
 ---
 
 # ciscoise_backup_restore (Data Source)
 
 It performs create operation on Backup And Restore.
 
-- Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API to
-get the status of the backup job
+- Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API
+to get the status of the backup job
 
 ## Example Usage
 
