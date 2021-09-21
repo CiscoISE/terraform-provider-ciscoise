@@ -33,7 +33,7 @@ resource "ciscoise_active_directory" "example" {
   provider = ciscoise
   item {
     name        = "cisco.com"
-    description = "Cisco AD"
+    description = "Cisco Active Directory"
     domain      = "cisco.com"
     adgroups {
       groups {
@@ -44,7 +44,7 @@ resource "ciscoise_active_directory" "example" {
     }
     advanced_settings {
       aging_time = 5
-      country    = "co"
+      country    = "cr"
       # auth_protection_type = ""
       department                        = "department"
       email                             = "mail"
@@ -56,14 +56,14 @@ resource "ciscoise_active_directory" "example" {
       plaintext_auth                    = "false"
       identity_not_in_ad_behaviour      = "SEARCH_JOINED_FOREST"
       unreachable_domains_behaviour     = "PROCEED"
-      enable_rewrites                   = "false"
+      enable_rewrites                   = "true"
       first_name                        = "givenName"
       last_name                         = "sn"
       organizational_unit               = "company"
       job_title                         = "title"
       locality                          = "l"
       state_or_province                 = "st"
-      telephone                         = "00171240591"
+      telephone                         = "00171240593"
       street_address                    = "streetAddress"
       schema                            = "ACTIVE_DIRECTORY"
     }
@@ -77,4 +77,8 @@ resource "ciscoise_active_directory" "example" {
     }
     ad_scopes_names = "Default_Scope"
   }
+}
+
+output "ciscoise_active_directory_example" {
+  value = ciscoise_active_directory.example
 }
