@@ -235,7 +235,7 @@ func expandRequestEndpointRegisterRegisterEndpointERSEndPoint(ctx context.Contex
 		request.MdmAttributes = expandRequestEndpointRegisterRegisterEndpointERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists("custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get("custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get("custom_attributes"))) {
-		vCustomAttributes := v.([]interface{})[0].(map[string]interface{})
+		vCustomAttributes := v.(map[string]interface{})
 		request.CustomAttributes = &vCustomAttributes
 	}
 	return &request
