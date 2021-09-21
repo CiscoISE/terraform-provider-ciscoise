@@ -63,9 +63,9 @@ resource "ciscoise_hotspot_portal" "example" {
       aup_settings {
 
         access_code         = "string"
-        include_aup         = false
-        require_access_code = false
-        require_scrolling   = false
+        include_aup         = "false"
+        require_access_code = "false"
+        require_scrolling   = "false"
       }
       auth_success_settings {
 
@@ -85,22 +85,22 @@ resource "ciscoise_hotspot_portal" "example" {
       }
       post_access_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       post_login_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       support_info_settings {
 
         default_empty_field_value  = "string"
         empty_field_display        = "string"
-        include_browser_user_agent = false
-        include_failure_code       = false
-        include_ip_address         = false
-        include_mac_addr           = false
-        include_policy_server      = false
-        include_support_info_page  = false
+        include_browser_user_agent = "false"
+        include_failure_code       = "false"
+        include_ip_address         = "false"
+        include_mac_addr           = "false"
+        include_policy_server      = "false"
+        include_support_info_page  = "false"
       }
     }
   }

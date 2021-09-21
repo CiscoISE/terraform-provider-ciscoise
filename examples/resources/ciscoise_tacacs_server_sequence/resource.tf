@@ -5,14 +5,14 @@ resource "ciscoise_tacacs_server_sequence" "example" {
 
     description       = "string"
     id                = "string"
-    local_accounting  = false
+    local_accounting  = "false"
     name              = "string"
     prefix_delimiter  = "string"
-    prefix_strip      = false
-    remote_accounting = false
+    prefix_strip      = "false"
+    remote_accounting = "false"
     server_list       = "string"
     suffix_delimiter  = "string"
-    suffix_strip      = false
+    suffix_strip      = "false"
   }
 }
 

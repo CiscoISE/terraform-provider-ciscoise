@@ -15,7 +15,7 @@ resource "ciscoise_tacacs_command_sets" "example" {
     description      = "string"
     id               = "string"
     name             = "string"
-    permit_unmatched = false
+    permit_unmatched = "false"
   }
 }
 

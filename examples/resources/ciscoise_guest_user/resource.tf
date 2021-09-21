@@ -19,7 +19,7 @@ resource "ciscoise_guest_user" "example" {
       company               = "string"
       creation_time         = "string"
       email_address         = "string"
-      enabled               = false
+      enabled               = "false"
       first_name            = "string"
       last_name             = "string"
       notification_language = "string"

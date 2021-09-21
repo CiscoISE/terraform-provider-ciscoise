@@ -9,7 +9,7 @@ resource "ciscoise_tacacs_external_servers" "example" {
     id              = "string"
     name            = "string"
     shared_secret   = "string"
-    single_connect  = false
+    single_connect  = "false"
     timeout         = 1
   }
 }

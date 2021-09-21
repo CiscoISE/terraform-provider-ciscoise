@@ -4,7 +4,7 @@ resource "ciscoise_sxp_connections" "example" {
   item {
 
     description = "string"
-    enabled     = false
+    enabled     = "false"
     id          = "string"
     ip_address  = "string"
     sxp_mode    = "string"

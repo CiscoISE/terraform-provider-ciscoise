@@ -20,18 +20,18 @@ resource "ciscoise_radius_server_sequence" "example" {
       value           = "string"
     }
     radius_server_list      = ["string"]
-    continue_authorz_policy = false
+    continue_authorz_policy = "false"
     description             = "string"
     id                      = "string"
-    local_accounting        = false
+    local_accounting        = "false"
     name                    = "string"
     prefix_separator        = "string"
-    remote_accounting       = false
-    strip_prefix            = false
-    strip_suffix            = false
+    remote_accounting       = "false"
+    strip_prefix            = "false"
+    strip_suffix            = "false"
     suffix_separator        = "string"
-    use_attr_set_before_acc = false
-    use_attr_set_on_request = false
+    use_attr_set_before_acc = "false"
+    use_attr_set_on_request = "false"
   }
 }
 

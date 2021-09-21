@@ -4,7 +4,7 @@ resource "ciscoise_pan_ha" "example" {
   item {
 
     failed_attempts             = 1
-    is_enabled                  = false
+    is_enabled                  = "false"
     polling_interval            = 1
     primary_health_check_node   = "string"
     secondary_health_check_node = "string"
