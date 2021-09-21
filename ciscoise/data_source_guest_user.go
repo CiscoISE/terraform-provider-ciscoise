@@ -540,7 +540,7 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseGuestUserGetGuestUsersSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -587,7 +587,7 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenGuestUserGetGuestUserByNameItemName(response2.GuestUser)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -613,7 +613,7 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenGuestUserGetGuestUserByIDItemID(response3.GuestUser)
 		if err := d.Set("item_id", vItemID3); err != nil {

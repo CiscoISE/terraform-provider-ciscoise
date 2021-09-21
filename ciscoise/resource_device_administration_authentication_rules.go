@@ -349,7 +349,7 @@ func resourceDeviceAdministrationAuthenticationRulesCreate(ctx context.Context, 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRule(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vPolicyID, okPolicyID := resourceItem["policy_id"]
 	vvPolicyID := interfaceToString(vPolicyID)
@@ -466,7 +466,7 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRules(m, response1, vvPolicyID)
 		item1, err := searchDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRules(m, items1, vvName, vvID, vvPolicyID)
@@ -495,7 +495,7 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -562,13 +562,13 @@ func resourceDeviceAdministrationAuthenticationRulesUpdate(ctx context.Context, 
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceAdministrationAuthenticationRules.UpdateDeviceAdminAuthenticationRuleByID(vvPolicyID, vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateDeviceAdminAuthenticationRuleByID", err, restyResp1.String(),
 					"Failure at UpdateDeviceAdminAuthenticationRuleByID, unexpected response", ""))
@@ -648,7 +648,7 @@ func resourceDeviceAdministrationAuthenticationRulesDelete(ctx context.Context, 
 	response1, restyResp1, err := client.DeviceAdministrationAuthenticationRules.DeleteDeviceAdminAuthenticationRuleByID(vvPolicyID, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteDeviceAdminAuthenticationRuleByID", err, restyResp1.String(),
 				"Failure at DeleteDeviceAdminAuthenticationRuleByID, unexpected response", ""))

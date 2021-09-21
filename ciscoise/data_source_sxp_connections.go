@@ -256,7 +256,7 @@ func dataSourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseSxpConnectionsGetSxpConnectionsSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -303,7 +303,7 @@ func dataSourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSxpConnectionsGetSxpConnectionsByIDItem(response2.ERSSxpConnection)
 		if err := d.Set("item", vItem2); err != nil {

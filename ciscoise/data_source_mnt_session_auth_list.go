@@ -55,7 +55,7 @@ func dataSourceMntSessionAuthListRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenMiscGetSessionAuthListItem(response1)
 		if err := d.Set("item", vItem1); err != nil {

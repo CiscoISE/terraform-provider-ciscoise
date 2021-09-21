@@ -412,7 +412,7 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestActiveDirectoryCreateActiveDirectory(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -509,7 +509,7 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenActiveDirectoryGetActiveDirectoryByNameItemName(response1.ERSActiveDirectory)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -534,7 +534,7 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenActiveDirectoryGetActiveDirectoryByIDItemID(response2.ERSActiveDirectory)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -595,7 +595,7 @@ func resourceActiveDirectoryDelete(ctx context.Context, d *schema.ResourceData, 
 	restyResp1, err := client.ActiveDirectory.DeleteActiveDirectoryByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteActiveDirectoryByID", err, restyResp1.String(),
 				"Failure at DeleteActiveDirectoryByID, unexpected response", ""))

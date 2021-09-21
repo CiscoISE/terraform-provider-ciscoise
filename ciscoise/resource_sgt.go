@@ -127,7 +127,7 @@ func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSgtCreateSecurityGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -212,7 +212,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsSecurityGroupsGetSecurityGroups(m, response1, &queryParams1)
 		item1, err := searchSecurityGroupsGetSecurityGroups(m, items1, vvName, vvID)
@@ -243,7 +243,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSecurityGroupsGetSecurityGroupByIDItem(response2.Sgt)
 		if err := d.Set("item", vItem2); err != nil {
@@ -297,13 +297,13 @@ func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSgtUpdateSecurityGroupByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SecurityGroups.UpdateSecurityGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateSecurityGroupByID", err, restyResp1.String(),
 					"Failure at UpdateSecurityGroupByID, unexpected response", ""))
@@ -369,7 +369,7 @@ func resourceSgtDelete(ctx context.Context, d *schema.ResourceData, m interface{
 	restyResp1, err := client.SecurityGroups.DeleteSecurityGroupByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSecurityGroupByID", err, restyResp1.String(),
 				"Failure at DeleteSecurityGroupByID, unexpected response", ""))

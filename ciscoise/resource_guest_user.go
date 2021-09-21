@@ -247,7 +247,7 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestGuestUserCreateGuestUser(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -324,7 +324,7 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenGuestUserGetGuestUserByNameItemName(response1.GuestUser)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -349,7 +349,7 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenGuestUserGetGuestUserByIDItemID(response2.GuestUser)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -400,13 +400,13 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestGuestUserUpdateGuestUserByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.GuestUser.UpdateGuestUserByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateGuestUserByID", err, restyResp1.String(),
 					"Failure at UpdateGuestUserByID, unexpected response", ""))
@@ -463,7 +463,7 @@ func resourceGuestUserDelete(ctx context.Context, d *schema.ResourceData, m inte
 	restyResp1, err := client.GuestUser.DeleteGuestUserByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteGuestUserByID", err, restyResp1.String(),
 				"Failure at DeleteGuestUserByID, unexpected response", ""))

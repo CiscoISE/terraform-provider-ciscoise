@@ -76,7 +76,7 @@ func dataSourceGuestUserResetPasswordRead(ctx context.Context, d *schema.Resourc
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenGuestUserResetGuestUserPasswordByIDItem(response1.OperationResult)
 		if err := d.Set("item", vItem1); err != nil {

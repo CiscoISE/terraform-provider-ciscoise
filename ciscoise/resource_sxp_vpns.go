@@ -86,7 +86,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSxpVpnsCreateSxpVpn(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vName, _ := resourceItem["sxp_vpn_name"]
@@ -168,7 +168,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsSxpVpnsGetSxpVpns(m, response1, &queryParams1)
 		item1, err := searchSxpVpnsGetSxpVpns(m, items1, vvName, vvID)
@@ -198,7 +198,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSxpVpnsGetSxpVpnByIDItem(response2.ERSSxpVpn)
 		if err := d.Set("item", vItem2); err != nil {
@@ -267,7 +267,7 @@ func resourceSxpVpnsDelete(ctx context.Context, d *schema.ResourceData, m interf
 	restyResp1, err := client.SxpVpns.DeleteSxpVpnByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSxpVpnByID", err, restyResp1.String(),
 				"Failure at DeleteSxpVpnByID, unexpected response", ""))

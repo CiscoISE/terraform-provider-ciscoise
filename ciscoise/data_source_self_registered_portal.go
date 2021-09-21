@@ -1425,7 +1425,7 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalsSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -1472,7 +1472,7 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItem(response2.SelfRegPortal)
 		if err := d.Set("item", vItem2); err != nil {

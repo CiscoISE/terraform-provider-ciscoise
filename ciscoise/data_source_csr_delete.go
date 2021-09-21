@@ -75,7 +75,7 @@ func dataSourceCsrDeleteRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	}
 	if selectedMethod == 2 {
@@ -92,7 +92,7 @@ func dataSourceCsrDeleteRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenCertificatesDeleteCsrByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {

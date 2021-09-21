@@ -384,7 +384,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseCertificatesGetCsrsResponse
 		for response1.Response != nil && len(*response1.Response) > 0 {
@@ -432,7 +432,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenCertificatesGetCsrByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {

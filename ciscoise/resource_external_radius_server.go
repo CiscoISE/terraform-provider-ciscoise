@@ -168,7 +168,7 @@ func resourceExternalRadiusServerCreate(ctx context.Context, d *schema.ResourceD
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestExternalRadiusServerCreateExternalRadiusServer(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -245,7 +245,7 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenExternalRadiusServerGetExternalRadiusServerByNameItemName(response1.ExternalRadiusServer)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -270,7 +270,7 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenExternalRadiusServerGetExternalRadiusServerByIDItemID(response2.ExternalRadiusServer)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -321,13 +321,13 @@ func resourceExternalRadiusServerUpdate(ctx context.Context, d *schema.ResourceD
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestExternalRadiusServerUpdateExternalRadiusServerByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.ExternalRadiusServer.UpdateExternalRadiusServerByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateExternalRadiusServerByID", err, restyResp1.String(),
 					"Failure at UpdateExternalRadiusServerByID, unexpected response", ""))
@@ -384,7 +384,7 @@ func resourceExternalRadiusServerDelete(ctx context.Context, d *schema.ResourceD
 	restyResp1, err := client.ExternalRadiusServer.DeleteExternalRadiusServerByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteExternalRadiusServerByID", err, restyResp1.String(),
 				"Failure at DeleteExternalRadiusServerByID, unexpected response", ""))

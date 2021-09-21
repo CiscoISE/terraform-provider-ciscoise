@@ -119,7 +119,7 @@ func dataSourceEgressMatrixCellBulkMonitorStatusRead(ctx context.Context, d *sch
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenEgressMatrixCellMonitorBulkStatusEgressMatrixCellItem(response1.BulkStatus)
 		if err := d.Set("item", vItem1); err != nil {

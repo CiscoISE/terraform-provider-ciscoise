@@ -171,7 +171,7 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestInternalUserCreateInternalUser(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -248,7 +248,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenInternalUserGetInternalUserByNameItemName(response1.InternalUser)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -273,7 +273,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenInternalUserGetInternalUserByIDItemID(response2.InternalUser)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -324,13 +324,13 @@ func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m i
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestInternalUserUpdateInternalUserByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.InternalUser.UpdateInternalUserByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateInternalUserByID", err, restyResp1.String(),
 					"Failure at UpdateInternalUserByID, unexpected response", ""))
@@ -387,7 +387,7 @@ func resourceInternalUserDelete(ctx context.Context, d *schema.ResourceData, m i
 	restyResp1, err := client.InternalUser.DeleteInternalUserByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteInternalUserByID", err, restyResp1.String(),
 				"Failure at DeleteInternalUserByID, unexpected response", ""))

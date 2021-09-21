@@ -363,7 +363,7 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 	}
 	if selectedMethod == 2 {
@@ -379,7 +379,7 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItems2 := flattenCertificatesGenerateCsrItems(response2.Response)
 		if err := d.Set("items", vItems2); err != nil {

@@ -175,7 +175,7 @@ func resourceSgToVnToVLANCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLAN(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -260,7 +260,7 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m, response1, &queryParams1)
 		item1, err := searchSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m, items1, vvName, vvID)
@@ -291,7 +291,7 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItem(response2.SgtVnVLANContainer)
 		if err := d.Set("item", vItem2); err != nil {
@@ -344,13 +344,13 @@ func resourceSgToVnToVLANUpdate(ctx context.Context, d *schema.ResourceData, m i
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SecurityGroupToVirtualNetwork.UpdateSecurityGroupsToVnToVLANByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateSecurityGroupsToVnToVLANByID", err, restyResp1.String(),
 					"Failure at UpdateSecurityGroupsToVnToVLANByID, unexpected response", ""))
@@ -415,7 +415,7 @@ func resourceSgToVnToVLANDelete(ctx context.Context, d *schema.ResourceData, m i
 	restyResp1, err := client.SecurityGroupToVirtualNetwork.DeleteSecurityGroupsToVnToVLANByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSecurityGroupsToVnToVLANByID", err, restyResp1.String(),
 				"Failure at DeleteSecurityGroupsToVnToVLANByID, unexpected response", ""))

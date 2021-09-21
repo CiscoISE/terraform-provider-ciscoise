@@ -1216,7 +1216,7 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNodeDeploymentRegisterNode(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vHostname, okHostname := resourceItem["hostname"]
 	vvHostname := interfaceToString(vHostname)
@@ -1285,7 +1285,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNodeDeploymentGetNodes(m, response1)
 		item1, err := searchNodeDeploymentGetNodes(m, items1, vHostname, "")
@@ -1316,7 +1316,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNodeDeploymentGetNodeDetailsItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -1353,13 +1353,13 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 		vvHostname = vHostname
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvHostname %s", vvHostname)
+		log.Printf("[DEBUG] Hostname used for update operation %s", vvHostname)
 		request1 := expandRequestNodeDeploymentUpdateNode(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NodeDeployment.UpdateNode(vvHostname, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNode", err, restyResp1.String(),
 					"Failure at UpdateNode, unexpected response", ""))
@@ -1423,7 +1423,7 @@ func resourceNodeDeploymentDelete(ctx context.Context, d *schema.ResourceData, m
 	response1, restyResp1, err := client.NodeDeployment.DeleteNode(vvHostname)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNode", err, restyResp1.String(),
 				"Failure at DeleteNode, unexpected response", ""))

@@ -63,7 +63,7 @@ func dataSourceDeviceAdministrationLocalExceptionRulesResetHitcountRead(ctx cont
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenDeviceAdministrationAuthorizationExceptionRulesResetHitCountsDeviceAdminLocalExceptionsItem(response1)
 		if err := d.Set("item", vItem1); err != nil {

@@ -142,7 +142,7 @@ func dataSourceBackupScheduleConfigUpdateRead(ctx context.Context, d *schema.Res
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenBackupAndRestoreUpdateScheduledConfigBackupItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
@@ -168,7 +168,7 @@ func dataSourceBackupScheduleConfigUpdateRead(ctx context.Context, d *schema.Res
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 	}
 	return diags

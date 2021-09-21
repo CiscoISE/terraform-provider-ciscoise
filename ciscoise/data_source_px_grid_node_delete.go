@@ -52,7 +52,7 @@ func dataSourcePxGridNodeDeleteRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		if err := d.Set("item", response2.String()); err != nil {
 			diags = append(diags, diagError(

@@ -119,7 +119,7 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSxpLocalBindingsCreateSxpLocalBindings(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -197,7 +197,7 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsSxpLocalBindingsGetSxpLocalBindings(m, response1, &queryParams1)
 		item1, err := searchSxpLocalBindingsGetSxpLocalBindings(m, items1, "", vvID)
@@ -228,7 +228,7 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSxpLocalBindingsGetSxpLocalBindingsByIDItem(response2.ERSSxpLocalBindings)
 		if err := d.Set("item", vItem2); err != nil {
@@ -264,13 +264,13 @@ func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData,
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSxpLocalBindingsUpdateSxpLocalBindingsByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SxpLocalBindings.UpdateSxpLocalBindingsByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateSxpLocalBindingsByID", err, restyResp1.String(),
 					"Failure at UpdateSxpLocalBindingsByID, unexpected response", ""))
@@ -334,7 +334,7 @@ func resourceSxpLocalBindingsDelete(ctx context.Context, d *schema.ResourceData,
 	restyResp1, err := client.SxpLocalBindings.DeleteSxpLocalBindingsByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSxpLocalBindingsByID", err, restyResp1.String(),
 				"Failure at DeleteSxpLocalBindingsByID, unexpected response", ""))

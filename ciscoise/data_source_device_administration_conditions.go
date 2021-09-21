@@ -710,7 +710,7 @@ func dataSourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceAdministrationConditionsGetDeviceAdminConditionsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -736,7 +736,7 @@ func dataSourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenDeviceAdministrationConditionsGetDeviceAdminConditionByNameItemName(response2.Response)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -762,7 +762,7 @@ func dataSourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenDeviceAdministrationConditionsGetDeviceAdminConditionByIDItemID(response3.Response)
 		if err := d.Set("item_id", vItemID3); err != nil {
