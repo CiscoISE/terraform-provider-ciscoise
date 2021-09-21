@@ -387,7 +387,7 @@ func flattenAdminUserGetAdminUserByIDItem(item *isegosdk.ResponseAdminUserGetAdm
 	respItem["external_user"] = boolPtrToString(item.ExternalUser)
 	respItem["inactive_account_never_disabled"] = boolPtrToString(item.InactiveAccountNeverDisabled)
 	respItem["admin_groups"] = item.AdminGroups
-	respItem["custom_attributes"] = item.CustomAttributes
+	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
 	respItem["link"] = flattenAdminUserGetAdminUserByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

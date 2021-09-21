@@ -677,7 +677,7 @@ func flattenGuestUserGetGuestUserByNameItemName(item *isegosdk.ResponseGuestUser
 	respItem["guest_info"] = flattenGuestUserGetGuestUserByNameItemNameGuestInfo(item.GuestInfo)
 	respItem["guest_access_info"] = flattenGuestUserGetGuestUserByNameItemNameGuestAccessInfo(item.GuestAccessInfo)
 	respItem["portal_id"] = item.PortalID
-	respItem["custom_fields"] = item.CustomFields
+	respItem["custom_fields"] = mapPtrToMap(item.CustomFields)
 	respItem["link"] = flattenGuestUserGetGuestUserByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -757,7 +757,7 @@ func flattenGuestUserGetGuestUserByIDItemID(item *isegosdk.ResponseGuestUserGetG
 	respItem["guest_info"] = flattenGuestUserGetGuestUserByIDItemIDGuestInfo(item.GuestInfo)
 	respItem["guest_access_info"] = flattenGuestUserGetGuestUserByIDItemIDGuestAccessInfo(item.GuestAccessInfo)
 	respItem["portal_id"] = item.PortalID
-	respItem["custom_fields"] = item.CustomFields
+	respItem["custom_fields"] = mapPtrToMap(item.CustomFields)
 	respItem["link"] = flattenGuestUserGetGuestUserByIDItemIDLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
