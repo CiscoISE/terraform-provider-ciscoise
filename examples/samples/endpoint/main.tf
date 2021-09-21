@@ -12,27 +12,27 @@ provider "ciscoise" {
 
 data "ciscoise_endpoint_group" "found" {
   provider = ciscoise
-  name = "Sony-Device-1"
+  name     = "Sony-Device-1"
 }
 
 output "ciscoise_endpoint_group_found" {
-    value = data.ciscoise_endpoint_group.found.item_name[0].id
+  value = data.ciscoise_endpoint_group.found.item_name[0].id
 }
 
 resource "ciscoise_endpoint" "example" {
-  provider = ciscoise
+  provider   = ciscoise
   depends_on = [data.ciscoise_endpoint_group.found]
   item {
-      name = "11:22:33:44:55:66"
-      description = "My Test Endpoint"
-      mac = "11:22:33:44:55:66"
-      profile_id =  "67a6ca50-edc9-4236-ada4-225559ed54d6"
-      group_id = data.ciscoise_endpoint_group.found.item_name[0].id
-      static_profile_assignment =  "true"
-      static_group_assignment =  "true"
-      portal_user =  "portalUser"
-      identity_store =  "identityStore"
-      identity_store_id =  "identityStoreId"
+    name                      = "11:22:33:44:55:66"
+    description               = "My Test Endpoint"
+    mac                       = "11:22:33:44:55:66"
+    profile_id                = "67a6ca50-edc9-4236-ada4-225559ed54d6"
+    group_id                  = data.ciscoise_endpoint_group.found.item_name[0].id
+    static_profile_assignment = "true"
+    static_group_assignment   = "true"
+    portal_user               = "portalUser"
+    identity_store            = "identityStore"
+    identity_store_id         = "identityStoreId"
     #   custom_attributes = { 
     #         custom_attributes = "{\"key1\":3}"
     #   }
@@ -40,5 +40,5 @@ resource "ciscoise_endpoint" "example" {
 }
 
 output "ciscoise_endpoint_example" {
-    value = ciscoise_endpoint.example
+  value = ciscoise_endpoint.example
 }
