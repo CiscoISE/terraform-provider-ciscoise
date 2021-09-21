@@ -3,14 +3,14 @@ resource "ciscoise_internal_user" "example" {
   provider = ciscoise
   item {
 
-    change_password = false
+    change_password = "false"
     custom_attributes {}
     description         = "string"
     email               = "string"
     enable_password     = "string"
-    enabled             = false
+    enabled             = "false"
     expiry_date         = "string"
-    expiry_date_enabled = false
+    expiry_date_enabled = "false"
     first_name          = "string"
     id                  = "string"
     identity_groups     = "string"

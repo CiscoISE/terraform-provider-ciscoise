@@ -5,7 +5,7 @@ resource "ciscoise_node_deployment" "example" {
 
     administration {
 
-      is_enabled = false
+      is_enabled = "false"
       role       = "string"
     }
     fdqn = "string"
@@ -13,25 +13,25 @@ resource "ciscoise_node_deployment" "example" {
 
       monitoring {
 
-        enable_pxgrid         = false
-        is_enabled            = false
-        is_mnt_dedicated      = false
+        enable_pxgrid         = "false"
+        is_enabled            = "false"
+        is_mnt_dedicated      = "false"
         other_monitoring_node = "string"
         policyservice {
 
-          enable_device_admin_service     = false
-          enable_nac_service              = false
-          enable_passive_identity_service = false
-          enable_profiling_service        = false
-          enabled                         = false
+          enable_device_admin_service     = "false"
+          enable_nac_service              = "false"
+          enable_passive_identity_service = "false"
+          enable_profiling_service        = "false"
+          enabled                         = "false"
           session_service {
 
-            is_enabled = false
+            is_enabled = "false"
             nodegroup  = "string"
           }
           sxpservice {
 
-            is_enabled     = false
+            is_enabled     = "false"
             user_interface = "string"
           }
         }
@@ -46,58 +46,58 @@ resource "ciscoise_node_deployment" "example" {
 
         days_before_rescan = 1
         description        = "string"
-        enabled            = false
+        enabled            = "false"
       }
       dhcp {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
         interface   = "string"
         port        = 1
       }
       dhcp_span {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
         interface   = "string"
       }
       dns {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
       }
       http {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
         interface   = "string"
       }
       netflow {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
         interface   = "string"
         port        = 1
       }
       nmap {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
       }
       pxgrid {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
       }
       radius {
 
         description = "string"
-        enabled     = false
+        enabled     = "false"
       }
       snmp_query {
 
         description   = "string"
-        enabled       = false
+        enabled       = "false"
         event_timeout = 1
         retries       = 1
         timeout       = 1
@@ -106,8 +106,8 @@ resource "ciscoise_node_deployment" "example" {
 
         description     = "string"
         interface       = "string"
-        link_trap_query = false
-        mac_trap_query  = false
+        link_trap_query = "false"
+        mac_trap_query  = "false"
         port            = 1
       }
     }
@@ -117,25 +117,25 @@ resource "ciscoise_node_deployment" "example" {
 
         monitoring {
 
-          enable_pxgrid         = false
-          is_enabled            = false
-          is_mnt_dedicated      = false
+          enable_pxgrid         = "false"
+          is_enabled            = "false"
+          is_mnt_dedicated      = "false"
           other_monitoring_node = "string"
           policyservice {
 
-            enable_device_admin_service     = false
-            enable_nac_service              = false
-            enable_passive_identity_service = false
-            enable_profiling_service        = false
-            enabled                         = false
+            enable_device_admin_service     = "false"
+            enable_nac_service              = "false"
+            enable_passive_identity_service = "false"
+            enable_profiling_service        = "false"
+            enabled                         = "false"
             session_service {
 
-              is_enabled = false
+              is_enabled = "false"
               nodegroup  = "string"
             }
             sxpservice {
 
-              is_enabled     = false
+              is_enabled     = "false"
               user_interface = "string"
             }
           }
@@ -148,58 +148,58 @@ resource "ciscoise_node_deployment" "example" {
 
           days_before_rescan = 1
           description        = "string"
-          enabled            = false
+          enabled            = "false"
         }
         dhcp {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
           interface   = "string"
           port        = 1
         }
         dhcp_span {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
           interface   = "string"
         }
         dns {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
         }
         http {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
           interface   = "string"
         }
         netflow {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
           interface   = "string"
           port        = 1
         }
         nmap {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
         }
         pxgrid {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
         }
         radius {
 
           description = "string"
-          enabled     = false
+          enabled     = "false"
         }
         snmp_query {
 
           description   = "string"
-          enabled       = false
+          enabled       = "false"
           event_timeout = 1
           retries       = 1
           timeout       = 1
@@ -208,8 +208,8 @@ resource "ciscoise_node_deployment" "example" {
 
           description     = "string"
           interface       = "string"
-          link_trap_query = false
-          mac_trap_query  = false
+          link_trap_query = "false"
+          mac_trap_query  = "false"
           port            = 1
         }
       }

@@ -12,10 +12,10 @@ resource "ciscoise_trusted_certificate" "example" {
     non_automatic_crl_update_units         = "string"
     selected_ocsp_service                  = "string"
     status                                 = "string"
-    trust_for_certificate_based_admin_auth = false
-    trust_for_cisco_services_auth          = false
-    trust_for_client_auth                  = false
-    trust_for_ise_auth                     = false
+    trust_for_certificate_based_admin_auth = "false"
+    trust_for_cisco_services_auth          = "false"
+    trust_for_client_auth                  = "false"
+    trust_for_ise_auth                     = "false"
   }
 }
 

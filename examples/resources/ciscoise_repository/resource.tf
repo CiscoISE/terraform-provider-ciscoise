@@ -3,7 +3,7 @@ resource "ciscoise_repository" "example" {
   provider = ciscoise
   item {
 
-    enable_pki  = false
+    enable_pki  = "false"
     name        = "string"
     password    = "******"
     path        = "string"

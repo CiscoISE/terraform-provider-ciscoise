@@ -64,16 +64,16 @@ resource "ciscoise_sponsor_portal" "example" {
 
         display_frequency               = "string"
         display_frequency_interval_days = 1
-        include_aup                     = false
-        require_scrolling               = false
+        include_aup                     = "false"
+        require_scrolling               = "false"
       }
       login_page_settings {
 
         aup_display                           = "string"
-        include_aup                           = false
+        include_aup                           = "false"
         max_failed_attempts_before_rate_limit = 1
-        require_aup_acceptance                = false
-        require_aup_scrolling                 = false
+        require_aup_acceptance                = "false"
+        require_aup_scrolling                 = "false"
         social_configs                        = ["string"]
         time_between_logins_during_rate_limit = 1
       }
@@ -91,26 +91,26 @@ resource "ciscoise_sponsor_portal" "example" {
       }
       post_access_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       post_login_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       sponsor_change_password_settings {
 
-        allow_sponsor_to_change_pwd = false
+        allow_sponsor_to_change_pwd = "false"
       }
       support_info_settings {
 
         default_empty_field_value  = "string"
         empty_field_display        = "string"
-        include_browser_user_agent = false
-        include_failure_code       = false
-        include_ip_address         = false
-        include_mac_addr           = false
-        include_policy_server      = false
-        include_support_info_page  = false
+        include_browser_user_agent = "false"
+        include_failure_code       = "false"
+        include_ip_address         = "false"
+        include_mac_addr           = "false"
+        include_policy_server      = "false"
+        include_support_info_page  = "false"
       }
     }
   }
