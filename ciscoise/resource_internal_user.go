@@ -74,6 +74,21 @@ func resourceInternalUser() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								vChangePassword, okChangePassword := d.GetOk("item.0.change_password")
+								vvChangePassword := interfaceToBoolPtr(vChangePassword)
+								hasDiff := old != new
+								if hasDiff {
+									// Do not suppress diff if it has change_password set
+									if okChangePassword && vvChangePassword != nil && *vvChangePassword {
+										log.Printf("[DEBUG] key %s does not require suppresion", k)
+										return false
+									}
+									return true
+								}
+								return true
+							},
 						},
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
@@ -149,6 +164,21 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 							Optional:  true,
 							Sensitive: true,
 							Computed:  true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								vChangePassword, okChangePassword := d.GetOk("item.0.change_password")
+								vvChangePassword := interfaceToBoolPtr(vChangePassword)
+								hasDiff := old != new
+								if hasDiff {
+									// Do not suppress diff if it has change_password set
+									if okChangePassword && vvChangePassword != nil && *vvChangePassword {
+										log.Printf("[DEBUG] key %s does not require suppresion", k)
+										return false
+									}
+									return true
+								}
+								return true
+							},
 						},
 						"password_idstore": &schema.Schema{
 							Description: `The id store where the internal user's password is kept`,
