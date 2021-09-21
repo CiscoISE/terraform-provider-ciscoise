@@ -508,7 +508,9 @@ func expandRequestEndpointCreateEndpointERSEndPoint(ctx context.Context, key str
 		request.MdmAttributes = expandRequestEndpointCreateEndpointERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.(map[string]interface{})
+		customAttributes := map[string]interface{}{
+			"customAttributes": v.(map[string]interface{}),
+		}
 		request.CustomAttributes = &customAttributes
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -612,7 +614,9 @@ func expandRequestEndpointUpdateEndpointByIDERSEndPoint(ctx context.Context, key
 		request.MdmAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.(map[string]interface{})
+		customAttributes := map[string]interface{}{
+			"customAttributes": v.(map[string]interface{}),
+		}
 		request.CustomAttributes = &customAttributes
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

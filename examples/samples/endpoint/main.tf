@@ -33,9 +33,16 @@ resource "ciscoise_endpoint" "example" {
     portal_user               = "portalUser"
     identity_store            = "identityStore"
     identity_store_id         = "identityStoreId"
-    #   custom_attributes = { 
-    #         custom_attributes = "{\"key1\":3}"
-    #   }
+      custom_attributes = {
+        Authorization = "Internet"
+        Owner = "wilhelm"
+        Department = "Eng"
+        Model = "1111"
+        Manufacturer = "Cisco"
+        iPSK = "abc123"
+        Created = 1234567890
+        Expired = 2134567890
+      }
   }
 }
 
