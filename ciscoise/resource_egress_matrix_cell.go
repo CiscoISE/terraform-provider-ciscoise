@@ -130,7 +130,7 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestEgressMatrixCellCreateEgressMatrixCell(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -215,7 +215,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsEgressMatrixCellGetEgressMatrixCell(m, response1, &queryParams1)
 		item1, err := searchEgressMatrixCellGetEgressMatrixCell(m, items1, vvName, vvID)
@@ -245,7 +245,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenEgressMatrixCellGetEgressMatrixCellByIDItem(response2.EgressMatrixCell)
 		if err := d.Set("item", vItem2); err != nil {
@@ -299,13 +299,13 @@ func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData,
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestEgressMatrixCellUpdateEgressMatrixCellByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.EgressMatrixCell.UpdateEgressMatrixCellByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateEgressMatrixCellByID", err, restyResp1.String(),
 					"Failure at UpdateEgressMatrixCellByID, unexpected response", ""))
@@ -371,7 +371,7 @@ func resourceEgressMatrixCellDelete(ctx context.Context, d *schema.ResourceData,
 	restyResp1, err := client.EgressMatrixCell.DeleteEgressMatrixCellByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteEgressMatrixCellByID", err, restyResp1.String(),
 				"Failure at DeleteEgressMatrixCellByID, unexpected response", ""))

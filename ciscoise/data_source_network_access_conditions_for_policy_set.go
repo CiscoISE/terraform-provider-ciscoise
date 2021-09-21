@@ -257,7 +257,7 @@ func dataSourceNetworkAccessConditionsForPolicySetRead(ctx context.Context, d *s
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenNetworkAccessConditionsGetNetworkAccessConditionsForPolicySetsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {

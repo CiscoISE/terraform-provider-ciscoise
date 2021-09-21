@@ -75,7 +75,7 @@ func dataSourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interfac
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenPanHaGetPanHaStatusItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {

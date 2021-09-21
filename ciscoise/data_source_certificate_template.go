@@ -199,7 +199,7 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseCertificateTemplateGetCertificateTemplateSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -246,7 +246,7 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenCertificateTemplateGetCertificateTemplateByIDItemID(response2.ERSCertificateTemplate)
 		if err := d.Set("item_id", vItemID2); err != nil {
@@ -272,7 +272,7 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemName3 := flattenCertificateTemplateGetCertificateTemplateByNameItemName(response3.ERSCertificateTemplate)
 		if err := d.Set("item_name", vItemName3); err != nil {

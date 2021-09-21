@@ -143,7 +143,7 @@ func dataSourceTasksRead(ctx context.Context, d *schema.ResourceData, m interfac
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenTasksGetTaskStatusItems(response1)
 		if err := d.Set("items", vItems1); err != nil {
@@ -169,7 +169,7 @@ func dataSourceTasksRead(ctx context.Context, d *schema.ResourceData, m interfac
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenTasksGetTaskStatusByIDItem(response2)
 		if err := d.Set("item", vItem2); err != nil {

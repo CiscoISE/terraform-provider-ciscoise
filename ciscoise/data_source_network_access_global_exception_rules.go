@@ -653,7 +653,7 @@ func dataSourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *sch
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -679,7 +679,7 @@ func dataSourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *sch
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {

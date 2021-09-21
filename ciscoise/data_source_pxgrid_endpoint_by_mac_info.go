@@ -47,7 +47,7 @@ func dataSourcePxgridEndpointByMacInfoRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(

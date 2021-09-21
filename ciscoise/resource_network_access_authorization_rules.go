@@ -355,7 +355,7 @@ func resourceNetworkAccessAuthorizationRulesCreate(ctx context.Context, d *schem
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRule(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vPolicyID, okPolicyID := resourceItem["policy_id"]
 	vvPolicyID := interfaceToString(vPolicyID)
@@ -472,7 +472,7 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRules(m, response1, vvPolicyID)
 		item1, err := searchNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRules(m, items1, vvName, vvID, vvPolicyID)
@@ -502,7 +502,7 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -570,13 +570,13 @@ func resourceNetworkAccessAuthorizationRulesUpdate(ctx context.Context, d *schem
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessAuthorizationRules.UpdateNetworkAccessAuthorizationRuleByID(vvPolicyID, vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkAccessAuthorizationRuleByID", err, restyResp1.String(),
 					"Failure at UpdateNetworkAccessAuthorizationRuleByID, unexpected response", ""))
@@ -657,7 +657,7 @@ func resourceNetworkAccessAuthorizationRulesDelete(ctx context.Context, d *schem
 	response1, restyResp1, err := client.NetworkAccessAuthorizationRules.DeleteNetworkAccessAuthorizationRuleByID(vvPolicyID, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkAccessAuthorizationRuleByID", err, restyResp1.String(),
 				"Failure at DeleteNetworkAccessAuthorizationRuleByID, unexpected response", ""))

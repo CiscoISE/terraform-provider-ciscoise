@@ -435,7 +435,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseCertificatesGetSystemCertificatesResponse
 		for response1.Response != nil && len(*response1.Response) > 0 {
@@ -483,7 +483,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenCertificatesGetSystemCertificateByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {

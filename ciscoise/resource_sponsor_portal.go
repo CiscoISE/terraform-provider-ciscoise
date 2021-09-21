@@ -632,7 +632,7 @@ func resourceSponsorPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSponsorPortalCreateSponsorPortal(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -717,7 +717,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsSponsorPortalGetSponsorPortal(m, response1, &queryParams1)
 		item1, err := searchSponsorPortalGetSponsorPortal(m, items1, vvName, vvID)
@@ -748,7 +748,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSponsorPortalGetSponsorPortalByIDItem(response2.SponsorPortal)
 		if err := d.Set("item", vItem2); err != nil {
@@ -802,13 +802,13 @@ func resourceSponsorPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSponsorPortalUpdateSponsorPortalByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SponsorPortal.UpdateSponsorPortalByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateSponsorPortalByID", err, restyResp1.String(),
 					"Failure at UpdateSponsorPortalByID, unexpected response", ""))
@@ -874,7 +874,7 @@ func resourceSponsorPortalDelete(ctx context.Context, d *schema.ResourceData, m 
 	restyResp1, err := client.SponsorPortal.DeleteSponsorPortalByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSponsorPortalByID", err, restyResp1.String(),
 				"Failure at DeleteSponsorPortalByID, unexpected response", ""))

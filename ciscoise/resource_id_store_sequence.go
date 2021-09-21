@@ -132,7 +132,7 @@ func resourceIDStoreSequenceCreate(ctx context.Context, d *schema.ResourceData, 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestIDStoreSequenceCreateIDentitySequence(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -209,7 +209,7 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenIDentitySequenceGetIDentitySequenceByNameItemName(response1.IDStoreSequence)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -234,7 +234,7 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenIDentitySequenceGetIDentitySequenceByIDItemID(response2.IDStoreSequence)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -285,13 +285,13 @@ func resourceIDStoreSequenceUpdate(ctx context.Context, d *schema.ResourceData, 
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestIDStoreSequenceUpdateIDentitySequenceByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.IDentitySequence.UpdateIDentitySequenceByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateIDentitySequenceByID", err, restyResp1.String(),
 					"Failure at UpdateIDentitySequenceByID, unexpected response", ""))
@@ -348,7 +348,7 @@ func resourceIDStoreSequenceDelete(ctx context.Context, d *schema.ResourceData, 
 	restyResp1, err := client.IDentitySequence.DeleteIDentitySequenceByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteIDentitySequenceByID", err, restyResp1.String(),
 				"Failure at DeleteIDentitySequenceByID, unexpected response", ""))

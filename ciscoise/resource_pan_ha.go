@@ -78,7 +78,7 @@ func resourcePanHaCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	var diags diag.Diagnostics
 
 	request1 := expandRequestPanHaEnablePanHa(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	resp1, restyResp1, err := client.PanHa.EnablePanHa(request1)
 	if err != nil || resp1 == nil {
@@ -114,7 +114,7 @@ func resourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interface{
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 		items1 := getAllItemsPanHaGetPanHaStatus(m, response1)
 		if err := d.Set("item", items1); err != nil {
 			diags = append(diags, diagError(
@@ -154,7 +154,7 @@ func resourcePanHaDelete(ctx context.Context, d *schema.ResourceData, m interfac
 	response1, restyResp1, err := client.PanHa.DisablePanHa()
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for disable operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DisablePanHa", err, restyResp1.String(),
 				"Failure at DisablePanHa, unexpected response", ""))

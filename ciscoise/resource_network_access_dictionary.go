@@ -88,7 +88,7 @@ func resourceNetworkAccessDictionaryCreate(ctx context.Context, d *schema.Resour
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkAccessDictionaryCreateNetworkAccessDictionaries(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
@@ -171,7 +171,7 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNetworkAccessDictionaryGetNetworkAccessDictionaries(m, response1)
 		item1, err := searchNetworkAccessDictionaryGetNetworkAccessDictionaries(m, items1, vvName, vvID)
@@ -202,7 +202,7 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -253,13 +253,13 @@ func resourceNetworkAccessDictionaryUpdate(ctx context.Context, d *schema.Resour
 		vvName = vName
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvName %s", vvName)
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestNetworkAccessDictionaryUpdateNetworkAccessDictionaryByName(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessDictionary.UpdateNetworkAccessDictionaryByName(vvName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkAccessDictionaryByName", err, restyResp1.String(),
 					"Failure at UpdateNetworkAccessDictionaryByName, unexpected response", ""))
@@ -323,7 +323,7 @@ func resourceNetworkAccessDictionaryDelete(ctx context.Context, d *schema.Resour
 	response1, restyResp1, err := client.NetworkAccessDictionary.DeleteNetworkAccessDictionaryByName(vvName)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkAccessDictionaryByName", err, restyResp1.String(),
 				"Failure at DeleteNetworkAccessDictionaryByName, unexpected response", ""))

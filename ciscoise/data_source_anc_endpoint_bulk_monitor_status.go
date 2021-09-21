@@ -115,7 +115,7 @@ func dataSourceAncEndpointBulkMonitorStatusRead(ctx context.Context, d *schema.R
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenAncEndpointMonitorBulkStatusAncEndpointItem(response1.BulkStatus)
 		if err := d.Set("item", vItem1); err != nil {

@@ -263,7 +263,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseTacacsExternalServersGetTacacsExternalServersSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -310,7 +310,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenTacacsExternalServersGetTacacsExternalServersByNameItemName(response2.TacacsExternalServer)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -336,7 +336,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenTacacsExternalServersGetTacacsExternalServersByIDItemID(response3.TacacsExternalServer)
 		if err := d.Set("item_id", vItemID3); err != nil {

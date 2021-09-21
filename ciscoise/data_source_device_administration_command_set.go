@@ -61,7 +61,7 @@ func dataSourceDeviceAdministrationCommandSetRead(ctx context.Context, d *schema
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceAdministrationCommandSetGetDeviceAdminCommandSetsItems(response1)
 		if err := d.Set("items", vItems1); err != nil {

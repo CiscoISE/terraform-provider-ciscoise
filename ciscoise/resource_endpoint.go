@@ -229,7 +229,7 @@ func resourceEndpointCreate(ctx context.Context, d *schema.ResourceData, m inter
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestEndpointCreateEndpoint(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -306,7 +306,7 @@ func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interfa
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenEndpointGetEndpointByNameItemName(response1.ERSEndPoint)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -331,7 +331,7 @@ func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interfa
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenEndpointGetEndpointByIDItemID(response2.ERSEndPoint)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -382,13 +382,13 @@ func resourceEndpointUpdate(ctx context.Context, d *schema.ResourceData, m inter
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestEndpointUpdateEndpointByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Endpoint.UpdateEndpointByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateEndpointByID", err, restyResp1.String(),
 					"Failure at UpdateEndpointByID, unexpected response", ""))
@@ -445,7 +445,7 @@ func resourceEndpointDelete(ctx context.Context, d *schema.ResourceData, m inter
 	restyResp1, err := client.Endpoint.DeleteEndpointByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteEndpointByID", err, restyResp1.String(),
 				"Failure at DeleteEndpointByID, unexpected response", ""))

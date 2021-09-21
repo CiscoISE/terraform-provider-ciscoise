@@ -278,7 +278,7 @@ func dataSourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -325,7 +325,7 @@ func dataSourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsByIDItem(response2.ERSGuestSmtpNotificationSettings)
 		if err := d.Set("item", vItem2); err != nil {

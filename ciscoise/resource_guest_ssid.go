@@ -90,7 +90,7 @@ func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestGuestSSIDCreateGuestSSID(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -176,7 +176,7 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsGuestSSIDGetGuestSSID(m, response1, &queryParams1)
 		item1, err := searchGuestSSIDGetGuestSSID(m, items1, vvName, vvID)
@@ -207,7 +207,7 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenGuestSSIDGetGuestSSIDByIDItem(response2.GuestSSID)
 		if err := d.Set("item", vItem2); err != nil {
@@ -261,13 +261,13 @@ func resourceGuestSSIDUpdate(ctx context.Context, d *schema.ResourceData, m inte
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestGuestSSIDUpdateGuestSSIDByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.GuestSSID.UpdateGuestSSIDByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateGuestSSIDByID", err, restyResp1.String(),
 					"Failure at UpdateGuestSSIDByID, unexpected response", ""))
@@ -333,7 +333,7 @@ func resourceGuestSSIDDelete(ctx context.Context, d *schema.ResourceData, m inte
 	restyResp1, err := client.GuestSSID.DeleteGuestSSIDByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteGuestSSIDByID", err, restyResp1.String(),
 				"Failure at DeleteGuestSSIDByID, unexpected response", ""))

@@ -122,7 +122,7 @@ func dataSourceBackupCancelRead(ctx context.Context, d *schema.ResourceData, m i
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenBackupAndRestoreCancelBackupItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {

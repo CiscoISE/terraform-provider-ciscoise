@@ -150,7 +150,7 @@ func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m in
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestRestIDStoreCreateRestIDStore(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -227,7 +227,7 @@ func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenRestidStoreGetRestIDStoreByNameItemName(response1.ERSRestIDStore)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -252,7 +252,7 @@ func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenRestidStoreGetRestIDStoreByIDItemID(response2.ERSRestIDStore)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -303,13 +303,13 @@ func resourceRestIDStoreUpdate(ctx context.Context, d *schema.ResourceData, m in
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestRestIDStoreUpdateRestIDStoreByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.RestidStore.UpdateRestIDStoreByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateRestIDStoreByID", err, restyResp1.String(),
 					"Failure at UpdateRestIDStoreByID, unexpected response", ""))
@@ -366,7 +366,7 @@ func resourceRestIDStoreDelete(ctx context.Context, d *schema.ResourceData, m in
 	restyResp1, err := client.RestidStore.DeleteRestIDStoreByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteRestIDStoreByID", err, restyResp1.String(),
 				"Failure at DeleteRestIDStoreByID, unexpected response", ""))
