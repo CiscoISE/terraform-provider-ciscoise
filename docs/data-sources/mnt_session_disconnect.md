@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Misc.
 
-Session Disconnect
+- Session Disconnect
 
 ## Example Usage
 

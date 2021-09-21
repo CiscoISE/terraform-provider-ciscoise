@@ -6,19 +6,18 @@ description: |-
   It performs read operation on Node Deployment.
   Discovers all deployment nodes in the cluster.
   It provides basic information about each of deployed nodes in the cluster like Hostname, personas, status, roles and
-  services.
-  It provides detailed information of the deployed node in the cluster.
+  services.It provides detailed information of the deployed node in the cluster.
 ---
 
 # ciscoise_node_deployment (Data Source)
 
 It performs read operation on Node Deployment.
 
-Discovers all deployment nodes in the cluster.
+- Discovers all deployment nodes in the cluster.
 It provides basic information about each of deployed nodes in the cluster like Hostname, personas, status, roles and
 services.
 
-It provides detailed information of the deployed node in the cluster.
+- It provides detailed information of the deployed node in the cluster.
 
 ## Example Usage
 
@@ -72,7 +71,7 @@ Read-Only:
 
 Read-Only:
 
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **role** (String)
 
 
@@ -88,9 +87,9 @@ Read-Only:
 
 Read-Only:
 
-- **enable_pxgrid** (Boolean)
-- **is_enabled** (Boolean)
-- **is_mnt_dedicated** (Boolean)
+- **enable_pxgrid** (String)
+- **is_enabled** (String)
+- **is_mnt_dedicated** (String)
 - **other_monitoring_node** (String)
 - **policyservice** (List of Object) (see [below for nested schema](#nestedobjatt--item--general_settings--monitoring--policyservice))
 - **role** (String)
@@ -100,11 +99,11 @@ Read-Only:
 
 Read-Only:
 
-- **enable_device_admin_service** (Boolean)
-- **enable_nac_service** (Boolean)
-- **enable_passive_identity_service** (Boolean)
-- **enable_profiling_service** (Boolean)
-- **enabled** (Boolean)
+- **enable_device_admin_service** (String)
+- **enable_nac_service** (String)
+- **enable_passive_identity_service** (String)
+- **enable_profiling_service** (String)
+- **enabled** (String)
 - **session_service** (List of Object) (see [below for nested schema](#nestedobjatt--item--general_settings--monitoring--role--session_service))
 - **sxpservice** (List of Object) (see [below for nested schema](#nestedobjatt--item--general_settings--monitoring--role--sxpservice))
 
@@ -113,7 +112,7 @@ Read-Only:
 
 Read-Only:
 
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **nodegroup** (String)
 
 
@@ -122,7 +121,7 @@ Read-Only:
 
 Read-Only:
 
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **user_interface** (String)
 
 
@@ -153,7 +152,7 @@ Read-Only:
 
 - **days_before_rescan** (Number)
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--dhcp"></a>
@@ -162,7 +161,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 - **port** (Number)
 
@@ -173,7 +172,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 
 
@@ -183,7 +182,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--http"></a>
@@ -192,7 +191,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 
 
@@ -202,7 +201,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **interface** (String)
 - **port** (Number)
 
@@ -213,7 +212,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--pxgrid"></a>
@@ -222,7 +221,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--radius"></a>
@@ -231,7 +230,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 
 
 <a id="nestedobjatt--item--profiling_configuration--snmp_query"></a>
@@ -240,7 +239,7 @@ Read-Only:
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **event_timeout** (Number)
 - **retries** (Number)
 - **timeout** (Number)
@@ -253,8 +252,8 @@ Read-Only:
 
 - **description** (String)
 - **interface** (String)
-- **link_trap_query** (Boolean)
-- **mac_trap_query** (Boolean)
+- **link_trap_query** (String)
+- **mac_trap_query** (String)
 - **port** (Number)
 
 

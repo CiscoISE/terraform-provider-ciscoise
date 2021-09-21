@@ -10,10 +10,12 @@ description: |-
 # ciscoise_downloadable_acl (Resource)
 
 It manages create, read, update and delete operations on DownloadableACL.
-  
-  - This resource allows the client to update a downloadable ACL.
-  - This resource deletes a downloadable ACL.
-  - This resource creates a downloadable ACL.
+
+- This resource allows the client to update a downloadable ACL.
+
+- This resource deletes a downloadable ACL.
+
+- This resource creates a downloadable ACL.
 
 ## Example Usage
 
@@ -54,9 +56,9 @@ Optional:
 
 - **dacl** (String) The DACL Content. Use the string \\n for a newline
 - **dacl_type** (String) Allowed values:
-  - IPV4,
-  - IPV6,
-  - IP_AGNOSTIC
+- IPV4,
+- IPV6,
+- IP_AGNOSTIC
 - **description** (String) Use the string \\n for a newline
 - **id** (String) The ID of this resource.
 - **name** (String) Resource Name. Name may contain alphanumeric or any of the following characters [_.-]

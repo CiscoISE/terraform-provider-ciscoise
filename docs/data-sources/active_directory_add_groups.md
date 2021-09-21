@@ -46,13 +46,13 @@ data "ciscoise_active_directory_add_groups" "example" {
     country                           = "string"
     department                        = "string"
     email                             = "string"
-    enable_callback_for_dialin_client = false
-    enable_dialin_permission_check    = false
-    enable_failed_auth_protection     = false
-    enable_machine_access             = false
-    enable_machine_auth               = false
-    enable_pass_change                = false
-    enable_rewrites                   = false
+    enable_callback_for_dialin_client = "false"
+    enable_dialin_permission_check    = "false"
+    enable_failed_auth_protection     = "false"
+    enable_machine_access             = "false"
+    enable_machine_auth               = "false"
+    enable_pass_change                = "false"
+    enable_rewrites                   = "false"
     failed_auth_threshold             = 1
     first_name                        = "string"
     identity_not_in_ad_behaviour      = "string"
@@ -60,7 +60,7 @@ data "ciscoise_active_directory_add_groups" "example" {
     last_name                         = "string"
     locality                          = "string"
     organizational_unit               = "string"
-    plaintext_auth                    = false
+    plaintext_auth                    = "false"
     rewrite_rules {
 
       rewrite_match  = "string"
@@ -75,7 +75,7 @@ data "ciscoise_active_directory_add_groups" "example" {
   }
   description              = "string"
   domain                   = "string"
-  enable_domain_white_list = false
+  enable_domain_white_list = "false"
   name                     = "string"
 }
 ```
@@ -95,7 +95,7 @@ data "ciscoise_active_directory_add_groups" "example" {
 - **advanced_settings** (Block List) (see [below for nested schema](#nestedblock--advanced_settings))
 - **description** (String) No character restriction
 - **domain** (String) The AD domain. Alphanumeric, hyphen (-) and dot (.) characters are allowed
-- **enable_domain_white_list** (Boolean)
+- **enable_domain_white_list** (String)
 - **name** (String) Resource Name. Maximum 32 characters allowed. Allowed characters are alphanumeric and .-_/\\ characters
 
 ### Read-Only
@@ -152,13 +152,13 @@ Optional:
 - **country** (String) User info attribute. All characters are allowed except %
 - **department** (String) User info attribute. All characters are allowed except %
 - **email** (String) User info attribute. All characters are allowed except %
-- **enable_callback_for_dialin_client** (Boolean)
-- **enable_dialin_permission_check** (Boolean)
-- **enable_failed_auth_protection** (Boolean) Enable prevent AD account lockout due to too many bad password attempts
-- **enable_machine_access** (Boolean)
-- **enable_machine_auth** (Boolean)
-- **enable_pass_change** (Boolean)
-- **enable_rewrites** (Boolean)
+- **enable_callback_for_dialin_client** (String)
+- **enable_dialin_permission_check** (String)
+- **enable_failed_auth_protection** (String) Enable prevent AD account lockout due to too many bad password attempts
+- **enable_machine_access** (String)
+- **enable_machine_auth** (String)
+- **enable_pass_change** (String)
+- **enable_rewrites** (String)
 - **failed_auth_threshold** (Number) Number of bad password attempts
 - **first_name** (String) User info attribute. All characters are allowed except %
 - **identity_not_in_ad_behaviour** (String) Allowed values: REJECT, SEARCH_JOINED_FOREST, SEARCH_ALL
@@ -166,7 +166,7 @@ Optional:
 - **last_name** (String) User info attribute. All characters are allowed except %
 - **locality** (String) User info attribute. All characters are allowed except %
 - **organizational_unit** (String) User info attribute. All characters are allowed except %
-- **plaintext_auth** (Boolean)
+- **plaintext_auth** (String)
 - **rewrite_rules** (Block List) Identity rewrite is an advanced feature that directs Cisco ISE to manipulate the identity
 before it is passed to the external Active Directory system. You can create rules to change
 the identity to a desired format that includes or excludes a domain prefix and/or suffix or

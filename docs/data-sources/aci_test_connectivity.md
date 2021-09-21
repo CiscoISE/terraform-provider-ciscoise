@@ -37,6 +37,6 @@ data "ciscoise_aci_test_connectivity" "example" {
 
 Read-Only:
 
-- **result** (Boolean)
+- **result** (String)
 
 

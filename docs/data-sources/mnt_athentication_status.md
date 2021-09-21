@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Misc.
 
-AuthenticationStatus by MAC
+- AuthenticationStatus by MAC
 
 ## Example Usage
 

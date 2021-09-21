@@ -10,8 +10,8 @@ description: |-
 # ciscoise_aci_settings (Resource)
 
 It manages read and update operations on ACISettings.
-  
-  - This resource allows the client to update ACI settings.
+
+- This resource allows the client to update ACI settings.
 
 ## Example Usage
 
@@ -20,24 +20,24 @@ resource "ciscoise_aci_settings" "example" {
   provider = ciscoise
   item {
 
-    aci50                     = false
-    aci51                     = false
+    aci50                     = "false"
+    aci51                     = "false"
     aciipaddress              = "string"
     acipassword               = "******"
     aciuser_name              = "string"
     admin_name                = "string"
     admin_password            = "string"
-    all_sxp_domain            = false
+    all_sxp_domain            = "false"
     default_sgt_name          = "string"
-    enable_aci                = false
-    enable_data_plane         = false
-    enable_elements_limit     = false
+    enable_aci                = "false"
+    enable_data_plane         = "false"
+    enable_elements_limit     = "false"
     id                        = "string"
     ip_address_host_name      = "string"
     l3_route_network          = "string"
     max_num_iepg_from_aci     = 1
     max_num_sgt_to_aci        = 1
-    specific_sxp_domain       = false
+    specific_sxp_domain       = "false"
     specifix_sxp_domain_list  = ["string"]
     suffix_to_epg             = "string"
     suffix_to_sgt             = "string"
@@ -68,24 +68,24 @@ output "ciscoise_aci_settings_example" {
 
 Optional:
 
-- **aci50** (Boolean) Enable 5.0 ACI Version
-- **aci51** (Boolean) Enable 5.1 ACI Version
+- **aci50** (String) Enable 5.0 ACI Version
+- **aci51** (String) Enable 5.1 ACI Version
 - **aciipaddress** (String) ACI Domain manager Ip Address.
 - **acipassword** (String, Sensitive) ACI Domain manager Password.
 - **aciuser_name** (String) ACI Domain manager Username.
 - **admin_name** (String) ACI Cluster Admin name
 - **admin_password** (String) ACI Cluster Admin password
-- **all_sxp_domain** (Boolean)
+- **all_sxp_domain** (String)
 - **default_sgt_name** (String)
-- **enable_aci** (Boolean) Enable ACI Integration
-- **enable_data_plane** (Boolean)
-- **enable_elements_limit** (Boolean)
+- **enable_aci** (String) Enable ACI Integration
+- **enable_data_plane** (String)
+- **enable_elements_limit** (String)
 - **id** (String) Resource UUID value
 - **ip_address_host_name** (String) ACI Cluster IP Address / Host name
 - **l3_route_network** (String)
 - **max_num_iepg_from_aci** (Number)
 - **max_num_sgt_to_aci** (Number)
-- **specific_sxp_domain** (Boolean)
+- **specific_sxp_domain** (String)
 - **specifix_sxp_domain_list** (List of String)
 - **suffix_to_epg** (String)
 - **suffix_to_sgt** (String)

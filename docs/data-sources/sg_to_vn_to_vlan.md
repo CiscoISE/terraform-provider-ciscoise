@@ -7,13 +7,6 @@ description: |-
   This data source allows the client to get a security group to virtual network by ID.This data source allows the client to get all the security group ACL to virtual networks.
   Filter:
   [sgtId]
-  To search guest users by using
-  toDate
-   column,follow the format:
-  DD-MON-YY (Example:13-SEP-18)
-  Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-  Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-  Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 ---
 
 # ciscoise_sg_to_vn_to_vlan (Data Source)
@@ -21,24 +14,12 @@ description: |-
 It performs read operation on SecurityGroupToVirtualNetwork.
 
 - This data source allows the client to get a security group to virtual network by ID.
+
 - This data source allows the client to get all the security group ACL to virtual networks.
 
 Filter:
 
 [sgtId]
-
-To search guest users by using
-toDate
- column,follow the format:
-
-DD-MON-YY (Example:13-SEP-18)
-
-
-Day or Year:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13
-
-Month:GET /ers/config/guestuser/?filter=toDate.CONTAINS.SEP
-
-Date:GET /ers/config/guestuser/?filter=toDate.CONTAINS.13-SEP-18
 
 ## Example Usage
 
@@ -139,7 +120,7 @@ Read-Only:
 
 Read-Only:
 
-- **default_virtual_network** (Boolean)
+- **default_virtual_network** (String)
 - **description** (String)
 - **id** (String)
 - **name** (String)
@@ -150,8 +131,8 @@ Read-Only:
 
 Read-Only:
 
-- **data** (Boolean)
-- **default_vlan** (Boolean)
+- **data** (String)
+- **default_vlan** (String)
 - **description** (String)
 - **id** (String)
 - **max_value** (Number)

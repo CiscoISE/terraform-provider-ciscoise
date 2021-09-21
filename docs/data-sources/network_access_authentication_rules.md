@@ -12,6 +12,7 @@ description: |-
 It performs read operation on Network Access - Authentication Rules.
 
 - Network Access Get authentication rules.
+
 - Network Access Get rule attributes.
 
 ## Example Usage
@@ -78,7 +79,7 @@ Read-Only:
 Read-Only:
 
 - **condition** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition))
-- **default** (Boolean)
+- **default** (String)
 - **hit_counts** (Number)
 - **id** (String)
 - **name** (String)
@@ -103,7 +104,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--link))
 - **name** (String)
 - **operator** (String)
@@ -116,7 +117,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--week_days_exception--link))
 
 <a id="nestedobjatt--item--rule--condition--week_days_exception--link"></a>
@@ -208,7 +209,7 @@ Read-Only:
 Read-Only:
 
 - **condition** (List of Object) (see [below for nested schema](#nestedobjatt--items--rule--condition))
-- **default** (Boolean)
+- **default** (String)
 - **hit_counts** (Number)
 - **id** (String)
 - **name** (String)
@@ -233,7 +234,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--items--rule--condition--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--items--rule--condition--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--rule--condition--link))
 - **name** (String)
 - **operator** (String)
@@ -246,7 +247,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--rule--condition--week_days_exception--link))
 
 <a id="nestedobjatt--items--rule--condition--week_days_exception--link"></a>

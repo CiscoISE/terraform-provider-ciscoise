@@ -16,6 +16,7 @@ description: |-
 It performs read operation on SponsorPortal.
 
 - This data source allows the client to get a sponsor portal by ID.
+
 - This data source allows the client to get all the sponsor portals.
 
 Filter:
@@ -250,8 +251,8 @@ Read-Only:
 
 - **display_frequency** (String)
 - **display_frequency_interval_days** (Number)
-- **include_aup** (Boolean)
-- **require_scrolling** (Boolean)
+- **include_aup** (String)
+- **require_scrolling** (String)
 
 
 <a id="nestedobjatt--item--settings--login_page_settings"></a>
@@ -260,10 +261,10 @@ Read-Only:
 Read-Only:
 
 - **aup_display** (String)
-- **include_aup** (Boolean)
+- **include_aup** (String)
 - **max_failed_attempts_before_rate_limit** (Number)
-- **require_aup_acceptance** (Boolean)
-- **require_aup_scrolling** (Boolean)
+- **require_aup_acceptance** (String)
+- **require_aup_scrolling** (String)
 - **social_configs** (List of String)
 - **time_between_logins_during_rate_limit** (Number)
 
@@ -289,7 +290,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedobjatt--item--settings--post_login_banner_settings"></a>
@@ -297,7 +298,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedobjatt--item--settings--sponsor_change_password_settings"></a>
@@ -305,7 +306,7 @@ Read-Only:
 
 Read-Only:
 
-- **allow_sponsor_to_change_pwd** (Boolean)
+- **allow_sponsor_to_change_pwd** (String)
 
 
 <a id="nestedobjatt--item--settings--support_info_settings"></a>
@@ -315,12 +316,12 @@ Read-Only:
 
 - **default_empty_field_value** (String)
 - **empty_field_display** (String)
-- **include_browser_user_agent** (Boolean)
-- **include_failure_code** (Boolean)
-- **include_ip_address** (Boolean)
-- **include_mac_addr** (Boolean)
-- **include_policy_server** (Boolean)
-- **include_support_info_page** (Boolean)
+- **include_browser_user_agent** (String)
+- **include_failure_code** (String)
+- **include_ip_address** (String)
+- **include_mac_addr** (String)
+- **include_policy_server** (String)
+- **include_support_info_page** (String)
 
 
 

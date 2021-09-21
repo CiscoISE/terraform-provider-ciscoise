@@ -16,6 +16,7 @@ description: |-
 It performs read operation on SelfRegisteredPortal.
 
 - This data source allows the client to get a self registered portal by ID.
+
 - This data source allows the client to get all the self registered portals.
 
 Filter:
@@ -255,11 +256,11 @@ Read-Only:
 
 - **display_frequency** (String)
 - **display_frequency_interval_days** (Number)
-- **include_aup** (Boolean)
-- **require_aup_scrolling** (Boolean)
-- **require_scrolling** (Boolean)
-- **skip_aup_for_employees** (Boolean)
-- **use_diff_aup_for_employees** (Boolean)
+- **include_aup** (String)
+- **require_aup_scrolling** (String)
+- **require_scrolling** (String)
+- **skip_aup_for_employees** (String)
+- **use_diff_aup_for_employees** (String)
 
 
 <a id="nestedobjatt--item--settings--auth_success_settings"></a>
@@ -286,7 +287,7 @@ Read-Only:
 Read-Only:
 
 - **end_point_identity_group_id** (String)
-- **show_device_id** (Boolean)
+- **show_device_id** (String)
 
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_registration_success_settings"></a>
@@ -304,12 +305,12 @@ Read-Only:
 Read-Only:
 
 - **aup_display** (String)
-- **enable_byo_d** (Boolean)
-- **enable_guest_access** (Boolean)
-- **include_aup** (Boolean)
-- **require_aup_acceptance** (Boolean)
-- **require_mdm** (Boolean)
-- **require_scrolling** (Boolean)
+- **enable_byo_d** (String)
+- **enable_guest_access** (String)
+- **include_aup** (String)
+- **require_aup_acceptance** (String)
+- **require_mdm** (String)
+- **require_scrolling** (String)
 
 
 
@@ -318,7 +319,7 @@ Read-Only:
 
 Read-Only:
 
-- **allow_change_passwd_at_first_login** (Boolean)
+- **allow_change_passwd_at_first_login** (String)
 
 
 <a id="nestedobjatt--item--settings--guest_device_registration_settings"></a>
@@ -326,8 +327,8 @@ Read-Only:
 
 Read-Only:
 
-- **allow_guests_to_register_devices** (Boolean)
-- **auto_register_guest_devices** (Boolean)
+- **allow_guests_to_register_devices** (String)
+- **auto_register_guest_devices** (String)
 
 
 <a id="nestedobjatt--item--settings--login_page_settings"></a>
@@ -336,18 +337,18 @@ Read-Only:
 Read-Only:
 
 - **access_code** (String)
-- **allow_alternate_guest_portal** (Boolean)
-- **allow_forgot_password** (Boolean)
-- **allow_guest_to_change_password** (Boolean)
-- **allow_guest_to_create_accounts** (Boolean)
-- **allow_guest_to_use_social_accounts** (Boolean)
-- **allow_show_guest_form** (Boolean)
+- **allow_alternate_guest_portal** (String)
+- **allow_forgot_password** (String)
+- **allow_guest_to_change_password** (String)
+- **allow_guest_to_create_accounts** (String)
+- **allow_guest_to_use_social_accounts** (String)
+- **allow_show_guest_form** (String)
 - **alternate_guest_portal** (String)
 - **aup_display** (String)
-- **include_aup** (Boolean)
+- **include_aup** (String)
 - **max_failed_attempts_before_rate_limit** (Number)
-- **require_access_code** (Boolean)
-- **require_aup_acceptance** (Boolean)
+- **require_access_code** (String)
+- **require_aup_acceptance** (String)
 - **social_configs** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--login_page_settings--social_configs))
 - **time_between_logins_during_rate_limit** (Number)
 
@@ -381,7 +382,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedobjatt--item--settings--post_login_banner_settings"></a>
@@ -389,7 +390,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings"></a>
@@ -399,19 +400,19 @@ Read-Only:
 
 - **account_validity_duration** (Number)
 - **account_validity_time_units** (String)
-- **allow_grace_access** (Boolean)
+- **allow_grace_access** (String)
 - **approval_email_addresses** (String)
 - **approve_deny_links_time_units** (String)
 - **approve_deny_links_valid_for** (Number)
 - **assign_guests_to_guest_type** (String)
 - **aup_display** (String)
 - **authenticate_sponsors_using_portal_list** (String)
-- **auto_login_self_wait** (Boolean)
+- **auto_login_self_wait** (String)
 - **auto_login_time_period** (Number)
-- **credential_notification_using_email** (Boolean)
-- **credential_notification_using_sms** (Boolean)
-- **enable_guest_email_blacklist** (Boolean)
-- **enable_guest_email_whitelist** (Boolean)
+- **credential_notification_using_email** (String)
+- **credential_notification_using_sms** (String)
+- **enable_guest_email_blacklist** (String)
+- **enable_guest_email_whitelist** (String)
 - **field_company** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_company))
 - **field_email_addr** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_email_addr))
 - **field_first_name** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_first_name))
@@ -423,17 +424,17 @@ Read-Only:
 - **field_sms_provider** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_sms_provider))
 - **field_user_name** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_user_name))
 - **grace_access_expire_interval** (Number)
-- **grace_access_send_account_expiration** (Boolean)
+- **grace_access_send_account_expiration** (String)
 - **guest_email_blacklist_domains** (String)
 - **guest_email_whitelist_domains** (String)
-- **include_aup** (Boolean)
+- **include_aup** (String)
 - **post_registration_redirect** (String)
 - **post_registration_redirect_url** (String)
 - **registration_code** (String)
-- **require_approver_to_authenticate** (Boolean)
-- **require_aup_acceptance** (Boolean)
-- **require_guest_approval** (Boolean)
-- **require_registration_code** (Boolean)
+- **require_approver_to_authenticate** (String)
+- **require_aup_acceptance** (String)
+- **require_guest_approval** (String)
+- **require_registration_code** (String)
 - **selectable_locations** (List of String)
 - **selectable_sms_providers** (List of String)
 - **send_approval_request_to** (String)
@@ -444,8 +445,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_email_addr"></a>
@@ -453,8 +454,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_first_name"></a>
@@ -462,8 +463,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_last_name"></a>
@@ -471,8 +472,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_location"></a>
@@ -480,8 +481,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_person_being_visited"></a>
@@ -489,8 +490,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_phone_no"></a>
@@ -498,8 +499,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_reason_for_visit"></a>
@@ -507,8 +508,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_sms_provider"></a>
@@ -516,8 +517,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_user_name"></a>
@@ -525,8 +526,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (Boolean)
-- **require** (Boolean)
+- **include** (String)
+- **require** (String)
 
 
 
@@ -535,25 +536,25 @@ Read-Only:
 
 Read-Only:
 
-- **allow_guest_login_from_selfreg_success_page** (Boolean)
-- **allow_guest_send_self_using_email** (Boolean)
-- **allow_guest_send_self_using_print** (Boolean)
-- **allow_guest_send_self_using_sms** (Boolean)
-- **aup_on_page** (Boolean)
-- **include_aup** (Boolean)
-- **include_company** (Boolean)
-- **include_email_addr** (Boolean)
-- **include_first_name** (Boolean)
-- **include_last_name** (Boolean)
-- **include_location** (Boolean)
-- **include_password** (Boolean)
-- **include_person_being_visited** (Boolean)
-- **include_phone_no** (Boolean)
-- **include_reason_for_visit** (Boolean)
-- **include_sms_provider** (Boolean)
-- **include_user_name** (Boolean)
-- **require_aup_acceptance** (Boolean)
-- **require_aup_scrolling** (Boolean)
+- **allow_guest_login_from_selfreg_success_page** (String)
+- **allow_guest_send_self_using_email** (String)
+- **allow_guest_send_self_using_print** (String)
+- **allow_guest_send_self_using_sms** (String)
+- **aup_on_page** (String)
+- **include_aup** (String)
+- **include_company** (String)
+- **include_email_addr** (String)
+- **include_first_name** (String)
+- **include_last_name** (String)
+- **include_location** (String)
+- **include_password** (String)
+- **include_person_being_visited** (String)
+- **include_phone_no** (String)
+- **include_reason_for_visit** (String)
+- **include_sms_provider** (String)
+- **include_user_name** (String)
+- **require_aup_acceptance** (String)
+- **require_aup_scrolling** (String)
 
 
 <a id="nestedobjatt--item--settings--support_info_settings"></a>
@@ -563,12 +564,12 @@ Read-Only:
 
 - **default_empty_field_value** (String)
 - **empty_field_display** (String)
-- **include_browser_user_agent** (Boolean)
-- **include_failure_code** (Boolean)
-- **include_ip_address** (Boolean)
-- **include_mac_addr** (Boolean)
-- **include_policy_server** (Boolean)
-- **include_support_info_page** (Boolean)
+- **include_browser_user_agent** (String)
+- **include_failure_code** (String)
+- **include_ip_address** (String)
+- **include_mac_addr** (String)
+- **include_policy_server** (String)
+- **include_support_info_page** (String)
 
 
 

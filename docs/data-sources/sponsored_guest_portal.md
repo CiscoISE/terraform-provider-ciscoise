@@ -16,6 +16,7 @@ description: |-
 It performs read operation on SponsoredGuestPortal.
 
 - This data source allows the client to get a sponsored guest portal by ID.
+
 - This data source allows the client to get all the sponsored guest portals.
 
 Filter:
@@ -253,11 +254,11 @@ Read-Only:
 
 - **display_frequency** (String)
 - **display_frequency_interval_days** (Number)
-- **include_aup** (Boolean)
-- **require_aup_scrolling** (Boolean)
-- **require_scrolling** (Boolean)
-- **skip_aup_for_employees** (Boolean)
-- **use_diff_aup_for_employees** (Boolean)
+- **include_aup** (String)
+- **require_aup_scrolling** (String)
+- **require_scrolling** (String)
+- **skip_aup_for_employees** (String)
+- **use_diff_aup_for_employees** (String)
 
 
 <a id="nestedobjatt--item--settings--auth_success_settings"></a>
@@ -284,7 +285,7 @@ Read-Only:
 Read-Only:
 
 - **end_point_identity_group_id** (String)
-- **show_device_id** (Boolean)
+- **show_device_id** (String)
 
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_registration_success_settings"></a>
@@ -302,12 +303,12 @@ Read-Only:
 Read-Only:
 
 - **aup_display** (String)
-- **enable_byo_d** (Boolean)
-- **enable_guest_access** (Boolean)
-- **include_aup** (Boolean)
-- **require_aup_acceptance** (Boolean)
-- **require_mdm** (Boolean)
-- **require_scrolling** (Boolean)
+- **enable_byo_d** (String)
+- **enable_guest_access** (String)
+- **include_aup** (String)
+- **require_aup_acceptance** (String)
+- **require_mdm** (String)
+- **require_scrolling** (String)
 
 
 
@@ -316,7 +317,7 @@ Read-Only:
 
 Read-Only:
 
-- **allow_change_passwd_at_first_login** (Boolean)
+- **allow_change_passwd_at_first_login** (String)
 
 
 <a id="nestedobjatt--item--settings--guest_device_registration_settings"></a>
@@ -324,8 +325,8 @@ Read-Only:
 
 Read-Only:
 
-- **allow_guests_to_register_devices** (Boolean)
-- **auto_register_guest_devices** (Boolean)
+- **allow_guests_to_register_devices** (String)
+- **auto_register_guest_devices** (String)
 
 
 <a id="nestedobjatt--item--settings--login_page_settings"></a>
@@ -334,15 +335,15 @@ Read-Only:
 Read-Only:
 
 - **access_code** (String)
-- **allow_alternate_guest_portal** (Boolean)
-- **allow_forgot_password** (Boolean)
-- **allow_guest_to_change_password** (Boolean)
-- **allow_guest_to_create_accounts** (Boolean)
+- **allow_alternate_guest_portal** (String)
+- **allow_forgot_password** (String)
+- **allow_guest_to_change_password** (String)
+- **allow_guest_to_create_accounts** (String)
 - **aup_display** (String)
-- **include_aup** (Boolean)
+- **include_aup** (String)
 - **max_failed_attempts_before_rate_limit** (Number)
-- **require_access_code** (Boolean)
-- **require_aup_acceptance** (Boolean)
+- **require_access_code** (String)
+- **require_aup_acceptance** (String)
 - **social_configs** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--login_page_settings--social_configs))
 - **time_between_logins_during_rate_limit** (Number)
 
@@ -376,7 +377,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedobjatt--item--settings--post_login_banner_settings"></a>
@@ -384,7 +385,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedobjatt--item--settings--support_info_settings"></a>
@@ -394,12 +395,12 @@ Read-Only:
 
 - **default_empty_field_value** (String)
 - **empty_field_display** (String)
-- **include_browser_user_agent** (Boolean)
-- **include_failure_code** (Boolean)
-- **include_ip_address** (Boolean)
-- **include_mac_addr** (Boolean)
-- **include_policy_server** (Boolean)
-- **include_support_info_page** (Boolean)
+- **include_browser_user_agent** (String)
+- **include_failure_code** (String)
+- **include_ip_address** (String)
+- **include_mac_addr** (String)
+- **include_policy_server** (String)
+- **include_support_info_page** (String)
 
 
 

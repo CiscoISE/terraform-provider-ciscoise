@@ -16,6 +16,7 @@ description: |-
 It performs read operation on SXPConnections.
 
 - This data source allows the client to get a SXP connection by ID.
+
 - This data source allows the client to get all the SXP connections.
 
 Filter:
@@ -108,7 +109,7 @@ string parameter. Each resource Data model description should specify if an attr
 Read-Only:
 
 - **description** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **id** (String)
 - **ip_address** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))

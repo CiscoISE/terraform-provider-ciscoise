@@ -72,8 +72,6 @@ description: |-
 
 It performs create operation on Certificates.
 
-
-
 - Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
 IMS Services.
 
@@ -237,7 +235,7 @@ portalGroupTag
 ```terraform
 data "ciscoise_csr_generate" "example" {
   provider             = ciscoise
-  allow_wild_card_cert = false
+  allow_wild_card_cert = "false"
   certificate_policies = "string"
   digest_type          = "string"
   hostnames            = ["string"]
@@ -263,7 +261,7 @@ data "ciscoise_csr_generate" "example" {
 
 ### Optional
 
-- **allow_wild_card_cert** (Boolean)
+- **allow_wild_card_cert** (String)
 - **certificate_policies** (String)
 - **digest_type** (String)
 - **hostnames** (List of String)

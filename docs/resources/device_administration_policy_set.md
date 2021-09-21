@@ -10,10 +10,12 @@ description: |-
 # ciscoise_device_administration_policy_set (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Policy Set.
-  
-  - Device Admin Create a new policy set.
-  - Device Admin Update a policy set.
-  - Device Admin Delete a policy set.
+
+- Device Admin Create a new policy set.
+
+- Device Admin Update a policy set.
+
+- Device Admin Delete a policy set.
 
 ## Example Usage
 
@@ -30,7 +32,7 @@ resource "ciscoise_device_administration_policy_set" "example" {
       children {
 
         condition_type = "string"
-        is_negate      = false
+        is_negate      = "false"
       }
       condition_type = "string"
       dates_range {
@@ -57,17 +59,17 @@ resource "ciscoise_device_administration_policy_set" "example" {
         start_time = "string"
       }
       id                  = "string"
-      is_negate           = false
+      is_negate           = "false"
       name                = "string"
       operator            = "string"
       week_days           = ["string"]
       week_days_exception = ["string"]
     }
-    default      = false
+    default      = "false"
     description  = "string"
     hit_counts   = 1
     id           = "string"
-    is_proxy     = false
+    is_proxy     = "false"
     name         = "string"
     rank         = 1
     service_name = "string"
@@ -98,11 +100,11 @@ output "ciscoise_device_administration_policy_set_example" {
 Optional:
 
 - **condition** (Block List) (see [below for nested schema](#nestedblock--item--condition))
-- **default** (Boolean) Flag which indicates if this policy set is the default one
+- **default** (String) Flag which indicates if this policy set is the default one
 - **description** (String) The description for the policy set
 - **hit_counts** (Number) The amount of times the policy was matched
 - **id** (String) Identifier for the policy set
-- **is_proxy** (Boolean) Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'
+- **is_proxy** (String) Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'
 - **name** (String) Given name for the policy set, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]
 - **rank** (Number) The rank(priority) in relation to other policy set. Lower rank is higher priority.
 - **service_name** (String) Policy set service identifier - Allowed Protocols,Server Sequence..
@@ -126,7 +128,7 @@ Optional:
 - **hours_range** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--condition--hours_range))
 - **hours_range_exception** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--condition--hours_range_exception))
 - **id** (String) The ID of this resource.
-- **is_negate** (Boolean) Indicates whereas this condition is in negate mode
+- **is_negate** (String) Indicates whereas this condition is in negate mode
 - **name** (String) Condition name
 - **operator** (String) Equality operator
 - **week_days** (List of String) <p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>
@@ -138,7 +140,7 @@ Optional:
 Optional:
 
 - **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
-- **is_negate** (Boolean) Indicates whereas this condition is in negate mode
+- **is_negate** (String) Indicates whereas this condition is in negate mode
 
 
 <a id="nestedblock--item--condition--dates_range"></a>

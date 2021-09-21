@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on TrustSec Configuration.
 
-🚧 getSecurityGroupAcls
+- 🚧 getSecurityGroupAcls
 
 ## Example Usage
 

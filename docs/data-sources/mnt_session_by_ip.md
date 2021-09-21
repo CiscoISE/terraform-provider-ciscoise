@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Misc.
 
-Sessions by Endpoint IP
+- Sessions by Endpoint IP
 
 ## Example Usage
 

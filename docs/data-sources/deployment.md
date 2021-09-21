@@ -73,11 +73,11 @@ Read-Only:
 Read-Only:
 
 - **declared_type** (String)
-- **global_scope** (Boolean)
+- **global_scope** (String)
 - **name** (String)
-- **nil** (Boolean)
+- **nil** (String)
 - **scope** (String)
-- **type_substituted** (Boolean)
+- **type_substituted** (String)
 - **value** (String)
 
 
@@ -207,7 +207,7 @@ Read-Only:
 Read-Only:
 
 - **deployment_id** (String)
-- **is_csn_enabled** (Boolean)
+- **is_csn_enabled** (String)
 - **node_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_access_info--node_list))
 - **radius3_rd_party** (List of String)
 - **sda_vns** (List of String)
@@ -235,11 +235,11 @@ Read-Only:
 Read-Only:
 
 - **declared_type** (String)
-- **global_scope** (Boolean)
+- **global_scope** (String)
 - **name** (String)
-- **nil** (Boolean)
+- **nil** (String)
 - **scope** (String)
-- **type_substituted** (Boolean)
+- **type_substituted** (String)
 - **value** (String)
 
 
@@ -265,7 +265,7 @@ Read-Only:
 Read-Only:
 
 - **last_applied_feed_date_time** (String)
-- **online_subscription_enabled** (Boolean)
+- **online_subscription_enabled** (String)
 - **profiles** (String)
 - **scope** (String)
 

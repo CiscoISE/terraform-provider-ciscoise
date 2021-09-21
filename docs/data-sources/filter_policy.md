@@ -12,6 +12,7 @@ description: |-
 It performs read operation on FilterPolicy.
 
 - This data source allows the client to get a filter policy by ID.
+
 - This data source allows the client to get all the filter policies.
 
 ## Example Usage

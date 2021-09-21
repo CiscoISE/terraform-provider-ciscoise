@@ -16,6 +16,7 @@ description: |-
 It performs read operation on ANCEndpoint.
 
 - This data source allows the client to get an ANC endpoint by ID.
+
 - This data source allows the client to get all the ANC endpoints.
 
 Filter:

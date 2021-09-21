@@ -10,10 +10,12 @@ description: |-
 # ciscoise_sgt (Resource)
 
 It manages create, read, update and delete operations on SecurityGroups.
-  
-  - This resource allows the client to update a security group.
-  - This resource deletes a security group.
-  - This resource creates a security group.
+
+- This resource allows the client to update a security group.
+
+- This resource deletes a security group.
+
+- This resource creates a security group.
 
 ## Example Usage
 
@@ -26,9 +28,9 @@ resource "ciscoise_sgt" "example" {
     description       = "string"
     generation_id     = 1
     id                = "string"
-    is_read_only      = false
+    is_read_only      = "false"
     name              = "string"
-    propogate_to_apic = false
+    propogate_to_apic = "false"
     value             = 1
   }
 }
@@ -59,9 +61,9 @@ Optional:
 - **description** (String)
 - **generation_id** (Number)
 - **id** (String) The ID of this resource.
-- **is_read_only** (Boolean)
+- **is_read_only** (String)
 - **name** (String)
-- **propogate_to_apic** (Boolean)
+- **propogate_to_apic** (String)
 - **value** (Number) Value range: 2 ot 65519 or -1 to auto-generate
 
 Read-Only:

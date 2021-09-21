@@ -10,10 +10,12 @@ description: |-
 # ciscoise_hotspot_portal (Resource)
 
 It manages create, read, update and delete operations on HotspotPortal.
-  
-  - This resource allows the client to update a hotspot portal by ID.
-  - This resource deletes a hotspot portal by ID.
-  - This resource creates a hotspot portal.
+
+- This resource allows the client to update a hotspot portal by ID.
+
+- This resource deletes a hotspot portal by ID.
+
+- This resource creates a hotspot portal.
 
 ## Example Usage
 
@@ -82,9 +84,9 @@ resource "ciscoise_hotspot_portal" "example" {
       aup_settings {
 
         access_code         = "string"
-        include_aup         = false
-        require_access_code = false
-        require_scrolling   = false
+        include_aup         = "false"
+        require_access_code = "false"
+        require_scrolling   = "false"
       }
       auth_success_settings {
 
@@ -104,22 +106,22 @@ resource "ciscoise_hotspot_portal" "example" {
       }
       post_access_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       post_login_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       support_info_settings {
 
         default_empty_field_value  = "string"
         empty_field_display        = "string"
-        include_browser_user_agent = false
-        include_failure_code       = false
-        include_ip_address         = false
-        include_mac_addr           = false
-        include_policy_server      = false
-        include_support_info_page  = false
+        include_browser_user_agent = "false"
+        include_failure_code       = "false"
+        include_ip_address         = "false"
+        include_mac_addr           = "false"
+        include_policy_server      = "false"
+        include_support_info_page  = "false"
       }
     }
   }
@@ -153,12 +155,12 @@ Optional:
 - **name** (String)
 - **portal_test_url** (String) URL to bring up a test page for this portal
 - **portal_type** (String) Allowed values:
-  - BYOD,
-  - HOTSPOTGUEST,
-  - MYDEVICE,
-  - SELFREGGUEST,
-  - SPONSOR,
-  - SPONSOREDGUEST
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST
 - **settings** (Block List) Defines all of the settings groups available for a BYOD (see [below for nested schema](#nestedblock--item--settings))
 
 Read-Only:
@@ -172,12 +174,12 @@ Optional:
 
 - **global_customizations** (Block List) (see [below for nested schema](#nestedblock--item--customizations--global_customizations))
 - **language** (Block List) This property is supported only for Read operation and it allows to show the customizations in English.
-  Other languages are not supported (see [below for nested schema](#nestedblock--item--customizations--language))
+Other languages are not supported (see [below for nested schema](#nestedblock--item--customizations--language))
 - **page_customizations** (Block List) (see [below for nested schema](#nestedblock--item--customizations--page_customizations))
 - **portal_theme** (Block List) Defines the configuration for portal theme (see [below for nested schema](#nestedblock--item--customizations--portal_theme))
 - **portal_tweak_settings** (Block List) The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-  The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--item--customizations--portal_tweak_settings))
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--item--customizations--portal_tweak_settings))
 
 <a id="nestedblock--item--customizations--global_customizations"></a>
 ### Nested Schema for `item.customizations.global_customizations`
@@ -290,10 +292,10 @@ Optional:
 Optional:
 
 - **access_code** (String) Access code that must be entered by the portal user (only valid if requireAccessCode = true)
-- **include_aup** (Boolean) Require the portal user to read and accept an AUP
-- **require_access_code** (Boolean) Require the portal user to enter an access code.
-  Only used in Hotspot portal
-- **require_scrolling** (Boolean) Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true
+- **include_aup** (String) Require the portal user to read and accept an AUP
+- **require_access_code** (String) Require the portal user to enter an access code.
+Only used in Hotspot portal
+- **require_scrolling** (String) Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true
 
 
 <a id="nestedblock--item--settings--auth_success_settings"></a>
@@ -303,9 +305,9 @@ Optional:
 
 - **redirect_url** (String) Target URL for redirection, used when successRedirect = URL
 - **success_redirect** (String) After an Authentication Success where should device be redirected. Allowed values:
-  - AUTHSUCCESSPAGE,
-  - ORIGINATINGURL,
-  - URL
+- AUTHSUCCESSPAGE,
+- ORIGINATINGURL,
+- URL
 
 
 <a id="nestedblock--item--settings--portal_settings"></a>
@@ -314,28 +316,28 @@ Optional:
 Optional:
 
 - **allowed_interfaces** (String) Interfaces that the portal will be reachable on.
-  Allowed values:
-  - eth0
-  - eth1
-  - eth2
-  - eth3
-  - eth4
-  - eth5
-  - bond0
-  - bond1
-  - bond2
+Allowed values:
+- eth0
+- eth1
+- eth2
+- eth3
+- eth4
+- eth5
+- bond0
+- bond1
+- bond2
 - **always_used_language** (String) Used when displayLang = ALWAYSUSE
 - **certificate_group_tag** (String) Logical name of the x.509 server certificate that will be used for the portal
 - **coa_type** (String) Allowed Values:
-  - COAREAUTHENTICATE,
-  - COATERMINATE
+- COAREAUTHENTICATE,
+- COATERMINATE
 - **display_lang** (String) Allowed values:
-  - USEBROWSERLOCALE,
-  - ALWAYSUSE
+- USEBROWSERLOCALE,
+- ALWAYSUSE
 - **endpoint_identity_group** (String) Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal
 - **fallback_language** (String) Used when displayLang = USEBROWSERLOCALE
 - **https_port** (Number) The port number that the allowed interfaces will listen on.
-  Range from 8000 to 8999
+Range from 8000 to 8999
 
 
 <a id="nestedblock--item--settings--post_access_banner_settings"></a>
@@ -343,7 +345,7 @@ Optional:
 
 Optional:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedblock--item--settings--post_login_banner_settings"></a>
@@ -351,7 +353,7 @@ Optional:
 
 Optional:
 
-- **include_post_access_banner** (Boolean) Include a Post-Login Banner page
+- **include_post_access_banner** (String) Include a Post-Login Banner page
 
 
 <a id="nestedblock--item--settings--support_info_settings"></a>
@@ -360,18 +362,18 @@ Optional:
 Optional:
 
 - **default_empty_field_value** (String) The default value displayed for an empty field.
-  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
 - **empty_field_display** (String) Specifies how empty fields are handled on the Support Information Page.
-  Allowed values:
-  - HIDE,
-  - DISPLAYWITHNOVALUE,
-  - DISPLAYWITHDEFAULTVALUE
-- **include_browser_user_agent** (Boolean)
-- **include_failure_code** (Boolean)
-- **include_ip_address** (Boolean)
-- **include_mac_addr** (Boolean)
-- **include_policy_server** (Boolean)
-- **include_support_info_page** (Boolean)
+Allowed values:
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE
+- **include_browser_user_agent** (String)
+- **include_failure_code** (String)
+- **include_ip_address** (String)
+- **include_mac_addr** (String)
+- **include_policy_server** (String)
+- **include_support_info_page** (String)
 
 
 

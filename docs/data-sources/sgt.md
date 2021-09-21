@@ -16,6 +16,7 @@ description: |-
 It performs read operation on SecurityGroups.
 
 - This data source allows the client to get a security group by ID.
+
 - This data source allows the client to get all the security groups.
 
 Filter:
@@ -111,10 +112,10 @@ Read-Only:
 - **description** (String)
 - **generation_id** (Number)
 - **id** (String)
-- **is_read_only** (Boolean)
+- **is_read_only** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **name** (String)
-- **propogate_to_apic** (Boolean)
+- **propogate_to_apic** (String)
 - **value** (Number)
 
 <a id="nestedobjatt--item--link"></a>

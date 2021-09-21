@@ -26,7 +26,7 @@ description: |-
 
 It performs read operation on Certificates.
 
- This data source supports Filtering, Sorting and Pagination.
+- This data source supports Filtering, Sorting and Pagination.
 
 
 Filtering and Sorting supported on below mentioned attributes:
@@ -231,8 +231,8 @@ Read-Only:
 - **friendly_name** (String)
 - **id** (String)
 - **ignore_crl_expiration** (String)
-- **internal_ca** (Boolean)
-- **is_referred_in_policy** (Boolean)
+- **internal_ca** (String)
+- **is_referred_in_policy** (String)
 - **issued_by** (String)
 - **issued_to** (String)
 - **key_size** (String)
@@ -281,8 +281,8 @@ Read-Only:
 - **friendly_name** (String)
 - **id** (String)
 - **ignore_crl_expiration** (String)
-- **internal_ca** (Boolean)
-- **is_referred_in_policy** (Boolean)
+- **internal_ca** (String)
+- **is_referred_in_policy** (String)
 - **issued_by** (String)
 - **issued_to** (String)
 - **key_size** (String)

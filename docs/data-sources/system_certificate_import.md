@@ -7,43 +7,46 @@ description: |-
   Import an X509 certificate as a system certificate.
   NOTE:
   The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
+  NOTE:
+  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 ---
 
 # ciscoise_system_certificate_import (Data Source)
 
 It performs create operation on Certificates.
 
-
-
 - Import an X509 certificate as a system certificate.
 
 NOTE:
 The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
+
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 ## Example Usage
 
 ```terraform
 data "ciscoise_system_certificate_import" "example" {
   provider                              = ciscoise
-  admin                                 = false
-  allow_extended_validity               = false
-  allow_out_of_date_cert                = false
-  allow_replacement_of_certificates     = false
-  allow_replacement_of_portal_group_tag = false
-  allow_sha1_certificates               = false
-  allow_wild_card_certificates          = false
+  admin                                 = "false"
+  allow_extended_validity               = "false"
+  allow_out_of_date_cert                = "false"
+  allow_replacement_of_certificates     = "false"
+  allow_replacement_of_portal_group_tag = "false"
+  allow_sha1_certificates               = "false"
+  allow_wild_card_certificates          = "false"
   data                                  = "string"
-  eap                                   = false
-  ims                                   = false
+  eap                                   = "false"
+  ims                                   = "false"
   name                                  = "string"
   password                              = "******"
-  portal                                = false
+  portal                                = "false"
   portal_group_tag                      = "string"
   private_key_data                      = "string"
-  pxgrid                                = false
-  radius                                = false
-  saml                                  = false
-  validate_certificate_extensions       = false
+  pxgrid                                = "false"
+  radius                                = "false"
+  saml                                  = "false"
+  validate_certificate_extensions       = "false"
 }
 ```
 
@@ -52,26 +55,26 @@ data "ciscoise_system_certificate_import" "example" {
 
 ### Optional
 
-- **admin** (Boolean) Use certificate to authenticate the ISE Admin Portal
-- **allow_extended_validity** (Boolean) Allow import of certificates with validity greater than 398 days
-- **allow_out_of_date_cert** (Boolean) Allow out of date certificates (required)
-- **allow_replacement_of_certificates** (Boolean) Allow Replacement of certificates (required)
-- **allow_replacement_of_portal_group_tag** (Boolean) Allow Replacement of Portal Group Tag (required)
-- **allow_sha1_certificates** (Boolean) Allow SHA1 based certificates (required)
-- **allow_wild_card_certificates** (Boolean) Allow Wildcard Certificates
+- **admin** (String) Use certificate to authenticate the ISE Admin Portal
+- **allow_extended_validity** (String) Allow import of certificates with validity greater than 398 days
+- **allow_out_of_date_cert** (String) Allow out of date certificates (required)
+- **allow_replacement_of_certificates** (String) Allow Replacement of certificates (required)
+- **allow_replacement_of_portal_group_tag** (String) Allow Replacement of Portal Group Tag (required)
+- **allow_sha1_certificates** (String) Allow SHA1 based certificates (required)
+- **allow_wild_card_certificates** (String) Allow Wildcard Certificates
 - **data** (String) Certificate Content (required)
-- **eap** (Boolean) Use certificate for EAP protocols that use SSL/TLS tunneling
+- **eap** (String) Use certificate for EAP protocols that use SSL/TLS tunneling
 - **id** (String) The ID of this resource.
-- **ims** (Boolean) Use certificate for the ISE Messaging Service
+- **ims** (String) Use certificate for the ISE Messaging Service
 - **name** (String) Name of the certificate
 - **password** (String, Sensitive) Certificate Password (required).
-- **portal** (Boolean) Use for portal
+- **portal** (String) Use for portal
 - **portal_group_tag** (String) Set Group tag
 - **private_key_data** (String) Private Key data (required)
-- **pxgrid** (Boolean) Use certificate for the pxGrid Controller
-- **radius** (Boolean) Use certificate for the RADSec server
-- **saml** (Boolean) Use certificate for SAML Signing
-- **validate_certificate_extensions** (Boolean) Validate Certificate Extensions
+- **pxgrid** (String) Use certificate for the pxGrid Controller
+- **radius** (String) Use certificate for the RADSec server
+- **saml** (String) Use certificate for SAML Signing
+- **validate_certificate_extensions** (String) Validate Certificate Extensions
 
 ### Read-Only
 

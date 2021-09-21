@@ -10,10 +10,12 @@ description: |-
 # ciscoise_sponsor_group (Resource)
 
 It manages create, read, update and delete operations on SponsorGroup.
-  
-  - This resource allows the client to update a sponsor group by ID.
-  - This resource deletes a sponsor group by ID.
-  - This resource creates a sponsor group.
+
+- This resource allows the client to update a sponsor group by ID.
+
+- This resource deletes a sponsor group by ID.
+
+- This resource creates a sponsor group.
 
 ## Example Usage
 
@@ -22,13 +24,13 @@ resource "ciscoise_sponsor_group" "example" {
   provider = ciscoise
   item {
 
-    auto_notification = false
+    auto_notification = "false"
     create_permissions {
 
-      can_create_random_accounts   = false
-      can_import_multiple_accounts = false
-      can_set_future_start_date    = false
-      can_specify_username_prefix  = false
+      can_create_random_accounts   = "false"
+      can_import_multiple_accounts = "false"
+      can_set_future_start_date    = "false"
+      can_specify_username_prefix  = "false"
       default_username_prefix      = "string"
       import_batch_size_limit      = 1
       random_batch_size_limit      = 1
@@ -37,26 +39,26 @@ resource "ciscoise_sponsor_group" "example" {
     description       = "string"
     guest_types       = ["string"]
     id                = "string"
-    is_default_group  = false
-    is_enabled        = false
+    is_default_group  = "false"
+    is_enabled        = "false"
     locations         = ["string"]
     manage_permission = "string"
     member_groups     = ["string"]
     name              = "string"
     other_permissions {
 
-      can_access_via_rest               = false
-      can_approve_selfreg_guests        = false
-      can_delete_guest_accounts         = false
-      can_extend_guest_accounts         = false
-      can_reinstate_suspended_accounts  = false
-      can_reset_guest_passwords         = false
-      can_send_sms_notifications        = false
-      can_suspend_guest_accounts        = false
-      can_update_guest_contact_info     = false
-      can_view_guest_passwords          = false
-      limit_approval_to_sponsors_guests = false
-      require_suspension_reason         = false
+      can_access_via_rest               = "false"
+      can_approve_selfreg_guests        = "false"
+      can_delete_guest_accounts         = "false"
+      can_extend_guest_accounts         = "false"
+      can_reinstate_suspended_accounts  = "false"
+      can_reset_guest_passwords         = "false"
+      can_send_sms_notifications        = "false"
+      can_suspend_guest_accounts        = "false"
+      can_update_guest_contact_info     = "false"
+      can_view_guest_passwords          = "false"
+      limit_approval_to_sponsors_guests = "false"
+      require_suspension_reason         = "false"
     }
   }
 }
@@ -83,13 +85,13 @@ output "ciscoise_sponsor_group_example" {
 
 Optional:
 
-- **auto_notification** (Boolean)
+- **auto_notification** (String)
 - **create_permissions** (Block List) (see [below for nested schema](#nestedblock--item--create_permissions))
 - **description** (String)
 - **guest_types** (List of String)
 - **id** (String) The ID of this resource.
-- **is_default_group** (Boolean)
-- **is_enabled** (Boolean)
+- **is_default_group** (String)
+- **is_enabled** (String)
 - **locations** (List of String)
 - **manage_permission** (String)
 - **member_groups** (List of String)
@@ -105,10 +107,10 @@ Read-Only:
 
 Optional:
 
-- **can_create_random_accounts** (Boolean)
-- **can_import_multiple_accounts** (Boolean)
-- **can_set_future_start_date** (Boolean)
-- **can_specify_username_prefix** (Boolean)
+- **can_create_random_accounts** (String)
+- **can_import_multiple_accounts** (String)
+- **can_set_future_start_date** (String)
+- **can_specify_username_prefix** (String)
 - **default_username_prefix** (String)
 - **import_batch_size_limit** (Number)
 - **random_batch_size_limit** (Number)
@@ -120,18 +122,18 @@ Optional:
 
 Optional:
 
-- **can_access_via_rest** (Boolean)
-- **can_approve_selfreg_guests** (Boolean)
-- **can_delete_guest_accounts** (Boolean)
-- **can_extend_guest_accounts** (Boolean)
-- **can_reinstate_suspended_accounts** (Boolean)
-- **can_reset_guest_passwords** (Boolean)
-- **can_send_sms_notifications** (Boolean)
-- **can_suspend_guest_accounts** (Boolean)
-- **can_update_guest_contact_info** (Boolean)
-- **can_view_guest_passwords** (Boolean)
-- **limit_approval_to_sponsors_guests** (Boolean)
-- **require_suspension_reason** (Boolean)
+- **can_access_via_rest** (String)
+- **can_approve_selfreg_guests** (String)
+- **can_delete_guest_accounts** (String)
+- **can_extend_guest_accounts** (String)
+- **can_reinstate_suspended_accounts** (String)
+- **can_reset_guest_passwords** (String)
+- **can_send_sms_notifications** (String)
+- **can_suspend_guest_accounts** (String)
+- **can_update_guest_contact_info** (String)
+- **can_view_guest_passwords** (String)
+- **limit_approval_to_sponsors_guests** (String)
+- **require_suspension_reason** (String)
 
 
 <a id="nestedatt--item--link"></a>

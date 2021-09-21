@@ -6,118 +6,34 @@ description: |-
   It performs create operation on Certificates.
   Import an X509 certificate as a trust certificate.
   NOTE:
-  If name is not set, a default name of the following format will be generated:
-  common-name#issuer#nnnnn
-  where
-  
-  "nnnnn"
-   is a unique number. You can always change the friendly name later by editing the certificate.
-  You must choose how this certificate will be trusted in ISE. The objective here is to distinguish between
-  
-  certificates that are used for trust within an ISE deployment and public certificates that are used to trust Cisco
-  services. Typically, you will not want to use a given certificate for both purposes.
-  Trusted For - Usage
-  Authentication within ISE
-  Use
-  "trustForIseAuth":true
-   if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
-  Client authentication and Syslog
-  Use
-  "trustForClientAuth":true
-   if the certificate is to be used for authentication of endpoints that contact ISE over the EAP protocol. Also check
-  this box if certificate is used to trust a Syslog server. Make sure to have keyCertSign bit asserted under KeyUsage
-  extension for this certificate.
-  Note:
-   "" can be set true only if the "trustForIseAuth" has been set true.
-  Certificate based admin authentication
-  Use
-  "trustForCertificateBasedAdminAuth":true
-   if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
-  Note:
-   "trustForCertificateBasedAdminAuth" can be set true only if "trustForIseAuth" and "trustForClientAuth" are true.
-  Authentication of Cisco Services
-  Use
-  "trustForCiscoServicesAuth":true
-   if the certificate is to be used for trusting external Cisco services, such as Feed Service.
+  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 ---
 
 # ciscoise_trusted_certificate_import (Data Source)
 
 It performs create operation on Certificates.
 
-
-
-Import an X509 certificate as a trust certificate.
+- Import an X509 certificate as a trust certificate.
 
 NOTE:
-If name is not set, a default name of the following format will be generated:
-common-name#issuer#nnnnn
-
-    where
-"nnnnn"
- is a unique number. You can always change the friendly name later by editing the certificate.
-
-
-    You must choose how this certificate will be trusted in ISE. The objective here is to distinguish between
-certificates that are used for trust within an ISE deployment and public certificates that are used to trust Cisco
-services. Typically, you will not want to use a given certificate for both purposes.
-
-
-Trusted For - Usage
-
-
-Authentication within ISE
-
-Use
-"trustForIseAuth":true
- if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
-
-
-
-Client authentication and Syslog
-
-Use
-"trustForClientAuth":true
- if the certificate is to be used for authentication of endpoints that contact ISE over the EAP protocol. Also check
-this box if certificate is used to trust a Syslog server. Make sure to have keyCertSign bit asserted under KeyUsage
-extension for this certificate.
-Note:
- "" can be set true only if the "trustForIseAuth" has been set true.
-
-
-
-Certificate based admin authentication
-
-Use
-"trustForCertificateBasedAdminAuth":true
- if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
-Note:
- "trustForCertificateBasedAdminAuth" can be set true only if "trustForIseAuth" and "trustForClientAuth" are true.
-
-
-
-Authentication of Cisco Services
-
- Use
-"trustForCiscoServicesAuth":true
- if the certificate is to be used for trusting external Cisco services, such as Feed Service.
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 ## Example Usage
 
 ```terraform
 data "ciscoise_trusted_certificate_import" "example" {
   provider                               = ciscoise
-  allow_basic_constraint_cafalse         = false
-  allow_out_of_date_cert                 = false
-  allow_sha1_certificates                = false
+  allow_basic_constraint_cafalse         = "false"
+  allow_out_of_date_cert                 = "false"
+  allow_sha1_certificates                = "false"
   data                                   = "string"
   description                            = "string"
   name                                   = "string"
-  trust_for_certificate_based_admin_auth = false
-  trust_for_cisco_services_auth          = false
-  trust_for_client_auth                  = false
-  trust_for_ise_auth                     = false
-  validate_certificate_extensions        = false
+  trust_for_certificate_based_admin_auth = "false"
+  trust_for_cisco_services_auth          = "false"
+  trust_for_client_auth                  = "false"
+  trust_for_ise_auth                     = "false"
+  validate_certificate_extensions        = "false"
 }
 ```
 
@@ -126,18 +42,18 @@ data "ciscoise_trusted_certificate_import" "example" {
 
 ### Optional
 
-- **allow_basic_constraint_cafalse** (Boolean) Allow Certificates with Basic Constraints CA Field as False (required)
-- **allow_out_of_date_cert** (Boolean) Allow out of date certificates (required)
-- **allow_sha1_certificates** (Boolean) Allow SHA1 based certificates (required)
+- **allow_basic_constraint_cafalse** (String) Allow Certificates with Basic Constraints CA Field as False (required)
+- **allow_out_of_date_cert** (String) Allow out of date certificates (required)
+- **allow_sha1_certificates** (String) Allow SHA1 based certificates (required)
 - **data** (String) Certificate content (required)
 - **description** (String) Description of the certificate
 - **id** (String) The ID of this resource.
 - **name** (String) Name of the certificate
-- **trust_for_certificate_based_admin_auth** (Boolean) Trust for Certificate based Admin authentication
-- **trust_for_cisco_services_auth** (Boolean) Trust for authentication of Cisco Services
-- **trust_for_client_auth** (Boolean) Trust for client authentication and Syslog
-- **trust_for_ise_auth** (Boolean) Trust for authentication within ISE
-- **validate_certificate_extensions** (Boolean) Validate trust certificate extension
+- **trust_for_certificate_based_admin_auth** (String) Trust for Certificate based Admin authentication
+- **trust_for_cisco_services_auth** (String) Trust for authentication of Cisco Services
+- **trust_for_client_auth** (String) Trust for client authentication and Syslog
+- **trust_for_ise_auth** (String) Trust for authentication within ISE
+- **validate_certificate_extensions** (String) Validate trust certificate extension
 
 ### Read-Only
 

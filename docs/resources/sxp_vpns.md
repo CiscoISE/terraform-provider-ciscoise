@@ -10,9 +10,10 @@ description: |-
 # ciscoise_sxp_vpns (Resource)
 
 It manages create, read and delete operations on SXPVPNs.
-  
-  - This resource deletes a SXP VPN.
-  - This resource creates a SXP VPN.
+
+- This resource deletes a SXP VPN.
+
+- This resource creates a SXP VPN.
 
 ## Example Usage
 
@@ -47,11 +48,11 @@ output "ciscoise_sxp_vpns_example" {
 
 Optional:
 
-- **id** (String) The ID of this resource.
 - **sxp_vpn_name** (String)
 
 Read-Only:
 
+- **id** (String) The ID of this resource.
 - **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
 
 <a id="nestedatt--item--link"></a>

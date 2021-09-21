@@ -5,17 +5,19 @@ subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Repository.
   Create a new repository in the system. The name provided for the
-  repository must be unique.Update the definition of a specific repository, providing ALL parameters for the repository.
+  repository must be unique.Update the definition of a specific repository, providing ALL parameters for the repository.Long description TBD
 ---
 
 # ciscoise_repository (Resource)
 
 It manages create, read, update and delete operations on Repository.
-  
-  - Create a new repository in the system. The name provided for the
-  repository must be unique.
-  
-  - Update the definition of a specific repository, providing ALL parameters for the repository.
+
+- Create a new repository in the system. The name provided for the
+repository must be unique.
+
+- Update the definition of a specific repository, providing ALL parameters for the repository.
+
+- Long description TBD
 
 ## Example Usage
 
@@ -24,7 +26,7 @@ resource "ciscoise_repository" "example" {
   provider = ciscoise
   item {
 
-    enable_pki  = false
+    enable_pki  = "false"
     name        = "string"
     password    = "******"
     path        = "string"
@@ -56,7 +58,7 @@ output "ciscoise_repository_example" {
 
 Optional:
 
-- **enable_pki** (Boolean)
+- **enable_pki** (String)
 - **name** (String) Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.
 - **password** (String, Sensitive) Password can contain alphanumeric and/or special characters.
 - **path** (String) Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.

@@ -16,6 +16,7 @@ description: |-
 It performs read operation on SponsorGroup.
 
 - This data source allows the client to get a sponsor group by ID.
+
 - This data source allows the client to get all the sponsor groups.
 
 Filter:
@@ -107,13 +108,13 @@ string parameter. Each resource Data model description should specify if an attr
 
 Read-Only:
 
-- **auto_notification** (Boolean)
+- **auto_notification** (String)
 - **create_permissions** (List of Object) (see [below for nested schema](#nestedobjatt--item--create_permissions))
 - **description** (String)
 - **guest_types** (List of String)
 - **id** (String)
-- **is_default_group** (Boolean)
-- **is_enabled** (Boolean)
+- **is_default_group** (String)
+- **is_enabled** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **locations** (List of String)
 - **manage_permission** (String)
@@ -126,10 +127,10 @@ Read-Only:
 
 Read-Only:
 
-- **can_create_random_accounts** (Boolean)
-- **can_import_multiple_accounts** (Boolean)
-- **can_set_future_start_date** (Boolean)
-- **can_specify_username_prefix** (Boolean)
+- **can_create_random_accounts** (String)
+- **can_import_multiple_accounts** (String)
+- **can_set_future_start_date** (String)
+- **can_specify_username_prefix** (String)
 - **default_username_prefix** (String)
 - **import_batch_size_limit** (Number)
 - **random_batch_size_limit** (Number)
@@ -151,18 +152,18 @@ Read-Only:
 
 Read-Only:
 
-- **can_access_via_rest** (Boolean)
-- **can_approve_selfreg_guests** (Boolean)
-- **can_delete_guest_accounts** (Boolean)
-- **can_extend_guest_accounts** (Boolean)
-- **can_reinstate_suspended_accounts** (Boolean)
-- **can_reset_guest_passwords** (Boolean)
-- **can_send_sms_notifications** (Boolean)
-- **can_suspend_guest_accounts** (Boolean)
-- **can_update_guest_contact_info** (Boolean)
-- **can_view_guest_passwords** (Boolean)
-- **limit_approval_to_sponsors_guests** (Boolean)
-- **require_suspension_reason** (Boolean)
+- **can_access_via_rest** (String)
+- **can_approve_selfreg_guests** (String)
+- **can_delete_guest_accounts** (String)
+- **can_extend_guest_accounts** (String)
+- **can_reinstate_suspended_accounts** (String)
+- **can_reset_guest_passwords** (String)
+- **can_send_sms_notifications** (String)
+- **can_suspend_guest_accounts** (String)
+- **can_update_guest_contact_info** (String)
+- **can_view_guest_passwords** (String)
+- **limit_approval_to_sponsors_guests** (String)
+- **require_suspension_reason** (String)
 
 
 

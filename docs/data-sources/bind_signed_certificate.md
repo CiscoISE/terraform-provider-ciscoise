@@ -10,13 +10,13 @@ description: |-
   trusted.
   NOTE:
   The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
+  NOTE:
+  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 ---
 
 # ciscoise_bind_signed_certificate (Data Source)
 
 It performs create operation on Certificates.
-
-
 
 - Bind CA Signed Certificate.
 
@@ -27,28 +27,31 @@ trusted.
 NOTE:
 The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
 
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+
 ## Example Usage
 
 ```terraform
 data "ciscoise_bind_signed_certificate" "example" {
   provider                              = ciscoise
-  admin                                 = false
-  allow_extended_validity               = false
-  allow_out_of_date_cert                = false
-  allow_replacement_of_certificates     = false
-  allow_replacement_of_portal_group_tag = false
+  admin                                 = "false"
+  allow_extended_validity               = "false"
+  allow_out_of_date_cert                = "false"
+  allow_replacement_of_certificates     = "false"
+  allow_replacement_of_portal_group_tag = "false"
   data                                  = "string"
-  eap                                   = false
+  eap                                   = "false"
   host_name                             = "string"
   id                                    = "string"
-  ims                                   = false
+  ims                                   = "false"
   name                                  = "string"
-  portal                                = false
+  portal                                = "false"
   portal_group_tag                      = "string"
-  pxgrid                                = false
-  radius                                = false
-  saml                                  = false
-  validate_certificate_extensions       = false
+  pxgrid                                = "false"
+  radius                                = "false"
+  saml                                  = "false"
+  validate_certificate_extensions       = "false"
 }
 ```
 
@@ -57,23 +60,23 @@ data "ciscoise_bind_signed_certificate" "example" {
 
 ### Optional
 
-- **admin** (Boolean) Use certificate to authenticate the ISE Admin Portal
-- **allow_extended_validity** (Boolean) Allow import of certificates with validity greater than 398 days
-- **allow_out_of_date_cert** (Boolean) Allow out of date certificates (required)
-- **allow_replacement_of_certificates** (Boolean) Allow Replacement of certificates (required)
-- **allow_replacement_of_portal_group_tag** (Boolean) Allow Replacement of Portal Group Tag (required)
+- **admin** (String) Use certificate to authenticate the ISE Admin Portal
+- **allow_extended_validity** (String) Allow import of certificates with validity greater than 398 days
+- **allow_out_of_date_cert** (String) Allow out of date certificates (required)
+- **allow_replacement_of_certificates** (String) Allow Replacement of certificates (required)
+- **allow_replacement_of_portal_group_tag** (String) Allow Replacement of Portal Group Tag (required)
 - **data** (String) Signed Certificate in escaped format
-- **eap** (Boolean) Use certificate for EAP protocols that use SSL/TLS tunneling
+- **eap** (String) Use certificate for EAP protocols that use SSL/TLS tunneling
 - **host_name** (String) Name of Host whose CSR ID has been provided
 - **id** (String) ID of the generated CSR
-- **ims** (Boolean) Use certificate for the ISE Messaging Service
+- **ims** (String) Use certificate for the ISE Messaging Service
 - **name** (String) Friendly Name of the certificate
-- **portal** (Boolean) Use for portal
+- **portal** (String) Use for portal
 - **portal_group_tag** (String) Set Group tag
-- **pxgrid** (Boolean) Use certificate for the pxGrid Controller
-- **radius** (Boolean) Use certificate for the RADSec server
-- **saml** (Boolean) Use certificate for SAML Signing
-- **validate_certificate_extensions** (Boolean) Validate Certificate Extensions
+- **pxgrid** (String) Use certificate for the pxGrid Controller
+- **radius** (String) Use certificate for the RADSec server
+- **saml** (String) Use certificate for SAML Signing
+- **validate_certificate_extensions** (String) Validate Certificate Extensions
 
 ### Read-Only
 

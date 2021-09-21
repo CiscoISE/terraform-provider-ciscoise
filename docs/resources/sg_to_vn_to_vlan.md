@@ -10,10 +10,12 @@ description: |-
 # ciscoise_sg_to_vn_to_vlan (Resource)
 
 It manages create, read, update and delete operations on SecurityGroupToVirtualNetwork.
-  
-  - This resource allows the client to update a security group to virtual network.
-  - This resource deletes a security group ACL to virtual network.
-  - This resource creates a security group to virtual network.
+
+- This resource allows the client to update a security group to virtual network.
+
+- This resource deletes a security group ACL to virtual network.
+
+- This resource creates a security group to virtual network.
 
 ## Example Usage
 
@@ -28,14 +30,14 @@ resource "ciscoise_sg_to_vn_to_vlan" "example" {
     sgt_id      = "string"
     virtualnetworklist {
 
-      default_virtual_network = false
+      default_virtual_network = "false"
       description             = "string"
       id                      = "string"
       name                    = "string"
       vlans {
 
-        data         = false
-        default_vlan = false
+        data         = "false"
+        default_vlan = "false"
         description  = "string"
         id           = "string"
         max_value    = 1
@@ -82,7 +84,7 @@ Read-Only:
 
 Optional:
 
-- **default_virtual_network** (Boolean)
+- **default_virtual_network** (String)
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
@@ -93,8 +95,8 @@ Optional:
 
 Optional:
 
-- **data** (Boolean)
-- **default_vlan** (Boolean)
+- **data** (String)
+- **default_vlan** (String)
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **max_value** (Number)

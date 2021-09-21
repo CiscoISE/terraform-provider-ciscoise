@@ -16,6 +16,7 @@ description: |-
 It performs read operation on GuestLocation.
 
 - This data source allows the client to get a guest location by ID.
+
 - This data source allows the client to get all the guest locations.
 
 Filter:

@@ -11,8 +11,10 @@ description: |-
 
 It manages read, update and delete operations on Certificates.
 
-  - Update a trusted certificate present in ISE trust store.
-  - This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
+- Update a trusted certificate present in ISE trust store.
+
+
+- This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
 
 ## Example Usage
 
@@ -30,10 +32,10 @@ resource "ciscoise_trusted_certificate" "example" {
     non_automatic_crl_update_units         = "string"
     selected_ocsp_service                  = "string"
     status                                 = "string"
-    trust_for_certificate_based_admin_auth = false
-    trust_for_cisco_services_auth          = false
-    trust_for_client_auth                  = false
-    trust_for_ise_auth                     = false
+    trust_for_certificate_based_admin_auth = "false"
+    trust_for_cisco_services_auth          = "false"
+    trust_for_client_auth                  = "false"
+    trust_for_ise_auth                     = "false"
   }
 }
 
@@ -63,22 +65,22 @@ Optional:
 - **crl_distribution_url** (String) CRL Distribution URL
 - **crl_download_failure_retries_units** (String) Unit of time before retry if CRL download fails
 - **description** (String) Description for trust certificate
-- **id** (String) ID of trust certificate
 - **name** (String) Friendly name of the certificate
 - **non_automatic_crl_update_units** (String) Unit of time of non automatic CRL update
 - **selected_ocsp_service** (String) Name of selected OCSP Service
 - **status** (String)
-- **trust_for_certificate_based_admin_auth** (Boolean) Trust for Certificate based Admin authentication
-- **trust_for_cisco_services_auth** (Boolean) Trust for authentication of Cisco Services
-- **trust_for_client_auth** (Boolean) Trust for client authentication and Syslog
-- **trust_for_ise_auth** (Boolean) Trust for authentication within ISE
+- **trust_for_certificate_based_admin_auth** (String) Trust for Certificate based Admin authentication
+- **trust_for_cisco_services_auth** (String) Trust for authentication of Cisco Services
+- **trust_for_client_auth** (String) Trust for client authentication and Syslog
+- **trust_for_ise_auth** (String) Trust for authentication within ISE
 
 Read-Only:
 
 - **expiration_date** (String) The time and date past which the certificate is no longer valid
 - **friendly_name** (String) Friendly name of trust certificate
-- **internal_ca** (Boolean)
-- **is_referred_in_policy** (Boolean)
+- **id** (String) ID of trust certificate
+- **internal_ca** (String)
+- **is_referred_in_policy** (String)
 - **issued_by** (String) The entity that verified the information and signed the certificate
 - **issued_to** (String) Entity to which trust certificate is issued
 - **key_size** (String) The length of key used for encrypting trust certificate

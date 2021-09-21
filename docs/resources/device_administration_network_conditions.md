@@ -4,16 +4,18 @@ page_title: "ciscoise_device_administration_network_conditions Resource - terraf
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Device Administration - Network Conditions.
-  Device Admin Creates network condition.Device Admin Update network condition.Device Admin Delete network condition.
+  Device AdminCreates network condition.Device Admin Update network condition.Device Admin Delete network condition.
 ---
 
 # ciscoise_device_administration_network_conditions (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Network Conditions.
-  
-  - Device Admin Creates network condition.
-  - Device Admin Update network condition.
-  - Device Admin Delete network condition.
+
+- Device AdminCreates network condition.
+
+- Device Admin Update network condition.
+
+- Device Admin Delete network condition.
 
 ## Example Usage
 

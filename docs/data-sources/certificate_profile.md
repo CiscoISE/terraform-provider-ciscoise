@@ -12,7 +12,9 @@ description: |-
 It performs read operation on CertificateProfile.
 
 - This data source allows the client to get a certificate profile by name.
+
 - This data source allows the client to get a certificate profile by ID.
+
 - This data source allows the client to get all the certificate profiles.
 
 ## Example Usage
@@ -68,7 +70,7 @@ output "ciscoise_certificate_profile_example" {
 
 Read-Only:
 
-- **allowed_as_user_name** (Boolean)
+- **allowed_as_user_name** (String)
 - **certificate_attribute_name** (String)
 - **description** (String)
 - **external_identity_store_name** (String)
@@ -94,7 +96,7 @@ Read-Only:
 
 Read-Only:
 
-- **allowed_as_user_name** (Boolean)
+- **allowed_as_user_name** (String)
 - **certificate_attribute_name** (String)
 - **description** (String)
 - **external_identity_store_name** (String)

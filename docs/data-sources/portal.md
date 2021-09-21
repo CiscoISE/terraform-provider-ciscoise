@@ -16,6 +16,7 @@ description: |-
 It performs read operation on portal.
 
 - This data source allows the client to get a portal by ID.
+
 - This data source allows the client to get all the portals.
 
 Filter:

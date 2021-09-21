@@ -10,8 +10,8 @@ description: |-
 # ciscoise_portal_global_setting (Resource)
 
 It manages read and update operations on PortalGlobalSetting.
-  
-  - This resource allows the client to update the portal global settings by id.
+
+- This resource allows the client to update the portal global settings by id.
 
 ## Example Usage
 
@@ -48,8 +48,8 @@ output "ciscoise_portal_global_setting_example" {
 Optional:
 
 - **customization** (String) Allowed values:
-  - HTML,
-  - HTMLANDJAVASCRIPT
+- HTML,
+- HTMLANDJAVASCRIPT
 - **id** (String) The ID of this resource.
 
 Read-Only:

@@ -12,7 +12,9 @@ description: |-
 It performs read operation on PsnNodeDetailsWithRadiusService.
 
 - This data source allows the client to get a PSN node details by name.
+
 - This data source allows the client to get a PSN node details by ID.
+
 - This data source allows the client to get all the PSN node details.
 
 ## Example Usage

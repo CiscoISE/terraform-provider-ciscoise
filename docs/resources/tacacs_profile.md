@@ -10,10 +10,12 @@ description: |-
 # ciscoise_tacacs_profile (Resource)
 
 It manages create, read, update and delete operations on TACACSProfile.
-  
-  - This resource allows the client to update a TACACS profile.
-  - This resource deletes a TACACS profile.
-  - This resource creates a TACACS profile.
+
+- This resource allows the client to update a TACACS profile.
+
+- This resource deletes a TACACS profile.
+
+- This resource creates a TACACS profile.
 
 ## Example Usage
 

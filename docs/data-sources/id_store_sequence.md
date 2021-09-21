@@ -12,7 +12,9 @@ description: |-
 It performs read operation on IdentitySequence.
 
 - This data source allows the client to get an identity sequence by name.
+
 - This data source allows the client to get an identity sequence by ID.
+
 - This data source allows the client to get all the identity sequences.
 
 ## Example Usage
@@ -68,7 +70,7 @@ output "ciscoise_id_store_sequence_example" {
 
 Read-Only:
 
-- **break_on_store_fail** (Boolean)
+- **break_on_store_fail** (String)
 - **certificate_authentication_profile** (String)
 - **description** (String)
 - **id** (String)
@@ -102,7 +104,7 @@ Read-Only:
 
 Read-Only:
 
-- **break_on_store_fail** (Boolean)
+- **break_on_store_fail** (String)
 - **certificate_authentication_profile** (String)
 - **description** (String)
 - **id** (String)

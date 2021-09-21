@@ -6,61 +6,15 @@ description: |-
   It manages create, read, update and delete operations on Network Access - Conditions.
   Network Access Creates a library condition:
   Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
-    policy rules could be match.
-  Condition can be compose from single dictionary attribute name and value using model
-    LibraryConditionAttributes
-     , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
-    LibraryConditionAndBlock
-     or
-    LibraryConditionOrBlock
-    .
-  When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
-    inner condition models:
-    ConditionAttributes
-    ,
-    ConditionAndBlock
-    ,
-    ConditionOrBlock
-    , that represent dynamically built Conditions which are not stored in the conditions Library, or using
-    ConditionReference
-    , which includes an ID to existing stored condition in the library.
-  The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
-    the condition name.
-  When using one of the 3 inner condition models (
-    ConditionAttributes, ConditionAndBlock, ConditionOrBlock
-    ), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
-    only as inner members of the root condition.
-  When using
-    ConditionReference
-     model in inner layers, the condition name is not required.
-  ConditionReference objects can also include a reference ID to a condition of type
-    TimeAndDate
-    .
-  Network Access Update library condition using condition name.Network Access Delete a library condition using condition Name.Network Access Update library condition.Network Access Delete a library condition.
----
-
-# ciscoise_network_access_conditions (Resource)
-
-It manages create, read, update and delete operations on Network Access - Conditions.
-  
-  - Network Access Creates a library condition:
-  
-  
-  
-   Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
   policy rules could be match.
-  
-  
-   Condition can be compose from single dictionary attribute name and value using model
+  Condition can be compose from single dictionary attribute name and value using model
   LibraryConditionAttributes
    , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
   LibraryConditionAndBlock
    or
   LibraryConditionOrBlock
   .
-  
-  
-   When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
+  When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
   inner condition models:
   ConditionAttributes
   ,
@@ -70,34 +24,83 @@ It manages create, read, update and delete operations on Network Access - Condit
   , that represent dynamically built Conditions which are not stored in the conditions Library, or using
   ConditionReference
   , which includes an ID to existing stored condition in the library.
-  
-  
-   The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
+  The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
   the condition name.
-  
-  
-   When using one of the 3 inner condition models (
+  When using one of the 3 inner condition models (
   ConditionAttributes, ConditionAndBlock, ConditionOrBlock
   ), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
   only as inner members of the root condition.
-  
-  
-   When using
+  When using
   ConditionReference
    model in inner layers, the condition name is not required.
-  
-  
-   ConditionReference objects can also include a reference ID to a condition of type
+  ConditionReference objects can also include a reference ID to a condition of type
   TimeAndDate
   .
-  
-  
-  
-  
-  - Network Access Update library condition using condition name.
-  - Network Access Delete a library condition using condition Name.
-  - Network Access Update library condition.
-  - Network Access Delete a library condition.
+  Network Access Update library condition using condition name.Network Access Delete a library condition using condition Name.Network Access Update library condition.Network Access Delete a library condition.
+---
+
+# ciscoise_network_access_conditions (Resource)
+
+It manages create, read, update and delete operations on Network Access - Conditions.
+
+- Network Access Creates a library condition:
+
+
+
+ Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
+policy rules could be match.
+
+
+ Condition can be compose from single dictionary attribute name and value using model
+LibraryConditionAttributes
+ , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
+LibraryConditionAndBlock
+ or
+LibraryConditionOrBlock
+.
+
+
+ When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
+inner condition models:
+ConditionAttributes
+,
+ConditionAndBlock
+,
+ConditionOrBlock
+, that represent dynamically built Conditions which are not stored in the conditions Library, or using
+ConditionReference
+, which includes an ID to existing stored condition in the library.
+
+
+ The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
+the condition name.
+
+
+ When using one of the 3 inner condition models (
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
+only as inner members of the root condition.
+
+
+ When using
+ConditionReference
+ model in inner layers, the condition name is not required.
+
+
+ ConditionReference objects can also include a reference ID to a condition of type
+TimeAndDate
+.
+
+
+
+
+- Network Access Update library condition using condition name.
+
+- Network Access Delete a library condition using condition Name.
+
+- Network Access Update library condition.
+
+- Network Access Delete a library condition.
 
 ## Example Usage
 
@@ -112,7 +115,7 @@ resource "ciscoise_network_access_conditions" "example" {
     children {
 
       condition_type = "string"
-      is_negate      = false
+      is_negate      = "false"
     }
     condition_type = "string"
     dates_range {
@@ -139,7 +142,7 @@ resource "ciscoise_network_access_conditions" "example" {
       start_time = "string"
     }
     id                  = "string"
-    is_negate           = false
+    is_negate           = "false"
     name                = "string"
     operator            = "string"
     week_days           = ["string"]
@@ -182,7 +185,7 @@ Optional:
 - **hours_range** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--hours_range))
 - **hours_range_exception** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--hours_range_exception))
 - **id** (String) The ID of this resource.
-- **is_negate** (Boolean) Indicates whereas this condition is in negate mode
+- **is_negate** (String) Indicates whereas this condition is in negate mode
 - **name** (String) Condition name
 - **operator** (String) Equality operator
 - **week_days** (List of String) <p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>
@@ -194,7 +197,7 @@ Optional:
 Optional:
 
 - **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
-- **is_negate** (Boolean) Indicates whereas this condition is in negate mode
+- **is_negate** (String) Indicates whereas this condition is in negate mode
 
 
 <a id="nestedblock--item--dates_range"></a>

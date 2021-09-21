@@ -11,7 +11,7 @@ description: |-
 
 It performs delete operation on Misc.
 
-Delete All Sessions
+- Delete All Sessions
 
 ## Example Usage
 

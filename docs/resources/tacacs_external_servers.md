@@ -10,10 +10,12 @@ description: |-
 # ciscoise_tacacs_external_servers (Resource)
 
 It manages create, read, update and delete operations on TACACSExternalServers.
-  
-  - This resource allows the client to update TACACS external servers.
-  - This resource deletes TACACS external servers.
-  - This resource creates TACACS external servers.
+
+- This resource allows the client to update TACACS external servers.
+
+- This resource deletes TACACS external servers.
+
+- This resource creates TACACS external servers.
 
 ## Example Usage
 
@@ -28,7 +30,7 @@ resource "ciscoise_tacacs_external_servers" "example" {
     id              = "string"
     name            = "string"
     shared_secret   = "string"
-    single_connect  = false
+    single_connect  = "false"
     timeout         = 1
   }
 }
@@ -61,7 +63,7 @@ Optional:
 - **id** (String) The ID of this resource.
 - **name** (String)
 - **shared_secret** (String) The server shared secret
-- **single_connect** (Boolean) Define the use of single connection
+- **single_connect** (String) Define the use of single connection
 - **timeout** (Number) The server timeout
 
 Read-Only:

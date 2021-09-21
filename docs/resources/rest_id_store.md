@@ -10,12 +10,16 @@ description: |-
 # ciscoise_rest_id_store (Resource)
 
 It manages create, read, update and delete operations on RESTIDStore.
-  
-  - This resource allows the client to update a REST ID store by name.
-  - This resource deletes a REST ID store by name.
-  - This resource allows the client to update a REST ID store.
-  - This resource deletes a REST ID store.
-  - This resource creates a REST ID store.
+
+- This resource allows the client to update a REST ID store by name.
+
+- This resource deletes a REST ID store by name.
+
+- This resource allows the client to update a REST ID store.
+
+- This resource deletes a REST ID store.
+
+- This resource creates a REST ID store.
 
 ## Example Usage
 
@@ -79,10 +83,10 @@ Optional:
 
 - **headers** (Block List) (see [below for nested schema](#nestedblock--item--ers_rest_idstore_attributes--headers))
 - **predefined** (String) The cloud provider connected to of the RestIDStore.
-  Options are:
-  - Azure,
-  - Okta,
-  - None
+Options are:
+- Azure,
+- Okta,
+- None
 - **root_url** (String) url of the root of the RestIDStore
 - **username_suffix** (String) Suffix of the username domain
 

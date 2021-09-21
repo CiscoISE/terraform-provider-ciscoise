@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Misc.
 
-Sessions by Username
+- Sessions by Username
 
 ## Example Usage
 

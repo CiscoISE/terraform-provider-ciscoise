@@ -10,10 +10,12 @@ description: |-
 # ciscoise_authorization_profile (Resource)
 
 It manages create, read, update and delete operations on AuthorizationProfile.
-  
-  - This resource allows the client to update an authorization profile.
-  - This resource deletes an authorization profile.
-  - This resource creates an authorization profile.
+
+- This resource allows the client to update an authorization profile.
+
+- This resource deletes an authorization profile.
+
+- This resource creates an authorization profile.
 
 ## Example Usage
 
@@ -41,7 +43,7 @@ resource "ciscoise_authorization_profile" "example" {
         value                         = "string"
       }
     }
-    agentless_posture           = false
+    agentless_posture           = "false"
     airespace_acl               = "string"
     airespace_ipv6_acl          = "string"
     asa_vpn                     = "string"
@@ -50,34 +52,34 @@ resource "ciscoise_authorization_profile" "example" {
     avc_profile                 = "string"
     dacl_name                   = "string"
     description                 = "string"
-    easywired_session_candidate = false
+    easywired_session_candidate = "false"
     id                          = "string"
     interface_template          = "string"
     ipv6_acl_filter             = "string"
     ipv6_dacl_name              = "string"
     mac_sec_policy              = "string"
     name                        = "string"
-    neat                        = false
+    neat                        = "false"
     profile_name                = "string"
     reauth {
 
       connectivity = "string"
       timer        = 1
     }
-    service_template = false
-    track_movement   = false
+    service_template = "false"
+    track_movement   = "false"
     vlan {
 
       name_id = "string"
       tag_id  = 1
     }
-    voice_domain_permission = false
-    web_auth                = false
+    voice_domain_permission = "false"
+    web_auth                = "false"
     web_redirection {
 
       web_redirection_type                  = "string"
       acl                                   = "string"
-      display_certificates_renewal_messages = false
+      display_certificates_renewal_messages = "false"
       portal_name                           = "string"
       static_iphost_name_fqd_n              = "string"
     }
@@ -107,41 +109,41 @@ output "ciscoise_authorization_profile_example" {
 Optional:
 
 - **access_type** (String) Allowed Values:
-  - ACCESS_ACCEPT,
-  - ACCESS_REJECT
+- ACCESS_ACCEPT,
+- ACCESS_REJECT
 - **acl** (String)
 - **advanced_attributes** (Block List) (see [below for nested schema](#nestedblock--item--advanced_attributes))
-- **agentless_posture** (Boolean)
+- **agentless_posture** (String)
 - **airespace_acl** (String)
 - **airespace_ipv6_acl** (String)
 - **asa_vpn** (String)
 - **authz_profile_type** (String) Allowed Values:
-  - SWITCH,
-  - TRUSTSEC,
-  - TACACS
-  SWITCH is used for Standard Authorization Profiles
+- SWITCH,
+- TRUSTSEC,
+- TACACS
+SWITCH is used for Standard Authorization Profiles
 - **auto_smart_port** (String)
 - **avc_profile** (String)
 - **dacl_name** (String)
 - **description** (String)
-- **easywired_session_candidate** (Boolean)
+- **easywired_session_candidate** (String)
 - **id** (String) Resource UUID value
 - **interface_template** (String)
 - **ipv6_acl_filter** (String)
 - **ipv6_dacl_name** (String)
 - **mac_sec_policy** (String) Allowed Values:
-  - MUST_SECURE,
-  - MUST_NOT_SECURE,
-  - SHOULD_SECURE
+- MUST_SECURE,
+- MUST_NOT_SECURE,
+- SHOULD_SECURE
 - **name** (String) Resource Name
-- **neat** (Boolean)
+- **neat** (String)
 - **profile_name** (String)
 - **reauth** (Block List) (see [below for nested schema](#nestedblock--item--reauth))
-- **service_template** (Boolean)
-- **track_movement** (Boolean)
+- **service_template** (String)
+- **track_movement** (String)
 - **vlan** (Block List) (see [below for nested schema](#nestedblock--item--vlan))
-- **voice_domain_permission** (Boolean)
-- **web_auth** (Boolean)
+- **voice_domain_permission** (String)
+- **web_auth** (String)
 - **web_redirection** (Block List) (see [below for nested schema](#nestedblock--item--web_redirection))
 
 Read-Only:
@@ -155,8 +157,8 @@ Optional:
 
 - **left_hand_side_dictionary_attribue** (Block List) (see [below for nested schema](#nestedblock--item--advanced_attributes--left_hand_side_dictionary_attribue))
 - **right_hand_side_attribue_value** (Block List) Attribute value can be of type AttributeValue or AdvancedDictionaryAttribute.
-  For AttributeValue the value is String,
-  For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties (see [below for nested schema](#nestedblock--item--advanced_attributes--right_hand_side_attribue_value))
+For AttributeValue the value is String,
+For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties (see [below for nested schema](#nestedblock--item--advanced_attributes--right_hand_side_attribue_value))
 
 <a id="nestedblock--item--advanced_attributes--left_hand_side_dictionary_attribue"></a>
 ### Nested Schema for `item.advanced_attributes.left_hand_side_dictionary_attribue`
@@ -187,8 +189,8 @@ Optional:
 Optional:
 
 - **connectivity** (String) Allowed Values:
-  - DEFAULT,
-  - RADIUS_REQUEST
+- DEFAULT,
+- RADIUS_REQUEST
 - **timer** (Number) Valid range is 1-65535
 
 
@@ -207,12 +209,12 @@ Optional:
 Optional:
 
 - **acl** (String)
-- **display_certificates_renewal_messages** (Boolean) The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
-  For all other 'WebRedirectionType' values the field must be ignored
+- **display_certificates_renewal_messages** (String) The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
+For all other 'WebRedirectionType' values the field must be ignored
 - **portal_name** (String) A portal that exist in the DB and fits the WebRedirectionType
 - **static_iphost_name_fqd_n** (String)
 - **web_redirection_type** (String) Value MUST be one of the following:CentralizedWebAuth, HotSpot, NativeSupplicanProvisioning, ClientProvisioning. 
-  The WebRedirectionType must fit the portalName
+The WebRedirectionType must fit the portalName
 
 
 <a id="nestedatt--item--link"></a>
