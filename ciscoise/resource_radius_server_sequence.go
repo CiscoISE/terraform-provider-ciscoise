@@ -675,11 +675,19 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	if v, ok := d.GetOkExists(key + ".strip_suffix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".strip_suffix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".strip_suffix"))) {
 		request.StripSuffix = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".prefix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_separator"))) {
-		request.PrefixSeparator = interfaceToString(v)
+	vStripPrefix, okStripPrefix := d.GetOk(key + ".strip_prefix")
+	vvStripPrefix := interfaceToBoolPtr(vStripPrefix)
+	if okStripPrefix && vvStripPrefix != nil && *vvStripPrefix {
+		if v, ok := d.GetOkExists(key + ".prefix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_separator"))) {
+			request.PrefixSeparator = interfaceToString(v)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".suffix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_separator"))) {
-		request.SuffixSeparator = interfaceToString(v)
+	vStripSuffix, okStripSuffix := d.GetOk(key + ".strip_suffix")
+	vvStripSuffix := interfaceToBoolPtr(vStripSuffix)
+	if okStripSuffix && vvStripSuffix != nil && *vvStripSuffix {
+		if v, ok := d.GetOkExists(key + ".suffix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_separator"))) {
+			request.SuffixSeparator = interfaceToString(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".remote_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".remote_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".remote_accounting"))) {
 		request.RemoteAccounting = interfaceToBoolPtr(v)
@@ -699,11 +707,16 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	if v, ok := d.GetOkExists(key + ".radius_server_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".radius_server_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".radius_server_list"))) {
 		request.RadiusServerList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".on_request_attr_manipulator_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".on_request_attr_manipulator_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".on_request_attr_manipulator_list"))) {
-		request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key, d)
-	}
-	if v, ok := d.GetOkExists(key + ".before_accept_attr_manipulators_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".before_accept_attr_manipulators_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".before_accept_attr_manipulators_list"))) {
-		request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key, d)
+
+	vUseAttrSetBeforeAcc, okUseAttrSetBeforeAcc := d.GetOk(key + ".use_attr_set_before_acc")
+	vvUseAttrSetBeforeAcc := interfaceToBoolPtr(vUseAttrSetBeforeAcc)
+	if okUseAttrSetBeforeAcc && vvUseAttrSetBeforeAcc != nil && *vvUseAttrSetBeforeAcc {
+		if v, ok := d.GetOkExists(key + ".on_request_attr_manipulator_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".on_request_attr_manipulator_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".on_request_attr_manipulator_list"))) {
+			request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key, d)
+		}
+		if v, ok := d.GetOkExists(key + ".before_accept_attr_manipulators_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".before_accept_attr_manipulators_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".before_accept_attr_manipulators_list"))) {
+			request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key, d)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -745,8 +758,12 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
-		request.ChangedVal = interfaceToString(v)
+	vAction, okAction := d.GetOk(key + ".action")
+	vvAction := interfaceToString(vAction)
+	if okAction && vvAction == "UPDATE" {
+		if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
+			request.ChangedVal = interfaceToString(v)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -788,8 +805,12 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
-		request.ChangedVal = interfaceToString(v)
+	vAction, okAction := d.GetOk(key + ".action")
+	vvAction := interfaceToString(vAction)
+	if okAction && vvAction == "UPDATE" {
+		if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
+			request.ChangedVal = interfaceToString(v)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

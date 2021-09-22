@@ -487,11 +487,15 @@ func expandRequestExternalRadiusServerUpdateExternalRadiusServerByIDExternalRadi
 	if v, ok := d.GetOkExists(key + ".enable_key_wrap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_key_wrap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_key_wrap"))) {
 		request.EnableKeyWrap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".encryption_key"))) {
-		request.EncryptionKey = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".authenticator_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authenticator_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authenticator_key"))) {
-		request.AuthenticatorKey = interfaceToString(v)
+	vEnableKeyWrap, okEnableKeyWrap := d.GetOk(key + ".enable_key_wrap")
+	vvEnableKeyWrap := interfaceToBoolPtr(vEnableKeyWrap)
+	if okEnableKeyWrap && vvEnableKeyWrap != nil && *vvEnableKeyWrap {
+		if v, ok := d.GetOkExists(key + ".encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".encryption_key"))) {
+			request.EncryptionKey = interfaceToString(v)
+		}
+		if v, ok := d.GetOkExists(key + ".authenticator_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authenticator_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authenticator_key"))) {
+			request.AuthenticatorKey = interfaceToString(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".key_input_format"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_input_format"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_input_format"))) {
 		request.KeyInputFormat = interfaceToString(v)
