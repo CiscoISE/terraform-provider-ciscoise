@@ -28,7 +28,10 @@ resource "ciscoise_guest_user" "example" {
   provider = ciscoise
   item {
 
-    custom_fields {}
+    custom_fields = {
+      key1 = "value1"
+      key2 = "value2"
+    }
     description = "string"
     guest_access_info {
 
