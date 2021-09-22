@@ -29,7 +29,10 @@ resource "ciscoise_internal_user" "example" {
   item {
 
     change_password = "false"
-    custom_attributes {}
+    custom_attributes = {
+      key1 = "value1"
+      key2 = "value2"
+    }
     description         = "string"
     email               = "string"
     enable_password     = "string"

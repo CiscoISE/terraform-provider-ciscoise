@@ -18,7 +18,10 @@ It performs update operation on endpoint.
 ```terraform
 data "ciscoise_endpoint_register" "example" {
   provider = ciscoise
-  custom_attributes {}
+  custom_attributes = {
+    key1 = "value1"
+    key2 = "value2"
+  }
   description       = "string"
   group_id          = "string"
   id                = "string"
