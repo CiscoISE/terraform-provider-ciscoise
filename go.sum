@@ -36,6 +36,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/CiscoISE/ciscoise-go-sdk v0.0.4 h1:vQE4zAGXykR5L2dOKCgTCK8rTneirU4I6EFwHUF0mlE=
 github.com/CiscoISE/ciscoise-go-sdk v0.0.4/go.mod h1:ighAksSmpvjhvEKedHkqTVmeE3ba0ap2yOT6txp+G98=
+github.com/CiscoISE/ciscoise-go-sdk v0.0.5 h1:9T2j8gfz8W0ICLrlWKt3iYxr1alXK5ASl/wsjZ7hbJk=
+github.com/CiscoISE/ciscoise-go-sdk v0.0.5/go.mod h1:ighAksSmpvjhvEKedHkqTVmeE3ba0ap2yOT6txp+G98=
 github.com/Masterminds/goutils v1.1.0 h1:zukEsf/1JZwCMgHiK3GZftabmxiCw4apj3a28RPBiVg=
 github.com/Masterminds/goutils v1.1.0/go.mod h1:8cTjp+g8YejhMuvIA5y2vz3BpJxksy863GQaJW2MFNU=
 github.com/Masterminds/semver v1.5.0 h1:H65muMkzWKEuNDnfl9d70GUjFniHKHRbFPGBuZ3QEww=
