@@ -822,7 +822,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -868,7 +868,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationAuthorizationExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildren {
 	request := []isegosdk.RequestDeviceAdministrationAuthorizationExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1074,7 +1074,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -1120,7 +1120,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationAuthorizationExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildren {
 	request := []isegosdk.RequestDeviceAdministrationAuthorizationExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

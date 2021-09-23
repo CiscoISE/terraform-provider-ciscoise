@@ -728,7 +728,7 @@ func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetCondition(ct
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -774,7 +774,7 @@ func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionLin
 func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChildren {
 	request := []isegosdk.RequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -972,7 +972,7 @@ func expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditio
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -1018,7 +1018,7 @@ func expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditio
 func expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionChildren {
 	request := []isegosdk.RequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

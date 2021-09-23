@@ -642,7 +642,7 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 		request.Description = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".advanced_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_attributes"))) {
-		request.AdvancedAttributes = expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesArray(ctx, key, d)
+		request.AdvancedAttributes = expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesArray(ctx, key+".advanced_attributes", d)
 	}
 	if v, ok := d.GetOkExists(key + ".access_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_type"))) {
 		request.AccessType = interfaceToString(v)
@@ -725,7 +725,7 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributes {
 	request := []isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributes{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -868,7 +868,7 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 		request.Description = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".advanced_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_attributes"))) {
-		request.AdvancedAttributes = expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesArray(ctx, key, d)
+		request.AdvancedAttributes = expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesArray(ctx, key+".advanced_attributes", d)
 	}
 	if v, ok := d.GetOkExists(key + ".access_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_type"))) {
 		request.AccessType = interfaceToString(v)
@@ -951,7 +951,7 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes {
 	request := []isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

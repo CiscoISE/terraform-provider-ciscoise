@@ -660,7 +660,7 @@ func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectory(ctx con
 func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroups(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroups {
 	request := isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroups{}
 	if v, ok := d.GetOkExists(key + ".groups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".groups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".groups"))) {
-		request.Groups = expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroupsGroupsArray(ctx, key, d)
+		request.Groups = expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroupsGroupsArray(ctx, key+".groups", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -671,7 +671,7 @@ func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroups
 func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroupsGroupsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroupsGroups {
 	request := []isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdgroupsGroups{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -747,7 +747,7 @@ func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvanced
 		request.EnableRewrites = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".rewrite_rules"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rewrite_rules"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rewrite_rules"))) {
-		request.RewriteRules = expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvancedSettingsRewriteRulesArray(ctx, key, d)
+		request.RewriteRules = expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvancedSettingsRewriteRulesArray(ctx, key+".rewrite_rules", d)
 	}
 	if v, ok := d.GetOkExists(key + ".first_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".first_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".first_name"))) {
 		request.FirstName = interfaceToString(v)
@@ -794,7 +794,7 @@ func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvanced
 func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvancedSettingsRewriteRulesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvancedSettingsRewriteRules {
 	request := []isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvancedSettingsRewriteRules{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -831,7 +831,7 @@ func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvanced
 func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttributes {
 	request := isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttributes{}
 	if v, ok := d.GetOkExists(key + ".attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attributes"))) {
-		request.Attributes = expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttributesAttributesArray(ctx, key, d)
+		request.Attributes = expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttributesAttributesArray(ctx, key+".attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -842,7 +842,7 @@ func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttrib
 func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttributesAttributesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttributesAttributes {
 	request := []isegosdk.RequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttributesAttributes{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

@@ -98,8 +98,8 @@ func expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodes(
 
 func expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodesOperationAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLeaveDomainWithAllNodesOperationAdditionalData {
 	request := isegosdk.RequestActiveDirectoryLeaveDomainWithAllNodesOperationAdditionalData{}
-	if v, ok := d.GetOkExists("additional_data"); !isEmptyValue(reflect.ValueOf(d.Get("additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get("additional_data"))) {
-		request.AdditionalData = expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodesOperationAdditionalDataAdditionalDataArray(ctx, key, d)
+	if v, ok := d.GetOkExists(key + ".additional_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".additional_data"))) {
+		request.AdditionalData = expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodesOperationAdditionalDataAdditionalDataArray(ctx, key+".additional_data", d)
 	}
 	return &request
 }
@@ -107,7 +107,7 @@ func expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodesO
 func expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodesOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryLeaveDomainWithAllNodesOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestActiveDirectoryLeaveDomainWithAllNodesOperationAdditionalDataAdditionalData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -123,10 +123,10 @@ func expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodesO
 
 func expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodesOperationAdditionalDataAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLeaveDomainWithAllNodesOperationAdditionalDataAdditionalData {
 	request := isegosdk.RequestActiveDirectoryLeaveDomainWithAllNodesOperationAdditionalDataAdditionalData{}
-	if v, ok := d.GetOkExists("value"); !isEmptyValue(reflect.ValueOf(d.Get("value"))) && (ok || !reflect.DeepEqual(v, d.Get("value"))) {
+	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
 	return &request

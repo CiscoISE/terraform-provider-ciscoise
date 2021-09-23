@@ -1278,7 +1278,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 		request.AllowAlternateGuestPortal = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".social_configs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_configs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_configs"))) {
-		request.SocialConfigs = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key, d)
+		request.SocialConfigs = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key+".social_configs", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1289,7 +1289,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs {
 	request := []isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1663,7 +1663,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1674,7 +1674,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1849,7 +1849,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 		request.AllowAlternateGuestPortal = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".social_configs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_configs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_configs"))) {
-		request.SocialConfigs = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key, d)
+		request.SocialConfigs = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key+".social_configs", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1860,7 +1860,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs {
 	request := []isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -2234,7 +2234,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -2245,7 +2245,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

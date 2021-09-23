@@ -178,10 +178,10 @@ func expandRequestSystemCertificateCreateCreateSystemCertificate(ctx context.Con
 
 func expandRequestSystemCertificateCreateCreateSystemCertificateERSSystemCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSystemCertificateCreateSystemCertificateERSSystemCertificate {
 	request := isegosdk.RequestSystemCertificateCreateSystemCertificateERSSystemCertificate{}
-	if v, ok := d.GetOkExists("node_id"); !isEmptyValue(reflect.ValueOf(d.Get("node_id"))) && (ok || !reflect.DeepEqual(v, d.Get("node_id"))) {
+	if v, ok := d.GetOkExists(key + ".node_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".node_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".node_id"))) {
 		request.NodeID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("ers_local_cert_stub"); !isEmptyValue(reflect.ValueOf(d.Get("ers_local_cert_stub"))) && (ok || !reflect.DeepEqual(v, d.Get("ers_local_cert_stub"))) {
+	if v, ok := d.GetOkExists(key + ".ers_local_cert_stub"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ers_local_cert_stub"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ers_local_cert_stub"))) {
 		request.ErsLocalCertStub = expandRequestSystemCertificateCreateCreateSystemCertificateERSSystemCertificateErsLocalCertStub(ctx, key+".ers_local_cert_stub.0", d)
 	}
 	return &request
@@ -189,49 +189,49 @@ func expandRequestSystemCertificateCreateCreateSystemCertificateERSSystemCertifi
 
 func expandRequestSystemCertificateCreateCreateSystemCertificateERSSystemCertificateErsLocalCertStub(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSystemCertificateCreateSystemCertificateERSSystemCertificateErsLocalCertStub {
 	request := isegosdk.RequestSystemCertificateCreateSystemCertificateERSSystemCertificateErsLocalCertStub{}
-	if v, ok := d.GetOkExists("friendly_name"); !isEmptyValue(reflect.ValueOf(d.Get("friendly_name"))) && (ok || !reflect.DeepEqual(v, d.Get("friendly_name"))) {
+	if v, ok := d.GetOkExists(key + ".friendly_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".friendly_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".friendly_name"))) {
 		request.FriendlyName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("ers_subject_stub"); !isEmptyValue(reflect.ValueOf(d.Get("ers_subject_stub"))) && (ok || !reflect.DeepEqual(v, d.Get("ers_subject_stub"))) {
+	if v, ok := d.GetOkExists(key + ".ers_subject_stub"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ers_subject_stub"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ers_subject_stub"))) {
 		request.ErsSubjectStub = expandRequestSystemCertificateCreateCreateSystemCertificateERSSystemCertificateErsLocalCertStubErsSubjectStub(ctx, key+".ers_subject_stub.0", d)
 	}
-	if v, ok := d.GetOkExists("key_length"); !isEmptyValue(reflect.ValueOf(d.Get("key_length"))) && (ok || !reflect.DeepEqual(v, d.Get("key_length"))) {
+	if v, ok := d.GetOkExists(key + ".key_length"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_length"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_length"))) {
 		request.KeyLength = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("xgrid_certificate"); !isEmptyValue(reflect.ValueOf(d.Get("xgrid_certificate"))) && (ok || !reflect.DeepEqual(v, d.Get("xgrid_certificate"))) {
+	if v, ok := d.GetOkExists(key + ".xgrid_certificate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".xgrid_certificate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".xgrid_certificate"))) {
 		request.XgridCertificate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("group_tag_dd"); !isEmptyValue(reflect.ValueOf(d.Get("group_tag_dd"))) && (ok || !reflect.DeepEqual(v, d.Get("group_tag_dd"))) {
+	if v, ok := d.GetOkExists(key + ".group_tag_dd"); !isEmptyValue(reflect.ValueOf(d.Get(key+".group_tag_dd"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".group_tag_dd"))) {
 		request.GroupTagDD = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("saml_certificate"); !isEmptyValue(reflect.ValueOf(d.Get("saml_certificate"))) && (ok || !reflect.DeepEqual(v, d.Get("saml_certificate"))) {
+	if v, ok := d.GetOkExists(key + ".saml_certificate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".saml_certificate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".saml_certificate"))) {
 		request.SamlCertificate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("key_type"); !isEmptyValue(reflect.ValueOf(d.Get("key_type"))) && (ok || !reflect.DeepEqual(v, d.Get("key_type"))) {
+	if v, ok := d.GetOkExists(key + ".key_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_type"))) {
 		request.KeyType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("digest"); !isEmptyValue(reflect.ValueOf(d.Get("digest"))) && (ok || !reflect.DeepEqual(v, d.Get("digest"))) {
+	if v, ok := d.GetOkExists(key + ".digest"); !isEmptyValue(reflect.ValueOf(d.Get(key+".digest"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".digest"))) {
 		request.Digest = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("certificate_policies"); !isEmptyValue(reflect.ValueOf(d.Get("certificate_policies"))) && (ok || !reflect.DeepEqual(v, d.Get("certificate_policies"))) {
+	if v, ok := d.GetOkExists(key + ".certificate_policies"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_policies"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_policies"))) {
 		request.CertificatePolicies = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("expiration_ttl"); !isEmptyValue(reflect.ValueOf(d.Get("expiration_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get("expiration_ttl"))) {
+	if v, ok := d.GetOkExists(key + ".expiration_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiration_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiration_ttl"))) {
 		request.ExpirationTTL = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists("selected_expiration_ttl_unit"); !isEmptyValue(reflect.ValueOf(d.Get("selected_expiration_ttl_unit"))) && (ok || !reflect.DeepEqual(v, d.Get("selected_expiration_ttl_unit"))) {
+	if v, ok := d.GetOkExists(key + ".selected_expiration_ttl_unit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".selected_expiration_ttl_unit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".selected_expiration_ttl_unit"))) {
 		request.SelectedExpirationTTLUnit = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("allow_wildcard_certs"); !isEmptyValue(reflect.ValueOf(d.Get("allow_wildcard_certs"))) && (ok || !reflect.DeepEqual(v, d.Get("allow_wildcard_certs"))) {
+	if v, ok := d.GetOkExists(key + ".allow_wildcard_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_wildcard_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_wildcard_certs"))) {
 		request.AllowWildcardCerts = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("certificate_san_dns"); !isEmptyValue(reflect.ValueOf(d.Get("certificate_san_dns"))) && (ok || !reflect.DeepEqual(v, d.Get("certificate_san_dns"))) {
+	if v, ok := d.GetOkExists(key + ".certificate_san_dns"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_san_dns"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_san_dns"))) {
 		request.CertificateSanDNS = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("certificate_san_ip"); !isEmptyValue(reflect.ValueOf(d.Get("certificate_san_ip"))) && (ok || !reflect.DeepEqual(v, d.Get("certificate_san_ip"))) {
+	if v, ok := d.GetOkExists(key + ".certificate_san_ip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_san_ip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_san_ip"))) {
 		request.CertificateSanIP = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("certificate_san_uri"); !isEmptyValue(reflect.ValueOf(d.Get("certificate_san_uri"))) && (ok || !reflect.DeepEqual(v, d.Get("certificate_san_uri"))) {
+	if v, ok := d.GetOkExists(key + ".certificate_san_uri"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_san_uri"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_san_uri"))) {
 		request.CertificateSanURI = interfaceToString(v)
 	}
 	return &request
@@ -239,22 +239,22 @@ func expandRequestSystemCertificateCreateCreateSystemCertificateERSSystemCertifi
 
 func expandRequestSystemCertificateCreateCreateSystemCertificateERSSystemCertificateErsLocalCertStubErsSubjectStub(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSystemCertificateCreateSystemCertificateERSSystemCertificateErsLocalCertStubErsSubjectStub {
 	request := isegosdk.RequestSystemCertificateCreateSystemCertificateERSSystemCertificateErsLocalCertStubErsSubjectStub{}
-	if v, ok := d.GetOkExists("common_name"); !isEmptyValue(reflect.ValueOf(d.Get("common_name"))) && (ok || !reflect.DeepEqual(v, d.Get("common_name"))) {
+	if v, ok := d.GetOkExists(key + ".common_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".common_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".common_name"))) {
 		request.CommonName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("organizational_unit_name"); !isEmptyValue(reflect.ValueOf(d.Get("organizational_unit_name"))) && (ok || !reflect.DeepEqual(v, d.Get("organizational_unit_name"))) {
+	if v, ok := d.GetOkExists(key + ".organizational_unit_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".organizational_unit_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".organizational_unit_name"))) {
 		request.OrganizationalUnitName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("organization_name"); !isEmptyValue(reflect.ValueOf(d.Get("organization_name"))) && (ok || !reflect.DeepEqual(v, d.Get("organization_name"))) {
+	if v, ok := d.GetOkExists(key + ".organization_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".organization_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".organization_name"))) {
 		request.OrganizationName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("locality_name"); !isEmptyValue(reflect.ValueOf(d.Get("locality_name"))) && (ok || !reflect.DeepEqual(v, d.Get("locality_name"))) {
+	if v, ok := d.GetOkExists(key + ".locality_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".locality_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".locality_name"))) {
 		request.LocalityName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("state_or_province_name"); !isEmptyValue(reflect.ValueOf(d.Get("state_or_province_name"))) && (ok || !reflect.DeepEqual(v, d.Get("state_or_province_name"))) {
+	if v, ok := d.GetOkExists(key + ".state_or_province_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".state_or_province_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".state_or_province_name"))) {
 		request.StateOrProvinceName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("country_name"); !isEmptyValue(reflect.ValueOf(d.Get("country_name"))) && (ok || !reflect.DeepEqual(v, d.Get("country_name"))) {
+	if v, ok := d.GetOkExists(key + ".country_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".country_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".country_name"))) {
 		request.CountryName = interfaceToString(v)
 	}
 	return &request

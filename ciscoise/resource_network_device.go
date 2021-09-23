@@ -708,7 +708,7 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDevice(ctx context.Cont
 		request.SoftwareVersion = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".network_device_iplist"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_device_iplist"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_device_iplist"))) {
-		request.NetworkDeviceIPList = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPListArray(ctx, key, d)
+		request.NetworkDeviceIPList = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPListArray(ctx, key+".network_device_iplist", d)
 	}
 	if v, ok := d.GetOkExists(key + ".network_device_group_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_device_group_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_device_group_list"))) {
 		request.NetworkDeviceGroupList = interfaceToSliceString(v)
@@ -886,7 +886,7 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTacacsSettings(ct
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPList {
 	request := []isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -968,7 +968,7 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDevice(ctx context.
 		request.SoftwareVersion = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".network_device_iplist"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_device_iplist"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_device_iplist"))) {
-		request.NetworkDeviceIPList = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPListArray(ctx, key, d)
+		request.NetworkDeviceIPList = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPListArray(ctx, key+".network_device_iplist", d)
 	}
 	if v, ok := d.GetOkExists(key + ".network_device_group_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_device_group_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_device_group_list"))) {
 		request.NetworkDeviceGroupList = interfaceToSliceString(v)
@@ -1146,7 +1146,7 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTacacsSetting
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList {
 	request := []isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

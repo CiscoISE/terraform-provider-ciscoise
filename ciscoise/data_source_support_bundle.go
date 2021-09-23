@@ -155,16 +155,16 @@ func expandRequestSupportBundleCreateSupportBundle(ctx context.Context, key stri
 
 func expandRequestSupportBundleCreateSupportBundleSupportBundle(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSupportBundleTriggerConfigurationCreateSupportBundleSupportBundle {
 	request := isegosdk.RequestSupportBundleTriggerConfigurationCreateSupportBundleSupportBundle{}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(d.Get("description"))) && (ok || !reflect.DeepEqual(v, d.Get("description"))) {
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("host_name"); !isEmptyValue(reflect.ValueOf(d.Get("host_name"))) && (ok || !reflect.DeepEqual(v, d.Get("host_name"))) {
+	if v, ok := d.GetOkExists(key + ".host_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".host_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".host_name"))) {
 		request.HostName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("support_bundle_include_options"); !isEmptyValue(reflect.ValueOf(d.Get("support_bundle_include_options"))) && (ok || !reflect.DeepEqual(v, d.Get("support_bundle_include_options"))) {
+	if v, ok := d.GetOkExists(key + ".support_bundle_include_options"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_bundle_include_options"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_bundle_include_options"))) {
 		request.SupportBundleIncludeOptions = expandRequestSupportBundleCreateSupportBundleSupportBundleSupportBundleIncludeOptions(ctx, key+".support_bundle_include_options.0", d)
 	}
 	return &request
@@ -172,31 +172,31 @@ func expandRequestSupportBundleCreateSupportBundleSupportBundle(ctx context.Cont
 
 func expandRequestSupportBundleCreateSupportBundleSupportBundleSupportBundleIncludeOptions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSupportBundleTriggerConfigurationCreateSupportBundleSupportBundleSupportBundleIncludeOptions {
 	request := isegosdk.RequestSupportBundleTriggerConfigurationCreateSupportBundleSupportBundleSupportBundleIncludeOptions{}
-	if v, ok := d.GetOkExists("include_config_db"); !isEmptyValue(reflect.ValueOf(d.Get("include_config_db"))) && (ok || !reflect.DeepEqual(v, d.Get("include_config_db"))) {
+	if v, ok := d.GetOkExists(key + ".include_config_db"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_config_db"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_config_db"))) {
 		request.IncludeConfigDB = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("include_debug_logs"); !isEmptyValue(reflect.ValueOf(d.Get("include_debug_logs"))) && (ok || !reflect.DeepEqual(v, d.Get("include_debug_logs"))) {
+	if v, ok := d.GetOkExists(key + ".include_debug_logs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_debug_logs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_debug_logs"))) {
 		request.IncludeDebugLogs = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("include_local_logs"); !isEmptyValue(reflect.ValueOf(d.Get("include_local_logs"))) && (ok || !reflect.DeepEqual(v, d.Get("include_local_logs"))) {
+	if v, ok := d.GetOkExists(key + ".include_local_logs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_local_logs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_local_logs"))) {
 		request.IncludeLocalLogs = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("include_core_files"); !isEmptyValue(reflect.ValueOf(d.Get("include_core_files"))) && (ok || !reflect.DeepEqual(v, d.Get("include_core_files"))) {
+	if v, ok := d.GetOkExists(key + ".include_core_files"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_core_files"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_core_files"))) {
 		request.IncludeCoreFiles = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("mnt_logs"); !isEmptyValue(reflect.ValueOf(d.Get("mnt_logs"))) && (ok || !reflect.DeepEqual(v, d.Get("mnt_logs"))) {
+	if v, ok := d.GetOkExists(key + ".mnt_logs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mnt_logs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mnt_logs"))) {
 		request.MntLogs = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("include_system_logs"); !isEmptyValue(reflect.ValueOf(d.Get("include_system_logs"))) && (ok || !reflect.DeepEqual(v, d.Get("include_system_logs"))) {
+	if v, ok := d.GetOkExists(key + ".include_system_logs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_system_logs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_system_logs"))) {
 		request.IncludeSystemLogs = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("policy_xml"); !isEmptyValue(reflect.ValueOf(d.Get("policy_xml"))) && (ok || !reflect.DeepEqual(v, d.Get("policy_xml"))) {
+	if v, ok := d.GetOkExists(key + ".policy_xml"); !isEmptyValue(reflect.ValueOf(d.Get(key+".policy_xml"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".policy_xml"))) {
 		request.PolicyXml = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("from_date"); !isEmptyValue(reflect.ValueOf(d.Get("from_date"))) && (ok || !reflect.DeepEqual(v, d.Get("from_date"))) {
+	if v, ok := d.GetOkExists(key + ".from_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".from_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".from_date"))) {
 		request.FromDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("to_date"); !isEmptyValue(reflect.ValueOf(d.Get("to_date"))) && (ok || !reflect.DeepEqual(v, d.Get("to_date"))) {
+	if v, ok := d.GetOkExists(key + ".to_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".to_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".to_date"))) {
 		request.ToDate = interfaceToString(v)
 	}
 	return &request

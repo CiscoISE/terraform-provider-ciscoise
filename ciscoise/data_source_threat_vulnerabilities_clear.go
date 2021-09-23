@@ -78,7 +78,7 @@ func expandRequestThreatVulnerabilitiesClearClearThreatsAndVulnerabilities(ctx c
 
 func expandRequestThreatVulnerabilitiesClearClearThreatsAndVulnerabilitiesERSIrfThreatContext(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesClearThreatsAndVulnerabilitiesERSIrfThreatContext {
 	request := isegosdk.RequestClearThreatsAndVulnerabilitiesClearThreatsAndVulnerabilitiesERSIrfThreatContext{}
-	if v, ok := d.GetOkExists("mac_addresses"); !isEmptyValue(reflect.ValueOf(d.Get("mac_addresses"))) && (ok || !reflect.DeepEqual(v, d.Get("mac_addresses"))) {
+	if v, ok := d.GetOkExists(key + ".mac_addresses"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac_addresses"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac_addresses"))) {
 		request.MacAddresses = interfaceToString(v)
 	}
 	return &request

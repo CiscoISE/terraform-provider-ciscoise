@@ -622,7 +622,7 @@ func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTime(ctx context.Contex
 		request.AllowAccessOnSpecificDaysTimes = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".day_time_limits"); !isEmptyValue(reflect.ValueOf(d.Get(key+".day_time_limits"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".day_time_limits"))) {
-		request.DayTimeLimits = expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimitsArray(ctx, key, d)
+		request.DayTimeLimits = expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimitsArray(ctx, key+".day_time_limits", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -633,7 +633,7 @@ func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTime(ctx context.Contex
 func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimitsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits {
 	request := []isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -781,7 +781,7 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTime(ctx context.Co
 		request.AllowAccessOnSpecificDaysTimes = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".day_time_limits"); !isEmptyValue(reflect.ValueOf(d.Get(key+".day_time_limits"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".day_time_limits"))) {
-		request.DayTimeLimits = expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimitsArray(ctx, key, d)
+		request.DayTimeLimits = expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimitsArray(ctx, key+".day_time_limits", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -792,7 +792,7 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTime(ctx context.Co
 func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimitsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits {
 	request := []isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

@@ -1254,7 +1254,7 @@ func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsGlo
 func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1265,7 +1265,7 @@ func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPag
 func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1660,7 +1660,7 @@ func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomization
 func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1671,7 +1671,7 @@ func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomization
 func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

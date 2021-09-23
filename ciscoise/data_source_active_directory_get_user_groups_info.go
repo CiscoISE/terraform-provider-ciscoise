@@ -125,8 +125,8 @@ func expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroups(ctx context.Cont
 
 func expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroupsOperationAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryGetUserGroupsOperationAdditionalData {
 	request := isegosdk.RequestActiveDirectoryGetUserGroupsOperationAdditionalData{}
-	if v, ok := d.GetOkExists("additional_data"); !isEmptyValue(reflect.ValueOf(d.Get("additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get("additional_data"))) {
-		request.AdditionalData = expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroupsOperationAdditionalDataAdditionalDataArray(ctx, key, d)
+	if v, ok := d.GetOkExists(key + ".additional_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".additional_data"))) {
+		request.AdditionalData = expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroupsOperationAdditionalDataAdditionalDataArray(ctx, key+".additional_data", d)
 	}
 	return &request
 }
@@ -134,7 +134,7 @@ func expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroupsOperationAddition
 func expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroupsOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryGetUserGroupsOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestActiveDirectoryGetUserGroupsOperationAdditionalDataAdditionalData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -150,10 +150,10 @@ func expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroupsOperationAddition
 
 func expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroupsOperationAdditionalDataAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryGetUserGroupsOperationAdditionalDataAdditionalData {
 	request := isegosdk.RequestActiveDirectoryGetUserGroupsOperationAdditionalDataAdditionalData{}
-	if v, ok := d.GetOkExists("value"); !isEmptyValue(reflect.ValueOf(d.Get("value"))) && (ok || !reflect.DeepEqual(v, d.Get("value"))) {
+	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
 	return &request

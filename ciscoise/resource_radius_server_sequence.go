@@ -553,10 +553,10 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 		request.RadiusServerList = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".on_request_attr_manipulator_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".on_request_attr_manipulator_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".on_request_attr_manipulator_list"))) {
-		request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key, d)
+		request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key+".on_request_attr_manipulator_list", d)
 	}
 	if v, ok := d.GetOkExists(key + ".before_accept_attr_manipulators_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".before_accept_attr_manipulators_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".before_accept_attr_manipulators_list"))) {
-		request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key, d)
+		request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key+".before_accept_attr_manipulators_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -567,7 +567,7 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorList {
 	request := []isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -610,7 +610,7 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsList {
 	request := []isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -713,10 +713,10 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	vvUseAttrSetBeforeAcc := interfaceToBoolPtr(vUseAttrSetBeforeAcc)
 	if okUseAttrSetBeforeAcc && vvUseAttrSetBeforeAcc != nil && *vvUseAttrSetBeforeAcc {
 		if v, ok := d.GetOkExists(key + ".on_request_attr_manipulator_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".on_request_attr_manipulator_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".on_request_attr_manipulator_list"))) {
-			request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key, d)
+			request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key+".on_request_attr_manipulator_list", d)
 		}
 		if v, ok := d.GetOkExists(key + ".before_accept_attr_manipulators_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".before_accept_attr_manipulators_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".before_accept_attr_manipulators_list"))) {
-			request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key, d)
+			request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key+".before_accept_attr_manipulators_list", d)
 		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -728,7 +728,7 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorList {
 	request := []isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -775,7 +775,7 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList {
 	request := []isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

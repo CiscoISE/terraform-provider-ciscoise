@@ -359,31 +359,31 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomain(ctx context.Conte
 
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectory {
 	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectory{}
-	if v, ok := d.GetOkExists("id"); !isEmptyValue(reflect.ValueOf(d.Get("id"))) && (ok || !reflect.DeepEqual(v, d.Get("id"))) {
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(d.Get("description"))) && (ok || !reflect.DeepEqual(v, d.Get("description"))) {
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("domain"); !isEmptyValue(reflect.ValueOf(d.Get("domain"))) && (ok || !reflect.DeepEqual(v, d.Get("domain"))) {
+	if v, ok := d.GetOkExists(key + ".domain"); !isEmptyValue(reflect.ValueOf(d.Get(key+".domain"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".domain"))) {
 		request.Domain = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("enable_domain_white_list"); !isEmptyValue(reflect.ValueOf(d.Get("enable_domain_white_list"))) && (ok || !reflect.DeepEqual(v, d.Get("enable_domain_white_list"))) {
+	if v, ok := d.GetOkExists(key + ".enable_domain_white_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_domain_white_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_domain_white_list"))) {
 		request.EnableDomainWhiteList = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("adgroups"); !isEmptyValue(reflect.ValueOf(d.Get("adgroups"))) && (ok || !reflect.DeepEqual(v, d.Get("adgroups"))) {
+	if v, ok := d.GetOkExists(key + ".adgroups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".adgroups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".adgroups"))) {
 		request.Adgroups = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroups(ctx, key+".adgroups.0", d)
 	}
-	if v, ok := d.GetOkExists("advanced_settings"); !isEmptyValue(reflect.ValueOf(d.Get("advanced_settings"))) && (ok || !reflect.DeepEqual(v, d.Get("advanced_settings"))) {
+	if v, ok := d.GetOkExists(key + ".advanced_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_settings"))) {
 		request.AdvancedSettings = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettings(ctx, key+".advanced_settings.0", d)
 	}
-	if v, ok := d.GetOkExists("ad_attributes"); !isEmptyValue(reflect.ValueOf(d.Get("ad_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get("ad_attributes"))) {
+	if v, ok := d.GetOkExists(key + ".ad_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ad_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ad_attributes"))) {
 		request.AdAttributes = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributes(ctx, key+".ad_attributes.0", d)
 	}
-	if v, ok := d.GetOkExists("ad_scopes_names"); !isEmptyValue(reflect.ValueOf(d.Get("ad_scopes_names"))) && (ok || !reflect.DeepEqual(v, d.Get("ad_scopes_names"))) {
+	if v, ok := d.GetOkExists(key + ".ad_scopes_names"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ad_scopes_names"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ad_scopes_names"))) {
 		request.AdScopesNames = interfaceToString(v)
 	}
 	return &request
@@ -391,8 +391,8 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroups(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroups {
 	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroups{}
-	if v, ok := d.GetOkExists("groups"); !isEmptyValue(reflect.ValueOf(d.Get("groups"))) && (ok || !reflect.DeepEqual(v, d.Get("groups"))) {
-		request.Groups = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroupsArray(ctx, key, d)
+	if v, ok := d.GetOkExists(key + ".groups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".groups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".groups"))) {
+		request.Groups = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroupsArray(ctx, key+".groups", d)
 	}
 	return &request
 }
@@ -400,7 +400,7 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroupsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups {
 	request := []isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -416,13 +416,13 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups {
 	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups{}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("sid"); !isEmptyValue(reflect.ValueOf(d.Get("sid"))) && (ok || !reflect.DeepEqual(v, d.Get("sid"))) {
+	if v, ok := d.GetOkExists(key + ".sid"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sid"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sid"))) {
 		request.Sid = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("type"); !isEmptyValue(reflect.ValueOf(d.Get("type"))) && (ok || !reflect.DeepEqual(v, d.Get("type"))) {
+	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
 		request.Type = interfaceToString(v)
 	}
 	return &request
@@ -430,82 +430,82 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettings {
 	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettings{}
-	if v, ok := d.GetOkExists("enable_pass_change"); !isEmptyValue(reflect.ValueOf(d.Get("enable_pass_change"))) && (ok || !reflect.DeepEqual(v, d.Get("enable_pass_change"))) {
+	if v, ok := d.GetOkExists(key + ".enable_pass_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_pass_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_pass_change"))) {
 		request.EnablePassChange = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("enable_machine_auth"); !isEmptyValue(reflect.ValueOf(d.Get("enable_machine_auth"))) && (ok || !reflect.DeepEqual(v, d.Get("enable_machine_auth"))) {
+	if v, ok := d.GetOkExists(key + ".enable_machine_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_machine_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_machine_auth"))) {
 		request.EnableMachineAuth = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("enable_machine_access"); !isEmptyValue(reflect.ValueOf(d.Get("enable_machine_access"))) && (ok || !reflect.DeepEqual(v, d.Get("enable_machine_access"))) {
+	if v, ok := d.GetOkExists(key + ".enable_machine_access"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_machine_access"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_machine_access"))) {
 		request.EnableMachineAccess = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("aging_time"); !isEmptyValue(reflect.ValueOf(d.Get("aging_time"))) && (ok || !reflect.DeepEqual(v, d.Get("aging_time"))) {
+	if v, ok := d.GetOkExists(key + ".aging_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aging_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aging_time"))) {
 		request.AgingTime = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists("enable_dialin_permission_check"); !isEmptyValue(reflect.ValueOf(d.Get("enable_dialin_permission_check"))) && (ok || !reflect.DeepEqual(v, d.Get("enable_dialin_permission_check"))) {
+	if v, ok := d.GetOkExists(key + ".enable_dialin_permission_check"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_dialin_permission_check"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_dialin_permission_check"))) {
 		request.EnableDialinPermissionCheck = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("enable_callback_for_dialin_client"); !isEmptyValue(reflect.ValueOf(d.Get("enable_callback_for_dialin_client"))) && (ok || !reflect.DeepEqual(v, d.Get("enable_callback_for_dialin_client"))) {
+	if v, ok := d.GetOkExists(key + ".enable_callback_for_dialin_client"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_callback_for_dialin_client"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_callback_for_dialin_client"))) {
 		request.EnableCallbackForDialinClient = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("plaintext_auth"); !isEmptyValue(reflect.ValueOf(d.Get("plaintext_auth"))) && (ok || !reflect.DeepEqual(v, d.Get("plaintext_auth"))) {
+	if v, ok := d.GetOkExists(key + ".plaintext_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".plaintext_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".plaintext_auth"))) {
 		request.PlaintextAuth = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("enable_failed_auth_protection"); !isEmptyValue(reflect.ValueOf(d.Get("enable_failed_auth_protection"))) && (ok || !reflect.DeepEqual(v, d.Get("enable_failed_auth_protection"))) {
+	if v, ok := d.GetOkExists(key + ".enable_failed_auth_protection"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_failed_auth_protection"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_failed_auth_protection"))) {
 		request.EnableFailedAuthProtection = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("auth_protection_type"); !isEmptyValue(reflect.ValueOf(d.Get("auth_protection_type"))) && (ok || !reflect.DeepEqual(v, d.Get("auth_protection_type"))) {
+	if v, ok := d.GetOkExists(key + ".auth_protection_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auth_protection_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auth_protection_type"))) {
 		request.AuthProtectionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("failed_auth_threshold"); !isEmptyValue(reflect.ValueOf(d.Get("failed_auth_threshold"))) && (ok || !reflect.DeepEqual(v, d.Get("failed_auth_threshold"))) {
+	if v, ok := d.GetOkExists(key + ".failed_auth_threshold"); !isEmptyValue(reflect.ValueOf(d.Get(key+".failed_auth_threshold"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".failed_auth_threshold"))) {
 		request.FailedAuthThreshold = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists("identity_not_in_ad_behaviour"); !isEmptyValue(reflect.ValueOf(d.Get("identity_not_in_ad_behaviour"))) && (ok || !reflect.DeepEqual(v, d.Get("identity_not_in_ad_behaviour"))) {
+	if v, ok := d.GetOkExists(key + ".identity_not_in_ad_behaviour"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_not_in_ad_behaviour"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_not_in_ad_behaviour"))) {
 		request.IDentityNotInAdBehaviour = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("unreachable_domains_behaviour"); !isEmptyValue(reflect.ValueOf(d.Get("unreachable_domains_behaviour"))) && (ok || !reflect.DeepEqual(v, d.Get("unreachable_domains_behaviour"))) {
+	if v, ok := d.GetOkExists(key + ".unreachable_domains_behaviour"); !isEmptyValue(reflect.ValueOf(d.Get(key+".unreachable_domains_behaviour"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".unreachable_domains_behaviour"))) {
 		request.UnreachableDomainsBehaviour = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("enable_rewrites"); !isEmptyValue(reflect.ValueOf(d.Get("enable_rewrites"))) && (ok || !reflect.DeepEqual(v, d.Get("enable_rewrites"))) {
+	if v, ok := d.GetOkExists(key + ".enable_rewrites"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_rewrites"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_rewrites"))) {
 		request.EnableRewrites = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("rewrite_rules"); !isEmptyValue(reflect.ValueOf(d.Get("rewrite_rules"))) && (ok || !reflect.DeepEqual(v, d.Get("rewrite_rules"))) {
-		request.RewriteRules = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRulesArray(ctx, key, d)
+	if v, ok := d.GetOkExists(key + ".rewrite_rules"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rewrite_rules"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rewrite_rules"))) {
+		request.RewriteRules = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRulesArray(ctx, key+".rewrite_rules", d)
 	}
-	if v, ok := d.GetOkExists("first_name"); !isEmptyValue(reflect.ValueOf(d.Get("first_name"))) && (ok || !reflect.DeepEqual(v, d.Get("first_name"))) {
+	if v, ok := d.GetOkExists(key + ".first_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".first_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".first_name"))) {
 		request.FirstName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("department"); !isEmptyValue(reflect.ValueOf(d.Get("department"))) && (ok || !reflect.DeepEqual(v, d.Get("department"))) {
+	if v, ok := d.GetOkExists(key + ".department"); !isEmptyValue(reflect.ValueOf(d.Get(key+".department"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".department"))) {
 		request.Department = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("last_name"); !isEmptyValue(reflect.ValueOf(d.Get("last_name"))) && (ok || !reflect.DeepEqual(v, d.Get("last_name"))) {
+	if v, ok := d.GetOkExists(key + ".last_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".last_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".last_name"))) {
 		request.LastName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("organizational_unit"); !isEmptyValue(reflect.ValueOf(d.Get("organizational_unit"))) && (ok || !reflect.DeepEqual(v, d.Get("organizational_unit"))) {
+	if v, ok := d.GetOkExists(key + ".organizational_unit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".organizational_unit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".organizational_unit"))) {
 		request.OrganizationalUnit = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("job_title"); !isEmptyValue(reflect.ValueOf(d.Get("job_title"))) && (ok || !reflect.DeepEqual(v, d.Get("job_title"))) {
+	if v, ok := d.GetOkExists(key + ".job_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".job_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".job_title"))) {
 		request.JobTitle = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("locality"); !isEmptyValue(reflect.ValueOf(d.Get("locality"))) && (ok || !reflect.DeepEqual(v, d.Get("locality"))) {
+	if v, ok := d.GetOkExists(key + ".locality"); !isEmptyValue(reflect.ValueOf(d.Get(key+".locality"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".locality"))) {
 		request.Locality = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("email"); !isEmptyValue(reflect.ValueOf(d.Get("email"))) && (ok || !reflect.DeepEqual(v, d.Get("email"))) {
+	if v, ok := d.GetOkExists(key + ".email"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email"))) {
 		request.Email = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("state_or_province"); !isEmptyValue(reflect.ValueOf(d.Get("state_or_province"))) && (ok || !reflect.DeepEqual(v, d.Get("state_or_province"))) {
+	if v, ok := d.GetOkExists(key + ".state_or_province"); !isEmptyValue(reflect.ValueOf(d.Get(key+".state_or_province"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".state_or_province"))) {
 		request.StateOrProvince = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("telephone"); !isEmptyValue(reflect.ValueOf(d.Get("telephone"))) && (ok || !reflect.DeepEqual(v, d.Get("telephone"))) {
+	if v, ok := d.GetOkExists(key + ".telephone"); !isEmptyValue(reflect.ValueOf(d.Get(key+".telephone"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".telephone"))) {
 		request.Telephone = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("country"); !isEmptyValue(reflect.ValueOf(d.Get("country"))) && (ok || !reflect.DeepEqual(v, d.Get("country"))) {
+	if v, ok := d.GetOkExists(key + ".country"); !isEmptyValue(reflect.ValueOf(d.Get(key+".country"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".country"))) {
 		request.Country = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("street_address"); !isEmptyValue(reflect.ValueOf(d.Get("street_address"))) && (ok || !reflect.DeepEqual(v, d.Get("street_address"))) {
+	if v, ok := d.GetOkExists(key + ".street_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".street_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".street_address"))) {
 		request.StreetAddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("schema"); !isEmptyValue(reflect.ValueOf(d.Get("schema"))) && (ok || !reflect.DeepEqual(v, d.Get("schema"))) {
+	if v, ok := d.GetOkExists(key + ".schema"); !isEmptyValue(reflect.ValueOf(d.Get(key+".schema"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".schema"))) {
 		request.Schema = interfaceToString(v)
 	}
 	return &request
@@ -514,7 +514,7 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRulesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules {
 	request := []isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -530,13 +530,13 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules {
 	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules{}
-	if v, ok := d.GetOkExists("row_id"); !isEmptyValue(reflect.ValueOf(d.Get("row_id"))) && (ok || !reflect.DeepEqual(v, d.Get("row_id"))) {
+	if v, ok := d.GetOkExists(key + ".row_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".row_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".row_id"))) {
 		request.RowID = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists("rewrite_match"); !isEmptyValue(reflect.ValueOf(d.Get("rewrite_match"))) && (ok || !reflect.DeepEqual(v, d.Get("rewrite_match"))) {
+	if v, ok := d.GetOkExists(key + ".rewrite_match"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rewrite_match"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rewrite_match"))) {
 		request.RewriteMatch = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("rewrite_result"); !isEmptyValue(reflect.ValueOf(d.Get("rewrite_result"))) && (ok || !reflect.DeepEqual(v, d.Get("rewrite_result"))) {
+	if v, ok := d.GetOkExists(key + ".rewrite_result"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rewrite_result"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rewrite_result"))) {
 		request.RewriteResult = interfaceToString(v)
 	}
 	return &request
@@ -544,8 +544,8 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributes {
 	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributes{}
-	if v, ok := d.GetOkExists("attributes"); !isEmptyValue(reflect.ValueOf(d.Get("attributes"))) && (ok || !reflect.DeepEqual(v, d.Get("attributes"))) {
-		request.Attributes = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributesArray(ctx, key, d)
+	if v, ok := d.GetOkExists(key + ".attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attributes"))) {
+		request.Attributes = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributesArray(ctx, key+".attributes", d)
 	}
 	return &request
 }
@@ -553,7 +553,7 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes {
 	request := []isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -569,16 +569,16 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 
 func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes {
 	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes{}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("type"); !isEmptyValue(reflect.ValueOf(d.Get("type"))) && (ok || !reflect.DeepEqual(v, d.Get("type"))) {
+	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
 		request.Type = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("internal_name"); !isEmptyValue(reflect.ValueOf(d.Get("internal_name"))) && (ok || !reflect.DeepEqual(v, d.Get("internal_name"))) {
+	if v, ok := d.GetOkExists(key + ".internal_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".internal_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".internal_name"))) {
 		request.InternalName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("default_value"); !isEmptyValue(reflect.ValueOf(d.Get("default_value"))) && (ok || !reflect.DeepEqual(v, d.Get("default_value"))) {
+	if v, ok := d.GetOkExists(key + ".default_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_value"))) {
 		request.DefaultValue = interfaceToString(v)
 	}
 	return &request
