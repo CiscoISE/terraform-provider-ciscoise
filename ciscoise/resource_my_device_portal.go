@@ -1238,7 +1238,7 @@ func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizations
 func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1249,7 +1249,7 @@ func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizations
 func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1638,7 +1638,7 @@ func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizat
 func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1649,7 +1649,7 @@ func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizat
 func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

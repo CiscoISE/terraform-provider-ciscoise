@@ -840,7 +840,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthen
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -886,7 +886,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthen
 func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionChildren {
 	request := []isegosdk.RequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1101,7 +1101,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthen
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -1147,7 +1147,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthen
 func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionChildren {
 	request := []isegosdk.RequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

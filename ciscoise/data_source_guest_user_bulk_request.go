@@ -81,10 +81,10 @@ func expandRequestGuestUserBulkRequestBulkRequestForGuestUser(ctx context.Contex
 
 func expandRequestGuestUserBulkRequestBulkRequestForGuestUserGuestUserBulkRequest(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserBulkRequestForGuestUserGuestUserBulkRequest {
 	request := isegosdk.RequestGuestUserBulkRequestForGuestUserGuestUserBulkRequest{}
-	if v, ok := d.GetOkExists("operation_type"); !isEmptyValue(reflect.ValueOf(d.Get("operation_type"))) && (ok || !reflect.DeepEqual(v, d.Get("operation_type"))) {
+	if v, ok := d.GetOkExists(key + ".operation_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".operation_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".operation_type"))) {
 		request.OperationType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("resource_media_type"); !isEmptyValue(reflect.ValueOf(d.Get("resource_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get("resource_media_type"))) {
+	if v, ok := d.GetOkExists(key + ".resource_media_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".resource_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".resource_media_type"))) {
 		request.ResourceMediaType = interfaceToString(v)
 	}
 	return &request

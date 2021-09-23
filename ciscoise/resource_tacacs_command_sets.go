@@ -403,7 +403,7 @@ func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSets(ctx 
 func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommands(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommands {
 	request := isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommands{}
 	if v, ok := d.GetOkExists(key + ".command_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".command_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".command_list"))) {
-		request.CommandList = expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandListArray(ctx, key, d)
+		request.CommandList = expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandListArray(ctx, key+".command_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -414,7 +414,7 @@ func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsComma
 func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandList {
 	request := []isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -483,7 +483,7 @@ func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSets(
 func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommands(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommands {
 	request := isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommands{}
 	if v, ok := d.GetOkExists(key + ".command_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".command_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".command_list"))) {
-		request.CommandList = expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandListArray(ctx, key, d)
+		request.CommandList = expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandListArray(ctx, key+".command_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -494,7 +494,7 @@ func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsC
 func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList {
 	request := []isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

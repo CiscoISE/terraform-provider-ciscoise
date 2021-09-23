@@ -198,43 +198,43 @@ func expandRequestEndpointRegisterRegisterEndpoint(ctx context.Context, key stri
 
 func expandRequestEndpointRegisterRegisterEndpointERSEndPoint(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointRegisterEndpointERSEndPoint {
 	request := isegosdk.RequestEndpointRegisterEndpointERSEndPoint{}
-	if v, ok := d.GetOkExists("id"); !isEmptyValue(reflect.ValueOf(d.Get("id"))) && (ok || !reflect.DeepEqual(v, d.Get("id"))) {
+	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("description"); !isEmptyValue(reflect.ValueOf(d.Get("description"))) && (ok || !reflect.DeepEqual(v, d.Get("description"))) {
+	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("mac"); !isEmptyValue(reflect.ValueOf(d.Get("mac"))) && (ok || !reflect.DeepEqual(v, d.Get("mac"))) {
+	if v, ok := d.GetOkExists(key + ".mac"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac"))) {
 		request.Mac = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("profile_id"); !isEmptyValue(reflect.ValueOf(d.Get("profile_id"))) && (ok || !reflect.DeepEqual(v, d.Get("profile_id"))) {
+	if v, ok := d.GetOkExists(key + ".profile_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile_id"))) {
 		request.ProfileID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("static_profile_assignment"); !isEmptyValue(reflect.ValueOf(d.Get("static_profile_assignment"))) && (ok || !reflect.DeepEqual(v, d.Get("static_profile_assignment"))) {
+	if v, ok := d.GetOkExists(key + ".static_profile_assignment"); !isEmptyValue(reflect.ValueOf(d.Get(key+".static_profile_assignment"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".static_profile_assignment"))) {
 		request.StaticProfileAssignment = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("group_id"); !isEmptyValue(reflect.ValueOf(d.Get("group_id"))) && (ok || !reflect.DeepEqual(v, d.Get("group_id"))) {
+	if v, ok := d.GetOkExists(key + ".group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".group_id"))) {
 		request.GroupID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("static_group_assignment"); !isEmptyValue(reflect.ValueOf(d.Get("static_group_assignment"))) && (ok || !reflect.DeepEqual(v, d.Get("static_group_assignment"))) {
+	if v, ok := d.GetOkExists(key + ".static_group_assignment"); !isEmptyValue(reflect.ValueOf(d.Get(key+".static_group_assignment"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".static_group_assignment"))) {
 		request.StaticGroupAssignment = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("portal_user"); !isEmptyValue(reflect.ValueOf(d.Get("portal_user"))) && (ok || !reflect.DeepEqual(v, d.Get("portal_user"))) {
+	if v, ok := d.GetOkExists(key + ".portal_user"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_user"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_user"))) {
 		request.PortalUser = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("identity_store"); !isEmptyValue(reflect.ValueOf(d.Get("identity_store"))) && (ok || !reflect.DeepEqual(v, d.Get("identity_store"))) {
+	if v, ok := d.GetOkExists(key + ".identity_store"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_store"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_store"))) {
 		request.IDentityStore = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("identity_store_id"); !isEmptyValue(reflect.ValueOf(d.Get("identity_store_id"))) && (ok || !reflect.DeepEqual(v, d.Get("identity_store_id"))) {
+	if v, ok := d.GetOkExists(key + ".identity_store_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_store_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_store_id"))) {
 		request.IDentityStoreID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("mdm_attributes"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_attributes"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_attributes"))) {
 		request.MdmAttributes = expandRequestEndpointRegisterRegisterEndpointERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
-	if v, ok := d.GetOkExists("custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get("custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get("custom_attributes"))) {
+	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
 		vCustomAttributes := v.(map[string]interface{})
 		request.CustomAttributes = &vCustomAttributes
 	}
@@ -243,43 +243,43 @@ func expandRequestEndpointRegisterRegisterEndpointERSEndPoint(ctx context.Contex
 
 func expandRequestEndpointRegisterRegisterEndpointERSEndPointMdmAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointRegisterEndpointERSEndPointMdmAttributes {
 	request := isegosdk.RequestEndpointRegisterEndpointERSEndPointMdmAttributes{}
-	if v, ok := d.GetOkExists("mdm_server_name"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_server_name"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_server_name"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_server_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_server_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_server_name"))) {
 		request.MdmServerName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("mdm_reachable"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_reachable"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_reachable"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_reachable"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_reachable"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_reachable"))) {
 		request.MdmReachable = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("mdm_enrolled"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_enrolled"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_enrolled"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_enrolled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_enrolled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_enrolled"))) {
 		request.MdmEnrolled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("mdm_compliance_status"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_compliance_status"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_compliance_status"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_compliance_status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_compliance_status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_compliance_status"))) {
 		request.MdmComplianceStatus = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("mdm_os"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_os"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_os"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_os"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_os"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_os"))) {
 		request.MdmOS = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("mdm_manufacturer"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_manufacturer"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_manufacturer"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_manufacturer"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_manufacturer"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_manufacturer"))) {
 		request.MdmManufacturer = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("mdm_model"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_model"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_model"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_model"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_model"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_model"))) {
 		request.MdmModel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("mdm_serial"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_serial"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_serial"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_serial"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_serial"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_serial"))) {
 		request.MdmSerial = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("mdm_encrypted"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_encrypted"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_encrypted"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_encrypted"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_encrypted"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_encrypted"))) {
 		request.MdmEncrypted = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("mdm_pinlock"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_pinlock"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_pinlock"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_pinlock"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_pinlock"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_pinlock"))) {
 		request.MdmPinlock = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("mdm_jail_broken"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_jail_broken"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_jail_broken"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_jail_broken"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_jail_broken"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_jail_broken"))) {
 		request.MdmJailBroken = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("mdm_ime_i"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_ime_i"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_ime_i"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_ime_i"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_ime_i"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_ime_i"))) {
 		request.MdmIMEI = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("mdm_phone_number"); !isEmptyValue(reflect.ValueOf(d.Get("mdm_phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get("mdm_phone_number"))) {
+	if v, ok := d.GetOkExists(key + ".mdm_phone_number"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_phone_number"))) {
 		request.MdmPhoneNumber = interfaceToString(v)
 	}
 	return &request
