@@ -60,6 +60,19 @@ Optional:
 - **name** (String) The dictionary name
 - **version** (String) The dictionary version
 
+Read-Only:
+
+- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+
+<a id="nestedatt--item--link"></a>
+### Nested Schema for `item.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
+
 ## Import
 
 Import is supported using the following syntax:
