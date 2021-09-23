@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceMntSessionProfilerCount() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Misc.
 
-ProfilerCount`,
+- ProfilerCount
+`,
 
 		ReadContext: dataSourceMntSessionProfilerCountRead,
 		Schema: map[string]*schema.Schema{
@@ -53,7 +55,7 @@ func dataSourceMntSessionProfilerCountRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenMiscGetProfilerCountItem(response1)
 		if err := d.Set("item", vItem1); err != nil {

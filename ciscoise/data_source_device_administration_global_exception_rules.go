@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 		Description: `It performs read operation on Device Administration - Authorization Global Exception Rules.
 
 - Device Admin Get global execption rules.
-- Device Admin Get global exception rule attribute`,
+
+- Device Admin Get global exception rule attribute
+`,
 
 		ReadContext: dataSourceDeviceAdministrationGlobalExceptionRulesRead,
 		Schema: map[string]*schema.Schema{
@@ -106,8 +109,9 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"link": &schema.Schema{
 																Type:     schema.TypeList,
@@ -231,8 +235,9 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -286,8 +291,9 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -402,8 +408,9 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"link": &schema.Schema{
 																Type:     schema.TypeList,
@@ -527,8 +534,9 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -582,8 +590,9 @@ func dataSourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -627,9 +636,9 @@ func dataSourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context,
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -644,7 +653,7 @@ func dataSourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -670,7 +679,7 @@ func dataSourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionByRuleIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -723,7 +732,7 @@ func flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminP
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRulesItemsRuleCondition(item.Condition)
-	respItem["default"] = item.Default
+	respItem["default"] = boolPtrToString(item.Default)
 	respItem["hit_counts"] = item.HitCounts
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -742,7 +751,7 @@ func flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminP
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRulesItemsRuleConditionLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -790,7 +799,7 @@ func flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminP
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRulesItemsRuleConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}
@@ -904,7 +913,7 @@ func flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminP
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionByRuleIDItemRuleCondition(item.Condition)
-	respItem["default"] = item.Default
+	respItem["default"] = boolPtrToString(item.Default)
 	respItem["hit_counts"] = item.HitCounts
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -923,7 +932,7 @@ func flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminP
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionByRuleIDItemRuleConditionLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -971,7 +980,7 @@ func flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminP
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionByRuleIDItemRuleConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

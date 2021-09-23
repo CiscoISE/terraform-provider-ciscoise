@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,8 +18,6 @@ func dataSourceBindSignedCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-
-
 - Bind CA Signed Certificate.
 
 NOTE:
@@ -28,35 +27,48 @@ trusted.
 NOTE:
 The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
 
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
- `,
+
+`,
 
 		ReadContext: dataSourceBindSignedCertificateRead,
 		Schema: map[string]*schema.Schema{
 			"admin": &schema.Schema{
 				Description: ` Use certificate to authenticate the ISE Admin Portal`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"allow_extended_validity": &schema.Schema{
 				Description: `Allow import of certificates with validity greater than 398 days`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"allow_out_of_date_cert": &schema.Schema{
 				Description: `Allow out of date certificates (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"allow_replacement_of_certificates": &schema.Schema{
 				Description: `Allow Replacement of certificates (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"allow_replacement_of_portal_group_tag": &schema.Schema{
 				Description: `Allow Replacement of Portal Group Tag (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"data": &schema.Schema{
 				Description: `Signed Certificate in escaped format`,
@@ -65,8 +77,10 @@ The certificate may have a validity period longer than 398 days. It may be untru
 			},
 			"eap": &schema.Schema{
 				Description: `Use certificate for EAP protocols that use SSL/TLS tunneling`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"host_name": &schema.Schema{
 				Description: `Name of Host whose CSR ID has been provided`,
@@ -80,8 +94,10 @@ The certificate may have a validity period longer than 398 days. It may be untru
 			},
 			"ims": &schema.Schema{
 				Description: `Use certificate for the ISE Messaging Service`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -108,8 +124,10 @@ The certificate may have a validity period longer than 398 days. It may be untru
 			},
 			"portal": &schema.Schema{
 				Description: `Use for portal`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"portal_group_tag": &schema.Schema{
 				Description: `Set Group tag`,
@@ -118,23 +136,31 @@ The certificate may have a validity period longer than 398 days. It may be untru
 			},
 			"pxgrid": &schema.Schema{
 				Description: `Use certificate for the pxGrid Controller`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"radius": &schema.Schema{
 				Description: `Use certificate for the RADSec server`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"saml": &schema.Schema{
 				Description: `Use certificate for SAML Signing`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"validate_certificate_extensions": &schema.Schema{
 				Description: `Validate Certificate Extensions`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 		},
 	}
@@ -159,7 +185,7 @@ func dataSourceBindSignedCertificateRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenCertificatesBindCsrItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {

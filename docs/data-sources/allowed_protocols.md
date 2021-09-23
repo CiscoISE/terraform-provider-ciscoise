@@ -12,7 +12,9 @@ description: |-
 It performs read operation on AllowedProtocols.
 
 - This data source allows the client to get an allowed protocol by name.
+
 - This data source allows the client to get an allowed protocol by ID.
+
 - This data source allows the client to get all the allowed protocols.
 
 ## Example Usage
@@ -68,31 +70,31 @@ output "ciscoise_allowed_protocols_example" {
 
 Read-Only:
 
-- **allow_chap** (Boolean)
-- **allow_eap_fast** (Boolean)
-- **allow_eap_md5** (Boolean)
-- **allow_eap_tls** (Boolean)
-- **allow_eap_ttls** (Boolean)
-- **allow_leap** (Boolean)
-- **allow_ms_chap_v1** (Boolean)
-- **allow_ms_chap_v2** (Boolean)
-- **allow_pap_ascii** (Boolean)
-- **allow_peap** (Boolean)
-- **allow_preferred_eap_protocol** (Boolean)
-- **allow_teap** (Boolean)
-- **allow_weak_ciphers_for_eap** (Boolean)
+- **allow_chap** (String)
+- **allow_eap_fast** (String)
+- **allow_eap_md5** (String)
+- **allow_eap_tls** (String)
+- **allow_eap_ttls** (String)
+- **allow_leap** (String)
+- **allow_ms_chap_v1** (String)
+- **allow_ms_chap_v2** (String)
+- **allow_pap_ascii** (String)
+- **allow_peap** (String)
+- **allow_preferred_eap_protocol** (String)
+- **allow_teap** (String)
+- **allow_weak_ciphers_for_eap** (String)
 - **description** (String)
 - **eap_fast** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--eap_fast))
 - **eap_tls** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--eap_tls))
-- **eap_tls_l_bit** (Boolean)
+- **eap_tls_l_bit** (String)
 - **eap_ttls** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--eap_ttls))
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
 - **name** (String)
 - **peap** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--peap))
 - **preferred_eap_protocol** (String)
-- **process_host_lookup** (Boolean)
-- **require_message_auth** (Boolean)
+- **process_host_lookup** (String)
+- **require_message_auth** (String)
 - **teap** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--teap))
 
 <a id="nestedobjatt--item_id--eap_fast"></a>
@@ -100,28 +102,28 @@ Read-Only:
 
 Read-Only:
 
-- **allow_eap_fast_eap_gtc** (Boolean)
-- **allow_eap_fast_eap_gtc_pwd_change** (Boolean)
+- **allow_eap_fast_eap_gtc** (String)
+- **allow_eap_fast_eap_gtc_pwd_change** (String)
 - **allow_eap_fast_eap_gtc_pwd_change_retries** (Number)
-- **allow_eap_fast_eap_ms_chap_v2** (Boolean)
-- **allow_eap_fast_eap_ms_chap_v2_pwd_change** (Boolean)
+- **allow_eap_fast_eap_ms_chap_v2** (String)
+- **allow_eap_fast_eap_ms_chap_v2_pwd_change** (String)
 - **allow_eap_fast_eap_ms_chap_v2_pwd_change_retries** (Number)
-- **allow_eap_fast_eap_tls** (Boolean)
-- **allow_eap_fast_eap_tls_auth_of_expired_certs** (Boolean)
-- **eap_fast_dont_use_pacs_accept_client_cert** (Boolean)
-- **eap_fast_dont_use_pacs_allow_machine_authentication** (Boolean)
-- **eap_fast_enable_eap_chaining** (Boolean)
-- **eap_fast_use_pacs** (Boolean)
-- **eap_fast_use_pacs_accept_client_cert** (Boolean)
-- **eap_fast_use_pacs_allow_anonym_provisioning** (Boolean)
-- **eap_fast_use_pacs_allow_authen_provisioning** (Boolean)
-- **eap_fast_use_pacs_allow_machine_authentication** (Boolean)
+- **allow_eap_fast_eap_tls** (String)
+- **allow_eap_fast_eap_tls_auth_of_expired_certs** (String)
+- **eap_fast_dont_use_pacs_accept_client_cert** (String)
+- **eap_fast_dont_use_pacs_allow_machine_authentication** (String)
+- **eap_fast_enable_eap_chaining** (String)
+- **eap_fast_use_pacs** (String)
+- **eap_fast_use_pacs_accept_client_cert** (String)
+- **eap_fast_use_pacs_allow_anonym_provisioning** (String)
+- **eap_fast_use_pacs_allow_authen_provisioning** (String)
+- **eap_fast_use_pacs_allow_machine_authentication** (String)
 - **eap_fast_use_pacs_authorization_pac_ttl** (Number)
 - **eap_fast_use_pacs_authorization_pac_ttl_units** (String)
 - **eap_fast_use_pacs_machine_pac_ttl** (Number)
 - **eap_fast_use_pacs_machine_pac_ttl_units** (String)
-- **eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning** (Boolean)
-- **eap_fast_use_pacs_stateless_session_resume** (Boolean)
+- **eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning** (String)
+- **eap_fast_use_pacs_stateless_session_resume** (String)
 - **eap_fast_use_pacs_tunnel_pac_ttl** (Number)
 - **eap_fast_use_pacs_tunnel_pac_ttl_units** (String)
 - **eap_fast_use_pacs_use_proactive_pac_update_precentage** (Number)
@@ -132,8 +134,8 @@ Read-Only:
 
 Read-Only:
 
-- **allow_eap_tls_auth_of_expired_certs** (Boolean)
-- **eap_tls_enable_stateless_session_resume** (Boolean)
+- **allow_eap_tls_auth_of_expired_certs** (String)
+- **eap_tls_enable_stateless_session_resume** (String)
 - **eap_tls_session_ticket_precentage** (Number)
 - **eap_tls_session_ticket_ttl** (Number)
 - **eap_tls_session_ticket_ttl_units** (String)
@@ -144,14 +146,14 @@ Read-Only:
 
 Read-Only:
 
-- **eap_ttls_chap** (Boolean)
-- **eap_ttls_eap_md5** (Boolean)
-- **eap_ttls_eap_ms_chap_v2** (Boolean)
-- **eap_ttls_eap_ms_chap_v2_pwd_change** (Boolean)
+- **eap_ttls_chap** (String)
+- **eap_ttls_eap_md5** (String)
+- **eap_ttls_eap_ms_chap_v2** (String)
+- **eap_ttls_eap_ms_chap_v2_pwd_change** (String)
 - **eap_ttls_eap_ms_chap_v2_pwd_change_retries** (Number)
-- **eap_ttls_ms_chap_v1** (Boolean)
-- **eap_ttls_ms_chap_v2** (Boolean)
-- **eap_ttls_pap_ascii** (Boolean)
+- **eap_ttls_ms_chap_v1** (String)
+- **eap_ttls_ms_chap_v2** (String)
+- **eap_ttls_pap_ascii** (String)
 
 
 <a id="nestedobjatt--item_id--link"></a>
@@ -169,16 +171,16 @@ Read-Only:
 
 Read-Only:
 
-- **allow_peap_eap_gtc** (Boolean)
-- **allow_peap_eap_gtc_pwd_change** (Boolean)
+- **allow_peap_eap_gtc** (String)
+- **allow_peap_eap_gtc_pwd_change** (String)
 - **allow_peap_eap_gtc_pwd_change_retries** (Number)
-- **allow_peap_eap_ms_chap_v2** (Boolean)
-- **allow_peap_eap_ms_chap_v2_pwd_change** (Boolean)
+- **allow_peap_eap_ms_chap_v2** (String)
+- **allow_peap_eap_ms_chap_v2_pwd_change** (String)
 - **allow_peap_eap_ms_chap_v2_pwd_change_retries** (Number)
-- **allow_peap_eap_tls** (Boolean)
-- **allow_peap_eap_tls_auth_of_expired_certs** (Boolean)
-- **allow_peap_v0** (Boolean)
-- **require_cryptobinding** (Boolean)
+- **allow_peap_eap_tls** (String)
+- **allow_peap_eap_tls_auth_of_expired_certs** (String)
+- **allow_peap_v0** (String)
+- **require_cryptobinding** (String)
 
 
 <a id="nestedobjatt--item_id--teap"></a>
@@ -186,14 +188,14 @@ Read-Only:
 
 Read-Only:
 
-- **accept_client_cert_during_tunnel_est** (Boolean)
-- **allow_downgrade_msk** (Boolean)
-- **allow_teap_eap_ms_chap_v2** (Boolean)
-- **allow_teap_eap_ms_chap_v2_pwd_change** (Boolean)
+- **accept_client_cert_during_tunnel_est** (String)
+- **allow_downgrade_msk** (String)
+- **allow_teap_eap_ms_chap_v2** (String)
+- **allow_teap_eap_ms_chap_v2_pwd_change** (String)
 - **allow_teap_eap_ms_chap_v2_pwd_change_retries** (Number)
-- **allow_teap_eap_tls** (Boolean)
-- **allow_teap_eap_tls_auth_of_expired_certs** (Boolean)
-- **enable_eap_chaining** (Boolean)
+- **allow_teap_eap_tls** (String)
+- **allow_teap_eap_tls_auth_of_expired_certs** (String)
+- **enable_eap_chaining** (String)
 
 
 
@@ -202,31 +204,31 @@ Read-Only:
 
 Read-Only:
 
-- **allow_chap** (Boolean)
-- **allow_eap_fast** (Boolean)
-- **allow_eap_md5** (Boolean)
-- **allow_eap_tls** (Boolean)
-- **allow_eap_ttls** (Boolean)
-- **allow_leap** (Boolean)
-- **allow_ms_chap_v1** (Boolean)
-- **allow_ms_chap_v2** (Boolean)
-- **allow_pap_ascii** (Boolean)
-- **allow_peap** (Boolean)
-- **allow_preferred_eap_protocol** (Boolean)
-- **allow_teap** (Boolean)
-- **allow_weak_ciphers_for_eap** (Boolean)
+- **allow_chap** (String)
+- **allow_eap_fast** (String)
+- **allow_eap_md5** (String)
+- **allow_eap_tls** (String)
+- **allow_eap_ttls** (String)
+- **allow_leap** (String)
+- **allow_ms_chap_v1** (String)
+- **allow_ms_chap_v2** (String)
+- **allow_pap_ascii** (String)
+- **allow_peap** (String)
+- **allow_preferred_eap_protocol** (String)
+- **allow_teap** (String)
+- **allow_weak_ciphers_for_eap** (String)
 - **description** (String)
 - **eap_fast** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--eap_fast))
 - **eap_tls** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--eap_tls))
-- **eap_tls_l_bit** (Boolean)
+- **eap_tls_l_bit** (String)
 - **eap_ttls** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--eap_ttls))
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
 - **name** (String)
 - **peap** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--peap))
 - **preferred_eap_protocol** (String)
-- **process_host_lookup** (Boolean)
-- **require_message_auth** (Boolean)
+- **process_host_lookup** (String)
+- **require_message_auth** (String)
 - **teap** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--teap))
 
 <a id="nestedobjatt--item_name--eap_fast"></a>
@@ -234,28 +236,28 @@ Read-Only:
 
 Read-Only:
 
-- **allow_eap_fast_eap_gtc** (Boolean)
-- **allow_eap_fast_eap_gtc_pwd_change** (Boolean)
+- **allow_eap_fast_eap_gtc** (String)
+- **allow_eap_fast_eap_gtc_pwd_change** (String)
 - **allow_eap_fast_eap_gtc_pwd_change_retries** (Number)
-- **allow_eap_fast_eap_ms_chap_v2** (Boolean)
-- **allow_eap_fast_eap_ms_chap_v2_pwd_change** (Boolean)
+- **allow_eap_fast_eap_ms_chap_v2** (String)
+- **allow_eap_fast_eap_ms_chap_v2_pwd_change** (String)
 - **allow_eap_fast_eap_ms_chap_v2_pwd_change_retries** (Number)
-- **allow_eap_fast_eap_tls** (Boolean)
-- **allow_eap_fast_eap_tls_auth_of_expired_certs** (Boolean)
-- **eap_fast_dont_use_pacs_accept_client_cert** (Boolean)
-- **eap_fast_dont_use_pacs_allow_machine_authentication** (Boolean)
-- **eap_fast_enable_eap_chaining** (Boolean)
-- **eap_fast_use_pacs** (Boolean)
-- **eap_fast_use_pacs_accept_client_cert** (Boolean)
-- **eap_fast_use_pacs_allow_anonym_provisioning** (Boolean)
-- **eap_fast_use_pacs_allow_authen_provisioning** (Boolean)
-- **eap_fast_use_pacs_allow_machine_authentication** (Boolean)
+- **allow_eap_fast_eap_tls** (String)
+- **allow_eap_fast_eap_tls_auth_of_expired_certs** (String)
+- **eap_fast_dont_use_pacs_accept_client_cert** (String)
+- **eap_fast_dont_use_pacs_allow_machine_authentication** (String)
+- **eap_fast_enable_eap_chaining** (String)
+- **eap_fast_use_pacs** (String)
+- **eap_fast_use_pacs_accept_client_cert** (String)
+- **eap_fast_use_pacs_allow_anonym_provisioning** (String)
+- **eap_fast_use_pacs_allow_authen_provisioning** (String)
+- **eap_fast_use_pacs_allow_machine_authentication** (String)
 - **eap_fast_use_pacs_authorization_pac_ttl** (Number)
 - **eap_fast_use_pacs_authorization_pac_ttl_units** (String)
 - **eap_fast_use_pacs_machine_pac_ttl** (Number)
 - **eap_fast_use_pacs_machine_pac_ttl_units** (String)
-- **eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning** (Boolean)
-- **eap_fast_use_pacs_stateless_session_resume** (Boolean)
+- **eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning** (String)
+- **eap_fast_use_pacs_stateless_session_resume** (String)
 - **eap_fast_use_pacs_tunnel_pac_ttl** (Number)
 - **eap_fast_use_pacs_tunnel_pac_ttl_units** (String)
 - **eap_fast_use_pacs_use_proactive_pac_update_precentage** (Number)
@@ -266,8 +268,8 @@ Read-Only:
 
 Read-Only:
 
-- **allow_eap_tls_auth_of_expired_certs** (Boolean)
-- **eap_tls_enable_stateless_session_resume** (Boolean)
+- **allow_eap_tls_auth_of_expired_certs** (String)
+- **eap_tls_enable_stateless_session_resume** (String)
 - **eap_tls_session_ticket_precentage** (Number)
 - **eap_tls_session_ticket_ttl** (Number)
 - **eap_tls_session_ticket_ttl_units** (String)
@@ -278,14 +280,14 @@ Read-Only:
 
 Read-Only:
 
-- **eap_ttls_chap** (Boolean)
-- **eap_ttls_eap_md5** (Boolean)
-- **eap_ttls_eap_ms_chap_v2** (Boolean)
-- **eap_ttls_eap_ms_chap_v2_pwd_change** (Boolean)
+- **eap_ttls_chap** (String)
+- **eap_ttls_eap_md5** (String)
+- **eap_ttls_eap_ms_chap_v2** (String)
+- **eap_ttls_eap_ms_chap_v2_pwd_change** (String)
 - **eap_ttls_eap_ms_chap_v2_pwd_change_retries** (Number)
-- **eap_ttls_ms_chap_v1** (Boolean)
-- **eap_ttls_ms_chap_v2** (Boolean)
-- **eap_ttls_pap_ascii** (Boolean)
+- **eap_ttls_ms_chap_v1** (String)
+- **eap_ttls_ms_chap_v2** (String)
+- **eap_ttls_pap_ascii** (String)
 
 
 <a id="nestedobjatt--item_name--link"></a>
@@ -303,16 +305,16 @@ Read-Only:
 
 Read-Only:
 
-- **allow_peap_eap_gtc** (Boolean)
-- **allow_peap_eap_gtc_pwd_change** (Boolean)
+- **allow_peap_eap_gtc** (String)
+- **allow_peap_eap_gtc_pwd_change** (String)
 - **allow_peap_eap_gtc_pwd_change_retries** (Number)
-- **allow_peap_eap_ms_chap_v2** (Boolean)
-- **allow_peap_eap_ms_chap_v2_pwd_change** (Boolean)
+- **allow_peap_eap_ms_chap_v2** (String)
+- **allow_peap_eap_ms_chap_v2_pwd_change** (String)
 - **allow_peap_eap_ms_chap_v2_pwd_change_retries** (Number)
-- **allow_peap_eap_tls** (Boolean)
-- **allow_peap_eap_tls_auth_of_expired_certs** (Boolean)
-- **allow_peap_v0** (Boolean)
-- **require_cryptobinding** (Boolean)
+- **allow_peap_eap_tls** (String)
+- **allow_peap_eap_tls_auth_of_expired_certs** (String)
+- **allow_peap_v0** (String)
+- **require_cryptobinding** (String)
 
 
 <a id="nestedobjatt--item_name--teap"></a>
@@ -320,14 +322,14 @@ Read-Only:
 
 Read-Only:
 
-- **accept_client_cert_during_tunnel_est** (Boolean)
-- **allow_downgrade_msk** (Boolean)
-- **allow_teap_eap_ms_chap_v2** (Boolean)
-- **allow_teap_eap_ms_chap_v2_pwd_change** (Boolean)
+- **accept_client_cert_during_tunnel_est** (String)
+- **allow_downgrade_msk** (String)
+- **allow_teap_eap_ms_chap_v2** (String)
+- **allow_teap_eap_ms_chap_v2_pwd_change** (String)
 - **allow_teap_eap_ms_chap_v2_pwd_change_retries** (Number)
-- **allow_teap_eap_tls** (Boolean)
-- **allow_teap_eap_tls_auth_of_expired_certs** (Boolean)
-- **enable_eap_chaining** (Boolean)
+- **allow_teap_eap_tls** (String)
+- **allow_teap_eap_tls_auth_of_expired_certs** (String)
+- **enable_eap_chaining** (String)
 
 
 

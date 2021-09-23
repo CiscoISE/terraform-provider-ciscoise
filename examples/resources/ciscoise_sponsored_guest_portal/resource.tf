@@ -64,11 +64,11 @@ resource "ciscoise_sponsored_guest_portal" "example" {
 
         display_frequency               = "string"
         display_frequency_interval_days = 1
-        include_aup                     = false
-        require_aup_scrolling           = false
-        require_scrolling               = false
-        skip_aup_for_employees          = false
-        use_diff_aup_for_employees      = false
+        include_aup                     = "false"
+        require_aup_scrolling           = "false"
+        require_scrolling               = "false"
+        skip_aup_for_employees          = "false"
+        use_diff_aup_for_employees      = "false"
       }
       auth_success_settings {
 
@@ -80,7 +80,7 @@ resource "ciscoise_sponsored_guest_portal" "example" {
         byod_registration_settings {
 
           end_point_identity_group_id = "string"
-          show_device_id              = false
+          show_device_id              = "false"
         }
         byod_registration_success_settings {
 
@@ -90,35 +90,35 @@ resource "ciscoise_sponsored_guest_portal" "example" {
         byod_welcome_settings {
 
           aup_display            = "string"
-          enable_byo_d           = false
-          enable_guest_access    = false
-          include_aup            = false
-          require_aup_acceptance = false
-          require_mdm            = false
-          require_scrolling      = false
+          enable_byo_d           = "false"
+          enable_guest_access    = "false"
+          include_aup            = "false"
+          require_aup_acceptance = "false"
+          require_mdm            = "false"
+          require_scrolling      = "false"
         }
       }
       guest_change_password_settings {
 
-        allow_change_passwd_at_first_login = false
+        allow_change_passwd_at_first_login = "false"
       }
       guest_device_registration_settings {
 
-        allow_guests_to_register_devices = false
-        auto_register_guest_devices      = false
+        allow_guests_to_register_devices = "false"
+        auto_register_guest_devices      = "false"
       }
       login_page_settings {
 
         access_code                           = "string"
-        allow_alternate_guest_portal          = false
-        allow_forgot_password                 = false
-        allow_guest_to_change_password        = false
-        allow_guest_to_create_accounts        = false
+        allow_alternate_guest_portal          = "false"
+        allow_forgot_password                 = "false"
+        allow_guest_to_change_password        = "false"
+        allow_guest_to_create_accounts        = "false"
         aup_display                           = "string"
-        include_aup                           = false
+        include_aup                           = "false"
         max_failed_attempts_before_rate_limit = 1
-        require_access_code                   = false
-        require_aup_acceptance                = false
+        require_access_code                   = "false"
+        require_aup_acceptance                = "false"
         social_configs {
 
           social_media_type  = "string"
@@ -139,22 +139,22 @@ resource "ciscoise_sponsored_guest_portal" "example" {
       }
       post_access_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       post_login_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       support_info_settings {
 
         default_empty_field_value  = "string"
         empty_field_display        = "string"
-        include_browser_user_agent = false
-        include_failure_code       = false
-        include_ip_address         = false
-        include_mac_addr           = false
-        include_policy_server      = false
-        include_support_info_page  = false
+        include_browser_user_agent = "false"
+        include_failure_code       = "false"
+        include_ip_address         = "false"
+        include_mac_addr           = "false"
+        include_policy_server      = "false"
+        include_support_info_page  = "false"
       }
     }
   }

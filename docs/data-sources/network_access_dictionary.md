@@ -12,6 +12,7 @@ description: |-
 It performs read operation on Network Access - Dictionary.
 
 - Get all Dictionaries.
+
 - GET a dictionary by name
 
 ## Example Usage

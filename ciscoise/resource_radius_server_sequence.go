@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceRadiusServerSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on RADIUSServerSequence.
-  
-  - This resource allows the client to update a RADIUS server sequence.
-  - This resource deletes a RADIUS server sequence.
-  - This resource creates a RADIUS server sequence.`,
+
+- This resource allows the client to update a RADIUS server sequence.
+
+- This resource deletes a RADIUS server sequence.
+
+- This resource creates a RADIUS server sequence.
+`,
 
 		CreateContext: resourceRadiusServerSequenceCreate,
 		ReadContext:   resourceRadiusServerSequenceRead,
@@ -50,10 +54,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 
 									"action": &schema.Schema{
 										Description: `Allowed Values:
-  - ADD,
-  - UPDATE,
-  - REMOVE,
-  - REMOVEANY`,
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -92,10 +96,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 
 									"action": &schema.Schema{
 										Description: `Allowed Values:
-  - ADD,
-  - UPDATE,
-  - REMOVE,
-  - REMOVEANY`,
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -133,9 +137,11 @@ func resourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"continue_authorz_policy": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -169,9 +175,11 @@ func resourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -185,19 +193,25 @@ func resourceRadiusServerSequence() *schema.Resource {
 							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"strip_prefix": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"strip_suffix": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"suffix_separator": &schema.Schema{
 							Description: `The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character`,
@@ -206,14 +220,18 @@ func resourceRadiusServerSequence() *schema.Resource {
 							Computed:    true,
 						},
 						"use_attr_set_before_acc": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"use_attr_set_on_request": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -229,7 +247,7 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestRadiusServerSequenceCreateRadiusServerSequence(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vName, _ := resourceItem["name"]
@@ -313,7 +331,7 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsRadiusServerSequenceGetRadiusServerSequence(m, response1, &queryParams1)
 		item1, err := searchRadiusServerSequenceGetRadiusServerSequence(m, items1, vvName, vvID)
@@ -323,7 +341,8 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 				"Failure when searching item from GetRadiusServerSequence, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenRadiusServerSequenceGetRadiusServerSequenceByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetRadiusServerSequence search response",
 				err))
@@ -344,7 +363,7 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenRadiusServerSequenceGetRadiusServerSequenceByIDItem(response2.RadiusServerSequence)
 		if err := d.Set("item", vItem2); err != nil {
@@ -397,13 +416,13 @@ func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.RadiusServerSequence.UpdateRadiusServerSequenceByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateRadiusServerSequenceByID", err, restyResp1.String(),
 					"Failure at UpdateRadiusServerSequenceByID, unexpected response", ""))
@@ -468,7 +487,7 @@ func resourceRadiusServerSequenceDelete(ctx context.Context, d *schema.ResourceD
 	restyResp1, err := client.RadiusServerSequence.DeleteRadiusServerSequenceByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteRadiusServerSequenceByID", err, restyResp1.String(),
 				"Failure at DeleteRadiusServerSequenceByID, unexpected response", ""))
@@ -657,11 +676,19 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	if v, ok := d.GetOkExists(key + ".strip_suffix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".strip_suffix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".strip_suffix"))) {
 		request.StripSuffix = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".prefix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_separator"))) {
-		request.PrefixSeparator = interfaceToString(v)
+	vStripPrefix, okStripPrefix := d.GetOk(key + ".strip_prefix")
+	vvStripPrefix := interfaceToBoolPtr(vStripPrefix)
+	if okStripPrefix && vvStripPrefix != nil && *vvStripPrefix {
+		if v, ok := d.GetOkExists(key + ".prefix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_separator"))) {
+			request.PrefixSeparator = interfaceToString(v)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".suffix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_separator"))) {
-		request.SuffixSeparator = interfaceToString(v)
+	vStripSuffix, okStripSuffix := d.GetOk(key + ".strip_suffix")
+	vvStripSuffix := interfaceToBoolPtr(vStripSuffix)
+	if okStripSuffix && vvStripSuffix != nil && *vvStripSuffix {
+		if v, ok := d.GetOkExists(key + ".suffix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_separator"))) {
+			request.SuffixSeparator = interfaceToString(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".remote_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".remote_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".remote_accounting"))) {
 		request.RemoteAccounting = interfaceToBoolPtr(v)
@@ -681,11 +708,16 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	if v, ok := d.GetOkExists(key + ".radius_server_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".radius_server_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".radius_server_list"))) {
 		request.RadiusServerList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".on_request_attr_manipulator_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".on_request_attr_manipulator_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".on_request_attr_manipulator_list"))) {
-		request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key, d)
-	}
-	if v, ok := d.GetOkExists(key + ".before_accept_attr_manipulators_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".before_accept_attr_manipulators_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".before_accept_attr_manipulators_list"))) {
-		request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key, d)
+
+	vUseAttrSetBeforeAcc, okUseAttrSetBeforeAcc := d.GetOk(key + ".use_attr_set_before_acc")
+	vvUseAttrSetBeforeAcc := interfaceToBoolPtr(vUseAttrSetBeforeAcc)
+	if okUseAttrSetBeforeAcc && vvUseAttrSetBeforeAcc != nil && *vvUseAttrSetBeforeAcc {
+		if v, ok := d.GetOkExists(key + ".on_request_attr_manipulator_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".on_request_attr_manipulator_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".on_request_attr_manipulator_list"))) {
+			request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key, d)
+		}
+		if v, ok := d.GetOkExists(key + ".before_accept_attr_manipulators_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".before_accept_attr_manipulators_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".before_accept_attr_manipulators_list"))) {
+			request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key, d)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -727,8 +759,12 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
-		request.ChangedVal = interfaceToString(v)
+	vAction, okAction := d.GetOk(key + ".action")
+	vvAction := interfaceToString(vAction)
+	if okAction && vvAction == "UPDATE" {
+		if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
+			request.ChangedVal = interfaceToString(v)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -770,8 +806,12 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
-		request.ChangedVal = interfaceToString(v)
+	vAction, okAction := d.GetOk(key + ".action")
+	vvAction := interfaceToString(vAction)
+	if okAction && vvAction == "UPDATE" {
+		if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
+			request.ChangedVal = interfaceToString(v)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

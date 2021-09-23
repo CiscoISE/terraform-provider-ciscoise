@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on TrustSec SXP.
 
-🚧 getBindings
+- 🚧 getBindings
 
 ## Example Usage
 

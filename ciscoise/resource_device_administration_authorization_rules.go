@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceDeviceAdministrationAuthorizationRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Authorization Rules.
-  
-  - Device Admin Create authorization rule.
-  - Device Admin Update authorization rule.
-  - Device Admin Delete authorization rule.`,
+
+- Device Admin Create authorization rule.
+
+- Device Admin Update authorization rule.
+
+- Device Admin Delete authorization rule.
+`,
 
 		CreateContext: resourceDeviceAdministrationAuthorizationRulesCreate,
 		ReadContext:   resourceDeviceAdministrationAuthorizationRulesRead,
@@ -53,6 +57,27 @@ func resourceDeviceAdministrationAuthorizationRules() *schema.Resource {
 							Description: `id path parameter. Rule id`,
 							Type:        schema.TypeString,
 							Optional:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
@@ -114,9 +139,32 @@ func resourceDeviceAdministrationAuthorizationRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -236,9 +284,32 @@ func resourceDeviceAdministrationAuthorizationRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -275,9 +346,11 @@ func resourceDeviceAdministrationAuthorizationRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -326,7 +399,7 @@ func resourceDeviceAdministrationAuthorizationRulesCreate(ctx context.Context, d
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthorizationRule(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vPolicyID, okPolicyID := resourceItem["policy_id"]
 	vvPolicyID := interfaceToString(vPolicyID)
@@ -443,7 +516,7 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m, response1, vvPolicyID)
 		item1, err := searchDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m, items1, vvName, vvID, vvPolicyID)
@@ -453,7 +526,8 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 				"Failure when searching item from GetDeviceAdminAuthorizationRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRuleByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminAuthorizationRules search response",
 				err))
@@ -473,7 +547,7 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -541,13 +615,13 @@ func resourceDeviceAdministrationAuthorizationRulesUpdate(ctx context.Context, d
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthorizationRuleByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationRules.UpdateDeviceAdminAuthorizationRuleByID(vvPolicyID, vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateDeviceAdminAuthorizationRuleByID", err, restyResp1.String(),
 					"Failure at UpdateDeviceAdminAuthorizationRuleByID, unexpected response", ""))
@@ -628,7 +702,7 @@ func resourceDeviceAdministrationAuthorizationRulesDelete(ctx context.Context, d
 	response1, restyResp1, err := client.DeviceAdministrationAuthorizationRules.DeleteDeviceAdminAuthorizationRuleByID(vvPolicyID, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteDeviceAdminAuthorizationRuleByID", err, restyResp1.String(),
 				"Failure at DeleteDeviceAdminAuthorizationRuleByID, unexpected response", ""))
@@ -651,9 +725,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthorizationRuleLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -720,9 +792,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthorizationRuleRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -822,9 +892,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthorizationRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -909,9 +977,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthorizationRuleByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -978,9 +1044,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthorizationRuleByIDRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1080,9 +1144,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthorizationRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

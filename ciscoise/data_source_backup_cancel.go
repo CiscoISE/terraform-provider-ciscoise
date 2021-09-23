@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,8 @@ func dataSourceBackupCancel() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Backup And Restore.
 
-- Cancels the backup job running on the node.`,
+- Cancels the backup job running on the node.
+`,
 
 		ReadContext: dataSourceBackupCancelRead,
 		Schema: map[string]*schema.Schema{
@@ -120,7 +122,7 @@ func dataSourceBackupCancelRead(ctx context.Context, d *schema.ResourceData, m i
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenBackupAndRestoreCancelBackupItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {

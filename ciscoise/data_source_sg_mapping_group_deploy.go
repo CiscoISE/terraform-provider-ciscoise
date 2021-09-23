@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +17,8 @@ func dataSourceSgMappingGroupDeploy() *schema.Resource {
 		Description: `It performs update operation on IPToSGTMappingGroup.
 
 - This data source action allows the client to deploy an IP to SGT mapping group by ID.
-Only one Deploy process can run at any given time`,
+Only one Deploy process can run at any given time
+`,
 
 		ReadContext: dataSourceSgMappingGroupDeployRead,
 		Schema: map[string]*schema.Schema{
@@ -53,7 +55,7 @@ func dataSourceSgMappingGroupDeployRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(

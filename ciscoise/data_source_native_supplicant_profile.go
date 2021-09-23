@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceNativeSupplicantProfile() *schema.Resource {
 		Description: `It performs read operation on NativeSupplicantProfile.
 
 - This data source allows the client to get a native supplicant profile by ID.
-- This data source allows the client to get all the native supplicant profiles.`,
+
+- This data source allows the client to get all the native supplicant profiles.
+`,
 
 		ReadContext: dataSourceNativeSupplicantProfileRead,
 		Schema: map[string]*schema.Schema{
@@ -167,9 +170,9 @@ func dataSourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resour
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -192,7 +195,7 @@ func dataSourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseNativeSupplicantProfileGetNativeSupplicantProfileSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -239,7 +242,7 @@ func dataSourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNativeSupplicantProfileGetNativeSupplicantProfileByIDItem(response2.ERSNSpProfile)
 		if err := d.Set("item", vItem2); err != nil {

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,10 @@ func dataSourceAciBindings() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on ACIBindings.
 
-- This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI from
-Cisco ISE.The binding information will be identical to the information on ACI bindings page in the Cisco ISE UI.
-Filtering will be based on one attribute only, such as ip/sgt/vn/psn/learnedFrom/learnedBy with CONTAINS mode of
-search.`,
+- This data source allows clients to retrieve all the bindings that were sent to Cisco ISE by ACI or received on ACI
+from Cisco ISE.The binding information will be identical to the information on ACI bindings page in the Cisco ISE UI.
+Filtering will be based on one attribute only, such as ip/sgt/vn/psn/learnedFrom/learnedBy with CONTAINS mode of search.
+`,
 
 		ReadContext: dataSourceAciBindingsRead,
 		Schema: map[string]*schema.Schema{
@@ -158,7 +159,7 @@ func dataSourceAciBindingsRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenAciBindingsGetAciBindingsItem(response1.AciBindings)
 		if err := d.Set("item", vItem1); err != nil {

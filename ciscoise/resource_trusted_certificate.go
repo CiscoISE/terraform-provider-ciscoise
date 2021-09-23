@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,9 +16,12 @@ import (
 func resourceTrustedCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read, update and delete operations on Certificates.
-
+  
   - Update a trusted certificate present in ISE trust store.
-  - This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.`,
+  
+  
+  - This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
+  `,
 
 		CreateContext: resourceTrustedCertificateCreate,
 		ReadContext:   resourceTrustedCertificateRead,
@@ -39,6 +43,63 @@ func resourceTrustedCertificate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"authenticate_before_crl_received": &schema.Schema{
+							Description: `Switch to enable/disable CRL Verification if CRL is not Received
+  ERROR: Different types for param authenticateBeforeCRLReceived schema.TypeBool schema.TypeString`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
+							Optional:     true,
+							Computed:     true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								if old == "off" {
+									return old == new || "false" == new
+								}
+								if old == "false" {
+									return old == new || "off" == new
+								}
+								if old == "on" {
+									return old == new || "true" == new
+								}
+								if old == "true" {
+									return old == new || "on" == new
+								}
+								return true
+							},
+						},
+						"automatic_crl_update": &schema.Schema{
+							Description: `Switch to enable/disable automatic CRL update
+  ERROR: Different types for param automaticCRLUpdate schema.TypeBool schema.TypeString`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
+							Optional:     true,
+							Computed:     true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								if old == "off" {
+									return old == new || "false" == new
+								}
+								if old == "false" {
+									return old == new || "off" == new
+								}
+								if old == "on" {
+									return old == new || "true" == new
+								}
+								if old == "true" {
+									return old == new || "on" == new
+								}
+								return true
+							},
+						},
+						"automatic_crl_update_period": &schema.Schema{
+							Description: `Automatic CRL update period
+  ERROR: Different types for param automaticCRLUpdatePeriod schema.TypeInt schema.TypeString`,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
 						"automatic_crl_update_units": &schema.Schema{
 							Description: `Unit of time for automatic CRL update`,
 							Type:        schema.TypeString,
@@ -51,6 +112,13 @@ func resourceTrustedCertificate() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"crl_download_failure_retries": &schema.Schema{
+							Description: `If CRL download fails, wait time before retry
+  ERROR: Different types for param crlDownloadFailureRetries schema.TypeInt schema.TypeString`,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
 						"crl_download_failure_retries_units": &schema.Schema{
 							Description: `Unit of time before retry if CRL download fails`,
 							Type:        schema.TypeString,
@@ -62,6 +130,81 @@ func resourceTrustedCertificate() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
+						},
+						"download_crl": &schema.Schema{
+							Description: `Switch to enable/disable download of CRL
+  ERROR: Different types for param downloadCRL schema.TypeBool schema.TypeString`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
+							Optional:     true,
+							Computed:     true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								if old == "off" {
+									return old == new || "false" == new
+								}
+								if old == "false" {
+									return old == new || "off" == new
+								}
+								if old == "on" {
+									return old == new || "true" == new
+								}
+								if old == "true" {
+									return old == new || "on" == new
+								}
+								return true
+							},
+						},
+						"enable_ocsp_validation": &schema.Schema{
+							Description: `Switch to enable/disable OCSP Validation
+  ERROR: Different types for param enableOCSPValidation schema.TypeBool schema.TypeString`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
+							Optional:     true,
+							Computed:     true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								if old == "off" {
+									return old == new || "false" == new
+								}
+								if old == "false" {
+									return old == new || "off" == new
+								}
+								if old == "on" {
+									return old == new || "true" == new
+								}
+								if old == "true" {
+									return old == new || "on" == new
+								}
+								return true
+							},
+						},
+						"enable_server_identity_check": &schema.Schema{
+							Description: `Switch to enable/disable verification if HTTPS or LDAP server certificate name fits the configured server URL
+  ERROR: Different types for param enableServerIdentityCheck schema.TypeBool schema.TypeString`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
+							Optional:     true,
+							Computed:     true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								if old == "off" {
+									return old == new || "false" == new
+								}
+								if old == "false" {
+									return old == new || "off" == new
+								}
+								if old == "on" {
+									return old == new || "true" == new
+								}
+								if old == "true" {
+									return old == new || "on" == new
+								}
+								return true
+							},
 						},
 						"expiration_date": &schema.Schema{
 							Description: `The time and date past which the certificate is no longer valid`,
@@ -76,15 +219,41 @@ func resourceTrustedCertificate() *schema.Resource {
 						"id": &schema.Schema{
 							Description: `ID of trust certificate`,
 							Type:        schema.TypeString,
-							Computed:    true,
 							Optional:    true,
 						},
+						"ignore_crl_expiration": &schema.Schema{
+							Description: `Switch to enable/disable ignore CRL Expiration
+  ERROR: Different types for param ignoreCRLExpiration schema.TypeBool schema.TypeString`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
+							Optional:     true,
+							Computed:     true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								if old == "off" {
+									return old == new || "false" == new
+								}
+								if old == "false" {
+									return old == new || "off" == new
+								}
+								if old == "on" {
+									return old == new || "true" == new
+								}
+								if old == "true" {
+									return old == new || "on" == new
+								}
+								return true
+							},
+						},
 						"internal_ca": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_referred_in_policy": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"issued_by": &schema.Schema{
@@ -126,13 +295,70 @@ func resourceTrustedCertificate() *schema.Resource {
 						"name": &schema.Schema{
 							Description: `Friendly name of the certificate`,
 							Type:        schema.TypeString,
-							Optional:    true,
+							Required:    true,
+						},
+						"non_automatic_crl_update_period": &schema.Schema{
+							Description: `Non automatic CRL update period
+  ERROR: Different types for param nonAutomaticCRLUpdatePeriod schema.TypeInt schema.TypeString`,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"non_automatic_crl_update_units": &schema.Schema{
 							Description: `Unit of time of non automatic CRL update`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							Computed:    true,
+						},
+						"reject_if_no_status_from_ocs_p": &schema.Schema{
+							Description: `Switch to reject certificate if there is no status from OCSP
+  ERROR: Different types for param rejectIfNoStatusFromOCSP schema.TypeBool schema.TypeString`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
+							Optional:     true,
+							Computed:     true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								if old == "off" {
+									return old == new || "false" == new
+								}
+								if old == "false" {
+									return old == new || "off" == new
+								}
+								if old == "on" {
+									return old == new || "true" == new
+								}
+								if old == "true" {
+									return old == new || "on" == new
+								}
+								return true
+							},
+						},
+						"reject_if_unreachable_from_ocs_p": &schema.Schema{
+							Description: `Switch to reject certificate if unreachable from OCSP
+  ERROR: Different types for param rejectIfUnreachableFromOCSP schema.TypeBool schema.TypeString`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
+							Optional:     true,
+							Computed:     true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								if old == "off" {
+									return old == new || "false" == new
+								}
+								if old == "false" {
+									return old == new || "off" == new
+								}
+								if old == "on" {
+									return old == new || "true" == new
+								}
+								if old == "true" {
+									return old == new || "on" == new
+								}
+								return true
+							},
 						},
 						"selected_ocsp_service": &schema.Schema{
 							Description: `Name of selected OCSP Service`,
@@ -166,23 +392,31 @@ func resourceTrustedCertificate() *schema.Resource {
 						},
 						"trust_for_certificate_based_admin_auth": &schema.Schema{
 							Description: `Trust for Certificate based Admin authentication`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"trust_for_cisco_services_auth": &schema.Schema{
 							Description: `Trust for authentication of Cisco Services`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"trust_for_client_auth": &schema.Schema{
 							Description: `Trust for client authentication and Syslog`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"trust_for_ise_auth": &schema.Schema{
 							Description: `Trust for authentication within ISE`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"trusted_for": &schema.Schema{
 							Description: `Different services for which the certificated is trusted`,
@@ -242,7 +476,7 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsCertificatesGetTrustedCertificates(m, response1, &queryParams1)
 		item1, err := searchCertificatesGetTrustedCertificates(m, items1, vvName, vvID)
@@ -252,7 +486,8 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 				"Failure when searching item from GetTrustedCertificates, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenCertificatesGetTrustedCertificateByIDItem2(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTrustedCertificates search response",
 				err))
@@ -272,9 +507,9 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItem2 := flattenCertificatesGetTrustedCertificateByIDItem(response2.Response)
+		vItem2 := flattenCertificatesGetTrustedCertificateByIDItem2(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTrustedCertificateByID response",
@@ -324,13 +559,13 @@ func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceDat
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestTrustedCertificateUpdateTrustedCertificate(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Certificates.UpdateTrustedCertificate(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateTrustedCertificate", err, restyResp1.String(),
 					"Failure at UpdateTrustedCertificate, unexpected response", ""))
@@ -395,7 +630,7 @@ func resourceTrustedCertificateDelete(ctx context.Context, d *schema.ResourceDat
 	response1, restyResp1, err := client.Certificates.DeleteTrustedCertificateByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteTrustedCertificateByID", err, restyResp1.String(),
 				"Failure at DeleteTrustedCertificateByID, unexpected response", ""))
@@ -415,11 +650,24 @@ func resourceTrustedCertificateDelete(ctx context.Context, d *schema.ResourceDat
 }
 func expandRequestTrustedCertificateUpdateTrustedCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesUpdateTrustedCertificate {
 	request := isegosdk.RequestCertificatesUpdateTrustedCertificate{}
-	if v, ok := d.GetOkExists(key + ".authenticate_before_crl_received"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authenticate_before_crl_received"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authenticate_before_crl_received"))) {
-		request.AuthenticateBeforeCRLReceived = interfaceToBoolPtr(v)
+	vDownloadCRL, okDownloadCRL := d.GetOk(key + ".download_crl")
+	vvDownloadCRL := interfaceToBoolPtr(vDownloadCRL)
+	if okDownloadCRL && vvDownloadCRL != nil && *vvDownloadCRL {
+		if v, ok := d.GetOkExists(key + ".automatic_crl_update"); !isEmptyValue(reflect.ValueOf(d.Get(key+".automatic_crl_update"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".automatic_crl_update"))) {
+			request.AutomaticCRLUpdate = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".enable_server_identity_check"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_server_identity_check"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_server_identity_check"))) {
+			request.EnableServerIDentityCheck = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".authenticate_before_crl_received"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authenticate_before_crl_received"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authenticate_before_crl_received"))) {
+			request.AuthenticateBeforeCRLReceived = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".ignore_crl_expiration"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ignore_crl_expiration"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ignore_crl_expiration"))) {
+			request.IgnoreCRLExpiration = interfaceToBoolPtr(v)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".automatic_crl_update"); !isEmptyValue(reflect.ValueOf(d.Get(key+".automatic_crl_update"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".automatic_crl_update"))) {
-		request.AutomaticCRLUpdate = interfaceToBoolPtr(v)
+	if v, ok := d.GetOkExists(key + ".crl_distribution_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".crl_distribution_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".crl_distribution_url"))) {
+		request.CrlDistributionURL = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".automatic_crl_update_period"); !isEmptyValue(reflect.ValueOf(d.Get(key+".automatic_crl_update_period"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".automatic_crl_update_period"))) {
 		request.AutomaticCRLUpdatePeriod = interfaceToIntPtr(v)
@@ -427,8 +675,11 @@ func expandRequestTrustedCertificateUpdateTrustedCertificate(ctx context.Context
 	if v, ok := d.GetOkExists(key + ".automatic_crl_update_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".automatic_crl_update_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".automatic_crl_update_units"))) {
 		request.AutomaticCRLUpdateUnits = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".crl_distribution_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".crl_distribution_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".crl_distribution_url"))) {
-		request.CrlDistributionURL = interfaceToString(v)
+	if v, ok := d.GetOkExists(key + ".non_automatic_crl_update_period"); !isEmptyValue(reflect.ValueOf(d.Get(key+".non_automatic_crl_update_period"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".non_automatic_crl_update_period"))) {
+		request.NonAutomaticCRLUpdatePeriod = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(key + ".non_automatic_crl_update_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".non_automatic_crl_update_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".non_automatic_crl_update_units"))) {
+		request.NonAutomaticCRLUpdateUnits = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".crl_download_failure_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".crl_download_failure_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".crl_download_failure_retries"))) {
 		request.CrlDownloadFailureRetries = interfaceToIntPtr(v)
@@ -445,26 +696,19 @@ func expandRequestTrustedCertificateUpdateTrustedCertificate(ctx context.Context
 	if v, ok := d.GetOkExists(key + ".enable_ocsp_validation"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_ocsp_validation"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_ocsp_validation"))) {
 		request.EnableOCSpValidation = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_server_identity_check"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_server_identity_check"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_server_identity_check"))) {
-		request.EnableServerIDentityCheck = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".ignore_crl_expiration"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ignore_crl_expiration"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ignore_crl_expiration"))) {
-		request.IgnoreCRLExpiration = interfaceToBoolPtr(v)
-	}
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".non_automatic_crl_update_period"); !isEmptyValue(reflect.ValueOf(d.Get(key+".non_automatic_crl_update_period"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".non_automatic_crl_update_period"))) {
-		request.NonAutomaticCRLUpdatePeriod = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".non_automatic_crl_update_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".non_automatic_crl_update_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".non_automatic_crl_update_units"))) {
-		request.NonAutomaticCRLUpdateUnits = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".reject_if_no_status_from_ocs_p"); !isEmptyValue(reflect.ValueOf(d.Get(key+".reject_if_no_status_from_ocs_p"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".reject_if_no_status_from_ocs_p"))) {
-		request.RejectIfNoStatusFromOCSP = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".reject_if_unreachable_from_ocs_p"); !isEmptyValue(reflect.ValueOf(d.Get(key+".reject_if_unreachable_from_ocs_p"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".reject_if_unreachable_from_ocs_p"))) {
-		request.RejectIfUnreachableFromOCSP = interfaceToBoolPtr(v)
+
+	vEnableOCSpValidation, okEnableOCSpValidation := d.GetOk(key + ".enable_ocsp_validation")
+	vvEnableOCSpValidation := interfaceToBoolPtr(vEnableOCSpValidation)
+	if okEnableOCSpValidation && vvEnableOCSpValidation != nil && *vvEnableOCSpValidation {
+		if v, ok := d.GetOkExists(key + ".reject_if_no_status_from_ocs_p"); !isEmptyValue(reflect.ValueOf(d.Get(key+".reject_if_no_status_from_ocs_p"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".reject_if_no_status_from_ocs_p"))) {
+			request.RejectIfNoStatusFromOCSP = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".reject_if_unreachable_from_ocs_p"); !isEmptyValue(reflect.ValueOf(d.Get(key+".reject_if_unreachable_from_ocs_p"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".reject_if_unreachable_from_ocs_p"))) {
+			request.RejectIfUnreachableFromOCSP = interfaceToBoolPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".selected_ocsp_service"); !isEmptyValue(reflect.ValueOf(d.Get(key+".selected_ocsp_service"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".selected_ocsp_service"))) {
 		request.SelectedOCSpService = interfaceToString(v)
@@ -472,14 +716,24 @@ func expandRequestTrustedCertificateUpdateTrustedCertificate(ctx context.Context
 	if v, ok := d.GetOkExists(key + ".status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".status"))) {
 		request.Status = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".trust_for_certificate_based_admin_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_certificate_based_admin_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_certificate_based_admin_auth"))) {
-		request.TrustForCertificateBasedAdminAuth = interfaceToBoolPtr(v)
+	vTrustForIseAuth, okTrustForIseAuth := d.GetOk(key + ".trust_for_ise_auth")
+	vvTrustForIseAuth := interfaceToBoolPtr(vTrustForIseAuth)
+	if okTrustForIseAuth && vvTrustForIseAuth != nil && *vvTrustForIseAuth {
+		vTrustForClientAuth, okTrustForClientAuth := d.GetOk(key + ".trust_for_client_auth")
+		vvTrustForClientAuth := interfaceToBoolPtr(vTrustForClientAuth)
+		if okTrustForClientAuth && vvTrustForClientAuth != nil && *vvTrustForClientAuth {
+			if v, ok := d.GetOkExists(key + ".trust_for_certificate_based_admin_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_certificate_based_admin_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_certificate_based_admin_auth"))) {
+				request.TrustForCertificateBasedAdminAuth = interfaceToBoolPtr(v)
+			}
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".trust_for_cisco_services_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_cisco_services_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_cisco_services_auth"))) {
 		request.TrustForCiscoServicesAuth = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".trust_for_client_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_client_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_client_auth"))) {
-		request.TrustForClientAuth = interfaceToBoolPtr(v)
+	if okTrustForIseAuth && vvTrustForIseAuth != nil && *vvTrustForIseAuth {
+		if v, ok := d.GetOkExists(key + ".trust_for_client_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_client_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_client_auth"))) {
+			request.TrustForClientAuth = interfaceToBoolPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".trust_for_ise_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_ise_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_ise_auth"))) {
 		request.TrustForIseAuth = interfaceToBoolPtr(v)

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceHotspotPortal() *schema.Resource {
 		Description: `It performs read operation on HotspotPortal.
 
 - This data source allows the client to get a hotspot portal by ID.
+
 - This data source allows the client to get all the hotspot portals.
 
 Filter:
@@ -23,7 +25,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceHotspotPortalRead,
 		Schema: map[string]*schema.Schema{
@@ -356,19 +359,22 @@ The Tweak Settings can subsequently be changed by the user`,
 												},
 												"include_aup": &schema.Schema{
 													Description: `Require the portal user to read and accept an AUP`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_access_code": &schema.Schema{
 													Description: `Require the portal user to enter an access code.
 Only used in Hotspot portal`,
-													Type:     schema.TypeBool,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -467,7 +473,8 @@ Range from 8000 to 8999`,
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -481,8 +488,9 @@ Range from 8000 to 8999`,
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -510,27 +518,33 @@ Allowed values:
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -601,9 +615,9 @@ func dataSourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m 
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -638,7 +652,7 @@ func dataSourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseHotspotPortalGetHotspotPortalSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -685,7 +699,7 @@ func dataSourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenHotspotPortalGetHotspotPortalByIDItem(response2.HotspotPortal)
 		if err := d.Set("item", vItem2); err != nil {
@@ -793,10 +807,10 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsAupSettings(item *isego
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["require_access_code"] = item.RequireAccessCode
+	respItem["require_access_code"] = boolPtrToString(item.RequireAccessCode)
 	respItem["access_code"] = item.AccessCode
-	respItem["include_aup"] = item.IncludeAup
-	respItem["require_scrolling"] = item.RequireScrolling
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
+	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
 
 	return []map[string]interface{}{
 		respItem,
@@ -809,7 +823,7 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPostAccessBannerSetting
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
+	respItem["include_post_access_banner"] = boolPtrToString(item.IncludePostAccessBanner)
 
 	return []map[string]interface{}{
 		respItem,
@@ -836,7 +850,7 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsPostLoginBannerSettings
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
+	respItem["include_post_access_banner"] = boolPtrToString(item.IncludePostAccessBanner)
 
 	return []map[string]interface{}{
 		respItem,
@@ -849,12 +863,12 @@ func flattenHotspotPortalGetHotspotPortalByIDItemSettingsSupportInfoSettings(ite
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
-	respItem["include_mac_addr"] = item.IncludeMacAddr
-	respItem["include_ip_address"] = item.IncludeIPAddress
-	respItem["include_browser_user_agent"] = item.IncludeBrowserUserAgent
-	respItem["include_policy_server"] = item.IncludePolicyServer
-	respItem["include_failure_code"] = item.IncludeFailureCode
+	respItem["include_support_info_page"] = boolPtrToString(item.IncludeSupportInfoPage)
+	respItem["include_mac_addr"] = boolPtrToString(item.IncludeMacAddr)
+	respItem["include_ip_address"] = boolPtrToString(item.IncludeIPAddress)
+	respItem["include_browser_user_agent"] = boolPtrToString(item.IncludeBrowserUserAgent)
+	respItem["include_policy_server"] = boolPtrToString(item.IncludePolicyServer)
+	respItem["include_failure_code"] = boolPtrToString(item.IncludeFailureCode)
 	respItem["empty_field_display"] = item.EmptyFieldDisplay
 	respItem["default_empty_field_value"] = item.DefaultEmptyFieldValue
 

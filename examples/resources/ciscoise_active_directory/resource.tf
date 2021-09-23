@@ -30,13 +30,13 @@ resource "ciscoise_active_directory" "example" {
       country                           = "string"
       department                        = "string"
       email                             = "string"
-      enable_callback_for_dialin_client = false
-      enable_dialin_permission_check    = false
-      enable_failed_auth_protection     = false
-      enable_machine_access             = false
-      enable_machine_auth               = false
-      enable_pass_change                = false
-      enable_rewrites                   = false
+      enable_callback_for_dialin_client = "false"
+      enable_dialin_permission_check    = "false"
+      enable_failed_auth_protection     = "false"
+      enable_machine_access             = "false"
+      enable_machine_auth               = "false"
+      enable_pass_change                = "false"
+      enable_rewrites                   = "false"
       failed_auth_threshold             = 1
       first_name                        = "string"
       identity_not_in_ad_behaviour      = "string"
@@ -44,7 +44,7 @@ resource "ciscoise_active_directory" "example" {
       last_name                         = "string"
       locality                          = "string"
       organizational_unit               = "string"
-      plaintext_auth                    = false
+      plaintext_auth                    = "false"
       rewrite_rules {
 
         rewrite_match  = "string"
@@ -59,7 +59,7 @@ resource "ciscoise_active_directory" "example" {
     }
     description              = "string"
     domain                   = "string"
-    enable_domain_white_list = false
+    enable_domain_white_list = "false"
     id                       = "string"
     name                     = "string"
   }

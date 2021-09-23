@@ -10,10 +10,12 @@ description: |-
 # ciscoise_radius_server_sequence (Resource)
 
 It manages create, read, update and delete operations on RADIUSServerSequence.
-  
-  - This resource allows the client to update a RADIUS server sequence.
-  - This resource deletes a RADIUS server sequence.
-  - This resource creates a RADIUS server sequence.
+
+- This resource allows the client to update a RADIUS server sequence.
+
+- This resource deletes a RADIUS server sequence.
+
+- This resource creates a RADIUS server sequence.
 
 ## Example Usage
 
@@ -39,18 +41,18 @@ resource "ciscoise_radius_server_sequence" "example" {
       value           = "string"
     }
     radius_server_list      = ["string"]
-    continue_authorz_policy = false
+    continue_authorz_policy = "false"
     description             = "string"
     id                      = "string"
-    local_accounting        = false
+    local_accounting        = "false"
     name                    = "string"
     prefix_separator        = "string"
-    remote_accounting       = false
-    strip_prefix            = false
-    strip_suffix            = false
+    remote_accounting       = "false"
+    strip_prefix            = "false"
+    strip_suffix            = "false"
     suffix_separator        = "string"
-    use_attr_set_before_acc = false
-    use_attr_set_on_request = false
+    use_attr_set_before_acc = "false"
+    use_attr_set_on_request = "false"
   }
 }
 
@@ -77,20 +79,20 @@ output "ciscoise_radius_server_sequence_example" {
 Optional:
 
 - **before_accept_attr_manipulators_list** (Block List) The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true (see [below for nested schema](#nestedblock--item--before_accept_attr_manipulators_list))
-- **continue_authorz_policy** (Boolean)
+- **continue_authorz_policy** (String)
 - **description** (String)
 - **id** (String) The ID of this resource.
-- **local_accounting** (Boolean)
+- **local_accounting** (String)
 - **name** (String)
 - **on_request_attr_manipulator_list** (Block List) The onRequestAttrManipulators is required only if useAttrSetOnRequest is true (see [below for nested schema](#nestedblock--item--on_request_attr_manipulator_list))
 - **prefix_separator** (String) The prefixSeparator is required only if stripPrefix is true. The maximum length is 1 character
 - **radius_server_list** (List of String)
-- **remote_accounting** (Boolean)
-- **strip_prefix** (Boolean)
-- **strip_suffix** (Boolean)
+- **remote_accounting** (String)
+- **strip_prefix** (String)
+- **strip_suffix** (String)
 - **suffix_separator** (String) The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character
-- **use_attr_set_before_acc** (Boolean)
-- **use_attr_set_on_request** (Boolean)
+- **use_attr_set_before_acc** (String)
+- **use_attr_set_on_request** (String)
 
 Read-Only:
 
@@ -102,10 +104,10 @@ Read-Only:
 Optional:
 
 - **action** (String) Allowed Values:
-  - ADD,
-  - UPDATE,
-  - REMOVE,
-  - REMOVEANY
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY
 - **attribute_name** (String)
 - **changed_val** (String) The changedVal is required only if the action equals to 'UPDATE'
 - **dictionary_name** (String)
@@ -118,10 +120,10 @@ Optional:
 Optional:
 
 - **action** (String) Allowed Values:
-  - ADD,
-  - UPDATE,
-  - REMOVE,
-  - REMOVEANY
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY
 - **attribute_name** (String)
 - **changed_val** (String) The changedVal is required only if the action equals to 'UPDATE'
 - **dictionary_name** (String)

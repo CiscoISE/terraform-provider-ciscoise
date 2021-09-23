@@ -12,7 +12,9 @@ description: |-
 It performs read operation on AuthorizationProfile.
 
 - This data source allows the client to get an authorization profile by name.
+
 - This data source allows the client to get an authorization profile by ID.
+
 - This data source allows the client to get all authorization profiles.
 
 ## Example Usage
@@ -71,7 +73,7 @@ Read-Only:
 - **access_type** (String)
 - **acl** (String)
 - **advanced_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_attributes))
-- **agentless_posture** (Boolean)
+- **agentless_posture** (String)
 - **airespace_acl** (String)
 - **airespace_ipv6_acl** (String)
 - **asa_vpn** (String)
@@ -80,7 +82,7 @@ Read-Only:
 - **avc_profile** (String)
 - **dacl_name** (String)
 - **description** (String)
-- **easywired_session_candidate** (Boolean)
+- **easywired_session_candidate** (String)
 - **id** (String)
 - **interface_template** (String)
 - **ipv6_acl_filter** (String)
@@ -88,14 +90,14 @@ Read-Only:
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
 - **mac_sec_policy** (String)
 - **name** (String)
-- **neat** (Boolean)
+- **neat** (String)
 - **profile_name** (String)
 - **reauth** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--reauth))
-- **service_template** (Boolean)
-- **track_movement** (Boolean)
+- **service_template** (String)
+- **track_movement** (String)
 - **vlan** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--vlan))
-- **voice_domain_permission** (Boolean)
-- **web_auth** (Boolean)
+- **voice_domain_permission** (String)
+- **web_auth** (String)
 - **web_redirection** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--web_redirection))
 
 <a id="nestedobjatt--item_id--advanced_attributes"></a>
@@ -163,7 +165,7 @@ Read-Only:
 Read-Only:
 
 - **acl** (String)
-- **display_certificates_renewal_messages** (Boolean)
+- **display_certificates_renewal_messages** (String)
 - **portal_name** (String)
 - **static_iphost_name_fqd_n** (String)
 - **web_redirection_type** (String)
@@ -178,7 +180,7 @@ Read-Only:
 - **access_type** (String)
 - **acl** (String)
 - **advanced_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_attributes))
-- **agentless_posture** (Boolean)
+- **agentless_posture** (String)
 - **airespace_acl** (String)
 - **airespace_ipv6_acl** (String)
 - **asa_vpn** (String)
@@ -187,7 +189,7 @@ Read-Only:
 - **avc_profile** (String)
 - **dacl_name** (String)
 - **description** (String)
-- **easywired_session_candidate** (Boolean)
+- **easywired_session_candidate** (String)
 - **id** (String)
 - **interface_template** (String)
 - **ipv6_acl_filter** (String)
@@ -195,14 +197,14 @@ Read-Only:
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
 - **mac_sec_policy** (String)
 - **name** (String)
-- **neat** (Boolean)
+- **neat** (String)
 - **profile_name** (String)
 - **reauth** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--reauth))
-- **service_template** (Boolean)
-- **track_movement** (Boolean)
+- **service_template** (String)
+- **track_movement** (String)
 - **vlan** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--vlan))
-- **voice_domain_permission** (Boolean)
-- **web_auth** (Boolean)
+- **voice_domain_permission** (String)
+- **web_auth** (String)
 - **web_redirection** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--web_redirection))
 
 <a id="nestedobjatt--item_name--advanced_attributes"></a>
@@ -270,7 +272,7 @@ Read-Only:
 Read-Only:
 
 - **acl** (String)
-- **display_certificates_renewal_messages** (Boolean)
+- **display_certificates_renewal_messages** (String)
 - **portal_name** (String)
 - **static_iphost_name_fqd_n** (String)
 - **web_redirection_type** (String)

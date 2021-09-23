@@ -2,10 +2,12 @@ package ciscoise
 
 import (
 	"context"
+
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,8 +18,9 @@ func dataSourceRenewCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-- This data source action will initiate regeneration of certificates. Response contains id which can be used to track the
-status`,
+- This data source action will initiate regeneration of certificates. Response contains id which can be used to track
+the status
+`,
 
 		ReadContext: dataSourceRenewCertificateRead,
 		Schema: map[string]*schema.Schema{
@@ -87,7 +90,7 @@ func dataSourceRenewCertificateRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenCertificatesRenewCertificatesItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {

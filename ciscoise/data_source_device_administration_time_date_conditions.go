@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 		Description: `It performs read operation on Device Administration - Time/Date Conditions.
 
 - Device Admin Returns a list of time and date conditions.
-- Device Admin Returns a network condition.`,
+
+- Device Admin Returns a network condition.
+`,
 
 		ReadContext: dataSourceDeviceAdministrationTimeDateConditionsRead,
 		Schema: map[string]*schema.Schema{
@@ -59,8 +62,9 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -184,8 +188,9 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -272,8 +277,9 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -397,8 +403,9 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -461,9 +468,9 @@ func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -478,7 +485,7 @@ func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -504,7 +511,7 @@ func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -528,7 +535,7 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsLink(item.Link)
 		respItem["description"] = item.Description
 		respItem["id"] = item.ID
@@ -574,7 +581,7 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsItemsChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}
@@ -659,7 +666,7 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -705,7 +712,7 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItemChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

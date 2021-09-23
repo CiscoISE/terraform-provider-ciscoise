@@ -10,10 +10,12 @@ description: |-
 # ciscoise_sxp_local_bindings (Resource)
 
 It manages create, read, update and delete operations on SXPLocalBindings.
-  
-  - This resource allows the client to update a SXP local binding.
-  - This resource deletes a SXP local binding.
-  - This resource creates a SXP local binding.
+
+- This resource allows the client to update a SXP local binding.
+
+- This resource deletes a SXP local binding.
+
+- This resource creates a SXP local binding.
 
 ## Example Usage
 

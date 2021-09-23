@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 		Description: `It performs read operation on Network Access - Authentication Rules.
 
 - Network Access Get authentication rules.
-- Network Access Get rule attributes.`,
+
+- Network Access Get rule attributes.
+`,
 
 		ReadContext: dataSourceNetworkAccessAuthenticationRulesRead,
 		Schema: map[string]*schema.Schema{
@@ -123,8 +126,9 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"link": &schema.Schema{
 																Type:     schema.TypeList,
@@ -248,8 +252,9 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -303,8 +308,9 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -431,8 +437,9 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"link": &schema.Schema{
 																Type:     schema.TypeList,
@@ -556,8 +563,9 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -611,8 +619,9 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -657,9 +666,9 @@ func dataSourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *sche
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPolicyID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okPolicyID, okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -675,7 +684,7 @@ func dataSourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *sche
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -702,7 +711,7 @@ func dataSourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *sche
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -758,7 +767,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleCondition(item.Condition)
-	respItem["default"] = item.Default
+	respItem["default"] = boolPtrToString(item.Default)
 	respItem["hit_counts"] = item.HitCounts
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -777,7 +786,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -825,7 +834,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}
@@ -942,7 +951,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleCondition(item.Condition)
-	respItem["default"] = item.Default
+	respItem["default"] = boolPtrToString(item.Default)
 	respItem["hit_counts"] = item.HitCounts
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -961,7 +970,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -1009,7 +1018,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

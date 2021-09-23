@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceTacacsProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on TACACSProfile.
-  
-  - This resource allows the client to update a TACACS profile.
-  - This resource deletes a TACACS profile.
-  - This resource creates a TACACS profile.`,
+
+- This resource allows the client to update a TACACS profile.
+
+- This resource deletes a TACACS profile.
+
+- This resource creates a TACACS profile.
+`,
 
 		CreateContext: resourceTacacsProfileCreate,
 		ReadContext:   resourceTacacsProfileRead,
@@ -127,7 +131,7 @@ func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestTacacsProfileCreateTacacsProfile(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -204,7 +208,7 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenTacacsProfileGetTacacsProfileByNameItemName(response1.TacacsProfile)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -229,7 +233,7 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenTacacsProfileGetTacacsProfileByIDItemID(response2.TacacsProfile)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -280,13 +284,13 @@ func resourceTacacsProfileUpdate(ctx context.Context, d *schema.ResourceData, m 
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestTacacsProfileUpdateTacacsProfileByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.TacacsProfile.UpdateTacacsProfileByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateTacacsProfileByID", err, restyResp1.String(),
 					"Failure at UpdateTacacsProfileByID, unexpected response", ""))
@@ -343,7 +347,7 @@ func resourceTacacsProfileDelete(ctx context.Context, d *schema.ResourceData, m 
 	restyResp1, err := client.TacacsProfile.DeleteTacacsProfileByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteTacacsProfileByID", err, restyResp1.String(),
 				"Failure at DeleteTacacsProfileByID, unexpected response", ""))

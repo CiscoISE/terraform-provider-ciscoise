@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceNetworkDeviceGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on NetworkDeviceGroup.
-  
-  - This resource allows the client to update a network device group.
-  - This resource deletes a network device group.
-  - This resource creates a network device group.`,
+
+- This resource allows the client to update a network device group.
+
+- This resource deletes a network device group.
+
+- This resource creates a network device group.
+`,
 
 		CreateContext: resourceNetworkDeviceGroupCreate,
 		ReadContext:   resourceNetworkDeviceGroupRead,
@@ -94,7 +98,7 @@ func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceDat
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkDeviceGroupCreateNetworkDeviceGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -171,7 +175,7 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenNetworkDeviceGroupGetNetworkDeviceGroupByNameItemName(response1.NetworkDeviceGroup)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -196,7 +200,7 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenNetworkDeviceGroupGetNetworkDeviceGroupByIDItemID(response2.NetworkDeviceGroup)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -247,13 +251,13 @@ func resourceNetworkDeviceGroupUpdate(ctx context.Context, d *schema.ResourceDat
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkDeviceGroupUpdateNetworkDeviceGroupByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkDeviceGroup.UpdateNetworkDeviceGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkDeviceGroupByID", err, restyResp1.String(),
 					"Failure at UpdateNetworkDeviceGroupByID, unexpected response", ""))
@@ -310,7 +314,7 @@ func resourceNetworkDeviceGroupDelete(ctx context.Context, d *schema.ResourceDat
 	restyResp1, err := client.NetworkDeviceGroup.DeleteNetworkDeviceGroupByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkDeviceGroupByID", err, restyResp1.String(),
 				"Failure at DeleteNetworkDeviceGroupByID, unexpected response", ""))

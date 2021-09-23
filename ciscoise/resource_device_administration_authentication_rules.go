@@ -3,11 +3,10 @@ package ciscoise
 import (
 	"context"
 	"fmt"
+	"log"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
-	"log"
-
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -15,10 +14,13 @@ import (
 func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Authentication Rules.
-  
-  - Device Admin Create authentication rule.
-  - Device Admin Update rule.
-  - Device Admin Delete rule.`,
+
+- Device Admin Create authentication rule.
+
+- Device Admin Update rule.
+
+- Device Admin Delete rule.
+`,
 
 		CreateContext: resourceDeviceAdministrationAuthenticationRulesCreate,
 		ReadContext:   resourceDeviceAdministrationAuthenticationRulesRead,
@@ -75,6 +77,27 @@ func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
 							Type:        schema.TypeString,
@@ -129,9 +152,32 @@ func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -251,9 +297,32 @@ func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -290,9 +359,11 @@ func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -341,7 +412,7 @@ func resourceDeviceAdministrationAuthenticationRulesCreate(ctx context.Context, 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRule(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vPolicyID, okPolicyID := resourceItem["policy_id"]
 	vvPolicyID := interfaceToString(vPolicyID)
@@ -458,7 +529,7 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRules(m, response1, vvPolicyID)
 		item1, err := searchDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRules(m, items1, vvName, vvID, vvPolicyID)
@@ -468,7 +539,8 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 				"Failure when searching item from GetDeviceAdminAuthenticationRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminAuthenticationRules search response",
 				err))
@@ -487,7 +559,7 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -554,13 +626,13 @@ func resourceDeviceAdministrationAuthenticationRulesUpdate(ctx context.Context, 
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceAdministrationAuthenticationRules.UpdateDeviceAdminAuthenticationRuleByID(vvPolicyID, vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateDeviceAdminAuthenticationRuleByID", err, restyResp1.String(),
 					"Failure at UpdateDeviceAdminAuthenticationRuleByID, unexpected response", ""))
@@ -640,7 +712,7 @@ func resourceDeviceAdministrationAuthenticationRulesDelete(ctx context.Context, 
 	response1, restyResp1, err := client.DeviceAdministrationAuthenticationRules.DeleteDeviceAdminAuthenticationRuleByID(vvPolicyID, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteDeviceAdminAuthenticationRuleByID", err, restyResp1.String(),
 				"Failure at DeleteDeviceAdminAuthenticationRuleByID, unexpected response", ""))
@@ -675,9 +747,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthen
 	if v, ok := d.GetOkExists(key + ".if_user_not_found"); !isEmptyValue(reflect.ValueOf(d.Get(key+".if_user_not_found"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".if_user_not_found"))) {
 		request.IfUserNotFound = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".rule"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rule"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rule"))) {
 		request.Rule = expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRule(ctx, key+".rule.0", d)
 	}
@@ -741,9 +811,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthen
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -843,9 +911,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthen
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -942,9 +1008,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthen
 	if v, ok := d.GetOkExists(key + ".if_user_not_found"); !isEmptyValue(reflect.ValueOf(d.Get(key+".if_user_not_found"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".if_user_not_found"))) {
 		request.IfUserNotFound = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".rule"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rule"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rule"))) {
 		request.Rule = expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRule(ctx, key+".rule.0", d)
 	}
@@ -1008,9 +1072,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthen
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1110,9 +1172,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthen
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

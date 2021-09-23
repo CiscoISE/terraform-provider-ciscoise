@@ -16,6 +16,7 @@ description: |-
 It performs read operation on ProfilerProfile.
 
 - This data source allows the client to get a profiler profile by ID.
+
 - This data source allows the client to get all the profiler profiles.
 
 Filter:

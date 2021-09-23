@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,12 +16,17 @@ import (
 func resourceDeviceAdministrationConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Conditions.
-  
-  - Device Admin Creates a library condition.
-  - Device Admin Update library condition using condition name.
-  - Device Admin Delete a library condition using condition Name.
-  - Device Admin Update library condition.
-  - Device Admin Delete a library condition.`,
+
+- Device Admin Creates a library condition.
+
+- Device Admin Update library condition using condition name.
+
+- NDevice Admin Delete a library condition using condition Name.
+
+- Device Admin Update library condition.
+
+- Device Admin Delete a library condition.
+`,
 
 		CreateContext: resourceDeviceAdministrationConditionsCreate,
 		ReadContext:   resourceDeviceAdministrationConditionsRead,
@@ -76,9 +82,32 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -198,9 +227,32 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Description: `Condition name`,
@@ -246,7 +298,7 @@ func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestDeviceAdministrationConditionsCreateDeviceAdminCondition(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -325,7 +377,7 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenDeviceAdministrationConditionsGetDeviceAdminConditionByNameItemName(response1.Response)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -350,7 +402,7 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenDeviceAdministrationConditionsGetDeviceAdminConditionByIDItemID(response2.Response)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -401,13 +453,13 @@ func resourceDeviceAdministrationConditionsUpdate(ctx context.Context, d *schema
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceAdministrationConditions.UpdateDeviceAdminConditionByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateDeviceAdminConditionByID", err, restyResp1.String(),
 					"Failure at UpdateDeviceAdminConditionByID, unexpected response", ""))
@@ -464,7 +516,7 @@ func resourceDeviceAdministrationConditionsDelete(ctx context.Context, d *schema
 	response1, restyResp1, err := client.DeviceAdministrationConditions.DeleteDeviceAdminConditionByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteDeviceAdminConditionByID", err, restyResp1.String(),
 				"Failure at DeleteDeviceAdminConditionByID, unexpected response", ""))
@@ -490,9 +542,7 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminCondition(ctx c
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -592,9 +642,7 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildr
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -682,9 +730,7 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByID(c
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -784,9 +830,7 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDCh
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

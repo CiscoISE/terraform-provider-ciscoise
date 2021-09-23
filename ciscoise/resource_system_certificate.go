@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,15 +16,18 @@ import (
 func resourceSystemCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read, update and delete operations on Certificates.
-  
-  
 
-  - Update a System Certificate.
-  
-  NOTE:
-  Renewing a certificate will cause an application server restart on the selected node. 
-  
-  - This resource deletes a System Certificate of a particular node based on a given HostName and ID.`,
+- Update a System Certificate.
+
+NOTE:
+Renewing a certificate will cause an application server restart on the selected node.
+
+NOTE:
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+
+
+- This resource deletes a System Certificate of a particular node based on a given HostName and ID.
+`,
 
 		CreateContext: resourceSystemCertificateCreate,
 		ReadContext:   resourceSystemCertificateRead,
@@ -47,13 +51,17 @@ func resourceSystemCertificate() *schema.Resource {
 
 						"admin": &schema.Schema{
 							Description: `Use certificate to authenticate the ISE Admin Portal`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"allow_replacement_of_portal_group_tag": &schema.Schema{
 							Description: `Allow Replacement of Portal Group Tag (required)`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"description": &schema.Schema{
 							Description: `Description of System Certificate`,
@@ -62,8 +70,10 @@ func resourceSystemCertificate() *schema.Resource {
 						},
 						"eap": &schema.Schema{
 							Description: `Use certificate for EAP protocols that use SSL/TLS tunneling`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"expiration_date": &schema.Schema{
 							Description: `The time and date past which the certificate is no longer valid`,
@@ -96,12 +106,13 @@ func resourceSystemCertificate() *schema.Resource {
 							Description: `ID of system certificate`,
 							Type:        schema.TypeString,
 							Computed:    true,
-							Optional:    true,
 						},
 						"ims": &schema.Schema{
 							Description: `Use certificate for the ISE Messaging Service`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"issued_by": &schema.Schema{
 							Description: `Common Name of the certificate issuer`,
@@ -146,8 +157,10 @@ func resourceSystemCertificate() *schema.Resource {
 						},
 						"portal": &schema.Schema{
 							Description: `Use for portal`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"portal_group_tag": &schema.Schema{
 							Description: `Set Group tag`,
@@ -160,26 +173,35 @@ func resourceSystemCertificate() *schema.Resource {
 						},
 						"pxgrid": &schema.Schema{
 							Description: `Use certificate for the pxGrid Controller`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"radius": &schema.Schema{
 							Description: `Use certificate for the RADSec server`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"renew_self_signed_certificate": &schema.Schema{
 							Description: `Renew Self Signed Certificate`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"saml": &schema.Schema{
 							Description: `Use certificate for SAML Signing`,
-							Type:        schema.TypeBool,
-							Optional:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"self_signed": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"serial_number_decimal_format": &schema.Schema{
@@ -256,7 +278,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsCertificatesGetSystemCertificates(m, response1, vvHostName, &queryParams1)
 		item1, err := searchCertificatesGetSystemCertificates(m, items1, vvName, vvID, vvHostName)
@@ -266,7 +288,8 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 				"Failure when searching item from GetSystemCertificates, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenCertificatesGetSystemCertificateByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSystemCertificates search response",
 				err))
@@ -286,7 +309,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenCertificatesGetSystemCertificateByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -327,13 +350,13 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 		vvHostName = vHostName
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSystemCertificateUpdateSystemCertificate(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Certificates.UpdateSystemCertificate(vvID, vvHostName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateSystemCertificate", err, restyResp1.String(),
 					"Failure at UpdateSystemCertificate, unexpected response", ""))
@@ -378,7 +401,7 @@ func resourceSystemCertificateDelete(ctx context.Context, d *schema.ResourceData
 	response1, restyResp1, err := client.Certificates.DeleteSystemCertificateByID(vvHostName, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSystemCertificateByID", err, restyResp1.String(),
 				"Failure at DeleteSystemCertificateByID, unexpected response", ""))

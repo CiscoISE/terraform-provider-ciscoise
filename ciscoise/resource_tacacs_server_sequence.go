@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceTacacsServerSequence() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on TacacsServerSequence.
-  
-  - This resource allows the client to update a TACACS server sequence.
-  - This resource deletes a TACACS server sequence.
-  - This resource creates a TACACS server sequence.`,
+
+- This resource allows the client to update a TACACS server sequence.
+
+- This resource deletes a TACACS server sequence.
+
+- This resource creates a TACACS server sequence.
+`,
 
 		CreateContext: resourceTacacsServerSequenceCreate,
 		ReadContext:   resourceTacacsServerSequenceRead,
@@ -71,9 +75,11 @@ func resourceTacacsServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -88,18 +94,22 @@ func resourceTacacsServerSequence() *schema.Resource {
 						},
 						"prefix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for prefix strip`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"server_list": &schema.Schema{
 							Description: `The names of Tacacs external servers separated by commas.
-  The order of the names in the string is the order of servers that will be used during authentication`,
+The order of the names in the string is the order of servers that will be used during authentication`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -112,9 +122,11 @@ func resourceTacacsServerSequence() *schema.Resource {
 						},
 						"suffix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for suffix strip`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -130,7 +142,7 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestTacacsServerSequenceCreateTacacsServerSequence(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -207,7 +219,7 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenTacacsServerSequenceGetTacacsServerSequenceByNameItemName(response1.TacacsServerSequence)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -232,7 +244,7 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenTacacsServerSequenceGetTacacsServerSequenceByIDItemID(response2.TacacsServerSequence)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -283,13 +295,13 @@ func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestTacacsServerSequenceUpdateTacacsServerSequenceByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.TacacsServerSequence.UpdateTacacsServerSequenceByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateTacacsServerSequenceByID", err, restyResp1.String(),
 					"Failure at UpdateTacacsServerSequenceByID, unexpected response", ""))
@@ -346,7 +358,7 @@ func resourceTacacsServerSequenceDelete(ctx context.Context, d *schema.ResourceD
 	restyResp1, err := client.TacacsServerSequence.DeleteTacacsServerSequenceByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteTacacsServerSequenceByID", err, restyResp1.String(),
 				"Failure at DeleteTacacsServerSequenceByID, unexpected response", ""))

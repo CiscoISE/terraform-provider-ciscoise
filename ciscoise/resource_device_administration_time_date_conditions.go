@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Time/Date Conditions.
-  
-  - Device Admin Creates time/date condition.
-  - Device Admin Update network condition.
-  - Device Admin Delete Time/Date condition.`,
+
+- Device Admin Creates time/date condition.
+
+- Device Admin Update network condition.
+
+- Device Admin Delete Time/Date condition.
+`,
 
 		CreateContext: resourceDeviceAdministrationTimeDateConditionsCreate,
 		ReadContext:   resourceDeviceAdministrationTimeDateConditionsRead,
@@ -74,9 +78,32 @@ func resourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -196,9 +223,32 @@ func resourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Description: `Condition name`,
@@ -244,7 +294,7 @@ func resourceDeviceAdministrationTimeDateConditionsCreate(ctx context.Context, d
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeCondition(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -326,7 +376,7 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditions(m, response1)
 		item1, err := searchDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditions(m, items1, vvName, vvID)
@@ -336,7 +386,8 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 				"Failure when searching item from GetDeviceAdminTimeConditions, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminTimeConditions search response",
 				err))
@@ -356,7 +407,7 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -407,13 +458,13 @@ func resourceDeviceAdministrationTimeDateConditionsUpdate(ctx context.Context, d
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceAdministrationTimeDateConditions.UpdateDeviceAdminTimeConditionByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateDeviceAdminTimeConditionByID", err, restyResp1.String(),
 					"Failure at UpdateDeviceAdminTimeConditionByID, unexpected response", ""))
@@ -476,7 +527,7 @@ func resourceDeviceAdministrationTimeDateConditionsDelete(ctx context.Context, d
 	response1, restyResp1, err := client.DeviceAdministrationTimeDateConditions.DeleteDeviceAdminTimeConditionByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteDeviceAdminTimeConditionByID", err, restyResp1.String(),
 				"Failure at DeleteDeviceAdminTimeConditionByID, unexpected response", ""))
@@ -502,9 +553,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeCon
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -604,9 +653,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeCon
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -694,9 +741,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeCon
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -796,9 +841,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeCon
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

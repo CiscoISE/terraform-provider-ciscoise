@@ -12,6 +12,7 @@ description: |-
 It performs read operation on DownloadableACL.
 
 - This data source allows the client to get a downloadable ACL by ID.
+
 - This data source allows the client to get all downloadable ACLs.
 
 ## Example Usage

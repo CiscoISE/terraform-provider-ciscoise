@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on RADIUS Failure.
 
-🚧 getFailures
+- 🚧 getFailures
 
 ## Example Usage
 

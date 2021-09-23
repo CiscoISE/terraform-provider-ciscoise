@@ -10,10 +10,12 @@ description: |-
 # ciscoise_filter_policy (Resource)
 
 It manages create, read, update and delete operations on FilterPolicy.
-  
-  - This resource allows the client to update a filter policy.
-  - This resource deletes a filter policy.
-  - This resource creates a filter policy.
+
+- This resource allows the client to update a filter policy.
+
+- This resource deletes a filter policy.
+
+- This resource creates a filter policy.
 
 ## Example Usage
 
@@ -56,9 +58,9 @@ Optional:
 - **id** (String) id path parameter.
 - **sgt** (String) SGT name or ID. At least one of subnet or sgt or vn should be defined
 - **subnet** (String) Subnet for filter policy (hostname is not supported).
-  At least one of subnet or sgt or vn should be defined
+At least one of subnet or sgt or vn should be defined
 - **vn** (String) Virtual Network.
-  At least one of subnet or sgt or vn should be defined
+At least one of subnet or sgt or vn should be defined
 
 ## Import
 

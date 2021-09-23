@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceGuestType() *schema.Resource {
 		Description: `It performs read operation on GuestType.
 
 - This data source allows the client to get a guest type by ID.
+
 - This data source allows the client to get all the guest types.
 
 Filter:
@@ -23,7 +25,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceGuestTypeRead,
 		Schema: map[string]*schema.Schema{
@@ -111,7 +114,8 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"allow_access_on_specific_days_times": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"day_time_limits": &schema.Schema{
@@ -165,8 +169,9 @@ Allowed values are:
 									},
 									"from_first_login": &schema.Schema{
 										Description: `When Account Duration starts from first login or specified date`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"max_account_duration": &schema.Schema{
 										Description: `Maximum value of Account Duration`,
@@ -206,18 +211,21 @@ Allowed values are:
 									},
 									"enable_notification": &schema.Schema{
 										Description: `Enable Notification settings`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"send_email_notification": &schema.Schema{
 										Description: `Enable Email Notification`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"send_sms_notification": &schema.Schema{
 										Description: `Maximum devices guests can register`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"sms_text": &schema.Schema{
 										Type:     schema.TypeString,
@@ -231,7 +239,8 @@ Allowed values are:
 							Computed: true,
 						},
 						"is_default_type": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -262,7 +271,8 @@ Allowed values are:
 								Schema: map[string]*schema.Schema{
 
 									"allow_guest_portal_bypass": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"failure_action": &schema.Schema{
@@ -279,8 +289,9 @@ Allowed values are:
 									},
 									"limit_simultaneous_logins": &schema.Schema{
 										Description: `Enable Simultaneous Logins`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"max_registered_devices": &schema.Schema{
 										Description: `Maximum devices guests can register`,
@@ -368,9 +379,9 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -405,7 +416,7 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseGuestTypeGetGuestTypeSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -452,7 +463,7 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenGuestTypeGetGuestTypeByIDItem(response2.GuestType)
 		if err := d.Set("item", vItem2); err != nil {
@@ -507,7 +518,7 @@ func flattenGuestTypeGetGuestTypeByIDItem(item *isegosdk.ResponseGuestTypeGetGue
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["is_default_type"] = item.IsDefaultType
+	respItem["is_default_type"] = boolPtrToString(item.IsDefaultType)
 	respItem["access_time"] = flattenGuestTypeGetGuestTypeByIDItemAccessTime(item.AccessTime)
 	respItem["login_options"] = flattenGuestTypeGetGuestTypeByIDItemLoginOptions(item.LoginOptions)
 	respItem["expiration_notification"] = flattenGuestTypeGetGuestTypeByIDItemExpirationNotification(item.ExpirationNotification)
@@ -523,11 +534,11 @@ func flattenGuestTypeGetGuestTypeByIDItemAccessTime(item *isegosdk.ResponseGuest
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["from_first_login"] = item.FromFirstLogin
+	respItem["from_first_login"] = boolPtrToString(item.FromFirstLogin)
 	respItem["max_account_duration"] = item.MaxAccountDuration
 	respItem["duration_time_unit"] = item.DurationTimeUnit
 	respItem["default_duration"] = item.DefaultDuration
-	respItem["allow_access_on_specific_days_times"] = item.AllowAccessOnSpecificDaysTimes
+	respItem["allow_access_on_specific_days_times"] = boolPtrToString(item.AllowAccessOnSpecificDaysTimes)
 	respItem["day_time_limits"] = flattenGuestTypeGetGuestTypeByIDItemAccessTimeDayTimeLimits(item.DayTimeLimits)
 
 	return []map[string]interface{}{
@@ -557,12 +568,12 @@ func flattenGuestTypeGetGuestTypeByIDItemLoginOptions(item *isegosdk.ResponseGue
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["limit_simultaneous_logins"] = item.LimitSimultaneousLogins
+	respItem["limit_simultaneous_logins"] = boolPtrToString(item.LimitSimultaneousLogins)
 	respItem["max_simultaneous_logins"] = item.MaxSimultaneousLogins
 	respItem["failure_action"] = item.FailureAction
 	respItem["max_registered_devices"] = item.MaxRegisteredDevices
 	respItem["identity_group_id"] = item.IDentityGroupID
-	respItem["allow_guest_portal_bypass"] = item.AllowGuestPortalBypass
+	respItem["allow_guest_portal_bypass"] = boolPtrToString(item.AllowGuestPortalBypass)
 
 	return []map[string]interface{}{
 		respItem,
@@ -575,12 +586,12 @@ func flattenGuestTypeGetGuestTypeByIDItemExpirationNotification(item *isegosdk.R
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enable_notification"] = item.EnableNotification
+	respItem["enable_notification"] = boolPtrToString(item.EnableNotification)
 	respItem["advance_notification_duration"] = item.AdvanceNotificationDuration
 	respItem["advance_notification_units"] = item.AdvanceNotificationUnits
-	respItem["send_email_notification"] = item.SendEmailNotification
+	respItem["send_email_notification"] = boolPtrToString(item.SendEmailNotification)
 	respItem["email_text"] = item.EmailText
-	respItem["send_sms_notification"] = item.SendSmsNotification
+	respItem["send_sms_notification"] = boolPtrToString(item.SendSmsNotification)
 	respItem["sms_text"] = item.SmsText
 
 	return []map[string]interface{}{

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,8 @@ func dataSourceEgressMatrixCellClone() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on EgressMatrixCell.
 
-- This data source action allows the client to clone an egress matrix cell.`,
+- This data source action allows the client to clone an egress matrix cell.
+`,
 
 		ReadContext: dataSourceEgressMatrixCellCloneRead,
 		Schema: map[string]*schema.Schema{
@@ -88,7 +90,7 @@ func dataSourceEgressMatrixCellCloneRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenEgressMatrixCellCloneMatrixCellItem(response1.OperationResult)
 		if err := d.Set("item", vItem1); err != nil {

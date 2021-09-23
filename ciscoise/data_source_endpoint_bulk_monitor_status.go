@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceEndpointBulkMonitorStatus() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on endpoint.
 
-- This data source allows the client to monitor the bulk request.`,
+- This data source allows the client to monitor the bulk request.
+`,
 
 		ReadContext: dataSourceEndpointBulkMonitorStatusRead,
 		Schema: map[string]*schema.Schema{
@@ -117,7 +119,7 @@ func dataSourceEndpointBulkMonitorStatusRead(ctx context.Context, d *schema.Reso
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenEndpointMonitorBulkStatusEndpointItem(response1.BulkStatus)
 		if err := d.Set("item", vItem1); err != nil {

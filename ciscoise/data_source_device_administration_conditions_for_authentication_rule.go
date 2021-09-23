@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceDeviceAdministrationConditionsForAuthenticationRule() *schema.Res
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Conditions.
 
-- Device Admin Returns list of library conditions for authentication rules.`,
+- Device Admin Returns list of library conditions for authentication rules.
+`,
 
 		ReadContext: dataSourceDeviceAdministrationConditionsForAuthenticationRuleRead,
 		Schema: map[string]*schema.Schema{
@@ -53,8 +55,9 @@ func dataSourceDeviceAdministrationConditionsForAuthenticationRule() *schema.Res
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -178,8 +181,9 @@ func dataSourceDeviceAdministrationConditionsForAuthenticationRule() *schema.Res
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -253,7 +257,7 @@ func dataSourceDeviceAdministrationConditionsForAuthenticationRuleRead(ctx conte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -277,7 +281,7 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsLink(item.Link)
 		respItem["description"] = item.Description
 		respItem["id"] = item.ID
@@ -323,7 +327,7 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticat
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForAuthenticationRulesItemsChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

@@ -46,7 +46,7 @@ output "ciscoise_network_access_service_name_example" {
 Read-Only:
 
 - **id** (String)
-- **is_local_authorization** (Boolean)
+- **is_local_authorization** (String)
 - **name** (String)
 - **service_type** (String)
 

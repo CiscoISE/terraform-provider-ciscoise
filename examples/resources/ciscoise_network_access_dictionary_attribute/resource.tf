@@ -5,7 +5,7 @@ resource "ciscoise_network_access_dictionary_attribute" "example" {
 
     allowed_values {
 
-      is_default = false
+      is_default = "false"
       key        = "string"
       value      = "string"
     }

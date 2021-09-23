@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,9 +15,11 @@ import (
 func resourceIDentityGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on IdentityGroups.
-  
-  - This resource allows the client to update an identity group.
-  - This resource creates an identity group.`,
+
+- This resource allows the client to update an identity group.
+
+- This resource creates an identity group.
+`,
 
 		CreateContext: resourceIDentityGroupCreate,
 		ReadContext:   resourceIDentityGroupRead,
@@ -93,7 +96,7 @@ func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestIDentityGroupCreateIDentityGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -170,7 +173,7 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenIDentityGroupsGetIDentityGroupByNameItemName(response1.IDentityGroup)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -195,7 +198,7 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenIDentityGroupsGetIDentityGroupByIDItemID(response2.IDentityGroup)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -246,13 +249,13 @@ func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestIDentityGroupUpdateIDentityGroupByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.IDentityGroups.UpdateIDentityGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateIDentityGroupByID", err, restyResp1.String(),
 					"Failure at UpdateIDentityGroupByID, unexpected response", ""))

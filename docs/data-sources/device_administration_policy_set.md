@@ -12,6 +12,7 @@ description: |-
 It performs read operation on Device Administration - Policy Set.
 
 - Device Admin List of policy sets.
+
 - Device Admin Get policy set attributes.
 
 ## Example Usage
@@ -53,11 +54,11 @@ output "ciscoise_device_administration_policy_set_example" {
 Read-Only:
 
 - **condition** (List of Object) (see [below for nested schema](#nestedobjatt--item--condition))
-- **default** (Boolean)
+- **default** (String)
 - **description** (String)
 - **hit_counts** (Number)
 - **id** (String)
-- **is_proxy** (Boolean)
+- **is_proxy** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **name** (String)
 - **rank** (Number)
@@ -82,7 +83,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--link))
 - **name** (String)
 - **operator** (String)
@@ -95,7 +96,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--link))
 
 <a id="nestedobjatt--item--condition--children--link"></a>
@@ -173,11 +174,11 @@ Read-Only:
 Read-Only:
 
 - **condition** (List of Object) (see [below for nested schema](#nestedobjatt--items--condition))
-- **default** (Boolean)
+- **default** (String)
 - **description** (String)
 - **hit_counts** (Number)
 - **id** (String)
-- **is_proxy** (Boolean)
+- **is_proxy** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
 - **name** (String)
 - **rank** (Number)
@@ -202,7 +203,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--items--condition--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--items--condition--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--condition--link))
 - **name** (String)
 - **operator** (String)
@@ -215,7 +216,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--condition--children--link))
 
 <a id="nestedobjatt--items--condition--children--link"></a>

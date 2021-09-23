@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 		Description: `It performs read operation on Network Access - Dictionary Attribute.
 
 - Returns a list of Dictionary Attributes for an existing Dictionary.
-- Get a Dictionary Attribute.`,
+
+- Get a Dictionary Attribute.
+`,
 
 		ReadContext: dataSourceNetworkAccessDictionaryAttributeRead,
 		Schema: map[string]*schema.Schema{
@@ -44,8 +47,9 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 
 									"is_default": &schema.Schema{
 										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,
@@ -111,8 +115,9 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 
 									"is_default": &schema.Schema{
 										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,
@@ -175,9 +180,9 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 	vName, okName := d.GetOk("name")
 
 	method1 := []bool{okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName, okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -193,7 +198,7 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -220,7 +225,7 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -263,7 +268,7 @@ func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributes
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["is_default"] = item.IsDefault
+		respItem["is_default"] = boolPtrToString(item.IsDefault)
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
 		respItems = append(respItems, respItem)
@@ -297,7 +302,7 @@ func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeB
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["is_default"] = item.IsDefault
+		respItem["is_default"] = boolPtrToString(item.IsDefault)
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
 		respItems = append(respItems, respItem)

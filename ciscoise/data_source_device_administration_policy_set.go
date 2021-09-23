@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 		Description: `It performs read operation on Device Administration - Policy Set.
 
 - Device Admin List of policy sets.
-- Device Admin Get policy set attributes.`,
+
+- Device Admin Get policy set attributes.
+`,
 
 		ReadContext: dataSourceDeviceAdministrationPolicySetRead,
 		Schema: map[string]*schema.Schema{
@@ -65,8 +68,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -190,8 +194,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -245,8 +250,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 						},
 						"default": &schema.Schema{
 							Description: `Flag which indicates if this policy set is the default one`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Description: `The description for the policy set`,
@@ -265,8 +271,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 						},
 						"is_proxy": &schema.Schema{
 							Description: `Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -353,8 +360,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -478,8 +486,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -533,8 +542,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 						},
 						"default": &schema.Schema{
 							Description: `Flag which indicates if this policy set is the default one`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Description: `The description for the policy set`,
@@ -553,8 +563,9 @@ func dataSourceDeviceAdministrationPolicySet() *schema.Resource {
 						},
 						"is_proxy": &schema.Schema{
 							Description: `Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -611,9 +622,9 @@ func dataSourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -628,7 +639,7 @@ func dataSourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -654,7 +665,7 @@ func dataSourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -678,11 +689,11 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItems(items *[]
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsCondition(item.Condition)
-		respItem["default"] = item.Default
+		respItem["default"] = boolPtrToString(item.Default)
 		respItem["description"] = item.Description
 		respItem["hit_counts"] = item.HitCounts
 		respItem["id"] = item.ID
-		respItem["is_proxy"] = item.IsProxy
+		respItem["is_proxy"] = boolPtrToString(item.IsProxy)
 		respItem["link"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsLink(item.Link)
 		respItem["name"] = item.Name
 		respItem["rank"] = item.Rank
@@ -699,7 +710,7 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsCondition(
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -747,7 +758,7 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionC
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetsItemsConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}
@@ -847,11 +858,11 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItem(item *i
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemCondition(item.Condition)
-	respItem["default"] = item.Default
+	respItem["default"] = boolPtrToString(item.Default)
 	respItem["description"] = item.Description
 	respItem["hit_counts"] = item.HitCounts
 	respItem["id"] = item.ID
-	respItem["is_proxy"] = item.IsProxy
+	respItem["is_proxy"] = boolPtrToString(item.IsProxy)
 	respItem["link"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemLink(item.Link)
 	respItem["name"] = item.Name
 	respItem["rank"] = item.Rank
@@ -868,7 +879,7 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -916,7 +927,7 @@ func flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditio
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItemConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 		Description: `It performs read operation on Network Access - Authorization Global Exception Rules.
 
 - Network Access Get global execption rules.
-- Network Access Get global exception rule attributes.`,
+
+- Network Access Get global exception rule attributes.
+`,
 
 		ReadContext: dataSourceNetworkAccessGlobalExceptionRulesRead,
 		Schema: map[string]*schema.Schema{
@@ -101,8 +104,9 @@ func dataSourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"link": &schema.Schema{
 																Type:     schema.TypeList,
@@ -226,8 +230,9 @@ func dataSourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -281,8 +286,9 @@ func dataSourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -397,8 +403,9 @@ func dataSourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"link": &schema.Schema{
 																Type:     schema.TypeList,
@@ -522,8 +529,9 @@ func dataSourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -577,8 +585,9 @@ func dataSourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -627,9 +636,9 @@ func dataSourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *sch
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -644,7 +653,7 @@ func dataSourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *sch
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRulesItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -670,7 +679,7 @@ func dataSourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *sch
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -723,7 +732,7 @@ func flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicy
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRulesItemsRuleCondition(item.Condition)
-	respItem["default"] = item.Default
+	respItem["default"] = boolPtrToString(item.Default)
 	respItem["hit_counts"] = item.HitCounts
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -742,7 +751,7 @@ func flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicy
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRulesItemsRuleConditionLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -790,7 +799,7 @@ func flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicy
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRulesItemsRuleConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}
@@ -904,7 +913,7 @@ func flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicy
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition"] = flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItemRuleCondition(item.Condition)
-	respItem["default"] = item.Default
+	respItem["default"] = boolPtrToString(item.Default)
 	respItem["hit_counts"] = item.HitCounts
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
@@ -923,7 +932,7 @@ func flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicy
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItemRuleConditionLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -971,7 +980,7 @@ func flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicy
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItemRuleConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

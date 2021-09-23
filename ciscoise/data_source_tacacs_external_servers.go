@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 		Description: `It performs read operation on TACACSExternalServers.
 
 - This data source allows the client to get TACACS external servers by name.
+
 - This data source allows the client to get TACACS external servers by ID.
-- This data source allows the client to get all the TACACS external servers.`,
+
+- This data source allows the client to get all the TACACS external servers.
+`,
 
 		ReadContext: dataSourceTacacsExternalServersRead,
 		Schema: map[string]*schema.Schema{
@@ -96,8 +100,9 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 						},
 						"single_connect": &schema.Schema{
 							Description: `Define the use of single connection`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"timeout": &schema.Schema{
 							Description: `The server timeout`,
@@ -163,8 +168,9 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 						},
 						"single_connect": &schema.Schema{
 							Description: `Define the use of single connection`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"timeout": &schema.Schema{
 							Description: `The server timeout`,
@@ -230,11 +236,11 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -257,7 +263,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseTacacsExternalServersGetTacacsExternalServersSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -304,7 +310,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenTacacsExternalServersGetTacacsExternalServersByNameItemName(response2.TacacsExternalServer)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -330,7 +336,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenTacacsExternalServersGetTacacsExternalServersByIDItemID(response3.TacacsExternalServer)
 		if err := d.Set("item_id", vItemID3); err != nil {
@@ -387,7 +393,7 @@ func flattenTacacsExternalServersGetTacacsExternalServersByNameItemName(item *is
 	respItem["description"] = item.Description
 	respItem["host_ip"] = item.HostIP
 	respItem["connection_port"] = item.ConnectionPort
-	respItem["single_connect"] = item.SingleConnect
+	respItem["single_connect"] = boolPtrToString(item.SingleConnect)
 	respItem["shared_secret"] = item.SharedSecret
 	respItem["timeout"] = item.Timeout
 	respItem["link"] = flattenTacacsExternalServersGetTacacsExternalServersByNameItemNameLink(item.Link)
@@ -421,7 +427,7 @@ func flattenTacacsExternalServersGetTacacsExternalServersByIDItemID(item *isegos
 	respItem["description"] = item.Description
 	respItem["host_ip"] = item.HostIP
 	respItem["connection_port"] = item.ConnectionPort
-	respItem["single_connect"] = item.SingleConnect
+	respItem["single_connect"] = boolPtrToString(item.SingleConnect)
 	respItem["shared_secret"] = item.SharedSecret
 	respItem["timeout"] = item.Timeout
 	respItem["link"] = flattenTacacsExternalServersGetTacacsExternalServersByIDItemIDLink(item.Link)

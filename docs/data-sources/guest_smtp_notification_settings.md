@@ -16,12 +16,12 @@ description: |-
 It performs read operation on GuestSMTPNotificationConfiguration.
 
 - This data source allows the client to get a guest SMTP notification configuration by ID.
+
 - This data source allows the client to get all the guest SMTP notification configurations.
 
 Filter:
 
 [name]
-
 
 Sorting:
 
@@ -112,13 +112,13 @@ Read-Only:
 - **default_from_address** (String)
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **notification_enabled** (Boolean)
+- **notification_enabled** (String)
 - **password** (String)
 - **smtp_port** (String)
 - **smtp_server** (String)
-- **use_default_from_address** (Boolean)
-- **use_password_authentication** (Boolean)
-- **use_tlsor_ssl_encryption** (Boolean)
+- **use_default_from_address** (String)
+- **use_password_authentication** (String)
+- **use_tlsor_ssl_encryption** (String)
 - **user_name** (String)
 
 <a id="nestedobjatt--item--link"></a>

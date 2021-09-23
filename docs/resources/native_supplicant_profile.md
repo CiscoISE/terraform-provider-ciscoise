@@ -10,9 +10,10 @@ description: |-
 # ciscoise_native_supplicant_profile (Resource)
 
 It manages read, update and delete operations on NativeSupplicantProfile.
-  
-  - This resource allows the client to update a native supplicant profile
-  - This resource deletes a native supplicant profile.
+
+- This resource allows the client to update a native supplicant profile
+
+- This resource deletes a native supplicant profile.
 
 ## Example Usage
 
@@ -72,11 +73,11 @@ Read-Only:
 Optional:
 
 - **action_type** (String) Action type for WifiProfile.
-  Allowed values:
-  - ADD,
-  - UPDATE,
-  - DELETE
-  (required for updating existing WirelessProfile)
+Allowed values:
+- ADD,
+- UPDATE,
+- DELETE
+(required for updating existing WirelessProfile)
 - **allowed_protocol** (String)
 - **certificate_template_id** (String)
 - **previous_ssid** (String) Previous ssid for WifiProfile (required for updating existing WirelessProfile)

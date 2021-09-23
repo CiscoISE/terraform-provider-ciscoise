@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on TrustSec Configuration.
 
-🚧 getEgressMatrices
+- 🚧 getEgressMatrices
 
 ## Example Usage
 

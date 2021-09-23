@@ -20,7 +20,7 @@ resource "ciscoise_device_administration_authentication_rules" "example" {
         children {
 
           condition_type = "string"
-          is_negate      = false
+          is_negate      = "false"
         }
         condition_type = "string"
         dates_range {
@@ -47,13 +47,13 @@ resource "ciscoise_device_administration_authentication_rules" "example" {
           start_time = "string"
         }
         id                  = "string"
-        is_negate           = false
+        is_negate           = "false"
         name                = "string"
         operator            = "string"
         week_days           = ["string"]
         week_days_exception = ["string"]
       }
-      default    = false
+      default    = "false"
       hit_counts = 1
       id         = "string"
       name       = "string"

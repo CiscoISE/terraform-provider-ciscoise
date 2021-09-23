@@ -10,10 +10,12 @@ description: |-
 # ciscoise_network_access_dictionary (Resource)
 
 It manages create, read, update and delete operations on Network Access - Dictionary.
-  
-  - Network Access Create a new Dictionary.
-  - Network Access Update a Dictionary.
-  - Network Access Delete a Dictionary.
+
+- Network Access Create a new Dictionary.
+
+- Network Access Update a Dictionary.
+
+- Network Access Delete a Dictionary.
 
 ## Example Usage
 
@@ -57,6 +59,19 @@ Optional:
 - **id** (String) Identifier for the dictionary
 - **name** (String) The dictionary name
 - **version** (String) The dictionary version
+
+Read-Only:
+
+- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+
+<a id="nestedatt--item--link"></a>
+### Nested Schema for `item.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
 
 ## Import
 

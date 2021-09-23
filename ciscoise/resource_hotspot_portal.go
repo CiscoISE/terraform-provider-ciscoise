@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceHotspotPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on HotspotPortal.
-  
-  - This resource allows the client to update a hotspot portal by ID.
-  - This resource deletes a hotspot portal by ID.
-  - This resource creates a hotspot portal.`,
+
+- This resource allows the client to update a hotspot portal by ID.
+
+- This resource deletes a hotspot portal by ID.
+
+- This resource creates a hotspot portal.
+`,
 
 		CreateContext: resourceHotspotPortalCreate,
 		ReadContext:   resourceHotspotPortalRead,
@@ -139,7 +143,7 @@ func resourceHotspotPortal() *schema.Resource {
 									},
 									"language": &schema.Schema{
 										Description: `This property is supported only for Read operation and it allows to show the customizations in English.
-  Other languages are not supported`,
+Other languages are not supported`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -215,8 +219,8 @@ func resourceHotspotPortal() *schema.Resource {
 									},
 									"portal_tweak_settings": &schema.Schema{
 										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-  The Tweak Settings can subsequently be changed by the user`,
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -294,12 +298,12 @@ func resourceHotspotPortal() *schema.Resource {
 						},
 						"portal_type": &schema.Schema{
 							Description: `Allowed values:
-  - BYOD,
-  - HOTSPOTGUEST,
-  - MYDEVICE,
-  - SELFREGGUEST,
-  - SPONSOR,
-  - SPONSOREDGUEST`,
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -328,22 +332,28 @@ func resourceHotspotPortal() *schema.Resource {
 												},
 												"include_aup": &schema.Schema{
 													Description: `Require the portal user to read and accept an AUP`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"require_access_code": &schema.Schema{
 													Description: `Require the portal user to enter an access code.
-  Only used in Hotspot portal`,
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+Only used in Hotspot portal`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"require_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -363,9 +373,9 @@ func resourceHotspotPortal() *schema.Resource {
 												},
 												"success_redirect": &schema.Schema{
 													Description: `After an Authentication Success where should device be redirected. Allowed values:
-  - AUTHSUCCESSPAGE,
-  - ORIGINATINGURL,
-  - URL`,
+- AUTHSUCCESSPAGE,
+- ORIGINATINGURL,
+- URL`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -383,16 +393,16 @@ func resourceHotspotPortal() *schema.Resource {
 
 												"allowed_interfaces": &schema.Schema{
 													Description: `Interfaces that the portal will be reachable on.
-  Allowed values:
-  - eth0
-  - eth1
-  - eth2
-  - eth3
-  - eth4
-  - eth5
-  - bond0
-  - bond1
-  - bond2`,
+Allowed values:
+- eth0
+- eth1
+- eth2
+- eth3
+- eth4
+- eth5
+- bond0
+- bond1
+- bond2`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -411,16 +421,16 @@ func resourceHotspotPortal() *schema.Resource {
 												},
 												"coa_type": &schema.Schema{
 													Description: `Allowed Values:
-  - COAREAUTHENTICATE,
-  - COATERMINATE`,
+- COAREAUTHENTICATE,
+- COATERMINATE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"display_lang": &schema.Schema{
 													Description: `Allowed values:
-  - USEBROWSERLOCALE,
-  - ALWAYSUSE`,
+- USEBROWSERLOCALE,
+- ALWAYSUSE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -439,7 +449,7 @@ func resourceHotspotPortal() *schema.Resource {
 												},
 												"https_port": &schema.Schema{
 													Description: `The port number that the allowed interfaces will listen on.
-  Range from 8000 to 8999`,
+Range from 8000 to 8999`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													Computed: true,
@@ -455,9 +465,11 @@ func resourceHotspotPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -471,9 +483,11 @@ func resourceHotspotPortal() *schema.Resource {
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -488,50 +502,62 @@ func resourceHotspotPortal() *schema.Resource {
 
 												"default_empty_field_value": &schema.Schema{
 													Description: `The default value displayed for an empty field.
-  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
 													Description: `Specifies how empty fields are handled on the Support Information Page.
-  Allowed values:
-  - HIDE,
-  - DISPLAYWITHNOVALUE,
-  - DISPLAYWITHDEFAULTVALUE`,
+Allowed values:
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -553,7 +579,7 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestHotspotPortalCreateHotspotPortal(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -638,7 +664,7 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsHotspotPortalGetHotspotPortal(m, response1, &queryParams1)
 		item1, err := searchHotspotPortalGetHotspotPortal(m, items1, vvName, vvID)
@@ -648,7 +674,8 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 				"Failure when searching item from GetHotspotPortal, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenHotspotPortalGetHotspotPortalByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetHotspotPortal search response",
 				err))
@@ -669,7 +696,7 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenHotspotPortalGetHotspotPortalByIDItem(response2.HotspotPortal)
 		if err := d.Set("item", vItem2); err != nil {
@@ -722,13 +749,13 @@ func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestHotspotPortalUpdateHotspotPortalByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.HotspotPortal.UpdateHotspotPortalByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateHotspotPortalByID", err, restyResp1.String(),
 					"Failure at UpdateHotspotPortalByID, unexpected response", ""))
@@ -794,7 +821,7 @@ func resourceHotspotPortalDelete(ctx context.Context, d *schema.ResourceData, m 
 	restyResp1, err := client.HotspotPortal.DeleteHotspotPortalByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteHotspotPortalByID", err, restyResp1.String(),
 				"Failure at DeleteHotspotPortalByID, unexpected response", ""))

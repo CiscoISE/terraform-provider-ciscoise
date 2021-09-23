@@ -10,12 +10,16 @@ description: |-
 # ciscoise_network_device (Resource)
 
 It manages create, read, update and delete operations on NetworkDevice.
-  
-  - This resource allows the client to update a network device by name.
-  - This resource deletes a network device by name.
-  - This resource allows the client to update a network device by ID.
-  - This resource deletes a network device by ID.
-  - This resource creates a network device.
+
+- This resource allows the client to update a network device by name.
+
+- This resource deletes a network device by name.
+
+- This resource allows the client to update a network device by ID.
+
+- This resource deletes a network device by ID.
+
+- This resource creates a network device.
 
 ## Example Usage
 
@@ -33,10 +37,10 @@ resource "ciscoise_network_device" "example" {
     }
     authentication_settings {
 
-      dtls_required                  = false
-      enable_key_wrap                = false
+      dtls_required                  = "false"
+      enable_key_wrap                = "false"
       enable_multi_secret            = "string"
-      enabled                        = false
+      enabled                        = "false"
       key_encryption_key             = "string"
       key_input_format               = "string"
       message_authenticator_code_key = "string"
@@ -53,8 +57,8 @@ resource "ciscoise_network_device" "example" {
     profile_name  = "string"
     snmpsettings {
 
-      link_trap_query                  = false
-      mac_trap_query                   = false
+      link_trap_query                  = "false"
+      mac_trap_query                   = "false"
       originating_policy_services_node = "string"
       polling_interval                 = 1
       ro_community                     = "string"
@@ -78,18 +82,18 @@ resource "ciscoise_network_device" "example" {
         enable_mode_password               = "string"
         exec_mode_password                 = "string"
         exec_mode_username                 = "string"
-        include_when_deploying_sgt_updates = false
+        include_when_deploying_sgt_updates = "false"
       }
-      push_id_support = false
+      push_id_support = "false"
       sga_notification_and_updates {
 
         coa_source_host                                    = "string"
         downlaod_environment_data_every_x_seconds          = 1
         downlaod_peer_authorization_policy_every_x_seconds = 1
         download_sga_cllists_every_x_seconds               = 1
-        other_sga_devices_to_trust_this_device             = false
+        other_sga_devices_to_trust_this_device             = "false"
         re_authentication_every_x_seconds                  = 1
-        send_configuration_to_device                       = false
+        send_configuration_to_device                       = "false"
         send_configuration_to_device_using                 = "string"
       }
     }
@@ -142,18 +146,18 @@ Read-Only:
 
 Optional:
 
-- **dtls_required** (Boolean) This value enforces use of dtls
-- **enable_key_wrap** (Boolean)
+- **dtls_required** (String) This value enforces use of dtls
+- **enable_key_wrap** (String)
 - **enable_multi_secret** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **key_encryption_key** (String)
 - **key_input_format** (String) Allowed values:
-  - ASCII,
-  - HEXADECIMAL
+- ASCII,
+- HEXADECIMAL
 - **message_authenticator_code_key** (String)
 - **network_protocol** (String) Allowed values:
-  - RADIUS,
-  - TACACS_PLUS
+- RADIUS,
+- TACACS_PLUS
 - **radius_shared_secret** (String)
 - **second_radius_shared_secret** (String)
 
@@ -173,8 +177,8 @@ Optional:
 
 Optional:
 
-- **link_trap_query** (Boolean)
-- **mac_trap_query** (Boolean)
+- **link_trap_query** (String)
+- **mac_trap_query** (String)
 - **originating_policy_services_node** (String)
 - **polling_interval** (Number)
 - **ro_community** (String)
@@ -187,9 +191,9 @@ Optional:
 Optional:
 
 - **connect_mode_options** (String) Allowed values:
-  - OFF,
-  - ON_LEGACY,
-  - ON_DRAFT_COMPLIANT
+- OFF,
+- ON_LEGACY,
+- ON_DRAFT_COMPLIANT
 - **shared_secret** (String)
 
 
@@ -200,7 +204,7 @@ Optional:
 
 - **device_authentication_settings** (Block List) (see [below for nested schema](#nestedblock--item--trustsecsettings--device_authentication_settings))
 - **device_configuration_deployment** (Block List) (see [below for nested schema](#nestedblock--item--trustsecsettings--device_configuration_deployment))
-- **push_id_support** (Boolean)
+- **push_id_support** (String)
 - **sga_notification_and_updates** (Block List) (see [below for nested schema](#nestedblock--item--trustsecsettings--sga_notification_and_updates))
 
 <a id="nestedblock--item--trustsecsettings--device_authentication_settings"></a>
@@ -220,7 +224,7 @@ Optional:
 - **enable_mode_password** (String)
 - **exec_mode_password** (String)
 - **exec_mode_username** (String)
-- **include_when_deploying_sgt_updates** (Boolean)
+- **include_when_deploying_sgt_updates** (String)
 
 
 <a id="nestedblock--item--trustsecsettings--sga_notification_and_updates"></a>
@@ -232,13 +236,13 @@ Optional:
 - **downlaod_environment_data_every_x_seconds** (Number)
 - **downlaod_peer_authorization_policy_every_x_seconds** (Number)
 - **download_sga_cllists_every_x_seconds** (Number)
-- **other_sga_devices_to_trust_this_device** (Boolean)
+- **other_sga_devices_to_trust_this_device** (String)
 - **re_authentication_every_x_seconds** (Number)
-- **send_configuration_to_device** (Boolean)
+- **send_configuration_to_device** (String)
 - **send_configuration_to_device_using** (String) Allowed values:
-  - ENABLE_USING_COA,
-  - ENABLE_USING_CLI,
-  - DISABLE_ALL
+- ENABLE_USING_COA,
+- ENABLE_USING_CLI,
+- DISABLE_ALL
 
 
 

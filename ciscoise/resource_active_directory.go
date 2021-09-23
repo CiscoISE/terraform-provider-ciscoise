@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,9 +16,11 @@ import (
 func resourceActiveDirectory() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and delete operations on ActiveDirectory.
-  
-  - This resource deletes an AD join point from Cisco ISE.
-  - This resource creates an AD join point in Cisco ISE.`,
+
+- This resource deletes an AD join point from Cisco ISE.
+
+- This resource creates an AD join point in Cisco ISE.
+`,
 
 		CreateContext: resourceActiveDirectoryCreate,
 		ReadContext:   resourceActiveDirectoryRead,
@@ -146,9 +149,9 @@ func resourceActiveDirectory() *schema.Resource {
 									},
 									"auth_protection_type": &schema.Schema{
 										Description: `Enable prevent AD account lockout. Allowed values:
-  - WIRELESS,
-  - WIRED,
-  - BOTH`,
+- WIRELESS,
+- WIRED,
+- BOTH`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -172,40 +175,54 @@ func resourceActiveDirectory() *schema.Resource {
 										Computed:    true,
 									},
 									"enable_callback_for_dialin_client": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_dialin_permission_check": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_failed_auth_protection": &schema.Schema{
 										Description: `Enable prevent AD account lockout due to too many bad password attempts`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_machine_access": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_machine_auth": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_pass_change": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_rewrites": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"failed_auth_threshold": &schema.Schema{
 										Description: `Number of bad password attempts`,
@@ -250,15 +267,17 @@ func resourceActiveDirectory() *schema.Resource {
 										Computed:    true,
 									},
 									"plaintext_auth": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"rewrite_rules": &schema.Schema{
 										Description: `Identity rewrite is an advanced feature that directs Cisco ISE to manipulate the identity
-  before it is passed to the external Active Directory system. You can create rules to change
-  the identity to a desired format that includes or excludes a domain prefix and/or suffix or
-  other additional markup of your choice`,
+before it is passed to the external Active Directory system. You can create rules to change
+the identity to a desired format that includes or excludes a domain prefix and/or suffix or
+other additional markup of your choice`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -288,9 +307,9 @@ func resourceActiveDirectory() *schema.Resource {
 									},
 									"schema": &schema.Schema{
 										Description: `Allowed values: ACTIVE_DIRECTORY, CUSTOM.
-  Choose ACTIVE_DIRECTORY schema when the AD attributes defined in AD can be copied to relevant attributes
-  in Cisco ISE. If customization is needed, choose CUSTOM schema. All User info attributes are always set to
-  default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUSTOM schema`,
+Choose ACTIVE_DIRECTORY schema when the AD attributes defined in AD can be copied to relevant attributes
+in Cisco ISE. If customization is needed, choose CUSTOM schema. All User info attributes are always set to
+default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUSTOM schema`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -335,13 +354,16 @@ func resourceActiveDirectory() *schema.Resource {
 							Computed:    true,
 						},
 						"enable_domain_allowed_list": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"enable_domain_white_list": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"id": &schema.Schema{
 							Description: `Resource UUID value`,
@@ -390,7 +412,7 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestActiveDirectoryCreateActiveDirectory(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -487,7 +509,7 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenActiveDirectoryGetActiveDirectoryByNameItemName(response1.ERSActiveDirectory)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -512,7 +534,7 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenActiveDirectoryGetActiveDirectoryByIDItemID(response2.ERSActiveDirectory)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -573,7 +595,7 @@ func resourceActiveDirectoryDelete(ctx context.Context, d *schema.ResourceData, 
 	restyResp1, err := client.ActiveDirectory.DeleteActiveDirectoryByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteActiveDirectoryByID", err, restyResp1.String(),
 				"Failure at DeleteActiveDirectoryByID, unexpected response", ""))

@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,83 +18,35 @@ func dataSourceTrustedCertificateImport() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-
-
-Import an X509 certificate as a trust certificate.
+- Import an X509 certificate as a trust certificate.
 
 NOTE:
-If name is not set, a default name of the following format will be generated:
-common-name#issuer#nnnnn
+Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
-    where
-"nnnnn"
- is a unique number. You can always change the friendly name later by editing the certificate.
-
-
-    You must choose how this certificate will be trusted in ISE. The objective here is to distinguish between
-certificates that are used for trust within an ISE deployment and public certificates that are used to trust Cisco
-services. Typically, you will not want to use a given certificate for both purposes.
-
-
-Trusted For - Usage
-
-
-Authentication within ISE
-
-Use
-"trustForIseAuth":true
- if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
-
-
-
-Client authentication and Syslog
-
-Use
-"trustForClientAuth":true
- if the certificate is to be used for authentication of endpoints that contact ISE over the EAP protocol. Also check
-this box if certificate is used to trust a Syslog server. Make sure to have keyCertSign bit asserted under KeyUsage
-extension for this certificate.
-Note:
- "" can be set true only if the "trustForIseAuth" has been set true.
-
-
-
-Certificate based admin authentication
-
-Use
-"trustForCertificateBasedAdminAuth":true
- if the certificate is used for trust within ISE, such as for secure communication between ISE nodes
-Note:
- "trustForCertificateBasedAdminAuth" can be set true only if "trustForIseAuth" and "trustForClientAuth" are true.
-
-
-
-Authentication of Cisco Services
-
- Use
-"trustForCiscoServicesAuth":true
- if the certificate is to be used for trusting external Cisco services, such as Feed Service.
-
-
-
- `,
+`,
 
 		ReadContext: dataSourceTrustedCertificateImportRead,
 		Schema: map[string]*schema.Schema{
 			"allow_basic_constraint_cafalse": &schema.Schema{
 				Description: `Allow Certificates with Basic Constraints CA Field as False (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"allow_out_of_date_cert": &schema.Schema{
 				Description: `Allow out of date certificates (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"allow_sha1_certificates": &schema.Schema{
 				Description: `Allow SHA1 based certificates (required)`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"data": &schema.Schema{
 				Description: `Certificate content (required)`,
@@ -136,28 +89,38 @@ Authentication of Cisco Services
 			},
 			"trust_for_certificate_based_admin_auth": &schema.Schema{
 				Description: `Trust for Certificate based Admin authentication`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"trust_for_cisco_services_auth": &schema.Schema{
 				Description: `Trust for authentication of Cisco Services`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"trust_for_client_auth": &schema.Schema{
 				Description: `Trust for client authentication and Syslog`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"trust_for_ise_auth": &schema.Schema{
 				Description: `Trust for authentication within ISE`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"validate_certificate_extensions": &schema.Schema{
 				Description: `Validate trust certificate extension`,
-				Type:        schema.TypeBool,
-				Optional:    true,
+				// Type:        schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 		},
 	}
@@ -182,7 +145,7 @@ func dataSourceTrustedCertificateImportRead(ctx context.Context, d *schema.Resou
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenCertificatesImportTrustCertificateItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {

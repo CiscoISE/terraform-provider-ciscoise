@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,11 +16,14 @@ import (
 func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Authorization Exception
-  Rules.
-  
-  - Device Admin Create local authorization exception rule.
-  - Device Admin Update local exception rule.
-  - Device Admin Delete local exception rule.`,
+Rules.
+
+- Device Admin Create local authorization exception rule.
+
+- Device Admin Update local exception rule.
+
+- Device Admin Delete local exception rule.
+`,
 
 		CreateContext: resourceDeviceAdministrationLocalExceptionRulesCreate,
 		ReadContext:   resourceDeviceAdministrationLocalExceptionRulesRead,
@@ -54,6 +58,27 @@ func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 							Description: `id path parameter. Rule id`,
 							Type:        schema.TypeString,
 							Optional:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
@@ -115,9 +140,32 @@ func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -237,9 +285,32 @@ func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -276,9 +347,11 @@ func resourceDeviceAdministrationLocalExceptionRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -327,7 +400,7 @@ func resourceDeviceAdministrationLocalExceptionRulesCreate(ctx context.Context, 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRule(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vPolicyID, okPolicyID := resourceItem["policy_id"]
 	vvPolicyID := interfaceToString(vPolicyID)
@@ -444,7 +517,7 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRules(m, response1, vvPolicyID)
 		item1, err := searchDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRules(m, items1, vvName, vvID, vvPolicyID)
@@ -454,7 +527,8 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 				"Failure when searching item from GetDeviceAdminLocalExceptionRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminLocalExceptionRules search response",
 				err))
@@ -474,7 +548,7 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -542,13 +616,13 @@ func resourceDeviceAdministrationLocalExceptionRulesUpdate(ctx context.Context, 
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationExceptionRules.UpdateDeviceAdminLocalExceptionRuleByID(vvPolicyID, vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateDeviceAdminLocalExceptionRuleByID", err, restyResp1.String(),
 					"Failure at UpdateDeviceAdminLocalExceptionRuleByID, unexpected response", ""))
@@ -629,7 +703,7 @@ func resourceDeviceAdministrationLocalExceptionRulesDelete(ctx context.Context, 
 	response1, restyResp1, err := client.DeviceAdministrationAuthorizationExceptionRules.DeleteDeviceAdminLocalExceptionRuleByID(vvPolicyID, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteDeviceAdminLocalExceptionRuleByID", err, restyResp1.String(),
 				"Failure at DeleteDeviceAdminLocalExceptionRuleByID, unexpected response", ""))
@@ -652,9 +726,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -721,9 +793,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -823,9 +893,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -910,9 +978,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -979,9 +1045,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1081,9 +1145,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

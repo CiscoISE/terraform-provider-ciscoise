@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceMyDevicePortal() *schema.Resource {
 		Description: `It performs read operation on MyDevicePortal.
 
 - This data source allows the client to get a my device portal by ID.
+
 - This data source allows the client to get all the my device portals.
 
 Filter:
@@ -23,7 +25,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceMyDevicePortalRead,
 		Schema: map[string]*schema.Schema{
@@ -364,13 +367,15 @@ Allowed Values:
 												},
 												"include_aup": &schema.Schema{
 													Description: `Require the portal user to read and accept an AUP`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -382,7 +387,8 @@ Allowed Values:
 											Schema: map[string]*schema.Schema{
 
 												"allow_employee_to_change_pwd": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -405,8 +411,9 @@ Allowed values:
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
 													Description: `Maximum failed login attempts before rate limiting`,
@@ -416,13 +423,15 @@ Allowed values:
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP.
 Only valid if includeAup = true`,
-													Type:     schema.TypeBool,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"social_configs": &schema.Schema{
 													Type:     schema.TypeList,
@@ -502,7 +511,8 @@ Allowed values:
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -516,8 +526,9 @@ Allowed values:
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -543,27 +554,33 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -634,9 +651,9 @@ func dataSourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -671,7 +688,7 @@ func dataSourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseMyDevicePortalGetMyDevicePortalSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -718,7 +735,7 @@ func dataSourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenMyDevicePortalGetMyDevicePortalByIDItem(response2.MyDevicePortal)
 		if err := d.Set("item", vItem2); err != nil {
@@ -828,10 +845,10 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettings(ite
 	respItem := make(map[string]interface{})
 	respItem["max_failed_attempts_before_rate_limit"] = item.MaxFailedAttemptsBeforeRateLimit
 	respItem["time_between_logins_during_rate_limit"] = item.TimeBetweenLoginsDuringRateLimit
-	respItem["include_aup"] = item.IncludeAup
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
 	respItem["aup_display"] = item.AupDisplay
-	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
-	respItem["require_scrolling"] = item.RequireScrolling
+	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
+	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
 	respItem["social_configs"] = responseInterfaceToSliceString(item.SocialConfigs)
 
 	return []map[string]interface{}{
@@ -847,8 +864,8 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsAupSettings(item *ise
 	respItem := make(map[string]interface{})
 	respItem["display_frequency_interval_days"] = item.DisplayFrequencyIntervalDays
 	respItem["display_frequency"] = item.DisplayFrequency
-	respItem["include_aup"] = item.IncludeAup
-	respItem["require_scrolling"] = item.RequireScrolling
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
+	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
 
 	return []map[string]interface{}{
 		respItem,
@@ -861,7 +878,7 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsEmployeeChangePasswor
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["allow_employee_to_change_pwd"] = item.AllowEmployeeToChangePwd
+	respItem["allow_employee_to_change_pwd"] = boolPtrToString(item.AllowEmployeeToChangePwd)
 
 	return []map[string]interface{}{
 		respItem,
@@ -874,7 +891,7 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPostLoginBannerSettin
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
+	respItem["include_post_access_banner"] = boolPtrToString(item.IncludePostAccessBanner)
 
 	return []map[string]interface{}{
 		respItem,
@@ -887,7 +904,7 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsPostAccessBannerSetti
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
+	respItem["include_post_access_banner"] = boolPtrToString(item.IncludePostAccessBanner)
 
 	return []map[string]interface{}{
 		respItem,
@@ -900,12 +917,12 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsSupportInfoSettings(i
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
-	respItem["include_mac_addr"] = item.IncludeMacAddr
-	respItem["include_ip_address"] = item.IncludeIPAddress
-	respItem["include_browser_user_agent"] = item.IncludeBrowserUserAgent
-	respItem["include_policy_server"] = item.IncludePolicyServer
-	respItem["include_failure_code"] = item.IncludeFailureCode
+	respItem["include_support_info_page"] = boolPtrToString(item.IncludeSupportInfoPage)
+	respItem["include_mac_addr"] = boolPtrToString(item.IncludeMacAddr)
+	respItem["include_ip_address"] = boolPtrToString(item.IncludeIPAddress)
+	respItem["include_browser_user_agent"] = boolPtrToString(item.IncludeBrowserUserAgent)
+	respItem["include_policy_server"] = boolPtrToString(item.IncludePolicyServer)
+	respItem["include_failure_code"] = boolPtrToString(item.IncludeFailureCode)
 	respItem["empty_field_display"] = item.EmptyFieldDisplay
 	respItem["default_empty_field_value"] = item.DefaultEmptyFieldValue
 

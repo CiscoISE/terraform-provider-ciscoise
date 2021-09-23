@@ -23,6 +23,23 @@ func interfaceToIntPtr(item interface{}) *int {
 	return &nnItem
 }
 
+func mapPtrToMap(item *map[string]interface{}) map[string]interface{} {
+	if item == nil {
+		return map[string]interface{}{}
+	}
+	return *item
+}
+
+func boolPtrToString(item *bool) string {
+	if item == nil {
+		return ""
+	}
+	if *item {
+		return "true"
+	}
+	return "false"
+}
+
 func interfaceToBoolPtr(item interface{}) *bool {
 	nItem := interfaceToString(item)
 	if nItem != "" {

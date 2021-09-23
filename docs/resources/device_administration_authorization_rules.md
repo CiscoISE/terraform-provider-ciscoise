@@ -10,10 +10,12 @@ description: |-
 # ciscoise_device_administration_authorization_rules (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Authorization Rules.
-  
-  - Device Admin Create authorization rule.
-  - Device Admin Update authorization rule.
-  - Device Admin Delete authorization rule.
+
+- Device Admin Create authorization rule.
+
+- Device Admin Update authorization rule.
+
+- Device Admin Delete authorization rule.
 
 ## Example Usage
 
@@ -36,7 +38,7 @@ resource "ciscoise_device_administration_authorization_rules" "example" {
         children {
 
           condition_type = "string"
-          is_negate      = false
+          is_negate      = "false"
         }
         condition_type = "string"
         dates_range {
@@ -63,13 +65,13 @@ resource "ciscoise_device_administration_authorization_rules" "example" {
           start_time = "string"
         }
         id                  = "string"
-        is_negate           = false
+        is_negate           = "false"
         name                = "string"
         operator            = "string"
         week_days           = ["string"]
         week_days_exception = ["string"]
       }
-      default    = false
+      default    = "false"
       hit_counts = 1
       id         = "string"
       name       = "string"
@@ -107,13 +109,17 @@ Optional:
 - **profile** (String) Device admin profiles control the initial login session of the device administrator
 - **rule** (Block List) Common attributes in rule authentication/authorization (see [below for nested schema](#nestedblock--item--rule))
 
+Read-Only:
+
+- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+
 <a id="nestedblock--item--rule"></a>
 ### Nested Schema for `item.rule`
 
 Optional:
 
 - **condition** (Block List) (see [below for nested schema](#nestedblock--item--rule--condition))
-- **default** (Boolean) Indicates if this rule is the default one
+- **default** (String) Indicates if this rule is the default one
 - **hit_counts** (Number) The amount of times the rule was matched
 - **id** (String) The identifier of the rule
 - **name** (String) Rule name, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]
@@ -138,23 +144,41 @@ Optional:
 - **hours_range** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--rule--condition--hours_range))
 - **hours_range_exception** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--rule--condition--hours_range_exception))
 - **id** (String) The ID of this resource.
-- **is_negate** (Boolean) Indicates whereas this condition is in negate mode
+- **is_negate** (String) Indicates whereas this condition is in negate mode
 - **name** (String) Condition name
 - **operator** (String) Equality operator
 - **week_days** (List of String) <p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>
 - **week_days_exception** (List of String) <p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>
 
+Read-Only:
+
+- **link** (List of Object) (see [below for nested schema](#nestedatt--item--rule--condition--link))
+
 <a id="nestedblock--item--rule--condition--children"></a>
-### Nested Schema for `item.rule.condition.week_days_exception`
+### Nested Schema for `item.rule.condition.link`
 
 Optional:
 
 - **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
-- **is_negate** (Boolean) Indicates whereas this condition is in negate mode
+- **is_negate** (String) Indicates whereas this condition is in negate mode
+
+Read-Only:
+
+- **link** (List of Object) (see [below for nested schema](#nestedatt--item--rule--condition--link--link))
+
+<a id="nestedatt--item--rule--condition--link--link"></a>
+### Nested Schema for `item.rule.condition.link.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
+
 
 
 <a id="nestedblock--item--rule--condition--dates_range"></a>
-### Nested Schema for `item.rule.condition.week_days_exception`
+### Nested Schema for `item.rule.condition.link`
 
 Optional:
 
@@ -163,7 +187,7 @@ Optional:
 
 
 <a id="nestedblock--item--rule--condition--dates_range_exception"></a>
-### Nested Schema for `item.rule.condition.week_days_exception`
+### Nested Schema for `item.rule.condition.link`
 
 Optional:
 
@@ -172,7 +196,7 @@ Optional:
 
 
 <a id="nestedblock--item--rule--condition--hours_range"></a>
-### Nested Schema for `item.rule.condition.week_days_exception`
+### Nested Schema for `item.rule.condition.link`
 
 Optional:
 
@@ -181,12 +205,34 @@ Optional:
 
 
 <a id="nestedblock--item--rule--condition--hours_range_exception"></a>
-### Nested Schema for `item.rule.condition.week_days_exception`
+### Nested Schema for `item.rule.condition.link`
 
 Optional:
 
 - **end_time** (String)
 - **start_time** (String)
+
+
+<a id="nestedatt--item--rule--condition--link"></a>
+### Nested Schema for `item.rule.condition.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
+
+
+
+
+<a id="nestedatt--item--link"></a>
+### Nested Schema for `item.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
 
 ## Import
 

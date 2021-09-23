@@ -2,10 +2,12 @@ package ciscoise
 
 import (
 	"context"
+
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +18,8 @@ func dataSourceSgToVnToVLANBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on SecurityGroupToVirtualNetwork.
 
-- This data source action allows the client to submit the bulk request.`,
+- This data source action allows the client to submit the bulk request.
+`,
 
 		ReadContext: dataSourceSgToVnToVLANBulkRequestRead,
 		Schema: map[string]*schema.Schema{
@@ -55,7 +58,7 @@ func dataSourceSgToVnToVLANBulkRequestRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(

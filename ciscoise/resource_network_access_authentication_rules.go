@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,30 +16,32 @@ import (
 func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Authentication Rules.
-  
-  - Network Access Create authentication rule:
-  
-  
-  
-   Rule must include name and condition.
-  
-  
-   Condition has hierarchical structure which define a set of conditions for which authentication policy rule could be
-  match.
-  
-  
-   Condition can be either reference to a stored Library condition, using model
-  ConditionReference
-  
-  
-  or dynamically built conditions which are not stored in the conditions Library, using models
-  ConditionAttributes, ConditionAndBlock, ConditionOrBlock
-  .
-  
-  
-  
-  - Network Access Update rule.
-  - Network Access Delete rule.`,
+
+- Network Access Create authentication rule:
+
+
+
+ Rule must include name and condition.
+
+
+ Condition has hierarchical structure which define a set of conditions for which authentication policy rule could be
+match.
+
+
+ Condition can be either reference to a stored Library condition, using model
+ConditionReference
+
+
+or dynamically built conditions which are not stored in the conditions Library, using models
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+.
+
+
+
+- Network Access Update rule.
+
+- Network Access Delete rule.
+`,
 
 		CreateContext: resourceNetworkAccessAuthenticationRulesCreate,
 		ReadContext:   resourceNetworkAccessAuthenticationRulesRead,
@@ -95,6 +98,27 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
 							Type:        schema.TypeString,
@@ -149,9 +173,32 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -271,9 +318,32 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -310,9 +380,11 @@ func resourceNetworkAccessAuthenticationRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -361,7 +433,7 @@ func resourceNetworkAccessAuthenticationRulesCreate(ctx context.Context, d *sche
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRule(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vPolicyID, okPolicyID := resourceItem["policy_id"]
 	vvPolicyID := interfaceToString(vPolicyID)
@@ -475,7 +547,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRules(m, response1, vvPolicyID)
 		item1, err := searchNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRules(m, items1, vvName, vvID, vvPolicyID)
@@ -485,7 +557,8 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 				"Failure when searching item from GetNetworkAccessAuthenticationRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthenticationRules search response",
 				err))
@@ -504,7 +577,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -570,13 +643,13 @@ func resourceNetworkAccessAuthenticationRulesUpdate(ctx context.Context, d *sche
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessAuthenticationRules.UpdateNetworkAccessAuthenticationRuleByID(vvPolicyID, vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkAccessAuthenticationRuleByID", err, restyResp1.String(),
 					"Failure at UpdateNetworkAccessAuthenticationRuleByID, unexpected response", ""))
@@ -656,7 +729,7 @@ func resourceNetworkAccessAuthenticationRulesDelete(ctx context.Context, d *sche
 	response1, restyResp1, err := client.NetworkAccessAuthenticationRules.DeleteNetworkAccessAuthenticationRuleByID(vvPolicyID, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkAccessAuthenticationRuleByID", err, restyResp1.String(),
 				"Failure at DeleteNetworkAccessAuthenticationRuleByID, unexpected response", ""))
@@ -690,9 +763,6 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	}
 	if v, ok := d.GetOkExists(key + ".if_user_not_found"); !isEmptyValue(reflect.ValueOf(d.Get(key+".if_user_not_found"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".if_user_not_found"))) {
 		request.IfUserNotFound = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleLink(ctx, key+".link.0", d)
 	}
 	if v, ok := d.GetOkExists(key + ".rule"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rule"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rule"))) {
 		request.Rule = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRule(ctx, key+".rule.0", d)
@@ -756,9 +826,6 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	}
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionLink(ctx, key+".link.0", d)
 	}
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
@@ -859,9 +926,6 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -958,9 +1022,6 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	if v, ok := d.GetOkExists(key + ".if_user_not_found"); !isEmptyValue(reflect.ValueOf(d.Get(key+".if_user_not_found"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".if_user_not_found"))) {
 		request.IfUserNotFound = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDLink(ctx, key+".link.0", d)
-	}
 	if v, ok := d.GetOkExists(key + ".rule"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rule"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rule"))) {
 		request.Rule = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRule(ctx, key+".rule.0", d)
 	}
@@ -1023,9 +1084,6 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	}
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionLink(ctx, key+".link.0", d)
 	}
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
@@ -1125,9 +1183,6 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	}
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,11 +16,14 @@ import (
 func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Authorization Global
-  Exception Rules.
-  
-  - Device Admin Create global exception authorization rule.
-  - Device Admin Update global exception authorization rule.
-  - Device Admin Delete global exception authorization rule.`,
+Exception Rules.
+
+- Device Admin Create global exception authorization rule.
+
+- Device Admin Update global exception authorization rule.
+
+- Device Admin Delete global exception authorization rule.
+`,
 
 		CreateContext: resourceDeviceAdministrationGlobalExceptionRulesCreate,
 		ReadContext:   resourceDeviceAdministrationGlobalExceptionRulesRead,
@@ -54,6 +58,27 @@ func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 							Description: `id path parameter. Rule id`,
 							Type:        schema.TypeString,
 							Optional:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"profile": &schema.Schema{
 							Description: `Device admin profiles control the initial login session of the device administrator`,
@@ -110,9 +135,32 @@ func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -232,9 +280,32 @@ func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -271,9 +342,11 @@ func resourceDeviceAdministrationGlobalExceptionRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -322,7 +395,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesCreate(ctx context.Context,
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolicySetGlobalException(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	var vvName string
@@ -432,7 +505,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRules(m, response1)
 		item1, err := searchDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRules(m, items1, vvName, vvID)
@@ -442,7 +515,8 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 				"Failure when searching item from GetDeviceAdminPolicySetGlobalExceptionRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionByRuleIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminPolicySetGlobalExceptionRules search response",
 				err))
@@ -462,7 +536,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionByRuleIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -528,13 +602,13 @@ func resourceDeviceAdministrationGlobalExceptionRulesUpdate(ctx context.Context,
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolicySetGlobalExceptionByRuleID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.UpdateDeviceAdminPolicySetGlobalExceptionByRuleID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateDeviceAdminPolicySetGlobalExceptionByRuleID", err, restyResp1.String(),
 					"Failure at UpdateDeviceAdminPolicySetGlobalExceptionByRuleID, unexpected response", ""))
@@ -613,7 +687,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesDelete(ctx context.Context,
 	response1, restyResp1, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.DeleteDeviceAdminPolicySetGlobalExceptionByRuleID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteDeviceAdminPolicySetGlobalExceptionByRuleID", err, restyResp1.String(),
 				"Failure at DeleteDeviceAdminPolicySetGlobalExceptionByRuleID, unexpected response", ""))
@@ -636,9 +710,7 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolic
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolicySetGlobalExceptionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -705,9 +777,7 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolic
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolicySetGlobalExceptionRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -807,9 +877,7 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolic
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolicySetGlobalExceptionRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -894,9 +962,7 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolic
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolicySetGlobalExceptionByRuleIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -963,9 +1029,7 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolic
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolicySetGlobalExceptionByRuleIDRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1065,9 +1129,7 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolic
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolicySetGlobalExceptionByRuleIDRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

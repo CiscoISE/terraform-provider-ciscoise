@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,8 +18,9 @@ func dataSourceBackupRestore() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Backup And Restore.
 
-- Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API to
-get the status of the backup job`,
+- Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API
+to get the status of the backup job
+`,
 
 		ReadContext: dataSourceBackupRestoreRead,
 		Schema: map[string]*schema.Schema{
@@ -104,7 +106,7 @@ func dataSourceBackupRestoreRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenBackupAndRestoreRestoreConfigBackupItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {

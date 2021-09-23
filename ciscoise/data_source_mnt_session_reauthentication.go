@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceMntSessionReauthentication() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Misc.
 
-Session Reauthentication by MAC`,
+- Session Reauthentication by MAC
+`,
 
 		ReadContext: dataSourceMntSessionReauthenticationRead,
 		Schema: map[string]*schema.Schema{
@@ -65,7 +67,7 @@ func dataSourceMntSessionReauthenticationRead(ctx context.Context, d *schema.Res
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(

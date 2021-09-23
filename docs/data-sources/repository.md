@@ -54,7 +54,7 @@ output "ciscoise_repository_example" {
 
 Read-Only:
 
-- **enable_pki** (Boolean)
+- **enable_pki** (String)
 - **name** (String)
 - **password** (String)
 - **path** (String)
@@ -68,7 +68,7 @@ Read-Only:
 
 Read-Only:
 
-- **enable_pki** (Boolean)
+- **enable_pki** (String)
 - **name** (String)
 - **password** (String)
 - **path** (String)

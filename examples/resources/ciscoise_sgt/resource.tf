@@ -7,9 +7,9 @@ resource "ciscoise_sgt" "example" {
     description       = "string"
     generation_id     = 1
     id                = "string"
-    is_read_only      = false
+    is_read_only      = "false"
     name              = "string"
-    propogate_to_apic = false
+    propogate_to_apic = "false"
     value             = 1
   }
 }

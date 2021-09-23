@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceNetworkAccessConditions() *schema.Resource {
 		Description: `It performs read operation on Network Access - Conditions.
 
 - Network Access Returns all library conditions
+
 - Network Access Returns a library condition.
-- Network Access Returns a library condition.`,
+
+- Network Access Returns a library condition.
+`,
 
 		ReadContext: dataSourceNetworkAccessConditionsRead,
 		Schema: map[string]*schema.Schema{
@@ -65,8 +69,9 @@ func dataSourceNetworkAccessConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -190,8 +195,9 @@ func dataSourceNetworkAccessConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -278,8 +284,9 @@ func dataSourceNetworkAccessConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -403,8 +410,9 @@ func dataSourceNetworkAccessConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -491,8 +499,9 @@ func dataSourceNetworkAccessConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -616,8 +625,9 @@ func dataSourceNetworkAccessConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -681,11 +691,11 @@ func dataSourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resour
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -700,7 +710,7 @@ func dataSourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenNetworkAccessConditionsGetNetworkAccessConditionsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -726,7 +736,7 @@ func dataSourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenNetworkAccessConditionsGetNetworkAccessConditionByNameItemName(response2.Response)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -752,7 +762,7 @@ func dataSourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenNetworkAccessConditionsGetNetworkAccessConditionByIDItemID(response3.Response)
 		if err := d.Set("item_id", vItemID3); err != nil {
@@ -776,7 +786,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsItems(items *[]iseg
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionsItemsLink(item.Link)
 		respItem["description"] = item.Description
 		respItem["id"] = item.ID
@@ -822,7 +832,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionsItemsChildren(items
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionsItemsChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}
@@ -907,7 +917,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionByNameItemName(item 
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionByNameItemNameLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -953,7 +963,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionByNameItemNameChildr
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionByNameItemNameChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}
@@ -1038,7 +1048,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionByIDItemID(item *ise
 	}
 	respItem := make(map[string]interface{})
 	respItem["condition_type"] = item.ConditionType
-	respItem["is_negate"] = item.IsNegate
+	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionByIDItemIDLink(item.Link)
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
@@ -1084,7 +1094,7 @@ func flattenNetworkAccessConditionsGetNetworkAccessConditionByIDItemIDChildren(i
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessConditionsGetNetworkAccessConditionByIDItemIDChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

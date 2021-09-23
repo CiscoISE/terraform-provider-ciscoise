@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceNetworkAccessDictionary() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Dictionary.
-  
-  - Network Access Create a new Dictionary.
-  - Network Access Update a Dictionary.
-  - Network Access Delete a Dictionary.`,
+
+- Network Access Create a new Dictionary.
+
+- Network Access Update a Dictionary.
+
+- Network Access Delete a Dictionary.
+`,
 
 		CreateContext: resourceNetworkAccessDictionaryCreate,
 		ReadContext:   resourceNetworkAccessDictionaryRead,
@@ -58,6 +62,27 @@ func resourceNetworkAccessDictionary() *schema.Resource {
 							Optional:    true,
 							Computed:    true,
 						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"name": &schema.Schema{
 							Description: `The dictionary name`,
 							Type:        schema.TypeString,
@@ -84,7 +109,7 @@ func resourceNetworkAccessDictionaryCreate(ctx context.Context, d *schema.Resour
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkAccessDictionaryCreateNetworkAccessDictionaries(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
@@ -167,7 +192,7 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNetworkAccessDictionaryGetNetworkAccessDictionaries(m, response1)
 		item1, err := searchNetworkAccessDictionaryGetNetworkAccessDictionaries(m, items1, vvName, vvID)
@@ -177,7 +202,8 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 				"Failure when searching item from GetNetworkAccessDictionaries, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessDictionaries search response",
 				err))
@@ -198,7 +224,7 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -249,13 +275,13 @@ func resourceNetworkAccessDictionaryUpdate(ctx context.Context, d *schema.Resour
 		vvName = vName
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvName %s", vvName)
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestNetworkAccessDictionaryUpdateNetworkAccessDictionaryByName(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessDictionary.UpdateNetworkAccessDictionaryByName(vvName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkAccessDictionaryByName", err, restyResp1.String(),
 					"Failure at UpdateNetworkAccessDictionaryByName, unexpected response", ""))
@@ -319,7 +345,7 @@ func resourceNetworkAccessDictionaryDelete(ctx context.Context, d *schema.Resour
 	response1, restyResp1, err := client.NetworkAccessDictionary.DeleteNetworkAccessDictionaryByName(vvName)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkAccessDictionaryByName", err, restyResp1.String(),
 				"Failure at DeleteNetworkAccessDictionaryByName, unexpected response", ""))
@@ -348,9 +374,7 @@ func expandRequestNetworkAccessDictionaryCreateNetworkAccessDictionaries(ctx con
 	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessDictionaryCreateNetworkAccessDictionariesLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
@@ -391,9 +415,7 @@ func expandRequestNetworkAccessDictionaryUpdateNetworkAccessDictionaryByName(ctx
 	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessDictionaryUpdateNetworkAccessDictionaryByNameLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +19,9 @@ func dataSourceNodeGroup() *schema.Resource {
 the failed node, two or more Policy Service nodes can be placed in the same node group. When a node that belongs to a
 node group fails, another node in the same node group issues a Change of Authorization (CoA) for all URL-redirected
 sessions on the failed node.
-- Get details of a node group in the cluster.`,
+
+- Get details of a node group in the cluster.
+`,
 
 		ReadContext: dataSourceNodeGroupRead,
 		Schema: map[string]*schema.Schema{
@@ -44,7 +47,8 @@ sessions on the failed node.
 								Schema: map[string]*schema.Schema{
 
 									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"query_attempts": &schema.Schema{
@@ -90,7 +94,8 @@ sessions on the failed node.
 								Schema: map[string]*schema.Schema{
 
 									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"query_attempts": &schema.Schema{
@@ -130,9 +135,9 @@ func dataSourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m inte
 	vNodeGroupName, okNodeGroupName := d.GetOk("node_group_name")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okNodeGroupName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -147,7 +152,7 @@ func dataSourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenNodeGroupGetNodeGroupsItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -173,7 +178,7 @@ func dataSourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNodeGroupGetNodeGroupItem(response2)
 		if err := d.Set("item", vItem2); err != nil {
@@ -209,7 +214,7 @@ func flattenNodeGroupGetNodeGroupsItemsMarCache(item *isegosdk.ResponseNodeGroup
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["replication_timeout"] = item.ReplicationTimeout
 	respItem["replication_attempts"] = item.ReplicationAttempts
 	respItem["query_timeout"] = item.QueryTimeout
@@ -239,7 +244,7 @@ func flattenNodeGroupGetNodeGroupItemMarCache(item *isegosdk.ResponseNodeGroupGe
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["replication_timeout"] = item.ReplicationTimeout
 	respItem["replication_attempts"] = item.ReplicationAttempts
 	respItem["query_timeout"] = item.QueryTimeout

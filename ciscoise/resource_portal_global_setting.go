@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,9 @@ import (
 func resourcePortalGlobalSetting() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read and update operations on PortalGlobalSetting.
-  
-  - This resource allows the client to update the portal global settings by id.`,
+
+- This resource allows the client to update the portal global settings by id.
+`,
 
 		CreateContext: resourcePortalGlobalSettingCreate,
 		ReadContext:   resourcePortalGlobalSettingRead,
@@ -40,8 +42,8 @@ func resourcePortalGlobalSetting() *schema.Resource {
 
 						"customization": &schema.Schema{
 							Description: `Allowed values:
-  - HTML,
-  - HTMLANDJAVASCRIPT`,
+- HTML,
+- HTMLANDJAVASCRIPT`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -118,7 +120,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsPortalGlobalSettingGetPortalGlobalSettings(m, response1, &queryParams1)
 		item1, err := searchPortalGlobalSettingGetPortalGlobalSettings(m, items1, "", vvID)
@@ -128,7 +130,8 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 				"Failure when searching item from GetPortalGlobalSettings, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenPortalGlobalSettingGetPortalGlobalSettingByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPortalGlobalSettings search response",
 				err))
@@ -149,7 +152,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenPortalGlobalSettingGetPortalGlobalSettingByIDItem(response2.PortalCustomizationGlobalSetting)
 		if err := d.Set("item", vItem2); err != nil {
@@ -187,13 +190,13 @@ func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceDa
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestPortalGlobalSettingUpdatePortalGlobalSettingByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.PortalGlobalSetting.UpdatePortalGlobalSettingByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdatePortalGlobalSettingByID", err, restyResp1.String(),
 					"Failure at UpdatePortalGlobalSettingByID, unexpected response", ""))

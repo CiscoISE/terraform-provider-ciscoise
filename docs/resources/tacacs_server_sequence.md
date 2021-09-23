@@ -10,10 +10,12 @@ description: |-
 # ciscoise_tacacs_server_sequence (Resource)
 
 It manages create, read, update and delete operations on TacacsServerSequence.
-  
-  - This resource allows the client to update a TACACS server sequence.
-  - This resource deletes a TACACS server sequence.
-  - This resource creates a TACACS server sequence.
+
+- This resource allows the client to update a TACACS server sequence.
+
+- This resource deletes a TACACS server sequence.
+
+- This resource creates a TACACS server sequence.
 
 ## Example Usage
 
@@ -24,14 +26,14 @@ resource "ciscoise_tacacs_server_sequence" "example" {
 
     description       = "string"
     id                = "string"
-    local_accounting  = false
+    local_accounting  = "false"
     name              = "string"
     prefix_delimiter  = "string"
-    prefix_strip      = false
-    remote_accounting = false
+    prefix_strip      = "false"
+    remote_accounting = "false"
     server_list       = "string"
     suffix_delimiter  = "string"
-    suffix_strip      = false
+    suffix_strip      = "false"
   }
 }
 
@@ -59,15 +61,15 @@ Optional:
 
 - **description** (String)
 - **id** (String) The ID of this resource.
-- **local_accounting** (Boolean)
+- **local_accounting** (String)
 - **name** (String)
 - **prefix_delimiter** (String) The delimiter that will be used for prefix strip
-- **prefix_strip** (Boolean) Define if a delimiter will be used for prefix strip
-- **remote_accounting** (Boolean)
+- **prefix_strip** (String) Define if a delimiter will be used for prefix strip
+- **remote_accounting** (String)
 - **server_list** (String) The names of Tacacs external servers separated by commas.
-  The order of the names in the string is the order of servers that will be used during authentication
+The order of the names in the string is the order of servers that will be used during authentication
 - **suffix_delimiter** (String) The delimiter that will be used for suffix strip
-- **suffix_strip** (Boolean) Define if a delimiter will be used for suffix strip
+- **suffix_strip** (String) Define if a delimiter will be used for suffix strip
 
 Read-Only:
 

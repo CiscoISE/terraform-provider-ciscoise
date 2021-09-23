@@ -14,7 +14,7 @@ description: |-
 
 It performs read operation on PAN HA.
 
-In a high availability configuration, the Primary Administration Node (PAN) is in the active state. The Secondary PAN
+- In a high availability configuration, the Primary Administration Node (PAN) is in the active state. The Secondary PAN
 (backup PAN) is in the standby state, which means it receives all configuration updates from the Primary PAN, but is not
 active in the ISE network. You can configure ISE to automatically the promote the secondary PAN when the primary PAN
 becomes unavailable.
@@ -48,7 +48,7 @@ output "ciscoise_pan_ha_example" {
 Read-Only:
 
 - **failed_attempts** (Number)
-- **is_enabled** (Boolean)
+- **is_enabled** (String)
 - **polling_interval** (Number)
 - **primary_health_check_node** (String)
 - **secondary_health_check_node** (String)

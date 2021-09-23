@@ -10,10 +10,12 @@ description: |-
 # ciscoise_anc_policy (Resource)
 
 It manages create, read, update and delete operations on AncPolicy.
-  
-  - This resource allows the client to update an ANC policy.
-  - This resource allows the client to delete an ANC policy.
-  - This resource allows the client to create an ANC policy.
+
+- This resource allows the client to update an ANC policy.
+
+- This resource allows the client to delete an ANC policy.
+
+- This resource allows the client to create an ANC policy.
 
 ## Example Usage
 
@@ -51,9 +53,9 @@ output "ciscoise_anc_policy_example" {
 Optional:
 
 - **actions** (List of String) - QUARANTINE: Allows you to use Exception policies (authorization policies) to limit or deny an endpoint access to the network.
-  - PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
-  - SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
-  - RE_AUTHENTICATE: Re-authenticates the session from the endpoint.
+- PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
+- SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
+- RE_AUTHENTICATE: Re-authenticates the session from the endpoint.
 - **id** (String) The ID of this resource.
 - **name** (String)
 

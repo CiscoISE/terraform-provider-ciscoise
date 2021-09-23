@@ -12,10 +12,10 @@ resource "ciscoise_network_device" "example" {
     }
     authentication_settings {
 
-      dtls_required                  = false
-      enable_key_wrap                = false
+      dtls_required                  = "false"
+      enable_key_wrap                = "false"
       enable_multi_secret            = "string"
-      enabled                        = false
+      enabled                        = "false"
       key_encryption_key             = "string"
       key_input_format               = "string"
       message_authenticator_code_key = "string"
@@ -32,8 +32,8 @@ resource "ciscoise_network_device" "example" {
     profile_name  = "string"
     snmpsettings {
 
-      link_trap_query                  = false
-      mac_trap_query                   = false
+      link_trap_query                  = "false"
+      mac_trap_query                   = "false"
       originating_policy_services_node = "string"
       polling_interval                 = 1
       ro_community                     = "string"
@@ -57,18 +57,18 @@ resource "ciscoise_network_device" "example" {
         enable_mode_password               = "string"
         exec_mode_password                 = "string"
         exec_mode_username                 = "string"
-        include_when_deploying_sgt_updates = false
+        include_when_deploying_sgt_updates = "false"
       }
-      push_id_support = false
+      push_id_support = "false"
       sga_notification_and_updates {
 
         coa_source_host                                    = "string"
         downlaod_environment_data_every_x_seconds          = 1
         downlaod_peer_authorization_policy_every_x_seconds = 1
         download_sga_cllists_every_x_seconds               = 1
-        other_sga_devices_to_trust_this_device             = false
+        other_sga_devices_to_trust_this_device             = "false"
         re_authentication_every_x_seconds                  = 1
-        send_configuration_to_device                       = false
+        send_configuration_to_device                       = "false"
         send_configuration_to_device_using                 = "string"
       }
     }

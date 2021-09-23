@@ -10,10 +10,12 @@ description: |-
 # ciscoise_network_access_dictionary_attribute (Resource)
 
 It manages create, read, update and delete operations on Network Access - Dictionary Attribute.
-  
-  - Create a new Dictionary Attribute for an existing Dictionary.
-  - Update a Dictionary Attribute
-  - Delete a Dictionary Attribute.
+
+- Create a new Dictionary Attribute for an existing Dictionary.
+
+- Update a Dictionary Attribute
+
+- Delete a Dictionary Attribute.
 
 ## Example Usage
 
@@ -24,7 +26,7 @@ resource "ciscoise_network_access_dictionary_attribute" "example" {
 
     allowed_values {
 
-      is_default = false
+      is_default = "false"
       key        = "string"
       value      = "string"
     }
@@ -74,7 +76,7 @@ Optional:
 
 Optional:
 
-- **is_default** (Boolean) true if this key value is the default between the allowed values of the dictionary attribute
+- **is_default** (String) true if this key value is the default between the allowed values of the dictionary attribute
 - **key** (String)
 - **value** (String)
 

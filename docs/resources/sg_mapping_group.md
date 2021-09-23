@@ -10,10 +10,12 @@ description: |-
 # ciscoise_sg_mapping_group (Resource)
 
 It manages create, read, update and delete operations on IPToSGTMappingGroup.
-  
-  - This resource allows the client to update an IP to SGT mapping group by ID.
-  - This resource deletes an IP to SGT mapping group.
-  - This resource creates an IP to SGT mapping group.
+
+- This resource allows the client to update an IP to SGT mapping group by ID.
+
+- This resource deletes an IP to SGT mapping group.
+
+- This resource creates an IP to SGT mapping group.
 
 ## Example Usage
 
@@ -54,9 +56,9 @@ Optional:
 
 - **deploy_to** (String) Mandatory unless mappingGroup is set or unless deployType=ALL
 - **deploy_type** (String) Allowed values:
-  - ALL,
-  - ND,
-  - NDG
+- ALL,
+- ND,
+- NDG
 - **id** (String) id path parameter.
 - **name** (String)
 - **sgt** (String) Mandatory unless mappingGroup is set

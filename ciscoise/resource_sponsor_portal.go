@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceSponsorPortal() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SponsorPortal.
-  
-  - This resource allows the client to update a sponsor portal by ID.
-  - This resource deletes a sponsor portal by ID.
-  - This resource creates a sponsor portal.`,
+
+- This resource allows the client to update a sponsor portal by ID.
+
+- This resource deletes a sponsor portal by ID.
+
+- This resource creates a sponsor portal.
+`,
 
 		CreateContext: resourceSponsorPortalCreate,
 		ReadContext:   resourceSponsorPortalRead,
@@ -212,8 +216,8 @@ func resourceSponsorPortal() *schema.Resource {
 									},
 									"portal_tweak_settings": &schema.Schema{
 										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-  The Tweak Settings can subsequently be changed by the user`,
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
 										Optional: true,
 										Computed: true,
@@ -291,12 +295,12 @@ func resourceSponsorPortal() *schema.Resource {
 						},
 						"portal_type": &schema.Schema{
 							Description: `Allowed values:
-  - BYOD,
-  - HOTSPOTGUEST,
-  - MYDEVICE,
-  - SELFREGGUEST,
-  - SPONSOR,
-  - SPONSOREDGUEST`,
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -318,9 +322,9 @@ func resourceSponsorPortal() *schema.Resource {
 
 												"display_frequency": &schema.Schema{
 													Description: `How the AUP should be displayed, either on page or as a link. Only valid if includeAup = true. Allowed Values:
-  - FIRSTLOGIN,
-  - EVERYLOGIN,
-  - RECURRING`,
+- FIRSTLOGIN,
+- EVERYLOGIN,
+- RECURRING`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -332,14 +336,18 @@ func resourceSponsorPortal() *schema.Resource {
 													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"require_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -354,19 +362,21 @@ func resourceSponsorPortal() *schema.Resource {
 
 												"aup_display": &schema.Schema{
 													Description: `How the AUP should be displayed, either on page or as a link.
-  Only valid if includeAup = true.
-  Allowed values:
-  -  ONPAGE,
-  - ASLINK`,
+Only valid if includeAup = true.
+Allowed values:
+-  ONPAGE,
+- ASLINK`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
 													Description: `Maximum failed login attempts before rate limiting`,
@@ -376,15 +386,19 @@ func resourceSponsorPortal() *schema.Resource {
 												},
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP.
-  Only valid if includeAup = true`,
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+Only valid if includeAup = true`,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"require_aup_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"social_configs": &schema.Schema{
 													Type:     schema.TypeList,
@@ -413,16 +427,16 @@ func resourceSponsorPortal() *schema.Resource {
 
 												"allowed_interfaces": &schema.Schema{
 													Description: `Interfaces that the portal will be reachable on.
-  Allowed values:
-  - eth0,
-  - eth1,
-  - eth2,
-  - eth3,
-  - eth4,
-  - eth5,
-  - bond0,
-  - bond1,
-  - bond2`,
+Allowed values:
+- eth0,
+- eth1,
+- eth2,
+- eth3,
+- eth4,
+- eth5,
+- bond0,
+- bond1,
+- bond2`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -447,8 +461,8 @@ func resourceSponsorPortal() *schema.Resource {
 												},
 												"display_lang": &schema.Schema{
 													Description: `Allowed values:
-  - USEBROWSERLOCALE,
-  - ALWAYSUSE`,
+- USEBROWSERLOCALE,
+- ALWAYSUSE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -467,7 +481,7 @@ func resourceSponsorPortal() *schema.Resource {
 												},
 												"https_port": &schema.Schema{
 													Description: `The port number that the allowed interfaces will listen on.
-  Range from 8000 to 8999`,
+Range from 8000 to 8999`,
 													Type:     schema.TypeInt,
 													Optional: true,
 													Computed: true,
@@ -488,9 +502,11 @@ func resourceSponsorPortal() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -504,9 +520,11 @@ func resourceSponsorPortal() *schema.Resource {
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -520,9 +538,11 @@ func resourceSponsorPortal() *schema.Resource {
 
 												"allow_sponsor_to_change_pwd": &schema.Schema{
 													Description: `Allow sponsors to change their own passwords`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -536,49 +556,61 @@ func resourceSponsorPortal() *schema.Resource {
 
 												"default_empty_field_value": &schema.Schema{
 													Description: `The default value displayed for an empty field.
-  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
 													Description: `Specifies how empty fields are handled on the Support Information Page. Allowed values:
-  - HIDE,
-  - DISPLAYWITHNOVALUE,
-  - DISPLAYWITHDEFAULTVALUE`,
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -600,7 +632,7 @@ func resourceSponsorPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSponsorPortalCreateSponsorPortal(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -685,7 +717,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsSponsorPortalGetSponsorPortal(m, response1, &queryParams1)
 		item1, err := searchSponsorPortalGetSponsorPortal(m, items1, vvName, vvID)
@@ -695,7 +727,8 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 				"Failure when searching item from GetSponsorPortal, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenSponsorPortalGetSponsorPortalByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSponsorPortal search response",
 				err))
@@ -716,7 +749,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSponsorPortalGetSponsorPortalByIDItem(response2.SponsorPortal)
 		if err := d.Set("item", vItem2); err != nil {
@@ -770,13 +803,13 @@ func resourceSponsorPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSponsorPortalUpdateSponsorPortalByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SponsorPortal.UpdateSponsorPortalByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateSponsorPortalByID", err, restyResp1.String(),
 					"Failure at UpdateSponsorPortalByID, unexpected response", ""))
@@ -842,7 +875,7 @@ func resourceSponsorPortalDelete(ctx context.Context, d *schema.ResourceData, m 
 	restyResp1, err := client.SponsorPortal.DeleteSponsorPortalByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSponsorPortalByID", err, restyResp1.String(),
 				"Failure at DeleteSponsorPortalByID, unexpected response", ""))

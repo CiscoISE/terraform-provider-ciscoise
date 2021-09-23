@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,12 +16,17 @@ import (
 func resourceNetworkDevice() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on NetworkDevice.
-  
-  - This resource allows the client to update a network device by name.
-  - This resource deletes a network device by name.
-  - This resource allows the client to update a network device by ID.
-  - This resource deletes a network device by ID.
-  - This resource creates a network device.`,
+
+- This resource allows the client to update a network device by name.
+
+- This resource deletes a network device by name.
+
+- This resource allows the client to update a network device by ID.
+
+- This resource deletes a network device by ID.
+
+- This resource creates a network device.
+`,
 
 		CreateContext: resourceNetworkDeviceCreate,
 		ReadContext:   resourceNetworkDeviceRead,
@@ -87,14 +93,18 @@ func resourceNetworkDevice() *schema.Resource {
 
 									"dtls_required": &schema.Schema{
 										Description: `This value enforces use of dtls`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_key_wrap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_multi_secret": &schema.Schema{
 										Type:     schema.TypeString,
@@ -102,9 +112,11 @@ func resourceNetworkDevice() *schema.Resource {
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"key_encryption_key": &schema.Schema{
 										Type:     schema.TypeString,
@@ -113,8 +125,8 @@ func resourceNetworkDevice() *schema.Resource {
 									},
 									"key_input_format": &schema.Schema{
 										Description: `Allowed values:
-  - ASCII,
-  - HEXADECIMAL`,
+- ASCII,
+- HEXADECIMAL`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -126,8 +138,8 @@ func resourceNetworkDevice() *schema.Resource {
 									},
 									"network_protocol": &schema.Schema{
 										Description: `Allowed values:
-  - RADIUS,
-  - TACACS_PLUS`,
+- RADIUS,
+- TACACS_PLUS`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -210,14 +222,18 @@ func resourceNetworkDevice() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"link_trap_query": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"mac_trap_query": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"originating_policy_services_node": &schema.Schema{
 										Type:     schema.TypeString,
@@ -256,9 +272,9 @@ func resourceNetworkDevice() *schema.Resource {
 
 									"connect_mode_options": &schema.Schema{
 										Description: `Allowed values:
-  - OFF,
-  - ON_LEGACY,
-  - ON_DRAFT_COMPLIANT`,
+- OFF,
+- ON_LEGACY,
+- ON_DRAFT_COMPLIANT`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -321,17 +337,21 @@ func resourceNetworkDevice() *schema.Resource {
 													Computed: true,
 												},
 												"include_when_deploying_sgt_updates": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
 									},
 									"push_id_support": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"sga_notification_and_updates": &schema.Schema{
 										Type:     schema.TypeList,
@@ -361,9 +381,11 @@ func resourceNetworkDevice() *schema.Resource {
 													Computed: true,
 												},
 												"other_sga_devices_to_trust_this_device": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"re_authentication_every_x_seconds": &schema.Schema{
 													Type:     schema.TypeInt,
@@ -371,15 +393,17 @@ func resourceNetworkDevice() *schema.Resource {
 													Computed: true,
 												},
 												"send_configuration_to_device": &schema.Schema{
-													Type:     schema.TypeBool,
-													Optional: true,
-													Computed: true,
+													// Type:     schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"send_configuration_to_device_using": &schema.Schema{
 													Description: `Allowed values:
-  - ENABLE_USING_COA,
-  - ENABLE_USING_CLI,
-  - DISABLE_ALL`,
+- ENABLE_USING_COA,
+- ENABLE_USING_CLI,
+- DISABLE_ALL`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
@@ -404,7 +428,7 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkDeviceCreateNetworkDevice(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -481,7 +505,7 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenNetworkDeviceGetNetworkDeviceByNameItemName(response1.NetworkDevice)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -506,7 +530,7 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenNetworkDeviceGetNetworkDeviceByIDItemID(response2.NetworkDevice)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -557,13 +581,13 @@ func resourceNetworkDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkDeviceUpdateNetworkDeviceByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkDevice.UpdateNetworkDeviceByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkDeviceByID", err, restyResp1.String(),
 					"Failure at UpdateNetworkDeviceByID, unexpected response", ""))
@@ -620,7 +644,7 @@ func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 	restyResp1, err := client.NetworkDevice.DeleteNetworkDeviceByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkDeviceByID", err, restyResp1.String(),
 				"Failure at DeleteNetworkDeviceByID, unexpected response", ""))
@@ -638,6 +662,7 @@ func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 
 	return diags
 }
+
 func expandRequestNetworkDeviceCreateNetworkDevice(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDevice {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDevice{}
 	request.NetworkDevice = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDevice(ctx, key, d)

@@ -16,7 +16,9 @@ description: |-
 It performs read operation on InternalUser.
 
 - This data source allows the client to get an internal user by name.
+
 - This data source allows the client to get an internal user by ID.
+
 - This data source allows the client to get all the internal users.
 
 Filter:
@@ -119,14 +121,14 @@ string parameter. Each resource Data model description should specify if an attr
 
 Read-Only:
 
-- **change_password** (Boolean)
+- **change_password** (String)
 - **custom_attributes** (Map of String)
 - **description** (String)
 - **email** (String)
 - **enable_password** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **expiry_date** (String)
-- **expiry_date_enabled** (Boolean)
+- **expiry_date_enabled** (String)
 - **first_name** (String)
 - **id** (String)
 - **identity_groups** (String)
@@ -152,14 +154,14 @@ Read-Only:
 
 Read-Only:
 
-- **change_password** (Boolean)
+- **change_password** (String)
 - **custom_attributes** (Map of String)
 - **description** (String)
 - **email** (String)
 - **enable_password** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **expiry_date** (String)
-- **expiry_date_enabled** (Boolean)
+- **expiry_date_enabled** (String)
 - **first_name** (String)
 - **id** (String)
 - **identity_groups** (String)

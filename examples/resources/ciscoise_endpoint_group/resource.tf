@@ -6,7 +6,7 @@ resource "ciscoise_endpoint_group" "example" {
     description    = "string"
     id             = "string"
     name           = "string"
-    system_defined = false
+    system_defined = "false"
   }
 }
 

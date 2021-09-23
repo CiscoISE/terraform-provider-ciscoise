@@ -16,13 +16,14 @@ description: |-
 It performs read operation on NetworkDeviceGroup.
 
 - This data source allows the client to get a network device group by name.
+
 - This data source allows the client to get a network device group by ID.
+
 - This data source allows the client to get all the network device groups.
 
 Filter:
 
 [name, description, type]
-
 
 Sorting:
 

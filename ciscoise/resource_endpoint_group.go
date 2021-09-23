@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceEndpointGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on EndpointIdentityGroup.
-  
-  - This resource allows the client to update an endpoint identity group.
-  - This resource deletes an endpoint identity group.
-  - This resource creates an endpoint identity group.`,
+
+- This resource allows the client to update an endpoint identity group.
+
+- This resource deletes an endpoint identity group.
+
+- This resource creates an endpoint identity group.
+`,
 
 		CreateContext: resourceEndpointGroupCreate,
 		ReadContext:   resourceEndpointGroupRead,
@@ -76,9 +80,11 @@ func resourceEndpointGroup() *schema.Resource {
 							Computed: true,
 						},
 						"system_defined": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -94,7 +100,7 @@ func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestEndpointGroupCreateEndpointGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -171,7 +177,7 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenEndpointIDentityGroupGetEndpointGroupByNameItemName(response1.EndPointGroup)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -196,7 +202,7 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenEndpointIDentityGroupGetEndpointGroupByIDItemID(response2.EndPointGroup)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -247,13 +253,13 @@ func resourceEndpointGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestEndpointGroupUpdateEndpointGroupByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.EndpointIDentityGroup.UpdateEndpointGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateEndpointGroupByID", err, restyResp1.String(),
 					"Failure at UpdateEndpointGroupByID, unexpected response", ""))
@@ -310,7 +316,7 @@ func resourceEndpointGroupDelete(ctx context.Context, d *schema.ResourceData, m 
 	restyResp1, err := client.EndpointIDentityGroup.DeleteEndpointGroupByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteEndpointGroupByID", err, restyResp1.String(),
 				"Failure at DeleteEndpointGroupByID, unexpected response", ""))

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceNetworkAccessDictionaryAttributesPolicySet() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Dictionary Attributes List.
 
-- Network Access Returns list of dictionary attributes for policyset.`,
+- Network Access Returns list of dictionary attributes for policyset.
+`,
 
 		ReadContext: dataSourceNetworkAccessDictionaryAttributesPolicySetRead,
 		Schema: map[string]*schema.Schema{
@@ -33,8 +35,9 @@ func dataSourceNetworkAccessDictionaryAttributesPolicySet() *schema.Resource {
 
 									"is_default": &schema.Schema{
 										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,
@@ -107,7 +110,7 @@ func dataSourceNetworkAccessDictionaryAttributesPolicySetRead(ctx context.Contex
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenNetworkAccessDictionaryAttributesListGetNetworkAccessDictionariesPolicySetItems(response1.Response)
 		if err := d.Set("items", vItems1); err != nil {
@@ -150,7 +153,7 @@ func flattenNetworkAccessDictionaryAttributesListGetNetworkAccessDictionariesPol
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["is_default"] = item.IsDefault
+		respItem["is_default"] = boolPtrToString(item.IsDefault)
 		respItem["key"] = item.Key
 		respItem["value"] = item.Value
 		respItems = append(respItems, respItem)

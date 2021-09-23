@@ -17,7 +17,9 @@ description: |-
 It performs read operation on GuestUser.
 
 - This data source allows the client to get a guest user by name.
+
 - This data source allows the client to get a guest user by ID.
+
 - This data source allows the client to get all the guest users.
 
 Filter:
@@ -157,7 +159,7 @@ Read-Only:
 - **company** (String)
 - **creation_time** (String)
 - **email_address** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **first_name** (String)
 - **last_name** (String)
 - **notification_language** (String)
@@ -219,7 +221,7 @@ Read-Only:
 - **company** (String)
 - **creation_time** (String)
 - **email_address** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **first_name** (String)
 - **last_name** (String)
 - **notification_language** (String)

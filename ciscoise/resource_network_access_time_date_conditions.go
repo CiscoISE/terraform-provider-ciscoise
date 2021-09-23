@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceNetworkAccessTimeDateConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Time/Date Conditions.
-  
-  - Network Access Creates time/date condition
-  - Network Access Update network condition
-  - Network Access Delete Time/Date condition.`,
+
+- Network Access Creates time/date condition
+
+- Network Access Update network condition
+
+- Network Access Delete Time/Date condition.
+`,
 
 		CreateContext: resourceNetworkAccessTimeDateConditionsCreate,
 		ReadContext:   resourceNetworkAccessTimeDateConditionsRead,
@@ -74,9 +78,32 @@ func resourceNetworkAccessTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -196,9 +223,32 @@ func resourceNetworkAccessTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Description: `Condition name`,
@@ -244,7 +294,7 @@ func resourceNetworkAccessTimeDateConditionsCreate(ctx context.Context, d *schem
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeCondition(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -326,7 +376,7 @@ func resourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditions(m, response1)
 		item1, err := searchNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditions(m, items1, vvName, vvID)
@@ -336,7 +386,8 @@ func resourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schema.
 				"Failure when searching item from GetNetworkAccessTimeConditions, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessTimeConditions search response",
 				err))
@@ -356,7 +407,7 @@ func resourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -407,13 +458,13 @@ func resourceNetworkAccessTimeDateConditionsUpdate(ctx context.Context, d *schem
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessTimeDateConditions.UpdateNetworkAccessTimeConditionByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkAccessTimeConditionByID", err, restyResp1.String(),
 					"Failure at UpdateNetworkAccessTimeConditionByID, unexpected response", ""))
@@ -477,7 +528,7 @@ func resourceNetworkAccessTimeDateConditionsDelete(ctx context.Context, d *schem
 	response1, restyResp1, err := client.NetworkAccessTimeDateConditions.DeleteNetworkAccessTimeConditionByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkAccessTimeConditionByID", err, restyResp1.String(),
 				"Failure at DeleteNetworkAccessTimeConditionByID, unexpected response", ""))
@@ -503,9 +554,7 @@ func expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -605,9 +654,7 @@ func expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -695,9 +742,7 @@ func expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -797,9 +842,7 @@ func expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

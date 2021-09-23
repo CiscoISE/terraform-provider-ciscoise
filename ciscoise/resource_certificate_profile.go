@@ -2,11 +2,10 @@ package ciscoise
 
 import (
 	"context"
+	"log"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
-	"log"
-
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -14,9 +13,11 @@ import (
 func resourceCertificateProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and update operations on CertificateProfile.
-  
-  - This resource allows the client to update a certificate profile.
-  - This resource allows the client to create a certificate profile.`,
+
+- This resource allows the client to update a certificate profile.
+
+- This resource allows the client to create a certificate profile.
+`,
 
 		CreateContext: resourceCertificateProfileCreate,
 		ReadContext:   resourceCertificateProfileRead,
@@ -39,21 +40,23 @@ func resourceCertificateProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allowed_as_user_name": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"certificate_attribute_name": &schema.Schema{
 							Description: `Attribute name of the Certificate Profile - used only when CERTIFICATE is chosen in usernameFrom.
-  Allowed values:
-  - SUBJECT_COMMON_NAME
-  - SUBJECT_ALTERNATIVE_NAME
-  - SUBJECT_SERIAL_NUMBER
-  - SUBJECT
-  - SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
-  - SUBJECT_ALTERNATIVE_NAME_EMAIL
-  - SUBJECT_ALTERNATIVE_NAME_DNS.
-  - Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN`,
+Allowed values:
+- SUBJECT_COMMON_NAME
+- SUBJECT_ALTERNATIVE_NAME
+- SUBJECT_SERIAL_NUMBER
+- SUBJECT
+- SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
+- SUBJECT_ALTERNATIVE_NAME_EMAIL
+- SUBJECT_ALTERNATIVE_NAME_DNS.
+- Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -97,10 +100,10 @@ func resourceCertificateProfile() *schema.Resource {
 						},
 						"match_mode": &schema.Schema{
 							Description: `Match mode of the Certificate Profile.
-  Allowed values:
-  - NEVER
-  - RESOLVE_IDENTITY_AMBIGUITY
-  - BINARY_COMPARISON`,
+Allowed values:
+- NEVER
+- RESOLVE_IDENTITY_AMBIGUITY
+- BINARY_COMPARISON`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -112,9 +115,9 @@ func resourceCertificateProfile() *schema.Resource {
 						},
 						"username_from": &schema.Schema{
 							Description: `The attribute in the certificate where the user name should be taken from.
-  Allowed values:
-  - CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
-  - UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)`,
+Allowed values:
+- CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
+- UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -133,7 +136,7 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestCertificateProfileCreateCertificateProfile(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -210,7 +213,7 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenCertificateProfileGetCertificateProfileByNameItemName(response1.CertificateProfile)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -235,7 +238,7 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenCertificateProfileGetCertificateProfileByIDItemID(response2.CertificateProfile)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -286,13 +289,13 @@ func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceDat
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestCertificateProfileUpdateCertificateProfileByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.CertificateProfile.UpdateCertificateProfileByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateCertificateProfileByID", err, restyResp1.String(),
 					"Failure at UpdateCertificateProfileByID, unexpected response", ""))

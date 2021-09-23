@@ -10,10 +10,12 @@ description: |-
 # ciscoise_network_access_network_condition (Resource)
 
 It manages create, read, update and delete operations on Network Access - Network Conditions.
-  
-  - Network Access Creates network condition.
-  - Network Access Update network condition.
-  - Network Access Delete network condition.
+
+- Network Access Creates network condition.
+
+- Network Access Update network condition.
+
+- Network Access Delete network condition.
 
 ## Example Usage
 
@@ -65,6 +67,10 @@ Optional:
 - **id** (String) The ID of this resource.
 - **name** (String) Network Condition name
 
+Read-Only:
+
+- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+
 <a id="nestedblock--item--conditions"></a>
 ### Nested Schema for `item.conditions`
 
@@ -75,6 +81,16 @@ Optional:
 - **device_list** (List of String) <p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>
 - **ip_addr_list** (List of String) <p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>
 - **mac_addr_list** (List of String) <p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>
+
+
+<a id="nestedatt--item--link"></a>
+### Nested Schema for `item.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
 
 ## Import
 

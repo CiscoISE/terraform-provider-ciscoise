@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceResourceVersion() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on VersionInfo.
 
-- Get all VersionInfo`,
+- Get all VersionInfo
+`,
 
 		ReadContext: dataSourceResourceVersionRead,
 		Schema: map[string]*schema.Schema{
@@ -85,7 +87,7 @@ func dataSourceResourceVersionRead(ctx context.Context, d *schema.ResourceData, 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenVersionInfoGetVersionInfoItem(response1.VersionInfo)
 		if err := d.Set("item", vItem1); err != nil {

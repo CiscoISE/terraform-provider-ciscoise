@@ -2,11 +2,10 @@ package ciscoise
 
 import (
 	"context"
+	"log"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
-	"log"
-
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -14,12 +13,17 @@ import (
 func resourceGuestUser() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on GuestUser.
-  
-  - This resource allows the client to update a guest user by name.
-  - This resource deletes a guest user.
-  - This resource allows the client to update a guest user by ID.
-  - This resource deletes a guest user by ID.
-  - This resource creates a guest user.`,
+
+- This resource allows the client to update a guest user by name.
+
+- This resource deletes a guest user.
+
+- This resource allows the client to update a guest user by ID.
+
+- This resource deletes a guest user by ID.
+
+- This resource creates a guest user.
+`,
 
 		CreateContext: resourceGuestUserCreate,
 		ReadContext:   resourceGuestUserRead,
@@ -116,9 +120,11 @@ func resourceGuestUser() *schema.Resource {
 									},
 									"enabled": &schema.Schema{
 										Description: `This field is only for Get operation not applicable for Create, Update operations`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"first_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -241,7 +247,7 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestGuestUserCreateGuestUser(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -318,7 +324,7 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenGuestUserGetGuestUserByNameItemName(response1.GuestUser)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -343,7 +349,7 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenGuestUserGetGuestUserByIDItemID(response2.GuestUser)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -394,13 +400,13 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestGuestUserUpdateGuestUserByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.GuestUser.UpdateGuestUserByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateGuestUserByID", err, restyResp1.String(),
 					"Failure at UpdateGuestUserByID, unexpected response", ""))
@@ -457,7 +463,7 @@ func resourceGuestUserDelete(ctx context.Context, d *schema.ResourceData, m inte
 	restyResp1, err := client.GuestUser.DeleteGuestUserByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteGuestUserByID", err, restyResp1.String(),
 				"Failure at DeleteGuestUserByID, unexpected response", ""))
@@ -520,7 +526,7 @@ func expandRequestGuestUserCreateGuestUserGuestUser(ctx context.Context, key str
 		request.PortalID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_fields"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_fields"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_fields"))) {
-		customFields := v.([]interface{})[0].(map[string]interface{})
+		customFields := v.(map[string]interface{})
 		request.CustomFields = &customFields
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -644,7 +650,7 @@ func expandRequestGuestUserUpdateGuestUserByIDGuestUser(ctx context.Context, key
 		request.PortalID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_fields"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_fields"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_fields"))) {
-		customFields := v.([]interface{})[0].(map[string]interface{})
+		customFields := v.(map[string]interface{})
 		request.CustomFields = &customFields
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

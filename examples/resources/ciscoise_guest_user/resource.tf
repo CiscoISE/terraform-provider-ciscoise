@@ -3,7 +3,10 @@ resource "ciscoise_guest_user" "example" {
   provider = ciscoise
   item {
 
-    custom_fields {}
+    custom_fields = {
+      key1 = "value1"
+      key2 = "value2"
+    }
     description = "string"
     guest_access_info {
 
@@ -19,7 +22,7 @@ resource "ciscoise_guest_user" "example" {
       company               = "string"
       creation_time         = "string"
       email_address         = "string"
-      enabled               = false
+      enabled               = "false"
       first_name            = "string"
       last_name             = "string"
       notification_language = "string"

@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Provider.
 
-🚧 ServiceReregister
+- 🚧 ServiceReregister
 
 ## Example Usage
 

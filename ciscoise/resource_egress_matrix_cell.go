@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceEgressMatrixCell() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on EgressMatrixCell.
-  
-  - This resource allows the client to update an egress matrix cell.
-  - This resource deletes an egress matrix cell.
-  - This resource creates an egress matrix cell.`,
+
+- This resource allows the client to update an egress matrix cell.
+
+- This resource deletes an egress matrix cell.
+
+- This resource creates an egress matrix cell.
+`,
 
 		CreateContext: resourceEgressMatrixCellCreate,
 		ReadContext:   resourceEgressMatrixCellRead,
@@ -42,9 +46,9 @@ func resourceEgressMatrixCell() *schema.Resource {
 
 						"default_rule": &schema.Schema{
 							Description: `Allowed values:
-  - NONE,
-  - DENY_IP,
-  - PERMIT_IP`,
+- NONE,
+- DENY_IP,
+- PERMIT_IP`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -87,9 +91,9 @@ func resourceEgressMatrixCell() *schema.Resource {
 						},
 						"matrix_cell_status": &schema.Schema{
 							Description: `Allowed values:
-  - DISABLED,
-  - ENABLED,
-  - MONITOR`,
+- DISABLED,
+- ENABLED,
+- MONITOR`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -126,7 +130,7 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestEgressMatrixCellCreateEgressMatrixCell(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -211,7 +215,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsEgressMatrixCellGetEgressMatrixCell(m, response1, &queryParams1)
 		item1, err := searchEgressMatrixCellGetEgressMatrixCell(m, items1, vvName, vvID)
@@ -221,7 +225,8 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 				"Failure when searching item from GetEgressMatrixCell, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenEgressMatrixCellGetEgressMatrixCellByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEgressMatrixCell search response",
 				err))
@@ -241,7 +246,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenEgressMatrixCellGetEgressMatrixCellByIDItem(response2.EgressMatrixCell)
 		if err := d.Set("item", vItem2); err != nil {
@@ -295,13 +300,13 @@ func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData,
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestEgressMatrixCellUpdateEgressMatrixCellByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.EgressMatrixCell.UpdateEgressMatrixCellByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateEgressMatrixCellByID", err, restyResp1.String(),
 					"Failure at UpdateEgressMatrixCellByID, unexpected response", ""))
@@ -367,7 +372,7 @@ func resourceEgressMatrixCellDelete(ctx context.Context, d *schema.ResourceData,
 	restyResp1, err := client.EgressMatrixCell.DeleteEgressMatrixCellByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteEgressMatrixCellByID", err, restyResp1.String(),
 				"Failure at DeleteEgressMatrixCellByID, unexpected response", ""))

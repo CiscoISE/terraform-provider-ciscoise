@@ -3,7 +3,7 @@ resource "ciscoise_certificate_profile" "example" {
   provider = ciscoise
   item {
 
-    allowed_as_user_name         = false
+    allowed_as_user_name         = "false"
     certificate_attribute_name   = "string"
     description                  = "string"
     external_identity_store_name = "string"
