@@ -131,7 +131,7 @@ resource "ciscoise_self_registered_portal" "example" {
       }
       portal_settings {
 
-        allowed_interfaces               = "string"
+        allowed_interfaces               = ["string"]
         always_used_language             = "string"
         assigned_guest_type_for_employee = "string"
         authentication_method            = "string"

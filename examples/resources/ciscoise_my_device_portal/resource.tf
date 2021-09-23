@@ -83,7 +83,7 @@ resource "ciscoise_my_device_portal" "example" {
       }
       portal_settings {
 
-        allowed_interfaces      = "string"
+        allowed_interfaces      = ["string"]
         always_used_language    = "string"
         certificate_group_tag   = "string"
         display_lang            = "string"
