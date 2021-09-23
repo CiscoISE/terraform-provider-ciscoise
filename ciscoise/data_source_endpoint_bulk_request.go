@@ -81,10 +81,10 @@ func expandRequestEndpointBulkRequestBulkRequestForEndpoint(ctx context.Context,
 
 func expandRequestEndpointBulkRequestBulkRequestForEndpointEndpointBulkRequest(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointBulkRequestForEndpointEndpointBulkRequest {
 	request := isegosdk.RequestEndpointBulkRequestForEndpointEndpointBulkRequest{}
-	if v, ok := d.GetOkExists("operation_type"); !isEmptyValue(reflect.ValueOf(d.Get("operation_type"))) && (ok || !reflect.DeepEqual(v, d.Get("operation_type"))) {
+	if v, ok := d.GetOkExists(key + ".operation_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".operation_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".operation_type"))) {
 		request.OperationType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("resource_media_type"); !isEmptyValue(reflect.ValueOf(d.Get("resource_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get("resource_media_type"))) {
+	if v, ok := d.GetOkExists(key + ".resource_media_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".resource_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".resource_media_type"))) {
 		request.ResourceMediaType = interfaceToString(v)
 	}
 	return &request

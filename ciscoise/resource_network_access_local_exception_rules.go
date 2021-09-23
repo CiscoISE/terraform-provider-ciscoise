@@ -840,7 +840,7 @@ func expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExcept
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -886,7 +886,7 @@ func expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExcept
 func expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthorizationExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionChildren {
 	request := []isegosdk.RequestNetworkAccessAuthorizationExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1092,7 +1092,7 @@ func expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExcept
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -1138,7 +1138,7 @@ func expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExcept
 func expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthorizationExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionChildren {
 	request := []isegosdk.RequestNetworkAccessAuthorizationExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

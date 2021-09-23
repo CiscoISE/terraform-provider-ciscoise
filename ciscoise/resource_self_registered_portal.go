@@ -1964,7 +1964,7 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSet
 		request.AllowShowGuestForm = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".social_configs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_configs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_configs"))) {
-		request.SocialConfigs = expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key, d)
+		request.SocialConfigs = expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key+".social_configs", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1975,7 +1975,7 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSet
 func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSettingsLoginPageSettingsSocialConfigsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSettingsLoginPageSettingsSocialConfigs {
 	request := []isegosdk.RequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSettingsLoginPageSettingsSocialConfigs{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -2686,7 +2686,7 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCus
 func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -2697,7 +2697,7 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCus
 func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -2887,7 +2887,7 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 		request.AllowShowGuestForm = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".social_configs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_configs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_configs"))) {
-		request.SocialConfigs = expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key, d)
+		request.SocialConfigs = expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key+".social_configs", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -2898,7 +2898,7 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettingsSocialConfigsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettingsSocialConfigs {
 	request := []isegosdk.RequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettingsSocialConfigs{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -3609,7 +3609,7 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -3620,7 +3620,7 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

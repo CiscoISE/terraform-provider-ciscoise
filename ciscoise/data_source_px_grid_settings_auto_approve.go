@@ -87,10 +87,10 @@ func expandRequestPxGridSettingsAutoApproveAutoapprovePxGridSettings(ctx context
 
 func expandRequestPxGridSettingsAutoApproveAutoapprovePxGridSettingsPxgridSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestPxGridSettingsAutoapprovePxGridSettingsPxgridSettings {
 	request := isegosdk.RequestPxGridSettingsAutoapprovePxGridSettingsPxgridSettings{}
-	if v, ok := d.GetOkExists("auto_approve_cert_based_accounts"); !isEmptyValue(reflect.ValueOf(d.Get("auto_approve_cert_based_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get("auto_approve_cert_based_accounts"))) {
+	if v, ok := d.GetOkExists(key + ".auto_approve_cert_based_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auto_approve_cert_based_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auto_approve_cert_based_accounts"))) {
 		request.AutoApproveCertBasedAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists("allow_password_based_accounts"); !isEmptyValue(reflect.ValueOf(d.Get("allow_password_based_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get("allow_password_based_accounts"))) {
+	if v, ok := d.GetOkExists(key + ".allow_password_based_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_password_based_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_password_based_accounts"))) {
 		request.AllowPasswordBasedAccounts = interfaceToBoolPtr(v)
 	}
 	return &request

@@ -583,7 +583,7 @@ func expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditio
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -629,7 +629,7 @@ func expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditio
 func expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionChildren {
 	request := []isegosdk.RequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -771,7 +771,7 @@ func expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditio
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDChildrenArray(ctx, key, d)
+		request.Children = expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDDatesRange(ctx, key+".dates_range.0", d)
@@ -817,7 +817,7 @@ func expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditio
 func expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDChildren {
 	request := []isegosdk.RequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

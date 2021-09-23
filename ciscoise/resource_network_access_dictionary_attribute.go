@@ -391,7 +391,7 @@ func resourceNetworkAccessDictionaryAttributeDelete(ctx context.Context, d *sche
 func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute {
 	request := isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute{}
 	if v, ok := d.GetOkExists(key + ".allowed_values"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_values"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_values"))) {
-		request.AllowedValues = expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValuesArray(ctx, key, d)
+		request.AllowedValues = expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValuesArray(ctx, key+".allowed_values", d)
 	}
 	if v, ok := d.GetOkExists(key + ".data_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data_type"))) {
 		request.DataType = interfaceToString(v)
@@ -423,7 +423,7 @@ func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryA
 func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValuesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValues {
 	request := []isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValues{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -460,7 +460,7 @@ func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryA
 func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName {
 	request := isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName{}
 	if v, ok := d.GetOkExists(key + ".allowed_values"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_values"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_values"))) {
-		request.AllowedValues = expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValuesArray(ctx, key, d)
+		request.AllowedValues = expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValuesArray(ctx, key+".allowed_values", d)
 	}
 	if v, ok := d.GetOkExists(key + ".data_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data_type"))) {
 		request.DataType = interfaceToString(v)
@@ -492,7 +492,7 @@ func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryA
 func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValuesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValues {
 	request := []isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValues{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

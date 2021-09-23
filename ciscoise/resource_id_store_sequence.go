@@ -387,7 +387,7 @@ func expandRequestIDStoreSequenceCreateIDentitySequenceIDStoreSequence(ctx conte
 		request.Parent = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".id_seq_item"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id_seq_item"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id_seq_item"))) {
-		request.IDSeqItem = expandRequestIDStoreSequenceCreateIDentitySequenceIDStoreSequenceIDSeqItemArray(ctx, key, d)
+		request.IDSeqItem = expandRequestIDStoreSequenceCreateIDentitySequenceIDStoreSequenceIDSeqItemArray(ctx, key+".id_seq_item", d)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_authentication_profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_authentication_profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_authentication_profile"))) {
 		request.CertificateAuthenticationProfile = interfaceToString(v)
@@ -404,7 +404,7 @@ func expandRequestIDStoreSequenceCreateIDentitySequenceIDStoreSequence(ctx conte
 func expandRequestIDStoreSequenceCreateIDentitySequenceIDStoreSequenceIDSeqItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestIDentitySequenceCreateIDentitySequenceIDStoreSequenceIDSeqItem {
 	request := []isegosdk.RequestIDentitySequenceCreateIDentitySequenceIDStoreSequenceIDSeqItem{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -459,7 +459,7 @@ func expandRequestIDStoreSequenceUpdateIDentitySequenceByIDIDStoreSequence(ctx c
 		request.Parent = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".id_seq_item"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id_seq_item"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id_seq_item"))) {
-		request.IDSeqItem = expandRequestIDStoreSequenceUpdateIDentitySequenceByIDIDStoreSequenceIDSeqItemArray(ctx, key, d)
+		request.IDSeqItem = expandRequestIDStoreSequenceUpdateIDentitySequenceByIDIDStoreSequenceIDSeqItemArray(ctx, key+".id_seq_item", d)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_authentication_profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_authentication_profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_authentication_profile"))) {
 		request.CertificateAuthenticationProfile = interfaceToString(v)
@@ -476,7 +476,7 @@ func expandRequestIDStoreSequenceUpdateIDentitySequenceByIDIDStoreSequence(ctx c
 func expandRequestIDStoreSequenceUpdateIDentitySequenceByIDIDStoreSequenceIDSeqItemArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestIDentitySequenceUpdateIDentitySequenceByIDIDStoreSequenceIDSeqItem {
 	request := []isegosdk.RequestIDentitySequenceUpdateIDentitySequenceByIDIDStoreSequenceIDSeqItem{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

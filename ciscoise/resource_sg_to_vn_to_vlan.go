@@ -458,7 +458,7 @@ func expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainer(c
 		request.SgtID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".virtualnetworklist"); !isEmptyValue(reflect.ValueOf(d.Get(key+".virtualnetworklist"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".virtualnetworklist"))) {
-		request.Virtualnetworklist = expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistArray(ctx, key, d)
+		request.Virtualnetworklist = expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistArray(ctx, key+".virtualnetworklist", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -469,7 +469,7 @@ func expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainer(c
 func expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSecurityGroupToVirtualNetworkCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklist {
 	request := []isegosdk.RequestSecurityGroupToVirtualNetworkCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklist{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -501,7 +501,7 @@ func expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVi
 		request.DefaultVirtualNetwork = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".vlans"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vlans"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vlans"))) {
-		request.VLANs = expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistVLANsArray(ctx, key, d)
+		request.VLANs = expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistVLANsArray(ctx, key+".vlans", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -512,7 +512,7 @@ func expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVi
 func expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistVLANsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSecurityGroupToVirtualNetworkCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistVLANs {
 	request := []isegosdk.RequestSecurityGroupToVirtualNetworkCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistVLANs{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -579,7 +579,7 @@ func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContain
 		request.SgtID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".virtualnetworklist"); !isEmptyValue(reflect.ValueOf(d.Get(key+".virtualnetworklist"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".virtualnetworklist"))) {
-		request.Virtualnetworklist = expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistArray(ctx, key, d)
+		request.Virtualnetworklist = expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistArray(ctx, key+".virtualnetworklist", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -590,7 +590,7 @@ func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContain
 func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSecurityGroupToVirtualNetworkUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklist {
 	request := []isegosdk.RequestSecurityGroupToVirtualNetworkUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklist{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -622,7 +622,7 @@ func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContain
 		request.DefaultVirtualNetwork = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".vlans"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vlans"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vlans"))) {
-		request.VLANs = expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistVLANsArray(ctx, key, d)
+		request.VLANs = expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistVLANsArray(ctx, key+".vlans", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -633,7 +633,7 @@ func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContain
 func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistVLANsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSecurityGroupToVirtualNetworkUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistVLANs {
 	request := []isegosdk.RequestSecurityGroupToVirtualNetworkUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistVLANs{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

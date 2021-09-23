@@ -422,7 +422,7 @@ func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttrib
 		request.Predefined = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".headers"); !isEmptyValue(reflect.ValueOf(d.Get(key+".headers"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".headers"))) {
-		request.Headers = expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx, key, d)
+		request.Headers = expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx, key+".headers", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -433,7 +433,7 @@ func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttrib
 func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeaders {
 	request := []isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeaders{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -505,7 +505,7 @@ func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAt
 		request.Predefined = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".headers"); !isEmptyValue(reflect.ValueOf(d.Get(key+".headers"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".headers"))) {
-		request.Headers = expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx, key, d)
+		request.Headers = expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx, key+".headers", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -516,7 +516,7 @@ func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAt
 func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders {
 	request := []isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

@@ -394,7 +394,7 @@ func expandRequestTacacsProfileCreateTacacsProfileTacacsProfile(ctx context.Cont
 func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes {
 	request := isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes{}
 	if v, ok := d.GetOkExists(key + ".session_attribute_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".session_attribute_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".session_attribute_list"))) {
-		request.SessionAttributeList = expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeListArray(ctx, key, d)
+		request.SessionAttributeList = expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeListArray(ctx, key+".session_attribute_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -405,7 +405,7 @@ func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes
 func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeList {
 	request := []isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -471,7 +471,7 @@ func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfile(ctx context.
 func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributes {
 	request := isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributes{}
 	if v, ok := d.GetOkExists(key + ".session_attribute_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".session_attribute_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".session_attribute_list"))) {
-		request.SessionAttributeList = expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeListArray(ctx, key, d)
+		request.SessionAttributeList = expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeListArray(ctx, key+".session_attribute_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -482,7 +482,7 @@ func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttrib
 func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList {
 	request := []isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

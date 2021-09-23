@@ -1167,7 +1167,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlo
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1178,7 +1178,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPag
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1540,7 +1540,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1551,7 +1551,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
