@@ -125,8 +125,8 @@ func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroups(ctx con
 
 func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperationAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryIsUserMemberOfGroupsOperationAdditionalData {
 	request := isegosdk.RequestActiveDirectoryIsUserMemberOfGroupsOperationAdditionalData{}
-	if v, ok := d.GetOkExists("additional_data"); !isEmptyValue(reflect.ValueOf(d.Get("additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get("additional_data"))) {
-		request.AdditionalData = expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperationAdditionalDataAdditionalDataArray(ctx, key, d)
+	if v, ok := d.GetOkExists(key + ".additional_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".additional_data"))) {
+		request.AdditionalData = expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperationAdditionalDataAdditionalDataArray(ctx, key+".additional_data", d)
 	}
 	return &request
 }
@@ -134,7 +134,7 @@ func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperatio
 func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryIsUserMemberOfGroupsOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestActiveDirectoryIsUserMemberOfGroupsOperationAdditionalDataAdditionalData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -150,10 +150,10 @@ func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperatio
 
 func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperationAdditionalDataAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryIsUserMemberOfGroupsOperationAdditionalDataAdditionalData {
 	request := isegosdk.RequestActiveDirectoryIsUserMemberOfGroupsOperationAdditionalDataAdditionalData{}
-	if v, ok := d.GetOkExists("value"); !isEmptyValue(reflect.ValueOf(d.Get("value"))) && (ok || !reflect.DeepEqual(v, d.Get("value"))) {
+	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
 	return &request

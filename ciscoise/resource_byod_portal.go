@@ -1188,7 +1188,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustom
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1199,7 +1199,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomiz
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1567,7 +1567,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCu
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations{}
 	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
-		request.Data = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsDataArray(ctx, key, d)
+		request.Data = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1578,7 +1578,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCust
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

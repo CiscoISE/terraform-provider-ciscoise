@@ -582,7 +582,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeCon
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -628,7 +628,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeCon
 func expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionChildren {
 	request := []isegosdk.RequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -770,7 +770,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeCon
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDChildrenArray(ctx, key, d)
+		request.Children = expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDDatesRange(ctx, key+".dates_range.0", d)
@@ -816,7 +816,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeCon
 func expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDChildren {
 	request := []isegosdk.RequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

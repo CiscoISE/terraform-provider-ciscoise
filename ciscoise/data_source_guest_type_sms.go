@@ -98,8 +98,8 @@ func expandRequestGuestTypeSmsUpdateGuestTypeSms(ctx context.Context, key string
 
 func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalData {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalData{}
-	if v, ok := d.GetOkExists("additional_data"); !isEmptyValue(reflect.ValueOf(d.Get("additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get("additional_data"))) {
-		request.AdditionalData = expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditionalDataArray(ctx, key, d)
+	if v, ok := d.GetOkExists(key + ".additional_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".additional_data"))) {
+		request.AdditionalData = expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditionalDataArray(ctx, key+".additional_data", d)
 	}
 	return &request
 }
@@ -107,7 +107,7 @@ func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalData(ctx cont
 func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalDataAdditionalData{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -123,10 +123,10 @@ func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditiona
 
 func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalDataAdditionalData {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalDataAdditionalData{}
-	if v, ok := d.GetOkExists("value"); !isEmptyValue(reflect.ValueOf(d.Get("value"))) && (ok || !reflect.DeepEqual(v, d.Get("value"))) {
+	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists("name"); !isEmptyValue(reflect.ValueOf(d.Get("name"))) && (ok || !reflect.DeepEqual(v, d.Get("name"))) {
+	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
 	return &request

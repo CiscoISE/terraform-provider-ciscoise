@@ -424,7 +424,7 @@ func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditi
 		request.Name = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".conditions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".conditions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".conditions"))) {
-		request.Conditions = expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionConditionsArray(ctx, key, d)
+		request.Conditions = expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionConditionsArray(ctx, key+".conditions", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -452,7 +452,7 @@ func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditi
 func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionConditionsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionConditions {
 	request := []isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionConditions{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -508,7 +508,7 @@ func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditi
 		request.Name = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".conditions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".conditions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".conditions"))) {
-		request.Conditions = expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDConditionsArray(ctx, key, d)
+		request.Conditions = expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDConditionsArray(ctx, key+".conditions", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -536,7 +536,7 @@ func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditi
 func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDConditionsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDConditions {
 	request := []isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDConditions{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

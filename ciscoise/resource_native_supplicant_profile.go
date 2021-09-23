@@ -363,8 +363,8 @@ func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSp
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".wireless_profiles"); !isEmptyValue(reflect.ValueOf(d.Get(key+".wireless_profiles"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".wireless_profiles"))) {
-		request.WirelessProfiles = expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfilesArray(ctx, key, d)
+	if _, ok := d.GetOk(key + ".wireless_profiles"); ok {
+		request.WirelessProfiles = expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfilesArray(ctx, key+".wireless_profiles", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -375,7 +375,7 @@ func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSp
 func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfilesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfiles {
 	request := []isegosdk.RequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfiles{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})

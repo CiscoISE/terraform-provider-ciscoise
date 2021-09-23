@@ -810,7 +810,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetG
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -856,7 +856,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetG
 func expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthorizationGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionChildren {
 	request := []isegosdk.RequestNetworkAccessAuthorizationGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
@@ -1062,7 +1062,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetG
 		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
-		request.Children = expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionChildrenArray(ctx, key, d)
+		request.Children = expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionChildrenArray(ctx, key+".children", d)
 	}
 	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
 		request.DatesRange = expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionDatesRange(ctx, key+".dates_range.0", d)
@@ -1108,7 +1108,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetG
 func expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthorizationGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionChildren {
 	request := []isegosdk.RequestNetworkAccessAuthorizationGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionChildren{}
 	o := d.Get(key)
-	if o != nil {
+	if o == nil {
 		return nil
 	}
 	objs := o.([]interface{})
