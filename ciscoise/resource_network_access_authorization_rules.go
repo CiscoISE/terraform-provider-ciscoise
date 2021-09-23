@@ -21,14 +21,14 @@ func resourceNetworkAccessAuthorizationRules() *schema.Resource {
 
 
 
- Rule must include name and condition.
+Rule must include name and condition.
 
 
- Condition has hierarchical structure which define a set of conditions for which authoriztion policy rule could be
+Condition has hierarchical structure which define a set of conditions for which authoriztion policy rule could be
 match.
 
 
- Condition can be either reference to a stored Library condition, using model
+Condition can be either reference to a stored Library condition, using model
 ConditionReference
 
 
@@ -67,6 +67,27 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							Description: `id path parameter. Rule id`,
 							Type:        schema.TypeString,
 							Optional:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
@@ -136,6 +157,27 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -260,6 +302,27 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -677,9 +740,7 @@ func resourceNetworkAccessAuthorizationRulesDelete(ctx context.Context, d *schem
 }
 func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRule(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRule {
 	request := isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRule{}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToSliceString(v)
 	}
@@ -749,9 +810,7 @@ func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizatio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -851,9 +910,7 @@ func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizatio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -935,9 +992,7 @@ func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizatio
 
 func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByID {
 	request := isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByID{}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToSliceString(v)
 	}
@@ -1007,9 +1062,7 @@ func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizatio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1109,9 +1162,7 @@ func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizatio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

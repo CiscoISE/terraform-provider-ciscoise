@@ -109,6 +109,27 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Optional:     true,
 													Computed:     true,
 												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
 											},
 										},
 									},
@@ -233,6 +254,27 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Optional:     true,
 										Computed:     true,
 									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
 									"name": &schema.Schema{
 										Description: `Condition name`,
 										Type:        schema.TypeString,
@@ -299,6 +341,27 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Description: `Given name for the policy set, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
@@ -608,9 +671,7 @@ func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySet(ctx context
 	if v, ok := d.GetOkExists(key + ".is_proxy"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_proxy"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_proxy"))) {
 		request.IsProxy = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
@@ -637,9 +698,7 @@ func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetCondition(ct
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -739,9 +798,7 @@ func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChi
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -858,9 +915,7 @@ func expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByID(ctx con
 	if v, ok := d.GetOkExists(key + ".is_proxy"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_proxy"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_proxy"))) {
 		request.IsProxy = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
@@ -887,9 +942,7 @@ func expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -989,9 +1042,7 @@ func expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditio
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

@@ -115,6 +115,27 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"name": &schema.Schema{
 							Description: `Network Condition name`,
 							Type:        schema.TypeString,
@@ -397,9 +418,7 @@ func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditi
 	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
@@ -483,9 +502,7 @@ func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditi
 	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}

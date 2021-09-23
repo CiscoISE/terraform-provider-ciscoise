@@ -91,6 +91,27 @@ func resourceDeviceAdministrationPolicySet() *schema.Resource {
 													Optional:     true,
 													Computed:     true,
 												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
+												},
 											},
 										},
 									},
@@ -215,6 +236,27 @@ func resourceDeviceAdministrationPolicySet() *schema.Resource {
 										Optional:     true,
 										Computed:     true,
 									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
 									"name": &schema.Schema{
 										Description: `Condition name`,
 										Type:        schema.TypeString,
@@ -281,6 +323,27 @@ func resourceDeviceAdministrationPolicySet() *schema.Resource {
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Description: `Given name for the policy set, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
@@ -590,9 +653,7 @@ func expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySet(ctx co
 	if v, ok := d.GetOkExists(key + ".is_proxy"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_proxy"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_proxy"))) {
 		request.IsProxy = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
@@ -619,9 +680,7 @@ func expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditi
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -721,9 +780,7 @@ func expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditi
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -840,9 +897,7 @@ func expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByID(ct
 	if v, ok := d.GetOkExists(key + ".is_proxy"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_proxy"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_proxy"))) {
 		request.IsProxy = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
@@ -869,9 +924,7 @@ func expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDCon
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -971,9 +1024,7 @@ func expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDCon
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

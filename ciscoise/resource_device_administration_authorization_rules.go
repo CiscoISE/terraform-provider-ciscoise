@@ -58,6 +58,27 @@ func resourceDeviceAdministrationAuthorizationRules() *schema.Resource {
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
 							Type:        schema.TypeString,
@@ -123,6 +144,27 @@ func resourceDeviceAdministrationAuthorizationRules() *schema.Resource {
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -247,6 +289,27 @@ func resourceDeviceAdministrationAuthorizationRules() *schema.Resource {
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -661,9 +724,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthorizationRuleLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -730,9 +791,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthorizationRuleRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -832,9 +891,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthorizationRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -919,9 +976,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthorizationRuleByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -988,9 +1043,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthorizationRuleByIDRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1090,9 +1143,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthori
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthorizationRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

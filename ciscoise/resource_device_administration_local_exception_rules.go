@@ -59,6 +59,27 @@ Rules.
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
 							Type:        schema.TypeString,
@@ -124,6 +145,27 @@ Rules.
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -248,6 +290,27 @@ Rules.
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -662,9 +725,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -731,9 +792,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -833,9 +892,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -920,9 +977,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
 		request.Commands = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToString(v)
 	}
@@ -989,9 +1044,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1091,9 +1144,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
