@@ -130,8 +130,16 @@ string parameter. Each resource Data model description should specify if an attr
 					Schema: map[string]*schema.Schema{
 
 						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"custom_attributes": &schema.Schema{
+										Type:     schema.TypeMap,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -277,8 +285,16 @@ string parameter. Each resource Data model description should specify if an attr
 					Schema: map[string]*schema.Schema{
 
 						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"custom_attributes": &schema.Schema{
+										Type:     schema.TypeMap,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -653,7 +669,7 @@ func flattenEndpointGetEndpointByNameItemName(item *isegosdk.ResponseEndpointGet
 	respItem["identity_store"] = item.IDentityStore
 	respItem["identity_store_id"] = item.IDentityStoreID
 	respItem["mdm_attributes"] = flattenEndpointGetEndpointByNameItemNameMdmAttributes(item.MdmAttributes)
-	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+	respItem["custom_attributes"] = flattenEndpointGetEndpointByNameItemNameCustomAttributes(item.CustomAttributes)
 	respItem["link"] = flattenEndpointGetEndpointByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -683,6 +699,18 @@ func flattenEndpointGetEndpointByNameItemNameMdmAttributes(item *isegosdk.Respon
 		respItem,
 	}
 
+}
+
+func flattenEndpointGetEndpointByNameItemNameCustomAttributes(item *isegosdk.ResponseEndpointGetEndpointByNameERSEndPointCustomAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+
+	return []map[string]interface{}{
+		respItem,
+	}
 }
 
 func flattenEndpointGetEndpointByNameItemNameLink(item *isegosdk.ResponseEndpointGetEndpointByNameERSEndPointLink) []map[string]interface{} {
@@ -717,7 +745,7 @@ func flattenEndpointGetEndpointByIDItemID(item *isegosdk.ResponseEndpointGetEndp
 	respItem["identity_store"] = item.IDentityStore
 	respItem["identity_store_id"] = item.IDentityStoreID
 	respItem["mdm_attributes"] = flattenEndpointGetEndpointByIDItemIDMdmAttributes(item.MdmAttributes)
-	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+	respItem["custom_attributes"] = flattenEndpointGetEndpointByIDItemIDCustomAttributes(item.CustomAttributes)
 	respItem["link"] = flattenEndpointGetEndpointByIDItemIDLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -747,6 +775,18 @@ func flattenEndpointGetEndpointByIDItemIDMdmAttributes(item *isegosdk.ResponseEn
 		respItem,
 	}
 
+}
+
+func flattenEndpointGetEndpointByIDItemIDCustomAttributes(item *isegosdk.ResponseEndpointGetEndpointByIDERSEndPointCustomAttributes) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+
+	return []map[string]interface{}{
+		respItem,
+	}
 }
 
 func flattenEndpointGetEndpointByIDItemIDLink(item *isegosdk.ResponseEndpointGetEndpointByIDERSEndPointLink) []map[string]interface{} {

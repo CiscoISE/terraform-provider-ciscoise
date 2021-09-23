@@ -44,9 +44,18 @@ func resourceEndpoint() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"custom_attributes": &schema.Schema{
-							Type:     schema.TypeMap,
+							Type:     schema.TypeList,
 							Optional: true,
 							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"custom_attributes": &schema.Schema{
+										Type:     schema.TypeMap,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -508,10 +517,7 @@ func expandRequestEndpointCreateEndpointERSEndPoint(ctx context.Context, key str
 		request.MdmAttributes = expandRequestEndpointCreateEndpointERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := map[string]interface{}{
-			"customAttributes": v.(map[string]interface{}),
-		}
-		request.CustomAttributes = &customAttributes
+		request.CustomAttributes = expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx, key+".custom_attributes.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -559,6 +565,18 @@ func expandRequestEndpointCreateEndpointERSEndPointMdmAttributes(ctx context.Con
 	}
 	if v, ok := d.GetOkExists(key + ".mdm_phone_number"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_phone_number"))) {
 		request.MdmPhoneNumber = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributes {
+	request := isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributes{}
+	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
+		customAttributes := v.(map[string]interface{})
+		request.CustomAttributes = &customAttributes
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -614,10 +632,7 @@ func expandRequestEndpointUpdateEndpointByIDERSEndPoint(ctx context.Context, key
 		request.MdmAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := map[string]interface{}{
-			"customAttributes": v.(map[string]interface{}),
-		}
-		request.CustomAttributes = &customAttributes
+		request.CustomAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx, key+".custom_attributes.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -665,6 +680,18 @@ func expandRequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes(ctx context
 	}
 	if v, ok := d.GetOkExists(key + ".mdm_phone_number"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_phone_number"))) {
 		request.MdmPhoneNumber = interfaceToString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes {
+	request := isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes{}
+	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
+		customAttributes := v.(map[string]interface{})
+		request.CustomAttributes = &customAttributes
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

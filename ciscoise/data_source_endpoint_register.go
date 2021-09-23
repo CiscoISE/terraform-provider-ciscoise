@@ -235,8 +235,7 @@ func expandRequestEndpointRegisterRegisterEndpointERSEndPoint(ctx context.Contex
 		request.MdmAttributes = expandRequestEndpointRegisterRegisterEndpointERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		vCustomAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &vCustomAttributes
+		request.CustomAttributes = expandRequestEndpointRegisterRegisterEndpointERSEndPointCustomAttributes(ctx, key+".custom_attributes.0", d)
 	}
 	return &request
 }
@@ -281,6 +280,15 @@ func expandRequestEndpointRegisterRegisterEndpointERSEndPointMdmAttributes(ctx c
 	}
 	if v, ok := d.GetOkExists(key + ".mdm_phone_number"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_phone_number"))) {
 		request.MdmPhoneNumber = interfaceToString(v)
+	}
+	return &request
+}
+
+func expandRequestEndpointRegisterRegisterEndpointERSEndPointCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointRegisterEndpointERSEndPointCustomAttributes {
+	request := isegosdk.RequestEndpointRegisterEndpointERSEndPointCustomAttributes{}
+	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
+		customAttributes := v.(map[string]interface{})
+		request.CustomAttributes = &customAttributes
 	}
 	return &request
 }
