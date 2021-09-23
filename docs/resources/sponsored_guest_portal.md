@@ -478,7 +478,7 @@ Optional:
 
 Optional:
 
-- **allowed_interfaces** (String) Interfaces that the portal will be reachable on.
+- **allowed_interfaces** (List of String) Interfaces that the portal will be reachable on.
 Allowed values:
 - eth0,
 - eth1,

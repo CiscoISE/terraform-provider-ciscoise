@@ -274,7 +274,7 @@ Read-Only:
 
 Read-Only:
 
-- **allowed_interfaces** (String)
+- **allowed_interfaces** (List of String)
 - **authentication_method** (String)
 - **available_ssids** (String)
 - **certificate_group_tag** (String)

@@ -147,7 +147,7 @@ string parameter. Each resource Data model description should specify if an attr
 
 Read-Only:
 
-- **custom_attributes** (Map of String)
+- **custom_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--custom_attributes))
 - **description** (String)
 - **group_id** (String)
 - **id** (String)
@@ -161,6 +161,14 @@ Read-Only:
 - **profile_id** (String)
 - **static_group_assignment** (String)
 - **static_profile_assignment** (String)
+
+<a id="nestedobjatt--item_id--custom_attributes"></a>
+### Nested Schema for `item_id.custom_attributes`
+
+Read-Only:
+
+- **custom_attributes** (Map of String)
+
 
 <a id="nestedobjatt--item_id--link"></a>
 ### Nested Schema for `item_id.link`
@@ -198,7 +206,7 @@ Read-Only:
 
 Read-Only:
 
-- **custom_attributes** (Map of String)
+- **custom_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--custom_attributes))
 - **description** (String)
 - **group_id** (String)
 - **id** (String)
@@ -212,6 +220,14 @@ Read-Only:
 - **profile_id** (String)
 - **static_group_assignment** (String)
 - **static_profile_assignment** (String)
+
+<a id="nestedobjatt--item_name--custom_attributes"></a>
+### Nested Schema for `item_name.custom_attributes`
+
+Read-Only:
+
+- **custom_attributes** (Map of String)
+
 
 <a id="nestedobjatt--item_name--link"></a>
 ### Nested Schema for `item_name.link`
