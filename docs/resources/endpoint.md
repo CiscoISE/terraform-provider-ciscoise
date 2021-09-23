@@ -24,9 +24,11 @@ resource "ciscoise_endpoint" "example" {
   provider = ciscoise
   item {
 
-    custom_attributes = {
-      key1 = "value1"
-      key2 = "value2"
+    custom_attributes {
+      custom_attributes = {
+        key1 = "value1"
+        key2 = "value2"
+      }
     }
     description       = "string"
     group_id          = "string"
@@ -80,7 +82,7 @@ output "ciscoise_endpoint_example" {
 
 Optional:
 
-- **custom_attributes** (Map of String)
+- **custom_attributes** (Block List) (see [below for nested schema](#nestedblock--item--custom_attributes))
 - **description** (String)
 - **group_id** (String)
 - **id** (String) The ID of this resource.
@@ -97,6 +99,14 @@ Optional:
 Read-Only:
 
 - **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+
+<a id="nestedblock--item--custom_attributes"></a>
+### Nested Schema for `item.custom_attributes`
+
+Optional:
+
+- **custom_attributes** (Map of String)
+
 
 <a id="nestedblock--item--mdm_attributes"></a>
 ### Nested Schema for `item.mdm_attributes`
