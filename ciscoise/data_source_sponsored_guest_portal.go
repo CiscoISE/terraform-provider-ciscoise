@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceSponsoredGuestPortal() *schema.Resource {
 		Description: `It performs read operation on SponsoredGuestPortal.
 
 - This data source allows the client to get a sponsored guest portal by ID.
+
 - This data source allows the client to get all the sponsored guest portals.
 
 Filter:
@@ -23,7 +25,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceSponsoredGuestPortalRead,
 		Schema: map[string]*schema.Schema{
@@ -361,27 +364,32 @@ The Tweak Settings can subsequently be changed by the user`,
 													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_aup_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"skip_aup_for_employees": &schema.Schema{
 													Description: `Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"use_diff_aup_for_employees": &schema.Schema{
 													Description: `Only valid if requireAupAcceptance = true`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -429,8 +437,9 @@ Allowed values:
 															},
 															"show_device_id": &schema.Schema{
 																Description: `Display Device ID field during registration`,
-																Type:        schema.TypeBool,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -473,29 +482,35 @@ Allowed values:
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_guest_access": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"include_aup": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_mdm": &schema.Schema{
-																Type:     schema.TypeBool,
+																// Type:     schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_scrolling": &schema.Schema{
 																Description: `Require BYOD devices to scroll down to the bottom of the AUP.
 Only valid if includeAup = true`,
-																Type:     schema.TypeBool,
+																// Type:        schema.TypeBool,
+																Type:     schema.TypeString,
 																Computed: true,
 															},
 														},
@@ -512,8 +527,9 @@ Only valid if includeAup = true`,
 
 												"allow_change_passwd_at_first_login": &schema.Schema{
 													Description: `Allow guest to change their own passwords`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -526,13 +542,15 @@ Only valid if includeAup = true`,
 
 												"allow_guests_to_register_devices": &schema.Schema{
 													Description: `Allow guests to register devices`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"auto_register_guest_devices": &schema.Schema{
 													Description: `Automatically register guest devices`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -550,20 +568,24 @@ Only valid if includeAup = true`,
 													Computed:    true,
 												},
 												"allow_alternate_guest_portal": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_forgot_password": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_to_change_password": &schema.Schema{
 													Description: `Require the portal user to enter an access code`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"allow_guest_to_create_accounts": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"aup_display": &schema.Schema{
@@ -577,8 +599,9 @@ Allowed values:
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
 													Description: `Maximum failed login attempts before rate limiting`,
@@ -586,13 +609,15 @@ Allowed values:
 													Computed:    true,
 												},
 												"require_access_code": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP.
 Only valid if includeAup = true`,
-													Type:     schema.TypeBool,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"social_configs": &schema.Schema{
@@ -690,7 +715,8 @@ Range from 8000 to 8999`,
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -704,8 +730,9 @@ Range from 8000 to 8999`,
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													Type:        schema.TypeBool,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
@@ -731,27 +758,33 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
@@ -822,9 +855,9 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -859,7 +892,7 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalsSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -906,7 +939,7 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItem(response2.SponsoredGuestPortal)
 		if err := d.Set("item", vItem2); err != nil {
@@ -1018,17 +1051,17 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPage
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["require_access_code"] = item.RequireAccessCode
+	respItem["require_access_code"] = boolPtrToString(item.RequireAccessCode)
 	respItem["max_failed_attempts_before_rate_limit"] = item.MaxFailedAttemptsBeforeRateLimit
 	respItem["time_between_logins_during_rate_limit"] = item.TimeBetweenLoginsDuringRateLimit
-	respItem["include_aup"] = item.IncludeAup
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
 	respItem["aup_display"] = item.AupDisplay
-	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
+	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
 	respItem["access_code"] = item.AccessCode
-	respItem["allow_guest_to_create_accounts"] = item.AllowGuestToCreateAccounts
-	respItem["allow_forgot_password"] = item.AllowForgotPassword
-	respItem["allow_guest_to_change_password"] = item.AllowGuestToChangePassword
-	respItem["allow_alternate_guest_portal"] = item.AllowAlternateGuestPortal
+	respItem["allow_guest_to_create_accounts"] = boolPtrToString(item.AllowGuestToCreateAccounts)
+	respItem["allow_forgot_password"] = boolPtrToString(item.AllowForgotPassword)
+	respItem["allow_guest_to_change_password"] = boolPtrToString(item.AllowGuestToChangePassword)
+	respItem["allow_alternate_guest_portal"] = boolPtrToString(item.AllowAlternateGuestPortal)
 	respItem["social_configs"] = flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPageSettingsSocialConfigs(item.SocialConfigs)
 
 	return []map[string]interface{}{
@@ -1057,12 +1090,12 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsAupSettin
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_aup"] = item.IncludeAup
-	respItem["require_aup_scrolling"] = item.RequireAupScrolling
-	respItem["use_diff_aup_for_employees"] = item.UseDiffAupForEmployees
-	respItem["skip_aup_for_employees"] = item.SkipAupForEmployees
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
+	respItem["require_aup_scrolling"] = boolPtrToString(item.RequireAupScrolling)
+	respItem["use_diff_aup_for_employees"] = boolPtrToString(item.UseDiffAupForEmployees)
+	respItem["skip_aup_for_employees"] = boolPtrToString(item.SkipAupForEmployees)
 	respItem["display_frequency_interval_days"] = item.DisplayFrequencyIntervalDays
-	respItem["require_scrolling"] = item.RequireScrolling
+	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
 	respItem["display_frequency"] = item.DisplayFrequency
 
 	return []map[string]interface{}{
@@ -1076,7 +1109,7 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsGuestChan
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["allow_change_passwd_at_first_login"] = item.AllowChangePasswdAtFirstLogin
+	respItem["allow_change_passwd_at_first_login"] = boolPtrToString(item.AllowChangePasswdAtFirstLogin)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1089,8 +1122,8 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsGuestDevi
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["auto_register_guest_devices"] = item.AutoRegisterGuestDevices
-	respItem["allow_guests_to_register_devices"] = item.AllowGuestsToRegisterDevices
+	respItem["auto_register_guest_devices"] = boolPtrToString(item.AutoRegisterGuestDevices)
+	respItem["allow_guests_to_register_devices"] = boolPtrToString(item.AllowGuestsToRegisterDevices)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1118,13 +1151,13 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSetti
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enable_byo_d"] = item.EnableByod
-	respItem["enable_guest_access"] = item.EnableGuestAccess
-	respItem["require_mdm"] = item.RequireMdm
-	respItem["include_aup"] = item.IncludeAup
+	respItem["enable_byo_d"] = boolPtrToString(item.EnableByod)
+	respItem["enable_guest_access"] = boolPtrToString(item.EnableGuestAccess)
+	respItem["require_mdm"] = boolPtrToString(item.RequireMdm)
+	respItem["include_aup"] = boolPtrToString(item.IncludeAup)
 	respItem["aup_display"] = item.AupDisplay
-	respItem["require_aup_acceptance"] = item.RequireAupAcceptance
-	respItem["require_scrolling"] = item.RequireScrolling
+	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
+	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1137,7 +1170,7 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsByodSetti
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["show_device_id"] = item.ShowDeviceID
+	respItem["show_device_id"] = boolPtrToString(item.ShowDeviceID)
 	respItem["end_point_identity_group_id"] = item.EndPointIDentityGroupID
 
 	return []map[string]interface{}{
@@ -1165,7 +1198,7 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPostAcces
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
+	respItem["include_post_access_banner"] = boolPtrToString(item.IncludePostAccessBanner)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1192,7 +1225,7 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsPostLogin
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_post_access_banner"] = item.IncludePostAccessBanner
+	respItem["include_post_access_banner"] = boolPtrToString(item.IncludePostAccessBanner)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1205,12 +1238,12 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsSupportIn
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_support_info_page"] = item.IncludeSupportInfoPage
-	respItem["include_mac_addr"] = item.IncludeMacAddr
-	respItem["include_ip_address"] = item.IncludeIPAddress
-	respItem["include_browser_user_agent"] = item.IncludeBrowserUserAgent
-	respItem["include_policy_server"] = item.IncludePolicyServer
-	respItem["include_failure_code"] = item.IncludeFailureCode
+	respItem["include_support_info_page"] = boolPtrToString(item.IncludeSupportInfoPage)
+	respItem["include_mac_addr"] = boolPtrToString(item.IncludeMacAddr)
+	respItem["include_ip_address"] = boolPtrToString(item.IncludeIPAddress)
+	respItem["include_browser_user_agent"] = boolPtrToString(item.IncludeBrowserUserAgent)
+	respItem["include_policy_server"] = boolPtrToString(item.IncludePolicyServer)
+	respItem["include_failure_code"] = boolPtrToString(item.IncludeFailureCode)
 	respItem["empty_field_display"] = item.EmptyFieldDisplay
 	respItem["default_empty_field_value"] = item.DefaultEmptyFieldValue
 

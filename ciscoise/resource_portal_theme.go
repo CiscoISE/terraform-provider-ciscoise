@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourcePortalTheme() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on PortalTheme.
-  
-  - This resource allows the client to update a portal theme by ID.
-  - This resource deletes a portal theme by ID.
-  - This resource creates a portal theme.`,
+
+- This resource allows the client to update a portal theme by ID.
+
+- This resource deletes a portal theme by ID.
+
+- This resource creates a portal theme.
+`,
 
 		CreateContext: resourcePortalThemeCreate,
 		ReadContext:   resourcePortalThemeRead,
@@ -96,7 +100,7 @@ func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m in
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestPortalThemeCreatePortalTheme(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -181,7 +185,7 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsPortalThemeGetPortalThemes(m, response1, &queryParams1)
 		item1, err := searchPortalThemeGetPortalThemes(m, items1, vvName, vvID)
@@ -191,7 +195,8 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure when searching item from GetPortalThemes, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenPortalThemeGetPortalThemeByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPortalThemes search response",
 				err))
@@ -212,7 +217,7 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenPortalThemeGetPortalThemeByIDItem(response2.PortalTheme)
 		if err := d.Set("item", vItem2); err != nil {
@@ -266,13 +271,13 @@ func resourcePortalThemeUpdate(ctx context.Context, d *schema.ResourceData, m in
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestPortalThemeUpdatePortalThemeByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.PortalTheme.UpdatePortalThemeByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdatePortalThemeByID", err, restyResp1.String(),
 					"Failure at UpdatePortalThemeByID, unexpected response", ""))
@@ -338,7 +343,7 @@ func resourcePortalThemeDelete(ctx context.Context, d *schema.ResourceData, m in
 	restyResp1, err := client.PortalTheme.DeletePortalThemeByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeletePortalThemeByID", err, restyResp1.String(),
 				"Failure at DeletePortalThemeByID, unexpected response", ""))

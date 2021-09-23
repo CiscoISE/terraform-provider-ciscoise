@@ -3,7 +3,7 @@ resource "ciscoise_id_store_sequence" "example" {
   provider = ciscoise
   item {
 
-    break_on_store_fail                = false
+    break_on_store_fail                = "false"
     certificate_authentication_profile = "string"
     description                        = "string"
     id                                 = "string"

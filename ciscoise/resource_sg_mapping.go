@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceSgMapping() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on IPToSGTMapping.
-  
-  - This resource allows the client to update an IP to SGT mapping by ID.
-  - This resource deletes an IP to SGT mapping.
-  - This resource creates an IP to SGT mapping.`,
+
+- This resource allows the client to update an IP to SGT mapping by ID.
+
+- This resource deletes an IP to SGT mapping.
+
+- This resource creates an IP to SGT mapping.
+`,
 
 		CreateContext: resourceSgMappingCreate,
 		ReadContext:   resourceSgMappingRead,
@@ -48,9 +52,9 @@ func resourceSgMapping() *schema.Resource {
 						},
 						"deploy_type": &schema.Schema{
 							Description: `Allowed values:
-  - ALL,
-  - ND,
-  - NDG`,
+- ALL,
+- ND,
+- NDG`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -124,7 +128,7 @@ func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSgMappingCreateIPToSgtMapping(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -209,7 +213,7 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsIPToSgtMappingGetIPToSgtMapping(m, response1, &queryParams1)
 		item1, err := searchIPToSgtMappingGetIPToSgtMapping(m, items1, vvName, vvID)
@@ -219,7 +223,8 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 				"Failure when searching item from GetIPToSgtMapping, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenIPToSgtMappingGetIPToSgtMappingByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetIPToSgtMapping search response",
 				err))
@@ -240,7 +245,7 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenIPToSgtMappingGetIPToSgtMappingByIDItem(response2.SgMapping)
 		if err := d.Set("item", vItem2); err != nil {
@@ -293,13 +298,13 @@ func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m inte
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSgMappingUpdateIPToSgtMappingByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.IPToSgtMapping.UpdateIPToSgtMappingByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateIPToSgtMappingByID", err, restyResp1.String(),
 					"Failure at UpdateIPToSgtMappingByID, unexpected response", ""))
@@ -365,7 +370,7 @@ func resourceSgMappingDelete(ctx context.Context, d *schema.ResourceData, m inte
 	restyResp1, err := client.IPToSgtMapping.DeleteIPToSgtMappingByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteIPToSgtMappingByID", err, restyResp1.String(),
 				"Failure at DeleteIPToSgtMappingByID, unexpected response", ""))

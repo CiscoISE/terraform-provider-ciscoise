@@ -8,7 +8,7 @@ resource "ciscoise_sg_acl" "example" {
     generation_id    = "string"
     id               = "string"
     ip_version       = "string"
-    is_read_only     = false
+    is_read_only     = "false"
     modelled_content = "string"
     name             = "string"
   }

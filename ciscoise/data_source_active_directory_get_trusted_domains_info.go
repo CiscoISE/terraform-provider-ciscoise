@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +17,8 @@ func dataSourceActiveDirectoryGetTrustedDomainsInfo() *schema.Resource {
 		Description: `It performs update operation on ActiveDirectory.
 
 - This data source action gets the list of domains that are accessible through the given join point via trust
-relationships.`,
+relationships.
+`,
 
 		ReadContext: dataSourceActiveDirectoryGetTrustedDomainsInfoRead,
 		Schema: map[string]*schema.Schema{
@@ -79,7 +81,7 @@ func dataSourceActiveDirectoryGetTrustedDomainsInfoRead(ctx context.Context, d *
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenActiveDirectoryGetTrustedDomainsItem(response1.ERSActiveDirectoryDomains)
 		if err := d.Set("item", vItem1); err != nil {

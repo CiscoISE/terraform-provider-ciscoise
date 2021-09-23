@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceNetworkAccessNetworkCondition() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Network Conditions.
-  
-  - Network Access Creates network condition.
-  - Network Access Update network condition.
-  - Network Access Delete network condition.`,
+
+- Network Access Creates network condition.
+
+- Network Access Update network condition.
+
+- Network Access Delete network condition.
+`,
 
 		CreateContext: resourceNetworkAccessNetworkConditionCreate,
 		ReadContext:   resourceNetworkAccessNetworkConditionRead,
@@ -111,6 +115,27 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"name": &schema.Schema{
 							Description: `Network Condition name`,
 							Type:        schema.TypeString,
@@ -131,7 +156,7 @@ func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkCondition(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -213,7 +238,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, response1)
 		item1, err := searchNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, items1, vvName, vvID)
@@ -223,7 +248,8 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 				"Failure when searching item from GetNetworkAccessNetworkConditions, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessNetworkConditions search response",
 				err))
@@ -243,7 +269,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -294,13 +320,13 @@ func resourceNetworkAccessNetworkConditionUpdate(ctx context.Context, d *schema.
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessNetworkConditions.UpdateNetworkAccessNetworkConditionByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkAccessNetworkConditionByID", err, restyResp1.String(),
 					"Failure at UpdateNetworkAccessNetworkConditionByID, unexpected response", ""))
@@ -364,7 +390,7 @@ func resourceNetworkAccessNetworkConditionDelete(ctx context.Context, d *schema.
 	response1, restyResp1, err := client.NetworkAccessNetworkConditions.DeleteNetworkAccessNetworkConditionByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkAccessNetworkConditionByID", err, restyResp1.String(),
 				"Failure at DeleteNetworkAccessNetworkConditionByID, unexpected response", ""))
@@ -393,9 +419,7 @@ func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditi
 	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}
@@ -479,9 +503,7 @@ func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditi
 	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
 		request.Name = interfaceToString(v)
 	}

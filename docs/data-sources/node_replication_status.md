@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Replication Status.
 
-Retrives replication status of a node
+- Retrives replication status of a node
 
 ## Example Usage
 

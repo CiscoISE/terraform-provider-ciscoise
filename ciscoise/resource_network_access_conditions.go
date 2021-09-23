@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,62 +16,66 @@ import (
 func resourceNetworkAccessConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Conditions.
-  
-  - Network Access Creates a library condition:
-  
-  
-  
-   Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
-  policy rules could be match.
-  
-  
-   Condition can be compose from single dictionary attribute name and value using model
-  LibraryConditionAttributes
-   , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
-  LibraryConditionAndBlock
-   or
-  LibraryConditionOrBlock
-  .
-  
-  
-   When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
-  inner condition models:
-  ConditionAttributes
-  ,
-  ConditionAndBlock
-  ,
-  ConditionOrBlock
-  , that represent dynamically built Conditions which are not stored in the conditions Library, or using
-  ConditionReference
-  , which includes an ID to existing stored condition in the library.
-  
-  
-   The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
-  the condition name.
-  
-  
-   When using one of the 3 inner condition models (
-  ConditionAttributes, ConditionAndBlock, ConditionOrBlock
-  ), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
-  only as inner members of the root condition.
-  
-  
-   When using
-  ConditionReference
-   model in inner layers, the condition name is not required.
-  
-  
-   ConditionReference objects can also include a reference ID to a condition of type
-  TimeAndDate
-  .
-  
-  
-  
-  
-  - Network Access Update library condition using condition name.
-  - Network Access Delete a library condition using condition Name.
-  - Network Access Update library condition.
-  - Network Access Delete a library condition.`,
+
+- Network Access Creates a library condition:
+
+
+
+ Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
+policy rules could be match.
+
+
+ Condition can be compose from single dictionary attribute name and value using model
+LibraryConditionAttributes
+ , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
+LibraryConditionAndBlock
+ or
+LibraryConditionOrBlock
+.
+
+
+ When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
+inner condition models:
+ConditionAttributes
+,
+ConditionAndBlock
+,
+ConditionOrBlock
+, that represent dynamically built Conditions which are not stored in the conditions Library, or using
+ConditionReference
+, which includes an ID to existing stored condition in the library.
+
+
+ The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
+the condition name.
+
+
+ When using one of the 3 inner condition models (
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
+only as inner members of the root condition.
+
+
+ When using
+ConditionReference
+ model in inner layers, the condition name is not required.
+
+
+ ConditionReference objects can also include a reference ID to a condition of type
+TimeAndDate
+.
+
+
+
+
+- Network Access Update library condition using condition name.
+
+- Network Access Delete a library condition using condition Name.
+
+- Network Access Update library condition.
+
+- Network Access Delete a library condition.
+`,
 
 		CreateContext: resourceNetworkAccessConditionsCreate,
 		ReadContext:   resourceNetworkAccessConditionsRead,
@@ -126,9 +131,32 @@ func resourceNetworkAccessConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -248,9 +276,32 @@ func resourceNetworkAccessConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							Type:        schema.TypeBool,
-							Optional:    true,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Description: `Condition name`,
@@ -296,7 +347,7 @@ func resourceNetworkAccessConditionsCreate(ctx context.Context, d *schema.Resour
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkAccessConditionsCreateNetworkAccessCondition(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -375,7 +426,7 @@ func resourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenNetworkAccessConditionsGetNetworkAccessConditionByNameItemName(response1.Response)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -400,7 +451,7 @@ func resourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenNetworkAccessConditionsGetNetworkAccessConditionByIDItemID(response2.Response)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -451,13 +502,13 @@ func resourceNetworkAccessConditionsUpdate(ctx context.Context, d *schema.Resour
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkAccessConditionsUpdateNetworkAccessConditionByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessConditions.UpdateNetworkAccessConditionByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkAccessConditionByID", err, restyResp1.String(),
 					"Failure at UpdateNetworkAccessConditionByID, unexpected response", ""))
@@ -514,7 +565,7 @@ func resourceNetworkAccessConditionsDelete(ctx context.Context, d *schema.Resour
 	response1, restyResp1, err := client.NetworkAccessConditions.DeleteNetworkAccessConditionByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkAccessConditionByID", err, restyResp1.String(),
 				"Failure at DeleteNetworkAccessConditionByID, unexpected response", ""))
@@ -540,9 +591,7 @@ func expandRequestNetworkAccessConditionsCreateNetworkAccessCondition(ctx contex
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessConditionsCreateNetworkAccessConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -642,9 +691,7 @@ func expandRequestNetworkAccessConditionsCreateNetworkAccessConditionChildren(ct
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessConditionsCreateNetworkAccessConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -732,9 +779,7 @@ func expandRequestNetworkAccessConditionsUpdateNetworkAccessConditionByID(ctx co
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessConditionsUpdateNetworkAccessConditionByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -834,9 +879,7 @@ func expandRequestNetworkAccessConditionsUpdateNetworkAccessConditionByIDChildre
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessConditionsUpdateNetworkAccessConditionByIDChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

@@ -5,14 +5,6 @@ subcategory: ""
 description: |-
   It performs create operation on Certificates.
   Export System Certificate.
-  NOTE:
-  The response of this API carries a ZIP file containing the certificate and private key if
-  "export" : "CERTIFICATEWITHPRIVATE_KEY"
-   in the request. If
-  "export" : "CERTIFICATE"
-   in request body, the response carries a ZIP file containing only the certificate.
-  WARNING:
-  Exporting a private key is not a secure operation. It could lead to possible exposure of the private key.
 ---
 
 # ciscoise_system_certificate_export_info (Data Source)
@@ -20,19 +12,6 @@ description: |-
 It performs create operation on Certificates.
 
 - Export System Certificate.
-
-
-NOTE:
-The response of this API carries a ZIP file containing the certificate and private key if
-"export" : "CERTIFICATE_WITH_PRIVATE_KEY"
- in the request. If
-"export" : "CERTIFICATE"
- in request body, the response carries a ZIP file containing only the certificate.
-
-
-
-WARNING:
-Exporting a private key is not a secure operation. It could lead to possible exposure of the private key.
 
 ## Example Usage
 

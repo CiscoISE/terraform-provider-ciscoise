@@ -12,7 +12,9 @@ description: |-
 It performs read operation on TACACSProfile.
 
 - This data source allows the client to get a TACACS profile by name.
+
 - This data source allows the client to get a TACACS profile by ID.
+
 - This data source allows the client to get all the TACACS profiles.
 
 ## Example Usage

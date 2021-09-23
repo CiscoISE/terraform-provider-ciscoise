@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceAuthorizationProfile() *schema.Resource {
 		Description: `It performs read operation on AuthorizationProfile.
 
 - This data source allows the client to get an authorization profile by name.
+
 - This data source allows the client to get an authorization profile by ID.
-- This data source allows the client to get all authorization profiles.`,
+
+- This data source allows the client to get all authorization profiles.
+`,
 
 		ReadContext: dataSourceAuthorizationProfileRead,
 		Schema: map[string]*schema.Schema{
@@ -120,7 +124,8 @@ For AdvancedDictionaryAttribute the value is dictionaryName and attributeName pr
 							},
 						},
 						"agentless_posture": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"airespace_acl": &schema.Schema{
@@ -161,7 +166,8 @@ SWITCH is used for Standard Authorization Profiles`,
 							Computed: true,
 						},
 						"easywired_session_candidate": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
@@ -216,7 +222,8 @@ SWITCH is used for Standard Authorization Profiles`,
 							Computed:    true,
 						},
 						"neat": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"profile_name": &schema.Schema{
@@ -245,11 +252,13 @@ SWITCH is used for Standard Authorization Profiles`,
 							},
 						},
 						"service_template": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"track_movement": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"vlan": &schema.Schema{
@@ -271,11 +280,13 @@ SWITCH is used for Standard Authorization Profiles`,
 							},
 						},
 						"voice_domain_permission": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"web_auth": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"web_redirection": &schema.Schema{
@@ -297,7 +308,8 @@ The WebRedirectionType must fit the portalName`,
 									"display_certificates_renewal_messages": &schema.Schema{
 										Description: `The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
 For all other 'WebRedirectionType' values the field must be ignored`,
-										Type:     schema.TypeBool,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"portal_name": &schema.Schema{
@@ -395,7 +407,8 @@ For AdvancedDictionaryAttribute the value is dictionaryName and attributeName pr
 							},
 						},
 						"agentless_posture": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"airespace_acl": &schema.Schema{
@@ -436,7 +449,8 @@ SWITCH is used for Standard Authorization Profiles`,
 							Computed: true,
 						},
 						"easywired_session_candidate": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
@@ -491,7 +505,8 @@ SWITCH is used for Standard Authorization Profiles`,
 							Computed:    true,
 						},
 						"neat": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"profile_name": &schema.Schema{
@@ -520,11 +535,13 @@ SWITCH is used for Standard Authorization Profiles`,
 							},
 						},
 						"service_template": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"track_movement": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"vlan": &schema.Schema{
@@ -546,11 +563,13 @@ SWITCH is used for Standard Authorization Profiles`,
 							},
 						},
 						"voice_domain_permission": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"web_auth": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"web_redirection": &schema.Schema{
@@ -572,7 +591,8 @@ The WebRedirectionType must fit the portalName`,
 									"display_certificates_renewal_messages": &schema.Schema{
 										Description: `The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
 For all other 'WebRedirectionType' values the field must be ignored`,
-										Type:     schema.TypeBool,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"portal_name": &schema.Schema{
@@ -646,11 +666,11 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -673,7 +693,7 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseAuthorizationProfileGetAuthorizationProfilesSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -720,7 +740,7 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenAuthorizationProfileGetAuthorizationProfileByNameItemName(response2.AuthorizationProfile)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -746,7 +766,7 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenAuthorizationProfileGetAuthorizationProfileByIDItemID(response3.AuthorizationProfile)
 		if err := d.Set("item_id", vItemID3); err != nil {
@@ -810,14 +830,14 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemName(item *iseg
 	respItem["airespace_ipv6_acl"] = item.AirespaceIPv6ACL
 	respItem["web_redirection"] = flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameWebRedirection(item.WebRedirection)
 	respItem["acl"] = item.ACL
-	respItem["track_movement"] = item.TrackMovement
-	respItem["agentless_posture"] = item.AgentlessPosture
-	respItem["service_template"] = item.ServiceTemplate
-	respItem["easywired_session_candidate"] = item.EasywiredSessionCandidate
+	respItem["track_movement"] = boolPtrToString(item.TrackMovement)
+	respItem["agentless_posture"] = boolPtrToString(item.AgentlessPosture)
+	respItem["service_template"] = boolPtrToString(item.ServiceTemplate)
+	respItem["easywired_session_candidate"] = boolPtrToString(item.EasywiredSessionCandidate)
 	respItem["dacl_name"] = item.DaclName
-	respItem["voice_domain_permission"] = item.VoiceDomainPermission
-	respItem["neat"] = item.Neat
-	respItem["web_auth"] = item.WebAuth
+	respItem["voice_domain_permission"] = boolPtrToString(item.VoiceDomainPermission)
+	respItem["neat"] = boolPtrToString(item.Neat)
+	respItem["web_auth"] = boolPtrToString(item.WebAuth)
 	respItem["auto_smart_port"] = item.AutoSmartPort
 	respItem["interface_template"] = item.InterfaceTemplate
 	respItem["ipv6_acl_filter"] = item.IPv6ACLFilter
@@ -916,7 +936,7 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameWebRedirect
 	respItem["acl"] = item.ACL
 	respItem["portal_name"] = item.PortalName
 	respItem["static_iphost_name_fqd_n"] = item.StaticIPHostNameFQDN
-	respItem["display_certificates_renewal_messages"] = item.DisplayCertificatesRenewalMessages
+	respItem["display_certificates_renewal_messages"] = boolPtrToString(item.DisplayCertificatesRenewalMessages)
 
 	return []map[string]interface{}{
 		respItem,
@@ -956,14 +976,14 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemID(item *isegosdk
 	respItem["airespace_ipv6_acl"] = item.AirespaceIPv6ACL
 	respItem["web_redirection"] = flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDWebRedirection(item.WebRedirection)
 	respItem["acl"] = item.ACL
-	respItem["track_movement"] = item.TrackMovement
-	respItem["agentless_posture"] = item.AgentlessPosture
-	respItem["service_template"] = item.ServiceTemplate
-	respItem["easywired_session_candidate"] = item.EasywiredSessionCandidate
+	respItem["track_movement"] = boolPtrToString(item.TrackMovement)
+	respItem["agentless_posture"] = boolPtrToString(item.AgentlessPosture)
+	respItem["service_template"] = boolPtrToString(item.ServiceTemplate)
+	respItem["easywired_session_candidate"] = boolPtrToString(item.EasywiredSessionCandidate)
 	respItem["dacl_name"] = item.DaclName
-	respItem["voice_domain_permission"] = item.VoiceDomainPermission
-	respItem["neat"] = item.Neat
-	respItem["web_auth"] = item.WebAuth
+	respItem["voice_domain_permission"] = boolPtrToString(item.VoiceDomainPermission)
+	respItem["neat"] = boolPtrToString(item.Neat)
+	respItem["web_auth"] = boolPtrToString(item.WebAuth)
 	respItem["auto_smart_port"] = item.AutoSmartPort
 	respItem["interface_template"] = item.InterfaceTemplate
 	respItem["ipv6_acl_filter"] = item.IPv6ACLFilter
@@ -1062,7 +1082,7 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDWebRedirection(
 	respItem["acl"] = item.ACL
 	respItem["portal_name"] = item.PortalName
 	respItem["static_iphost_name_fqd_n"] = item.StaticIPHostNameFQDN
-	respItem["display_certificates_renewal_messages"] = item.DisplayCertificatesRenewalMessages
+	respItem["display_certificates_renewal_messages"] = boolPtrToString(item.DisplayCertificatesRenewalMessages)
 
 	return []map[string]interface{}{
 		respItem,

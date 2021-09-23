@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,8 @@ func dataSourceDeviceAdministrationCommandSet() *schema.Resource {
 		Description: `It performs read operation on Device Administration - Command Set.
 
 - Device Admin Return list of command sets.
- (Other CRUD APIs available throught ERS)`,
+ (Other CRUD APIs available throught ERS)
+`,
 
 		ReadContext: dataSourceDeviceAdministrationCommandSetRead,
 		Schema: map[string]*schema.Schema{
@@ -59,7 +61,7 @@ func dataSourceDeviceAdministrationCommandSetRead(ctx context.Context, d *schema
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceAdministrationCommandSetGetDeviceAdminCommandSetsItems(response1)
 		if err := d.Set("items", vItems1); err != nil {

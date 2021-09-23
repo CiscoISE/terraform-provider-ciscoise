@@ -16,6 +16,7 @@ description: |-
 It performs read operation on BYODPortal.
 
 - This data source allows the client to get a BYOD portal by ID.
+
 - This data source allows the client to get all the BYOD portals.
 
 Filter:
@@ -254,7 +255,7 @@ Read-Only:
 Read-Only:
 
 - **end_point_identity_group_id** (String)
-- **show_device_id** (Boolean)
+- **show_device_id** (String)
 
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_registration_success_settings"></a>
@@ -272,12 +273,12 @@ Read-Only:
 Read-Only:
 
 - **aup_display** (String)
-- **enable_byo_d** (Boolean)
-- **enable_guest_access** (Boolean)
-- **include_aup** (Boolean)
-- **require_aup_acceptance** (Boolean)
-- **require_mdm** (Boolean)
-- **require_scrolling** (Boolean)
+- **enable_byo_d** (String)
+- **enable_guest_access** (String)
+- **include_aup** (String)
+- **require_aup_acceptance** (String)
+- **require_mdm** (String)
+- **require_scrolling** (String)
 
 
 
@@ -302,12 +303,12 @@ Read-Only:
 
 - **default_empty_field_value** (String)
 - **empty_field_display** (String)
-- **include_browser_user_agent** (Boolean)
-- **include_failure_code** (Boolean)
-- **include_ip_address** (Boolean)
-- **include_mac_addr** (Boolean)
-- **include_policy_server** (Boolean)
-- **include_support_info_page** (Boolean)
+- **include_browser_user_agent** (String)
+- **include_failure_code** (String)
+- **include_ip_address** (String)
+- **include_mac_addr** (String)
+- **include_policy_server** (String)
+- **include_support_info_page** (String)
 
 
 

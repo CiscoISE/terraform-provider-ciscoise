@@ -2,7 +2,6 @@ package ciscoise
 
 import (
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"net/url"
 	"reflect"
 	"regexp"
@@ -10,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
 func compareSGT(first_sgt, second_sgt string) bool {

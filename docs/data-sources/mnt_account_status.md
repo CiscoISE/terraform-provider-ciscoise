@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Misc.
 
-AccountStatus by MAC
+- AccountStatus by MAC
 
 ## Example Usage
 

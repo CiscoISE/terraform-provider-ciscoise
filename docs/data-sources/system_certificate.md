@@ -22,7 +22,7 @@ description: |-
 
 It performs read operation on Certificates.
 
- This data source supports Filtering, Sorting and Pagination.
+- This data source supports Filtering, Sorting and Pagination.
 
 
 Filtering and Sorting supported on below mentioned attributes:
@@ -213,7 +213,7 @@ Read-Only:
 - **key_size** (Number)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **portals_using_the_tag** (String)
-- **self_signed** (Boolean)
+- **self_signed** (String)
 - **serial_number_decimal_format** (String)
 - **sha256_fingerprint** (String)
 - **signature_algorithm** (String)
@@ -245,7 +245,7 @@ Read-Only:
 - **key_size** (Number)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
 - **portals_using_the_tag** (String)
-- **self_signed** (Boolean)
+- **self_signed** (String)
 - **serial_number_decimal_format** (String)
 - **sha256_fingerprint** (String)
 - **signature_algorithm** (String)

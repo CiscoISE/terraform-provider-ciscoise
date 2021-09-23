@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceExternalRadiusServer() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on ExternalRADIUSServer.
-  
-  - This resource allows the client to update an external RADIUS server.
-  - This resource deletes an external RADIUS server.
-  - This resource creates an external RADIUS server.`,
+
+- This resource allows the client to update an external RADIUS server.
+
+- This resource deletes an external RADIUS server.
+
+- This resource creates an external RADIUS server.
+`,
 
 		CreateContext: resourceExternalRadiusServerCreate,
 		ReadContext:   resourceExternalRadiusServerRead,
@@ -53,7 +57,7 @@ func resourceExternalRadiusServer() *schema.Resource {
 						},
 						"authenticator_key": &schema.Schema{
 							Description: `The authenticatorKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-  The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
+The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -65,14 +69,16 @@ func resourceExternalRadiusServer() *schema.Resource {
 						},
 						"enable_key_wrap": &schema.Schema{
 							Description: `KeyWrap may only be enabled if it is supported on the device.
-  When running in FIPS mode this option should be enabled for such devices`,
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+When running in FIPS mode this option should be enabled for such devices`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"encryption_key": &schema.Schema{
 							Description: `The encryptionKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-  The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
+The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -90,9 +96,9 @@ func resourceExternalRadiusServer() *schema.Resource {
 						},
 						"key_input_format": &schema.Schema{
 							Description: `Specifies the format of the input for fields 'encryptionKey' and 'authenticatorKey'.
-  Allowed Values:
-  - ASCII
-  - HEXADECIMAL`,
+Allowed Values:
+- ASCII
+- HEXADECIMAL`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -162,7 +168,7 @@ func resourceExternalRadiusServerCreate(ctx context.Context, d *schema.ResourceD
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestExternalRadiusServerCreateExternalRadiusServer(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -239,7 +245,7 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenExternalRadiusServerGetExternalRadiusServerByNameItemName(response1.ExternalRadiusServer)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -264,7 +270,7 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenExternalRadiusServerGetExternalRadiusServerByIDItemID(response2.ExternalRadiusServer)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -315,13 +321,13 @@ func resourceExternalRadiusServerUpdate(ctx context.Context, d *schema.ResourceD
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestExternalRadiusServerUpdateExternalRadiusServerByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.ExternalRadiusServer.UpdateExternalRadiusServerByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateExternalRadiusServerByID", err, restyResp1.String(),
 					"Failure at UpdateExternalRadiusServerByID, unexpected response", ""))
@@ -378,7 +384,7 @@ func resourceExternalRadiusServerDelete(ctx context.Context, d *schema.ResourceD
 	restyResp1, err := client.ExternalRadiusServer.DeleteExternalRadiusServerByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteExternalRadiusServerByID", err, restyResp1.String(),
 				"Failure at DeleteExternalRadiusServerByID, unexpected response", ""))
@@ -481,11 +487,15 @@ func expandRequestExternalRadiusServerUpdateExternalRadiusServerByIDExternalRadi
 	if v, ok := d.GetOkExists(key + ".enable_key_wrap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_key_wrap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_key_wrap"))) {
 		request.EnableKeyWrap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".encryption_key"))) {
-		request.EncryptionKey = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".authenticator_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authenticator_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authenticator_key"))) {
-		request.AuthenticatorKey = interfaceToString(v)
+	vEnableKeyWrap, okEnableKeyWrap := d.GetOk(key + ".enable_key_wrap")
+	vvEnableKeyWrap := interfaceToBoolPtr(vEnableKeyWrap)
+	if okEnableKeyWrap && vvEnableKeyWrap != nil && *vvEnableKeyWrap {
+		if v, ok := d.GetOkExists(key + ".encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".encryption_key"))) {
+			request.EncryptionKey = interfaceToString(v)
+		}
+		if v, ok := d.GetOkExists(key + ".authenticator_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authenticator_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authenticator_key"))) {
+			request.AuthenticatorKey = interfaceToString(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".key_input_format"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_input_format"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_input_format"))) {
 		request.KeyInputFormat = interfaceToString(v)

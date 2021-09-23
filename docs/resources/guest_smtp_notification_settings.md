@@ -10,9 +10,10 @@ description: |-
 # ciscoise_guest_smtp_notification_settings (Resource)
 
 It manages create, read and update operations on GuestSMTPNotificationConfiguration.
-  
-  - This resource allows the client to update a SMTP configuration setting.
-  - This resource creates a guest SMTP notification configuration.
+
+- This resource allows the client to update a SMTP configuration setting.
+
+- This resource creates a guest SMTP notification configuration.
 
 ## Example Usage
 
@@ -24,13 +25,13 @@ resource "ciscoise_guest_smtp_notification_settings" "example" {
     connection_timeout          = "string"
     default_from_address        = "string"
     id                          = "string"
-    notification_enabled        = false
+    notification_enabled        = "false"
     password                    = "******"
     smtp_port                   = "string"
     smtp_server                 = "string"
-    use_default_from_address    = false
-    use_password_authentication = false
-    use_tlsor_ssl_encryption    = false
+    use_default_from_address    = "false"
+    use_password_authentication = "false"
+    use_tlsor_ssl_encryption    = "false"
     user_name                   = "string"
   }
 }
@@ -60,13 +61,13 @@ Optional:
 - **connection_timeout** (String) Interval in seconds for all the SMTP client connections
 - **default_from_address** (String) The default from email address to be used to send emails from
 - **id** (String) The ID of this resource.
-- **notification_enabled** (Boolean) Indicates if the email notification service is to be enabled
+- **notification_enabled** (String) Indicates if the email notification service is to be enabled
 - **password** (String, Sensitive) Password of Secure SMTP server
 - **smtp_port** (String) Port at which SMTP Secure Server is listening
 - **smtp_server** (String) The SMTP server ip address or fqdn such as outbound.mycompany.com
-- **use_default_from_address** (Boolean) If the default from address should be used rather than using a sponsor user email address
-- **use_password_authentication** (Boolean) If configured to true, SMTP server authentication will happen using username/password
-- **use_tlsor_ssl_encryption** (Boolean) If configured to true, SMTP server authentication will happen using TLS/SSL
+- **use_default_from_address** (String) If the default from address should be used rather than using a sponsor user email address
+- **use_password_authentication** (String) If configured to true, SMTP server authentication will happen using username/password
+- **use_tlsor_ssl_encryption** (String) If configured to true, SMTP server authentication will happen using TLS/SSL
 - **user_name** (String) Username of Secure SMTP server
 
 Read-Only:

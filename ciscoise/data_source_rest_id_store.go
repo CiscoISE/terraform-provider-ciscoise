@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceRestIDStore() *schema.Resource {
 		Description: `It performs read operation on RESTIDStore.
 
 - This data source allows the client to get a REST ID store by name.
+
 - This data source allows the client to get a REST ID store by ID.
+
 - This data source allows the client to get all the REST ID stores.
 
 Filter:
@@ -24,7 +27,8 @@ Filter:
 
 Sorting:
 
-[name]`,
+[name]
+`,
 
 		ReadContext: dataSourceRestIDStoreRead,
 		Schema: map[string]*schema.Schema{
@@ -338,11 +342,11 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -377,7 +381,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseRestidStoreGetRestIDStoreSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -424,7 +428,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenRestidStoreGetRestIDStoreByNameItemName(response2.ERSRestIDStore)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -450,7 +454,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenRestidStoreGetRestIDStoreByIDItemID(response3.ERSRestIDStore)
 		if err := d.Set("item_id", vItemID3); err != nil {

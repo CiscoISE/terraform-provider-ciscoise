@@ -22,7 +22,7 @@ resource "ciscoise_authorization_profile" "example" {
         value                         = "string"
       }
     }
-    agentless_posture           = false
+    agentless_posture           = "false"
     airespace_acl               = "string"
     airespace_ipv6_acl          = "string"
     asa_vpn                     = "string"
@@ -31,34 +31,34 @@ resource "ciscoise_authorization_profile" "example" {
     avc_profile                 = "string"
     dacl_name                   = "string"
     description                 = "string"
-    easywired_session_candidate = false
+    easywired_session_candidate = "false"
     id                          = "string"
     interface_template          = "string"
     ipv6_acl_filter             = "string"
     ipv6_dacl_name              = "string"
     mac_sec_policy              = "string"
     name                        = "string"
-    neat                        = false
+    neat                        = "false"
     profile_name                = "string"
     reauth {
 
       connectivity = "string"
       timer        = 1
     }
-    service_template = false
-    track_movement   = false
+    service_template = "false"
+    track_movement   = "false"
     vlan {
 
       name_id = "string"
       tag_id  = 1
     }
-    voice_domain_permission = false
-    web_auth                = false
+    voice_domain_permission = "false"
+    web_auth                = "false"
     web_redirection {
 
       web_redirection_type                  = "string"
       acl                                   = "string"
-      display_certificates_renewal_messages = false
+      display_certificates_renewal_messages = "false"
       portal_name                           = "string"
       static_iphost_name_fqd_n              = "string"
     }

@@ -12,6 +12,7 @@ description: |-
 It performs read operation on SupportBundleStatus.
 
 - This data source allows the client to get a support bundle status by ID.
+
 - This data source allows the client to get all the support bundle status.
 
 ## Example Usage

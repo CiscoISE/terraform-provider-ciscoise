@@ -16,7 +16,9 @@ description: |-
 It performs read operation on IdentityGroups.
 
 - This data source allows the client to get an identity group by name.
+
 - This data source allows the client to get an identity group by ID.
+
 - This data source allows the client to get all the identity groups.
 
 Filter:

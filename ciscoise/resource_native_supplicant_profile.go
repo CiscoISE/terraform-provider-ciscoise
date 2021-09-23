@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,9 +16,11 @@ import (
 func resourceNativeSupplicantProfile() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read, update and delete operations on NativeSupplicantProfile.
-  
-  - This resource allows the client to update a native supplicant profile
-  - This resource deletes a native supplicant profile.`,
+
+- This resource allows the client to update a native supplicant profile
+
+- This resource deletes a native supplicant profile.
+`,
 
 		CreateContext: resourceNativeSupplicantProfileCreate,
 		ReadContext:   resourceNativeSupplicantProfileRead,
@@ -84,11 +87,11 @@ func resourceNativeSupplicantProfile() *schema.Resource {
 
 									"action_type": &schema.Schema{
 										Description: `Action type for WifiProfile.
-  Allowed values:
-  - ADD,
-  - UPDATE,
-  - DELETE
-  (required for updating existing WirelessProfile)`,
+Allowed values:
+- ADD,
+- UPDATE,
+- DELETE
+(required for updating existing WirelessProfile)`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -166,7 +169,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNativeSupplicantProfileGetNativeSupplicantProfile(m, response1, &queryParams1)
 		item1, err := searchNativeSupplicantProfileGetNativeSupplicantProfile(m, items1, vvName, vvID)
@@ -176,7 +179,8 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 				"Failure when searching item from GetNativeSupplicantProfile, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNativeSupplicantProfileGetNativeSupplicantProfileByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNativeSupplicantProfile search response",
 				err))
@@ -197,7 +201,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNativeSupplicantProfileGetNativeSupplicantProfileByIDItem(response2.ERSNSpProfile)
 		if err := d.Set("item", vItem2); err != nil {
@@ -250,13 +254,13 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NativeSupplicantProfile.UpdateNativeSupplicantProfileByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNativeSupplicantProfileByID", err, restyResp1.String(),
 					"Failure at UpdateNativeSupplicantProfileByID, unexpected response", ""))
@@ -321,7 +325,7 @@ func resourceNativeSupplicantProfileDelete(ctx context.Context, d *schema.Resour
 	restyResp1, err := client.NativeSupplicantProfile.DeleteNativeSupplicantProfileByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNativeSupplicantProfileByID", err, restyResp1.String(),
 				"Failure at DeleteNativeSupplicantProfileByID, unexpected response", ""))

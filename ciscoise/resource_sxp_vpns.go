@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,9 +16,11 @@ import (
 func resourceSxpVpns() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and delete operations on SXPVPNs.
-  
-  - This resource deletes a SXP VPN.
-  - This resource creates a SXP VPN.`,
+
+- This resource deletes a SXP VPN.
+
+- This resource creates a SXP VPN.
+`,
 
 		CreateContext: resourceSxpVpnsCreate,
 		ReadContext:   resourceSxpVpnsRead,
@@ -42,7 +45,6 @@ func resourceSxpVpns() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
-							Optional: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -84,7 +86,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSxpVpnsCreateSxpVpn(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vName, _ := resourceItem["sxp_vpn_name"]
@@ -166,7 +168,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsSxpVpnsGetSxpVpns(m, response1, &queryParams1)
 		item1, err := searchSxpVpnsGetSxpVpns(m, items1, vvName, vvID)
@@ -176,7 +178,8 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 				"Failure when searching item from GetSxpVpns, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenSxpVpnsGetSxpVpnByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSxpVpns search response",
 				err))
@@ -196,7 +199,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSxpVpnsGetSxpVpnByIDItem(response2.ERSSxpVpn)
 		if err := d.Set("item", vItem2); err != nil {
@@ -265,7 +268,7 @@ func resourceSxpVpnsDelete(ctx context.Context, d *schema.ResourceData, m interf
 	restyResp1, err := client.SxpVpns.DeleteSxpVpnByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSxpVpnByID", err, restyResp1.String(),
 				"Failure at DeleteSxpVpnByID, unexpected response", ""))

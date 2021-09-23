@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,11 +16,14 @@ import (
 func resourceNodeGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Node Group.
-  
-  - Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
-  pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
-  API updates an existing node group in the system.
-  - Developers need to delete node group in the system.`,
+
+- Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
+pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
+
+- API updates an existing node group in the system.
+
+- Developers need to delete node group in the system.
+`,
 
 		CreateContext: resourceNodeGroupCreate,
 		ReadContext:   resourceNodeGroupRead,
@@ -54,9 +58,11 @@ func resourceNodeGroup() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"query_attempts": &schema.Schema{
 										Type:     schema.TypeInt,
@@ -104,7 +110,7 @@ func resourceNodeGroupCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNodeGroupCreateNodeGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vNodeGroupName, okNodeGroupName := resourceItem["node_group_name"]
 	vvNodeGroupName := interfaceToString(vNodeGroupName)
@@ -174,7 +180,7 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNodeGroupGetNodeGroups(m, response1)
 		item1, err := searchNodeGroupGetNodeGroups(m, items1, vvNodeGroupName, "")
@@ -184,7 +190,8 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 				"Failure when searching item from GetNodeGroups, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNodeGroupGetNodeGroupItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodeGroups search response",
 				err))
@@ -205,7 +212,7 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNodeGroupGetNodeGroupItem(response2)
 		if err := d.Set("item", vItem2); err != nil {
@@ -242,13 +249,13 @@ func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m inte
 		vvNodeGroupName = vNodeGroupName
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvNodeGroupName %s", vvNodeGroupName)
+		log.Printf("[DEBUG] NodeGroupName used for update operation %s", vvNodeGroupName)
 		request1 := expandRequestNodeGroupUpdateNodeGroup(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NodeGroup.UpdateNodeGroup(vvNodeGroupName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNodeGroup", err, restyResp1.String(),
 					"Failure at UpdateNodeGroup, unexpected response", ""))
@@ -307,7 +314,7 @@ func resourceNodeGroupDelete(ctx context.Context, d *schema.ResourceData, m inte
 	response1, restyResp1, err := client.NodeGroup.DeleteNodeGroup(vvNodeGroupName)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNodeGroup", err, restyResp1.String(),
 				"Failure at DeleteNodeGroup, unexpected response", ""))

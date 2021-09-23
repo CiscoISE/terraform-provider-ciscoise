@@ -10,9 +10,10 @@ description: |-
 # ciscoise_certificate_profile (Resource)
 
 It manages create, read and update operations on CertificateProfile.
-  
-  - This resource allows the client to update a certificate profile.
-  - This resource allows the client to create a certificate profile.
+
+- This resource allows the client to update a certificate profile.
+
+- This resource allows the client to create a certificate profile.
 
 ## Example Usage
 
@@ -21,7 +22,7 @@ resource "ciscoise_certificate_profile" "example" {
   provider = ciscoise
   item {
 
-    allowed_as_user_name         = false
+    allowed_as_user_name         = "false"
     certificate_attribute_name   = "string"
     description                  = "string"
     external_identity_store_name = "string"
@@ -54,30 +55,30 @@ output "ciscoise_certificate_profile_example" {
 
 Optional:
 
-- **allowed_as_user_name** (Boolean)
+- **allowed_as_user_name** (String)
 - **certificate_attribute_name** (String) Attribute name of the Certificate Profile - used only when CERTIFICATE is chosen in usernameFrom.
-  Allowed values:
-  - SUBJECT_COMMON_NAME
-  - SUBJECT_ALTERNATIVE_NAME
-  - SUBJECT_SERIAL_NUMBER
-  - SUBJECT
-  - SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
-  - SUBJECT_ALTERNATIVE_NAME_EMAIL
-  - SUBJECT_ALTERNATIVE_NAME_DNS.
-  - Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN
+Allowed values:
+- SUBJECT_COMMON_NAME
+- SUBJECT_ALTERNATIVE_NAME
+- SUBJECT_SERIAL_NUMBER
+- SUBJECT
+- SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
+- SUBJECT_ALTERNATIVE_NAME_EMAIL
+- SUBJECT_ALTERNATIVE_NAME_DNS.
+- Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN
 - **description** (String)
 - **external_identity_store_name** (String) Referred IDStore name for the Certificate Profile or [not applicable] in case no identity store is chosen
 - **id** (String) The ID of this resource.
 - **match_mode** (String) Match mode of the Certificate Profile.
-  Allowed values:
-  - NEVER
-  - RESOLVE_IDENTITY_AMBIGUITY
-  - BINARY_COMPARISON
+Allowed values:
+- NEVER
+- RESOLVE_IDENTITY_AMBIGUITY
+- BINARY_COMPARISON
 - **name** (String)
 - **username_from** (String) The attribute in the certificate where the user name should be taken from.
-  Allowed values:
-  - CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
-  - UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)
+Allowed values:
+- CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
+- UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)
 
 Read-Only:
 

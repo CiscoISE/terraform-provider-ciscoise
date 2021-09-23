@@ -10,10 +10,12 @@ description: |-
 # ciscoise_tacacs_command_sets (Resource)
 
 It manages create, read, update and delete operations on TACACSCommandSets.
-  
-  - This resource allows the client to update TACACS command sets.
-  - This resource deletes TACACS command sets.
-  - This resource creates TACACS command sets.
+
+- This resource allows the client to update TACACS command sets.
+
+- This resource deletes TACACS command sets.
+
+- This resource creates TACACS command sets.
 
 ## Example Usage
 
@@ -34,7 +36,7 @@ resource "ciscoise_tacacs_command_sets" "example" {
     description      = "string"
     id               = "string"
     name             = "string"
-    permit_unmatched = false
+    permit_unmatched = "false"
   }
 }
 
@@ -64,7 +66,7 @@ Optional:
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
-- **permit_unmatched** (Boolean)
+- **permit_unmatched** (String)
 
 Read-Only:
 

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceSgACL() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on SecurityGroupsACLs.
-  
-  - This resource allows the client to update a security group ACL.
-  - This resource deletes a security group ACL.
-  - This resource creates a security group ACL.`,
+
+- This resource allows the client to update a security group ACL.
+
+- This resource deletes a security group ACL.
+
+- This resource creates a security group ACL.
+`,
 
 		CreateContext: resourceSgACLCreate,
 		ReadContext:   resourceSgACLRead,
@@ -62,17 +66,19 @@ func resourceSgACL() *schema.Resource {
 						},
 						"ip_version": &schema.Schema{
 							Description: `Allowed values:
-  - IPV4,
-  - IPV6,
-  - IP_AGNOSTIC`,
+- IPV4,
+- IPV6,
+- IP_AGNOSTIC`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"is_read_only": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -120,7 +126,7 @@ func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interfac
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestSgACLCreateSecurityGroupsACL(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -205,7 +211,7 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsSecurityGroupsACLsGetSecurityGroupsACL(m, response1, &queryParams1)
 		item1, err := searchSecurityGroupsACLsGetSecurityGroupsACL(m, items1, vvName, vvID)
@@ -215,7 +221,8 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 				"Failure when searching item from GetSecurityGroupsACL, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSecurityGroupsACL search response",
 				err))
@@ -236,7 +243,7 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItem(response2.Sgacl)
 		if err := d.Set("item", vItem2); err != nil {
@@ -290,13 +297,13 @@ func resourceSgACLUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSgACLUpdateSecurityGroupsACLByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SecurityGroupsACLs.UpdateSecurityGroupsACLByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateSecurityGroupsACLByID", err, restyResp1.String(),
 					"Failure at UpdateSecurityGroupsACLByID, unexpected response", ""))
@@ -362,7 +369,7 @@ func resourceSgACLDelete(ctx context.Context, d *schema.ResourceData, m interfac
 	restyResp1, err := client.SecurityGroupsACLs.DeleteSecurityGroupsACLByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteSecurityGroupsACLByID", err, restyResp1.String(),
 				"Failure at DeleteSecurityGroupsACLByID, unexpected response", ""))

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,13 +16,14 @@ import (
 func resourceRepository() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Repository.
-  
-  - Create a new repository in the system. The name provided for the
-  repository must be unique.
-  
-  - Update the definition of a specific repository, providing ALL parameters for the repository.
-  
-  `,
+
+- Create a new repository in the system. The name provided for the
+repository must be unique.
+
+- Update the definition of a specific repository, providing ALL parameters for the repository.
+
+- Long description TBD
+`,
 
 		CreateContext: resourceRepositoryCreate,
 		ReadContext:   resourceRepositoryRead,
@@ -44,9 +46,11 @@ func resourceRepository() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"enable_pki": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
@@ -97,7 +101,7 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestRepositoryCreateRepository(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
@@ -167,7 +171,7 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsRepositoryGetRepositories(m, response1)
 		item1, err := searchRepositoryGetRepositories(m, items1, vvName, "")
@@ -177,7 +181,8 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 				"Failure when searching item from GetRepositories, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenRepositoryGetRepositoryItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetRepositories search response",
 				err))
@@ -198,7 +203,7 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenRepositoryGetRepositoryItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -235,13 +240,13 @@ func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m int
 		vvName = vName
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvName %s", vvName)
+		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestRepositoryUpdateRepository(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Repository.UpdateRepository(vvName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateRepository", err, restyResp1.String(),
 					"Failure at UpdateRepository, unexpected response", ""))
@@ -304,7 +309,7 @@ func resourceRepositoryDelete(ctx context.Context, d *schema.ResourceData, m int
 	response1, restyResp1, err := client.Repository.DeleteRepository(vvName)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteRepository", err, restyResp1.String(),
 				"Failure at DeleteRepository, unexpected response", ""))

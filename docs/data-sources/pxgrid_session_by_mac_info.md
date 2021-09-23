@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Session Directory.
 
-🚧 getSessionByMacAddress
+- 🚧 getSessionByMacAddress
 
 ## Example Usage
 

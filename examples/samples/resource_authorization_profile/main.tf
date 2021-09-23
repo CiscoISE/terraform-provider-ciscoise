@@ -13,20 +13,20 @@ provider "ciscoise" {
 resource "ciscoise_authorization_profile" "example" {
   provider = ciscoise
   item {
-      access_type = "ACCESS_ACCEPT"
-      authz_profile_type = "SWITCH"
-      dacl_name = "PERMIT_ALL_IPV4_TRAFFIC"
-      description = "Onboard the device with Cisco temp agent"
-      easywired_session_candidate = false
-      name = "Cisco_Temporal_Onboard"
-      profile_name = "Cisco"
-      service_template = false
-      track_movement = false
-      web_redirection {
-          web_redirection_type = "ClientProvisioning"
-          acl = "ACL_WEBAUTH_REDIRECT"
-          portal_name = "Client Provisioning Portal (default)"
-      }
+    access_type                 = "ACCESS_ACCEPT"
+    authz_profile_type          = "SWITCH"
+    dacl_name                   = "PERMIT_ALL_IPV4_TRAFFIC"
+    description                 = "Onboard the device with Cisco temporal agent"
+    easywired_session_candidate = "false"
+    name                        = "Cisco_Temporal_Onboard"
+    profile_name                = "Cisco"
+    service_template            = "false"
+    track_movement              = "false"
+    web_redirection {
+      web_redirection_type = "ClientProvisioning"
+      acl                  = "ACL_WEBAUTH_REDIRECT"
+      portal_name          = "Client Provisioning Portal (default)"
+    }
   }
 }
 

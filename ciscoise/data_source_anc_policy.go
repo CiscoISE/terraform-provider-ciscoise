@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,14 +16,17 @@ func dataSourceAncPolicy() *schema.Resource {
 		Description: `It performs read operation on AncPolicy.
 
 - This data source allows the client to get an ANC policy by name.
+
 - This data source allows the client to get an ANC policy by ID.
+
 - This data source allows the client to get all the ANC policies.
 
 Filter:
 [name]
 
 Sorting:
-[name]`,
+[name]
+`,
 
 		ReadContext: dataSourceAncPolicyRead,
 		Schema: map[string]*schema.Schema{
@@ -256,11 +260,11 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -295,7 +299,7 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseAncPolicyGetAncPolicySearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -342,7 +346,7 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenAncPolicyGetAncPolicyByNameItemName(response2.ErsAncPolicy)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -368,7 +372,7 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenAncPolicyGetAncPolicyByIDItemID(response3.ErsAncPolicy)
 		if err := d.Set("item_id", vItemID3); err != nil {

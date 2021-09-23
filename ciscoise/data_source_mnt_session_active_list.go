@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,8 @@ func dataSourceMntSessionActiveList() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Misc.
 
-ActiveList`,
+- ActiveList
+`,
 
 		ReadContext: dataSourceMntSessionActiveListRead,
 		Schema: map[string]*schema.Schema{
@@ -53,7 +55,7 @@ func dataSourceMntSessionActiveListRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenMiscGetActiveListItem(response1)
 		if err := d.Set("item", vItem1); err != nil {

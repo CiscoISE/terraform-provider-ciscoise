@@ -4,7 +4,7 @@ page_title: "ciscoise_network_access_time_date_conditions Data Source - terrafor
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Time/Date Conditions.
-  Network Access Returns a list of time and date conditions.Network Access Returns a network condition.
+  Network Access Returns a list of time and date conditions.Network Access returns a network condition.
 ---
 
 # ciscoise_network_access_time_date_conditions (Data Source)
@@ -12,7 +12,8 @@ description: |-
 It performs read operation on Network Access - Time/Date Conditions.
 
 - Network Access Returns a list of time and date conditions.
-- Network Access Returns a network condition.
+
+- Network Access returns a network condition.
 
 ## Example Usage
 
@@ -65,7 +66,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **name** (String)
 - **operator** (String)
@@ -78,7 +79,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--children--link))
 
 <a id="nestedobjatt--item--children--link"></a>
@@ -157,7 +158,7 @@ Read-Only:
 - **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range))
 - **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range_exception))
 - **id** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
 - **name** (String)
 - **operator** (String)
@@ -170,7 +171,7 @@ Read-Only:
 Read-Only:
 
 - **condition_type** (String)
-- **is_negate** (Boolean)
+- **is_negate** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--children--link))
 
 <a id="nestedobjatt--items--children--link"></a>

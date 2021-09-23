@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -44,7 +45,8 @@ Supported Operators: EQ, NEQ, GT and LT
 
 
 - This data source displays details of a Certificate Signing Request of a particular node based on a given HostName and
-ID.`,
+ID.
+`,
 
 		ReadContext: dataSourceCsrRead,
 		Schema: map[string]*schema.Schema{
@@ -345,9 +347,9 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okHostName, okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -382,7 +384,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseCertificatesGetCsrsResponse
 		for response1.Response != nil && len(*response1.Response) > 0 {
@@ -430,7 +432,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenCertificatesGetCsrByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {

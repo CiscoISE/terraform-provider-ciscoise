@@ -6,238 +6,21 @@ description: |-
   It performs create operation on Certificates.
   Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
   IMS Services.
-  Following Parameters are present in POST request body
-  PARAMETER
-  DESCRIPTION
-  EXAMPLE
-  hostnames
-  List of ise node hostnames for which CSRs should be generated
-  [ise-host1, ise-host2]
-  allowWildCardCert
-  Allow use of WildCards in certificates
-  false
-  keyLength
-  Length of the Key used for CSR generation (required)
-  512
-  keyType
-  Type of key used for CSR generation either RSA or ECDSA(required)
-  RSA
-  digestType
-  Hash algorithm used for signing CSR(required)
-  SHA-256
-  usedFor
-  Certificate Usage(required)
-  MULTI-USE
-  subjectCommonName
-  Certificate common name(CN)(required)
-  $FQDN$
-  subjectOrgUnit
-  Certificate organizational unit(OU)
-  Engineering
-  subjectOrg
-  Certificate organization (O)
-  Cisco
-  subjectCity
-  Certificate city or locality (L)
-  San Jose
-  subjectState
-  Certificate state (ST)
-  California
-  subjectCountry
-  Certificate country ( C)
-  US
-  sanDNS
-  Array of SAN(Subject Alternative Name) DNS entries(optional)
-  [ise.example.com]
-  sanIP
-  Array of SAN IP entries(optional)
-  [1.1.1.1]
-  sanURI
-  Array of SAN URI entries(optional)
-  [https://1.1.1.1]
-  sanDir
-  Array of SAN DIR entries(optional)
-  [CN=AAA,DC=COM,C=IL]
-  portalGroupTag
-  Portal Group Tag when using certificate for PORTAL service
-  Default Portal Certificate Group
-  NOTE:
-  For allowWildCardCert to be false, the below mentioned parameter is mandatory:
-  hostnames
-  When Certificate is selected to be used for Portal Service, the below mentioned parameter is mandatory:
-  portalGroupTag
 ---
 
 # ciscoise_csr_generate (Data Source)
 
 It performs create operation on Certificates.
 
-
-
 - Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
 IMS Services.
-
-Following Parameters are present in POST request body
-
-
-
-
-PARAMETER
-
-DESCRIPTION
-
-EXAMPLE
-
-
-
-
-
-hostnames
-
-List of ise node hostnames for which CSRs should be generated
-
-[ise-host1, ise-host2]
-
-
-
-allowWildCardCert
-
-Allow use of WildCards in certificates
-
-false
-
-
-
-keyLength
-
-Length of the Key used for CSR generation (required)
-
-512
-
-
-
-keyType
-
-Type of key used for CSR generation either RSA or ECDSA(required)
-
-RSA
-
-
-
-digestType
-
-Hash algorithm used for signing CSR(required)
-
-SHA-256
-
-
-
-usedFor
-
-Certificate Usage(required)
-
-MULTI-USE
-
-
-
-subjectCommonName
-
-Certificate common name(CN)(required)
-
-$FQDN$
-
-
-
-subjectOrgUnit
-
-Certificate organizational unit(OU)
-
-Engineering
-
-
-
-subjectOrg
-
-Certificate organization (O)
-
-Cisco
-
-
-
-subjectCity
-
-Certificate city or locality (L)
-
-San Jose
-
-
-subjectState
-
-Certificate state (ST)
-
-California
-
-
-subjectCountry
-
-Certificate country ( C)
-
-US
-
-
-
-sanDNS
-
-Array of SAN(Subject Alternative Name) DNS entries(optional)
-
-[ise.example.com]
-
-
-sanIP
-
-Array of SAN IP entries(optional)
-
-[1.1.1.1]
-
-
-sanURI
-
-Array of SAN URI entries(optional)
-
-[https://1.1.1.1]
-
-
-
-sanDir
-
-Array of SAN DIR entries(optional)
-
-[CN=AAA,DC=COM,C=IL]
-
-
-
-portalGroupTag
-
-Portal Group Tag when using certificate for PORTAL service
-
-Default Portal Certificate Group
-
-
-
-
-NOTE:
-For allowWildCardCert to be false, the below mentioned parameter is mandatory:
-hostnames
-
-When Certificate is selected to be used for Portal Service, the below mentioned parameter is mandatory:
-portalGroupTag
 
 ## Example Usage
 
 ```terraform
 data "ciscoise_csr_generate" "example" {
   provider             = ciscoise
-  allow_wild_card_cert = false
+  allow_wild_card_cert = "false"
   certificate_policies = "string"
   digest_type          = "string"
   hostnames            = ["string"]
@@ -263,7 +46,7 @@ data "ciscoise_csr_generate" "example" {
 
 ### Optional
 
-- **allow_wild_card_cert** (Boolean)
+- **allow_wild_card_cert** (String)
 - **certificate_policies** (String)
 - **digest_type** (String)
 - **hostnames** (List of String)

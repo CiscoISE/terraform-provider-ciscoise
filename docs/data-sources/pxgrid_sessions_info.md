@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Session Directory.
 
-🚧 getSessions
+- 🚧 getSessions
 
 ## Example Usage
 

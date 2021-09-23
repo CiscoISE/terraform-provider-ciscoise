@@ -10,12 +10,16 @@ description: |-
 # ciscoise_internal_user (Resource)
 
 It manages create, read, update and delete operations on InternalUser.
-  
-  - This resource allows the client to update an internal user by name.
-  - This resource deletes an internal user by name.
-  - This resource allows the client to update an internal user by ID.
-  - This resource deletes an internal user by ID.
-  - This resource creates an internal user.
+
+- This resource allows the client to update an internal user by name.
+
+- This resource deletes an internal user by name.
+
+- This resource allows the client to update an internal user by ID.
+
+- This resource deletes an internal user by ID.
+
+- This resource creates an internal user.
 
 ## Example Usage
 
@@ -24,14 +28,17 @@ resource "ciscoise_internal_user" "example" {
   provider = ciscoise
   item {
 
-    change_password = false
-    custom_attributes {}
+    change_password = "false"
+    custom_attributes = {
+      key1 = "value1"
+      key2 = "value2"
+    }
     description         = "string"
     email               = "string"
     enable_password     = "string"
-    enabled             = false
+    enabled             = "false"
     expiry_date         = "string"
-    expiry_date_enabled = false
+    expiry_date_enabled = "false"
     first_name          = "string"
     id                  = "string"
     identity_groups     = "string"
@@ -64,15 +71,15 @@ output "ciscoise_internal_user_example" {
 
 Optional:
 
-- **change_password** (Boolean)
+- **change_password** (String)
 - **custom_attributes** (Map of String) Key value map
 - **description** (String)
 - **email** (String)
 - **enable_password** (String)
-- **enabled** (Boolean) Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
-  The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'
+- **enabled** (String) Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
+The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'
 - **expiry_date** (String) To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'
-- **expiry_date_enabled** (Boolean)
+- **expiry_date_enabled** (String)
 - **first_name** (String)
 - **id** (String) The ID of this resource.
 - **identity_groups** (String) CSV of identity group IDs

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +17,8 @@ func dataSourceDeviceAdministrationServiceNames() *schema.Resource {
 
 - Returns list of Allowed Protocols and Server Sequences for Device Admin Policy Set results.
  'isLocalAuthorization' property is available only for Network Access Policy Set results of type Server Sequence.
- (Other CRUD APIs available throught ERS)`,
+ (Other CRUD APIs available throught ERS)
+`,
 
 		ReadContext: dataSourceDeviceAdministrationServiceNamesRead,
 		Schema: map[string]*schema.Schema{
@@ -31,7 +33,8 @@ func dataSourceDeviceAdministrationServiceNames() *schema.Resource {
 							Computed: true,
 						},
 						"is_local_authorization": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"name": &schema.Schema{
@@ -68,7 +71,7 @@ func dataSourceDeviceAdministrationServiceNamesRead(ctx context.Context, d *sche
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenDeviceAdministrationServiceNamesGetDeviceAdminServiceNamesItems(response1)
 		if err := d.Set("items", vItems1); err != nil {
@@ -92,7 +95,7 @@ func flattenDeviceAdministrationServiceNamesGetDeviceAdminServiceNamesItems(item
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["id"] = item.ID
-		respItem["is_local_authorization"] = item.IsLocalAuthorization
+		respItem["is_local_authorization"] = boolPtrToString(item.IsLocalAuthorization)
 		respItem["name"] = item.Name
 		respItem["service_type"] = item.ServiceType
 		respItems = append(respItems, respItem)

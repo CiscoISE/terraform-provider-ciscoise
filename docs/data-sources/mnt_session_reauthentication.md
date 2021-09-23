@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Misc.
 
-Session Reauthentication by MAC
+- Session Reauthentication by MAC
 
 ## Example Usage
 

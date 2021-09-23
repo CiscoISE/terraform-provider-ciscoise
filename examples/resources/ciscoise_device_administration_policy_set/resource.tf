@@ -11,7 +11,7 @@ resource "ciscoise_device_administration_policy_set" "example" {
       children {
 
         condition_type = "string"
-        is_negate      = false
+        is_negate      = "false"
       }
       condition_type = "string"
       dates_range {
@@ -38,17 +38,17 @@ resource "ciscoise_device_administration_policy_set" "example" {
         start_time = "string"
       }
       id                  = "string"
-      is_negate           = false
+      is_negate           = "false"
       name                = "string"
       operator            = "string"
       week_days           = ["string"]
       week_days_exception = ["string"]
     }
-    default      = false
+    default      = "false"
     description  = "string"
     hit_counts   = 1
     id           = "string"
-    is_proxy     = false
+    is_proxy     = "false"
     name         = "string"
     rank         = 1
     service_name = "string"

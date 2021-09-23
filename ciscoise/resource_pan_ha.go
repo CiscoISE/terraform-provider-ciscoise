@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,12 +15,14 @@ import (
 func resourcePanHa() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and delete operations on PAN HA.
-  
-  - To deploy the auto-failover feature, you must have at least three nodes, where two of the nodes assume the
-  Administration persona, and one node acts as the health check node. A health check node is a non-administration node and
-  can be a Policy Service, Monitoring, or pxGrid node, or a combination of these. If the PANs are in different data
-  centers, you must have a health check node for each PAN.
-  - Disable the automatic PAN failover`,
+
+- To deploy the auto-failover feature, you must have at least three nodes, where two of the nodes assume the
+Administration persona, and one node acts as the health check node. A health check node is a non-administration node and
+can be a Policy Service, Monitoring, or pxGrid node, or a combination of these. If the PANs are in different data
+centers, you must have a health check node for each PAN.
+
+- Disable the automatic PAN failover
+`,
 
 		CreateContext: resourcePanHaCreate,
 		ReadContext:   resourcePanHaRead,
@@ -45,8 +48,10 @@ func resourcePanHa() *schema.Resource {
 							Optional: true,
 						},
 						"is_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"polling_interval": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -73,7 +78,7 @@ func resourcePanHaCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	var diags diag.Diagnostics
 
 	request1 := expandRequestPanHaEnablePanHa(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	resp1, restyResp1, err := client.PanHa.EnablePanHa(request1)
 	if err != nil || resp1 == nil {
@@ -109,7 +114,7 @@ func resourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interface{
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 		items1 := getAllItemsPanHaGetPanHaStatus(m, response1)
 		if err := d.Set("item", items1); err != nil {
 			diags = append(diags, diagError(
@@ -149,7 +154,7 @@ func resourcePanHaDelete(ctx context.Context, d *schema.ResourceData, m interfac
 	response1, restyResp1, err := client.PanHa.DisablePanHa()
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for disable operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DisablePanHa", err, restyResp1.String(),
 				"Failure at DisablePanHa, unexpected response", ""))

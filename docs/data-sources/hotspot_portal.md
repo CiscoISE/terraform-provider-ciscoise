@@ -16,6 +16,7 @@ description: |-
 It performs read operation on HotspotPortal.
 
 - This data source allows the client to get a hotspot portal by ID.
+
 - This data source allows the client to get all the hotspot portals.
 
 Filter:
@@ -248,9 +249,9 @@ Read-Only:
 Read-Only:
 
 - **access_code** (String)
-- **include_aup** (Boolean)
-- **require_access_code** (Boolean)
-- **require_scrolling** (Boolean)
+- **include_aup** (String)
+- **require_access_code** (String)
+- **require_scrolling** (String)
 
 
 <a id="nestedobjatt--item--settings--auth_success_settings"></a>
@@ -282,7 +283,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedobjatt--item--settings--post_login_banner_settings"></a>
@@ -290,7 +291,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedobjatt--item--settings--support_info_settings"></a>
@@ -300,12 +301,12 @@ Read-Only:
 
 - **default_empty_field_value** (String)
 - **empty_field_display** (String)
-- **include_browser_user_agent** (Boolean)
-- **include_failure_code** (Boolean)
-- **include_ip_address** (Boolean)
-- **include_mac_addr** (Boolean)
-- **include_policy_server** (Boolean)
-- **include_support_info_page** (Boolean)
+- **include_browser_user_agent** (String)
+- **include_failure_code** (String)
+- **include_ip_address** (String)
+- **include_mac_addr** (String)
+- **include_policy_server** (String)
+- **include_support_info_page** (String)
 
 
 

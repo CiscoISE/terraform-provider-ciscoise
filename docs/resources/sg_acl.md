@@ -10,10 +10,12 @@ description: |-
 # ciscoise_sg_acl (Resource)
 
 It manages create, read, update and delete operations on SecurityGroupsACLs.
-  
-  - This resource allows the client to update a security group ACL.
-  - This resource deletes a security group ACL.
-  - This resource creates a security group ACL.
+
+- This resource allows the client to update a security group ACL.
+
+- This resource deletes a security group ACL.
+
+- This resource creates a security group ACL.
 
 ## Example Usage
 
@@ -27,7 +29,7 @@ resource "ciscoise_sg_acl" "example" {
     generation_id    = "string"
     id               = "string"
     ip_version       = "string"
-    is_read_only     = false
+    is_read_only     = "false"
     modelled_content = "string"
     name             = "string"
   }
@@ -60,10 +62,10 @@ Optional:
 - **generation_id** (String)
 - **id** (String) The ID of this resource.
 - **ip_version** (String) Allowed values:
-  - IPV4,
-  - IPV6,
-  - IP_AGNOSTIC
-- **is_read_only** (Boolean)
+- IPV4,
+- IPV6,
+- IP_AGNOSTIC
+- **is_read_only** (String)
 - **modelled_content** (String) Modelled content of contract
 - **name** (String)
 

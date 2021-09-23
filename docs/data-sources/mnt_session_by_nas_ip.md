@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Misc.
 
-Sessions by NAS IP
+- Sessions by NAS IP
 
 ## Example Usage
 

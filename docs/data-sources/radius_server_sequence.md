@@ -12,6 +12,7 @@ description: |-
 It performs read operation on RADIUSServerSequence.
 
 - This data source allows the client to get a RADIUS server sequence by ID.
+
 - This data source allows the client to get all the RADIUS server sequences.
 
 ## Example Usage
@@ -57,21 +58,21 @@ output "ciscoise_radius_server_sequence_example" {
 Read-Only:
 
 - **before_accept_attr_manipulators_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--before_accept_attr_manipulators_list))
-- **continue_authorz_policy** (Boolean)
+- **continue_authorz_policy** (String)
 - **description** (String)
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **local_accounting** (Boolean)
+- **local_accounting** (String)
 - **name** (String)
 - **on_request_attr_manipulator_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--on_request_attr_manipulator_list))
 - **prefix_separator** (String)
 - **radius_server_list** (List of String)
-- **remote_accounting** (Boolean)
-- **strip_prefix** (Boolean)
-- **strip_suffix** (Boolean)
+- **remote_accounting** (String)
+- **strip_prefix** (String)
+- **strip_suffix** (String)
 - **suffix_separator** (String)
-- **use_attr_set_before_acc** (Boolean)
-- **use_attr_set_on_request** (Boolean)
+- **use_attr_set_before_acc** (String)
+- **use_attr_set_on_request** (String)
 
 <a id="nestedobjatt--item--before_accept_attr_manipulators_list"></a>
 ### Nested Schema for `item.before_accept_attr_manipulators_list`

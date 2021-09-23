@@ -16,6 +16,7 @@ description: |-
 It performs read operation on PortalGlobalSetting.
 
 - This data source allows the client to get the portal global settings by id.
+
 - This data source allows the client to get all the portal global settings.
 
 Filter:

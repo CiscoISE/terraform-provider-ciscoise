@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,7 +17,8 @@ func dataSourceSgMappingDeployStatusInfo() *schema.Resource {
 		Description: `It performs update operation on IPToSGTMapping.
 
 - This data source action allows the client to get the IP to SGT mapping deployment status.
-Deploy Status will show last Deploy command output. The information will be saved until the next Deploy command`,
+Deploy Status will show last Deploy command output. The information will be saved until the next Deploy command
+`,
 
 		ReadContext: dataSourceSgMappingDeployStatusInfoRead,
 		Schema: map[string]*schema.Schema{
@@ -68,7 +70,7 @@ func dataSourceSgMappingDeployStatusInfoRead(ctx context.Context, d *schema.Reso
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenIPToSgtMappingGetDeployStatusIPToSgtMappingItem(response1.OperationResult)
 		if err := d.Set("item", vItem1); err != nil {

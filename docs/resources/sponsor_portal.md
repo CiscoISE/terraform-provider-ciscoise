@@ -10,10 +10,12 @@ description: |-
 # ciscoise_sponsor_portal (Resource)
 
 It manages create, read, update and delete operations on SponsorPortal.
-  
-  - This resource allows the client to update a sponsor portal by ID.
-  - This resource deletes a sponsor portal by ID.
-  - This resource creates a sponsor portal.
+
+- This resource allows the client to update a sponsor portal by ID.
+
+- This resource deletes a sponsor portal by ID.
+
+- This resource creates a sponsor portal.
 
 ## Example Usage
 
@@ -83,16 +85,16 @@ resource "ciscoise_sponsor_portal" "example" {
 
         display_frequency               = "string"
         display_frequency_interval_days = 1
-        include_aup                     = false
-        require_scrolling               = false
+        include_aup                     = "false"
+        require_scrolling               = "false"
       }
       login_page_settings {
 
         aup_display                           = "string"
-        include_aup                           = false
+        include_aup                           = "false"
         max_failed_attempts_before_rate_limit = 1
-        require_aup_acceptance                = false
-        require_aup_scrolling                 = false
+        require_aup_acceptance                = "false"
+        require_aup_scrolling                 = "false"
         social_configs                        = ["string"]
         time_between_logins_during_rate_limit = 1
       }
@@ -110,26 +112,26 @@ resource "ciscoise_sponsor_portal" "example" {
       }
       post_access_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       post_login_banner_settings {
 
-        include_post_access_banner = false
+        include_post_access_banner = "false"
       }
       sponsor_change_password_settings {
 
-        allow_sponsor_to_change_pwd = false
+        allow_sponsor_to_change_pwd = "false"
       }
       support_info_settings {
 
         default_empty_field_value  = "string"
         empty_field_display        = "string"
-        include_browser_user_agent = false
-        include_failure_code       = false
-        include_ip_address         = false
-        include_mac_addr           = false
-        include_policy_server      = false
-        include_support_info_page  = false
+        include_browser_user_agent = "false"
+        include_failure_code       = "false"
+        include_ip_address         = "false"
+        include_mac_addr           = "false"
+        include_policy_server      = "false"
+        include_support_info_page  = "false"
       }
     }
   }
@@ -163,12 +165,12 @@ Optional:
 - **name** (String)
 - **portal_test_url** (String) URL to bring up a test page for this portal
 - **portal_type** (String) Allowed values:
-  - BYOD,
-  - HOTSPOTGUEST,
-  - MYDEVICE,
-  - SELFREGGUEST,
-  - SPONSOR,
-  - SPONSOREDGUEST
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST
 - **settings** (Block List) Defines all of the settings groups available for a portal (see [below for nested schema](#nestedblock--item--settings))
 
 Read-Only:
@@ -185,8 +187,8 @@ Optional:
 - **page_customizations** (Block List) (see [below for nested schema](#nestedblock--item--customizations--page_customizations))
 - **portal_theme** (Block List) (see [below for nested schema](#nestedblock--item--customizations--portal_theme))
 - **portal_tweak_settings** (Block List) The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-  The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--item--customizations--portal_tweak_settings))
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--item--customizations--portal_tweak_settings))
 
 <a id="nestedblock--item--customizations--global_customizations"></a>
 ### Nested Schema for `item.customizations.global_customizations`
@@ -300,12 +302,12 @@ Optional:
 Optional:
 
 - **display_frequency** (String) How the AUP should be displayed, either on page or as a link. Only valid if includeAup = true. Allowed Values:
-  - FIRSTLOGIN,
-  - EVERYLOGIN,
-  - RECURRING
+- FIRSTLOGIN,
+- EVERYLOGIN,
+- RECURRING
 - **display_frequency_interval_days** (Number) Number of days between AUP confirmations (when displayFrequency = recurring)
-- **include_aup** (Boolean)
-- **require_scrolling** (Boolean)
+- **include_aup** (String)
+- **require_scrolling** (String)
 
 
 <a id="nestedblock--item--settings--login_page_settings"></a>
@@ -314,15 +316,15 @@ Optional:
 Optional:
 
 - **aup_display** (String) How the AUP should be displayed, either on page or as a link.
-  Only valid if includeAup = true.
-  Allowed values:
-  -  ONPAGE,
-  - ASLINK
-- **include_aup** (Boolean) Include an Acceptable Use Policy (AUP) that should be displayed during login
+Only valid if includeAup = true.
+Allowed values:
+-  ONPAGE,
+- ASLINK
+- **include_aup** (String) Include an Acceptable Use Policy (AUP) that should be displayed during login
 - **max_failed_attempts_before_rate_limit** (Number) Maximum failed login attempts before rate limiting
-- **require_aup_acceptance** (Boolean) Require the portal user to accept the AUP.
-  Only valid if includeAup = true
-- **require_aup_scrolling** (Boolean)
+- **require_aup_acceptance** (String) Require the portal user to accept the AUP.
+Only valid if includeAup = true
+- **require_aup_scrolling** (String)
 - **social_configs** (List of String)
 - **time_between_logins_during_rate_limit** (Number) Time between login attempts when rate limiting
 
@@ -333,26 +335,26 @@ Optional:
 Optional:
 
 - **allowed_interfaces** (String) Interfaces that the portal will be reachable on.
-  Allowed values:
-  - eth0,
-  - eth1,
-  - eth2,
-  - eth3,
-  - eth4,
-  - eth5,
-  - bond0,
-  - bond1,
-  - bond2
+Allowed values:
+- eth0,
+- eth1,
+- eth2,
+- eth3,
+- eth4,
+- eth5,
+- bond0,
+- bond1,
+- bond2
 - **authentication_method** (String) Unique Id of the identity source sequence
 - **available_ssids** (String) Names of the SSIDs available for assignment to guest users by sponsors
 - **certificate_group_tag** (String) Logical name of the x.509 server certificate that will be used for the portal
 - **display_lang** (String) Allowed values:
-  - USEBROWSERLOCALE,
-  - ALWAYSUSE
+- USEBROWSERLOCALE,
+- ALWAYSUSE
 - **fallback_language** (String) Used when displayLang = USEBROWSERLOCALE
 - **fqdn** (String) The fully-qualified domain name (FQDN) that end-users will use to access this portal. Used only in Sponsor portal
 - **https_port** (Number) The port number that the allowed interfaces will listen on.
-  Range from 8000 to 8999
+Range from 8000 to 8999
 - **idle_timeout** (Number)
 
 
@@ -361,7 +363,7 @@ Optional:
 
 Optional:
 
-- **include_post_access_banner** (Boolean)
+- **include_post_access_banner** (String)
 
 
 <a id="nestedblock--item--settings--post_login_banner_settings"></a>
@@ -369,7 +371,7 @@ Optional:
 
 Optional:
 
-- **include_post_access_banner** (Boolean) Include a Post-Login Banner page
+- **include_post_access_banner** (String) Include a Post-Login Banner page
 
 
 <a id="nestedblock--item--settings--sponsor_change_password_settings"></a>
@@ -377,7 +379,7 @@ Optional:
 
 Optional:
 
-- **allow_sponsor_to_change_pwd** (Boolean) Allow sponsors to change their own passwords
+- **allow_sponsor_to_change_pwd** (String) Allow sponsors to change their own passwords
 
 
 <a id="nestedblock--item--settings--support_info_settings"></a>
@@ -386,17 +388,17 @@ Optional:
 Optional:
 
 - **default_empty_field_value** (String) The default value displayed for an empty field.
-  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
 - **empty_field_display** (String) Specifies how empty fields are handled on the Support Information Page. Allowed values:
-  - HIDE,
-  - DISPLAYWITHNOVALUE,
-  - DISPLAYWITHDEFAULTVALUE
-- **include_browser_user_agent** (Boolean)
-- **include_failure_code** (Boolean)
-- **include_ip_address** (Boolean)
-- **include_mac_addr** (Boolean)
-- **include_policy_server** (Boolean)
-- **include_support_info_page** (Boolean)
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE
+- **include_browser_user_agent** (String)
+- **include_failure_code** (String)
+- **include_ip_address** (String)
+- **include_mac_addr** (String)
+- **include_policy_server** (String)
+- **include_support_info_page** (String)
 
 
 

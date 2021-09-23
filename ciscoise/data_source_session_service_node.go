@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +16,11 @@ func dataSourceSessionServiceNode() *schema.Resource {
 		Description: `It performs read operation on PsnNodeDetailsWithRadiusService.
 
 - This data source allows the client to get a PSN node details by name.
+
 - This data source allows the client to get a PSN node details by ID.
-- This data source allows the client to get all the PSN node details.`,
+
+- This data source allows the client to get all the PSN node details.
+`,
 
 		ReadContext: dataSourceSessionServiceNodeRead,
 		Schema: map[string]*schema.Schema{
@@ -196,11 +200,11 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -223,7 +227,7 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponsePsnNodeDetailsWithRadiusServiceGetSessionServiceNodeSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -270,7 +274,7 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByNameItemName(response2.SessionServiceNode)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -296,7 +300,7 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenPsnNodeDetailsWithRadiusServiceGetSessionServiceNodeByIDItemID(response3.SessionServiceNode)
 		if err := d.Set("item_id", vItemID3); err != nil {

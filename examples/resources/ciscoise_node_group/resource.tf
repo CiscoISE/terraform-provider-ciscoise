@@ -6,7 +6,7 @@ resource "ciscoise_node_group" "example" {
     description = "string"
     mar_cache {
 
-      enabled              = false
+      enabled              = "false"
       query_attempts       = 1
       query_timeout        = 1
       replication_attempts = 1

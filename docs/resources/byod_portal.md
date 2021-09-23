@@ -10,10 +10,12 @@ description: |-
 # ciscoise_byod_portal (Resource)
 
 It manages create, read, update and delete operations on BYODPortal.
-  
-  - This resource allows the client to update a BYOD portal by ID.
-  - This resource deletes a BYOD portal by ID.
-  - This resource creates a BYOD portal.
+
+- This resource allows the client to update a BYOD portal by ID.
+
+- This resource deletes a BYOD portal by ID.
+
+- This resource creates a BYOD portal.
 
 ## Example Usage
 
@@ -84,7 +86,7 @@ resource "ciscoise_byod_portal" "example" {
         byod_registration_settings {
 
           end_point_identity_group_id = "string"
-          show_device_id              = false
+          show_device_id              = "false"
         }
         byod_registration_success_settings {
 
@@ -94,12 +96,12 @@ resource "ciscoise_byod_portal" "example" {
         byod_welcome_settings {
 
           aup_display            = "string"
-          enable_byo_d           = false
-          enable_guest_access    = false
-          include_aup            = false
-          require_aup_acceptance = false
-          require_mdm            = false
-          require_scrolling      = false
+          enable_byo_d           = "false"
+          enable_guest_access    = "false"
+          include_aup            = "false"
+          require_aup_acceptance = "false"
+          require_mdm            = "false"
+          require_scrolling      = "false"
         }
       }
       portal_settings {
@@ -116,12 +118,12 @@ resource "ciscoise_byod_portal" "example" {
 
         default_empty_field_value  = "string"
         empty_field_display        = "string"
-        include_browser_user_agent = false
-        include_failure_code       = false
-        include_ip_address         = false
-        include_mac_addr           = false
-        include_policy_server      = false
-        include_support_info_page  = false
+        include_browser_user_agent = "false"
+        include_failure_code       = "false"
+        include_ip_address         = "false"
+        include_mac_addr           = "false"
+        include_policy_server      = "false"
+        include_support_info_page  = "false"
       }
     }
   }
@@ -155,12 +157,12 @@ Optional:
 - **name** (String) Resource Name
 - **portal_test_url** (String) URL to bring up a test page for this portal
 - **portal_type** (String) Allowed values:
-  - BYOD,
-  - HOTSPOTGUEST,
-  - MYDEVICE,
-  - SELFREGGUEST,
-  - SPONSOR,
-  - SPONSOREDGUEST
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST
 - **settings** (Block List) Defines all of the settings groups available for a BYOD (see [below for nested schema](#nestedblock--item--settings))
 
 Read-Only:
@@ -174,12 +176,12 @@ Optional:
 
 - **global_customizations** (Block List) Represent the portal Global customizations (see [below for nested schema](#nestedblock--item--customizations--global_customizations))
 - **language** (Block List) This property is supported only for Read operation and it allows to show the customizations in English.
-  Other languages are not supported (see [below for nested schema](#nestedblock--item--customizations--language))
+Other languages are not supported (see [below for nested schema](#nestedblock--item--customizations--language))
 - **page_customizations** (Block List) Represent the entire page customization as a giant dictionary (see [below for nested schema](#nestedblock--item--customizations--page_customizations))
 - **portal_theme** (Block List) Defines the configuration for portal theme (see [below for nested schema](#nestedblock--item--customizations--portal_theme))
 - **portal_tweak_settings** (Block List) The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-  When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-  The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--item--customizations--portal_tweak_settings))
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--item--customizations--portal_tweak_settings))
 
 <a id="nestedblock--item--customizations--global_customizations"></a>
 ### Nested Schema for `item.customizations.global_customizations`
@@ -298,7 +300,7 @@ Optional:
 Optional:
 
 - **end_point_identity_group_id** (String)
-- **show_device_id** (Boolean)
+- **show_device_id** (String)
 
 
 <a id="nestedblock--item--settings--byod_settings--byod_registration_success_settings"></a>
@@ -316,16 +318,16 @@ Optional:
 Optional:
 
 - **aup_display** (String) How the AUP should be displayed, either on page or as a link.
-  Only valid if includeAup = true.
-  Allowed values:
-  - ONPAGE,
-  - ASLINK
-- **enable_byo_d** (Boolean)
-- **enable_guest_access** (Boolean)
-- **include_aup** (Boolean)
-- **require_aup_acceptance** (Boolean)
-- **require_mdm** (Boolean)
-- **require_scrolling** (Boolean) Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true
+Only valid if includeAup = true.
+Allowed values:
+- ONPAGE,
+- ASLINK
+- **enable_byo_d** (String)
+- **enable_guest_access** (String)
+- **include_aup** (String)
+- **require_aup_acceptance** (String)
+- **require_mdm** (String)
+- **require_scrolling** (String) Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true
 
 
 
@@ -335,21 +337,21 @@ Optional:
 Optional:
 
 - **allowed_interfaces** (List of String) Interfaces that the portal will be reachable on.
-  Allowed values:
-  - eth0,
-  - eth1,
-  - eth2,
-  - eth3,
-  - eth4,
-  - eth5,
-  - bond0,
-  - bond1,
-  - bond2
+Allowed values:
+- eth0,
+- eth1,
+- eth2,
+- eth3,
+- eth4,
+- eth5,
+- bond0,
+- bond1,
+- bond2
 - **always_used_language** (String) Used when displayLang = ALWAYSUSE
 - **certificate_group_tag** (String) Logical name of the x.509 server certificate that will be used for the portal
 - **display_lang** (String) Allowed values:
-  - USEBROWSERLOCALE,
-  - ALWAYSUSE
+- USEBROWSERLOCALE,
+- ALWAYSUSE
 - **endpoint_identity_group** (String) Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal
 - **fallback_language** (String) Used when displayLang = USEBROWSERLOCALE
 - **https_port** (Number) The port number that the allowed interfaces will listen on. Range from 8000 to 8999
@@ -361,18 +363,18 @@ Optional:
 Optional:
 
 - **default_empty_field_value** (String) The default value displayed for an empty field.
-  Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
 - **empty_field_display** (String) Specifies how empty fields are handled on the Support Information Page.
-  Allowed values:
-  - HIDE,
-  - DISPLAYWITHNOVALUE,
-  - DISPLAYWITHDEFAULTVALUE
-- **include_browser_user_agent** (Boolean)
-- **include_failure_code** (Boolean)
-- **include_ip_address** (Boolean)
-- **include_mac_addr** (Boolean)
-- **include_policy_server** (Boolean)
-- **include_support_info_page** (Boolean)
+Allowed values:
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE
+- **include_browser_user_agent** (String)
+- **include_failure_code** (String)
+- **include_ip_address** (String)
+- **include_mac_addr** (String)
+- **include_policy_server** (String)
+- **include_support_info_page** (String)
 
 
 

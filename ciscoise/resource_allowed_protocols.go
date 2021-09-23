@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceAllowedProtocols() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on AllowedProtocols.
-  
-  - This resource allows the client to update an allowed protocol.
-  - This resource deletes an allowed protocol.
-  - This resource creates an allowed protocol.`,
+
+- This resource allows the client to update an allowed protocol.
+
+- This resource deletes an allowed protocol.
+
+- This resource creates an allowed protocol.
+`,
 
 		CreateContext: resourceAllowedProtocolsCreate,
 		ReadContext:   resourceAllowedProtocolsRead,
@@ -40,69 +44,95 @@ func resourceAllowedProtocols() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allow_chap": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_eap_fast": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_eap_md5": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_eap_tls": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_eap_ttls": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_leap": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_ms_chap_v1": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_ms_chap_v2": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_pap_ascii": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_peap": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_preferred_eap_protocol": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_teap": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"allow_weak_ciphers_for_eap": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -118,33 +148,41 @@ func resourceAllowedProtocols() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"allow_eap_fast_eap_gtc": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_eap_fast_eap_gtc_pwd_change": &schema.Schema{
 										Description: `The allowEapFastEapGtcPwdChange is required only if allowEapFastEapGtc is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_eap_fast_eap_gtc_pwd_change_retries": &schema.Schema{
 										Description: `The allowEapFastEapGtcPwdChangeRetries is required only if allowEapFastEapGtc is true,
-  otherwise it must be ignored. Valid range is 0-3`,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"allow_eap_fast_eap_ms_chap_v2": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_eap_fast_eap_ms_chap_v2_pwd_change": &schema.Schema{
 										Description: `The allowEapFastEapMsChapV2PwdChange is required only if allowEapFastEapMsChapV2 is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_eap_fast_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
 										Description: `The allowEapFastEapMsChapV2PwdChangeRetries is required only if eapTtlsEapMsChapV2 is true, otherwise it must be ignored. Valid range is 0-3`,
@@ -153,116 +191,140 @@ func resourceAllowedProtocols() *schema.Resource {
 										Computed:    true,
 									},
 									"allow_eap_fast_eap_tls": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_eap_fast_eap_tls_auth_of_expired_certs": &schema.Schema{
 										Description: `The allowEapFastEapTlsAuthOfExpiredCerts is required only if allowEapFastEapTls is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_dont_use_pacs_accept_client_cert": &schema.Schema{
 										Description: `The eapFastDontUsePacsAcceptClientCert is required only if eapFastUsePacs is FALSE, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_dont_use_pacs_allow_machine_authentication": &schema.Schema{
 										Description: `The eapFastDontUsePacsAllowMachineAuthentication is required only if eapFastUsePacs is FALSE, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_enable_eap_chaining": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_use_pacs": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_use_pacs_accept_client_cert": &schema.Schema{
 										Description: `The eapFastUsePacsAcceptClientCert is required only if eapFastUsePacsAllowAuthenProvisioning is true,
-  otherwise it must be ignored`,
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+otherwise it must be ignored`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_use_pacs_allow_anonym_provisioning": &schema.Schema{
 										Description: `The eapFastUsePacsAllowAnonymProvisioning is required only if eapFastUsePacs is true,
-  otherwise it must be ignored`,
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+otherwise it must be ignored`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_use_pacs_allow_authen_provisioning": &schema.Schema{
 										Description: `The eapFastUsePacsAllowAuthenProvisioning is required only if eapFastUsePacs is true,
-  otherwise it must be ignored`,
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+otherwise it must be ignored`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_use_pacs_allow_machine_authentication": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_use_pacs_authorization_pac_ttl": &schema.Schema{
 										Description: `The eapFastUsePacsAuthorizationPacTtl is required only if eapFastUsePacsStatelessSessionResume is true,
-  otherwise it must be ignored`,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_authorization_pac_ttl_units": &schema.Schema{
 										Description: `The eapFastUsePacsAuthorizationPacTtlUnits is required only if eapFastUsePacsStatelessSessionResume is true,
-  otherwise it must be ignored.
-  Allowed Values:
-  - SECONDS,
-  - MINUTES,
-  - HOURS,
-  - DAYS,
-  - WEEKS`,
+otherwise it must be ignored.
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_machine_pac_ttl": &schema.Schema{
 										Description: `The eapFastUsePacsMachinePacTtl is required only if eapFastUsePacsAllowMachineAuthentication is true,
-  otherwise it must be ignored`,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_machine_pac_ttl_units": &schema.Schema{
 										Description: `The eapFastUsePacsMachinePacTtlUnits is required only if eapFastUsePacsAllowMachineAuthentication is true,
-  otherwise it must be ignored.
-  Allowed Values:
-  - SECONDS,
-  - MINUTES,
-  - HOURS,
-  - DAYS,
-  - WEEKS`,
+otherwise it must be ignored.
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
 										Description: `The eapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning
-  is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored`,
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_use_pacs_stateless_session_resume": &schema.Schema{
 										Description: `The eapFastUsePacsStatelessSessionResume is required only if eapFastUsePacs is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_fast_use_pacs_tunnel_pac_ttl": &schema.Schema{
 										Description: `The eapFastUsePacsTunnelPacTtl is required only if eapFastUsePacs is true, otherwise it must be ignored`,
@@ -272,19 +334,19 @@ func resourceAllowedProtocols() *schema.Resource {
 									},
 									"eap_fast_use_pacs_tunnel_pac_ttl_units": &schema.Schema{
 										Description: `The eapFastUsePacsTunnelPacTtlUnits is required only if eapFastUsePacs is true, otherwise it must be ignored.
-  Allowed Values:
-  - SECONDS,
-  - MINUTES,
-  - HOURS,
-  - DAYS,
-  - WEEKS`,
+Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"eap_fast_use_pacs_use_proactive_pac_update_precentage": &schema.Schema{
 										Description: `The eapFastUsePacsUseProactivePacUpdatePrecentage is required only if eapFastUsePacs is true,
-  otherwise it must be ignored`,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
@@ -301,18 +363,22 @@ func resourceAllowedProtocols() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"allow_eap_tls_auth_of_expired_certs": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_tls_enable_stateless_session_resume": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_tls_session_ticket_precentage": &schema.Schema{
 										Description: `The eapTlsSessionTicketPrecentage is required only if eapTlsEnableStatelessSessionResume is true,
-  otherwise it must be ignored`,
+otherwise it must be ignored`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
@@ -325,12 +391,12 @@ func resourceAllowedProtocols() *schema.Resource {
 									},
 									"eap_tls_session_ticket_ttl_units": &schema.Schema{
 										Description: `Time to live time units. The eapTlsSessionTicketTtlUnits is required only if eapTlsEnableStatelessSessionResume is true,
-  otherwise it must be ignored. Allowed Values:
-  - SECONDS,
-  - MINUTES,
-  - HOURS,
-  - DAYS,
-  - WEEKS`,
+otherwise it must be ignored. Allowed Values:
+- SECONDS,
+- MINUTES,
+- HOURS,
+- DAYS,
+- WEEKS`,
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -339,13 +405,15 @@ func resourceAllowedProtocols() *schema.Resource {
 							},
 						},
 						"eap_tls_l_bit": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"eap_ttls": &schema.Schema{
 							Description: `The eapTtls is required only if allowEapTtls is true, otherwise it must be ignored.
-  The object eapTtls contains the settings for EAP TTLS protocol`,
+The object eapTtls contains the settings for EAP TTLS protocol`,
 							Type:     schema.TypeList,
 							Optional: true,
 							Computed: true,
@@ -353,47 +421,61 @@ func resourceAllowedProtocols() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"eap_ttls_chap": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_ttls_eap_md5": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_ttls_eap_ms_chap_v2": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_ttls_eap_ms_chap_v2_pwd_change": &schema.Schema{
 										Description: `The eapTtlsEapMsChapV2PwdChange is required only if eapTtlsEapMsChapV2 is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_ttls_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
 										Description: `The eapTtlsEapMsChapV2PwdChangeRetries is required only if eapTtlsEapMsChapV2 is true,
-  otherwise it must be ignored. Valid range is 0-3`,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"eap_ttls_ms_chap_v1": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_ttls_ms_chap_v2": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"eap_ttls_pap_ascii": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -439,93 +521,113 @@ func resourceAllowedProtocols() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"allow_peap_eap_gtc": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_peap_eap_gtc_pwd_change": &schema.Schema{
 										Description: `The allowPeapEapGtcPwdChange is required only if allowPeapEapGtc is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_peap_eap_gtc_pwd_change_retries": &schema.Schema{
 										Description: `The allowPeapEapGtcPwdChangeRetries is required only if allowPeapEapGtc is true,
-  otherwise it must be ignored. Valid range is 0-3`,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"allow_peap_eap_ms_chap_v2": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_peap_eap_ms_chap_v2_pwd_change": &schema.Schema{
 										Description: `The allowPeapEapMsChapV2PwdChange is required only if allowPeapEapMsChapV2 is true,
-  otherwise it must be ignored`,
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+otherwise it must be ignored`,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_peap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
 										Description: `The allowPeapEapMsChapV2PwdChangeRetries is required only if allowPeapEapMsChapV2 is true,
-  otherwise it must be ignored. Valid range is 0-3`,
+otherwise it must be ignored. Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"allow_peap_eap_tls": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_peap_eap_tls_auth_of_expired_certs": &schema.Schema{
 										Description: `The allowPeapEapTlsAuthOfExpiredCerts is required only if allowPeapEapTls is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_peap_v0": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"require_cryptobinding": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"preferred_eap_protocol": &schema.Schema{
 							Description: `The preferredEapProtocol is required only if allowPreferredEapProtocol is true, otherwise it must be ignored.
-  Allowed Values: 
-  - EAP_FAST,
-  - PEAP,
-  - LEAP,
-  - EAP_MD5,
-  - EAP_TLS,
-  - EAP_TTLS,
-  - TEAP`,
+Allowed Values: 
+- EAP_FAST,
+- PEAP,
+- LEAP,
+- EAP_MD5,
+- EAP_TLS,
+- EAP_TTLS,
+- TEAP`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"process_host_lookup": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"require_message_auth": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"teap": &schema.Schema{
 							Description: `The teap is required only if allowTeap is true, otherwise it must be ignored.
-  The object teap contains the settings for TEAP protocol`,
+The object teap contains the settings for TEAP protocol`,
 							Type:     schema.TypeList,
 							Optional: true,
 							Computed: true,
@@ -533,49 +635,63 @@ func resourceAllowedProtocols() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"accept_client_cert_during_tunnel_est": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_downgrade_msk": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_teap_eap_ms_chap_v2": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_teap_eap_ms_chap_v2_pwd_change": &schema.Schema{
 										Description: `The allowTeapEapMsChapV2PwdChange is required only if allowTeapEapMsChapV2 is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_teap_eap_ms_chap_v2_pwd_change_retries": &schema.Schema{
 										Description: `The allowTeapEapMsChapV2PwdChangeRetries is required only if allowTeapEapMsChapV2 is true,
-  otherwise it must be ignored.
-  Valid range is 0-3`,
+otherwise it must be ignored.
+Valid range is 0-3`,
 										Type:     schema.TypeInt,
 										Optional: true,
 										Computed: true,
 									},
 									"allow_teap_eap_tls": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"allow_teap_eap_tls_auth_of_expired_certs": &schema.Schema{
 										Description: `The allowTeapEapTlsAuthOfExpiredCerts is required only if allowTeapEapTls is true, otherwise it must be ignored`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"enable_eap_chaining": &schema.Schema{
-										Type:     schema.TypeBool,
-										Optional: true,
-										Computed: true,
+										// Type:     schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -594,7 +710,7 @@ func resourceAllowedProtocolsCreate(ctx context.Context, d *schema.ResourceData,
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestAllowedProtocolsCreateAllowedProtocol(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -672,7 +788,7 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenAllowedProtocolsGetAllowedProtocolByNameItemName(response1.AllowedProtocols)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -697,7 +813,7 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenAllowedProtocolsGetAllowedProtocolByIDItemID(response2.AllowedProtocols)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -749,13 +865,13 @@ func resourceAllowedProtocolsUpdate(ctx context.Context, d *schema.ResourceData,
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestAllowedProtocolsUpdateAllowedProtocolByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.AllowedProtocols.UpdateAllowedProtocolByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateAllowedProtocolByID", err, restyResp1.String(),
 					"Failure at UpdateAllowedProtocolByID, unexpected response", ""))
@@ -813,7 +929,7 @@ func resourceAllowedProtocolsDelete(ctx context.Context, d *schema.ResourceData,
 	restyResp1, err := client.AllowedProtocols.DeleteAllowedProtocolByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteAllowedProtocolByID", err, restyResp1.String(),
 				"Failure at DeleteAllowedProtocolByID, unexpected response", ""))
@@ -1148,20 +1264,41 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(ctx 
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls"))) {
-		request.EapTls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(ctx, key+".eap_tls.0", d)
+
+	vAllowEapTls, okAllowEapTls := d.GetOk(key + ".allow_eap_tls")
+	vvAllowEapTls := interfaceToBoolPtr(vAllowEapTls)
+	if okAllowEapTls && vvAllowEapTls != nil && *vvAllowEapTls {
+		if v, ok := d.GetOkExists(key + ".eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls"))) {
+			request.EapTls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(ctx, key+".eap_tls.0", d)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".peap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".peap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".peap"))) {
-		request.Peap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(ctx, key+".peap.0", d)
+	vAllowPeap, okAllowPeap := d.GetOk(key + ".allow_peap")
+	vvAllowPeap := interfaceToBoolPtr(vAllowPeap)
+	if okAllowPeap && vvAllowPeap != nil && *vvAllowPeap {
+		if v, ok := d.GetOkExists(key + ".peap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".peap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".peap"))) {
+			request.Peap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(ctx, key+".peap.0", d)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast"))) {
-		request.EapFast = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast(ctx, key+".eap_fast.0", d)
+	vAllowEapFast, okAllowEapFast := d.GetOk(key + ".allow_eap_fast")
+	vvAllowEapFast := interfaceToBoolPtr(vAllowEapFast)
+	if okAllowEapFast && vvAllowEapFast != nil && *vvAllowEapFast {
+		if v, ok := d.GetOkExists(key + ".eap_fast"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast"))) {
+			request.EapFast = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFast(ctx, key+".eap_fast.0", d)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls"))) {
-		request.EapTtls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls(ctx, key+".eap_ttls.0", d)
+	vAllowEapTtls, okAllowEapTtls := d.GetOk(key + ".allow_eap_ttls")
+	vvAllowEapTtls := interfaceToBoolPtr(vAllowEapTtls)
+	if okAllowEapTtls && vvAllowEapTtls != nil && *vvAllowEapTtls {
+		if v, ok := d.GetOkExists(key + ".eap_ttls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls"))) {
+			request.EapTtls = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTtls(ctx, key+".eap_ttls.0", d)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".teap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".teap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".teap"))) {
-		request.Teap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(ctx, key+".teap.0", d)
+	vAllowTeap, okAllowTeap := d.GetOk(key + ".allow_teap")
+	vvAllowTeap := interfaceToBoolPtr(vAllowTeap)
+	if okAllowTeap && vvAllowTeap != nil && *vvAllowTeap {
+		if v, ok := d.GetOkExists(key + ".teap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".teap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".teap"))) {
+			request.Teap = expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(ctx, key+".teap.0", d)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".process_host_lookup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".process_host_lookup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".process_host_lookup"))) {
 		request.ProcessHostLookup = interfaceToBoolPtr(v)
@@ -1202,8 +1339,12 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(ctx 
 	if v, ok := d.GetOkExists(key + ".allow_preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_preferred_eap_protocol"))) {
 		request.AllowPreferredEapProtocol = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".preferred_eap_protocol"))) {
-		request.PreferredEapProtocol = interfaceToString(v)
+	vAllowPreferredEapProtocol, okAllowPreferredEapProtocol := d.GetOk(key + ".allow_preferred_eap_protocol")
+	vvAllowPreferredEapProtocol := interfaceToBoolPtr(vAllowPreferredEapProtocol)
+	if okAllowPreferredEapProtocol && vvAllowPreferredEapProtocol != nil && *vvAllowPreferredEapProtocol {
+		if v, ok := d.GetOkExists(key + ".preferred_eap_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".preferred_eap_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".preferred_eap_protocol"))) {
+			request.PreferredEapProtocol = interfaceToString(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".eap_tls_l_bit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_l_bit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_l_bit"))) {
 		request.EapTlsLBit = interfaceToBoolPtr(v)
@@ -1222,20 +1363,24 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(ctx 
 
 func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls {
 	request := isegosdk.RequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTls{}
+	vEapTlsEnableStatelessSessionResume, okEapTlsEnableStatelessSessionResume := d.GetOk(key + ".eap_tls_enable_stateless_session_resume")
+	vvEapTlsEnableStatelessSessionResume := interfaceToBoolPtr(vEapTlsEnableStatelessSessionResume)
 	if v, ok := d.GetOkExists(key + ".allow_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_tls_auth_of_expired_certs"))) {
 		request.AllowEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".eap_tls_enable_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_enable_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_enable_stateless_session_resume"))) {
 		request.EapTlsEnableStatelessSessionResume = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl"))) {
-		request.EapTlsSessionTicketTtl = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl_units"))) {
-		request.EapTlsSessionTicketTtlUnits = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_precentage"))) {
-		request.EapTlsSessionTicketPrecentage = interfaceToIntPtr(v)
+	if okEapTlsEnableStatelessSessionResume && vvEapTlsEnableStatelessSessionResume != nil && *vvEapTlsEnableStatelessSessionResume {
+		if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl"))) {
+			request.EapTlsSessionTicketTtl = interfaceToIntPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_ttl_units"))) {
+			request.EapTlsSessionTicketTtlUnits = interfaceToString(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_tls_session_ticket_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_tls_session_ticket_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_tls_session_ticket_precentage"))) {
+			request.EapTlsSessionTicketPrecentage = interfaceToIntPtr(v)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1248,26 +1393,41 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsPeap(
 	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2"))) {
 		request.AllowPeapEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) {
-		request.AllowPeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) {
-		request.AllowPeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+
+	vAllowPeapEapMsChapV2, okAllowPeapEapMsChapV2 := d.GetOk(key + ".allow_peap_eap_ms_chap_v2")
+	vvAllowPeapEapMsChapV2 := interfaceToBoolPtr(vAllowPeapEapMsChapV2)
+	if okAllowPeapEapMsChapV2 && vvAllowPeapEapMsChapV2 != nil && *vvAllowPeapEapMsChapV2 {
+		if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change"))) {
+			request.AllowPeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".allow_peap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_ms_chap_v2_pwd_change_retries"))) {
+			request.AllowPeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc"))) {
 		request.AllowPeapEapGtc = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change"))) {
-		request.AllowPeapEapGtcPwdChange = interfaceToBoolPtr(v)
+
+	vAllowPeapEapGtc, okAllowPeapEapGtc := d.GetOk(key + ".allow_peap_eap_gtc")
+	vvAllowPeapEapGtc := interfaceToBoolPtr(vAllowPeapEapGtc)
+	if okAllowPeapEapGtc && vvAllowPeapEapGtc != nil && *vvAllowPeapEapGtc {
+		if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change"))) {
+			request.AllowPeapEapGtcPwdChange = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) {
+			request.AllowPeapEapGtcPwdChangeRetries = interfaceToIntPtr(v)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_gtc_pwd_change_retries"))) {
-		request.AllowPeapEapGtcPwdChangeRetries = interfaceToIntPtr(v)
-	}
+
 	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls"))) {
 		request.AllowPeapEapTls = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) {
-		request.AllowPeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	vAllowPeapEapTls, okAllowPeapEapTls := d.GetOk(key + ".allow_peap_eap_tls")
+	vvAllowPeapEapTls := interfaceToBoolPtr(vAllowPeapEapTls)
+	if okAllowPeapEapTls && vvAllowPeapEapTls != nil && *vvAllowPeapEapTls {
+		if v, ok := d.GetOkExists(key + ".allow_peap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_peap_eap_tls_auth_of_expired_certs"))) {
+			request.AllowPeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".require_cryptobinding"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_cryptobinding"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_cryptobinding"))) {
 		request.RequireCryptobinding = interfaceToBoolPtr(v)
@@ -1286,74 +1446,106 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFa
 	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2"))) {
 		request.AllowEapFastEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) {
-		request.AllowEapFastEapMsChapV2PwdChange = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) {
-		request.AllowEapFastEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	vAllowEapFastEapMsChapV2, okAllowEapFastEapMsChapV2 := d.GetOk(key + ".allow_eap_fast_eap_ms_chap_v2")
+	vvAllowEapFastEapMsChapV2 := interfaceToBoolPtr(vAllowEapFastEapMsChapV2)
+	if okAllowEapFastEapMsChapV2 && vvAllowEapFastEapMsChapV2 != nil && *vvAllowEapFastEapMsChapV2 {
+		if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change"))) {
+			request.AllowEapFastEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_ms_chap_v2_pwd_change_retries"))) {
+			request.AllowEapFastEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc"))) {
 		request.AllowEapFastEapGtc = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) {
-		request.AllowEapFastEapGtcPwdChange = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) {
-		request.AllowEapFastEapGtcPwdChangeRetries = interfaceToIntPtr(v)
+	vAllowEapFastEapGtc, okAllowEapFastEapGtc := d.GetOk(key + ".allow_eap_fast_eap_gtc")
+	vvAllowEapFastEapGtc := interfaceToBoolPtr(vAllowEapFastEapGtc)
+	if okAllowEapFastEapGtc && vvAllowEapFastEapGtc != nil && *vvAllowEapFastEapGtc {
+		if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change"))) {
+			request.AllowEapFastEapGtcPwdChange = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_gtc_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_gtc_pwd_change_retries"))) {
+			request.AllowEapFastEapGtcPwdChangeRetries = interfaceToIntPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls"))) {
 		request.AllowEapFastEapTls = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) {
-		request.AllowEapFastEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+	vAllowEapFastEapTls, okAllowEapFastEapTls := d.GetOk(key + ".allow_eap_fast_eap_tls")
+	vvAllowEapFastEapTls := interfaceToBoolPtr(vAllowEapFastEapTls)
+	if okAllowEapFastEapTls && vvAllowEapFastEapTls != nil && *vvAllowEapFastEapTls {
+		if v, ok := d.GetOkExists(key + ".allow_eap_fast_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_eap_fast_eap_tls_auth_of_expired_certs"))) {
+			request.AllowEapFastEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs"))) {
 		request.EapFastUsePacs = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) {
-		request.EapFastUsePacsTunnelPacTtl = interfaceToIntPtr(v)
+	vEapFastUsePacs, okEapFastUsePacs := d.GetOk(key + ".eap_fast_use_pacs")
+	vvEapFastUsePacs := interfaceToBoolPtr(vEapFastUsePacs)
+	if okEapFastUsePacs && vvEapFastUsePacs != nil && *vvEapFastUsePacs {
+		if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl"))) {
+			request.EapFastUsePacsTunnelPacTtl = interfaceToIntPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) {
+			request.EapFastUsePacsTunnelPacTtlUnits = interfaceToString(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_use_proactive_pac_update_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) {
+			request.EapFastUsePacsUseProactivePacUpdatePrecentage = interfaceToIntPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_anonym_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) {
+			request.EapFastUsePacsAllowAnonymProvisioning = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_authen_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) {
+			request.EapFastUsePacsAllowAuthenProvisioning = interfaceToBoolPtr(v)
+		}
+		vEapFastUsePacsAllowAuthenProvisioning, okEapFastUsePacsAllowAuthenProvisioning := d.GetOk(key + ".eap_fast_use_pacs_allow_authen_provisioning")
+		vvEapFastUsePacsAllowAuthenProvisioning := interfaceToBoolPtr(vEapFastUsePacsAllowAuthenProvisioning)
+		if okEapFastUsePacsAllowAuthenProvisioning && vvEapFastUsePacsAllowAuthenProvisioning != nil && *vvEapFastUsePacsAllowAuthenProvisioning {
+			if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) {
+				request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(v)
+			}
+			if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) {
+				request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(v)
+			}
+		}
+		if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) {
+			request.EapFastUsePacsStatelessSessionResume = interfaceToBoolPtr(v)
+		}
+		vEapFastUsePacsStatelessSessionResume, okEapFastUsePacsStatelessSessionResume := d.GetOk(key + ".eap_fast_use_pacs_stateless_session_resume")
+		vvEapFastUsePacsStatelessSessionResume := interfaceToBoolPtr(vEapFastUsePacsStatelessSessionResume)
+		if okEapFastUsePacsStatelessSessionResume && vvEapFastUsePacsStatelessSessionResume != nil && *vvEapFastUsePacsStatelessSessionResume {
+			if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) {
+				request.EapFastUsePacsAuthorizationPacTtl = interfaceToIntPtr(v)
+			}
+			if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) {
+				request.EapFastUsePacsAuthorizationPacTtlUnits = interfaceToString(v)
+			}
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_tunnel_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_tunnel_pac_ttl_units"))) {
-		request.EapFastUsePacsTunnelPacTtlUnits = interfaceToString(v)
+
+	vEapFastUsePacsAllowMachineAuthentication, okEapFastUsePacsAllowMachineAuthentication := d.GetOk(key + ".eap_fast_use_pacs_allow_machine_authentication")
+	vvEapFastUsePacsAllowMachineAuthentication := interfaceToBoolPtr(vEapFastUsePacsAllowMachineAuthentication)
+	if okEapFastUsePacsAllowMachineAuthentication && vvEapFastUsePacsAllowMachineAuthentication != nil && *vvEapFastUsePacsAllowMachineAuthentication {
+		if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) {
+			request.EapFastUsePacsMachinePacTtl = interfaceToIntPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) {
+			request.EapFastUsePacsMachinePacTtlUnits = interfaceToString(v)
+		}
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_use_proactive_pac_update_precentage"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_use_proactive_pac_update_precentage"))) {
-		request.EapFastUsePacsUseProactivePacUpdatePrecentage = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_anonym_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_anonym_provisioning"))) {
-		request.EapFastUsePacsAllowAnonymProvisioning = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_authen_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_authen_provisioning"))) {
-		request.EapFastUsePacsAllowAuthenProvisioning = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"))) {
-		request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_accept_client_cert"))) {
-		request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl"))) {
-		request.EapFastUsePacsMachinePacTtl = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_machine_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_machine_pac_ttl_units"))) {
-		request.EapFastUsePacsMachinePacTtlUnits = interfaceToString(v)
-	}
+
 	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_allow_machine_authentication"))) {
 		request.EapFastUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_stateless_session_resume"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_stateless_session_resume"))) {
-		request.EapFastUsePacsStatelessSessionResume = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl"))) {
-		request.EapFastUsePacsAuthorizationPacTtl = interfaceToIntPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_use_pacs_authorization_pac_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_use_pacs_authorization_pac_ttl_units"))) {
-		request.EapFastUsePacsAuthorizationPacTtlUnits = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) {
-		request.EapFastDontUsePacsAcceptClientCert = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) {
-		request.EapFastDontUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
+	if !(okEapFastUsePacs && vvEapFastUsePacs != nil && *vvEapFastUsePacs) {
+		if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_accept_client_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_accept_client_cert"))) {
+			request.EapFastDontUsePacsAcceptClientCert = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_fast_dont_use_pacs_allow_machine_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_dont_use_pacs_allow_machine_authentication"))) {
+			request.EapFastDontUsePacsAllowMachineAuthentication = interfaceToBoolPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".eap_fast_enable_eap_chaining"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_fast_enable_eap_chaining"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_fast_enable_eap_chaining"))) {
 		request.EapFastEnableEApChaining = interfaceToBoolPtr(v)
@@ -1384,11 +1576,15 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapTt
 	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2"))) {
 		request.EapTtlsEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) {
-		request.EapTtlsEapMsChapV2PwdChange = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) {
-		request.EapTtlsEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	vEapTtlsEapMsChapV2, okEapTtlsEapMsChapV2 := d.GetOk(key + ".eap_ttls_eap_ms_chap_v2")
+	vvEapTtlsEapMsChapV2 := interfaceToBoolPtr(vEapTtlsEapMsChapV2)
+	if okEapTtlsEapMsChapV2 && vvEapTtlsEapMsChapV2 != nil && *vvEapTtlsEapMsChapV2 {
+		if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change"))) {
+			request.EapTtlsEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".eap_ttls_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap_ttls_eap_ms_chap_v2_pwd_change_retries"))) {
+			request.EapTtlsEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1401,17 +1597,26 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(
 	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2"))) {
 		request.AllowTeapEapMsChapV2 = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) {
-		request.AllowTeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
-	}
-	if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) {
-		request.AllowTeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+	vAllowTeapEapMsChapV2, okAllowTeapEapMsChapV2 := d.GetOk(key + ".allow_teap_eap_ms_chap_v2")
+	vvAllowTeapEapMsChapV2 := interfaceToBoolPtr(vAllowTeapEapMsChapV2)
+	if okAllowTeapEapMsChapV2 && vvAllowTeapEapMsChapV2 != nil && *vvAllowTeapEapMsChapV2 {
+		if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change"))) {
+			request.AllowTeapEapMsChapV2PwdChange = interfaceToBoolPtr(v)
+		}
+		if v, ok := d.GetOkExists(key + ".allow_teap_eap_ms_chap_v2_pwd_change_retries"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_ms_chap_v2_pwd_change_retries"))) {
+			request.AllowTeapEapMsChapV2PwdChangeRetries = interfaceToIntPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls"))) {
 		request.AllowTeapEapTls = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) {
-		request.AllowTeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+
+	vAllowTeapEapTls, okAllowTeapEapTls := d.GetOk(key + ".allow_teap_eap_tls")
+	vvAllowTeapEapTls := interfaceToBoolPtr(vAllowTeapEapTls)
+	if okAllowTeapEapTls && vvAllowTeapEapTls != nil && *vvAllowTeapEapTls {
+		if v, ok := d.GetOkExists(key + ".allow_teap_eap_tls_auth_of_expired_certs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_teap_eap_tls_auth_of_expired_certs"))) {
+			request.AllowTeapEapTlsAuthOfExpiredCerts = interfaceToBoolPtr(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".accept_client_cert_during_tunnel_est"); !isEmptyValue(reflect.ValueOf(d.Get(key+".accept_client_cert_during_tunnel_est"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".accept_client_cert_during_tunnel_est"))) {
 		request.AcceptClientCertDuringTunnelEst = interfaceToBoolPtr(v)

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 		Description: `It performs read operation on RADIUSServerSequence.
 
 - This data source allows the client to get a RADIUS server sequence by ID.
-- This data source allows the client to get all the RADIUS server sequences.`,
+
+- This data source allows the client to get all the RADIUS server sequences.
+`,
 
 		ReadContext: dataSourceRadiusServerSequenceRead,
 		Schema: map[string]*schema.Schema{
@@ -120,7 +123,8 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"continue_authorz_policy": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"description": &schema.Schema{
@@ -153,7 +157,8 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"name": &schema.Schema{
@@ -166,15 +171,18 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"strip_prefix": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"strip_suffix": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"suffix_separator": &schema.Schema{
@@ -183,11 +191,13 @@ func dataSourceRadiusServerSequence() *schema.Resource {
 							Computed:    true,
 						},
 						"use_attr_set_before_acc": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"use_attr_set_on_request": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -248,9 +258,9 @@ func dataSourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceD
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -273,7 +283,7 @@ func dataSourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequenceSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -320,7 +330,7 @@ func dataSourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenRadiusServerSequenceGetRadiusServerSequenceByIDItem(response2.RadiusServerSequence)
 		if err := d.Set("item", vItem2); err != nil {
@@ -375,15 +385,15 @@ func flattenRadiusServerSequenceGetRadiusServerSequenceByIDItem(item *isegosdk.R
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
-	respItem["strip_prefix"] = item.StripPrefix
-	respItem["strip_suffix"] = item.StripSuffix
+	respItem["strip_prefix"] = boolPtrToString(item.StripPrefix)
+	respItem["strip_suffix"] = boolPtrToString(item.StripSuffix)
 	respItem["prefix_separator"] = item.PrefixSeparator
 	respItem["suffix_separator"] = item.SuffixSeparator
-	respItem["remote_accounting"] = item.RemoteAccounting
-	respItem["local_accounting"] = item.LocalAccounting
-	respItem["use_attr_set_on_request"] = item.UseAttrSetOnRequest
-	respItem["use_attr_set_before_acc"] = item.UseAttrSetBeforeAcc
-	respItem["continue_authorz_policy"] = item.ContinueAuthorzPolicy
+	respItem["remote_accounting"] = boolPtrToString(item.RemoteAccounting)
+	respItem["local_accounting"] = boolPtrToString(item.LocalAccounting)
+	respItem["use_attr_set_on_request"] = boolPtrToString(item.UseAttrSetOnRequest)
+	respItem["use_attr_set_before_acc"] = boolPtrToString(item.UseAttrSetBeforeAcc)
+	respItem["continue_authorz_policy"] = boolPtrToString(item.ContinueAuthorzPolicy)
 	respItem["radius_server_list"] = item.RadiusServerList
 	respItem["on_request_attr_manipulator_list"] = flattenRadiusServerSequenceGetRadiusServerSequenceByIDItemOnRequestAttrManipulatorList(item.OnRequestAttrManipulatorList)
 	respItem["before_accept_attr_manipulators_list"] = flattenRadiusServerSequenceGetRadiusServerSequenceByIDItemBeforeAcceptAttrManipulatorsList(item.BeforeAcceptAttrManipulatorsList)

@@ -55,7 +55,7 @@ Read-Only:
 
 Read-Only:
 
-- **is_default** (Boolean)
+- **is_default** (String)
 - **key** (String)
 - **value** (String)
 

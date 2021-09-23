@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,173 +18,17 @@ func dataSourceCsrGenerate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-
-
 - Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
 IMS Services.
-
-Following Parameters are present in POST request body
-
-
-
-
-PARAMETER
-
-DESCRIPTION
-
-EXAMPLE
-
-
-
-
-
-hostnames
-
-List of ise node hostnames for which CSRs should be generated
-
-[ise-host1, ise-host2]
-
-
-
-allowWildCardCert
-
-Allow use of WildCards in certificates
-
-false
-
-
-
-keyLength
-
-Length of the Key used for CSR generation (required)
-
-512
-
-
-
-keyType
-
-Type of key used for CSR generation either RSA or ECDSA(required)
-
-RSA
-
-
-
-digestType
-
-Hash algorithm used for signing CSR(required)
-
-SHA-256
-
-
-
-usedFor
-
-Certificate Usage(required)
-
-MULTI-USE
-
-
-
-subjectCommonName
-
-Certificate common name(CN)(required)
-
-$FQDN$
-
-
-
-subjectOrgUnit
-
-Certificate organizational unit(OU)
-
-Engineering
-
-
-
-subjectOrg
-
-Certificate organization (O)
-
-Cisco
-
-
-
-subjectCity
-
-Certificate city or locality (L)
-
-San Jose
-
-
-subjectState
-
-Certificate state (ST)
-
-California
-
-
-subjectCountry
-
-Certificate country ( C)
-
-US
-
-
-
-sanDNS
-
-Array of SAN(Subject Alternative Name) DNS entries(optional)
-
-[ise.example.com]
-
-
-sanIP
-
-Array of SAN IP entries(optional)
-
-[1.1.1.1]
-
-
-sanURI
-
-Array of SAN URI entries(optional)
-
-[https://1.1.1.1]
-
-
-
-sanDir
-
-Array of SAN DIR entries(optional)
-
-[CN=AAA,DC=COM,C=IL]
-
-
-
-portalGroupTag
-
-Portal Group Tag when using certificate for PORTAL service
-
-Default Portal Certificate Group
-
-
-
-
-NOTE:
-For allowWildCardCert to be false, the below mentioned parameter is mandatory:
-hostnames
-
-When Certificate is selected to be used for Portal Service, the below mentioned parameter is mandatory:
-portalGroupTag
-
- `,
+`,
 
 		ReadContext: dataSourceCsrGenerateRead,
 		Schema: map[string]*schema.Schema{
 			"allow_wild_card_cert": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
+				// Type:     schema.TypeBool,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
 			},
 			"certificate_policies": &schema.Schema{
 				Type:     schema.TypeString,
@@ -316,9 +161,55 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
+	vPage, okPage := d.GetOk("page")
+	vSize, okSize := d.GetOk("size")
+	vSort, okSort := d.GetOk("sort")
+	vSortBy, okSortBy := d.GetOk("sort_by")
+	vFilter, okFilter := d.GetOk("filter")
+	vFilterType, okFilterType := d.GetOk("filter_type")
 
-	selectedMethod := 1
+	method1 := []bool{okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	method2 := []bool{}
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: GetCsrs")
+		queryParams1 := isegosdk.GetCsrsQueryParams{}
+
+		if okPage {
+			queryParams1.Page = vPage.(int)
+		}
+		if okSize {
+			queryParams1.Size = vSize.(int)
+		}
+		if okSort {
+			queryParams1.Sort = vSort.(string)
+		}
+		if okSortBy {
+			queryParams1.SortBy = vSortBy.(string)
+		}
+		if okFilter {
+			queryParams1.Filter = interfaceToSliceString(vFilter)
+		}
+		if okFilterType {
+			queryParams1.FilterType = vFilterType.(string)
+		}
+
+		response1, _, err := client.Certificates.GetCsrs(&queryParams1)
+
+		if err != nil || response1 == nil {
+			diags = append(diags, diagErrorWithAlt(
+				"Failure when executing GetCsrs", err,
+				"Failure at GetCsrs, unexpected response", ""))
+			return diags
+		}
+
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+
+	}
+	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method 2: GenerateCsr")
 		request2 := expandRequestCsrGenerateGenerateCsr(ctx, "", d)
 
@@ -331,7 +222,7 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItems2 := flattenCertificatesGenerateCsrItems(response2.Response)
 		if err := d.Set("items", vItems2); err != nil {

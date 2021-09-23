@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on MDM.
 
-🚧 getEndpointsByType
+- 🚧 getEndpointsByType
 
 ## Example Usage
 

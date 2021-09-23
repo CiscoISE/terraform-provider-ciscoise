@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +19,8 @@ func dataSourceActiveDirectoryLeaveDomain() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
 
-- This data source action makes a Cisco ISE node to leave an Active Directory domain.`,
+- This data source action makes a Cisco ISE node to leave an Active Directory domain.
+`,
 
 		ReadContext: dataSourceActiveDirectoryLeaveDomainRead,
 		Schema: map[string]*schema.Schema{
@@ -73,7 +75,7 @@ func dataSourceActiveDirectoryLeaveDomainRead(ctx context.Context, d *schema.Res
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(

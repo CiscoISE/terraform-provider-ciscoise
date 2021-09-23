@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,12 +15,17 @@ import (
 func resourceInternalUser() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on InternalUser.
-  
-  - This resource allows the client to update an internal user by name.
-  - This resource deletes an internal user by name.
-  - This resource allows the client to update an internal user by ID.
-  - This resource deletes an internal user by ID.
-  - This resource creates an internal user.`,
+
+- This resource allows the client to update an internal user by name.
+
+- This resource deletes an internal user by name.
+
+- This resource allows the client to update an internal user by ID.
+
+- This resource deletes an internal user by ID.
+
+- This resource creates an internal user.
+`,
 
 		CreateContext: resourceInternalUserCreate,
 		ReadContext:   resourceInternalUserRead,
@@ -42,9 +48,11 @@ func resourceInternalUser() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"custom_attributes": &schema.Schema{
 							Description: `Key value map`,
@@ -66,13 +74,30 @@ func resourceInternalUser() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								vChangePassword, okChangePassword := d.GetOk("item.0.change_password")
+								vvChangePassword := interfaceToBoolPtr(vChangePassword)
+								hasDiff := old != new
+								if hasDiff {
+									// Do not suppress diff if it has change_password set
+									if okChangePassword && vvChangePassword != nil && *vvChangePassword {
+										log.Printf("[DEBUG] key %s does not require suppresion", k)
+										return false
+									}
+									return true
+								}
+								return true
+							},
 						},
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
-  The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
+							// Type:        schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"expiry_date": &schema.Schema{
 							Description: `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
@@ -81,9 +106,11 @@ func resourceInternalUser() *schema.Resource {
 							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							Type:     schema.TypeBool,
-							Optional: true,
-							Computed: true,
+							// Type:     schema.TypeBool,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"first_name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -137,6 +164,21 @@ func resourceInternalUser() *schema.Resource {
 							Optional:  true,
 							Sensitive: true,
 							Computed:  true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								vChangePassword, okChangePassword := d.GetOk("item.0.change_password")
+								vvChangePassword := interfaceToBoolPtr(vChangePassword)
+								hasDiff := old != new
+								if hasDiff {
+									// Do not suppress diff if it has change_password set
+									if okChangePassword && vvChangePassword != nil && *vvChangePassword {
+										log.Printf("[DEBUG] key %s does not require suppresion", k)
+										return false
+									}
+									return true
+								}
+								return true
+							},
 						},
 						"password_idstore": &schema.Schema{
 							Description: `The id store where the internal user's password is kept`,
@@ -159,7 +201,7 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestInternalUserCreateInternalUser(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -236,7 +278,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenInternalUserGetInternalUserByNameItemName(response1.InternalUser)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -261,7 +303,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenInternalUserGetInternalUserByIDItemID(response2.InternalUser)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -312,13 +354,13 @@ func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m i
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestInternalUserUpdateInternalUserByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.InternalUser.UpdateInternalUserByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateInternalUserByID", err, restyResp1.String(),
 					"Failure at UpdateInternalUserByID, unexpected response", ""))
@@ -375,7 +417,7 @@ func resourceInternalUserDelete(ctx context.Context, d *schema.ResourceData, m i
 	restyResp1, err := client.InternalUser.DeleteInternalUserByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteInternalUserByID", err, restyResp1.String(),
 				"Failure at DeleteInternalUserByID, unexpected response", ""))
@@ -441,7 +483,7 @@ func expandRequestInternalUserCreateInternalUserInternalUser(ctx context.Context
 		request.EnablePassword = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.([]interface{})[0].(map[string]interface{})
+		customAttributes := v.(map[string]interface{})
 		request.CustomAttributes = &customAttributes
 	}
 	if v, ok := d.GetOkExists(key + ".password_idstore"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password_idstore"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password_idstore"))) {
@@ -464,6 +506,8 @@ func expandRequestInternalUserUpdateInternalUserByID(ctx context.Context, key st
 
 func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUser {
 	request := isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUser{}
+	vChangePassword, okChangePassword := d.GetOk(key + ".change_password")
+	vvChangePassword := interfaceToBoolPtr(vChangePassword)
 	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
 		request.ID = interfaceToString(v)
 	}
@@ -479,8 +523,13 @@ func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Con
 	if v, ok := d.GetOkExists(key + ".email"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email"))) {
 		request.Email = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
-		request.Password = interfaceToString(v)
+	if okChangePassword && vvChangePassword != nil && *vvChangePassword {
+		if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+			request.Password = interfaceToString(v)
+		}
+		if v, ok := d.GetOkExists(key + ".enable_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_password"))) {
+			request.EnablePassword = interfaceToString(v)
+		}
 	}
 	if v, ok := d.GetOkExists(key + ".first_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".first_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".first_name"))) {
 		request.FirstName = interfaceToString(v)
@@ -500,11 +549,8 @@ func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Con
 	if v, ok := d.GetOkExists(key + ".expiry_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiry_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiry_date"))) {
 		request.ExpiryDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_password"))) {
-		request.EnablePassword = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.([]interface{})[0].(map[string]interface{})
+		customAttributes := v.(map[string]interface{})
 		request.CustomAttributes = &customAttributes
 	}
 	if v, ok := d.GetOkExists(key + ".password_idstore"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password_idstore"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password_idstore"))) {

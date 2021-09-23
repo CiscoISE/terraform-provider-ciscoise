@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,10 +16,13 @@ import (
 func resourceFilterPolicy() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on FilterPolicy.
-  
-  - This resource allows the client to update a filter policy.
-  - This resource deletes a filter policy.
-  - This resource creates a filter policy.`,
+
+- This resource allows the client to update a filter policy.
+
+- This resource deletes a filter policy.
+
+- This resource creates a filter policy.
+`,
 
 		CreateContext: resourceFilterPolicyCreate,
 		ReadContext:   resourceFilterPolicyRead,
@@ -60,14 +64,14 @@ func resourceFilterPolicy() *schema.Resource {
 						},
 						"subnet": &schema.Schema{
 							Description: `Subnet for filter policy (hostname is not supported).
-  At least one of subnet or sgt or vn should be defined`,
+At least one of subnet or sgt or vn should be defined`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vn": &schema.Schema{
 							Description: `Virtual Network.
-  At least one of subnet or sgt or vn should be defined`,
+At least one of subnet or sgt or vn should be defined`,
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -86,7 +90,7 @@ func resourceFilterPolicyCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestFilterPolicyCreateFilterPolicy(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vSgt, _ := resourceItem["sgt"]
@@ -186,7 +190,7 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsFilterPolicyGetFilterPolicy(m, response1, &queryParams1)
 		item1, _, err := searchFilterPolicyGetFilterPolicy(m, items1, vvSgt, vvSubnet, vvVn, vvID)
@@ -196,7 +200,8 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 				"Failure when searching item from GetFilterPolicy, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenFilterPolicyGetFilterPolicyByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetFilterPolicy search response",
 				err))
@@ -216,7 +221,7 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenFilterPolicyGetFilterPolicyByIDItem(response2.ERSFilterPolicy)
 		if err := d.Set("item", vItem2); err != nil {
@@ -269,13 +274,13 @@ func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m i
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestFilterPolicyUpdateFilterPolicyByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.FilterPolicy.UpdateFilterPolicyByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateFilterPolicyByID", err, restyResp1.String(),
 					"Failure at UpdateFilterPolicyByID, unexpected response", ""))
@@ -338,7 +343,7 @@ func resourceFilterPolicyDelete(ctx context.Context, d *schema.ResourceData, m i
 	restyResp1, err := client.FilterPolicy.DeleteFilterPolicyByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteFilterPolicyByID", err, restyResp1.String(),
 				"Failure at DeleteFilterPolicyByID, unexpected response", ""))

@@ -12,7 +12,9 @@ description: |-
 It performs read operation on ExternalRADIUSServer.
 
 - This data source allows the client to get an external RADIUS server by name.
+
 - This data source allows the client to get an external RADIUS server by ID.
+
 - This data source allows the client to get all the external RADIUS servers.
 
 ## Example Usage
@@ -72,7 +74,7 @@ Read-Only:
 - **authentication_port** (Number)
 - **authenticator_key** (String)
 - **description** (String)
-- **enable_key_wrap** (Boolean)
+- **enable_key_wrap** (String)
 - **encryption_key** (String)
 - **host_ip** (String)
 - **id** (String)
@@ -104,7 +106,7 @@ Read-Only:
 - **authentication_port** (Number)
 - **authenticator_key** (String)
 - **description** (String)
-- **enable_key_wrap** (Boolean)
+- **enable_key_wrap** (String)
 - **encryption_key** (String)
 - **host_ip** (String)
 - **id** (String)

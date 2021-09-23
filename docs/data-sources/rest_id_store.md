@@ -16,7 +16,9 @@ description: |-
 It performs read operation on RESTIDStore.
 
 - This data source allows the client to get a REST ID store by name.
+
 - This data source allows the client to get a REST ID store by ID.
+
 - This data source allows the client to get all the REST ID stores.
 
 Filter:

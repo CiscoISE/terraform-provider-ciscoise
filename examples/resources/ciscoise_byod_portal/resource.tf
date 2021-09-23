@@ -65,7 +65,7 @@ resource "ciscoise_byod_portal" "example" {
         byod_registration_settings {
 
           end_point_identity_group_id = "string"
-          show_device_id              = false
+          show_device_id              = "false"
         }
         byod_registration_success_settings {
 
@@ -75,12 +75,12 @@ resource "ciscoise_byod_portal" "example" {
         byod_welcome_settings {
 
           aup_display            = "string"
-          enable_byo_d           = false
-          enable_guest_access    = false
-          include_aup            = false
-          require_aup_acceptance = false
-          require_mdm            = false
-          require_scrolling      = false
+          enable_byo_d           = "false"
+          enable_guest_access    = "false"
+          include_aup            = "false"
+          require_aup_acceptance = "false"
+          require_mdm            = "false"
+          require_scrolling      = "false"
         }
       }
       portal_settings {
@@ -97,12 +97,12 @@ resource "ciscoise_byod_portal" "example" {
 
         default_empty_field_value  = "string"
         empty_field_display        = "string"
-        include_browser_user_agent = false
-        include_failure_code       = false
-        include_ip_address         = false
-        include_mac_addr           = false
-        include_policy_server      = false
-        include_support_info_page  = false
+        include_browser_user_agent = "false"
+        include_failure_code       = "false"
+        include_ip_address         = "false"
+        include_mac_addr           = "false"
+        include_policy_server      = "false"
+        include_support_info_page  = "false"
       }
     }
   }

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,6 +16,7 @@ func dataSourceSxpConnections() *schema.Resource {
 		Description: `It performs read operation on SXPConnections.
 
 - This data source allows the client to get a SXP connection by ID.
+
 - This data source allows the client to get all the SXP connections.
 
 Filter:
@@ -23,7 +25,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceSxpConnectionsRead,
 		Schema: map[string]*schema.Schema{
@@ -109,7 +112,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
-							Type:     schema.TypeBool,
+							// Type:     schema.TypeBool,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{
@@ -215,9 +219,9 @@ func dataSourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -252,7 +256,7 @@ func dataSourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseSxpConnectionsGetSxpConnectionsSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -299,7 +303,7 @@ func dataSourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenSxpConnectionsGetSxpConnectionsByIDItem(response2.ERSSxpConnection)
 		if err := d.Set("item", vItem2); err != nil {
@@ -357,7 +361,7 @@ func flattenSxpConnectionsGetSxpConnectionsByIDItem(item *isegosdk.ResponseSxpCo
 	respItem["ip_address"] = item.IPAddress
 	respItem["sxp_mode"] = item.SxpMode
 	respItem["sxp_version"] = item.SxpVersion
-	respItem["enabled"] = item.Enabled
+	respItem["enabled"] = boolPtrToString(item.Enabled)
 	respItem["link"] = flattenSxpConnectionsGetSxpConnectionsByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

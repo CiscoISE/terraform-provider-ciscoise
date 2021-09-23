@@ -16,6 +16,7 @@ description: |-
 It performs read operation on PortalTheme.
 
 - This data source allows the client to get a portal theme by ID.
+
 - This data source allows the client to get all the portal themes.
 
 Filter:

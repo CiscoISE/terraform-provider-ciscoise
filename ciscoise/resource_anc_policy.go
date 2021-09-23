@@ -4,8 +4,9 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,10 +15,13 @@ import (
 func resourceAncPolicy() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on AncPolicy.
-  
-  - This resource allows the client to update an ANC policy.
-  - This resource allows the client to delete an ANC policy.
-  - This resource allows the client to create an ANC policy.`,
+
+- This resource allows the client to update an ANC policy.
+
+- This resource allows the client to delete an ANC policy.
+
+- This resource allows the client to create an ANC policy.
+`,
 
 		CreateContext: resourceAncPolicyCreate,
 		ReadContext:   resourceAncPolicyRead,
@@ -41,9 +45,9 @@ func resourceAncPolicy() *schema.Resource {
 
 						"actions": &schema.Schema{
 							Description: `- QUARANTINE: Allows you to use Exception policies (authorization policies) to limit or deny an endpoint access to the network.
-  - PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
-  - SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
-  - RE_AUTHENTICATE: Re-authenticates the session from the endpoint.`,
+- PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
+- SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
+- RE_AUTHENTICATE: Re-authenticates the session from the endpoint.`,
 							Type:     schema.TypeList,
 							Optional: true,
 							Computed: true,
@@ -96,7 +100,7 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestAncPolicyCreateAncPolicy(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -174,7 +178,7 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItemName1 := flattenAncPolicyGetAncPolicyByNameItemName(response1.ErsAncPolicy)
 		if err := d.Set("item", vItemName1); err != nil {
@@ -199,7 +203,7 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemID2 := flattenAncPolicyGetAncPolicyByIDItemID(response2.ErsAncPolicy)
 		if err := d.Set("item", vItemID2); err != nil {
@@ -250,13 +254,13 @@ func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m inte
 		}
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestAncPolicyUpdateAncPolicyByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.AncPolicy.UpdateAncPolicyByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateAncPolicyByID", err, restyResp1.String(),
 					"Failure at UpdateAncPolicyByID, unexpected response", ""))
@@ -313,7 +317,7 @@ func resourceAncPolicyDelete(ctx context.Context, d *schema.ResourceData, m inte
 	restyResp1, err := client.AncPolicy.DeleteAncPolicyByID(vvID)
 	if err != nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteAncPolicyByID", err, restyResp1.String(),
 				"Failure at DeleteAncPolicyByID, unexpected response", ""))

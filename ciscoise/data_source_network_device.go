@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +16,9 @@ func dataSourceNetworkDevice() *schema.Resource {
 		Description: `It performs read operation on NetworkDevice.
 
 - This data source allows the client to get a network device by name.
+
 - This data source allows the client to get a network device by ID.
+
 - This data source allows the client to get all the network devices.
 
 Filter:
@@ -24,7 +27,8 @@ Filter:
 
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceNetworkDeviceRead,
 		Schema: map[string]*schema.Schema{
@@ -149,11 +153,13 @@ string parameter. Each resource Data model description should specify if an attr
 
 									"dtls_required": &schema.Schema{
 										Description: `This value enforces use of dtls`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"enable_key_wrap": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_multi_secret": &schema.Schema{
@@ -161,7 +167,8 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"key_encryption_key": &schema.Schema{
@@ -254,11 +261,13 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"link_trap_query": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mac_trap_query": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"originating_policy_services_node": &schema.Schema{
@@ -347,14 +356,16 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"include_when_deploying_sgt_updates": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
 										},
 									},
 									"push_id_support": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"sga_notification_and_updates": &schema.Schema{
@@ -380,7 +391,8 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"other_sga_devices_to_trust_this_device": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"re_authentication_every_x_seconds": &schema.Schema{
@@ -388,7 +400,8 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"send_configuration_to_device": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"send_configuration_to_device_using": &schema.Schema{
@@ -453,11 +466,13 @@ string parameter. Each resource Data model description should specify if an attr
 
 									"dtls_required": &schema.Schema{
 										Description: `This value enforces use of dtls`,
-										Type:        schema.TypeBool,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"enable_key_wrap": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_multi_secret": &schema.Schema{
@@ -465,7 +480,8 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"key_encryption_key": &schema.Schema{
@@ -558,11 +574,13 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"link_trap_query": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mac_trap_query": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"originating_policy_services_node": &schema.Schema{
@@ -651,14 +669,16 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"include_when_deploying_sgt_updates": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 											},
 										},
 									},
 									"push_id_support": &schema.Schema{
-										Type:     schema.TypeBool,
+										// Type:     schema.TypeBool,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"sga_notification_and_updates": &schema.Schema{
@@ -684,7 +704,8 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"other_sga_devices_to_trust_this_device": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"re_authentication_every_x_seconds": &schema.Schema{
@@ -692,7 +713,8 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"send_configuration_to_device": &schema.Schema{
-													Type:     schema.TypeBool,
+													// Type:     schema.TypeBool,
+													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"send_configuration_to_device_using": &schema.Schema{
@@ -772,11 +794,11 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
@@ -811,7 +833,7 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseNetworkDeviceGetNetworkDeviceSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -858,7 +880,7 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItemName2 := flattenNetworkDeviceGetNetworkDeviceByNameItemName(response2.NetworkDevice)
 		if err := d.Set("item_name", vItemName2); err != nil {
@@ -884,7 +906,7 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response3)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
 		vItemID3 := flattenNetworkDeviceGetNetworkDeviceByIDItemID(response3.NetworkDevice)
 		if err := d.Set("item_id", vItemID3); err != nil {
@@ -964,9 +986,9 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameAuthenticationSettings(it
 	respItem["network_protocol"] = item.NetworkProtocol
 	respItem["second_radius_shared_secret"] = item.SecondRadiusSharedSecret
 	respItem["radius_shared_secret"] = item.RadiusSharedSecret
-	respItem["enable_key_wrap"] = item.EnableKeyWrap
-	respItem["enabled"] = item.Enabled
-	respItem["dtls_required"] = item.DtlsRequired
+	respItem["enable_key_wrap"] = boolPtrToString(item.EnableKeyWrap)
+	respItem["enabled"] = boolPtrToString(item.Enabled)
+	respItem["dtls_required"] = boolPtrToString(item.DtlsRequired)
 	respItem["enable_multi_secret"] = item.EnableMultiSecret
 	respItem["key_encryption_key"] = item.KeyEncryptionKey
 	respItem["message_authenticator_code_key"] = item.MessageAuthenticatorCodeKey
@@ -986,8 +1008,8 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameSNMPsettings(item *isegos
 	respItem["version"] = item.Version
 	respItem["ro_community"] = item.RoCommunity
 	respItem["polling_interval"] = item.PollingInterval
-	respItem["link_trap_query"] = item.LinkTrapQuery
-	respItem["mac_trap_query"] = item.MacTrapQuery
+	respItem["link_trap_query"] = boolPtrToString(item.LinkTrapQuery)
+	respItem["mac_trap_query"] = boolPtrToString(item.MacTrapQuery)
 	respItem["originating_policy_services_node"] = item.OriginatingPolicyServicesNode
 
 	return []map[string]interface{}{
@@ -1004,7 +1026,7 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettings(item *is
 	respItem["device_authentication_settings"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceAuthenticationSettings(item.DeviceAuthenticationSettings)
 	respItem["sga_notification_and_updates"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsSgaNotificationAndUpdates(item.SgaNotificationAndUpdates)
 	respItem["device_configuration_deployment"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceConfigurationDeployment(item.DeviceConfigurationDeployment)
-	respItem["push_id_support"] = item.PushIDSupport
+	respItem["push_id_support"] = boolPtrToString(item.PushIDSupport)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1035,8 +1057,8 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsSgaNotifi
 	respItem["downlaod_peer_authorization_policy_every_x_seconds"] = item.DownlaodPeerAuthorizationPolicyEveryXSeconds
 	respItem["re_authentication_every_x_seconds"] = item.ReAuthenticationEveryXSeconds
 	respItem["download_sga_cllists_every_x_seconds"] = item.DownloadSgACLListsEveryXSeconds
-	respItem["other_sga_devices_to_trust_this_device"] = item.OtherSgADevicesToTrustThisDevice
-	respItem["send_configuration_to_device"] = item.SendConfigurationToDevice
+	respItem["other_sga_devices_to_trust_this_device"] = boolPtrToString(item.OtherSgADevicesToTrustThisDevice)
+	respItem["send_configuration_to_device"] = boolPtrToString(item.SendConfigurationToDevice)
 	respItem["send_configuration_to_device_using"] = item.SendConfigurationToDeviceUsing
 	respItem["coa_source_host"] = item.CoaSourceHost
 
@@ -1051,7 +1073,7 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceCon
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_when_deploying_sgt_updates"] = item.IncludeWhenDeployingSgtUpdates
+	respItem["include_when_deploying_sgt_updates"] = boolPtrToString(item.IncludeWhenDeployingSgtUpdates)
 	respItem["enable_mode_password"] = item.EnableModePassword
 	respItem["exec_mode_password"] = item.ExecModePassword
 	respItem["exec_mode_username"] = item.ExecModeUsername
@@ -1140,9 +1162,9 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDAuthenticationSettings(item *
 	respItem["network_protocol"] = item.NetworkProtocol
 	respItem["second_radius_shared_secret"] = item.SecondRadiusSharedSecret
 	respItem["radius_shared_secret"] = item.RadiusSharedSecret
-	respItem["enable_key_wrap"] = item.EnableKeyWrap
-	respItem["enabled"] = item.Enabled
-	respItem["dtls_required"] = item.DtlsRequired
+	respItem["enable_key_wrap"] = boolPtrToString(item.EnableKeyWrap)
+	respItem["enabled"] = boolPtrToString(item.Enabled)
+	respItem["dtls_required"] = boolPtrToString(item.DtlsRequired)
 	respItem["enable_multi_secret"] = item.EnableMultiSecret
 	respItem["key_encryption_key"] = item.KeyEncryptionKey
 	respItem["message_authenticator_code_key"] = item.MessageAuthenticatorCodeKey
@@ -1162,8 +1184,8 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDSNMPsettings(item *isegosdk.R
 	respItem["version"] = item.Version
 	respItem["ro_community"] = item.RoCommunity
 	respItem["polling_interval"] = item.PollingInterval
-	respItem["link_trap_query"] = item.LinkTrapQuery
-	respItem["mac_trap_query"] = item.MacTrapQuery
+	respItem["link_trap_query"] = boolPtrToString(item.LinkTrapQuery)
+	respItem["mac_trap_query"] = boolPtrToString(item.MacTrapQuery)
 	respItem["originating_policy_services_node"] = item.OriginatingPolicyServicesNode
 
 	return []map[string]interface{}{
@@ -1180,7 +1202,7 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettings(item *isegos
 	respItem["device_authentication_settings"] = flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceAuthenticationSettings(item.DeviceAuthenticationSettings)
 	respItem["sga_notification_and_updates"] = flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsSgaNotificationAndUpdates(item.SgaNotificationAndUpdates)
 	respItem["device_configuration_deployment"] = flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceConfigurationDeployment(item.DeviceConfigurationDeployment)
-	respItem["push_id_support"] = item.PushIDSupport
+	respItem["push_id_support"] = boolPtrToString(item.PushIDSupport)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1211,8 +1233,8 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsSgaNotificati
 	respItem["downlaod_peer_authorization_policy_every_x_seconds"] = item.DownlaodPeerAuthorizationPolicyEveryXSeconds
 	respItem["re_authentication_every_x_seconds"] = item.ReAuthenticationEveryXSeconds
 	respItem["download_sga_cllists_every_x_seconds"] = item.DownloadSgACLListsEveryXSeconds
-	respItem["other_sga_devices_to_trust_this_device"] = item.OtherSgADevicesToTrustThisDevice
-	respItem["send_configuration_to_device"] = item.SendConfigurationToDevice
+	respItem["other_sga_devices_to_trust_this_device"] = boolPtrToString(item.OtherSgADevicesToTrustThisDevice)
+	respItem["send_configuration_to_device"] = boolPtrToString(item.SendConfigurationToDevice)
 	respItem["send_configuration_to_device_using"] = item.SendConfigurationToDeviceUsing
 	respItem["coa_source_host"] = item.CoaSourceHost
 
@@ -1227,7 +1249,7 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceConfigu
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["include_when_deploying_sgt_updates"] = item.IncludeWhenDeployingSgtUpdates
+	respItem["include_when_deploying_sgt_updates"] = boolPtrToString(item.IncludeWhenDeployingSgtUpdates)
 	respItem["enable_mode_password"] = item.EnableModePassword
 	respItem["exec_mode_password"] = item.ExecModePassword
 	respItem["exec_mode_username"] = item.ExecModeUsername

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,16 +16,17 @@ func dataSourceGuestSmtpNotificationSettings() *schema.Resource {
 		Description: `It performs read operation on GuestSMTPNotificationConfiguration.
 
 - This data source allows the client to get a guest SMTP notification configuration by ID.
+
 - This data source allows the client to get all the guest SMTP notification configurations.
 
 Filter:
 
 [name]
 
-
 Sorting:
 
-[name, description]`,
+[name, description]
+`,
 
 		ReadContext: dataSourceGuestSmtpNotificationSettingsRead,
 		Schema: map[string]*schema.Schema{
@@ -142,8 +144,9 @@ string parameter. Each resource Data model description should specify if an attr
 						},
 						"notification_enabled": &schema.Schema{
 							Description: `Indicates if the email notification service is to be enabled`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"password": &schema.Schema{
 							Description: `Password of Secure SMTP server`,
@@ -163,18 +166,21 @@ string parameter. Each resource Data model description should specify if an attr
 						},
 						"use_default_from_address": &schema.Schema{
 							Description: `If the default from address should be used rather than using a sponsor user email address`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"use_password_authentication": &schema.Schema{
 							Description: `If configured to true, SMTP server authentication will happen using username/password`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"use_tlsor_ssl_encryption": &schema.Schema{
 							Description: `If configured to true, SMTP server authentication will happen using TLS/SSL`,
-							Type:        schema.TypeBool,
-							Computed:    true,
+							// Type:        schema.TypeBool,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"user_name": &schema.Schema{
 							Description: `Username of Secure SMTP server`,
@@ -235,9 +241,9 @@ func dataSourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
@@ -272,7 +278,7 @@ func dataSourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		var items1 []isegosdk.ResponseGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsSearchResultResources
 		for response1.SearchResult != nil && response1.SearchResult.Resources != nil && len(*response1.SearchResult.Resources) > 0 {
@@ -319,7 +325,7 @@ func dataSourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsByIDItem(response2.ERSGuestSmtpNotificationSettings)
 		if err := d.Set("item", vItem2); err != nil {
@@ -371,13 +377,13 @@ func flattenGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsBy
 	respItem := make(map[string]interface{})
 	respItem["id"] = item.ID
 	respItem["smtp_server"] = item.SmtpServer
-	respItem["notification_enabled"] = item.NotificationEnabled
-	respItem["use_default_from_address"] = item.UseDefaultFromAddress
+	respItem["notification_enabled"] = boolPtrToString(item.NotificationEnabled)
+	respItem["use_default_from_address"] = boolPtrToString(item.UseDefaultFromAddress)
 	respItem["default_from_address"] = item.DefaultFromAddress
 	respItem["smtp_port"] = item.SmtpPort
 	respItem["connection_timeout"] = item.ConnectionTimeout
-	respItem["use_tlsor_ssl_encryption"] = item.UseTLSorSSLEncryption
-	respItem["use_password_authentication"] = item.UsePasswordAuthentication
+	respItem["use_tlsor_ssl_encryption"] = boolPtrToString(item.UseTLSorSSLEncryption)
+	respItem["use_password_authentication"] = boolPtrToString(item.UsePasswordAuthentication)
 	respItem["user_name"] = item.UserName
 	respItem["password"] = item.Password
 	respItem["link"] = flattenGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsByIDItemLink(item.Link)

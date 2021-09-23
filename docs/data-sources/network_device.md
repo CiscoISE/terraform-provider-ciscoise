@@ -16,7 +16,9 @@ description: |-
 It performs read operation on NetworkDevice.
 
 - This data source allows the client to get a network device by name.
+
 - This data source allows the client to get a network device by ID.
+
 - This data source allows the client to get all the network devices.
 
 Filter:
@@ -140,10 +142,10 @@ Read-Only:
 
 Read-Only:
 
-- **dtls_required** (Boolean)
-- **enable_key_wrap** (Boolean)
+- **dtls_required** (String)
+- **enable_key_wrap** (String)
 - **enable_multi_secret** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **key_encryption_key** (String)
 - **key_input_format** (String)
 - **message_authenticator_code_key** (String)
@@ -177,8 +179,8 @@ Read-Only:
 
 Read-Only:
 
-- **link_trap_query** (Boolean)
-- **mac_trap_query** (Boolean)
+- **link_trap_query** (String)
+- **mac_trap_query** (String)
 - **originating_policy_services_node** (String)
 - **polling_interval** (Number)
 - **ro_community** (String)
@@ -201,7 +203,7 @@ Read-Only:
 
 - **device_authentication_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--device_authentication_settings))
 - **device_configuration_deployment** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--device_configuration_deployment))
-- **push_id_support** (Boolean)
+- **push_id_support** (String)
 - **sga_notification_and_updates** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--sga_notification_and_updates))
 
 <a id="nestedobjatt--item_id--trustsecsettings--device_authentication_settings"></a>
@@ -221,7 +223,7 @@ Read-Only:
 - **enable_mode_password** (String)
 - **exec_mode_password** (String)
 - **exec_mode_username** (String)
-- **include_when_deploying_sgt_updates** (Boolean)
+- **include_when_deploying_sgt_updates** (String)
 
 
 <a id="nestedobjatt--item_id--trustsecsettings--sga_notification_and_updates"></a>
@@ -233,9 +235,9 @@ Read-Only:
 - **downlaod_environment_data_every_x_seconds** (Number)
 - **downlaod_peer_authorization_policy_every_x_seconds** (Number)
 - **download_sga_cllists_every_x_seconds** (Number)
-- **other_sga_devices_to_trust_this_device** (Boolean)
+- **other_sga_devices_to_trust_this_device** (String)
 - **re_authentication_every_x_seconds** (Number)
-- **send_configuration_to_device** (Boolean)
+- **send_configuration_to_device** (String)
 - **send_configuration_to_device_using** (String)
 
 
@@ -267,10 +269,10 @@ Read-Only:
 
 Read-Only:
 
-- **dtls_required** (Boolean)
-- **enable_key_wrap** (Boolean)
+- **dtls_required** (String)
+- **enable_key_wrap** (String)
 - **enable_multi_secret** (String)
-- **enabled** (Boolean)
+- **enabled** (String)
 - **key_encryption_key** (String)
 - **key_input_format** (String)
 - **message_authenticator_code_key** (String)
@@ -304,8 +306,8 @@ Read-Only:
 
 Read-Only:
 
-- **link_trap_query** (Boolean)
-- **mac_trap_query** (Boolean)
+- **link_trap_query** (String)
+- **mac_trap_query** (String)
 - **originating_policy_services_node** (String)
 - **polling_interval** (Number)
 - **ro_community** (String)
@@ -328,7 +330,7 @@ Read-Only:
 
 - **device_authentication_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--device_authentication_settings))
 - **device_configuration_deployment** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--device_configuration_deployment))
-- **push_id_support** (Boolean)
+- **push_id_support** (String)
 - **sga_notification_and_updates** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--sga_notification_and_updates))
 
 <a id="nestedobjatt--item_name--trustsecsettings--device_authentication_settings"></a>
@@ -348,7 +350,7 @@ Read-Only:
 - **enable_mode_password** (String)
 - **exec_mode_password** (String)
 - **exec_mode_username** (String)
-- **include_when_deploying_sgt_updates** (Boolean)
+- **include_when_deploying_sgt_updates** (String)
 
 
 <a id="nestedobjatt--item_name--trustsecsettings--sga_notification_and_updates"></a>
@@ -360,9 +362,9 @@ Read-Only:
 - **downlaod_environment_data_every_x_seconds** (Number)
 - **downlaod_peer_authorization_policy_every_x_seconds** (Number)
 - **download_sga_cllists_every_x_seconds** (Number)
-- **other_sga_devices_to_trust_this_device** (Boolean)
+- **other_sga_devices_to_trust_this_device** (String)
 - **re_authentication_every_x_seconds** (Number)
-- **send_configuration_to_device** (Boolean)
+- **send_configuration_to_device** (String)
 - **send_configuration_to_device_using** (String)
 
 

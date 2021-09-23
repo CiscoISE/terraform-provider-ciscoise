@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Consumer.
 
-🚧 AccessSecret
+- 🚧 AccessSecret
 
 ## Example Usage
 

@@ -3,8 +3,9 @@ package ciscoise
 import (
 	"context"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,7 @@ func dataSourceRepositoryFiles() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Repository.
 
-This will get the full list of files present in the named repository.
+- This will get the full list of files present in the named repository.
 `,
 
 		ReadContext: dataSourceRepositoryFilesRead,
@@ -68,7 +69,7 @@ func dataSourceRepositoryFilesRead(ctx context.Context, d *schema.ResourceData, 
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItems1 := flattenRepositoryGetRepositoryFilesItems(response1)
 		if err := d.Set("items", vItems1); err != nil {

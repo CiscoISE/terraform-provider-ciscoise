@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,8 +18,9 @@ func dataSourceNodeSync() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Sync ISE Node.
 
-Performing a manual sync will involve a reload of the target node, but not the primary PAN. There might be situations
-where if the node has been out of sync for a long time, it may not be possible to recover via a manual sync.`,
+- Performing a manual sync will involve a reload of the target node, but not the primary PAN. There might be situations
+where if the node has been out of sync for a long time, it may not be possible to recover via a manual sync.
+`,
 
 		ReadContext: dataSourceNodeSyncRead,
 		Schema: map[string]*schema.Schema{
@@ -70,7 +72,7 @@ func dataSourceNodeSyncRead(ctx context.Context, d *schema.ResourceData, m inter
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		vItem1 := flattenSyncIseNodeSyncNodeItem(response1)
 		if err := d.Set("item", vItem1); err != nil {

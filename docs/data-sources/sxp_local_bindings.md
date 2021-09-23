@@ -16,6 +16,7 @@ description: |-
 It performs read operation on SXPLocalBindings.
 
 - This data source allows the client to get a SXP local binding by ID.
+
 - This data source allows the client to get all the SXP local bindings.
 
 Filter:

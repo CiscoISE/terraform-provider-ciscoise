@@ -5,8 +5,9 @@ import (
 
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,7 +18,8 @@ func dataSourceSystemCertificateCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on SystemCertificate.
 
-- This data source action allows the client to create a system certificate.`,
+- This data source action allows the client to create a system certificate.
+`,
 
 		ReadContext: dataSourceSystemCertificateCreateRead,
 		Schema: map[string]*schema.Schema{
@@ -153,7 +155,7 @@ func dataSourceSystemCertificateCreateRead(ctx context.Context, d *schema.Resour
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(

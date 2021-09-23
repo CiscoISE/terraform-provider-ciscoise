@@ -11,11 +11,13 @@ description: |-
 # ciscoise_id_store_sequence (Resource)
 
 It manages create, read, update and delete operations on IdentitySequence.
-  
-  - This resource allows the client to update an identity sequence.
-  Partial update is not supported
-  - This resource deletes an identity sequence.
-  - This resource creates an identity sequence.
+
+- This resource allows the client to update an identity sequence.
+Partial update is not supported
+
+- This resource deletes an identity sequence.
+
+- This resource creates an identity sequence.
 
 ## Example Usage
 
@@ -24,7 +26,7 @@ resource "ciscoise_id_store_sequence" "example" {
   provider = ciscoise
   item {
 
-    break_on_store_fail                = false
+    break_on_store_fail                = "false"
     certificate_authentication_profile = "string"
     description                        = "string"
     id                                 = "string"
@@ -60,7 +62,7 @@ output "ciscoise_id_store_sequence_example" {
 
 Optional:
 
-- **break_on_store_fail** (Boolean)
+- **break_on_store_fail** (String)
 - **certificate_authentication_profile** (String)
 - **description** (String)
 - **id** (String) The ID of this resource.

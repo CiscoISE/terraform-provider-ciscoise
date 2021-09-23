@@ -46,7 +46,7 @@ output "ciscoise_device_administration_service_names_example" {
 Read-Only:
 
 - **id** (String)
-- **is_local_authorization** (Boolean)
+- **is_local_authorization** (String)
 - **name** (String)
 - **service_type** (String)
 

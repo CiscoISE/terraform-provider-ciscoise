@@ -7,7 +7,7 @@ resource "ciscoise_external_radius_server" "example" {
     authentication_port = 1
     authenticator_key   = "string"
     description         = "string"
-    enable_key_wrap     = false
+    enable_key_wrap     = "false"
     encryption_key      = "string"
     host_ip             = "string"
     id                  = "string"

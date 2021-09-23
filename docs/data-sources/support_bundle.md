@@ -24,13 +24,13 @@ data "ciscoise_support_bundle" "example" {
   support_bundle_include_options {
 
     from_date           = "string"
-    include_config_db   = false
-    include_core_files  = false
-    include_debug_logs  = false
-    include_local_logs  = false
-    include_system_logs = false
-    mnt_logs            = false
-    policy_xml          = false
+    include_config_db   = "false"
+    include_core_files  = "false"
+    include_debug_logs  = "false"
+    include_local_logs  = "false"
+    include_system_logs = "false"
+    mnt_logs            = "false"
+    policy_xml          = "false"
     to_date             = "string"
   }
 }
@@ -57,13 +57,13 @@ data "ciscoise_support_bundle" "example" {
 Optional:
 
 - **from_date** (String) Date from where support bundle should include the logs
-- **include_config_db** (Boolean) Set to include Config DB in Support Bundle
-- **include_core_files** (Boolean) Set to include Core files in Support Bundle
-- **include_debug_logs** (Boolean) Set to include Debug logs in Support Bundle
-- **include_local_logs** (Boolean) Set to include Local logs in Support Bundle
-- **include_system_logs** (Boolean) Set to include System logs in Support Bundle
-- **mnt_logs** (Boolean) Set to include Monitoring and troublshooting logs in Support Bundle
-- **policy_xml** (Boolean) Set to include Policy XML in Support Bundle
+- **include_config_db** (String) Set to include Config DB in Support Bundle
+- **include_core_files** (String) Set to include Core files in Support Bundle
+- **include_debug_logs** (String) Set to include Debug logs in Support Bundle
+- **include_local_logs** (String) Set to include Local logs in Support Bundle
+- **include_system_logs** (String) Set to include System logs in Support Bundle
+- **mnt_logs** (String) Set to include Monitoring and troublshooting logs in Support Bundle
+- **policy_xml** (String) Set to include Policy XML in Support Bundle
 - **to_date** (String) Date upto where support bundle should include the logs
 
 

@@ -6,8 +6,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -19,7 +20,9 @@ func dataSourceGuestUserSuspend() *schema.Resource {
 		Description: `It performs update operation on GuestUser.
 
 - This data source action allows the client to suspend a guest user by name.
-- This data source action allows the client to suspend a guest user by ID.`,
+
+- This data source action allows the client to suspend a guest user by ID.
+`,
 
 		ReadContext: dataSourceGuestUserSuspendRead,
 		Schema: map[string]*schema.Schema{
@@ -66,7 +69,10 @@ func dataSourceGuestUserSuspendRead(ctx context.Context, d *schema.ResourceData,
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
 	method2 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: SuspendGuestUserByName")
@@ -81,7 +87,7 @@ func dataSourceGuestUserSuspendRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(
@@ -107,7 +113,7 @@ func dataSourceGuestUserSuspendRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		if err := d.Set("item", response2.String()); err != nil {
 			diags = append(diags, diagError(

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/CiscoISE/ciscoise-go-sdk/sdk"
 	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,31 +16,33 @@ import (
 func resourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Network Access - Authorization Global Exception
-  Rules.
-  
-  - Network Access Create global exception authorization rule:
-  
-  
-  
-   Rule must include name and condition.
-  
-  
-   Condition has hierarchical structure which define a set of conditions for which authoriztion policy rule could be
-  match.
-  
-  
-   Condition can be either reference to a stored Library condition, using model
-  ConditionReference
-  
-  
-  or dynamically built conditions which are not stored in the conditions Library, using models
-  ConditionAttributes, ConditionAndBlock, ConditionOrBlock
-  .
-  
-  
-  
-  - Network Access Update global exception authorization rule.
-  - Network Access Delete global exception authorization rule.`,
+Rules.
+
+- Network Access Create global exception authorization rule:
+
+
+
+ Rule must include name and condition.
+
+
+ Condition has hierarchical structure which define a set of conditions for which authoriztion policy rule could be
+match.
+
+
+ Condition can be either reference to a stored Library condition, using model
+ConditionReference
+
+
+or dynamically built conditions which are not stored in the conditions Library, using models
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+.
+
+
+
+- Network Access Update global exception authorization rule.
+
+- Network Access Delete global exception authorization rule.
+`,
 
 		CreateContext: resourceNetworkAccessGlobalExceptionRulesCreate,
 		ReadContext:   resourceNetworkAccessGlobalExceptionRulesRead,
@@ -65,6 +68,27 @@ func resourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 							Description: `id path parameter. Rule id`,
 							Type:        schema.TypeString,
 							Optional:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"profile": &schema.Schema{
 							Description: `The authorization profile/s`,
@@ -124,9 +148,32 @@ func resourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																Type:        schema.TypeBool,
-																Optional:    true,
-																Computed:    true,
+																// Type:        schema.TypeBool,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+																Computed:     true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -246,9 +293,32 @@ func resourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													Type:        schema.TypeBool,
-													Optional:    true,
-													Computed:    true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
+												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
+													},
 												},
 												"name": &schema.Schema{
 													Description: `Condition name`,
@@ -285,9 +355,11 @@ func resourceNetworkAccessGlobalExceptionRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeBool,
-										Optional:    true,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+										Computed:     true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -342,7 +414,7 @@ func resourceNetworkAccessGlobalExceptionRulesCreate(ctx context.Context, d *sch
 
 	resourceItem := *getResourceItem(d.Get("item"))
 	request1 := expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRule(ctx, "item.0", d)
-	log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	var vvName string
@@ -452,7 +524,7 @@ func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schem
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response1)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRules(m, response1)
 		item1, err := searchNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRules(m, items1, vvName, vvID)
@@ -462,7 +534,8 @@ func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schem
 				"Failure when searching item from GetNetworkAccessPolicySetGlobalExceptionRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessPolicySetGlobalExceptionRules search response",
 				err))
@@ -482,7 +555,7 @@ func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schem
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", *response2)
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
@@ -548,13 +621,13 @@ func resourceNetworkAccessGlobalExceptionRulesUpdate(ctx context.Context, d *sch
 		vvID = vID
 	}
 	if d.HasChange("item") {
-		log.Printf("[DEBUG] vvID %s", vvID)
+		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request1 => %v", responseInterfaceToString(*request1))
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessAuthorizationGlobalExceptionRules.UpdateNetworkAccessPolicySetGlobalExceptionRuleByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
-				log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
 					"Failure when executing UpdateNetworkAccessPolicySetGlobalExceptionRuleByID", err, restyResp1.String(),
 					"Failure at UpdateNetworkAccessPolicySetGlobalExceptionRuleByID, unexpected response", ""))
@@ -618,7 +691,7 @@ func resourceNetworkAccessGlobalExceptionRulesDelete(ctx context.Context, d *sch
 	response1, restyResp1, err := client.NetworkAccessAuthorizationGlobalExceptionRules.DeleteNetworkAccessPolicySetGlobalExceptionRuleByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] restyResp1 => %v", restyResp1.String())
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 			diags = append(diags, diagErrorWithAltAndResponse(
 				"Failure when executing DeleteNetworkAccessPolicySetGlobalExceptionRuleByID", err, restyResp1.String(),
 				"Failure at DeleteNetworkAccessPolicySetGlobalExceptionRuleByID, unexpected response", ""))
@@ -638,9 +711,7 @@ func resourceNetworkAccessGlobalExceptionRulesDelete(ctx context.Context, d *sch
 }
 func expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRule(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRule {
 	request := isegosdk.RequestNetworkAccessAuthorizationGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRule{}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToSliceString(v)
 	}
@@ -710,9 +781,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetG
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -812,9 +881,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetG
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -896,9 +963,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetG
 
 func expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByID {
 	request := isegosdk.RequestNetworkAccessAuthorizationGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByID{}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile"))) {
 		request.Profile = interfaceToSliceString(v)
 	}
@@ -968,9 +1033,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetG
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionLink(ctx, key+".link.0", d)
-	}
+
 	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1070,9 +1133,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetG
 	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link"))) {
-		request.Link = expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
-	}
+
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

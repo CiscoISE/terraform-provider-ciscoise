@@ -10,8 +10,10 @@ description: |-
 # ciscoise_trusted_certificate (Resource)
 
 It manages read, update and delete operations on Certificates.
-
+  
   - Update a trusted certificate present in ISE trust store.
+  
+  
   - This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
 
 ## Example Usage
@@ -21,19 +23,29 @@ resource "ciscoise_trusted_certificate" "example" {
   provider = ciscoise
   item {
 
+    authenticate_before_crl_received       = "false"
+    automatic_crl_update                   = "false"
+    automatic_crl_update_period            = 1
     automatic_crl_update_units             = "string"
     crl_distribution_url                   = "string"
+    crl_download_failure_retries           = 1
     crl_download_failure_retries_units     = "string"
     description                            = "string"
-    id                                     = "string"
+    download_crl                           = "false"
+    enable_ocsp_validation                 = "false"
+    enable_server_identity_check           = "false"
+    ignore_crl_expiration                  = "false"
     name                                   = "string"
+    non_automatic_crl_update_period        = 1
     non_automatic_crl_update_units         = "string"
+    reject_if_no_status_from_ocs_p         = "false"
+    reject_if_unreachable_from_ocs_p       = "false"
     selected_ocsp_service                  = "string"
     status                                 = "string"
-    trust_for_certificate_based_admin_auth = false
-    trust_for_cisco_services_auth          = false
-    trust_for_client_auth                  = false
-    trust_for_ise_auth                     = false
+    trust_for_certificate_based_admin_auth = "false"
+    trust_for_cisco_services_auth          = "false"
+    trust_for_client_auth                  = "false"
+    trust_for_ise_auth                     = "false"
   }
 }
 
@@ -57,28 +69,53 @@ output "ciscoise_trusted_certificate_example" {
 <a id="nestedblock--item"></a>
 ### Nested Schema for `item`
 
+Required:
+
+- **name** (String) Friendly name of the certificate
+
 Optional:
 
+- **authenticate_before_crl_received** (String) Switch to enable/disable CRL Verification if CRL is not Received
+  ERROR: Different types for param authenticateBeforeCRLReceived schema.TypeBool schema.TypeString
+- **automatic_crl_update** (String) Switch to enable/disable automatic CRL update
+  ERROR: Different types for param automaticCRLUpdate schema.TypeBool schema.TypeString
+- **automatic_crl_update_period** (Number) Automatic CRL update period
+  ERROR: Different types for param automaticCRLUpdatePeriod schema.TypeInt schema.TypeString
 - **automatic_crl_update_units** (String) Unit of time for automatic CRL update
 - **crl_distribution_url** (String) CRL Distribution URL
+- **crl_download_failure_retries** (Number) If CRL download fails, wait time before retry
+  ERROR: Different types for param crlDownloadFailureRetries schema.TypeInt schema.TypeString
 - **crl_download_failure_retries_units** (String) Unit of time before retry if CRL download fails
 - **description** (String) Description for trust certificate
+- **download_crl** (String) Switch to enable/disable download of CRL
+  ERROR: Different types for param downloadCRL schema.TypeBool schema.TypeString
+- **enable_ocsp_validation** (String) Switch to enable/disable OCSP Validation
+  ERROR: Different types for param enableOCSPValidation schema.TypeBool schema.TypeString
+- **enable_server_identity_check** (String) Switch to enable/disable verification if HTTPS or LDAP server certificate name fits the configured server URL
+  ERROR: Different types for param enableServerIdentityCheck schema.TypeBool schema.TypeString
 - **id** (String) ID of trust certificate
-- **name** (String) Friendly name of the certificate
+- **ignore_crl_expiration** (String) Switch to enable/disable ignore CRL Expiration
+  ERROR: Different types for param ignoreCRLExpiration schema.TypeBool schema.TypeString
+- **non_automatic_crl_update_period** (Number) Non automatic CRL update period
+  ERROR: Different types for param nonAutomaticCRLUpdatePeriod schema.TypeInt schema.TypeString
 - **non_automatic_crl_update_units** (String) Unit of time of non automatic CRL update
+- **reject_if_no_status_from_ocs_p** (String) Switch to reject certificate if there is no status from OCSP
+  ERROR: Different types for param rejectIfNoStatusFromOCSP schema.TypeBool schema.TypeString
+- **reject_if_unreachable_from_ocs_p** (String) Switch to reject certificate if unreachable from OCSP
+  ERROR: Different types for param rejectIfUnreachableFromOCSP schema.TypeBool schema.TypeString
 - **selected_ocsp_service** (String) Name of selected OCSP Service
 - **status** (String)
-- **trust_for_certificate_based_admin_auth** (Boolean) Trust for Certificate based Admin authentication
-- **trust_for_cisco_services_auth** (Boolean) Trust for authentication of Cisco Services
-- **trust_for_client_auth** (Boolean) Trust for client authentication and Syslog
-- **trust_for_ise_auth** (Boolean) Trust for authentication within ISE
+- **trust_for_certificate_based_admin_auth** (String) Trust for Certificate based Admin authentication
+- **trust_for_cisco_services_auth** (String) Trust for authentication of Cisco Services
+- **trust_for_client_auth** (String) Trust for client authentication and Syslog
+- **trust_for_ise_auth** (String) Trust for authentication within ISE
 
 Read-Only:
 
 - **expiration_date** (String) The time and date past which the certificate is no longer valid
 - **friendly_name** (String) Friendly name of trust certificate
-- **internal_ca** (Boolean)
-- **is_referred_in_policy** (Boolean)
+- **internal_ca** (String)
+- **is_referred_in_policy** (String)
 - **issued_by** (String) The entity that verified the information and signed the certificate
 - **issued_to** (String) Entity to which trust certificate is issued
 - **key_size** (String) The length of key used for encrypting trust certificate

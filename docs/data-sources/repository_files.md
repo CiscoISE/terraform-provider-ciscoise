@@ -11,7 +11,7 @@ description: |-
 
 It performs read operation on Repository.
 
-This will get the full list of files present in the named repository.
+- This will get the full list of files present in the named repository.
 
 ## Example Usage
 
