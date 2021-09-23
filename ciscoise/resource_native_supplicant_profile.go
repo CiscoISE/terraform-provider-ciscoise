@@ -179,7 +179,8 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 				"Failure when searching item from GetNativeSupplicantProfile, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNativeSupplicantProfileGetNativeSupplicantProfileByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNativeSupplicantProfile search response",
 				err))

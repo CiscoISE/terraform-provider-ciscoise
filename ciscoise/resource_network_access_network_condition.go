@@ -248,7 +248,8 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 				"Failure when searching item from GetNetworkAccessNetworkConditions, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessNetworkConditions search response",
 				err))

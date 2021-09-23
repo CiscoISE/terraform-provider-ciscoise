@@ -475,7 +475,8 @@ func resourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.Re
 				"Failure when searching item from GetDeviceAdminPolicySets, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationPolicySetGetDeviceAdminPolicySetByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminPolicySets search response",
 				err))

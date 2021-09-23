@@ -539,7 +539,8 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 				"Failure when searching item from GetDeviceAdminAuthenticationRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminAuthenticationRules search response",
 				err))

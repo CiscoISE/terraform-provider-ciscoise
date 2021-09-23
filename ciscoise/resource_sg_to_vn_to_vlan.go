@@ -270,7 +270,8 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 				"Failure when searching item from GetSecurityGroupsToVnToVLAN, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSecurityGroupsToVnToVLAN search response",
 				err))

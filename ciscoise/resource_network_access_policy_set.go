@@ -493,7 +493,8 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 				"Failure when searching item from GetNetworkAccessPolicySets, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessPolicySetGetNetworkAccessPolicySetByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessPolicySets search response",
 				err))

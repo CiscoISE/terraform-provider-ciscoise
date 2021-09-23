@@ -186,7 +186,8 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 				"Failure when searching item from GetGuestSSID, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenGuestSSIDGetGuestSSIDByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGuestSSID search response",
 				err))

@@ -223,7 +223,8 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 				"Failure when searching item from GetIPToSgtMapping, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenIPToSgtMappingGetIPToSgtMappingByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetIPToSgtMapping search response",
 				err))

@@ -248,7 +248,8 @@ func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *s
 				"Failure when searching item from GetDeviceAdminNetworkConditions, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminNetworkConditions search response",
 				err))

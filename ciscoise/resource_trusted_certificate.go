@@ -486,7 +486,8 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 				"Failure when searching item from GetTrustedCertificates, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenCertificatesGetTrustedCertificateByIDItem2(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTrustedCertificates search response",
 				err))
