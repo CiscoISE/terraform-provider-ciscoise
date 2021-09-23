@@ -810,3 +810,61 @@ func flattenCertificatesGetTrustedCertificateByIDItemLink(item *isegosdk.Respons
 	}
 
 }
+
+func flattenCertificatesGetTrustedCertificateByIDItem2(item *isegosdk.ResponseCertificatesGetTrustedCertificateByIDResponse) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["authenticate_before_crl_received"] = item.AuthenticateBeforeCRLReceived
+	respItem["automatic_crl_update"] = item.AutomaticCRLUpdate
+	respItem["automatic_crl_update_period"] = interfaceToIntPtr(item.AutomaticCRLUpdatePeriod)
+	respItem["automatic_crl_update_units"] = item.AutomaticCRLUpdateUnits
+	respItem["crl_distribution_url"] = item.CrlDistributionURL
+	respItem["crl_download_failure_retries"] = interfaceToIntPtr(item.CrlDownloadFailureRetries)
+	respItem["crl_download_failure_retries_units"] = item.CrlDownloadFailureRetriesUnits
+	respItem["description"] = item.Description
+	respItem["download_crl"] = item.DownloadCRL
+	respItem["enable_ocsp_validation"] = item.EnableOCSpValidation
+	respItem["enable_server_identity_check"] = item.EnableServerIDentityCheck
+	respItem["expiration_date"] = item.ExpirationDate
+	respItem["friendly_name"] = item.FriendlyName
+	respItem["id"] = item.ID
+	respItem["ignore_crl_expiration"] = item.IgnoreCRLExpiration
+	respItem["internal_ca"] = boolPtrToString(item.InternalCa)
+	respItem["is_referred_in_policy"] = boolPtrToString(item.IsReferredInPolicy)
+	respItem["issued_by"] = item.IssuedBy
+	respItem["issued_to"] = item.IssuedTo
+	respItem["key_size"] = item.KeySize
+	respItem["link"] = flattenCertificatesGetTrustedCertificateByIDItem2Link(item.Link)
+	respItem["non_automatic_crl_update_period"] = interfaceToIntPtr(item.NonAutomaticCRLUpdatePeriod)
+	respItem["non_automatic_crl_update_units"] = item.NonAutomaticCRLUpdateUnits
+	respItem["reject_if_no_status_from_ocs_p"] = item.RejectIfNoStatusFromOCSP
+	respItem["reject_if_unreachable_from_ocs_p"] = item.RejectIfUnreachableFromOCSP
+	respItem["selected_ocsp_service"] = item.SelectedOCSpService
+	respItem["serial_number_decimal_format"] = item.SerialNumberDecimalFormat
+	respItem["sha256_fingerprint"] = item.Sha256Fingerprint
+	respItem["signature_algorithm"] = item.SignatureAlgorithm
+	respItem["status"] = item.Status
+	respItem["subject"] = item.Subject
+	respItem["trusted_for"] = item.TrustedFor
+	respItem["valid_from"] = item.ValidFrom
+	return []map[string]interface{}{
+		respItem,
+	}
+}
+
+func flattenCertificatesGetTrustedCertificateByIDItem2Link(item *isegosdk.ResponseCertificatesGetTrustedCertificateByIDResponseLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["href"] = item.Href
+	respItem["rel"] = item.Rel
+	respItem["type"] = item.Type
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
