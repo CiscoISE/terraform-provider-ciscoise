@@ -219,7 +219,8 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 				"Failure when searching item from GetNetworkAccessDictionaryAttributesByDictionaryName, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessDictionaryAttributesByDictionaryName search response",
 				err))

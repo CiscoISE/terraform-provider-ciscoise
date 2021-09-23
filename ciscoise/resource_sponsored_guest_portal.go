@@ -971,7 +971,8 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 				"Failure when searching item from GetSponsoredGuestPortals, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSponsoredGuestPortals search response",
 				err))

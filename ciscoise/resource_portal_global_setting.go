@@ -130,7 +130,8 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 				"Failure when searching item from GetPortalGlobalSettings, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenPortalGlobalSettingGetPortalGlobalSettingByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPortalGlobalSettings search response",
 				err))

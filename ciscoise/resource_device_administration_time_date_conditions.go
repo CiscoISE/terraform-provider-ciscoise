@@ -386,7 +386,8 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 				"Failure when searching item from GetDeviceAdminTimeConditions, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminTimeConditions search response",
 				err))

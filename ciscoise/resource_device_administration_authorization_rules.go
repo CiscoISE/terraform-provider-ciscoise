@@ -526,7 +526,8 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 				"Failure when searching item from GetDeviceAdminAuthorizationRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRuleByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminAuthorizationRules search response",
 				err))

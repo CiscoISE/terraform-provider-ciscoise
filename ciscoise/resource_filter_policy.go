@@ -200,7 +200,8 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 				"Failure when searching item from GetFilterPolicy, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenFilterPolicyGetFilterPolicyByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetFilterPolicy search response",
 				err))

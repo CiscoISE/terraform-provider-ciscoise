@@ -557,7 +557,8 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 				"Failure when searching item from GetNetworkAccessAuthenticationRules, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthenticationRules search response",
 				err))

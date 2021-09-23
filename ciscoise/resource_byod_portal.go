@@ -686,7 +686,8 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 				"Failure when searching item from GetByodPortal, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenByodPortalGetByodPortalByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetByodPortal search response",
 				err))

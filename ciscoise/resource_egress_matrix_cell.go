@@ -225,7 +225,8 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 				"Failure when searching item from GetEgressMatrixCell, unexpected response", ""))
 			return diags
 		}
-		if err := d.Set("item", item1); err != nil {
+		vItem1 := flattenEgressMatrixCellGetEgressMatrixCellByIDItem(item1)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEgressMatrixCell search response",
 				err))
