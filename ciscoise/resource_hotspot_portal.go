@@ -403,9 +403,12 @@ Allowed values:
 - bond0
 - bond1
 - bond2`,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Optional: true,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"always_used_language": &schema.Schema{
 													Description: `Used when displayLang = ALWAYSUSE`,
@@ -906,7 +909,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPortalSet
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
-		request.AllowedInterfaces = interfaceToString(v)
+		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
 		request.CertificateGroupTag = interfaceToString(v)
@@ -1279,7 +1282,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPorta
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
-		request.AllowedInterfaces = interfaceToString(v)
+		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
 		request.CertificateGroupTag = interfaceToString(v)
