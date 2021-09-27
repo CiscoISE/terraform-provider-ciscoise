@@ -47,9 +47,8 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 
 									"is_default": &schema.Schema{
 										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,
@@ -115,9 +114,8 @@ func dataSourceNetworkAccessDictionaryAttribute() *schema.Resource {
 
 									"is_default": &schema.Schema{
 										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,

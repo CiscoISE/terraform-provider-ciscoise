@@ -102,8 +102,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Computed:    true,
 												},
 												"is_negate": &schema.Schema{
-													Description: `Indicates whereas this condition is in negate mode`,
-													// Type:        schema.TypeBool,
+													Description:  `Indicates whereas this condition is in negate mode`,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -247,8 +246,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Computed: true,
 									},
 									"is_negate": &schema.Schema{
-										Description: `Indicates whereas this condition is in negate mode`,
-										// Type:        schema.TypeBool,
+										Description:  `Indicates whereas this condition is in negate mode`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -309,8 +307,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							},
 						},
 						"default": &schema.Schema{
-							Description: `Flag which indicates if this policy set is the default one`,
-							// Type:        schema.TypeBool,
+							Description:  `Flag which indicates if this policy set is the default one`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -335,8 +332,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							Computed:    true,
 						},
 						"is_proxy": &schema.Schema{
-							Description: `Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'`,
-							// Type:        schema.TypeBool,
+							Description:  `Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

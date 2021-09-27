@@ -81,8 +81,7 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 										Computed:    true,
 									},
 									"is_negate": &schema.Schema{
-										Description: `Indicates whereas this condition is in negate mode`,
-										// Type:        schema.TypeBool,
+										Description:  `Indicates whereas this condition is in negate mode`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -226,8 +225,7 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 							Computed: true,
 						},
 						"is_negate": &schema.Schema{
-							Description: `Indicates whereas this condition is in negate mode`,
-							// Type:        schema.TypeBool,
+							Description:  `Indicates whereas this condition is in negate mode`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

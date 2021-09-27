@@ -28,7 +28,6 @@ func dataSourceAciTestConnectivity() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"result": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

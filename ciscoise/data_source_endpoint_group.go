@@ -148,7 +148,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"system_defined": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -195,7 +194,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"system_defined": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

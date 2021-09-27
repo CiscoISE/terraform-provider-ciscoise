@@ -62,19 +62,16 @@ func dataSourceEndpointRegister() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"mdm_compliance_status": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"mdm_encrypted": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"mdm_enrolled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -84,7 +81,6 @@ func dataSourceEndpointRegister() *schema.Resource {
 							Optional: true,
 						},
 						"mdm_jail_broken": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -106,13 +102,11 @@ func dataSourceEndpointRegister() *schema.Resource {
 							Optional: true,
 						},
 						"mdm_pinlock": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"mdm_reachable": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -141,13 +135,11 @@ func dataSourceEndpointRegister() *schema.Resource {
 				Optional: true,
 			},
 			"static_group_assignment": &schema.Schema{
-				// Type:     schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
 			},
 			"static_profile_assignment": &schema.Schema{
-				// Type:     schema.TypeBool,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

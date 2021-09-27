@@ -48,7 +48,6 @@ centers, you must have a health check node for each PAN.
 							Optional: true,
 						},
 						"is_enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

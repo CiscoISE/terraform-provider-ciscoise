@@ -39,15 +39,13 @@ func resourceAciSettings() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"aci50": &schema.Schema{
-							Description: `Enable 5.0 ACI Version`,
-							// Type:        schema.TypeBool,
+							Description:  `Enable 5.0 ACI Version`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"aci51": &schema.Schema{
-							Description: `Enable 5.1 ACI Version`,
-							// Type:        schema.TypeBool,
+							Description:  `Enable 5.1 ACI Version`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -79,7 +77,6 @@ func resourceAciSettings() *schema.Resource {
 							Optional:    true,
 						},
 						"all_sxp_domain": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -89,20 +86,17 @@ func resourceAciSettings() *schema.Resource {
 							Optional: true,
 						},
 						"enable_aci": &schema.Schema{
-							Description: `Enable ACI Integration`,
-							// Type:        schema.TypeBool,
+							Description:  `Enable ACI Integration`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"enable_data_plane": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"enable_elements_limit": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -130,7 +124,6 @@ func resourceAciSettings() *schema.Resource {
 							Optional: true,
 						},
 						"specific_sxp_domain": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

@@ -117,7 +117,6 @@ func resourceTacacsCommandSets() *schema.Resource {
 							Computed: true,
 						},
 						"permit_unmatched": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

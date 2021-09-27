@@ -58,7 +58,6 @@ pending sessions when a PSN in local node group fails.Node group members can com
 								Schema: map[string]*schema.Schema{
 
 									"enabled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,

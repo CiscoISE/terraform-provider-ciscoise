@@ -28,15 +28,13 @@ func dataSourceAciSettings() *schema.Resource {
 
 						"aci50": &schema.Schema{
 							Description: `Enable 5.0 ACI Version`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"aci51": &schema.Schema{
 							Description: `Enable 5.1 ACI Version`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"aciipaddress": &schema.Schema{
 							Description: `ACI Domain manager Ip Address.`,
@@ -65,7 +63,6 @@ func dataSourceAciSettings() *schema.Resource {
 							Computed:    true,
 						},
 						"all_sxp_domain": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -75,17 +72,14 @@ func dataSourceAciSettings() *schema.Resource {
 						},
 						"enable_aci": &schema.Schema{
 							Description: `Enable ACI Integration`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"enable_data_plane": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"enable_elements_limit": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -112,7 +106,6 @@ func dataSourceAciSettings() *schema.Resource {
 							Computed: true,
 						},
 						"specific_sxp_domain": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

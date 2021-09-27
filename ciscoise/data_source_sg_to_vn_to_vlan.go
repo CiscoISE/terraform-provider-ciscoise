@@ -138,7 +138,6 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"default_virtual_network": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -161,12 +160,10 @@ string parameter. Each resource Data model description should specify if an attr
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"default_vlan": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},

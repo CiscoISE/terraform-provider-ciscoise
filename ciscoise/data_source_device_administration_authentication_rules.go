@@ -126,9 +126,8 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 															"link": &schema.Schema{
 																Type:     schema.TypeList,
@@ -252,9 +251,8 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -308,9 +306,8 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -437,9 +434,8 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 															"link": &schema.Schema{
 																Type:     schema.TypeList,
@@ -563,9 +559,8 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 												},
 												"is_negate": &schema.Schema{
 													Description: `Indicates whereas this condition is in negate mode`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"link": &schema.Schema{
 													Type:     schema.TypeList,
@@ -619,9 +614,8 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,

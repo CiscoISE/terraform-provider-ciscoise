@@ -127,7 +127,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"is_read_only": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -157,7 +156,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"propogate_to_apic": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

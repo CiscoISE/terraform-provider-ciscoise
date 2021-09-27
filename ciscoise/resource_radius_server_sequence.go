@@ -137,7 +137,6 @@ func resourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"continue_authorz_policy": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -175,7 +174,6 @@ func resourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -193,21 +191,18 @@ func resourceRadiusServerSequence() *schema.Resource {
 							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
 						},
 						"strip_prefix": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
 						},
 						"strip_suffix": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -220,14 +215,12 @@ func resourceRadiusServerSequence() *schema.Resource {
 							Computed:    true,
 						},
 						"use_attr_set_before_acc": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
 						},
 						"use_attr_set_on_request": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

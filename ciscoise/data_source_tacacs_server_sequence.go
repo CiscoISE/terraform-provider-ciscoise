@@ -80,7 +80,6 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -95,12 +94,10 @@ func dataSourceTacacsServerSequence() *schema.Resource {
 						},
 						"prefix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for prefix strip`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -117,9 +114,8 @@ The order of the names in the string is the order of servers that will be used d
 						},
 						"suffix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for suffix strip`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -160,7 +156,6 @@ The order of the names in the string is the order of servers that will be used d
 							},
 						},
 						"local_accounting": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -175,12 +170,10 @@ The order of the names in the string is the order of servers that will be used d
 						},
 						"prefix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for prefix strip`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"remote_accounting": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -197,9 +190,8 @@ The order of the names in the string is the order of servers that will be used d
 						},
 						"suffix_strip": &schema.Schema{
 							Description: `Define if a delimiter will be used for suffix strip`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

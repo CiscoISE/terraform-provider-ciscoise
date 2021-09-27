@@ -149,7 +149,6 @@ Simple filtering
 							Computed: true,
 						},
 						"self_signed": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -244,7 +243,6 @@ Simple filtering
 							Computed: true,
 						},
 						"self_signed": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

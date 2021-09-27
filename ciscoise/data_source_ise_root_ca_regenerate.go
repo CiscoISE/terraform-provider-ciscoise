@@ -65,8 +65,7 @@ used to track the status.
 				},
 			},
 			"remove_existing_ise_intermediate_csr": &schema.Schema{
-				Description: `Setting this attribute to true will remove existing ISE Intermediate CSR`,
-				// Type:        schema.TypeBool,
+				Description:  `Setting this attribute to true will remove existing ISE Intermediate CSR`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

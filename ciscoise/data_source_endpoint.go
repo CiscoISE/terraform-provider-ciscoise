@@ -193,17 +193,14 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"mdm_compliance_status": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_encrypted": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_enrolled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -212,7 +209,6 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"mdm_jail_broken": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -233,12 +229,10 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"mdm_pinlock": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_reachable": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -266,12 +260,10 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"static_group_assignment": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"static_profile_assignment": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -348,17 +340,14 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"mdm_compliance_status": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_encrypted": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_enrolled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -367,7 +356,6 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"mdm_jail_broken": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -388,12 +376,10 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"mdm_pinlock": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mdm_reachable": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -421,12 +407,10 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"static_group_assignment": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"static_profile_assignment": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

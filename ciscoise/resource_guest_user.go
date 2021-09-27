@@ -120,8 +120,7 @@ func resourceGuestUser() *schema.Resource {
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										Description: `This field is only for Get operation not applicable for Create, Update operations`,
-										// Type:        schema.TypeBool,
+										Description:  `This field is only for Get operation not applicable for Create, Update operations`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,

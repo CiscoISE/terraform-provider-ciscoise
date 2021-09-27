@@ -152,8 +152,7 @@ func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 																Computed:    true,
 															},
 															"is_negate": &schema.Schema{
-																Description: `Indicates whereas this condition is in negate mode`,
-																// Type:        schema.TypeBool,
+																Description:  `Indicates whereas this condition is in negate mode`,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -297,8 +296,7 @@ func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													Computed: true,
 												},
 												"is_negate": &schema.Schema{
-													Description: `Indicates whereas this condition is in negate mode`,
-													// Type:        schema.TypeBool,
+													Description:  `Indicates whereas this condition is in negate mode`,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -359,8 +357,7 @@ func resourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 										},
 									},
 									"default": &schema.Schema{
-										Description: `Indicates if this rule is the default one`,
-										// Type:        schema.TypeBool,
+										Description:  `Indicates if this rule is the default one`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,

@@ -55,7 +55,6 @@ that are Administration, PolicyService, and Monitoring.
 								Schema: map[string]*schema.Schema{
 
 									"is_enabled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -92,21 +91,18 @@ that are Administration, PolicyService, and Monitoring.
 											Schema: map[string]*schema.Schema{
 
 												"enable_pxgrid": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"is_enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"is_mnt_dedicated": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -125,35 +121,30 @@ that are Administration, PolicyService, and Monitoring.
 														Schema: map[string]*schema.Schema{
 
 															"enable_device_admin_service": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																Computed:     true,
 															},
 															"enable_nac_service": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																Computed:     true,
 															},
 															"enable_passive_identity_service": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																Computed:     true,
 															},
 															"enable_profiling_service": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 																Computed:     true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -167,7 +158,6 @@ that are Administration, PolicyService, and Monitoring.
 																	Schema: map[string]*schema.Schema{
 
 																		"is_enabled": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:         schema.TypeString,
 																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																			Optional:     true,
@@ -189,7 +179,6 @@ that are Administration, PolicyService, and Monitoring.
 																	Schema: map[string]*schema.Schema{
 
 																		"is_enabled": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:         schema.TypeString,
 																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																			Optional:     true,
@@ -257,7 +246,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -277,7 +265,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -305,7 +292,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -329,7 +315,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -349,7 +334,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -373,7 +357,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -401,7 +384,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -421,7 +403,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -441,7 +422,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -461,7 +441,6 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -497,13 +476,11 @@ that are Administration, PolicyService, and Monitoring.
 													Optional: true,
 												},
 												"link_trap_query": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 												},
 												"mac_trap_query": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -539,7 +516,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -557,7 +533,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -583,7 +558,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -605,7 +579,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -623,7 +596,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -645,7 +617,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -671,7 +642,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -689,7 +659,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -707,7 +676,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -725,7 +693,6 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -759,12 +726,10 @@ that are Administration, PolicyService, and Monitoring.
 													Computed: true,
 												},
 												"link_trap_query": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"mac_trap_query": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -800,19 +765,16 @@ that are Administration, PolicyService, and Monitoring.
 														Schema: map[string]*schema.Schema{
 
 															"enable_pxgrid": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 															},
 															"is_enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 															},
 															"is_mnt_dedicated": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -829,31 +791,26 @@ that are Administration, PolicyService, and Monitoring.
 																	Schema: map[string]*schema.Schema{
 
 																		"enable_device_admin_service": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:         schema.TypeString,
 																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																			Optional:     true,
 																		},
 																		"enable_nac_service": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:         schema.TypeString,
 																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																			Optional:     true,
 																		},
 																		"enable_passive_identity_service": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:         schema.TypeString,
 																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																			Optional:     true,
 																		},
 																		"enable_profiling_service": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:         schema.TypeString,
 																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																			Optional:     true,
 																		},
 																		"enabled": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:         schema.TypeString,
 																			ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																			Optional:     true,
@@ -866,7 +823,6 @@ that are Administration, PolicyService, and Monitoring.
 																				Schema: map[string]*schema.Schema{
 
 																					"is_enabled": &schema.Schema{
-																						// Type:     schema.TypeBool,
 																						Type:         schema.TypeString,
 																						ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																						Optional:     true,
@@ -886,7 +842,6 @@ that are Administration, PolicyService, and Monitoring.
 																				Schema: map[string]*schema.Schema{
 
 																					"is_enabled": &schema.Schema{
-																						// Type:     schema.TypeBool,
 																						Type:         schema.TypeString,
 																						ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																						Optional:     true,
@@ -934,7 +889,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -954,7 +908,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -982,7 +935,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1006,7 +958,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1026,7 +977,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1050,7 +1000,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1078,7 +1027,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1098,7 +1046,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1118,7 +1065,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1138,7 +1084,6 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
@@ -1174,13 +1119,11 @@ that are Administration, PolicyService, and Monitoring.
 																Optional: true,
 															},
 															"link_trap_query": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,
 															},
 															"mac_trap_query": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:         schema.TypeString,
 																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:     true,

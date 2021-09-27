@@ -115,7 +115,6 @@ string parameter. Each resource Data model description should specify if an attr
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -139,7 +138,6 @@ string parameter. Each resource Data model description should specify if an attr
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
 The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -149,7 +147,6 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -216,7 +213,6 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -240,7 +236,6 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
 The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -250,7 +245,6 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

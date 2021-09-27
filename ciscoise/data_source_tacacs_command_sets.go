@@ -115,7 +115,6 @@ func dataSourceTacacsCommandSets() *schema.Resource {
 							Computed: true,
 						},
 						"permit_unmatched": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -193,7 +192,6 @@ func dataSourceTacacsCommandSets() *schema.Resource {
 							Computed: true,
 						},
 						"permit_unmatched": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

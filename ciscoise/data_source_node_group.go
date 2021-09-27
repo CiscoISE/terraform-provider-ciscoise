@@ -47,7 +47,6 @@ sessions on the failed node.
 								Schema: map[string]*schema.Schema{
 
 									"enabled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -94,7 +93,6 @@ sessions on the failed node.
 								Schema: map[string]*schema.Schema{
 
 									"enabled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},

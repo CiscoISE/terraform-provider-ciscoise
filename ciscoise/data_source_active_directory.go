@@ -165,38 +165,31 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Computed:    true,
 									},
 									"enable_callback_for_dialin_client": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_dialin_permission_check": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_failed_auth_protection": &schema.Schema{
 										Description: `Enable prevent AD account lockout due to too many bad password attempts`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"enable_machine_access": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_machine_auth": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_pass_change": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_rewrites": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -236,7 +229,6 @@ func dataSourceActiveDirectory() *schema.Resource {
 										Computed:    true,
 									},
 									"plaintext_auth": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -310,12 +302,10 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 							Computed:    true,
 						},
 						"enable_domain_allowed_list": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"enable_domain_white_list": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -474,38 +464,31 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 										Computed:    true,
 									},
 									"enable_callback_for_dialin_client": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_dialin_permission_check": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_failed_auth_protection": &schema.Schema{
 										Description: `Enable prevent AD account lockout due to too many bad password attempts`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"enable_machine_access": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_machine_auth": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_pass_change": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"enable_rewrites": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -545,7 +528,6 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 										Computed:    true,
 									},
 									"plaintext_auth": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -619,12 +601,10 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 							Computed:    true,
 						},
 						"enable_domain_allowed_list": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"enable_domain_white_list": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

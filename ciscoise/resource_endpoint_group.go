@@ -80,7 +80,6 @@ func resourceEndpointGroup() *schema.Resource {
 							Computed: true,
 						},
 						"system_defined": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

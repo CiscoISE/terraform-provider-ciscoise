@@ -45,7 +45,6 @@ func resourceSponsorGroup() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"auto_notification": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -59,28 +58,24 @@ func resourceSponsorGroup() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"can_create_random_accounts": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_import_multiple_accounts": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_set_future_start_date": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_specify_username_prefix": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -128,14 +123,12 @@ func resourceSponsorGroup() *schema.Resource {
 							Computed: true,
 						},
 						"is_default_group": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 							Computed:     true,
 						},
 						"is_enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -196,84 +189,72 @@ func resourceSponsorGroup() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"can_access_via_rest": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_approve_selfreg_guests": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_delete_guest_accounts": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_extend_guest_accounts": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_reinstate_suspended_accounts": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_reset_guest_passwords": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_send_sms_notifications": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_suspend_guest_accounts": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_update_guest_contact_info": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"can_view_guest_passwords": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"limit_approval_to_sponsors_guests": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"require_suspension_reason": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,

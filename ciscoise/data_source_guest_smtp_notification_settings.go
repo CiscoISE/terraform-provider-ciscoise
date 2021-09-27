@@ -144,9 +144,8 @@ string parameter. Each resource Data model description should specify if an attr
 						},
 						"notification_enabled": &schema.Schema{
 							Description: `Indicates if the email notification service is to be enabled`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"password": &schema.Schema{
 							Description: `Password of Secure SMTP server`,
@@ -166,21 +165,18 @@ string parameter. Each resource Data model description should specify if an attr
 						},
 						"use_default_from_address": &schema.Schema{
 							Description: `If the default from address should be used rather than using a sponsor user email address`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"use_password_authentication": &schema.Schema{
 							Description: `If configured to true, SMTP server authentication will happen using username/password`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"use_tlsor_ssl_encryption": &schema.Schema{
 							Description: `If configured to true, SMTP server authentication will happen using TLS/SSL`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"user_name": &schema.Schema{
 							Description: `Username of Secure SMTP server`,

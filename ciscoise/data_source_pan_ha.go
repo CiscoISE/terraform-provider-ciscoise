@@ -34,7 +34,6 @@ becomes unavailable.
 							Computed: true,
 						},
 						"is_enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

@@ -93,7 +93,6 @@ func resourceSgToVnToVLAN() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"default_virtual_network": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -122,14 +121,12 @@ func resourceSgToVnToVLAN() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"default_vlan": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,

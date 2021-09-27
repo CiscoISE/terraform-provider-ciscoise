@@ -53,8 +53,7 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"is_default": &schema.Schema{
-										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
-										// Type:        schema.TypeBool,
+										Description:  `true if this key value is the default between the allowed values of the dictionary attribute`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
