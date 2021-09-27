@@ -115,7 +115,7 @@ func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceDat
 		}
 	}
 	if okName && vvName != "" {
-		getResponse2, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a seperator instead of (#) in the NDG name.
+		getResponse2, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
@@ -166,7 +166,7 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Selected method: GetNetworkDeviceGroupByName")
 		vvName := vName
 
-		response1, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a seperator instead of (#) in the NDG name.
+		response1, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
 
 		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
@@ -238,7 +238,7 @@ func resourceNetworkDeviceGroupUpdate(ctx context.Context, d *schema.ResourceDat
 	}
 	if selectedMethod == 2 {
 		vvName = vName
-		getResp, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a seperator instead of (#) in the NDG name.
+		getResp, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
 		if err != nil || getResp == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceGroupByName", err,
@@ -301,7 +301,7 @@ func resourceNetworkDeviceGroupDelete(ctx context.Context, d *schema.ResourceDat
 	}
 	if selectedMethod == 2 {
 		vvName = vName
-		getResp, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a seperator instead of (#) in the NDG name.
+		getResp, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
 		if err != nil || getResp == nil {
 			// Assume that element it is already gone
 			return diags
