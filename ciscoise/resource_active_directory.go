@@ -408,8 +408,6 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	// vDomain, okDomain := resourceItem["domain"]
-	// vvDomain := interfaceToString(vDomain)
 
 	if okID && vvID != "" {
 		getResponse1, _, err := client.ActiveDirectory.GetActiveDirectoryByID(vvID)
@@ -417,7 +415,6 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
-			// resourceMap["domain"] = vvDomain
 			d.SetId(joinResourceID(resourceMap))
 			return diags
 		}
@@ -428,7 +425,6 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
-			// resourceMap["domain"] = vvDomain
 			d.SetId(joinResourceID(resourceMap))
 			return diags
 		}
@@ -453,7 +449,6 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
-	// resourceMap["domain"] = vvDomain
 	d.SetId(joinResourceID(resourceMap))
 	return diags
 }
