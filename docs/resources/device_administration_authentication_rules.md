@@ -245,5 +245,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_device_administration_authentication_rules.example "id=string/policy_id=string"
+terraform import ciscoise_device_administration_authentication_rules.example "id:=string\policy_id:=string"
 ```
