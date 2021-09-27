@@ -29,6 +29,9 @@ output "ciscoise_network_access_conditions_example" {
 }
 
 data "ciscoise_network_access_conditions" "found" {
+  depends_on = [
+    ciscoise_network_access_conditions.example
+  ]
   provider = ciscoise
   name = "My New Condition"
 }
