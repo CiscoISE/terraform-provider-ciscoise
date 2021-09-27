@@ -48,7 +48,6 @@ func resourceInternalUser() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -93,7 +92,6 @@ func resourceInternalUser() *schema.Resource {
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
 The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -106,7 +104,6 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

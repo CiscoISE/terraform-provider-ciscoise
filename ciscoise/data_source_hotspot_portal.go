@@ -359,22 +359,19 @@ The Tweak Settings can subsequently be changed by the user`,
 												},
 												"include_aup": &schema.Schema{
 													Description: `Require the portal user to read and accept an AUP`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"require_access_code": &schema.Schema{
 													Description: `Require the portal user to enter an access code.
 Only used in Hotspot portal`,
-													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -476,7 +473,6 @@ Range from 8000 to 8999`,
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -491,9 +487,8 @@ Range from 8000 to 8999`,
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -521,32 +516,26 @@ Allowed values:
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_failure_code": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_ip_address": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_mac_addr": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_policy_server": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_support_info_page": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},

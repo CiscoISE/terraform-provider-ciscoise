@@ -336,14 +336,12 @@ The Tweak Settings can subsequently be changed by the user`,
 													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"require_scrolling": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -371,8 +369,7 @@ Allowed values:
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
-													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													// Type:        schema.TypeBool,
+													Description:  `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -387,14 +384,12 @@ Allowed values:
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP.
 Only valid if includeAup = true`,
-													// Type:        schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"require_aup_scrolling": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -508,7 +503,6 @@ Range from 8000 to 8999`,
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -525,8 +519,7 @@ Range from 8000 to 8999`,
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Description: `Include a Post-Login Banner page`,
-													// Type:        schema.TypeBool,
+													Description:  `Include a Post-Login Banner page`,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -543,8 +536,7 @@ Range from 8000 to 8999`,
 											Schema: map[string]*schema.Schema{
 
 												"allow_sponsor_to_change_pwd": &schema.Schema{
-													Description: `Allow sponsors to change their own passwords`,
-													// Type:        schema.TypeBool,
+													Description:  `Allow sponsors to change their own passwords`,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
@@ -577,42 +569,36 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"include_failure_code": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"include_ip_address": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"include_mac_addr": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"include_policy_server": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
 													Computed:     true,
 												},
 												"include_support_info_page": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,

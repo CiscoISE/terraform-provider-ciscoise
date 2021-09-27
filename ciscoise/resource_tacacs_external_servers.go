@@ -98,8 +98,7 @@ func resourceTacacsExternalServers() *schema.Resource {
 							Computed:    true,
 						},
 						"single_connect": &schema.Schema{
-							Description: `Define the use of single connection`,
-							// Type:        schema.TypeBool,
+							Description:  `Define the use of single connection`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

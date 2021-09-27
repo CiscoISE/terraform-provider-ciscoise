@@ -50,7 +50,6 @@ func resourceSxpConnections() *schema.Resource {
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

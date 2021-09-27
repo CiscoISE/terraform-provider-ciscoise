@@ -52,7 +52,6 @@ func resourceGuestType() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 
 									"allow_access_on_specific_days_times": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -114,8 +113,7 @@ Allowed values are:
 										Computed: true,
 									},
 									"from_first_login": &schema.Schema{
-										Description: `When Account Duration starts from first login or specified date`,
-										// Type:        schema.TypeBool,
+										Description:  `When Account Duration starts from first login or specified date`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -164,24 +162,21 @@ Allowed values are:
 										Computed: true,
 									},
 									"enable_notification": &schema.Schema{
-										Description: `Enable Notification settings`,
-										// Type:        schema.TypeBool,
+										Description:  `Enable Notification settings`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"send_email_notification": &schema.Schema{
-										Description: `Enable Email Notification`,
-										// Type:        schema.TypeBool,
+										Description:  `Enable Email Notification`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
 										Computed:     true,
 									},
 									"send_sms_notification": &schema.Schema{
-										Description: `Maximum devices guests can register`,
-										// Type:        schema.TypeBool,
+										Description:  `Maximum devices guests can register`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -201,7 +196,6 @@ Allowed values are:
 							Computed: true,
 						},
 						"is_default_type": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -236,7 +230,6 @@ Allowed values are:
 								Schema: map[string]*schema.Schema{
 
 									"allow_guest_portal_bypass": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
@@ -257,8 +250,7 @@ Allowed values are:
 										Computed: true,
 									},
 									"limit_simultaneous_logins": &schema.Schema{
-										Description: `Enable Simultaneous Logins`,
-										// Type:        schema.TypeBool,
+										Description:  `Enable Simultaneous Logins`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,

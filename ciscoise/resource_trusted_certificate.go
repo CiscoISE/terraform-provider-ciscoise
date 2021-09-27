@@ -46,7 +46,6 @@ func resourceTrustedCertificate() *schema.Resource {
 						"authenticate_before_crl_received": &schema.Schema{
 							Description: `Switch to enable/disable CRL Verification if CRL is not Received
   ERROR: Different types for param authenticateBeforeCRLReceived schema.TypeBool schema.TypeString`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
 							Optional:     true,
@@ -71,7 +70,6 @@ func resourceTrustedCertificate() *schema.Resource {
 						"automatic_crl_update": &schema.Schema{
 							Description: `Switch to enable/disable automatic CRL update
   ERROR: Different types for param automaticCRLUpdate schema.TypeBool schema.TypeString`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
 							Optional:     true,
@@ -134,7 +132,6 @@ func resourceTrustedCertificate() *schema.Resource {
 						"download_crl": &schema.Schema{
 							Description: `Switch to enable/disable download of CRL
   ERROR: Different types for param downloadCRL schema.TypeBool schema.TypeString`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
 							Optional:     true,
@@ -159,7 +156,6 @@ func resourceTrustedCertificate() *schema.Resource {
 						"enable_ocsp_validation": &schema.Schema{
 							Description: `Switch to enable/disable OCSP Validation
   ERROR: Different types for param enableOCSPValidation schema.TypeBool schema.TypeString`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
 							Optional:     true,
@@ -184,7 +180,6 @@ func resourceTrustedCertificate() *schema.Resource {
 						"enable_server_identity_check": &schema.Schema{
 							Description: `Switch to enable/disable verification if HTTPS or LDAP server certificate name fits the configured server URL
   ERROR: Different types for param enableServerIdentityCheck schema.TypeBool schema.TypeString`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
 							Optional:     true,
@@ -224,7 +219,6 @@ func resourceTrustedCertificate() *schema.Resource {
 						"ignore_crl_expiration": &schema.Schema{
 							Description: `Switch to enable/disable ignore CRL Expiration
   ERROR: Different types for param ignoreCRLExpiration schema.TypeBool schema.TypeString`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
 							Optional:     true,
@@ -247,12 +241,10 @@ func resourceTrustedCertificate() *schema.Resource {
 							},
 						},
 						"internal_ca": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_referred_in_policy": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -313,7 +305,6 @@ func resourceTrustedCertificate() *schema.Resource {
 						"reject_if_no_status_from_ocs_p": &schema.Schema{
 							Description: `Switch to reject certificate if there is no status from OCSP
   ERROR: Different types for param rejectIfNoStatusFromOCSP schema.TypeBool schema.TypeString`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
 							Optional:     true,
@@ -338,7 +329,6 @@ func resourceTrustedCertificate() *schema.Resource {
 						"reject_if_unreachable_from_ocs_p": &schema.Schema{
 							Description: `Switch to reject certificate if unreachable from OCSP
   ERROR: Different types for param rejectIfUnreachableFromOCSP schema.TypeBool schema.TypeString`,
-							// Type:        schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
 							Optional:     true,
@@ -391,29 +381,25 @@ func resourceTrustedCertificate() *schema.Resource {
 							Computed:    true,
 						},
 						"trust_for_certificate_based_admin_auth": &schema.Schema{
-							Description: `Trust for Certificate based Admin authentication`,
-							// Type:        schema.TypeBool,
+							Description:  `Trust for Certificate based Admin authentication`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"trust_for_cisco_services_auth": &schema.Schema{
-							Description: `Trust for authentication of Cisco Services`,
-							// Type:        schema.TypeBool,
+							Description:  `Trust for authentication of Cisco Services`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"trust_for_client_auth": &schema.Schema{
-							Description: `Trust for client authentication and Syslog`,
-							// Type:        schema.TypeBool,
+							Description:  `Trust for client authentication and Syslog`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"trust_for_ise_auth": &schema.Schema{
-							Description: `Trust for authentication within ISE`,
-							// Type:        schema.TypeBool,
+							Description:  `Trust for authentication within ISE`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

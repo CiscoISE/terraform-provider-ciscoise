@@ -168,12 +168,10 @@ Simple filtering
 							Computed:    true,
 						},
 						"internal_ca": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_referred_in_policy": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -356,12 +354,10 @@ Simple filtering
 							Computed:    true,
 						},
 						"internal_ca": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"is_referred_in_policy": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

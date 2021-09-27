@@ -41,7 +41,6 @@ func resourceCertificateProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allowed_as_user_name": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

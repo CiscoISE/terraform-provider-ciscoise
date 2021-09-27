@@ -50,15 +50,13 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 					Schema: map[string]*schema.Schema{
 
 						"admin": &schema.Schema{
-							Description: `Use certificate to authenticate the ISE Admin Portal`,
-							// Type:        schema.TypeBool,
+							Description:  `Use certificate to authenticate the ISE Admin Portal`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"allow_replacement_of_portal_group_tag": &schema.Schema{
-							Description: `Allow Replacement of Portal Group Tag (required)`,
-							// Type:        schema.TypeBool,
+							Description:  `Allow Replacement of Portal Group Tag (required)`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -69,8 +67,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 							Optional:    true,
 						},
 						"eap": &schema.Schema{
-							Description: `Use certificate for EAP protocols that use SSL/TLS tunneling`,
-							// Type:        schema.TypeBool,
+							Description:  `Use certificate for EAP protocols that use SSL/TLS tunneling`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -108,8 +105,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 							Computed:    true,
 						},
 						"ims": &schema.Schema{
-							Description: `Use certificate for the ISE Messaging Service`,
-							// Type:        schema.TypeBool,
+							Description:  `Use certificate for the ISE Messaging Service`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -156,8 +152,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 							Optional:    true,
 						},
 						"portal": &schema.Schema{
-							Description: `Use for portal`,
-							// Type:        schema.TypeBool,
+							Description:  `Use for portal`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
@@ -172,35 +167,30 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 							Computed: true,
 						},
 						"pxgrid": &schema.Schema{
-							Description: `Use certificate for the pxGrid Controller`,
-							// Type:        schema.TypeBool,
+							Description:  `Use certificate for the pxGrid Controller`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"radius": &schema.Schema{
-							Description: `Use certificate for the RADSec server`,
-							// Type:        schema.TypeBool,
+							Description:  `Use certificate for the RADSec server`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"renew_self_signed_certificate": &schema.Schema{
-							Description: `Renew Self Signed Certificate`,
-							// Type:        schema.TypeBool,
+							Description:  `Renew Self Signed Certificate`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"saml": &schema.Schema{
-							Description: `Use certificate for SAML Signing`,
-							// Type:        schema.TypeBool,
+							Description:  `Use certificate for SAML Signing`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
 						"self_signed": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

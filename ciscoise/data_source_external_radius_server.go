@@ -73,7 +73,6 @@ The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend o
 						"enable_key_wrap": &schema.Schema{
 							Description: `KeyWrap may only be enabled if it is supported on the device.
 When running in FIPS mode this option should be enabled for such devices`,
-							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -178,7 +177,6 @@ The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend o
 						"enable_key_wrap": &schema.Schema{
 							Description: `KeyWrap may only be enabled if it is supported on the device.
 When running in FIPS mode this option should be enabled for such devices`,
-							// Type:        schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

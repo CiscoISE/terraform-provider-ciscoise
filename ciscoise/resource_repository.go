@@ -46,7 +46,6 @@ repository must be unique.
 					Schema: map[string]*schema.Schema{
 
 						"enable_pki": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

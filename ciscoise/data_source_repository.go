@@ -34,7 +34,6 @@ func dataSourceRepository() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"enable_pki": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -77,7 +76,6 @@ func dataSourceRepository() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"enable_pki": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

@@ -62,9 +62,8 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -188,9 +187,8 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -277,9 +275,8 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 									},
 									"is_negate": &schema.Schema{
 										Description: `Indicates whereas this condition is in negate mode`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -403,9 +400,8 @@ func dataSourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 						},
 						"is_negate": &schema.Schema{
 							Description: `Indicates whereas this condition is in negate mode`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,

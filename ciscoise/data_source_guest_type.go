@@ -114,7 +114,6 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"allow_access_on_specific_days_times": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -169,9 +168,8 @@ Allowed values are:
 									},
 									"from_first_login": &schema.Schema{
 										Description: `When Account Duration starts from first login or specified date`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"max_account_duration": &schema.Schema{
 										Description: `Maximum value of Account Duration`,
@@ -211,21 +209,18 @@ Allowed values are:
 									},
 									"enable_notification": &schema.Schema{
 										Description: `Enable Notification settings`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"send_email_notification": &schema.Schema{
 										Description: `Enable Email Notification`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"send_sms_notification": &schema.Schema{
 										Description: `Maximum devices guests can register`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"sms_text": &schema.Schema{
 										Type:     schema.TypeString,
@@ -239,7 +234,6 @@ Allowed values are:
 							Computed: true,
 						},
 						"is_default_type": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -271,7 +265,6 @@ Allowed values are:
 								Schema: map[string]*schema.Schema{
 
 									"allow_guest_portal_bypass": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -289,9 +282,8 @@ Allowed values are:
 									},
 									"limit_simultaneous_logins": &schema.Schema{
 										Description: `Enable Simultaneous Logins`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"max_registered_devices": &schema.Schema{
 										Description: `Maximum devices guests can register`,

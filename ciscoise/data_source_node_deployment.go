@@ -42,7 +42,6 @@ services.
 								Schema: map[string]*schema.Schema{
 
 									"is_enabled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -70,17 +69,14 @@ services.
 											Schema: map[string]*schema.Schema{
 
 												"enable_pxgrid": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"is_enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"is_mnt_dedicated": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -95,27 +91,22 @@ services.
 														Schema: map[string]*schema.Schema{
 
 															"enable_device_admin_service": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_nac_service": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_passive_identity_service": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_profiling_service": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -126,7 +117,6 @@ services.
 																	Schema: map[string]*schema.Schema{
 
 																		"is_enabled": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
@@ -144,7 +134,6 @@ services.
 																	Schema: map[string]*schema.Schema{
 
 																		"is_enabled": &schema.Schema{
-																			// Type:     schema.TypeBool,
 																			Type:     schema.TypeString,
 																			Computed: true,
 																		},
@@ -201,7 +190,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -219,7 +207,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -245,7 +232,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -267,7 +253,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -285,7 +270,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -307,7 +291,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -333,7 +316,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -351,7 +333,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -369,7 +350,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -387,7 +367,6 @@ services.
 													Computed: true,
 												},
 												"enabled": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -421,12 +400,10 @@ services.
 													Computed: true,
 												},
 												"link_trap_query": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"mac_trap_query": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},

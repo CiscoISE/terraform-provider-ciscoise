@@ -118,7 +118,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"in_deployment": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -167,7 +166,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"pap_node": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -176,12 +174,10 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"primary_pap_node": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"px_grid_node": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -219,7 +215,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"in_deployment": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -268,7 +263,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"pap_node": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -277,12 +271,10 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"primary_pap_node": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"px_grid_node": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

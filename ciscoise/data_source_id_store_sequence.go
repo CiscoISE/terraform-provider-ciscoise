@@ -51,7 +51,6 @@ func dataSourceIDStoreSequence() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"break_on_store_fail": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -123,7 +122,6 @@ func dataSourceIDStoreSequence() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"break_on_store_fail": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

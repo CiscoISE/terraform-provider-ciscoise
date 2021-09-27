@@ -24,15 +24,13 @@ func dataSourcePxGridSettingsAutoApprove() *schema.Resource {
 		ReadContext: dataSourcePxGridSettingsAutoApproveRead,
 		Schema: map[string]*schema.Schema{
 			"allow_password_based_accounts": &schema.Schema{
-				Description: `Allow password based accounts when true`,
-				// Type:        schema.TypeBool,
+				Description:  `Allow password based accounts when true`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
 			},
 			"auto_approve_cert_based_accounts": &schema.Schema{
-				Description: `Auto approve certificate based accounts when true`,
-				// Type:        schema.TypeBool,
+				Description:  `Auto approve certificate based accounts when true`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,

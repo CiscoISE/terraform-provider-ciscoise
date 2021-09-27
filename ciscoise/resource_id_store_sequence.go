@@ -46,7 +46,6 @@ Partial update is not supported
 					Schema: map[string]*schema.Schema{
 
 						"break_on_store_fail": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

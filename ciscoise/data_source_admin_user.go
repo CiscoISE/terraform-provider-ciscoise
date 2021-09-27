@@ -113,7 +113,6 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"change_password": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -126,12 +125,10 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"external_user": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -140,12 +137,10 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"inactive_account_never_disabled": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"include_system_alarms_in_email": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

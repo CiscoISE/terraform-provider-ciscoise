@@ -368,7 +368,6 @@ The Tweak Settings can subsequently be changed by the user`,
 																Computed: true,
 															},
 															"show_device_id": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -411,35 +410,29 @@ Allowed values:
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_guest_access": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"include_aup": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_mdm": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_scrolling": &schema.Schema{
 																Description: `Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -529,32 +522,26 @@ Allowed values:
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_failure_code": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_ip_address": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_mac_addr": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_policy_server": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_support_info_page": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},

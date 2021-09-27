@@ -367,33 +367,28 @@ Allowed Values:
 												},
 												"include_aup": &schema.Schema{
 													Description: `Require the portal user to read and accept an AUP`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"require_aup_scrolling": &schema.Schema{
 													Description: `Require the portal user to scroll to the end of the AUP.
 Only valid if requireAupAcceptance = true`,
-													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"skip_aup_for_employees": &schema.Schema{
 													Description: `Only valid if requireAupAcceptance = trueG`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"use_diff_aup_for_employees": &schema.Schema{
 													Description: `Only valid if requireAupAcceptance = trueG`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -436,9 +431,8 @@ Only valid if requireAupAcceptance = true`,
 															},
 															"show_device_id": &schema.Schema{
 																Description: `Display Device ID field during registration`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -484,34 +478,28 @@ Allowed values:
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"enable_guest_access": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"include_aup": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_mdm": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require_scrolling": &schema.Schema{
 																Description: `Require BYOD devices to scroll down to the bottom of the AUP, 
 Only valid if includeAup = true`,
-																// Type:        schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -529,9 +517,8 @@ Only valid if includeAup = true`,
 
 												"allow_change_passwd_at_first_login": &schema.Schema{
 													Description: `Allow guest to change their own passwords`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -544,15 +531,13 @@ Only valid if includeAup = true`,
 
 												"allow_guests_to_register_devices": &schema.Schema{
 													Description: `Allow guests to register devices`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"auto_register_guest_devices": &schema.Schema{
 													Description: `Automatically register guest devices`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -570,33 +555,27 @@ Only valid if includeAup = true`,
 													Computed:    true,
 												},
 												"allow_alternate_guest_portal": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_forgot_password": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_to_change_password": &schema.Schema{
 													Description: `Require the portal user to enter an access code`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"allow_guest_to_create_accounts": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_to_use_social_accounts": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_show_guest_form": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -615,9 +594,8 @@ Allowed values:
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
 													Description: `Maximum failed login attempts before rate limiting`,
@@ -626,15 +604,13 @@ Allowed values:
 												},
 												"require_access_code": &schema.Schema{
 													Description: `Require the portal user to enter an access code`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP. Only valid if includeAup = true`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"social_configs": &schema.Schema{
 													Type:     schema.TypeList,
@@ -734,7 +710,6 @@ Range from 8000 to 8999`,
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -749,9 +724,8 @@ Range from 8000 to 8999`,
 
 												"include_post_access_banner": &schema.Schema{
 													Description: `Include a Post-Login Banner page`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -777,7 +751,6 @@ Allowed Values:
 													Computed: true,
 												},
 												"allow_grace_access": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -817,14 +790,12 @@ Allowed values:
 													Computed: true,
 												},
 												"authenticate_sponsors_using_portal_list": &schema.Schema{
-													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"auto_login_self_wait": &schema.Schema{
 													Description: `Allow guests to login automatically from self-registration after sponsor's approval.
 No need to provide the credentials by guest to login`,
-													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -838,28 +809,24 @@ Default value is 5 minutes`,
 												"credential_notification_using_email": &schema.Schema{
 													Description: `If true, send credential notification upon approval using email.
 Only valid if requireGuestApproval = true`,
-													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"credential_notification_using_sms": &schema.Schema{
 													Description: `If true, send credential notification upon approval using SMS.
 Only valid if requireGuestApproval = true`,
-													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"enable_guest_email_blacklist": &schema.Schema{
 													Description: `Disallow guests with an e-mail address from selected domains`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"enable_guest_email_whitelist": &schema.Schema{
 													Description: `Allow guests with an e-mail address from selected domains`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"field_company": &schema.Schema{
 													Type:     schema.TypeList,
@@ -868,15 +835,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -888,15 +853,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -908,15 +871,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -928,15 +889,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -948,15 +907,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -968,15 +925,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -988,15 +943,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -1008,15 +961,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -1028,15 +979,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -1048,15 +997,13 @@ Only valid if requireGuestApproval = true`,
 														Schema: map[string]*schema.Schema{
 
 															"include": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
 															"require": &schema.Schema{
 																Description: `Only applicable if include = true`,
-																// Type:        schema.TypeBool,
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -1066,7 +1013,6 @@ Only valid if requireGuestApproval = true`,
 													Computed: true,
 												},
 												"grace_access_send_account_expiration": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1089,9 +1035,8 @@ Only valid if enableGuestEmailWhitelist = true`,
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"post_registration_redirect": &schema.Schema{
 													Description: `After the registration submission direct the guest user to one of the following pages.
@@ -1119,27 +1064,23 @@ Only valid if requireGuestApproval = true and postRegistrationRedirect = URL`,
 If the Cisco ISE Administrator chooses to include an approval link in the e-mail,
 a sponsor user who clicks the link will be required to enter their username and password if this attribute is true.
 Only valid if requireGuestApproval = true`,
-													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP. Only valid if includeAup = true`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"require_guest_approval": &schema.Schema{
 													Description: `Require self-registered guests to be approved if true`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"require_registration_code": &schema.Schema{
 													Description: `Self-registered guests are required to enter a registration code`,
-													// Type:        schema.TypeBool,
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"selectable_locations": &schema.Schema{
 													Description: `Guests can choose from these locations to set their time zone`,
@@ -1183,97 +1124,78 @@ Allowed Values:
 											Schema: map[string]*schema.Schema{
 
 												"allow_guest_login_from_selfreg_success_page": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_send_self_using_email": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_send_self_using_print": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"allow_guest_send_self_using_sms": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"aup_on_page": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_company": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_email_addr": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_first_name": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_last_name": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_location": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_password": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_person_being_visited": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_phone_no": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_reason_for_visit": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_sms_provider": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_user_name": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_aup_acceptance": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"require_aup_scrolling": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1301,32 +1223,26 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Computed: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_failure_code": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_ip_address": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_mac_addr": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_policy_server": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
 												"include_support_info_page": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},

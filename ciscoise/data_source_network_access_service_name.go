@@ -33,7 +33,6 @@ func dataSourceNetworkAccessServiceName() *schema.Resource {
 							Computed: true,
 						},
 						"is_local_authorization": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:     schema.TypeString,
 							Computed: true,
 						},

@@ -57,7 +57,6 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"global_scope": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -66,7 +65,6 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"nil": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -75,7 +73,6 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"type_substituted": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},
@@ -308,7 +305,6 @@ func dataSourceDeployment() *schema.Resource {
 										Computed:    true,
 									},
 									"is_csn_enabled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -366,7 +362,6 @@ func dataSourceDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"global_scope": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -375,7 +370,6 @@ func dataSourceDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"nil": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -384,7 +378,6 @@ func dataSourceDeployment() *schema.Resource {
 													Computed: true,
 												},
 												"type_substituted": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -429,7 +422,6 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"online_subscription_enabled": &schema.Schema{
-																// Type:     schema.TypeBool,
 																Type:     schema.TypeString,
 																Computed: true,
 															},

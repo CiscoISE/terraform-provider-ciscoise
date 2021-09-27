@@ -153,12 +153,10 @@ string parameter. Each resource Data model description should specify if an attr
 
 									"dtls_required": &schema.Schema{
 										Description: `This value enforces use of dtls`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"enable_key_wrap": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -167,7 +165,6 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -261,12 +258,10 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"link_trap_query": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mac_trap_query": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -356,7 +351,6 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"include_when_deploying_sgt_updates": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -364,7 +358,6 @@ string parameter. Each resource Data model description should specify if an attr
 										},
 									},
 									"push_id_support": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -391,7 +384,6 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"other_sga_devices_to_trust_this_device": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -400,7 +392,6 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"send_configuration_to_device": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -466,12 +457,10 @@ string parameter. Each resource Data model description should specify if an attr
 
 									"dtls_required": &schema.Schema{
 										Description: `This value enforces use of dtls`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"enable_key_wrap": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -480,7 +469,6 @@ string parameter. Each resource Data model description should specify if an attr
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -574,12 +562,10 @@ string parameter. Each resource Data model description should specify if an attr
 								Schema: map[string]*schema.Schema{
 
 									"link_trap_query": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
 									"mac_trap_query": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -669,7 +655,6 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"include_when_deploying_sgt_updates": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -677,7 +662,6 @@ string parameter. Each resource Data model description should specify if an attr
 										},
 									},
 									"push_id_support": &schema.Schema{
-										// Type:     schema.TypeBool,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -704,7 +688,6 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"other_sga_devices_to_trust_this_device": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -713,7 +696,6 @@ string parameter. Each resource Data model description should specify if an attr
 													Computed: true,
 												},
 												"send_configuration_to_device": &schema.Schema{
-													// Type:     schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},

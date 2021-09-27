@@ -74,7 +74,6 @@ func resourceSgACL() *schema.Resource {
 							Computed: true,
 						},
 						"is_read_only": &schema.Schema{
-							// Type:     schema.TypeBool,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,

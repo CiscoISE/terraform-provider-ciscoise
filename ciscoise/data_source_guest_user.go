@@ -177,9 +177,8 @@ string parameter. Each resource Data model description should specify if an attr
 									},
 									"enabled": &schema.Schema{
 										Description: `This field is only for Get operation not applicable for Create, Update operations`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"first_name": &schema.Schema{
 										Type:     schema.TypeString,
@@ -343,9 +342,8 @@ string parameter. Each resource Data model description should specify if an attr
 									},
 									"enabled": &schema.Schema{
 										Description: `This field is only for Get operation not applicable for Create, Update operations`,
-										// Type:        schema.TypeBool,
-										Type:     schema.TypeString,
-										Computed: true,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"first_name": &schema.Schema{
 										Type:     schema.TypeString,

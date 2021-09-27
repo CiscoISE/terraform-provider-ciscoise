@@ -100,9 +100,8 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 						},
 						"single_connect": &schema.Schema{
 							Description: `Define the use of single connection`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"timeout": &schema.Schema{
 							Description: `The server timeout`,
@@ -168,9 +167,8 @@ func dataSourceTacacsExternalServers() *schema.Resource {
 						},
 						"single_connect": &schema.Schema{
 							Description: `Define the use of single connection`,
-							// Type:        schema.TypeBool,
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"timeout": &schema.Schema{
 							Description: `The server timeout`,
