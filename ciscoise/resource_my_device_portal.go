@@ -1262,7 +1262,9 @@ func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizations
 	}
 	for item_no, _ := range objs {
 		i := expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1662,7 +1664,9 @@ func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizat
 	}
 	for item_no, _ := range objs {
 		i := expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

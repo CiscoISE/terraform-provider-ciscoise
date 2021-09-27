@@ -413,7 +413,9 @@ func expandRequestIDStoreSequenceCreateIDentitySequenceIDStoreSequenceIDSeqItemA
 	}
 	for item_no, _ := range objs {
 		i := expandRequestIDStoreSequenceCreateIDentitySequenceIDStoreSequenceIDSeqItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -485,7 +487,9 @@ func expandRequestIDStoreSequenceUpdateIDentitySequenceByIDIDStoreSequenceIDSeqI
 	}
 	for item_no, _ := range objs {
 		i := expandRequestIDStoreSequenceUpdateIDentitySequenceByIDIDStoreSequenceIDSeqItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

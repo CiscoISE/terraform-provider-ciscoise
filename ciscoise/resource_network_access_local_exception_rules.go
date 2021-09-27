@@ -895,7 +895,9 @@ func expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExcept
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1147,7 +1149,9 @@ func expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExcept
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1245,7 +1249,7 @@ func expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExcept
 
 func getAllItemsNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRules(m interface{}, response *isegosdk.ResponseNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRules, policyTypeID string) []isegosdk.ResponseNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRulesResponse {
 	var respItems []isegosdk.ResponseNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRulesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

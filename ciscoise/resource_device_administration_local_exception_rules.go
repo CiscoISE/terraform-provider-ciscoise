@@ -877,7 +877,9 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1129,7 +1131,9 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1227,7 +1231,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 
 func getAllItemsDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRules(m interface{}, response *isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRules, policyTypeID string) []isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponse {
 	var respItems []isegosdk.ResponseDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRulesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

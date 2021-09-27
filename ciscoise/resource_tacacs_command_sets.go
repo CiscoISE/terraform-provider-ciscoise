@@ -423,7 +423,9 @@ func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsComma
 	}
 	for item_no, _ := range objs {
 		i := expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -503,7 +505,9 @@ func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsC
 	}
 	for item_no, _ := range objs {
 		i := expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

@@ -1190,7 +1190,9 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPag
 	}
 	for item_no, _ := range objs {
 		i := expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1563,7 +1565,9 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 	}
 	for item_no, _ := range objs {
 		i := expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

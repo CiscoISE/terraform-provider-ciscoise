@@ -765,7 +765,9 @@ func expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditi
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1009,7 +1011,9 @@ func expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDCon
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1124,7 +1128,7 @@ func expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDLin
 
 func getAllItemsDeviceAdministrationPolicySetGetDeviceAdminPolicySets(m interface{}, response *isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySets) []isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponse {
 	var respItems []isegosdk.ResponseDeviceAdministrationPolicySetGetDeviceAdminPolicySetsResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

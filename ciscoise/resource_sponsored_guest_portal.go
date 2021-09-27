@@ -1301,7 +1301,9 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1686,7 +1688,9 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1872,7 +1876,9 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -2257,7 +2263,9 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
