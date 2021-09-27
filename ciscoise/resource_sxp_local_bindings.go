@@ -88,10 +88,11 @@ func resourceSxpLocalBindings() *schema.Resource {
 							},
 						},
 						"sgt": &schema.Schema{
-							Description: `SGT name or ID`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Description:      `SGT name or ID`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							Computed:         true,
+							DiffSuppressFunc: diffSuppressSgt(),
 						},
 						"sxp_vpn": &schema.Schema{
 							Description: `List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined`,
@@ -380,7 +381,8 @@ func expandRequestSxpLocalBindingsCreateSxpLocalBindingsERSSxpLocalBindings(ctx 
 		request.SxpVpn = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
-		request.Sgt = interfaceToString(v)
+		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
+		request.Sgt = first
 	}
 	if v, ok := d.GetOkExists(key + ".vns"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vns"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vns"))) {
 		request.Vns = interfaceToString(v)
@@ -418,7 +420,8 @@ func expandRequestSxpLocalBindingsUpdateSxpLocalBindingsByIDERSSxpLocalBindings(
 		request.SxpVpn = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
-		request.Sgt = interfaceToString(v)
+		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
+		request.Sgt = first
 	}
 	if v, ok := d.GetOkExists(key + ".vns"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vns"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vns"))) {
 		request.Vns = interfaceToString(v)
