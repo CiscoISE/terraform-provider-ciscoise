@@ -243,7 +243,6 @@ func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvNodeGroupName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if selectedMethod == 2 {
 		vvNodeGroupName = vNodeGroupName
 	}
