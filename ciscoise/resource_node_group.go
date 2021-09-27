@@ -408,7 +408,7 @@ func expandRequestNodeGroupUpdateNodeGroupMarCache(ctx context.Context, key stri
 
 func getAllItemsNodeGroupGetNodeGroups(m interface{}, response *isegosdk.ResponseNodeGroupGetNodeGroups) []isegosdk.ResponseNodeGroupGetNodeGroupsResponse {
 	var respItems []isegosdk.ResponseNodeGroupGetNodeGroupsResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

@@ -2163,7 +2163,7 @@ func expandRequestNodeDeploymentUpdateNodeResponseProfileConfigurationPxgrid(ctx
 
 func getAllItemsNodeDeploymentGetNodes(m interface{}, response *isegosdk.ResponseNodeDeploymentGetNodes) []isegosdk.ResponseNodeDeploymentGetNodesResponse {
 	var respItems []isegosdk.ResponseNodeDeploymentGetNodesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems
