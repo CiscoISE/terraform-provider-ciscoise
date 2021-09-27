@@ -13,6 +13,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
+func fixKeyAccess(key string) string {
+	return strings.Trim(key, ".")
+}
+
 func compareSGT(first_sgt, second_sgt string) bool {
 	rexp := `\s*\(.*\)$`
 	oldClear, newClear := replaceRegExStrings(first_sgt, second_sgt, rexp, "")
@@ -65,8 +69,8 @@ func isEmptyValue(v reflect.Value) bool {
 }
 
 func joinResourceID(result_params map[string]string) string {
-	var PARAMS_SEPARATOR string = "/"
-	var PARAM_VALUE_SEPARATOR string = "="
+	var PARAMS_SEPARATOR string = "\\"
+	var PARAM_VALUE_SEPARATOR string = ":="
 	ID := ""
 	params := []string{}
 	for key, value := range result_params {
@@ -80,8 +84,8 @@ func joinResourceID(result_params map[string]string) string {
 }
 
 func separateResourceID(ID string) map[string]string {
-	var PARAMS_SEPARATOR string = "/"
-	var PARAM_VALUE_SEPARATOR string = "="
+	var PARAMS_SEPARATOR string = "\\"
+	var PARAM_VALUE_SEPARATOR string = ":="
 	params := strings.Split(ID, PARAMS_SEPARATOR)
 	sort.Strings(params) // Sort params
 	result_params := make(map[string]string)

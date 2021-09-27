@@ -414,7 +414,9 @@ func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes
 	}
 	for item_no, _ := range objs {
 		i := expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -491,7 +493,9 @@ func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttrib
 	}
 	for item_no, _ := range objs {
 		i := expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

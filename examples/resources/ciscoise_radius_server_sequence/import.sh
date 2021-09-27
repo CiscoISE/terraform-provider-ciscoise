@@ -1,1 +1,1 @@
-terraform import ciscoise_radius_server_sequence.example "id=string"
+terraform import ciscoise_radius_server_sequence.example "id:=string"

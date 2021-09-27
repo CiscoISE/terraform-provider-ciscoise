@@ -725,9 +725,12 @@ Allowed values:
 - bond0,
 - bond1,
 - bond2`,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Optional: true,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"always_used_language": &schema.Schema{
 													Type:     schema.TypeString,
@@ -883,9 +886,11 @@ Allowed values:
 													Computed: true,
 												},
 												"authenticate_sponsors_using_portal_list": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
-													Computed: true,
+													// Type:        schema.TypeBool,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+													Computed:     true,
 												},
 												"auto_login_self_wait": &schema.Schema{
 													Description: `Allow guests to login automatically from self-registration after sponsor's approval.
@@ -1202,9 +1207,12 @@ Only valid if requireGuestApproval = true`,
 												},
 												"guest_email_blacklist_domains": &schema.Schema{
 													Description: `Disallow guests with an e-mail address from selected domains`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Optional:    true,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"guest_email_whitelist_domains": &schema.Schema{
 													Description: `Self-registered guests whose e-mail address is in one of these domains will be allowed.
@@ -1212,6 +1220,9 @@ Only valid if enableGuestEmailWhitelist = true`,
 													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
@@ -1893,7 +1904,7 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSet
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
-		request.AllowedInterfaces = interfaceToString(v)
+		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
 		request.CertificateGroupTag = interfaceToString(v)
@@ -1984,7 +1995,9 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSet
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSettingsLoginPageSettingsSocialConfigs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -2072,13 +2085,13 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSet
 		request.EnableGuestEmailWhitelist = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".guest_email_whitelist_domains"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_email_whitelist_domains"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_email_whitelist_domains"))) {
-		request.GuestEmailWhitelistDomains = interfaceToString(v)
+		request.GuestEmailWhitelistDomains = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".enable_guest_email_blacklist"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_guest_email_blacklist"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_guest_email_blacklist"))) {
 		request.EnableGuestEmailBlacklist = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".guest_email_blacklist_domains"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_email_blacklist_domains"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_email_blacklist_domains"))) {
-		request.GuestEmailBlacklistDomains = interfaceToString(v)
+		request.GuestEmailBlacklistDomains = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".require_guest_approval"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_guest_approval"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_guest_approval"))) {
 		request.RequireGuestApproval = interfaceToBoolPtr(v)
@@ -2126,7 +2139,7 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSet
 		request.RequireApproverToAuthenticate = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".authenticate_sponsors_using_portal_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authenticate_sponsors_using_portal_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authenticate_sponsors_using_portal_list"))) {
-		request.AuthenticateSponsorsUsingPortalList = interfaceToString(v)
+		request.AuthenticateSponsorsUsingPortalList = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".sponsor_portal_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sponsor_portal_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sponsor_portal_list"))) {
 		sponsorPortalList := v.([]interface{})
@@ -2706,7 +2719,9 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCus
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -2816,7 +2831,7 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
-		request.AllowedInterfaces = interfaceToString(v)
+		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
 		request.CertificateGroupTag = interfaceToString(v)
@@ -2907,7 +2922,9 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalSettingsLoginPageSettingsSocialConfigs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -2995,13 +3012,13 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 		request.EnableGuestEmailWhitelist = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".guest_email_whitelist_domains"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_email_whitelist_domains"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_email_whitelist_domains"))) {
-		request.GuestEmailWhitelistDomains = interfaceToString(v)
+		request.GuestEmailWhitelistDomains = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".enable_guest_email_blacklist"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_guest_email_blacklist"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_guest_email_blacklist"))) {
 		request.EnableGuestEmailBlacklist = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".guest_email_blacklist_domains"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_email_blacklist_domains"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_email_blacklist_domains"))) {
-		request.GuestEmailBlacklistDomains = interfaceToString(v)
+		request.GuestEmailBlacklistDomains = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".require_guest_approval"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_guest_approval"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_guest_approval"))) {
 		request.RequireGuestApproval = interfaceToBoolPtr(v)
@@ -3049,7 +3066,7 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 		request.RequireApproverToAuthenticate = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".authenticate_sponsors_using_portal_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authenticate_sponsors_using_portal_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authenticate_sponsors_using_portal_list"))) {
-		request.AuthenticateSponsorsUsingPortalList = interfaceToString(v)
+		request.AuthenticateSponsorsUsingPortalList = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".sponsor_portal_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sponsor_portal_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sponsor_portal_list"))) {
 		sponsorPortalList := v.([]interface{})
@@ -3629,7 +3646,9 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

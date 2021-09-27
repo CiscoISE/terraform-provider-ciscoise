@@ -139,6 +139,9 @@ func dataSourceTrustedCertificateImportRead(ctx context.Context, d *schema.Resou
 		response1, _, err := client.Certificates.ImportTrustCertificate(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ImportTrustCertificate", err,
 				"Failure at ImportTrustCertificate, unexpected response", ""))
@@ -163,37 +166,37 @@ func dataSourceTrustedCertificateImportRead(ctx context.Context, d *schema.Resou
 
 func expandRequestTrustedCertificateImportImportTrustCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesImportTrustCertificate {
 	request := isegosdk.RequestCertificatesImportTrustCertificate{}
-	if v, ok := d.GetOkExists(key + ".allow_basic_constraint_cafalse"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_basic_constraint_cafalse"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_basic_constraint_cafalse"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_basic_constraint_cafalse")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_basic_constraint_cafalse")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_basic_constraint_cafalse")))) {
 		request.AllowBasicConstraintCaFalse = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_out_of_date_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_out_of_date_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_out_of_date_cert"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_out_of_date_cert")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_out_of_date_cert")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_out_of_date_cert")))) {
 		request.AllowOutOfDateCert = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_sha1_certificates"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_sha1_certificates"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_sha1_certificates"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_sha1_certificates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_sha1_certificates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_sha1_certificates")))) {
 		request.AllowSHA1Certificates = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".validate_certificate_extensions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".validate_certificate_extensions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".validate_certificate_extensions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".validate_certificate_extensions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".validate_certificate_extensions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".validate_certificate_extensions")))) {
 		request.ValidateCertificateExtensions = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".trust_for_certificate_based_admin_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_certificate_based_admin_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_certificate_based_admin_auth"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".trust_for_certificate_based_admin_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".trust_for_certificate_based_admin_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".trust_for_certificate_based_admin_auth")))) {
 		request.TrustForCertificateBasedAdminAuth = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".trust_for_cisco_services_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_cisco_services_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_cisco_services_auth"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".trust_for_cisco_services_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".trust_for_cisco_services_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".trust_for_cisco_services_auth")))) {
 		request.TrustForCiscoServicesAuth = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".trust_for_client_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_client_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_client_auth"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".trust_for_client_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".trust_for_client_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".trust_for_client_auth")))) {
 		request.TrustForClientAuth = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".trust_for_ise_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_ise_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_ise_auth"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".trust_for_ise_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".trust_for_ise_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".trust_for_ise_auth")))) {
 		request.TrustForIseAuth = interfaceToBoolPtr(v)
 	}
 	return &request

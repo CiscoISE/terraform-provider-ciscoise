@@ -30,6 +30,7 @@ output "ciscoise_network_access_authentication_rules_example" {
 data "ciscoise_network_access_authentication_rules" "example" {
   provider  = ciscoise
   policy_id = "string"
+  id        = "string"
 }
 
 output "ciscoise_network_access_authentication_rules_example" {

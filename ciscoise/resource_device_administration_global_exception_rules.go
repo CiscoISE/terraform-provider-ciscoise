@@ -861,7 +861,9 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolic
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationGlobalExceptionRulesCreateDeviceAdminPolicySetGlobalExceptionRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1113,7 +1115,9 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolic
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolicySetGlobalExceptionByRuleIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1211,7 +1215,7 @@ func expandRequestDeviceAdministrationGlobalExceptionRulesUpdateDeviceAdminPolic
 
 func getAllItemsDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRules(m interface{}, response *isegosdk.ResponseDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRules) []isegosdk.ResponseDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRulesResponse {
 	var respItems []isegosdk.ResponseDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRulesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

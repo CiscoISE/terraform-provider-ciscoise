@@ -84,6 +84,9 @@ func dataSourceRenewCertificateRead(ctx context.Context, d *schema.ResourceData,
 		response1, _, err := client.Certificates.RenewCertificates(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing RenewCertificates", err,
 				"Failure at RenewCertificates, unexpected response", ""))
@@ -108,7 +111,7 @@ func dataSourceRenewCertificateRead(ctx context.Context, d *schema.ResourceData,
 
 func expandRequestRenewCertificateRenewCertificates(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesRenewCertificates {
 	request := isegosdk.RequestCertificatesRenewCertificates{}
-	if v, ok := d.GetOkExists(key + ".cert_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".cert_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".cert_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cert_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cert_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cert_type")))) {
 		request.CertType = interfaceToString(v)
 	}
 	return &request

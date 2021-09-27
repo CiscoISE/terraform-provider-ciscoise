@@ -910,7 +910,9 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1168,7 +1170,9 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1265,7 +1269,7 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 
 func getAllItemsNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRules(m interface{}, response *isegosdk.ResponseNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRules, policyTypeID string) []isegosdk.ResponseNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesResponse {
 	var respItems []isegosdk.ResponseNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

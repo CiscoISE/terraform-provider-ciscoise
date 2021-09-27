@@ -97,6 +97,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
+			resourceMap["sxp_vpn_name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
 			return diags
 		}
@@ -110,6 +111,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 			if err == nil && item2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
+				resourceMap["sxp_vpn_name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return diags
 			}
@@ -351,6 +353,19 @@ func searchSxpVpnsGetSxpVpns(m interface{}, items []isegosdk.ResponseSxpVpnsGetS
 			}
 			foundItem = getItem.ERSSxpVpn
 			return foundItem, err
+		} else {
+			var getItem *isegosdk.ResponseSxpVpnsGetSxpVpnByID
+			getItem, _, err = client.SxpVpns.GetSxpVpnByID(item.ID)
+			if err != nil {
+				continue
+			}
+			if getItem == nil {
+				continue
+			}
+			if getItem.ERSSxpVpn != nil && getItem.ERSSxpVpn.SxpVpnName == name {
+				foundItem = getItem.ERSSxpVpn
+				return foundItem, err
+			}
 		}
 	}
 	return foundItem, err

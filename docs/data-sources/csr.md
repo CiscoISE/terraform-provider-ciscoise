@@ -6,9 +6,7 @@ description: |-
   It performs read operation on Certificates.
   This data source supports Filtering, Sorting and Pagination.
   Filtering and Sorting supported on below mentioned attributes:
-  friendlyName
-  subject
-  timeStamp
+  [friendlyName, subject, timeStamp]
   Supported Date Format: yyyy-MM-dd HH:mm:ss.SSS
   Supported Operators: EQ, NEQ, GT and LT
   This data source displays details of a Certificate Signing Request of a particular node based on a given HostName and
@@ -23,30 +21,12 @@ It performs read operation on Certificates.
 
 
 Filtering and Sorting supported on below mentioned attributes:
-
-
-
-
-friendlyName
-
-
-subject
-
-
-timeStamp
-
-
-
+[friendlyName, subject, timeStamp]
 
 Supported Date Format: yyyy-MM-dd HH:mm:ss.SSS
 
 
 Supported Operators: EQ, NEQ, GT and LT
-
-
-
-
-
 
 - This data source displays details of a Certificate Signing Request of a particular node based on a given HostName and
 ID.
@@ -91,77 +71,7 @@ output "ciscoise_csr_example" {
 Simple filtering
  should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
 "filterType=or"
- query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
- 
- 
- 
- 
- 
-OPERATOR
- 
-DESCRIPTION
- 
- 
- 
- 
- 
-EQ
- 
-Equals
- 
- 
- 
-NEQ
- 
-Not Equals
- 
- 
- 
-GT
- 
-Greater Than
- 
- 
- 
-LT
- 
-Less Then
- 
- 
- 
-STARTSW
- 
-Starts With
- 
- 
- 
-NSTARTSW
- 
-Not Starts With
- 
- 
- 
-ENDSW
- 
-Ends With
- 
- 
- 
-NENDSW
- 
-Not Ends With
- 
- 
- 
-CONTAINS
- 
-Contains
- 
- 
- 
-NCONTAINS
- 
-Not Contains
+ query string parameter. Each resource Data model description should specify if an attribute is a filtered field.
 - **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
 - **host_name** (String) hostName path parameter. Name of the host of which CSR's should be returned
 - **id** (String) id path parameter. The ID of the Certificate Signing Request returned

@@ -576,7 +576,9 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 	}
 	for item_no, _ := range objs {
 		i := expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -619,7 +621,9 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 	}
 	for item_no, _ := range objs {
 		i := expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -737,7 +741,9 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	}
 	for item_no, _ := range objs {
 		i := expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -784,7 +790,9 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 	}
 	for item_no, _ := range objs {
 		i := expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

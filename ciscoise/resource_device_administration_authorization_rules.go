@@ -876,7 +876,9 @@ func expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthori
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationAuthorizationRulesCreateDeviceAdminAuthorizationRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1128,7 +1130,9 @@ func expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthori
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthorizationRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1226,7 +1230,7 @@ func expandRequestDeviceAdministrationAuthorizationRulesUpdateDeviceAdminAuthori
 
 func getAllItemsDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m interface{}, response *isegosdk.ResponseDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules, policyTypeID string) []isegosdk.ResponseDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRulesResponse {
 	var respItems []isegosdk.ResponseDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRulesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

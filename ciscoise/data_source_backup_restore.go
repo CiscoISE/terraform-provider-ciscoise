@@ -100,6 +100,9 @@ func dataSourceBackupRestoreRead(ctx context.Context, d *schema.ResourceData, m 
 		response1, _, err := client.BackupAndRestore.RestoreConfigBackup(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing RestoreConfigBackup", err,
 				"Failure at RestoreConfigBackup, unexpected response", ""))
@@ -124,16 +127,16 @@ func dataSourceBackupRestoreRead(ctx context.Context, d *schema.ResourceData, m 
 
 func expandRequestBackupRestoreRestoreConfigBackup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestBackupAndRestoreRestoreConfigBackup {
 	request := isegosdk.RequestBackupAndRestoreRestoreConfigBackup{}
-	if v, ok := d.GetOkExists(key + ".backup_encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".backup_encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".backup_encryption_key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_encryption_key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_encryption_key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_encryption_key")))) {
 		request.BackupEncryptionKey = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".repository_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".repository_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".repository_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".repository_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".repository_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".repository_name")))) {
 		request.RepositoryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".restore_file"); !isEmptyValue(reflect.ValueOf(d.Get(key+".restore_file"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".restore_file"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".restore_file")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".restore_file")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".restore_file")))) {
 		request.RestoreFile = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".restore_include_adeos"); !isEmptyValue(reflect.ValueOf(d.Get(key+".restore_include_adeos"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".restore_include_adeos"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".restore_include_adeos")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".restore_include_adeos")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".restore_include_adeos")))) {
 		request.RestoreIncludeAdeos = interfaceToString(v)
 	}
 	return &request

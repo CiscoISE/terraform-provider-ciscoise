@@ -136,6 +136,9 @@ func dataSourceBackupScheduleConfigUpdateRead(ctx context.Context, d *schema.Res
 		response1, _, err := client.BackupAndRestore.UpdateScheduledConfigBackup(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateScheduledConfigBackup", err,
 				"Failure at UpdateScheduledConfigBackup, unexpected response", ""))
@@ -176,37 +179,37 @@ func dataSourceBackupScheduleConfigUpdateRead(ctx context.Context, d *schema.Res
 
 func expandRequestBackupScheduleConfigUpdateUpdateScheduledConfigBackup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestBackupAndRestoreUpdateScheduledConfigBackup {
 	request := isegosdk.RequestBackupAndRestoreUpdateScheduledConfigBackup{}
-	if v, ok := d.GetOkExists(key + ".backup_description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".backup_description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".backup_description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_description")))) {
 		request.BackupDescription = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".backup_encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".backup_encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".backup_encryption_key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_encryption_key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_encryption_key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_encryption_key")))) {
 		request.BackupEncryptionKey = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".backup_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".backup_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".backup_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_name")))) {
 		request.BackupName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".end_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_date")))) {
 		request.EndDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".frequency"); !isEmptyValue(reflect.ValueOf(d.Get(key+".frequency"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".frequency"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".frequency")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".frequency")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".frequency")))) {
 		request.Frequency = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".month_day"); !isEmptyValue(reflect.ValueOf(d.Get(key+".month_day"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".month_day"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".month_day")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".month_day")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".month_day")))) {
 		request.MonthDay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".repository_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".repository_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".repository_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".repository_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".repository_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".repository_name")))) {
 		request.RepositoryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date")))) {
 		request.StartDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".status"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".status")))) {
 		request.Status = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time")))) {
 		request.Time = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".week_day"); !isEmptyValue(reflect.ValueOf(d.Get(key+".week_day"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".week_day"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".week_day")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".week_day")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".week_day")))) {
 		request.WeekDay = interfaceToString(v)
 	}
 	return &request
@@ -241,37 +244,37 @@ func flattenBackupAndRestoreUpdateScheduledConfigBackupItemLink(item *isegosdk.R
 
 func expandRequestBackupScheduleConfigUpdateCreateScheduledConfigBackup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestBackupAndRestoreCreateScheduledConfigBackup {
 	request := isegosdk.RequestBackupAndRestoreCreateScheduledConfigBackup{}
-	if v, ok := d.GetOkExists(key + ".backup_description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".backup_description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".backup_description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_description")))) {
 		request.BackupDescription = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".backup_encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".backup_encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".backup_encryption_key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_encryption_key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_encryption_key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_encryption_key")))) {
 		request.BackupEncryptionKey = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".backup_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".backup_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".backup_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_name")))) {
 		request.BackupName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".end_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_date")))) {
 		request.EndDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".frequency"); !isEmptyValue(reflect.ValueOf(d.Get(key+".frequency"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".frequency"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".frequency")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".frequency")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".frequency")))) {
 		request.Frequency = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".month_day"); !isEmptyValue(reflect.ValueOf(d.Get(key+".month_day"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".month_day"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".month_day")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".month_day")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".month_day")))) {
 		request.MonthDay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".repository_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".repository_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".repository_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".repository_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".repository_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".repository_name")))) {
 		request.RepositoryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date")))) {
 		request.StartDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".status"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".status")))) {
 		request.Status = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time")))) {
 		request.Time = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".week_day"); !isEmptyValue(reflect.ValueOf(d.Get(key+".week_day"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".week_day"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".week_day")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".week_day")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".week_day")))) {
 		request.WeekDay = interfaceToString(v)
 	}
 	return &request

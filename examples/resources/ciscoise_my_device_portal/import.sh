@@ -1,1 +1,1 @@
-terraform import ciscoise_my_device_portal.example "id=string"
+terraform import ciscoise_my_device_portal.example "id:=string"

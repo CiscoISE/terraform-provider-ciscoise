@@ -120,16 +120,16 @@ func expandRequestEndpointCertificateCreateEndpointCertificate(ctx context.Conte
 
 func expandRequestEndpointCertificateCreateEndpointCertificateERSEndPointCert(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCertificateCreateEndpointCertificateERSEndPointCert {
 	request := isegosdk.RequestEndpointCertificateCreateEndpointCertificateERSEndPointCert{}
-	if v, ok := d.GetOkExists(key + ".cert_template_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".cert_template_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".cert_template_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cert_template_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cert_template_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cert_template_name")))) {
 		request.CertTemplateName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".format"); !isEmptyValue(reflect.ValueOf(d.Get(key+".format"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".format"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".format")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".format")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".format")))) {
 		request.Format = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_request"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_request"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_request"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_request")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_request")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_request")))) {
 		request.CertificateRequest = expandRequestEndpointCertificateCreateEndpointCertificateERSEndPointCertCertificateRequest(ctx, key+".certificate_request.0", d)
 	}
 	return &request
@@ -137,10 +137,10 @@ func expandRequestEndpointCertificateCreateEndpointCertificateERSEndPointCert(ct
 
 func expandRequestEndpointCertificateCreateEndpointCertificateERSEndPointCertCertificateRequest(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCertificateCreateEndpointCertificateERSEndPointCertCertificateRequest {
 	request := isegosdk.RequestEndpointCertificateCreateEndpointCertificateERSEndPointCertCertificateRequest{}
-	if v, ok := d.GetOkExists(key + ".san"); !isEmptyValue(reflect.ValueOf(d.Get(key+".san"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".san"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".san")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".san")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".san")))) {
 		request.San = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".cn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".cn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".cn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cn")))) {
 		request.Cn = interfaceToString(v)
 	}
 	return &request

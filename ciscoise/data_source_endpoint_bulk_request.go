@@ -52,6 +52,9 @@ func dataSourceEndpointBulkRequestRead(ctx context.Context, d *schema.ResourceDa
 		response1, err := client.Endpoint.BulkRequestForEndpoint(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForEndpoint", err,
 				"Failure at BulkRequestForEndpoint, unexpected response", ""))
@@ -81,10 +84,10 @@ func expandRequestEndpointBulkRequestBulkRequestForEndpoint(ctx context.Context,
 
 func expandRequestEndpointBulkRequestBulkRequestForEndpointEndpointBulkRequest(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointBulkRequestForEndpointEndpointBulkRequest {
 	request := isegosdk.RequestEndpointBulkRequestForEndpointEndpointBulkRequest{}
-	if v, ok := d.GetOkExists(key + ".operation_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".operation_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".operation_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation_type")))) {
 		request.OperationType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".resource_media_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".resource_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".resource_media_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".resource_media_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".resource_media_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".resource_media_type")))) {
 		request.ResourceMediaType = interfaceToString(v)
 	}
 	return &request

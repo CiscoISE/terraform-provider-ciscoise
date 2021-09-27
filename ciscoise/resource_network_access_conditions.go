@@ -675,7 +675,9 @@ func expandRequestNetworkAccessConditionsCreateNetworkAccessConditionChildrenArr
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessConditionsCreateNetworkAccessConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -863,7 +865,9 @@ func expandRequestNetworkAccessConditionsUpdateNetworkAccessConditionByIDChildre
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessConditionsUpdateNetworkAccessConditionByIDChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

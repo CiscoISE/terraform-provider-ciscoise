@@ -420,8 +420,11 @@ Allowed values:
 - bond0
 - bond1
 - bond2`,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"always_used_language": &schema.Schema{
 													Description: `Used when displayLang = ALWAYSUSE`,

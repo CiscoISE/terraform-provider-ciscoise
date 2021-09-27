@@ -362,7 +362,7 @@ Read-Only:
 
 Read-Only:
 
-- **allowed_interfaces** (String)
+- **allowed_interfaces** (List of String)
 - **always_used_language** (String)
 - **assigned_guest_type_for_employee** (String)
 - **authentication_method** (String)

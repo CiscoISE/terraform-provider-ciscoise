@@ -403,9 +403,12 @@ Allowed values:
 - bond0
 - bond1
 - bond2`,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Optional: true,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"always_used_language": &schema.Schema{
 													Description: `Used when displayLang = ALWAYSUSE`,
@@ -906,7 +909,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPortalSet
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
-		request.AllowedInterfaces = interfaceToString(v)
+		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
 		request.CertificateGroupTag = interfaceToString(v)
@@ -1187,7 +1190,9 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPag
 	}
 	for item_no, _ := range objs {
 		i := expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1279,7 +1284,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPorta
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
-		request.AllowedInterfaces = interfaceToString(v)
+		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
 		request.CertificateGroupTag = interfaceToString(v)
@@ -1560,7 +1565,9 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 	}
 	for item_no, _ := range objs {
 		i := expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

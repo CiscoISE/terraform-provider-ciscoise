@@ -131,7 +131,7 @@ resource "ciscoise_self_registered_portal" "example" {
       }
       portal_settings {
 
-        allowed_interfaces               = "string"
+        allowed_interfaces               = ["string"]
         always_used_language             = "string"
         assigned_guest_type_for_employee = "string"
         authentication_method            = "string"
@@ -158,7 +158,7 @@ resource "ciscoise_self_registered_portal" "example" {
         approve_deny_links_valid_for            = 1
         assign_guests_to_guest_type             = "string"
         aup_display                             = "string"
-        authenticate_sponsors_using_portal_list = "string"
+        authenticate_sponsors_using_portal_list = "false"
         auto_login_self_wait                    = "false"
         auto_login_time_period                  = 1
         credential_notification_using_email     = "false"
@@ -217,8 +217,8 @@ resource "ciscoise_self_registered_portal" "example" {
         }
         grace_access_expire_interval         = 1
         grace_access_send_account_expiration = "false"
-        guest_email_blacklist_domains        = "string"
-        guest_email_whitelist_domains        = "string"
+        guest_email_blacklist_domains        = ["string"]
+        guest_email_whitelist_domains        = ["string"]
         include_aup                          = "false"
         post_registration_redirect           = "string"
         post_registration_redirect_url       = "string"

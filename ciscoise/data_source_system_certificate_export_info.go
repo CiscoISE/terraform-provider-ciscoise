@@ -81,13 +81,13 @@ func dataSourceSystemCertificateExportInfoRead(ctx context.Context, d *schema.Re
 
 func expandRequestSystemCertificateExportInfoExportSystemCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesExportSystemCertificate {
 	request := isegosdk.RequestCertificatesExportSystemCertificate{}
-	if v, ok := d.GetOkExists(key + ".export"); !isEmptyValue(reflect.ValueOf(d.Get(key+".export"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".export"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".export")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".export")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".export")))) {
 		request.Export = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
 	return &request

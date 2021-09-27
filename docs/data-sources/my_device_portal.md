@@ -282,7 +282,7 @@ Read-Only:
 
 Read-Only:
 
-- **allowed_interfaces** (String)
+- **allowed_interfaces** (List of String)
 - **always_used_language** (String)
 - **certificate_group_tag** (String)
 - **display_lang** (String)

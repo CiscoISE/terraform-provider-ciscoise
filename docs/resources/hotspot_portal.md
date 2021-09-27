@@ -95,7 +95,7 @@ resource "ciscoise_hotspot_portal" "example" {
       }
       portal_settings {
 
-        allowed_interfaces      = "string"
+        allowed_interfaces      = ["string"]
         always_used_language    = "string"
         certificate_group_tag   = "string"
         coa_type                = "string"
@@ -315,7 +315,7 @@ Optional:
 
 Optional:
 
-- **allowed_interfaces** (String) Interfaces that the portal will be reachable on.
+- **allowed_interfaces** (List of String) Interfaces that the portal will be reachable on.
 Allowed values:
 - eth0
 - eth1
@@ -391,5 +391,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_hotspot_portal.example "id=string"
+terraform import ciscoise_hotspot_portal.example "id:=string"
 ```

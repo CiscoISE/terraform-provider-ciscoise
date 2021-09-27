@@ -437,9 +437,12 @@ Allowed values:
 - bond0,
 - bond1,
 - bond2`,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Optional: true,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"authentication_method": &schema.Schema{
 													Description: `Unique Id of the identity source sequence`,
@@ -449,9 +452,12 @@ Allowed values:
 												},
 												"available_ssids": &schema.Schema{
 													Description: `Names of the SSIDs available for assignment to guest users by sponsors`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Optional:    true,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"certificate_group_tag": &schema.Schema{
 													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
@@ -963,7 +969,7 @@ func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsPortalSet
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
-		request.AllowedInterfaces = interfaceToString(v)
+		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
 		request.CertificateGroupTag = interfaceToString(v)
@@ -984,7 +990,7 @@ func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsPortalSet
 		request.FallbackLanguage = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".available_ssids"); !isEmptyValue(reflect.ValueOf(d.Get(key+".available_ssids"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".available_ssids"))) {
-		request.AvailableSSIDs = interfaceToString(v)
+		request.AvailableSSIDs = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1274,7 +1280,9 @@ func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPag
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1369,7 +1377,7 @@ func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsPorta
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
-		request.AllowedInterfaces = interfaceToString(v)
+		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
 		request.CertificateGroupTag = interfaceToString(v)
@@ -1390,7 +1398,7 @@ func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsPorta
 		request.FallbackLanguage = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".available_ssids"); !isEmptyValue(reflect.ValueOf(d.Get(key+".available_ssids"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".available_ssids"))) {
-		request.AvailableSSIDs = interfaceToString(v)
+		request.AvailableSSIDs = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1680,7 +1688,9 @@ func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomization
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

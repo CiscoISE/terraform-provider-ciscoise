@@ -1,9 +1,11 @@
 
 data "ciscoise_endpoint_register" "example" {
   provider = ciscoise
-  custom_attributes = {
-    key1 = "value1"
-    key2 = "value2"
+  custom_attributes {
+    custom_attributes = {
+      key1 = "value1"
+      key2 = "value2"
+    }
   }
   description       = "string"
   group_id          = "string"

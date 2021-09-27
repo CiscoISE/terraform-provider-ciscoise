@@ -88,6 +88,9 @@ func dataSourceIseRootCaRegenerateRead(ctx context.Context, d *schema.ResourceDa
 		response1, _, err := client.Certificates.RegenerateIseRootCa(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing RegenerateIseRootCa", err,
 				"Failure at RegenerateIseRootCa, unexpected response", ""))
@@ -112,7 +115,7 @@ func dataSourceIseRootCaRegenerateRead(ctx context.Context, d *schema.ResourceDa
 
 func expandRequestIseRootCaRegenerateRegenerateIseRootCa(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesRegenerateIseRootCa {
 	request := isegosdk.RequestCertificatesRegenerateIseRootCa{}
-	if v, ok := d.GetOkExists(key + ".remove_existing_ise_intermediate_csr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".remove_existing_ise_intermediate_csr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".remove_existing_ise_intermediate_csr"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remove_existing_ise_intermediate_csr")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remove_existing_ise_intermediate_csr")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remove_existing_ise_intermediate_csr")))) {
 		request.RemoveExistingIseIntermediateCsr = interfaceToBoolPtr(v)
 	}
 	return &request

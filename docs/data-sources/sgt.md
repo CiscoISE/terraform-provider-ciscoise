@@ -110,7 +110,7 @@ Read-Only:
 
 - **default_sgacls** (List of String)
 - **description** (String)
-- **generation_id** (Number)
+- **generation_id** (String)
 - **id** (String)
 - **is_read_only** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))

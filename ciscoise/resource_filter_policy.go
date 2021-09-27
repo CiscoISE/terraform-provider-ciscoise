@@ -379,7 +379,8 @@ func expandRequestFilterPolicyCreateFilterPolicyERSFilterPolicy(ctx context.Cont
 		request.Domains = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
-		request.Sgt = interfaceToString(v)
+		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
+		request.Sgt = first
 	}
 	if v, ok := d.GetOkExists(key + ".vn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vn"))) {
 		request.Vn = interfaceToString(v)
@@ -408,7 +409,8 @@ func expandRequestFilterPolicyUpdateFilterPolicyByIDERSFilterPolicy(ctx context.
 		request.Domains = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
-		request.Sgt = interfaceToString(v)
+		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
+		request.Sgt = first
 	}
 	if v, ok := d.GetOkExists(key + ".vn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vn"))) {
 		request.Vn = interfaceToString(v)

@@ -52,6 +52,9 @@ func dataSourceNetworkDeviceBulkRequestRead(ctx context.Context, d *schema.Resou
 		response1, err := client.NetworkDevice.BulkRequestForNetworkDevice(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForNetworkDevice", err,
 				"Failure at BulkRequestForNetworkDevice, unexpected response", ""))
@@ -81,10 +84,10 @@ func expandRequestNetworkDeviceBulkRequestBulkRequestForNetworkDevice(ctx contex
 
 func expandRequestNetworkDeviceBulkRequestBulkRequestForNetworkDeviceNetworkDeviceBulkRequest(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceBulkRequestForNetworkDeviceNetworkDeviceBulkRequest {
 	request := isegosdk.RequestNetworkDeviceBulkRequestForNetworkDeviceNetworkDeviceBulkRequest{}
-	if v, ok := d.GetOkExists(key + ".operation_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".operation_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".operation_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation_type")))) {
 		request.OperationType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".resource_media_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".resource_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".resource_media_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".resource_media_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".resource_media_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".resource_media_type")))) {
 		request.ResourceMediaType = interfaceToString(v)
 	}
 	return &request

@@ -119,7 +119,7 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"generation_id": &schema.Schema{
-							Type:     schema.TypeInt,
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"id": &schema.Schema{

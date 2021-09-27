@@ -79,9 +79,9 @@ resource "ciscoise_sponsor_portal" "example" {
       }
       portal_settings {
 
-        allowed_interfaces    = "string"
+        allowed_interfaces    = ["string"]
         authentication_method = "string"
-        available_ssids       = "string"
+        available_ssids       = ["string"]
         certificate_group_tag = "string"
         display_lang          = "string"
         fallback_language     = "string"
