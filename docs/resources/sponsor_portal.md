@@ -100,9 +100,9 @@ resource "ciscoise_sponsor_portal" "example" {
       }
       portal_settings {
 
-        allowed_interfaces    = "string"
+        allowed_interfaces    = ["string"]
         authentication_method = "string"
-        available_ssids       = "string"
+        available_ssids       = ["string"]
         certificate_group_tag = "string"
         display_lang          = "string"
         fallback_language     = "string"
@@ -334,7 +334,7 @@ Only valid if includeAup = true
 
 Optional:
 
-- **allowed_interfaces** (String) Interfaces that the portal will be reachable on.
+- **allowed_interfaces** (List of String) Interfaces that the portal will be reachable on.
 Allowed values:
 - eth0,
 - eth1,
@@ -346,7 +346,7 @@ Allowed values:
 - bond1,
 - bond2
 - **authentication_method** (String) Unique Id of the identity source sequence
-- **available_ssids** (String) Names of the SSIDs available for assignment to guest users by sponsors
+- **available_ssids** (List of String) Names of the SSIDs available for assignment to guest users by sponsors
 - **certificate_group_tag** (String) Logical name of the x.509 server certificate that will be used for the portal
 - **display_lang** (String) Allowed values:
 - USEBROWSERLOCALE,
@@ -416,5 +416,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_sponsor_portal.example "id=string"
+terraform import ciscoise_sponsor_portal.example "id:=string"
 ```

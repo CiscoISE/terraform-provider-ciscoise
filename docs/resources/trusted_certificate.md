@@ -141,5 +141,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_trusted_certificate.example "id=string"
+terraform import ciscoise_trusted_certificate.example "id:=string"
 ```

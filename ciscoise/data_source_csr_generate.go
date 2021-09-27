@@ -240,58 +240,58 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 
 func expandRequestCsrGenerateGenerateCsr(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesGenerateCsr {
 	request := isegosdk.RequestCertificatesGenerateCsr{}
-	if v, ok := d.GetOkExists(key + ".allow_wild_card_cert"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_wild_card_cert"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_wild_card_cert"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_wild_card_cert")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_wild_card_cert")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_wild_card_cert")))) {
 		request.AllowWildCardCert = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_policies"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_policies"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_policies"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_policies")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_policies")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_policies")))) {
 		request.CertificatePolicies = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".digest_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".digest_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".digest_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".digest_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".digest_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".digest_type")))) {
 		request.DigestType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".hostnames"); !isEmptyValue(reflect.ValueOf(d.Get(key+".hostnames"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".hostnames"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostnames")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostnames")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostnames")))) {
 		request.Hostnames = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".key_length"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_length"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_length"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key_length")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key_length")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key_length")))) {
 		request.KeyLength = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".key_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key_type")))) {
 		request.KeyType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_group_tag")))) {
 		request.PortalGroupTag = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".san_dns"); !isEmptyValue(reflect.ValueOf(d.Get(key+".san_dns"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".san_dns"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".san_dns")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".san_dns")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".san_dns")))) {
 		request.SanDNS = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".san_dir"); !isEmptyValue(reflect.ValueOf(d.Get(key+".san_dir"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".san_dir"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".san_dir")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".san_dir")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".san_dir")))) {
 		request.SanDir = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".san_ip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".san_ip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".san_ip"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".san_ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".san_ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".san_ip")))) {
 		request.SanIP = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".san_uri"); !isEmptyValue(reflect.ValueOf(d.Get(key+".san_uri"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".san_uri"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".san_uri")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".san_uri")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".san_uri")))) {
 		request.SanURI = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".subject_city"); !isEmptyValue(reflect.ValueOf(d.Get(key+".subject_city"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".subject_city"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subject_city")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subject_city")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subject_city")))) {
 		request.SubjectCity = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".subject_common_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".subject_common_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".subject_common_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subject_common_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subject_common_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subject_common_name")))) {
 		request.SubjectCommonName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".subject_country"); !isEmptyValue(reflect.ValueOf(d.Get(key+".subject_country"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".subject_country"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subject_country")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subject_country")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subject_country")))) {
 		request.SubjectCountry = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".subject_org"); !isEmptyValue(reflect.ValueOf(d.Get(key+".subject_org"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".subject_org"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subject_org")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subject_org")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subject_org")))) {
 		request.SubjectOrg = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".subject_org_unit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".subject_org_unit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".subject_org_unit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subject_org_unit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subject_org_unit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subject_org_unit")))) {
 		request.SubjectOrgUnit = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".subject_state"); !isEmptyValue(reflect.ValueOf(d.Get(key+".subject_state"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".subject_state"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subject_state")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subject_state")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subject_state")))) {
 		request.SubjectState = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".used_for"); !isEmptyValue(reflect.ValueOf(d.Get(key+".used_for"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".used_for"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".used_for")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".used_for")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".used_for")))) {
 		request.UsedFor = interfaceToString(v)
 	}
 	return &request

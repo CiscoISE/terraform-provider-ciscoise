@@ -20,44 +20,11 @@ func dataSourceSystemCertificate() *schema.Resource {
 
 Filtering and Sorting supported on below mentioned attributes:
 
-
-
-
-friendlyName
-
-
-issuedTo
-
-
-issuedBy
-
-
-validFrom
-
-
-
+[friendlyName, issuedTo, issuedBy, validFrom, expirationDate]
 
 Supported Date Format: yyyy-MM-dd HH:mm:ss
 
-
 Supported Operators: EQ, NEQ, GT and LT
-
-
-
-
-expirationDate
-
-
-
-
-Supported Date Format: yyyy-MM-dd HH:mm:ss
-
-
-Supported Operators: EQ, NEQ, GT and LT
-
-
-
-
 
 
 - This data source displays details of a System Certificate of a particular node based on a given HostName and ID.
@@ -74,79 +41,6 @@ Simple filtering
  should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
 "filterType=or"
  query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
- 
- 
- 
- 
- 
-OPERATOR
- 
-DESCRIPTION
- 
- 
- 
- 
- 
-EQ
- 
-Equals
- 
- 
- 
-NEQ
- 
-Not Equals
- 
- 
- 
-GT
- 
-Greater Than
- 
- 
- 
-LT
- 
-Less Then
- 
- 
- 
-STARTSW
- 
-Starts With
- 
- 
- 
-NSTARTSW
- 
-Not Starts With
- 
- 
- 
-ENDSW
- 
-Ends With
- 
- 
- 
-NENDSW
- 
-Not Ends With
- 
- 
- 
-CONTAINS
- 
-Contains
- 
- 
- 
-NCONTAINS
- 
-Not Contains
- 
- 
- 
  `,
 				Type:     schema.TypeList,
 				Optional: true,
@@ -402,7 +296,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
+	if selectedMethod == 1 || !okID {
 		log.Printf("[DEBUG] Selected method 1: GetSystemCertificates")
 		vvHostName := vHostName.(string)
 		queryParams1 := isegosdk.GetSystemCertificatesQueryParams{}

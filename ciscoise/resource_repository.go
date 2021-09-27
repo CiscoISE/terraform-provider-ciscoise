@@ -387,7 +387,7 @@ func expandRequestRepositoryUpdateRepository(ctx context.Context, key string, d 
 
 func getAllItemsRepositoryGetRepositories(m interface{}, response *isegosdk.ResponseRepositoryGetRepositories) []isegosdk.ResponseRepositoryGetRepositoriesResponse {
 	var respItems []isegosdk.ResponseRepositoryGetRepositoriesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

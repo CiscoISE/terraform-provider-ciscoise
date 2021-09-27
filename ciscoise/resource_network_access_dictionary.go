@@ -447,7 +447,7 @@ func expandRequestNetworkAccessDictionaryUpdateNetworkAccessDictionaryByNameLink
 
 func getAllItemsNetworkAccessDictionaryGetNetworkAccessDictionaries(m interface{}, response *isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionaries) []isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionariesResponse {
 	var respItems []isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionariesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

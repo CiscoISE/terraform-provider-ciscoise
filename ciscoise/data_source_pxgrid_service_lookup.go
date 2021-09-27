@@ -47,6 +47,9 @@ func dataSourcePxgridServiceLookupRead(ctx context.Context, d *schema.ResourceDa
 		response1, err := client.Consumer.LookupService(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing LookupService", err,
 				"Failure at LookupService, unexpected response", ""))
@@ -70,7 +73,7 @@ func dataSourcePxgridServiceLookupRead(ctx context.Context, d *schema.ResourceDa
 
 func expandRequestPxgridServiceLookupLookupService(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesLookupService {
 	request := isegosdk.RequestClearThreatsAndVulnerabilitiesLookupService{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	return &request

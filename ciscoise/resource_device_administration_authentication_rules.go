@@ -7,6 +7,7 @@ import (
 	"reflect"
 
 	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -895,7 +896,9 @@ func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthen
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1156,7 +1159,9 @@ func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthen
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1254,7 +1259,7 @@ func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthen
 
 func getAllItemsDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRules(m interface{}, response *isegosdk.ResponseDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRules, policyTypeID string) []isegosdk.ResponseDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRulesResponse {
 	var respItems []isegosdk.ResponseDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRulesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

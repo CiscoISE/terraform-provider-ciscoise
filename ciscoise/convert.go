@@ -43,7 +43,7 @@ func boolPtrToString(item *bool) string {
 func interfaceToBoolPtr(item interface{}) *bool {
 	nItem := interfaceToString(item)
 	if nItem != "" {
-		nItemBool := nItem == "true"
+		nItemBool := nItem == "true" || nItem == "on"
 		return &nItemBool
 	}
 	return nil

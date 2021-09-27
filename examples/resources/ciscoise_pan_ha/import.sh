@@ -1,1 +1,1 @@
-terraform import ciscoise_pan_ha.example "id=string"
+terraform import ciscoise_pan_ha.example "id:=string"

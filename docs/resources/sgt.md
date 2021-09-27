@@ -59,7 +59,7 @@ Optional:
 
 - **default_sgacls** (List of String)
 - **description** (String)
-- **generation_id** (Number)
+- **generation_id** (String)
 - **id** (String) The ID of this resource.
 - **is_read_only** (String)
 - **name** (String)
@@ -84,5 +84,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_sgt.example "id=string"
+terraform import ciscoise_sgt.example "id:=string"
 ```

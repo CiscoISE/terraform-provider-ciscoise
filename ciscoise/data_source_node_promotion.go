@@ -66,6 +66,9 @@ func dataSourceNodePromotionRead(ctx context.Context, d *schema.ResourceData, m 
 		response1, _, err := client.NodeDeployment.PromoteNode(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing PromoteNode", err,
 				"Failure at PromoteNode, unexpected response", ""))
@@ -90,7 +93,7 @@ func dataSourceNodePromotionRead(ctx context.Context, d *schema.ResourceData, m 
 
 func expandRequestNodePromotionPromoteNode(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeDeploymentPromoteNode {
 	request := isegosdk.RequestNodeDeploymentPromoteNode{}
-	if v, ok := d.GetOkExists(key + ".promotion_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".promotion_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".promotion_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".promotion_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".promotion_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".promotion_type")))) {
 		request.PromotionType = interfaceToString(v)
 	}
 	return &request

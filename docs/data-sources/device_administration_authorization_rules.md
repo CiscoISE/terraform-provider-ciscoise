@@ -30,6 +30,7 @@ output "ciscoise_device_administration_authorization_rules_example" {
 data "ciscoise_device_administration_authorization_rules" "example" {
   provider  = ciscoise
   policy_id = "string"
+  id        = "string"
 }
 
 output "ciscoise_device_administration_authorization_rules_example" {

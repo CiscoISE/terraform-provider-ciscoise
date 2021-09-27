@@ -150,5 +150,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_sponsor_group.example "id=string"
+terraform import ciscoise_sponsor_group.example "id:=string"
 ```

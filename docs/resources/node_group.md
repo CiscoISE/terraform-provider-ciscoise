@@ -85,5 +85,5 @@ Optional:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_node_group.example "node_group_name=string"
+terraform import ciscoise_node_group.example "node_group_name:=string"
 ```

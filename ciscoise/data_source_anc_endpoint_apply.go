@@ -62,6 +62,9 @@ func dataSourceAncEndpointApplyRead(ctx context.Context, d *schema.ResourceData,
 		response1, err := client.AncEndpoint.ApplyAncEndpoint(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ApplyAncEndpoint", err,
 				"Failure at ApplyAncEndpoint, unexpected response", ""))
@@ -91,7 +94,7 @@ func expandRequestAncEndpointApplyApplyAncEndpoint(ctx context.Context, key stri
 
 func expandRequestAncEndpointApplyApplyAncEndpointOperationAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAncEndpointApplyAncEndpointOperationAdditionalData {
 	request := isegosdk.RequestAncEndpointApplyAncEndpointOperationAdditionalData{}
-	if v, ok := d.GetOkExists(key + ".additional_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".additional_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".additional_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".additional_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".additional_data")))) {
 		request.AdditionalData = expandRequestAncEndpointApplyApplyAncEndpointOperationAdditionalDataAdditionalDataArray(ctx, key+".additional_data", d)
 	}
 	return &request
@@ -109,17 +112,19 @@ func expandRequestAncEndpointApplyApplyAncEndpointOperationAdditionalDataAdditio
 	}
 	for item_no, _ := range objs {
 		i := expandRequestAncEndpointApplyApplyAncEndpointOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	return &request
 }
 
 func expandRequestAncEndpointApplyApplyAncEndpointOperationAdditionalDataAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAncEndpointApplyAncEndpointOperationAdditionalDataAdditionalData {
 	request := isegosdk.RequestAncEndpointApplyAncEndpointOperationAdditionalDataAdditionalData{}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	return &request

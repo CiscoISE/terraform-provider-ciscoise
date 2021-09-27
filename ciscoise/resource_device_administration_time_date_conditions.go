@@ -637,7 +637,9 @@ func expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeCon
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationTimeDateConditionsCreateDeviceAdminTimeConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -825,7 +827,9 @@ func expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeCon
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeConditionByIDChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -923,7 +927,7 @@ func expandRequestDeviceAdministrationTimeDateConditionsUpdateDeviceAdminTimeCon
 
 func getAllItemsDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditions(m interface{}, response *isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditions) []isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponse {
 	var respItems []isegosdk.ResponseDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

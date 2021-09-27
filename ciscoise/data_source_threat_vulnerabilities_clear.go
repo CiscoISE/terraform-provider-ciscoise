@@ -49,6 +49,9 @@ func dataSourceThreatVulnerabilitiesClearRead(ctx context.Context, d *schema.Res
 		response1, err := client.ClearThreatsAndVulnerabilities.ClearThreatsAndVulnerabilities(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ClearThreatsAndVulnerabilities", err,
 				"Failure at ClearThreatsAndVulnerabilities, unexpected response", ""))
@@ -78,7 +81,7 @@ func expandRequestThreatVulnerabilitiesClearClearThreatsAndVulnerabilities(ctx c
 
 func expandRequestThreatVulnerabilitiesClearClearThreatsAndVulnerabilitiesERSIrfThreatContext(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesClearThreatsAndVulnerabilitiesERSIrfThreatContext {
 	request := isegosdk.RequestClearThreatsAndVulnerabilitiesClearThreatsAndVulnerabilitiesERSIrfThreatContext{}
-	if v, ok := d.GetOkExists(key + ".mac_addresses"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac_addresses"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac_addresses"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_addresses")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_addresses")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_addresses")))) {
 		request.MacAddresses = interfaceToString(v)
 	}
 	return &request
