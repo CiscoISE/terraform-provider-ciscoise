@@ -189,13 +189,13 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 	vDictionaryName, okDictionaryName := resourceMap["dictionary_name"]
 	vName, okName := resourceMap["name"]
 
-	method1 := []bool{okDictionaryName}
+	method1 := []bool{okName, okDictionaryName}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okName, okDictionaryName}
+	method2 := []bool{okDictionaryName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
+	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionaryAttributesByDictionaryName")
 		vvDictionaryName := vDictionaryName
 		vvName := vName
@@ -228,7 +228,7 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 		}
 
 	}
-	if selectedMethod == 2 {
+	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionaryAttributeByName")
 		vvName := vName
 		vvDictionaryName := vDictionaryName
@@ -267,16 +267,16 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 	vDictionaryName, okDictionaryName := resourceMap["dictionary_name"]
 	vName, okName := resourceMap["name"]
 
-	method1 := []bool{okDictionaryName}
+	method1 := []bool{okName, okDictionaryName}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okName, okDictionaryName}
+	method2 := []bool{okDictionaryName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvDictionaryName string
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	if selectedMethod == 1 {
+	if selectedMethod == 2 {
 		vvDictionaryName = vDictionaryName
 
 		getResp1, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
@@ -292,7 +292,7 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 			}
 		}
 	}
-	if selectedMethod == 2 {
+	if selectedMethod == 1 {
 		vvName = vName
 		vvDictionaryName = vDictionaryName
 	}
@@ -329,16 +329,16 @@ func resourceNetworkAccessDictionaryAttributeDelete(ctx context.Context, d *sche
 	vDictionaryName, okDictionaryName := resourceMap["dictionary_name"]
 	vName, okName := resourceMap["name"]
 
-	method1 := []bool{okDictionaryName}
+	method1 := []bool{okName, okDictionaryName}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okName, okDictionaryName}
+	method2 := []bool{okDictionaryName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvDictionaryName string
 	var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 1 {
+	if selectedMethod == 2 {
 		vvDictionaryName = vDictionaryName
 
 		getResp1, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
@@ -358,7 +358,7 @@ func resourceNetworkAccessDictionaryAttributeDelete(ctx context.Context, d *sche
 			vvName = vName
 		}
 	}
-	if selectedMethod == 2 {
+	if selectedMethod == 1 {
 		vvName = vName
 		vvDictionaryName = vDictionaryName
 		getResp, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributeByName(vvName, vvDictionaryName)
@@ -432,7 +432,9 @@ func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryA
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValues(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -501,7 +503,9 @@ func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryA
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValues(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -528,7 +532,7 @@ func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryA
 
 func getAllItemsNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryName(m interface{}, response *isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryName, dictionaryname string) []isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameResponse {
 	var respItems []isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems
