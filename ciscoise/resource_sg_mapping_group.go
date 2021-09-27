@@ -91,10 +91,11 @@ func resourceSgMappingGroup() *schema.Resource {
 							Computed: true,
 						},
 						"sgt": &schema.Schema{
-							Description: `Mandatory unless mappingGroup is set`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Description:      `Mandatory unless mappingGroup is set`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							Computed:         true,
+							DiffSuppressFunc: diffSuppressSgt(),
 						},
 					},
 				},
@@ -376,7 +377,8 @@ func expandRequestSgMappingGroupCreateIPToSgtMappingGroupSgMappingGroup(ctx cont
 		request.Name = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
-		request.Sgt = interfaceToString(v)
+		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
+		request.Sgt = first
 	}
 	if v, ok := d.GetOkExists(key + ".deploy_to"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_to"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_to"))) {
 		request.DeployTo = interfaceToString(v)
@@ -405,7 +407,8 @@ func expandRequestSgMappingGroupUpdateIPToSgtMappingGroupByIDSgMappingGroup(ctx 
 		request.Name = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
-		request.Sgt = interfaceToString(v)
+		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
+		request.Sgt = first
 	}
 	if v, ok := d.GetOkExists(key + ".deploy_to"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_to"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_to"))) {
 		request.DeployTo = interfaceToString(v)
