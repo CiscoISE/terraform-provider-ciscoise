@@ -452,9 +452,12 @@ Allowed values:
 												},
 												"available_ssids": &schema.Schema{
 													Description: `Names of the SSIDs available for assignment to guest users by sponsors`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Optional:    true,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"certificate_group_tag": &schema.Schema{
 													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
@@ -987,7 +990,7 @@ func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsPortalSet
 		request.FallbackLanguage = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".available_ssids"); !isEmptyValue(reflect.ValueOf(d.Get(key+".available_ssids"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".available_ssids"))) {
-		request.AvailableSSIDs = interfaceToString(v)
+		request.AvailableSSIDs = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1277,7 +1280,9 @@ func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPag
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSponsorPortalCreateSponsorPortalSponsorPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1393,7 +1398,7 @@ func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsPorta
 		request.FallbackLanguage = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".available_ssids"); !isEmptyValue(reflect.ValueOf(d.Get(key+".available_ssids"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".available_ssids"))) {
-		request.AvailableSSIDs = interfaceToString(v)
+		request.AvailableSSIDs = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1683,7 +1688,9 @@ func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomization
 	}
 	for item_no, _ := range objs {
 		i := expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
