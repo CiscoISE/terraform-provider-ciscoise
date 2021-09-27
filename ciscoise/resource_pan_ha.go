@@ -206,7 +206,7 @@ func expandRequestPanHaEnablePanHaRequest(ctx context.Context, key string, d *sc
 
 func getAllItemsPanHaGetPanHaStatus(m interface{}, response *isegosdk.ResponsePanHaGetPanHaStatus) []isegosdk.ResponsePanHaGetPanHaStatusResponse {
 	var respItems []isegosdk.ResponsePanHaGetPanHaStatusResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems
