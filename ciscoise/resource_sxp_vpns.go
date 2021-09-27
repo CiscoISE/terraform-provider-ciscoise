@@ -237,7 +237,6 @@ func resourceSxpVpnsDelete(ctx context.Context, d *schema.ResourceData, m interf
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
-	// var vvName string
 	// REVIEW: Add getAllItems and search function to get missing params
 	if selectedMethod == 1 {
 		queryParams1 := isegosdk.GetSxpVpnsQueryParams{}

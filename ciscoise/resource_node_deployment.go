@@ -1333,7 +1333,6 @@ func resourceNodeDeploymentDelete(ctx context.Context, d *schema.ResourceData, m
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	// var vvID string
 	var vvHostname string
 	// REVIEW: Add getAllItems and search function to get missing params
 	if selectedMethod == 1 {
