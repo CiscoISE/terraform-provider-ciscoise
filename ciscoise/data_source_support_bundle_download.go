@@ -80,7 +80,7 @@ func expandRequestSupportBundleDownloadDownloadSupportBundle(ctx context.Context
 
 func expandRequestSupportBundleDownloadDownloadSupportBundleErsSupportBundleDownload(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSupportBundleDownloadDownloadSupportBundleErsSupportBundleDownload {
 	request := isegosdk.RequestSupportBundleDownloadDownloadSupportBundleErsSupportBundleDownload{}
-	if v, ok := d.GetOkExists(key + ".file_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".file_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".file_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".file_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".file_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".file_name")))) {
 		request.FileName = interfaceToString(v)
 	}
 	return &request

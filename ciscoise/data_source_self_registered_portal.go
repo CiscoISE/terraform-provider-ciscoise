@@ -817,6 +817,7 @@ Allowed values:
 													Computed: true,
 												},
 												"authenticate_sponsors_using_portal_list": &schema.Schema{
+													// Type:        schema.TypeBool,
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -1071,14 +1072,20 @@ Only valid if requireGuestApproval = true`,
 												},
 												"guest_email_blacklist_domains": &schema.Schema{
 													Description: `Disallow guests with an e-mail address from selected domains`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"guest_email_whitelist_domains": &schema.Schema{
 													Description: `Self-registered guests whose e-mail address is in one of these domains will be allowed.
 Only valid if enableGuestEmailWhitelist = true`,
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"include_aup": &schema.Schema{
 													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
@@ -1670,7 +1677,7 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 	respItem["approve_deny_links_valid_for"] = item.ApproveDenyLinksValidFor
 	respItem["approve_deny_links_time_units"] = item.ApproveDenyLinksTimeUnits
 	respItem["require_approver_to_authenticate"] = boolPtrToString(item.RequireApproverToAuthenticate)
-	respItem["authenticate_sponsors_using_portal_list"] = item.AuthenticateSponsorsUsingPortalList
+	respItem["authenticate_sponsors_using_portal_list"] = boolPtrToString(item.AuthenticateSponsorsUsingPortalList)
 	respItem["sponsor_portal_list"] = responseInterfaceToSliceString(item.SponsorPortalList)
 
 	return []map[string]interface{}{

@@ -58,6 +58,9 @@ func dataSourcePxGridSettingsAutoApproveRead(ctx context.Context, d *schema.Reso
 		response1, err := client.PxGridSettings.AutoapprovePxGridSettings(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing AutoapprovePxGridSettings", err,
 				"Failure at AutoapprovePxGridSettings, unexpected response", ""))
@@ -87,10 +90,10 @@ func expandRequestPxGridSettingsAutoApproveAutoapprovePxGridSettings(ctx context
 
 func expandRequestPxGridSettingsAutoApproveAutoapprovePxGridSettingsPxgridSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestPxGridSettingsAutoapprovePxGridSettingsPxgridSettings {
 	request := isegosdk.RequestPxGridSettingsAutoapprovePxGridSettingsPxgridSettings{}
-	if v, ok := d.GetOkExists(key + ".auto_approve_cert_based_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auto_approve_cert_based_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auto_approve_cert_based_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_approve_cert_based_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_approve_cert_based_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_approve_cert_based_accounts")))) {
 		request.AutoApproveCertBasedAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_password_based_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_password_based_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_password_based_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_password_based_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_password_based_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_password_based_accounts")))) {
 		request.AllowPasswordBasedAccounts = interfaceToBoolPtr(v)
 	}
 	return &request

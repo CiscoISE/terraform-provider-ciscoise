@@ -338,7 +338,7 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 2: GetNetworkDeviceGroupByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(vvName)
+		response2, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
 
 		if err != nil || response2 == nil {
 			diags = append(diags, diagErrorWithAlt(

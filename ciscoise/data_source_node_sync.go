@@ -66,6 +66,9 @@ func dataSourceNodeSyncRead(ctx context.Context, d *schema.ResourceData, m inter
 		response1, _, err := client.SyncIseNode.SyncNode(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing SyncNode", err,
 				"Failure at SyncNode, unexpected response", ""))
@@ -90,7 +93,7 @@ func dataSourceNodeSyncRead(ctx context.Context, d *schema.ResourceData, m inter
 
 func expandRequestNodeSyncSyncNode(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSyncIseNodeSyncNode {
 	request := isegosdk.RequestSyncIseNodeSyncNode{}
-	if v, ok := d.GetOkExists(key + ".hostname"); !isEmptyValue(reflect.ValueOf(d.Get(key+".hostname"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".hostname"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostname")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostname")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostname")))) {
 		request.Hostname = interfaceToString(v)
 	}
 	return &request

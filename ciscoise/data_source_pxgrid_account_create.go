@@ -47,6 +47,9 @@ func dataSourcePxgridAccountCreateRead(ctx context.Context, d *schema.ResourceDa
 		response1, err := client.Consumer.CreateAccount(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateAccount", err,
 				"Failure at CreateAccount, unexpected response", ""))
@@ -70,7 +73,7 @@ func dataSourcePxgridAccountCreateRead(ctx context.Context, d *schema.ResourceDa
 
 func expandRequestPxgridAccountCreateCreateAccount(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesCreateAccount {
 	request := isegosdk.RequestClearThreatsAndVulnerabilitiesCreateAccount{}
-	if v, ok := d.GetOkExists(key + ".node_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".node_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".node_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".node_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".node_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".node_name")))) {
 		request.NodeName = interfaceToString(v)
 	}
 	return &request
