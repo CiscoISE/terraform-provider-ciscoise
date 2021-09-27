@@ -47,6 +47,9 @@ func dataSourcePxgridAccessSecretRead(ctx context.Context, d *schema.ResourceDat
 		response1, err := client.Consumer.AccessSecret(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing AccessSecret", err,
 				"Failure at AccessSecret, unexpected response", ""))
@@ -70,7 +73,7 @@ func dataSourcePxgridAccessSecretRead(ctx context.Context, d *schema.ResourceDat
 
 func expandRequestPxgridAccessSecretAccessSecret(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesAccessSecret {
 	request := isegosdk.RequestClearThreatsAndVulnerabilitiesAccessSecret{}
-	if v, ok := d.GetOkExists(key + ".peer_node_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".peer_node_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".peer_node_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".peer_node_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".peer_node_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".peer_node_name")))) {
 		request.PeerNodeName = interfaceToString(v)
 	}
 	return &request

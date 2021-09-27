@@ -460,8 +460,11 @@ Allowed values:
 												},
 												"available_ssids": &schema.Schema{
 													Description: `Names of the SSIDs available for assignment to guest users by sponsors`,
-													Type:        schema.TypeString,
+													Type:        schema.TypeList,
 													Computed:    true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"certificate_group_tag": &schema.Schema{
 													Description: `Logical name of the x.509 server certificate that will be used for the portal`,

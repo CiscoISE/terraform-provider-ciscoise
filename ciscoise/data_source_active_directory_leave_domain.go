@@ -69,6 +69,9 @@ func dataSourceActiveDirectoryLeaveDomainRead(ctx context.Context, d *schema.Res
 		response1, err := client.ActiveDirectory.LeaveDomain(vvID, request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing LeaveDomain", err,
 				"Failure at LeaveDomain, unexpected response", ""))
@@ -98,7 +101,7 @@ func expandRequestActiveDirectoryLeaveDomainLeaveDomain(ctx context.Context, key
 
 func expandRequestActiveDirectoryLeaveDomainLeaveDomainOperationAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLeaveDomainOperationAdditionalData {
 	request := isegosdk.RequestActiveDirectoryLeaveDomainOperationAdditionalData{}
-	if v, ok := d.GetOkExists(key + ".additional_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".additional_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".additional_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".additional_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".additional_data")))) {
 		request.AdditionalData = expandRequestActiveDirectoryLeaveDomainLeaveDomainOperationAdditionalDataAdditionalDataArray(ctx, key+".additional_data", d)
 	}
 	return &request
@@ -116,17 +119,19 @@ func expandRequestActiveDirectoryLeaveDomainLeaveDomainOperationAdditionalDataAd
 	}
 	for item_no, _ := range objs {
 		i := expandRequestActiveDirectoryLeaveDomainLeaveDomainOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	return &request
 }
 
 func expandRequestActiveDirectoryLeaveDomainLeaveDomainOperationAdditionalDataAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLeaveDomainOperationAdditionalDataAdditionalData {
 	request := isegosdk.RequestActiveDirectoryLeaveDomainOperationAdditionalDataAdditionalData{}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	return &request

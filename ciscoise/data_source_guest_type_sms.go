@@ -69,6 +69,9 @@ func dataSourceGuestTypeSmsRead(ctx context.Context, d *schema.ResourceData, m i
 		response1, err := client.GuestType.UpdateGuestTypeSms(vvID, request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateGuestTypeSms", err,
 				"Failure at UpdateGuestTypeSms, unexpected response", ""))
@@ -98,7 +101,7 @@ func expandRequestGuestTypeSmsUpdateGuestTypeSms(ctx context.Context, key string
 
 func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalData {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalData{}
-	if v, ok := d.GetOkExists(key + ".additional_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".additional_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".additional_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".additional_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".additional_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".additional_data")))) {
 		request.AdditionalData = expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditionalDataArray(ctx, key+".additional_data", d)
 	}
 	return &request
@@ -116,17 +119,19 @@ func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditiona
 	}
 	for item_no, _ := range objs {
 		i := expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	return &request
 }
 
 func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalDataAdditionalData {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeSmsOperationAdditionalDataAdditionalData{}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	return &request

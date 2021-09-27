@@ -52,6 +52,9 @@ func dataSourceSgMappingBulkRequestRead(ctx context.Context, d *schema.ResourceD
 		response1, err := client.IPToSgtMapping.BulkRequestForIPToSgtMapping(request1)
 
 		if err != nil || response1 == nil {
+			if request1 != nil {
+				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForIPToSgtMapping", err,
 				"Failure at BulkRequestForIPToSgtMapping, unexpected response", ""))
@@ -81,10 +84,10 @@ func expandRequestSgMappingBulkRequestBulkRequestForIPToSgtMapping(ctx context.C
 
 func expandRequestSgMappingBulkRequestBulkRequestForIPToSgtMappingSgMappingBulkRequest(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIPToSgtMappingBulkRequestForIPToSgtMappingSgMappingBulkRequest {
 	request := isegosdk.RequestIPToSgtMappingBulkRequestForIPToSgtMappingSgMappingBulkRequest{}
-	if v, ok := d.GetOkExists(key + ".operation_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".operation_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".operation_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operation_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operation_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operation_type")))) {
 		request.OperationType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".resource_media_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".resource_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".resource_media_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".resource_media_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".resource_media_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".resource_media_type")))) {
 		request.ResourceMediaType = interfaceToString(v)
 	}
 	return &request
