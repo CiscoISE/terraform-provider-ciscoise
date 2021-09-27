@@ -20,14 +20,14 @@ output "ciscoise_active_directory_response" {
   value = data.ciscoise_active_directory.response
 }
 
-# data "ciscoise_active_directory" "single_response" {
-#   provider = ciscoise
-#   id       = data.ciscoise_active_directory.response.items[0].id
-# }
+data "ciscoise_active_directory" "single_response" {
+  provider = ciscoise
+  id       = data.ciscoise_active_directory.response.items[0].id
+}
 
-# output "ciscoise_active_directory_single_response" {
-#   value = data.ciscoise_active_directory.single_response
-# }
+output "ciscoise_active_directory_single_response" {
+  value = data.ciscoise_active_directory.single_response
+}
 
 resource "ciscoise_active_directory" "example" {
   provider = ciscoise
