@@ -638,7 +638,9 @@ func expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditio
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessTimeDateConditionsCreateNetworkAccessTimeConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -826,7 +828,9 @@ func expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditio
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditionByIDChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -924,7 +928,7 @@ func expandRequestNetworkAccessTimeDateConditionsUpdateNetworkAccessTimeConditio
 
 func getAllItemsNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditions(m interface{}, response *isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditions) []isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponse {
 	var respItems []isegosdk.ResponseNetworkAccessTimeDateConditionsGetNetworkAccessTimeConditionsResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

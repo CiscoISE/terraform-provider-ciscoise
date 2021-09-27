@@ -783,7 +783,9 @@ func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChi
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1027,7 +1029,9 @@ func expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditio
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1142,7 +1146,7 @@ func expandRequestNetworkAccessPolicySetUpdateNetworkAccessPolicySetByIDLink(ctx
 
 func getAllItemsNetworkAccessPolicySetGetNetworkAccessPolicySets(m interface{}, response *isegosdk.ResponseNetworkAccessPolicySetGetNetworkAccessPolicySets) []isegosdk.ResponseNetworkAccessPolicySetGetNetworkAccessPolicySetsResponse {
 	var respItems []isegosdk.ResponseNetworkAccessPolicySetGetNetworkAccessPolicySetsResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

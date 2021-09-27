@@ -865,7 +865,9 @@ func expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetG
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1117,7 +1119,9 @@ func expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetG
 	}
 	for item_no, _ := range objs {
 		i := expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1215,7 +1219,7 @@ func expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetG
 
 func getAllItemsNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRules(m interface{}, response *isegosdk.ResponseNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRules) []isegosdk.ResponseNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRulesResponse {
 	var respItems []isegosdk.ResponseNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRulesResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems

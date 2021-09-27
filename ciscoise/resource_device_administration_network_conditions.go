@@ -461,7 +461,9 @@ func expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkC
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditions(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -545,7 +547,9 @@ func expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkC
 	}
 	for item_no, _ := range objs {
 		i := expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditions(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		request = append(request, *i)
+		if i != nil {
+			request = append(request, *i)
+		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -578,7 +582,7 @@ func expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkC
 
 func getAllItemsDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions(m interface{}, response *isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions) []isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsResponse {
 	var respItems []isegosdk.ResponseDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionsResponse
-	for response.Response != nil && len(*response.Response) > 0 {
+	if response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
 	}
 	return respItems
