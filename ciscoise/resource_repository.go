@@ -234,7 +234,6 @@ func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m int
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvName string
 	// NOTE: Consider adding getAllItems and search function to get missing params
-	// if selectedMethod == 1 { }
 	if selectedMethod == 2 {
 		vvName = vName
 	}

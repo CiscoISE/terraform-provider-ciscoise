@@ -433,17 +433,6 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 			return diags
 		}
 	}
-	// if okDomain && vvDomain != "" {
-	// 	getResponse2, _, err := client.ActiveDirectory.GetActiveDirectoryByName(vvDomain)
-	// 	if err == nil && getResponse2 != nil {
-	// 		resourceMap := make(map[string]string)
-	// 		resourceMap["id"] = vvID
-	// 		resourceMap["name"] = vvName
-	// 		resourceMap["domain"] = vvDomain
-	// 		d.SetId(joinResourceID(resourceMap))
-	// 		return diags
-	// 	}
-	// }
 	restyResp1, err := client.ActiveDirectory.CreateActiveDirectory(request1)
 	if err != nil {
 		if restyResp1 != nil {
