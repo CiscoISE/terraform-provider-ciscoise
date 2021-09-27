@@ -28,12 +28,14 @@ output "ciscoise_network_access_conditions_example" {
   value = ciscoise_network_access_conditions.example
 }
 
-# data "ciscoise_network_access_conditions" "found" {
-#   provider = ciscoise
-#   # id = "37a5b141-f00a-4793-bcc6-805fa4e2c427"
-#   # name = "My New Condition"
-# }
+data "ciscoise_network_access_conditions" "found" {
+  depends_on = [
+    ciscoise_network_access_conditions.example
+  ]
+  provider = ciscoise
+  name = "My New Condition"
+}
 
-# output "ciscoise_network_access_conditions_found" {
-#   value = data.ciscoise_network_access_conditions.found
-# }
+output "ciscoise_network_access_conditions_found" {
+  value = data.ciscoise_network_access_conditions.found.item_name
+}

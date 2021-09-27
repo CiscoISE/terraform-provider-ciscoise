@@ -28,19 +28,19 @@ resource "ciscoise_repository" "example" {
 #   value = ciscoise_repository.example
 # }
 
-# data "ciscoise_repository" "example" {
-#   provider = ciscoise
-# }
+data "ciscoise_repository" "items" {
+  provider = ciscoise
+}
 
-# output "ciscoise_repository_example" {
-#   value = data.ciscoise_repository.example.items
-# }
+output "ciscoise_repository_items" {
+  value = data.ciscoise_repository.items.items
+}
 
-# data "ciscoise_repository" "example1" {
-#   provider = ciscoise
-#   name     = data.ciscoise_repository.example.items[0].name
-# }
+data "ciscoise_repository" "item1" {
+  provider = ciscoise
+  name     = data.ciscoise_repository.items.items[0].name
+}
 
-# output "ciscoise_repository_example1" {
-#   value = data.ciscoise_repository.example1.item
-# }
+output "ciscoise_repository_item1" {
+  value = data.ciscoise_repository.item1.item
+}
