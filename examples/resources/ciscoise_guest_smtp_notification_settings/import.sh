@@ -1,1 +1,1 @@
-terraform import ciscoise_guest_smtp_notification_settings.example "id=string"
+terraform import ciscoise_guest_smtp_notification_settings.example "id:=string"

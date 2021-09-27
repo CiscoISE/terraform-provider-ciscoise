@@ -1,1 +1,1 @@
-terraform import ciscoise_native_supplicant_profile.example "id=string"
+terraform import ciscoise_native_supplicant_profile.example "id:=string"

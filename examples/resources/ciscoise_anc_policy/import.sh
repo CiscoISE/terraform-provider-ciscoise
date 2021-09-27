@@ -1,1 +1,1 @@
-terraform import ciscoise_anc_policy.example "id=string/name=string"
+terraform import ciscoise_anc_policy.example "id:=string\name:=string"

@@ -1,1 +1,1 @@
-terraform import ciscoise_network_access_dictionary_attribute.example "dictionary_name=string/name=string"
+terraform import ciscoise_network_access_dictionary_attribute.example "dictionary_name:=string\name:=string"

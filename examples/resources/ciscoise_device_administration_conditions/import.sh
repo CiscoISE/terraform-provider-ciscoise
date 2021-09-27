@@ -1,1 +1,1 @@
-terraform import ciscoise_device_administration_conditions.example "id=string/name=string"
+terraform import ciscoise_device_administration_conditions.example "id:=string\name:=string"
