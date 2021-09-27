@@ -58,7 +58,7 @@ func resourceSgt() *schema.Resource {
 							Computed: true,
 						},
 						"generation_id": &schema.Schema{
-							Type:     schema.TypeInt,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -409,7 +409,7 @@ func expandRequestSgtCreateSecurityGroupSgt(ctx context.Context, key string, d *
 		request.Value = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".generation_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".generation_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".generation_id"))) {
-		request.GenerationID = interfaceToIntPtr(v)
+		request.GenerationID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".is_read_only"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_read_only"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_read_only"))) {
 		request.IsReadOnly = interfaceToBoolPtr(v)
@@ -451,7 +451,7 @@ func expandRequestSgtUpdateSecurityGroupByIDSgt(ctx context.Context, key string,
 		request.Value = interfaceToIntPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".generation_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".generation_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".generation_id"))) {
-		request.GenerationID = interfaceToIntPtr(v)
+		request.GenerationID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".is_read_only"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_read_only"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_read_only"))) {
 		request.IsReadOnly = interfaceToBoolPtr(v)
