@@ -1,1 +1,1 @@
-terraform import ciscoise_network_access_network_condition.example "id=string"
+terraform import ciscoise_network_access_network_condition.example "id:=string"

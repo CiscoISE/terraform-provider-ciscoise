@@ -1,1 +1,1 @@
-terraform import ciscoise_network_device_group.example "id=string/name=string"
+terraform import ciscoise_network_device_group.example "id:=string\name:=string"

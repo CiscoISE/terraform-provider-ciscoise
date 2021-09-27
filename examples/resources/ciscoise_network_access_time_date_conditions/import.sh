@@ -1,1 +1,1 @@
-terraform import ciscoise_network_access_time_date_conditions.example "id=string"
+terraform import ciscoise_network_access_time_date_conditions.example "id:=string"
