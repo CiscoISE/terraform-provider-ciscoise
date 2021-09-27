@@ -67,5 +67,5 @@ At least one of subnet or sgt or vn should be defined
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_filter_policy.example "id=string"
+terraform import ciscoise_filter_policy.example "id:=string"
 ```

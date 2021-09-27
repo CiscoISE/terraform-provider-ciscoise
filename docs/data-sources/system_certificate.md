@@ -6,13 +6,7 @@ description: |-
   It performs read operation on Certificates.
   This data source supports Filtering, Sorting and Pagination.
   Filtering and Sorting supported on below mentioned attributes:
-  friendlyName
-  issuedTo
-  issuedBy
-  validFrom
-  Supported Date Format: yyyy-MM-dd HH:mm:ss
-  Supported Operators: EQ, NEQ, GT and LT
-  expirationDate
+  [friendlyName, issuedTo, issuedBy, validFrom, expirationDate]
   Supported Date Format: yyyy-MM-dd HH:mm:ss
   Supported Operators: EQ, NEQ, GT and LT
   This data source displays details of a System Certificate of a particular node based on a given HostName and ID.
@@ -27,44 +21,11 @@ It performs read operation on Certificates.
 
 Filtering and Sorting supported on below mentioned attributes:
 
-
-
-
-friendlyName
-
-
-issuedTo
-
-
-issuedBy
-
-
-validFrom
-
-
-
+[friendlyName, issuedTo, issuedBy, validFrom, expirationDate]
 
 Supported Date Format: yyyy-MM-dd HH:mm:ss
 
-
 Supported Operators: EQ, NEQ, GT and LT
-
-
-
-
-expirationDate
-
-
-
-
-Supported Date Format: yyyy-MM-dd HH:mm:ss
-
-
-Supported Operators: EQ, NEQ, GT and LT
-
-
-
-
 
 
 - This data source displays details of a System Certificate of a particular node based on a given HostName and ID.
@@ -88,14 +49,9 @@ output "ciscoise_system_certificate_example" {
 }
 
 data "ciscoise_system_certificate" "example" {
-  provider    = ciscoise
-  filter      = ["string"]
-  filter_type = "string"
-  host_name   = "string"
-  page        = 1
-  size        = 1
-  sort        = "string"
-  sort_by     = "string"
+  provider  = ciscoise
+  host_name = "string"
+  id        = "string"
 }
 
 output "ciscoise_system_certificate_example" {
@@ -115,77 +71,7 @@ output "ciscoise_system_certificate_example" {
 Simple filtering
  should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
 "filterType=or"
- query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
- 
- 
- 
- 
- 
-OPERATOR
- 
-DESCRIPTION
- 
- 
- 
- 
- 
-EQ
- 
-Equals
- 
- 
- 
-NEQ
- 
-Not Equals
- 
- 
- 
-GT
- 
-Greater Than
- 
- 
- 
-LT
- 
-Less Then
- 
- 
- 
-STARTSW
- 
-Starts With
- 
- 
- 
-NSTARTSW
- 
-Not Starts With
- 
- 
- 
-ENDSW
- 
-Ends With
- 
- 
- 
-NENDSW
- 
-Not Ends With
- 
- 
- 
-CONTAINS
- 
-Contains
- 
- 
- 
-NCONTAINS
- 
-Not Contains
+ query string parameter. Each resource Data model description should specify if an attribute is a filtered field.
 - **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
 - **host_name** (String) hostName path parameter. Name of the host of which system certificates should be returned
 - **id** (String) id path parameter. The id of the system certificate
