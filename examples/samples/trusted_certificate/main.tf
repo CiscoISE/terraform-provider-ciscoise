@@ -10,16 +10,25 @@ terraform {
 provider "ciscoise" {
 }
 
-# data "ciscoise_trusted_certificate" "example" {
-#   provider    = ciscoise
-#   id          = "7865ac6a-64c6-4e65-865e-d1b093ee0b10"
-# }
+data "ciscoise_trusted_certificate" "example" {
+  provider = ciscoise
+}
 
-# output "ciscoise_trusted_certificate_example" {
-#   value = data.ciscoise_trusted_certificate.example.item
-# }
+output "ciscoise_trusted_certificate_example" {
+  value = data.ciscoise_trusted_certificate.example.items
+}
 
-resource "ciscoise_trusted_certificate" "example" {
+data "ciscoise_trusted_certificate" "example_id" {
+  provider = ciscoise
+  id       = data.ciscoise_trusted_certificate.example.items[0].id
+}
+
+output "ciscoise_trusted_certificate_example_id" {
+  value = data.ciscoise_trusted_certificate.example_id.item
+}
+
+
+resource "ciscoise_trusted_certificate" "iden_trust" {
   provider = ciscoise
   item {
     id                                 = "7865ac6a-64c6-4e65-865e-d1b093ee0b10"

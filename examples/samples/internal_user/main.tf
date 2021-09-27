@@ -10,6 +10,31 @@ terraform {
 provider "ciscoise" {
 }
 
+data "ciscoise_internal_user" "items" {
+  provider = ciscoise
+}
+output "ciscoise_internal_user_items" {
+  value = data.ciscoise_internal_user.items.items
+}
+
+data "ciscoise_internal_user" "example1" {
+  provider = ciscoise
+  name     = data.ciscoise_internal_user.items.items[0].name
+}
+
+output "ciscoise_internal_user_example1" {
+  value = data.ciscoise_internal_user.example1.item_name
+}
+
+data "ciscoise_internal_user" "example2" {
+  provider = ciscoise
+  id       = data.ciscoise_internal_user.items.items[0].id
+}
+
+output "ciscoise_internal_user_example2" {
+  value = data.ciscoise_internal_user.example2.item_id
+}
+
 resource "ciscoise_internal_user" "example" {
   provider = ciscoise
   item {
