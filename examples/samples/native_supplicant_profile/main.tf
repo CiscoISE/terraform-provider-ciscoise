@@ -10,12 +10,21 @@ terraform {
 provider "ciscoise" {
 }
 
-data "ciscoise_native_supplicant_profile" "response" {
+data "ciscoise_native_supplicant_profile" "items" {
   provider = ciscoise
 }
 
-output "ciscoise_native_supplicant_profile_response" {
-  value = data.ciscoise_native_supplicant_profile.response
+output "ciscoise_native_supplicant_profile_items" {
+  value = data.ciscoise_native_supplicant_profile.items
+}
+
+data "ciscoise_native_supplicant_profile" "item" {
+  provider = ciscoise
+  id       = data.ciscoise_native_supplicant_profile.items.items[0].id
+}
+
+output "ciscoise_native_supplicant_profile_item" {
+  value = data.ciscoise_native_supplicant_profile.item.item
 }
 
 resource "ciscoise_native_supplicant_profile" "example" {

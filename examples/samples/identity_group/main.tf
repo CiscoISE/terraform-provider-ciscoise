@@ -16,18 +16,18 @@ data "ciscoise_identity_group" "example" {
 }
 
 output "ciscoise_identity_group_example" {
-  value = data.ciscoise_identity_group.example.items
+  value = data.ciscoise_identity_group.example
 }
 
-# GetIdentityGroupByName's API call fails with 404
-# data "ciscoise_identity_group" "example1" {
-#   provider = ciscoise
-#   name     = data.ciscoise_identity_group.example.items[1].name
-# }
+// GetIdentityGroupByName's API call sometimes fails with 404
+data "ciscoise_identity_group" "example1" {
+  provider = ciscoise
+  name     = "Employee"
+}
 
-# output "ciscoise_identity_group_example1" {
-#   value = data.ciscoise_identity_group.example1.item_name
-# }
+output "ciscoise_identity_group_example1" {
+  value = data.ciscoise_identity_group.example1.item_name
+}
 
 data "ciscoise_identity_group" "example2" {
   provider = ciscoise

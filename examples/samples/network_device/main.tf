@@ -15,7 +15,7 @@ data "ciscoise_network_device" "response" {
   page     = 1
   size     = 20
 }
-output "ciscoise__network_device_response" {
+output "ciscoise_network_device_response" {
   value = data.ciscoise_network_device.response
 }
 
@@ -24,7 +24,7 @@ data "ciscoise_network_device" "single_response_id" {
   id       = data.ciscoise_network_device.response.items[0].id
 }
 
-output "ciscoise__network_device_single_response_id" {
+output "ciscoise_network_device_single_response_id" {
   value = data.ciscoise_network_device.single_response_id
 }
 
@@ -33,6 +33,6 @@ data "ciscoise_network_device" "single_response_name" {
   provider = ciscoise
   name     = data.ciscoise_network_device.response.items[0].name
 }
-output "ciscoise__network_device_single_response_name" {
+output "ciscoise_network_device_single_response_name" {
   value = data.ciscoise_network_device.single_response_name
 }
