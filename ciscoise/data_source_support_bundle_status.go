@@ -52,7 +52,7 @@ func dataSourceSupportBundleStatus() *schema.Resource {
 							Computed: true,
 						},
 						"file_size": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 						"host_name": &schema.Schema{
