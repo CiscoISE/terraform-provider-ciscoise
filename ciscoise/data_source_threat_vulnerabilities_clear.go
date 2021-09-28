@@ -48,10 +48,10 @@ func dataSourceThreatVulnerabilitiesClearRead(ctx context.Context, d *schema.Res
 
 		response1, err := client.ClearThreatsAndVulnerabilities.ClearThreatsAndVulnerabilities(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ClearThreatsAndVulnerabilities", err,
 				"Failure at ClearThreatsAndVulnerabilities, unexpected response", ""))

@@ -51,10 +51,10 @@ func dataSourceSxpConnectionsBulkRequestRead(ctx context.Context, d *schema.Reso
 
 		response1, err := client.SxpConnections.BulkRequestForSxpConnections(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForSxpConnections", err,
 				"Failure at BulkRequestForSxpConnections, unexpected response", ""))

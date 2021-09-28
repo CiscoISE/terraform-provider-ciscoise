@@ -51,10 +51,10 @@ func dataSourceSgMappingBulkRequestRead(ctx context.Context, d *schema.ResourceD
 
 		response1, err := client.IPToSgtMapping.BulkRequestForIPToSgtMapping(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForIPToSgtMapping", err,
 				"Failure at BulkRequestForIPToSgtMapping, unexpected response", ""))

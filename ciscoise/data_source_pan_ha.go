@@ -65,9 +65,12 @@ func dataSourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interfac
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetPanHaStatus")
 
-		response1, _, err := client.PanHa.GetPanHaStatus()
+		response1, restyResp1, err := client.PanHa.GetPanHaStatus()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPanHaStatus", err,
 				"Failure at GetPanHaStatus, unexpected response", ""))

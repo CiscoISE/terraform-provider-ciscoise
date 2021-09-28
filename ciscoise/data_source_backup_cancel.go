@@ -113,9 +113,12 @@ func dataSourceBackupCancelRead(ctx context.Context, d *schema.ResourceData, m i
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: CancelBackup")
 
-		response1, _, err := client.BackupAndRestore.CancelBackup()
+		response1, restyResp1, err := client.BackupAndRestore.CancelBackup()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CancelBackup", err,
 				"Failure at CancelBackup, unexpected response", ""))

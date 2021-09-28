@@ -46,10 +46,10 @@ func dataSourcePxgridAccountActivateRead(ctx context.Context, d *schema.Resource
 
 		response1, err := client.Consumer.ActivateAccount(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ActivateAccount", err,
 				"Failure at ActivateAccount, unexpected response", ""))

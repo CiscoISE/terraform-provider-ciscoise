@@ -100,9 +100,12 @@ func dataSourceNetworkAccessDictionaryAttributesPolicySetRead(ctx context.Contex
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionariesPolicySet")
 
-		response1, _, err := client.NetworkAccessDictionaryAttributesList.GetNetworkAccessDictionariesPolicySet()
+		response1, restyResp1, err := client.NetworkAccessDictionaryAttributesList.GetNetworkAccessDictionariesPolicySet()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessDictionariesPolicySet", err,
 				"Failure at GetNetworkAccessDictionariesPolicySet, unexpected response", ""))

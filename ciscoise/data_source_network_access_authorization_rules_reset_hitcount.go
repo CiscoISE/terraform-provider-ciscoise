@@ -54,9 +54,12 @@ func dataSourceNetworkAccessAuthorizationRulesResetHitcountRead(ctx context.Cont
 		log.Printf("[DEBUG] Selected method 1: ResetHitCountsNetworkAccessAuthorizationRules")
 		vvPolicyID := vPolicyID.(string)
 
-		response1, _, err := client.NetworkAccessAuthorizationRules.ResetHitCountsNetworkAccessAuthorizationRules(vvPolicyID)
+		response1, restyResp1, err := client.NetworkAccessAuthorizationRules.ResetHitCountsNetworkAccessAuthorizationRules(vvPolicyID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ResetHitCountsNetworkAccessAuthorizationRules", err,
 				"Failure at ResetHitCountsNetworkAccessAuthorizationRules, unexpected response", ""))

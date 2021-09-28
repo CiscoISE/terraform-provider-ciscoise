@@ -47,9 +47,12 @@ func dataSourceDeviceAdministrationGlobalExceptionRulesResetHitcountRead(ctx con
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: ResetHitCountsDeviceAdminGlobalExceptions")
 
-		response1, _, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.ResetHitCountsDeviceAdminGlobalExceptions()
+		response1, restyResp1, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.ResetHitCountsDeviceAdminGlobalExceptions()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ResetHitCountsDeviceAdminGlobalExceptions", err,
 				"Failure at ResetHitCountsDeviceAdminGlobalExceptions, unexpected response", ""))

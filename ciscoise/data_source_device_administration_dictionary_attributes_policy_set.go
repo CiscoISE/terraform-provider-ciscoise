@@ -100,9 +100,12 @@ func dataSourceDeviceAdministrationDictionaryAttributesPolicySetRead(ctx context
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminDictionariesPolicySet")
 
-		response1, _, err := client.DeviceAdministrationDictionaryAttributesList.GetDeviceAdminDictionariesPolicySet()
+		response1, restyResp1, err := client.DeviceAdministrationDictionaryAttributesList.GetDeviceAdminDictionariesPolicySet()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminDictionariesPolicySet", err,
 				"Failure at GetDeviceAdminDictionariesPolicySet, unexpected response", ""))

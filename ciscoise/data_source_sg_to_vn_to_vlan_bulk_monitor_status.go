@@ -110,9 +110,12 @@ func dataSourceSgToVnToVLANBulkMonitorStatusRead(ctx context.Context, d *schema.
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusSecurityGroupsToVnToVLAN")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.SecurityGroupToVirtualNetwork.MonitorBulkStatusSecurityGroupsToVnToVLAN(vvBulkid)
+		response1, restyResp1, err := client.SecurityGroupToVirtualNetwork.MonitorBulkStatusSecurityGroupsToVnToVLAN(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusSecurityGroupsToVnToVLAN", err,
 				"Failure at MonitorBulkStatusSecurityGroupsToVnToVLAN, unexpected response", ""))

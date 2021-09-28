@@ -240,9 +240,12 @@ func dataSourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d 
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminNetworkConditions")
 
-		response1, _, err := client.DeviceAdministrationNetworkConditions.GetDeviceAdminNetworkConditions()
+		response1, restyResp1, err := client.DeviceAdministrationNetworkConditions.GetDeviceAdminNetworkConditions()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminNetworkConditions", err,
 				"Failure at GetDeviceAdminNetworkConditions, unexpected response", ""))

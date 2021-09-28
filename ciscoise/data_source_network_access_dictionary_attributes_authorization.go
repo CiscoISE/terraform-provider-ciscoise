@@ -100,9 +100,12 @@ func dataSourceNetworkAccessDictionaryAttributesAuthorizationRead(ctx context.Co
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionariesAuthorization")
 
-		response1, _, err := client.NetworkAccessDictionaryAttributesList.GetNetworkAccessDictionariesAuthorization()
+		response1, restyResp1, err := client.NetworkAccessDictionaryAttributesList.GetNetworkAccessDictionariesAuthorization()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessDictionariesAuthorization", err,
 				"Failure at GetNetworkAccessDictionariesAuthorization, unexpected response", ""))

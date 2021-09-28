@@ -272,9 +272,12 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 			queryParams1.Size = vSize.(int)
 		}
 
-		response1, _, err := client.TacacsCommandSets.GetTacacsCommandSets(&queryParams1)
+		response1, restyResp1, err := client.TacacsCommandSets.GetTacacsCommandSets(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsCommandSets", err,
 				"Failure at GetTacacsCommandSets, unexpected response", ""))

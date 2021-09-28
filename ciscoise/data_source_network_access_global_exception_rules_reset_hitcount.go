@@ -47,9 +47,12 @@ func dataSourceNetworkAccessGlobalExceptionRulesResetHitcountRead(ctx context.Co
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: ResetHitCountsNetworkAccessGlobalExceptions")
 
-		response1, _, err := client.NetworkAccessAuthorizationGlobalExceptionRules.ResetHitCountsNetworkAccessGlobalExceptions()
+		response1, restyResp1, err := client.NetworkAccessAuthorizationGlobalExceptionRules.ResetHitCountsNetworkAccessGlobalExceptions()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ResetHitCountsNetworkAccessGlobalExceptions", err,
 				"Failure at ResetHitCountsNetworkAccessGlobalExceptions, unexpected response", ""))

@@ -472,9 +472,12 @@ func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminTimeConditions")
 
-		response1, _, err := client.DeviceAdministrationTimeDateConditions.GetDeviceAdminTimeConditions()
+		response1, restyResp1, err := client.DeviceAdministrationTimeDateConditions.GetDeviceAdminTimeConditions()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminTimeConditions", err,
 				"Failure at GetDeviceAdminTimeConditions, unexpected response", ""))

@@ -74,9 +74,12 @@ func dataSourceCsrGenerateIntermediateCaRead(ctx context.Context, d *schema.Reso
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GenerateIntermediateCaCsr")
 
-		response1, _, err := client.Certificates.GenerateIntermediateCaCsr()
+		response1, restyResp1, err := client.Certificates.GenerateIntermediateCaCsr()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GenerateIntermediateCaCsr", err,
 				"Failure at GenerateIntermediateCaCsr, unexpected response", ""))

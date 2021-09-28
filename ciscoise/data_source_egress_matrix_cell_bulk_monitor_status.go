@@ -110,9 +110,12 @@ func dataSourceEgressMatrixCellBulkMonitorStatusRead(ctx context.Context, d *sch
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusEgressMatrixCell")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.EgressMatrixCell.MonitorBulkStatusEgressMatrixCell(vvBulkid)
+		response1, restyResp1, err := client.EgressMatrixCell.MonitorBulkStatusEgressMatrixCell(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusEgressMatrixCell", err,
 				"Failure at MonitorBulkStatusEgressMatrixCell, unexpected response", ""))

@@ -187,9 +187,12 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionaryAttributesByDictionaryName")
 		vvDictionaryName := vDictionaryName.(string)
 
-		response1, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
+		response1, restyResp1, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessDictionaryAttributesByDictionaryName", err,
 				"Failure at GetNetworkAccessDictionaryAttributesByDictionaryName, unexpected response", ""))

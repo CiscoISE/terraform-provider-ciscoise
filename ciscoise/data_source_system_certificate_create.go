@@ -148,10 +148,10 @@ func dataSourceSystemCertificateCreateRead(ctx context.Context, d *schema.Resour
 
 		response1, err := client.SystemCertificate.CreateSystemCertificate(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateSystemCertificate", err,
 				"Failure at CreateSystemCertificate, unexpected response", ""))

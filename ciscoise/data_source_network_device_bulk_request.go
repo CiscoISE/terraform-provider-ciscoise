@@ -51,10 +51,10 @@ func dataSourceNetworkDeviceBulkRequestRead(ctx context.Context, d *schema.Resou
 
 		response1, err := client.NetworkDevice.BulkRequestForNetworkDevice(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForNetworkDevice", err,
 				"Failure at BulkRequestForNetworkDevice, unexpected response", ""))

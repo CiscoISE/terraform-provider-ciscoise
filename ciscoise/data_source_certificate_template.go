@@ -190,9 +190,12 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 			queryParams1.Size = vSize.(int)
 		}
 
-		response1, _, err := client.CertificateTemplate.GetCertificateTemplate(&queryParams1)
+		response1, restyResp1, err := client.CertificateTemplate.GetCertificateTemplate(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetCertificateTemplate", err,
 				"Failure at GetCertificateTemplate, unexpected response", ""))

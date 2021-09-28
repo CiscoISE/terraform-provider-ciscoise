@@ -458,9 +458,12 @@ func dataSourceDeploymentRead(ctx context.Context, d *schema.ResourceData, m int
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeploymentInfo")
 
-		response1, _, err := client.PullDeploymentInfo.GetDeploymentInfo()
+		response1, restyResp1, err := client.PullDeploymentInfo.GetDeploymentInfo()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeploymentInfo", err,
 				"Failure at GetDeploymentInfo, unexpected response", ""))
