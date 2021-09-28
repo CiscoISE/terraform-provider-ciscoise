@@ -33,7 +33,7 @@ data "ciscoise_network_access_conditions" "found" {
     ciscoise_network_access_conditions.example
   ]
   provider = ciscoise
-  name = "My New Condition"
+  name     = "My New Condition"
 }
 
 output "ciscoise_network_access_conditions_found" {
