@@ -11,9 +11,9 @@ provider "ciscoise" {
 }
 
 data "ciscoise_aci_test_connectivity" "test_resp" {
-    provider = ciscoise
+  provider = ciscoise
 }
 
 output "test_resp" {
-    value = data.ciscoise_aci_test_connectivity.test_resp.item[0].result
+  value = data.ciscoise_aci_test_connectivity.test_resp.item[0].result
 }

@@ -13,15 +13,15 @@ provider "ciscoise" {
 
 data "ciscoise_active_directory" "response" {
   provider = ciscoise
-  name = "cisco.com"
+  name     = "cisco.com"
 }
 
 data "ciscoise_active_directory_add_groups" "add_groups_resp" {
-  provider = ciscoise
-  id       = data.ciscoise_active_directory.response.item_name[0].id
-  name = data.ciscoise_active_directory.response.item_name[0].name
+  provider    = ciscoise
+  id          = data.ciscoise_active_directory.response.item_name[0].id
+  name        = data.ciscoise_active_directory.response.item_name[0].name
   description = data.ciscoise_active_directory.response.item_name[0].description
-  domain = data.ciscoise_active_directory.response.item_name[0].domain
+  domain      = data.ciscoise_active_directory.response.item_name[0].domain
   adgroups {
     groups {
       name = "cisco.com/operators"
@@ -31,7 +31,7 @@ data "ciscoise_active_directory_add_groups" "add_groups_resp" {
 }
 
 output "add_groups_resp" {
-    value = data.ciscoise_active_directory_add_groups.add_groups_resp
+  value = data.ciscoise_active_directory_add_groups.add_groups_resp
 }
 
 
@@ -66,5 +66,5 @@ data "ciscoise_active_directory_get_groups_by_domain_info" "get_groups_by_domain
 }
 
 output "get_groups_by_domain_resp" {
-    value = data.ciscoise_active_directory_get_groups_by_domain_info.get_groups_by_domain_resp
+  value = data.ciscoise_active_directory_get_groups_by_domain_info.get_groups_by_domain_resp
 }

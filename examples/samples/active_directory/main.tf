@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 data "ciscoise_active_directory" "single_response" {
   provider = ciscoise
-  name       = data.ciscoise_active_directory.response.items[0].id
+  name     = data.ciscoise_active_directory.response.items[0].id
 }
 
 output "ciscoise_active_directory_single_response" {
