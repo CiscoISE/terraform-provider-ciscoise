@@ -369,7 +369,11 @@ func flattenSecurityGroupsGetSecurityGroupByIDItem(item *isegosdk.ResponseSecuri
 	respItem["generation_id"] = item.GenerationID
 	respItem["is_read_only"] = boolPtrToString(item.IsReadOnly)
 	respItem["propogate_to_apic"] = boolPtrToString(item.PropogateToAPIc)
-	respItem["default_sgacls"] = responseInterfaceToSliceString(item.DefaultSgACLs)
+	if item.DefaultSgACLs != nil {
+		respItem["default_sgacls"] = responseInterfaceToSliceString(*item.DefaultSgACLs)
+	} else {
+		respItem["default_sgacls"] = []string{}
+	}
 	respItem["link"] = flattenSecurityGroupsGetSecurityGroupByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

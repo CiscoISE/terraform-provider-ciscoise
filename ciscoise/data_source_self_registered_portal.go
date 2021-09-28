@@ -1594,7 +1594,11 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 	respItem["approve_deny_links_time_units"] = item.ApproveDenyLinksTimeUnits
 	respItem["require_approver_to_authenticate"] = boolPtrToString(item.RequireApproverToAuthenticate)
 	respItem["authenticate_sponsors_using_portal_list"] = boolPtrToString(item.AuthenticateSponsorsUsingPortalList)
-	respItem["sponsor_portal_list"] = responseInterfaceToSliceString(item.SponsorPortalList)
+	if item.SponsorPortalList != nil {
+		respItem["sponsor_portal_list"] = responseInterfaceToSliceString(*item.SponsorPortalList)
+	} else {
+		respItem["sponsor_portal_list"] = []string{}
+	}
 
 	return []map[string]interface{}{
 		respItem,
