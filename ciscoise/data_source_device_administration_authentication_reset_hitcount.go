@@ -54,9 +54,12 @@ func dataSourceDeviceAdministrationAuthenticationResetHitcountRead(ctx context.C
 		log.Printf("[DEBUG] Selected method 1: ResetHitCountsDeviceAdminAuthenticationRules")
 		vvPolicyID := vPolicyID.(string)
 
-		response1, _, err := client.DeviceAdministrationAuthenticationRules.ResetHitCountsDeviceAdminAuthenticationRules(vvPolicyID)
+		response1, restyResp1, err := client.DeviceAdministrationAuthenticationRules.ResetHitCountsDeviceAdminAuthenticationRules(vvPolicyID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ResetHitCountsDeviceAdminAuthenticationRules", err,
 				"Failure at ResetHitCountsDeviceAdminAuthenticationRules, unexpected response", ""))

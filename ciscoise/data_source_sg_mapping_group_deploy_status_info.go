@@ -61,9 +61,12 @@ func dataSourceSgMappingGroupDeployStatusInfoRead(ctx context.Context, d *schema
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeployStatusIPToSgtMappingGroup")
 
-		response1, _, err := client.IPToSgtMappingGroup.GetDeployStatusIPToSgtMappingGroup()
+		response1, restyResp1, err := client.IPToSgtMappingGroup.GetDeployStatusIPToSgtMappingGroup()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeployStatusIPToSgtMappingGroup", err,
 				"Failure at GetDeployStatusIPToSgtMappingGroup, unexpected response", ""))

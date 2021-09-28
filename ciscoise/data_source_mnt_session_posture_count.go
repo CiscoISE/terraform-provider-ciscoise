@@ -46,9 +46,12 @@ func dataSourceMntSessionPostureCountRead(ctx context.Context, d *schema.Resourc
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetPostureCount")
 
-		response1, _, err := client.Misc.GetPostureCount()
+		response1, restyResp1, err := client.Misc.GetPostureCount()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPostureCount", err,
 				"Failure at GetPostureCount, unexpected response", ""))

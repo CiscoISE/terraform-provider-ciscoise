@@ -51,9 +51,12 @@ func dataSourceNetworkAccessSecurityGroupsRead(ctx context.Context, d *schema.Re
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessSecurityGroups")
 
-		response1, _, err := client.NetworkAccessSecurityGroups.GetNetworkAccessSecurityGroups()
+		response1, restyResp1, err := client.NetworkAccessSecurityGroups.GetNetworkAccessSecurityGroups()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessSecurityGroups", err,
 				"Failure at GetNetworkAccessSecurityGroups, unexpected response", ""))

@@ -642,12 +642,15 @@ func dataSourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminAuthorizationRules")
+		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminAuthorizationRules")
 		vvPolicyID := vPolicyID.(string)
 
-		response1, _, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRules(vvPolicyID)
+		response1, restyResp1, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRules(vvPolicyID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminAuthorizationRules", err,
 				"Failure at GetDeviceAdminAuthorizationRules, unexpected response", ""))
@@ -668,7 +671,7 @@ func dataSourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d
 
 	}
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminAuthorizationRuleByID")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminAuthorizationRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)
 

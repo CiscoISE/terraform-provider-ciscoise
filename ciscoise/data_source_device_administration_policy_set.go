@@ -622,9 +622,12 @@ func dataSourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminPolicySets")
 
-		response1, _, err := client.DeviceAdministrationPolicySet.GetDeviceAdminPolicySets()
+		response1, restyResp1, err := client.DeviceAdministrationPolicySet.GetDeviceAdminPolicySets()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminPolicySets", err,
 				"Failure at GetDeviceAdminPolicySets, unexpected response", ""))

@@ -1342,9 +1342,12 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.SelfRegisteredPortal.GetSelfRegisteredPortals(&queryParams1)
+		response1, restyResp1, err := client.SelfRegisteredPortal.GetSelfRegisteredPortals(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSelfRegisteredPortals", err,
 				"Failure at GetSelfRegisteredPortals, unexpected response", ""))
@@ -1594,7 +1597,11 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 	respItem["approve_deny_links_time_units"] = item.ApproveDenyLinksTimeUnits
 	respItem["require_approver_to_authenticate"] = boolPtrToString(item.RequireApproverToAuthenticate)
 	respItem["authenticate_sponsors_using_portal_list"] = boolPtrToString(item.AuthenticateSponsorsUsingPortalList)
-	respItem["sponsor_portal_list"] = responseInterfaceToSliceString(item.SponsorPortalList)
+	if item.SponsorPortalList != nil {
+		respItem["sponsor_portal_list"] = responseInterfaceToSliceString(*item.SponsorPortalList)
+	} else {
+		respItem["sponsor_portal_list"] = []string{}
+	}
 
 	return []map[string]interface{}{
 		respItem,

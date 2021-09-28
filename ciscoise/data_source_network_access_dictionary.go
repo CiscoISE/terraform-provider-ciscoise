@@ -156,9 +156,12 @@ func dataSourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resour
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionaries")
 
-		response1, _, err := client.NetworkAccessDictionary.GetNetworkAccessDictionaries()
+		response1, restyResp1, err := client.NetworkAccessDictionary.GetNetworkAccessDictionaries()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessDictionaries", err,
 				"Failure at GetNetworkAccessDictionaries, unexpected response", ""))

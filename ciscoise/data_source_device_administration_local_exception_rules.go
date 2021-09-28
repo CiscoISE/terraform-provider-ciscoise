@@ -642,12 +642,15 @@ func dataSourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminLocalExceptionRules")
+		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminLocalExceptionRules")
 		vvPolicyID := vPolicyID.(string)
 
-		response1, _, err := client.DeviceAdministrationAuthorizationExceptionRules.GetDeviceAdminLocalExceptionRules(vvPolicyID)
+		response1, restyResp1, err := client.DeviceAdministrationAuthorizationExceptionRules.GetDeviceAdminLocalExceptionRules(vvPolicyID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminLocalExceptionRules", err,
 				"Failure at GetDeviceAdminLocalExceptionRules, unexpected response", ""))
@@ -668,7 +671,7 @@ func dataSourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, 
 
 	}
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminLocalExceptionRuleByID")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminLocalExceptionRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)
 

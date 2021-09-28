@@ -458,9 +458,12 @@ func dataSourceDeploymentRead(ctx context.Context, d *schema.ResourceData, m int
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeploymentInfo")
 
-		response1, _, err := client.PullDeploymentInfo.GetDeploymentInfo()
+		response1, restyResp1, err := client.PullDeploymentInfo.GetDeploymentInfo()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeploymentInfo", err,
 				"Failure at GetDeploymentInfo, unexpected response", ""))
@@ -509,9 +512,17 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfo(item *isego
 	respItem["deployment_id"] = item.DeploymentID
 	respItem["is_csn_enabled"] = boolPtrToString(item.IsCsnEnabled)
 	respItem["node_list"] = flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfoNodeList(item.NodeList)
-	respItem["sda_vns"] = responseInterfaceToSliceString(item.SdaVns)
+	if item.SdaVns != nil {
+		respItem["sda_vns"] = responseInterfaceToSliceString(*item.SdaVns)
+	} else {
+		respItem["sda_vns"] = []string{}
+	}
 	respItem["trust_sec_control"] = item.TrustSecControl
-	respItem["radius3_rd_party"] = responseInterfaceToSliceString(item.Radius3RdParty)
+	if item.Radius3RdParty != nil {
+		respItem["radius3_rd_party"] = responseInterfaceToSliceString(*item.Radius3RdParty)
+	} else {
+		respItem["radius3_rd_party"] = []string{}
+	}
 
 	return []map[string]interface{}{
 		respItem,
@@ -524,7 +535,11 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNetworkAccessInfoNodeList(ite
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
+	if item.NodeAndScope != nil {
+		respItem["node_and_scope"] = responseInterfaceToSliceString(*item.NodeAndScope)
+	} else {
+		respItem["node_and_scope"] = []string{}
+	}
 
 	return []map[string]interface{}{
 		respItem,
@@ -660,7 +675,11 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemNadInfoNodeList(item *isegosd
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
+	if item.NodeAndScope != nil {
+		respItem["node_and_scope"] = responseInterfaceToSliceString(*item.NodeAndScope)
+	} else {
+		respItem["node_and_scope"] = []string{}
+	}
 
 	return []map[string]interface{}{
 		respItem,
@@ -703,7 +722,11 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemMdmInfoNodeList(item *isegosd
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["node_and_scope"] = responseInterfaceToSliceString(item.NodeAndScope)
+	if item.NodeAndScope != nil {
+		respItem["node_and_scope"] = responseInterfaceToSliceString(*item.NodeAndScope)
+	} else {
+		respItem["node_and_scope"] = []string{}
+	}
 
 	return []map[string]interface{}{
 		respItem,
@@ -730,7 +753,11 @@ func flattenPullDeploymentInfoGetDeploymentInfoItemLicensesInfoNodeList(item *is
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["node"] = responseInterfaceToSliceString(item.Node)
+	if item.Node != nil {
+		respItem["node"] = responseInterfaceToSliceString(*item.Node)
+	} else {
+		respItem["node"] = []string{}
+	}
 
 	return []map[string]interface{}{
 		respItem,

@@ -677,9 +677,12 @@ func dataSourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m 
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.SponsorPortal.GetSponsorPortal(&queryParams1)
+		response1, restyResp1, err := client.SponsorPortal.GetSponsorPortal(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsorPortal", err,
 				"Failure at GetSponsorPortal, unexpected response", ""))
@@ -849,7 +852,11 @@ func flattenSponsorPortalGetSponsorPortalByIDItemSettingsLoginPageSettings(item 
 	respItem["aup_display"] = item.AupDisplay
 	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
 	respItem["require_aup_scrolling"] = boolPtrToString(item.RequireAupScrolling)
-	respItem["social_configs"] = responseInterfaceToSliceString(item.SocialConfigs)
+	if item.SocialConfigs != nil {
+		respItem["social_configs"] = responseInterfaceToSliceString(*item.SocialConfigs)
+	} else {
+		respItem["social_configs"] = []string{}
+	}
 
 	return []map[string]interface{}{
 		respItem,

@@ -184,12 +184,15 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionaryAttributesByDictionaryName")
+		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessDictionaryAttributesByDictionaryName")
 		vvDictionaryName := vDictionaryName.(string)
 
-		response1, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
+		response1, restyResp1, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessDictionaryAttributesByDictionaryName", err,
 				"Failure at GetNetworkAccessDictionaryAttributesByDictionaryName, unexpected response", ""))
@@ -210,7 +213,7 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 
 	}
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessDictionaryAttributeByName")
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionaryAttributeByName")
 		vvName := vName.(string)
 		vvDictionaryName := vDictionaryName.(string)
 

@@ -89,9 +89,12 @@ func dataSourceEndpointCertificateRead(ctx context.Context, d *schema.ResourceDa
 		log.Printf("[DEBUG] Selected method 1: CreateEndpointCertificate")
 		request1 := expandRequestEndpointCertificateCreateEndpointCertificate(ctx, "", d)
 
-		response1, _, err := client.EndpointCertificate.CreateEndpointCertificate(request1)
+		response1, restyResp1, err := client.EndpointCertificate.CreateEndpointCertificate(request1)
 
 		if err != nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagError(
 				"Failure when executing CreateEndpointCertificate", err))
 			return diags

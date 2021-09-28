@@ -856,9 +856,12 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.SponsoredGuestPortal.GetSponsoredGuestPortals(&queryParams1)
+		response1, restyResp1, err := client.SponsoredGuestPortal.GetSponsoredGuestPortals(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsoredGuestPortals", err,
 				"Failure at GetSponsoredGuestPortals, unexpected response", ""))

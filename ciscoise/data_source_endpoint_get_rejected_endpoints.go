@@ -59,9 +59,12 @@ func dataSourceEndpointGetRejectedEndpointsRead(ctx context.Context, d *schema.R
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetRejectedEndpoints")
 
-		response1, _, err := client.Endpoint.GetRejectedEndpoints()
+		response1, restyResp1, err := client.Endpoint.GetRejectedEndpoints()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRejectedEndpoints", err,
 				"Failure at GetRejectedEndpoints, unexpected response", ""))

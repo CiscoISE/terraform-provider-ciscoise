@@ -10,19 +10,9 @@ terraform {
 provider "ciscoise" {
 }
 
-data "ciscoise_active_directory" "response" {
-  provider = ciscoise
-  page     = 1
-  size     = 20
-}
-
-output "ciscoise_active_directory_response" {
-  value = data.ciscoise_active_directory.response
-}
-
 data "ciscoise_active_directory" "single_response" {
   provider = ciscoise
-  id       = data.ciscoise_active_directory.response.items[0].id
+  name     = data.ciscoise_active_directory.response.items[0].id
 }
 
 output "ciscoise_active_directory_single_response" {

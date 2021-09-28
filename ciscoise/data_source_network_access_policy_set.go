@@ -622,9 +622,12 @@ func dataSourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.Resourc
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessPolicySets")
 
-		response1, _, err := client.NetworkAccessPolicySet.GetNetworkAccessPolicySets()
+		response1, restyResp1, err := client.NetworkAccessPolicySet.GetNetworkAccessPolicySets()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessPolicySets", err,
 				"Failure at GetNetworkAccessPolicySets, unexpected response", ""))

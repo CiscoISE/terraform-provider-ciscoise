@@ -81,9 +81,12 @@ func dataSourceEgressMatrixCellCloneRead(ctx context.Context, d *schema.Resource
 		vvSrcSgtID := vSrcSgtID.(string)
 		vvDstSgtID := vDstSgtID.(string)
 
-		response1, _, err := client.EgressMatrixCell.CloneMatrixCell(vvID, vvSrcSgtID, vvDstSgtID)
+		response1, restyResp1, err := client.EgressMatrixCell.CloneMatrixCell(vvID, vvSrcSgtID, vvDstSgtID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CloneMatrixCell", err,
 				"Failure at CloneMatrixCell, unexpected response", ""))

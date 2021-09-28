@@ -68,17 +68,17 @@ func dataSourceGuestTypeEmailRead(ctx context.Context, d *schema.ResourceData, m
 
 		response1, err := client.GuestType.UpdateGuestTypeEmail(vvID, request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateGuestTypeEmail", err,
 				"Failure at UpdateGuestTypeEmail, unexpected response", ""))
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved response %s", response1.String())
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(
@@ -109,6 +109,7 @@ func expandRequestGuestTypeEmailUpdateGuestTypeEmailOperationAdditionalData(ctx 
 
 func expandRequestGuestTypeEmailUpdateGuestTypeEmailOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestGuestTypeUpdateGuestTypeEmailOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestGuestTypeUpdateGuestTypeEmailOperationAdditionalDataAdditionalData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil

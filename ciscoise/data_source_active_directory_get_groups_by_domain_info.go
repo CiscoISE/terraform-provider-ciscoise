@@ -92,11 +92,14 @@ func dataSourceActiveDirectoryGetGroupsByDomainInfoRead(ctx context.Context, d *
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryGetGroupsByDomainInfoGetGroupsByDomain(ctx, "", d)
 
-		response1, _, err := client.ActiveDirectory.GetGroupsByDomain(vvID, request1)
+		response1, restyResp1, err := client.ActiveDirectory.GetGroupsByDomain(vvID, request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGroupsByDomain", err,
@@ -136,6 +139,7 @@ func expandRequestActiveDirectoryGetGroupsByDomainInfoGetGroupsByDomainOperation
 
 func expandRequestActiveDirectoryGetGroupsByDomainInfoGetGroupsByDomainOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryGetGroupsByDomainOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestActiveDirectoryGetGroupsByDomainOperationAdditionalDataAdditionalData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil

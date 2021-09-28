@@ -110,9 +110,12 @@ func dataSourceSxpLocalBindingsBulkMonitorStatusRead(ctx context.Context, d *sch
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusSxpLocalBindings")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.SxpLocalBindings.MonitorBulkStatusSxpLocalBindings(vvBulkid)
+		response1, restyResp1, err := client.SxpLocalBindings.MonitorBulkStatusSxpLocalBindings(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusSxpLocalBindings", err,
 				"Failure at MonitorBulkStatusSxpLocalBindings, unexpected response", ""))

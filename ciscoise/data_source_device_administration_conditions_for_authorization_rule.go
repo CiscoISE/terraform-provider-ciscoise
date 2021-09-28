@@ -246,9 +246,12 @@ func dataSourceDeviceAdministrationConditionsForAuthorizationRuleRead(ctx contex
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminConditionsForAuthorizationRules")
 
-		response1, _, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionsForAuthorizationRules()
+		response1, restyResp1, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionsForAuthorizationRules()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminConditionsForAuthorizationRules", err,
 				"Failure at GetDeviceAdminConditionsForAuthorizationRules, unexpected response", ""))
