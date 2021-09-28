@@ -19,7 +19,7 @@ output "ciscoise_tasks_response" {
 
 data "ciscoise_tasks" "single_response" {
   provider = ciscoise
-  task_id       = data.ciscoise_tasks.response.items[0].id
+  task_id  = data.ciscoise_tasks.response.items[0].id
 }
 
 output "ciscoise_tasks_single_response" {
