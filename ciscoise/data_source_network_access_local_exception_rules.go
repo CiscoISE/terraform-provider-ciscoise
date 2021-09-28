@@ -642,7 +642,7 @@ func dataSourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *sche
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessLocalExceptionRules")
+		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessLocalExceptionRules")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.NetworkAccessAuthorizationExceptionRules.GetNetworkAccessLocalExceptionRules(vvPolicyID)
@@ -671,7 +671,7 @@ func dataSourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *sche
 
 	}
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessLocalExceptionRuleByID")
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessLocalExceptionRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)
 

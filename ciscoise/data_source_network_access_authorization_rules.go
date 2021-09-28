@@ -642,7 +642,7 @@ func dataSourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schem
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessAuthorizationRules")
+		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessAuthorizationRules")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.NetworkAccessAuthorizationRules.GetNetworkAccessAuthorizationRules(vvPolicyID)
@@ -671,7 +671,7 @@ func dataSourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schem
 
 	}
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessAuthorizationRuleByID")
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessAuthorizationRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)
 
