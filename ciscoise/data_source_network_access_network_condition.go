@@ -240,9 +240,12 @@ func dataSourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessNetworkConditions")
 
-		response1, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditions()
+		response1, restyResp1, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditions()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessNetworkConditions", err,
 				"Failure at GetNetworkAccessNetworkConditions, unexpected response", ""))

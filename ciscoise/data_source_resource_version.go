@@ -78,9 +78,12 @@ func dataSourceResourceVersionRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Selected method 1: GetVersionInfo")
 		vvResource := vResource.(string)
 
-		response1, _, err := client.VersionInfo.GetVersionInfo(vvResource)
+		response1, restyResp1, err := client.VersionInfo.GetVersionInfo(vvResource)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetVersionInfo", err,
 				"Failure at GetVersionInfo, unexpected response", ""))

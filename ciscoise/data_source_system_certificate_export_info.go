@@ -56,9 +56,12 @@ func dataSourceSystemCertificateExportInfoRead(ctx context.Context, d *schema.Re
 		log.Printf("[DEBUG] Selected method 1: ExportSystemCertificate")
 		request1 := expandRequestSystemCertificateExportInfoExportSystemCertificate(ctx, "", d)
 
-		response1, _, err := client.Certificates.ExportSystemCertificate(request1)
+		response1, restyResp1, err := client.Certificates.ExportSystemCertificate(request1)
 
 		if err != nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagError(
 				"Failure when executing ExportSystemCertificate", err))
 			return diags

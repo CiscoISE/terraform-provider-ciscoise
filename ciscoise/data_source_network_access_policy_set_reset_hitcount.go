@@ -47,9 +47,12 @@ func dataSourceNetworkAccessPolicySetResetHitcountRead(ctx context.Context, d *s
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: ResetHitCountsNetworkAccessPolicySets")
 
-		response1, _, err := client.NetworkAccessPolicySet.ResetHitCountsNetworkAccessPolicySets()
+		response1, restyResp1, err := client.NetworkAccessPolicySet.ResetHitCountsNetworkAccessPolicySets()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ResetHitCountsNetworkAccessPolicySets", err,
 				"Failure at ResetHitCountsNetworkAccessPolicySets, unexpected response", ""))

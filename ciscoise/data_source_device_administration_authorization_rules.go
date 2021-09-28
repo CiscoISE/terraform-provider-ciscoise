@@ -645,9 +645,12 @@ func dataSourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminAuthorizationRules")
 		vvPolicyID := vPolicyID.(string)
 
-		response1, _, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRules(vvPolicyID)
+		response1, restyResp1, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRules(vvPolicyID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminAuthorizationRules", err,
 				"Failure at GetDeviceAdminAuthorizationRules, unexpected response", ""))

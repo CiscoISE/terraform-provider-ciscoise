@@ -246,9 +246,12 @@ func dataSourceNetworkAccessConditionsForAuthenticationRuleRead(ctx context.Cont
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessConditionsForAuthenticationRules")
 
-		response1, _, err := client.NetworkAccessConditions.GetNetworkAccessConditionsForAuthenticationRules()
+		response1, restyResp1, err := client.NetworkAccessConditions.GetNetworkAccessConditionsForAuthenticationRules()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessConditionsForAuthenticationRules", err,
 				"Failure at GetNetworkAccessConditionsForAuthenticationRules, unexpected response", ""))

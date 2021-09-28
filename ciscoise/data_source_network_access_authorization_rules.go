@@ -645,9 +645,12 @@ func dataSourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schem
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessAuthorizationRules")
 		vvPolicyID := vPolicyID.(string)
 
-		response1, _, err := client.NetworkAccessAuthorizationRules.GetNetworkAccessAuthorizationRules(vvPolicyID)
+		response1, restyResp1, err := client.NetworkAccessAuthorizationRules.GetNetworkAccessAuthorizationRules(vvPolicyID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessAuthorizationRules", err,
 				"Failure at GetNetworkAccessAuthorizationRules, unexpected response", ""))

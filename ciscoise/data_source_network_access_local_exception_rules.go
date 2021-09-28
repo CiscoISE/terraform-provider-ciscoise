@@ -645,9 +645,12 @@ func dataSourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *sche
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessLocalExceptionRules")
 		vvPolicyID := vPolicyID.(string)
 
-		response1, _, err := client.NetworkAccessAuthorizationExceptionRules.GetNetworkAccessLocalExceptionRules(vvPolicyID)
+		response1, restyResp1, err := client.NetworkAccessAuthorizationExceptionRules.GetNetworkAccessLocalExceptionRules(vvPolicyID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessLocalExceptionRules", err,
 				"Failure at GetNetworkAccessLocalExceptionRules, unexpected response", ""))

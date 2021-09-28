@@ -638,9 +638,12 @@ func dataSourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context,
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminPolicySetGlobalExceptionRules")
 
-		response1, _, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.GetDeviceAdminPolicySetGlobalExceptionRules()
+		response1, restyResp1, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.GetDeviceAdminPolicySetGlobalExceptionRules()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminPolicySetGlobalExceptionRules", err,
 				"Failure at GetDeviceAdminPolicySetGlobalExceptionRules, unexpected response", ""))

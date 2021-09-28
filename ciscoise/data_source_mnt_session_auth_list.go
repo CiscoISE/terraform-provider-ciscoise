@@ -46,9 +46,12 @@ func dataSourceMntSessionAuthListRead(ctx context.Context, d *schema.ResourceDat
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetSessionAuthList")
 
-		response1, _, err := client.Misc.GetSessionAuthList()
+		response1, restyResp1, err := client.Misc.GetSessionAuthList()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSessionAuthList", err,
 				"Failure at GetSessionAuthList, unexpected response", ""))

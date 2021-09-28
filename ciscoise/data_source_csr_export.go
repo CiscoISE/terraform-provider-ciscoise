@@ -52,9 +52,12 @@ func dataSourceCsrExportRead(ctx context.Context, d *schema.ResourceData, m inte
 		vvHostname := vHostname.(string)
 		vvID := vID.(string)
 
-		response1, _, err := client.Certificates.ExportCsr(vvHostname, vvID)
+		response1, restyResp1, err := client.Certificates.ExportCsr(vvHostname, vvID)
 
 		if err != nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagError(
 				"Failure when executing ExportCsr", err))
 			return diags

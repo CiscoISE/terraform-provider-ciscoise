@@ -61,10 +61,10 @@ func dataSourceAncEndpointApplyRead(ctx context.Context, d *schema.ResourceData,
 
 		response1, err := client.AncEndpoint.ApplyAncEndpoint(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ApplyAncEndpoint", err,
 				"Failure at ApplyAncEndpoint, unexpected response", ""))

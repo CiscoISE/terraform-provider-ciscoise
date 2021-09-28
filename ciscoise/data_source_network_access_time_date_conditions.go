@@ -472,9 +472,12 @@ func dataSourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schem
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessTimeConditions")
 
-		response1, _, err := client.NetworkAccessTimeDateConditions.GetNetworkAccessTimeConditions()
+		response1, restyResp1, err := client.NetworkAccessTimeDateConditions.GetNetworkAccessTimeConditions()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessTimeConditions", err,
 				"Failure at GetNetworkAccessTimeConditions, unexpected response", ""))

@@ -54,9 +54,12 @@ func dataSourceMntVersionRead(ctx context.Context, d *schema.ResourceData, m int
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetMntVersion")
 
-		response1, _, err := client.Misc.GetMntVersion()
+		response1, restyResp1, err := client.Misc.GetMntVersion()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetMntVersion", err,
 				"Failure at GetMntVersion, unexpected response", ""))

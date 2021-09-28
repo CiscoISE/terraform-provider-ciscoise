@@ -1342,9 +1342,12 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.SelfRegisteredPortal.GetSelfRegisteredPortals(&queryParams1)
+		response1, restyResp1, err := client.SelfRegisteredPortal.GetSelfRegisteredPortals(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSelfRegisteredPortals", err,
 				"Failure at GetSelfRegisteredPortals, unexpected response", ""))

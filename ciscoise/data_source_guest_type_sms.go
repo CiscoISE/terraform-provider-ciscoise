@@ -68,10 +68,10 @@ func dataSourceGuestTypeSmsRead(ctx context.Context, d *schema.ResourceData, m i
 
 		response1, err := client.GuestType.UpdateGuestTypeSms(vvID, request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing UpdateGuestTypeSms", err,
 				"Failure at UpdateGuestTypeSms, unexpected response", ""))

@@ -110,9 +110,12 @@ func dataSourceEndpointBulkMonitorStatusRead(ctx context.Context, d *schema.Reso
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusEndpoint")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.Endpoint.MonitorBulkStatusEndpoint(vvBulkid)
+		response1, restyResp1, err := client.Endpoint.MonitorBulkStatusEndpoint(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusEndpoint", err,
 				"Failure at MonitorBulkStatusEndpoint, unexpected response", ""))

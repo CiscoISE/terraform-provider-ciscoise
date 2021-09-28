@@ -72,9 +72,12 @@ func dataSourceActiveDirectoryGetTrustedDomainsInfoRead(ctx context.Context, d *
 		log.Printf("[DEBUG] Selected method 1: GetTrustedDomains")
 		vvID := vID.(string)
 
-		response1, _, err := client.ActiveDirectory.GetTrustedDomains(vvID)
+		response1, restyResp1, err := client.ActiveDirectory.GetTrustedDomains(vvID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTrustedDomains", err,
 				"Failure at GetTrustedDomains, unexpected response", ""))

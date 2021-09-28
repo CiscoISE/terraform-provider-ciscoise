@@ -47,9 +47,12 @@ func dataSourceAciTestConnectivityRead(ctx context.Context, d *schema.ResourceDa
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: TestAciConnectivity")
 
-		response1, _, err := client.AciSettings.TestAciConnectivity()
+		response1, restyResp1, err := client.AciSettings.TestAciConnectivity()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing TestAciConnectivity", err,
 				"Failure at TestAciConnectivity, unexpected response", ""))

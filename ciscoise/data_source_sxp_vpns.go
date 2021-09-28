@@ -218,9 +218,12 @@ func dataSourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interf
 			queryParams1.Sortdsc = vSortdsc.(string)
 		}
 
-		response1, _, err := client.SxpVpns.GetSxpVpns(&queryParams1)
+		response1, restyResp1, err := client.SxpVpns.GetSxpVpns(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpVpns", err,
 				"Failure at GetSxpVpns, unexpected response", ""))

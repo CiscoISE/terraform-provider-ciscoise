@@ -134,9 +134,12 @@ func dataSourceTasksRead(ctx context.Context, d *schema.ResourceData, m interfac
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetTaskStatus")
 
-		response1, _, err := client.Tasks.GetTaskStatus()
+		response1, restyResp1, err := client.Tasks.GetTaskStatus()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTaskStatus", err,
 				"Failure at GetTaskStatus, unexpected response", ""))

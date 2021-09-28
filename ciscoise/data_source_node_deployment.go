@@ -477,9 +477,12 @@ func dataSourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNodes")
 
-		response1, _, err := client.NodeDeployment.GetNodes()
+		response1, restyResp1, err := client.NodeDeployment.GetNodes()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNodes", err,
 				"Failure at GetNodes, unexpected response", ""))

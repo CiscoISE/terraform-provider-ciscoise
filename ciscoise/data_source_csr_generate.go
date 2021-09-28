@@ -196,9 +196,12 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.Certificates.GetCsrs(&queryParams1)
+		response1, restyResp1, err := client.Certificates.GetCsrs(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetCsrs", err,
 				"Failure at GetCsrs, unexpected response", ""))

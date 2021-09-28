@@ -51,10 +51,10 @@ func dataSourceSxpVpnsBulkRequestRead(ctx context.Context, d *schema.ResourceDat
 
 		response1, err := client.SxpVpns.BulkRequestForSxpVpns(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForSxpVpns", err,
 				"Failure at BulkRequestForSxpVpns, unexpected response", ""))

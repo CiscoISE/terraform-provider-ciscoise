@@ -46,10 +46,10 @@ func dataSourcePxgridServiceLookupRead(ctx context.Context, d *schema.ResourceDa
 
 		response1, err := client.Consumer.LookupService(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing LookupService", err,
 				"Failure at LookupService, unexpected response", ""))

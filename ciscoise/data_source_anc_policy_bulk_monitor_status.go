@@ -106,9 +106,12 @@ func dataSourceAncPolicyBulkMonitorStatusRead(ctx context.Context, d *schema.Res
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusAncPolicy")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.AncPolicy.MonitorBulkStatusAncPolicy(vvBulkid)
+		response1, restyResp1, err := client.AncPolicy.MonitorBulkStatusAncPolicy(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusAncPolicy", err,
 				"Failure at MonitorBulkStatusAncPolicy, unexpected response", ""))

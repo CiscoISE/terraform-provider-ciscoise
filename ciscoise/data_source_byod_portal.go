@@ -641,9 +641,12 @@ func dataSourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m int
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.ByodPortal.GetByodPortal(&queryParams1)
+		response1, restyResp1, err := client.ByodPortal.GetByodPortal(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetByodPortal", err,
 				"Failure at GetByodPortal, unexpected response", ""))

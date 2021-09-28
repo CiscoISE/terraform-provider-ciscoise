@@ -52,9 +52,12 @@ func dataSourceDeviceAdministrationCommandSetRead(ctx context.Context, d *schema
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminCommandSets")
 
-		response1, _, err := client.DeviceAdministrationCommandSet.GetDeviceAdminCommandSets()
+		response1, restyResp1, err := client.DeviceAdministrationCommandSet.GetDeviceAdminCommandSets()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminCommandSets", err,
 				"Failure at GetDeviceAdminCommandSets, unexpected response", ""))
