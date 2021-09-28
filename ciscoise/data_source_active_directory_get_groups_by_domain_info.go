@@ -136,6 +136,7 @@ func expandRequestActiveDirectoryGetGroupsByDomainInfoGetGroupsByDomainOperation
 
 func expandRequestActiveDirectoryGetGroupsByDomainInfoGetGroupsByDomainOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryGetGroupsByDomainOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestActiveDirectoryGetGroupsByDomainOperationAdditionalDataAdditionalData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil

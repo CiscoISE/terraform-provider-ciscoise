@@ -71,7 +71,7 @@ func dataSourceAncEndpointApplyRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved response %s", response1.String())
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(
@@ -102,6 +102,7 @@ func expandRequestAncEndpointApplyApplyAncEndpointOperationAdditionalData(ctx co
 
 func expandRequestAncEndpointApplyApplyAncEndpointOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestAncEndpointApplyAncEndpointOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestAncEndpointApplyAncEndpointOperationAdditionalDataAdditionalData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil

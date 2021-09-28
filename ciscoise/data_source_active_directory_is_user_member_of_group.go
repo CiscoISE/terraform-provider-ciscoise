@@ -136,6 +136,7 @@ func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperatio
 
 func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryIsUserMemberOfGroupsOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestActiveDirectoryIsUserMemberOfGroupsOperationAdditionalDataAdditionalData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil

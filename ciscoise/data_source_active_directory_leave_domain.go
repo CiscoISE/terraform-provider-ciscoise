@@ -78,7 +78,7 @@ func dataSourceActiveDirectoryLeaveDomainRead(ctx context.Context, d *schema.Res
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved response %s", response1.String())
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(
@@ -109,6 +109,7 @@ func expandRequestActiveDirectoryLeaveDomainLeaveDomainOperationAdditionalData(c
 
 func expandRequestActiveDirectoryLeaveDomainLeaveDomainOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryLeaveDomainOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestActiveDirectoryLeaveDomainOperationAdditionalDataAdditionalData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
