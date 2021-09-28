@@ -81,7 +81,7 @@ func dataSourceMntSessionDisconnectRead(ctx context.Context, d *schema.ResourceD
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved response %s", response1.String())
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(

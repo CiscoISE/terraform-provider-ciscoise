@@ -78,7 +78,7 @@ func dataSourceGuestTypeEmailRead(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved response %s", response1.String())
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(
@@ -109,6 +109,7 @@ func expandRequestGuestTypeEmailUpdateGuestTypeEmailOperationAdditionalData(ctx 
 
 func expandRequestGuestTypeEmailUpdateGuestTypeEmailOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestGuestTypeUpdateGuestTypeEmailOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestGuestTypeUpdateGuestTypeEmailOperationAdditionalDataAdditionalData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
