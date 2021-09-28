@@ -199,7 +199,11 @@ func flattenTasksGetTaskStatusItems(items *[]isegosdk.ResponseTasksGetTaskStatus
 		respItem["resources_count"] = item.ResourcesCount
 		respItem["success_count"] = item.SuccessCount
 		respItem["fail_count"] = item.FailCount
-		respItem["detail_status"] = responseInterfaceToSliceString(item.DetailStatus)
+		if item.DetailStatus != nil {
+			respItem["detail_status"] = responseInterfaceToSliceString(*item.DetailStatus)
+		} else {
+			respItem["detail_status"] = []string{}
+		}
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -217,7 +221,11 @@ func flattenTasksGetTaskStatusByIDItem(item *isegosdk.ResponseTasksGetTaskStatus
 	respItem["resources_count"] = item.ResourcesCount
 	respItem["success_count"] = item.SuccessCount
 	respItem["fail_count"] = item.FailCount
-	respItem["detail_status"] = responseInterfaceToSliceString(item.DetailStatus)
+	if item.DetailStatus != nil {
+		respItem["detail_status"] = responseInterfaceToSliceString(*item.DetailStatus)
+	} else {
+		respItem["detail_status"] = []string{}
+	}
 	return []map[string]interface{}{
 		respItem,
 	}

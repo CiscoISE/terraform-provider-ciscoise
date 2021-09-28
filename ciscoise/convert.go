@@ -101,11 +101,11 @@ func interfaceToString(v interface{}) string {
 }
 
 func responseInterfaceToSliceString(v interface{}) []string {
+	newValue := []string{}
 	value, ok := v.([]interface{})
 	if !ok {
 		return nil
 	}
-	newValue := []string{}
 	for _, i := range value {
 		newValue = append(newValue, responseInterfaceToString(i))
 	}
