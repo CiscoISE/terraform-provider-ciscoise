@@ -67,9 +67,12 @@ func dataSourceGuestUserResetPasswordRead(ctx context.Context, d *schema.Resourc
 		log.Printf("[DEBUG] Selected method 1: ResetGuestUserPasswordByID")
 		vvID := vID.(string)
 
-		response1, _, err := client.GuestUser.ResetGuestUserPasswordByID(vvID)
+		response1, restyResp1, err := client.GuestUser.ResetGuestUserPasswordByID(vvID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ResetGuestUserPasswordByID", err,
 				"Failure at ResetGuestUserPasswordByID, unexpected response", ""))

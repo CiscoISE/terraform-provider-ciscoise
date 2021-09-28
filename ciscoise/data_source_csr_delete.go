@@ -66,9 +66,12 @@ func dataSourceCsrDeleteRead(ctx context.Context, d *schema.ResourceData, m inte
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)
 
-		response1, _, err := client.Certificates.GetCsrByID(vvHostName, vvID)
+		response1, restyResp1, err := client.Certificates.GetCsrByID(vvHostName, vvID)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetCsrByID", err,
 				"Failure at GetCsrByID, unexpected response", ""))

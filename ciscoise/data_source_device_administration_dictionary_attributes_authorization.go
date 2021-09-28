@@ -100,9 +100,12 @@ func dataSourceDeviceAdministrationDictionaryAttributesAuthorizationRead(ctx con
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminDictionariesAuthorization")
 
-		response1, _, err := client.DeviceAdministrationDictionaryAttributesList.GetDeviceAdminDictionariesAuthorization()
+		response1, restyResp1, err := client.DeviceAdministrationDictionaryAttributesList.GetDeviceAdminDictionariesAuthorization()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminDictionariesAuthorization", err,
 				"Failure at GetDeviceAdminDictionariesAuthorization, unexpected response", ""))

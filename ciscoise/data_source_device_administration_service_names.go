@@ -61,9 +61,12 @@ func dataSourceDeviceAdministrationServiceNamesRead(ctx context.Context, d *sche
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminServiceNames")
 
-		response1, _, err := client.DeviceAdministrationServiceNames.GetDeviceAdminServiceNames()
+		response1, restyResp1, err := client.DeviceAdministrationServiceNames.GetDeviceAdminServiceNames()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminServiceNames", err,
 				"Failure at GetDeviceAdminServiceNames, unexpected response", ""))

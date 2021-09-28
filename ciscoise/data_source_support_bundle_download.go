@@ -49,9 +49,12 @@ func dataSourceSupportBundleDownloadRead(ctx context.Context, d *schema.Resource
 		log.Printf("[DEBUG] Selected method 1: DownloadSupportBundle")
 		request1 := expandRequestSupportBundleDownloadDownloadSupportBundle(ctx, "", d)
 
-		response1, _, err := client.SupportBundleDownload.DownloadSupportBundle(request1)
+		response1, restyResp1, err := client.SupportBundleDownload.DownloadSupportBundle(request1)
 
 		if err != nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagError(
 				"Failure when executing DownloadSupportBundle", err))
 			return diags

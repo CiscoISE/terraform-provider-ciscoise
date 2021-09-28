@@ -150,9 +150,12 @@ func dataSourceAciBindingsRead(ctx context.Context, d *schema.ResourceData, m in
 			queryParams1.FilterValue = interfaceToSliceString(vFilterValue)
 		}
 
-		response1, _, err := client.AciBindings.GetAciBindings(&queryParams1)
+		response1, restyResp1, err := client.AciBindings.GetAciBindings(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAciBindings", err,
 				"Failure at GetAciBindings, unexpected response", ""))

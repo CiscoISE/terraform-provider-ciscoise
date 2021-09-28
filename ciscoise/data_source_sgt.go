@@ -254,9 +254,12 @@ func dataSourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.SecurityGroups.GetSecurityGroups(&queryParams1)
+		response1, restyResp1, err := client.SecurityGroups.GetSecurityGroups(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSecurityGroups", err,
 				"Failure at GetSecurityGroups, unexpected response", ""))
@@ -369,7 +372,11 @@ func flattenSecurityGroupsGetSecurityGroupByIDItem(item *isegosdk.ResponseSecuri
 	respItem["generation_id"] = item.GenerationID
 	respItem["is_read_only"] = boolPtrToString(item.IsReadOnly)
 	respItem["propogate_to_apic"] = boolPtrToString(item.PropogateToAPIc)
-	respItem["default_sgacls"] = responseInterfaceToSliceString(item.DefaultSgACLs)
+	if item.DefaultSgACLs != nil {
+		respItem["default_sgacls"] = responseInterfaceToSliceString(*item.DefaultSgACLs)
+	} else {
+		respItem["default_sgacls"] = []string{}
+	}
 	respItem["link"] = flattenSecurityGroupsGetSecurityGroupByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

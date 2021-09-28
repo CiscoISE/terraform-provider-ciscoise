@@ -51,9 +51,12 @@ func dataSourceDeviceAdministrationIDentityStoresRead(ctx context.Context, d *sc
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminIDentityStores")
 
-		response1, _, err := client.DeviceAdministrationIDentityStores.GetDeviceAdminIDentityStores()
+		response1, restyResp1, err := client.DeviceAdministrationIDentityStores.GetDeviceAdminIDentityStores()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminIDentityStores", err,
 				"Failure at GetDeviceAdminIDentityStores, unexpected response", ""))

@@ -110,9 +110,12 @@ func dataSourceNetworkDeviceBulkMonitorStatusRead(ctx context.Context, d *schema
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusNetworkDevice")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.NetworkDevice.MonitorBulkStatusNetworkDevice(vvBulkid)
+		response1, restyResp1, err := client.NetworkDevice.MonitorBulkStatusNetworkDevice(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusNetworkDevice", err,
 				"Failure at MonitorBulkStatusNetworkDevice, unexpected response", ""))

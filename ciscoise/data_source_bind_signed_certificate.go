@@ -164,11 +164,14 @@ func dataSourceBindSignedCertificateRead(ctx context.Context, d *schema.Resource
 		log.Printf("[DEBUG] Selected method 1: BindCsr")
 		request1 := expandRequestBindSignedCertificateBindCsr(ctx, "", d)
 
-		response1, _, err := client.Certificates.BindCsr(request1)
+		response1, restyResp1, err := client.Certificates.BindCsr(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BindCsr", err,

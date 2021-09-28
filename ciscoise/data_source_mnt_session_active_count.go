@@ -46,9 +46,12 @@ func dataSourceMntSessionActiveCountRead(ctx context.Context, d *schema.Resource
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetActiveCount")
 
-		response1, _, err := client.Misc.GetActiveCount()
+		response1, restyResp1, err := client.Misc.GetActiveCount()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetActiveCount", err,
 				"Failure at GetActiveCount, unexpected response", ""))

@@ -110,9 +110,12 @@ func dataSourceSxpVpnsBulkMonitorStatusRead(ctx context.Context, d *schema.Resou
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusSxpVpns")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.SxpVpns.MonitorBulkStatusSxpVpns(vvBulkid)
+		response1, restyResp1, err := client.SxpVpns.MonitorBulkStatusSxpVpns(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusSxpVpns", err,
 				"Failure at MonitorBulkStatusSxpVpns, unexpected response", ""))

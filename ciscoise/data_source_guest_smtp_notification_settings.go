@@ -265,9 +265,12 @@ func dataSourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettings(&queryParams1)
+		response1, restyResp1, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettings(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestSmtpNotificationSettings", err,
 				"Failure at GetGuestSmtpNotificationSettings, unexpected response", ""))

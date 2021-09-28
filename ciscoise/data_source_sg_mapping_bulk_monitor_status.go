@@ -110,9 +110,12 @@ func dataSourceSgMappingBulkMonitorStatusRead(ctx context.Context, d *schema.Res
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusIPToSgtMapping")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.IPToSgtMapping.MonitorBulkStatusIPToSgtMapping(vvBulkid)
+		response1, restyResp1, err := client.IPToSgtMapping.MonitorBulkStatusIPToSgtMapping(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusIPToSgtMapping", err,
 				"Failure at MonitorBulkStatusIPToSgtMapping, unexpected response", ""))

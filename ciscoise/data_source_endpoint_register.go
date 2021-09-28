@@ -160,17 +160,17 @@ func dataSourceEndpointRegisterRead(ctx context.Context, d *schema.ResourceData,
 
 		response1, err := client.Endpoint.RegisterEndpoint(request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing RegisterEndpoint", err,
 				"Failure at RegisterEndpoint, unexpected response", ""))
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved response %s", response1.String())
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(

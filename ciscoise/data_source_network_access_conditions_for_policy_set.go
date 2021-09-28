@@ -246,9 +246,12 @@ func dataSourceNetworkAccessConditionsForPolicySetRead(ctx context.Context, d *s
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessConditionsForPolicySets")
 
-		response1, _, err := client.NetworkAccessConditions.GetNetworkAccessConditionsForPolicySets()
+		response1, restyResp1, err := client.NetworkAccessConditions.GetNetworkAccessConditionsForPolicySets()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessConditionsForPolicySets", err,
 				"Failure at GetNetworkAccessConditionsForPolicySets, unexpected response", ""))

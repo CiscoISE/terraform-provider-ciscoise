@@ -668,9 +668,12 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 			queryParams1.Size = vSize.(int)
 		}
 
-		response1, _, err := client.AuthorizationProfile.GetAuthorizationProfiles(&queryParams1)
+		response1, restyResp1, err := client.AuthorizationProfile.GetAuthorizationProfiles(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAuthorizationProfiles", err,
 				"Failure at GetAuthorizationProfiles, unexpected response", ""))

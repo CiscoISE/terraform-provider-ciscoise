@@ -68,17 +68,17 @@ func dataSourceActiveDirectoryJoinDomainRead(ctx context.Context, d *schema.Reso
 
 		response1, err := client.ActiveDirectory.JoinDomain(vvID, request1)
 
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		if err != nil || response1 == nil {
-			if request1 != nil {
-				log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing JoinDomain", err,
 				"Failure at JoinDomain, unexpected response", ""))
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		log.Printf("[DEBUG] Retrieved response %s", response1.String())
 
 		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(
@@ -109,6 +109,7 @@ func expandRequestActiveDirectoryJoinDomainJoinDomainOperationAdditionalData(ctx
 
 func expandRequestActiveDirectoryJoinDomainJoinDomainOperationAdditionalDataAdditionalDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryJoinDomainOperationAdditionalDataAdditionalData {
 	request := []isegosdk.RequestActiveDirectoryJoinDomainOperationAdditionalDataAdditionalData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil

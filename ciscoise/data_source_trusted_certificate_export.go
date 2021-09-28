@@ -45,9 +45,12 @@ func dataSourceTrustedCertificateExportRead(ctx context.Context, d *schema.Resou
 		log.Printf("[DEBUG] Selected method 1: ExportTrustedCertificate")
 		vvID := vID.(string)
 
-		response1, _, err := client.Certificates.ExportTrustedCertificate(vvID)
+		response1, restyResp1, err := client.Certificates.ExportTrustedCertificate(vvID)
 
 		if err != nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagError(
 				"Failure when executing ExportTrustedCertificate", err))
 			return diags

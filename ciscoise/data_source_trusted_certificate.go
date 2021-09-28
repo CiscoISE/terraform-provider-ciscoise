@@ -503,9 +503,12 @@ func dataSourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceDat
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.Certificates.GetTrustedCertificates(&queryParams1)
+		response1, restyResp1, err := client.Certificates.GetTrustedCertificates(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTrustedCertificates", err,
 				"Failure at GetTrustedCertificates, unexpected response", ""))

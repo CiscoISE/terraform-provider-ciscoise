@@ -110,9 +110,12 @@ func dataSourceSgtBulkMonitorStatusRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusSecurityGroup")
 		vvBulkid := vBulkid.(string)
 
-		response1, _, err := client.SecurityGroups.MonitorBulkStatusSecurityGroup(vvBulkid)
+		response1, restyResp1, err := client.SecurityGroups.MonitorBulkStatusSecurityGroup(vvBulkid)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing MonitorBulkStatusSecurityGroup", err,
 				"Failure at MonitorBulkStatusSecurityGroup, unexpected response", ""))

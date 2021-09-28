@@ -372,9 +372,12 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 			queryParams1.FilterType = vFilterType.(string)
 		}
 
-		response1, _, err := client.RestidStore.GetRestIDStore(&queryParams1)
+		response1, restyResp1, err := client.RestidStore.GetRestIDStore(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRestIDStore", err,
 				"Failure at GetRestIDStore, unexpected response", ""))
