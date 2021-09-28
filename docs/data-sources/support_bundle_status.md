@@ -59,7 +59,7 @@ Read-Only:
 
 - **description** (String)
 - **file_name** (String)
-- **file_size** (String)
+- **file_size** (Number)
 - **host_name** (String)
 - **id** (String)
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
