@@ -50,3 +50,5 @@ vendor/
 # Log files
 *.log
 
+
+examples/samples/*/*.xml
