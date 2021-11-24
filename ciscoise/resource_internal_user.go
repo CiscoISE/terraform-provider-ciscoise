@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -481,7 +481,8 @@ func expandRequestInternalUserCreateInternalUserInternalUser(ctx context.Context
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
 		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+		var customAttributes2 isegosdk.RequestInternalUserCreateInternalUserInternalUserCustomAttributes = customAttributes
+		request.CustomAttributes = &customAttributes2
 	}
 	if v, ok := d.GetOkExists(key + ".password_idstore"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password_idstore"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password_idstore"))) {
 		request.PasswordIDStore = interfaceToString(v)
@@ -548,7 +549,8 @@ func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Con
 	}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
 		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+		var customAttributes2 isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUserCustomAttributes = customAttributes
+		request.CustomAttributes = &customAttributes2
 	}
 	if v, ok := d.GetOkExists(key + ".password_idstore"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password_idstore"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password_idstore"))) {
 		request.PasswordIDStore = interfaceToString(v)

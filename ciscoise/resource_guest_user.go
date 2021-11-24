@@ -5,7 +5,7 @@ import (
 	"log"
 	"reflect"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -527,7 +527,8 @@ func expandRequestGuestUserCreateGuestUserGuestUser(ctx context.Context, key str
 	}
 	if v, ok := d.GetOkExists(key + ".custom_fields"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_fields"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_fields"))) {
 		customFields := v.(map[string]interface{})
-		request.CustomFields = &customFields
+		var customFields2 isegosdk.RequestGuestUserCreateGuestUserGuestUserCustomFields = customFields
+		request.CustomFields = &customFields2
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -651,7 +652,8 @@ func expandRequestGuestUserUpdateGuestUserByIDGuestUser(ctx context.Context, key
 	}
 	if v, ok := d.GetOkExists(key + ".custom_fields"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_fields"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_fields"))) {
 		customFields := v.(map[string]interface{})
-		request.CustomFields = &customFields
+		var customFields2 isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUserCustomFields = customFields
+		request.CustomFields = &customFields2
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

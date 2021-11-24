@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -693,7 +693,9 @@ func flattenEndpointGetEndpointByNameItemNameCustomAttributes(item *isegosdk.Res
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+	if item.CustomAttributes != nil {
+		respItem["custom_attributes"] = *item.CustomAttributes
+	}
 
 	return []map[string]interface{}{
 		respItem,
@@ -769,7 +771,9 @@ func flattenEndpointGetEndpointByIDItemIDCustomAttributes(item *isegosdk.Respons
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+	if item.CustomAttributes != nil {
+		respItem["custom_attributes"] = *item.CustomAttributes
+	}
 
 	return []map[string]interface{}{
 		respItem,

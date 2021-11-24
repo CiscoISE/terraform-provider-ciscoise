@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -79,7 +79,7 @@ func dataSourceDeviceAdministrationIDentityStoresRead(ctx context.Context, d *sc
 	return diags
 }
 
-func flattenDeviceAdministrationIDentityStoresGetDeviceAdminIDentityStoresItems(items *[]isegosdk.ResponseDeviceAdministrationIDentityStoresGetDeviceAdminIDentityStores) []map[string]interface{} {
+func flattenDeviceAdministrationIDentityStoresGetDeviceAdminIDentityStoresItems(items *isegosdk.ResponseDeviceAdministrationIDentityStoresGetDeviceAdminIDentityStores) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

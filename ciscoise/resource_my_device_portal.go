@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -988,7 +988,11 @@ func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalSettingsLoginP
 	}
 	if v, ok := d.GetOkExists(key + ".social_configs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_configs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_configs"))) {
 		socialConfigs := v.([]interface{})
-		request.SocialConfigs = &socialConfigs
+		socialConfigs2 := []isegosdk.RequestMyDevicePortalCreateMyDevicePortalMyDevicePortalSettingsLoginPageSettingsSocialConfigs{}
+		for _, i := range socialConfigs {
+			socialConfigs2 = append(socialConfigs2, i)
+		}
+		request.SocialConfigs = &socialConfigs2
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1390,7 +1394,11 @@ func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalSettingsLo
 	}
 	if v, ok := d.GetOkExists(key + ".social_configs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_configs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_configs"))) {
 		socialConfigs := v.([]interface{})
-		request.SocialConfigs = &socialConfigs
+		socialConfigs2 := []isegosdk.RequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalSettingsLoginPageSettingsSocialConfigs{}
+		for _, i := range socialConfigs {
+			socialConfigs2 = append(socialConfigs2, i)
+		}
+		request.SocialConfigs = &socialConfigs2
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

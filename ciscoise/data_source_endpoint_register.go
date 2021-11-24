@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -283,7 +283,8 @@ func expandRequestEndpointRegisterRegisterEndpointERSEndPointCustomAttributes(ct
 	request := isegosdk.RequestEndpointRegisterEndpointERSEndPointCustomAttributes{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
 		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+		var customAttributes2 isegosdk.RequestEndpointRegisterEndpointERSEndPointCustomAttributesCustomAttributes = customAttributes
+		request.CustomAttributes = &customAttributes2
 	}
 	return &request
 }

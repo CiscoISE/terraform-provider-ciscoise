@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -540,7 +540,6 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionsIt
 		respItem["id"] = item.ID
 		respItem["name"] = item.Name
 		respItem["attribute_name"] = item.AttributeName
-		respItem["attribute_id"] = item.AttributeID
 		respItem["attribute_value"] = item.AttributeValue
 		respItem["dictionary_name"] = item.DictionaryName
 		respItem["dictionary_value"] = item.DictionaryValue
@@ -671,7 +670,6 @@ func flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByI
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
-	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue

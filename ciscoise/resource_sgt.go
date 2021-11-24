@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -417,7 +417,11 @@ func expandRequestSgtCreateSecurityGroupSgt(ctx context.Context, key string, d *
 	}
 	if v, ok := d.GetOkExists(key + ".default_sgacls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_sgacls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_sgacls"))) {
 		defaultSgACLs := v.([]interface{})
-		request.DefaultSgACLs = &defaultSgACLs
+		defaultSgACLs2 := []isegosdk.RequestSecurityGroupsCreateSecurityGroupSgtDefaultSgACLs{}
+		for _, i := range defaultSgACLs {
+			defaultSgACLs2 = append(defaultSgACLs2, i)
+		}
+		request.DefaultSgACLs = &defaultSgACLs2
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -459,7 +463,11 @@ func expandRequestSgtUpdateSecurityGroupByIDSgt(ctx context.Context, key string,
 	}
 	if v, ok := d.GetOkExists(key + ".default_sgacls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_sgacls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_sgacls"))) {
 		defaultSgACLs := v.([]interface{})
-		request.DefaultSgACLs = &defaultSgACLs
+		defaultSgACLs2 := []isegosdk.RequestSecurityGroupsUpdateSecurityGroupByIDSgtDefaultSgACLs{}
+		for _, i := range defaultSgACLs {
+			defaultSgACLs2 = append(defaultSgACLs2, i)
+		}
+		request.DefaultSgACLs = &defaultSgACLs2
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

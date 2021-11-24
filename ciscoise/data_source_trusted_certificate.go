@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -601,7 +601,6 @@ func flattenCertificatesGetTrustedCertificatesItems(items *[]isegosdk.ResponseCe
 		respItem["id"] = item.ID
 		respItem["ignore_crl_expiration"] = item.IgnoreCRLExpiration
 		respItem["internal_ca"] = boolPtrToString(item.InternalCa)
-		respItem["is_referred_in_policy"] = boolPtrToString(item.IsReferredInPolicy)
 		respItem["issued_by"] = item.IssuedBy
 		respItem["issued_to"] = item.IssuedTo
 		respItem["key_size"] = item.KeySize

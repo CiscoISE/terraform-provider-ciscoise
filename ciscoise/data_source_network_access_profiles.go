@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -79,7 +79,7 @@ func dataSourceNetworkAccessProfilesRead(ctx context.Context, d *schema.Resource
 	return diags
 }
 
-func flattenNetworkAccessProfilesGetNetworkAccessProfilesItems(items *[]isegosdk.ResponseNetworkAccessProfilesGetNetworkAccessProfiles) []map[string]interface{} {
+func flattenNetworkAccessProfilesGetNetworkAccessProfilesItems(items *isegosdk.ResponseNetworkAccessProfilesGetNetworkAccessProfiles) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
