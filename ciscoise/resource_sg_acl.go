@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -413,7 +413,8 @@ func expandRequestSgACLCreateSecurityGroupsACLSgacl(ctx context.Context, key str
 		request.IsReadOnly = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".modelled_content"); !isEmptyValue(reflect.ValueOf(d.Get(key+".modelled_content"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".modelled_content"))) {
-		request.ModelledContent = &v
+		var v1 isegosdk.RequestSecurityGroupsACLsCreateSecurityGroupsACLSgaclModelledContent = v
+		request.ModelledContent = &v1
 	}
 	if v, ok := d.GetOkExists(key + ".ip_version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_version"))) {
 		request.IPVersion = interfaceToString(v)
@@ -454,7 +455,8 @@ func expandRequestSgACLUpdateSecurityGroupsACLByIDSgacl(ctx context.Context, key
 		request.IsReadOnly = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(key + ".modelled_content"); !isEmptyValue(reflect.ValueOf(d.Get(key+".modelled_content"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".modelled_content"))) {
-		request.ModelledContent = &v
+		var v1 isegosdk.RequestSecurityGroupsACLsUpdateSecurityGroupsACLByIDSgaclModelledContent = v
+		request.ModelledContent = &v1
 	}
 	if v, ok := d.GetOkExists(key + ".ip_version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_version"))) {
 		request.IPVersion = interfaceToString(v)

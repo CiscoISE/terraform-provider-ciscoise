@@ -6,7 +6,7 @@ import (
 	"log"
 	"reflect"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -730,9 +730,6 @@ func resourceDeviceAdministrationAuthenticationRulesDelete(ctx context.Context, 
 }
 func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRule(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRule {
 	request := isegosdk.RequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthenticationRule{}
-	if v, ok := d.GetOkExists(key + ".identity_source_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_source_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_source_id"))) {
-		request.IDentitySourceID = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(key + ".identity_source_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_source_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_source_name"))) {
 		request.IDentitySourceName = interfaceToString(v)
 	}
@@ -821,9 +818,6 @@ func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthen
 	}
 	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
 		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".attribute_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_id"))) {
-		request.AttributeID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".attribute_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_value"))) {
 		request.AttributeValue = interfaceToString(v)
@@ -993,9 +987,6 @@ func expandRequestDeviceAdministrationAuthenticationRulesCreateDeviceAdminAuthen
 
 func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByID {
 	request := isegosdk.RequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthenticationRuleByID{}
-	if v, ok := d.GetOkExists(key + ".identity_source_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_source_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_source_id"))) {
-		request.IDentitySourceID = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(key + ".identity_source_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_source_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_source_name"))) {
 		request.IDentitySourceName = interfaceToString(v)
 	}
@@ -1084,9 +1075,6 @@ func expandRequestDeviceAdministrationAuthenticationRulesUpdateDeviceAdminAuthen
 	}
 	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
 		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".attribute_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_id"))) {
-		request.AttributeID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(key + ".attribute_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_value"))) {
 		request.AttributeValue = interfaceToString(v)

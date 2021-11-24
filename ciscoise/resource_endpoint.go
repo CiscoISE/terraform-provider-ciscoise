@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -568,7 +568,8 @@ func expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx context.
 	request := isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributes{}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
 		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+		var customAttributes2 isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes = customAttributes
+		request.CustomAttributes = &customAttributes2
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -683,7 +684,8 @@ func expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx cont
 	request := isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes{}
 	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
 		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+		var customAttributes2 isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributesCustomAttributes = customAttributes
+		request.CustomAttributes = &customAttributes2
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

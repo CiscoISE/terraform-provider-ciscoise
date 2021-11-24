@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -385,7 +385,9 @@ func flattenAdminUserGetAdminUserByIDItem(item *isegosdk.ResponseAdminUserGetAdm
 	respItem["external_user"] = boolPtrToString(item.ExternalUser)
 	respItem["inactive_account_never_disabled"] = boolPtrToString(item.InactiveAccountNeverDisabled)
 	respItem["admin_groups"] = item.AdminGroups
-	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+	if item.CustomAttributes != nil {
+		respItem["custom_attributes"] = item.CustomAttributes
+	}
 	respItem["link"] = flattenAdminUserGetAdminUserByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,

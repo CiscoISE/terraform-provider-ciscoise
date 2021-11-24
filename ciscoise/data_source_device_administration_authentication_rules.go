@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -731,7 +731,6 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["identity_source_id"] = item.IDentitySourceID
 		respItem["identity_source_name"] = item.IDentitySourceName
 		respItem["if_auth_fail"] = item.IfAuthFail
 		respItem["if_process_fail"] = item.IfProcessFail
@@ -789,7 +788,6 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
-	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
@@ -915,7 +913,6 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["identity_source_id"] = item.IDentitySourceID
 	respItem["identity_source_name"] = item.IDentitySourceName
 	respItem["if_auth_fail"] = item.IfAuthFail
 	respItem["if_process_fail"] = item.IfProcessFail
@@ -973,7 +970,6 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
-	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
