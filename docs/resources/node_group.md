@@ -71,6 +71,7 @@ Optional:
 - **description** (String)
 - **mar_cache** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--mar_cache))
 - **name** (String)
+- **node_group_name** (String) nodeGroupName path parameter. Name of the existing node group.
 
 <a id="nestedblock--parameters--mar_cache"></a>
 ### Nested Schema for `parameters.mar_cache`

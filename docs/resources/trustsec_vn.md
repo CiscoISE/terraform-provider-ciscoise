@@ -46,6 +46,7 @@ output "ciscoise_trustsec_vn_example" {
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
 <a id="nestedblock--parameters"></a>
@@ -57,6 +58,17 @@ Optional:
 - **id** (String) Identifier of the Virtual Network
 - **last_update** (String) Timestamp for the last update of the Virtual Network
 - **name** (String) Name of the Virtual Network
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **additional_attributes** (String)
+- **id** (String)
+- **last_update** (String)
+- **name** (String)
 
 ## Import
 

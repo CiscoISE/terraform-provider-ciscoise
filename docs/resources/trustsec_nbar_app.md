@@ -54,7 +54,7 @@ output "ciscoise_trustsec_nbar_app_example" {
 Optional:
 
 - **description** (String)
-- **id** (String) The ID of this resource.
+- **id** (String) id path parameter.
 - **name** (String)
 - **network_identities** (Block List) Array of NIs (see [below for nested schema](#nestedblock--parameters--network_identities))
 

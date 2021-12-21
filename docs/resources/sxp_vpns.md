@@ -50,6 +50,7 @@ output "ciscoise_sxp_vpns_example" {
 
 Optional:
 
+- **id** (String) id path parameter.
 - **sxp_vpn_name** (String)
 
 

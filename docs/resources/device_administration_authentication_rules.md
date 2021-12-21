@@ -130,6 +130,7 @@ output "ciscoise_device_administration_authentication_rules_example" {
 
 Optional:
 
+- **id** (String) id path parameter. Rule id
 - **identity_source_name** (String) Identity source name from the identity stores
 - **if_auth_fail** (String) Action to perform when authentication fails such as Bad credentials, disabled user and so on
 - **if_process_fail** (String) Action to perform when ISE is uanble to access the identity database
