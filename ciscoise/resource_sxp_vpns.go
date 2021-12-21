@@ -78,7 +78,11 @@ func resourceSxpVpns() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
+						"id": &schema.Schema{
+							Description: `id path parameter.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"sxp_vpn_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,

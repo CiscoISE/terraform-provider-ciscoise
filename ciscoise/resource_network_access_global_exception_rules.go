@@ -348,6 +348,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"id": &schema.Schema{
+							Description: `id path parameter. Rule id`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"profile": &schema.Schema{
 							Description: `The authorization profile/s`,
 							Type:        schema.TypeList,

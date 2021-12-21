@@ -51,7 +51,7 @@ func resourceNodeServicesSxpInterfaces() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"hostname": &schema.Schema{
-							Description: `hostname path parameter.`,
+							Description: `hostname path parameter. Hostname of the node.`,
 							Type:        schema.TypeString,
 							Required:    true,
 						},

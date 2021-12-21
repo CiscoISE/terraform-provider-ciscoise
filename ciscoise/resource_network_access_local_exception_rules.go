@@ -85,11 +85,6 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 								Type: schema.TypeString,
 							},
 						},
-						"policy_id": &schema.Schema{
-							Description: `policyId path parameter. Policy id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
 						"rule": &schema.Schema{
 							Description: `Common attributes in rule authentication/authorization`,
 							Type:        schema.TypeList,
@@ -351,7 +346,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
+						"id": &schema.Schema{
+							Description: `id path parameter. Rule id`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"profile": &schema.Schema{
 							Description: `The authorization profile/s`,
 							Type:        schema.TypeList,

@@ -96,8 +96,9 @@ standalone node.
 							Optional:     true,
 						},
 						"hostname": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `hostname path parameter. Hostname of the deployed node.`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"fqdn": &schema.Schema{
 							Type:     schema.TypeString,

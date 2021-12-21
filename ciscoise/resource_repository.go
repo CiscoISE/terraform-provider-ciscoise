@@ -91,7 +91,7 @@ func resourceRepository() *schema.Resource {
 							Optional:     true,
 						},
 						"name": &schema.Schema{
-							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Description: `repositoryName path parameter. Unique name for a repository. Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
 						},

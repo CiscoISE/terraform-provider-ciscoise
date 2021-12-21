@@ -132,6 +132,11 @@ longer carried out among the nodes.
 							Type:     schema.TypeString,
 							Optional: true,
 						},
+						"node_group_name": &schema.Schema{
+							Description: `nodeGroupName path parameter. Name of the existing node group.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 					},
 				},
 			},

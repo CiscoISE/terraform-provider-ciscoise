@@ -361,6 +361,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 								Type: schema.TypeString,
 							},
 						},
+						"id": &schema.Schema{
+							Description: `id path parameter. Rule id`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
