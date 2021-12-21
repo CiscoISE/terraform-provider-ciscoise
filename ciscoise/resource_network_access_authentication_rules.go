@@ -359,6 +359,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"id": &schema.Schema{
+							Description: `id path parameter. Rule id`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"identity_source_name": &schema.Schema{
 							Description: `Identity source name from the identity stores`,
 							Type:        schema.TypeString,

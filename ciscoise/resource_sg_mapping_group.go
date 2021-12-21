@@ -108,6 +108,11 @@ func resourceSgMappingGroup() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 						},
+						"id": &schema.Schema{
+							Description: `id path parameter.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,

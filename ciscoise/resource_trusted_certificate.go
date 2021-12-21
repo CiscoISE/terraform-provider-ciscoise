@@ -293,6 +293,11 @@ func resourceTrustedCertificate() *schema.Resource {
 							Optional:         true,
 							DiffSuppressFunc: diffSuppressBooleans(),
 						},
+						"id": &schema.Schema{
+							Description: `id path parameter. ID of the trust certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"ignore_crl_expiration": &schema.Schema{
 							Description:      `Switch to enable or disable ignore CRL expiration`,
 							Type:             schema.TypeString,

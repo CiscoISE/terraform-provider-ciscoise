@@ -87,8 +87,9 @@ func resourceTrustsecNbarApp() *schema.Resource {
 							Optional: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Description: `id path parameter.`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,

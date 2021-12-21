@@ -68,7 +68,7 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 							Optional:    true,
 						},
 						"id": &schema.Schema{
-							Description: `ID of system certificate`,
+							Description: `id path parameter. ID of the System Certificate to be updated`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},

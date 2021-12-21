@@ -360,7 +360,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 								Type: schema.TypeString,
 							},
 						},
-
+						"id": &schema.Schema{
+							Description: `id path parameter. Rule id`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"profile": &schema.Schema{
 							Description: `Device admin profiles control the initial login session of the device administrator`,
 							Type:        schema.TypeString,

@@ -79,6 +79,11 @@ At least one of subnet or sgt or vn should be defined`,
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
+						"id": &schema.Schema{
+							Description: `id path parameter.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"sgt": &schema.Schema{
 							Description:      `SGT name or ID. At least one of subnet or sgt or vn should be defined`,
 							Type:             schema.TypeString,
