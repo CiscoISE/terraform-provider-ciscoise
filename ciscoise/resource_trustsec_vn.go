@@ -66,6 +66,35 @@ func resourceTrustsecVn() *schema.Resource {
 					},
 				},
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"additional_attributes": &schema.Schema{
+							Description: `JSON String of additional attributes for the Virtual Network`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"id": &schema.Schema{
+							Description: `Identifier of the Virtual Network`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"last_update": &schema.Schema{
+							Description: `Timestamp for the last update of the Virtual Network`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"name": &schema.Schema{
+							Description: `Name of the Virtual Network`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -169,7 +198,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 				"Failure when searching item from GetVirtualNetworks, unexpected response", ""))
 			return diags
 		}
-		vItem1 := flattenVirtualNetworkGetVirtualNetworksItems(&items1)
+		vItem1 := flattenVirtualNetworkGetVirtualNetworkByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetVirtualNetworks search response",

@@ -76,6 +76,45 @@ func resourceTrustsecSgVnMapping() *schema.Resource {
 					},
 				},
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"id": &schema.Schema{
+							Description: `Identifier of the SG-VN mapping`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"last_update": &schema.Schema{
+							Description: `Timestamp for the last update of the SG-VN mapping`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"sg_name": &schema.Schema{
+							Description: `Name of the associated Security Group to be used for identity if id is not provided`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"sgt_id": &schema.Schema{
+							Description: `Identifier of the associated Security Group which is required unless its name is provided`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"vn_id": &schema.Schema{
+							Description: `Identifier for the associated Virtual Network which is required unless its name is provided`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"vn_name": &schema.Schema{
+							Description: `Name of the associated Virtual Network to be used for identity if id is not provided`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -200,7 +239,7 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 				"Failure when searching item from GetSgVnMappings, unexpected response", ""))
 			return diags
 		}
-		vItem1 := flattenSgVnMappingGetSgVnMappingsItems(&items1)
+		vItem1 := flattenSgVnMappingGetSgVnMappingByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSgVnMappings search response",
