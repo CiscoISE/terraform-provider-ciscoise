@@ -840,8 +840,11 @@ Only valid if includeAup = true`,
 													Optional:     true,
 												},
 												"social_configs": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Optional: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"time_between_logins_during_rate_limit": &schema.Schema{
 													Description: `Time between login attempts when rate limiting`,
@@ -1427,7 +1430,8 @@ func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalSettingsLoginP
 
 func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalSettingsLoginPageSettingsSocialConfigs(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestMyDevicePortalCreateMyDevicePortalMyDevicePortalSettingsLoginPageSettingsSocialConfigs {
 	var request isegosdk.RequestMyDevicePortalCreateMyDevicePortalMyDevicePortalSettingsLoginPageSettingsSocialConfigs
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 
@@ -1858,7 +1862,8 @@ func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalSettingsLo
 
 func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalSettingsLoginPageSettingsSocialConfigs(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalSettingsLoginPageSettingsSocialConfigs {
 	var request isegosdk.RequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalSettingsLoginPageSettingsSocialConfigs
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 

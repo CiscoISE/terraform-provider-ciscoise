@@ -410,18 +410,27 @@ null
 						},
 						"nmap": &schema.Schema{
 							Description: `The NMAP probe scans endpoints for open ports and OS.`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Optional:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"pxgrid": &schema.Schema{
 							Description: `The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Optional:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"radius": &schema.Schema{
 							Description: `The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Optional:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"snmp_query": &schema.Schema{
 							Description: `The SNMP query probe collects details from network devices such as interface, CDP, LLDP, and ARP.`,
@@ -864,7 +873,8 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNmapArray
 
 func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNmap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetProfilerProbeConfigNmap {
 	var request isegosdk.RequestNodeServicesSetProfilerProbeConfigNmap
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 
@@ -893,7 +903,8 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigPxgridArr
 
 func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigPxgrid(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetProfilerProbeConfigPxgrid {
 	var request isegosdk.RequestNodeServicesSetProfilerProbeConfigPxgrid
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 
@@ -922,7 +933,8 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigRadiusArr
 
 func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigRadius(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetProfilerProbeConfigRadius {
 	var request isegosdk.RequestNodeServicesSetProfilerProbeConfigRadius
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 

@@ -468,7 +468,8 @@ func expandRequestSgACLCreateSecurityGroupsACLSgacl(ctx context.Context, key str
 
 func expandRequestSgACLCreateSecurityGroupsACLSgaclModelledContent(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSecurityGroupsACLsCreateSecurityGroupsACLSgaclModelledContent {
 	var request isegosdk.RequestSecurityGroupsACLsCreateSecurityGroupsACLSgaclModelledContent
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 
@@ -515,7 +516,8 @@ func expandRequestSgACLUpdateSecurityGroupsACLByIDSgacl(ctx context.Context, key
 
 func expandRequestSgACLUpdateSecurityGroupsACLByIDSgaclModelledContent(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSecurityGroupsACLsUpdateSecurityGroupsACLByIDSgaclModelledContent {
 	var request isegosdk.RequestSecurityGroupsACLsUpdateSecurityGroupsACLByIDSgaclModelledContent
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 
