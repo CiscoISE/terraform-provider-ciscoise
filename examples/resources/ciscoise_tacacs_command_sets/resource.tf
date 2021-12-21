@@ -1,7 +1,7 @@
 
 resource "ciscoise_tacacs_command_sets" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     commands {
 

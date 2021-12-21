@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Consumer.
 
-🚧 AccountActivate
+- 🚧 AccountActivate
 
 ## Example Usage
 

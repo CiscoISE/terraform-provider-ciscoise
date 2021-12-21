@@ -5,7 +5,7 @@ subcategory: ""
 description: |-
   It performs read operation on Device Administration - Command Set.
   Device Admin Return list of command sets.
-  (Other CRUD APIs available throught ERS)
+  (Other CRUD APIs available through ERS)
 ---
 
 # ciscoise_device_administration_command_set (Data Source)
@@ -13,7 +13,7 @@ description: |-
 It performs read operation on Device Administration - Command Set.
 
 - Device Admin Return list of command sets.
- (Other CRUD APIs available throught ERS)
+ (Other CRUD APIs available through ERS)
 
 ## Example Usage
 

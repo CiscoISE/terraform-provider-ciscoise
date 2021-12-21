@@ -108,7 +108,7 @@ string parameter. Each resource Data model description should specify if an attr
 
 Read-Only:
 
-- **default_sgacls** (List of String)
+- **default_sgacls** (String)
 - **description** (String)
 - **generation_id** (String)
 - **id** (String)

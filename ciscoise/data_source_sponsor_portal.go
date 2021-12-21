@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -727,9 +727,12 @@ func dataSourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Selected method 2: GetSponsorPortalByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SponsorPortal.GetSponsorPortalByID(vvID)
+		response2, restyResp2, err := client.SponsorPortal.GetSponsorPortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsorPortalByID", err,
 				"Failure at GetSponsorPortalByID, unexpected response", ""))
@@ -852,11 +855,7 @@ func flattenSponsorPortalGetSponsorPortalByIDItemSettingsLoginPageSettings(item 
 	respItem["aup_display"] = item.AupDisplay
 	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
 	respItem["require_aup_scrolling"] = boolPtrToString(item.RequireAupScrolling)
-	if item.SocialConfigs != nil {
-		respItem["social_configs"] = responseInterfaceToSliceString(*item.SocialConfigs)
-	} else {
-		respItem["social_configs"] = []string{}
-	}
+	respItem["social_configs"] = responseInterfaceToSliceString(item.SocialConfigs)
 
 	return []map[string]interface{}{
 		respItem,
@@ -1096,7 +1095,6 @@ func flattenSponsorPortalGetSponsorPortalByIDItemCustomizationsPageCustomization
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenSponsorPortalGetSponsorPortalByIDItemLink(item *isegosdk.ResponseSponsorPortalGetSponsorPortalByIDSponsorPortalLink) []map[string]interface{} {

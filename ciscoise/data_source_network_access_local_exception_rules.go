@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -80,11 +80,6 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"attribute_id": &schema.Schema{
-													Description: `Dictionary attribute id (Optional), used for additional verification`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
 												"attribute_name": &schema.Schema{
 													Description: `Dictionary attribute name`,
 													Type:        schema.TypeString,
@@ -142,7 +137,7 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -160,7 +155,7 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -193,7 +188,7 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -211,7 +206,7 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -376,11 +371,6 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"attribute_id": &schema.Schema{
-													Description: `Dictionary attribute id (Optional), used for additional verification`,
-													Type:        schema.TypeString,
-													Computed:    true,
-												},
 												"attribute_name": &schema.Schema{
 													Description: `Dictionary attribute name`,
 													Type:        schema.TypeString,
@@ -438,7 +428,7 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -456,7 +446,7 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -489,7 +479,7 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -507,7 +497,7 @@ func dataSourceNetworkAccessLocalExceptionRules() *schema.Resource {
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -635,14 +625,14 @@ func dataSourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *sche
 	vPolicyID, okPolicyID := d.GetOk("policy_id")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okPolicyID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okPolicyID}
+	method2 := []bool{okPolicyID, okID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessLocalExceptionRules")
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessLocalExceptionRules")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.NetworkAccessAuthorizationExceptionRules.GetNetworkAccessLocalExceptionRules(vvPolicyID)
@@ -670,14 +660,17 @@ func dataSourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *sche
 		return diags
 
 	}
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessLocalExceptionRuleByID")
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessLocalExceptionRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)
 
-		response2, _, err := client.NetworkAccessAuthorizationExceptionRules.GetNetworkAccessLocalExceptionRuleByID(vvPolicyID, vvID)
+		response2, restyResp2, err := client.NetworkAccessAuthorizationExceptionRules.GetNetworkAccessLocalExceptionRuleByID(vvPolicyID, vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessLocalExceptionRuleByID", err,
 				"Failure at GetNetworkAccessLocalExceptionRuleByID, unexpected response", ""))
@@ -808,7 +801,6 @@ func flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExcepti
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRulesItemsRuleConditionChildrenLink(item *isegosdk.ResponseNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRulesResponseRuleConditionChildrenLink) []map[string]interface{} {
@@ -988,7 +980,6 @@ func flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExcepti
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRuleByIDItemRuleConditionChildrenLink(item *isegosdk.ResponseNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRuleByIDResponseRuleConditionChildrenLink) []map[string]interface{} {

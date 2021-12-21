@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -168,14 +168,14 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 	var diags diag.Diagnostics
 	vPage, okPage := d.GetOk("page")
 	vSize, okSize := d.GetOk("size")
-	vID, okID := d.GetOk("id")
 	vName, okName := d.GetOk("name")
+	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
 	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okID}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-	method3 := []bool{okName}
+	method3 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
@@ -237,24 +237,27 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetCertificateTemplateByID")
-		vvID := vID.(string)
+		log.Printf("[DEBUG] Selected method 2: GetCertificateTemplateByName")
+		vvName := vName.(string)
 
-		response2, _, err := client.CertificateTemplate.GetCertificateTemplateByID(vvID)
+		response2, restyResp2, err := client.CertificateTemplate.GetCertificateTemplateByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetCertificateTemplateByID", err,
-				"Failure at GetCertificateTemplateByID, unexpected response", ""))
+				"Failure when executing GetCertificateTemplateByName", err,
+				"Failure at GetCertificateTemplateByName, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItemID2 := flattenCertificateTemplateGetCertificateTemplateByIDItemID(response2.ERSCertificateTemplate)
-		if err := d.Set("item_id", vItemID2); err != nil {
+		vItemName2 := flattenCertificateTemplateGetCertificateTemplateByNameItemName(response2.ERSCertificateTemplate)
+		if err := d.Set("item_name", vItemName2); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetCertificateTemplateByID response",
+				"Failure when setting GetCertificateTemplateByName response",
 				err))
 			return diags
 		}
@@ -263,24 +266,27 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetCertificateTemplateByName")
-		vvName := vName.(string)
+		log.Printf("[DEBUG] Selected method 3: GetCertificateTemplateByID")
+		vvID := vID.(string)
 
-		response3, _, err := client.CertificateTemplate.GetCertificateTemplateByName(vvName)
+		response3, restyResp3, err := client.CertificateTemplate.GetCertificateTemplateByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetCertificateTemplateByName", err,
-				"Failure at GetCertificateTemplateByName, unexpected response", ""))
+				"Failure when executing GetCertificateTemplateByID", err,
+				"Failure at GetCertificateTemplateByID, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response3))
 
-		vItemName3 := flattenCertificateTemplateGetCertificateTemplateByNameItemName(response3.ERSCertificateTemplate)
-		if err := d.Set("item_name", vItemName3); err != nil {
+		vItemID3 := flattenCertificateTemplateGetCertificateTemplateByIDItemID(response3.ERSCertificateTemplate)
+		if err := d.Set("item_id", vItemID3); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetCertificateTemplateByName response",
+				"Failure when setting GetCertificateTemplateByID response",
 				err))
 			return diags
 		}
@@ -322,7 +328,7 @@ func flattenCertificateTemplateGetCertificateTemplateItemsLink(item *isegosdk.Re
 
 }
 
-func flattenCertificateTemplateGetCertificateTemplateByIDItemID(item *isegosdk.ResponseCertificateTemplateGetCertificateTemplateByIDERSCertificateTemplate) []map[string]interface{} {
+func flattenCertificateTemplateGetCertificateTemplateByNameItemName(item *isegosdk.ResponseCertificateTemplateGetCertificateTemplateByNameERSCertificateTemplate) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -338,7 +344,7 @@ func flattenCertificateTemplateGetCertificateTemplateByIDItemID(item *isegosdk.R
 	}
 }
 
-func flattenCertificateTemplateGetCertificateTemplateByNameItemName(item *isegosdk.ResponseCertificateTemplateGetCertificateTemplateByNameERSCertificateTemplate) []map[string]interface{} {
+func flattenCertificateTemplateGetCertificateTemplateByIDItemID(item *isegosdk.ResponseCertificateTemplateGetCertificateTemplateByIDERSCertificateTemplate) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

@@ -1,7 +1,7 @@
 
 resource "ciscoise_sg_mapping" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     deploy_to     = "string"
     deploy_type   = "string"

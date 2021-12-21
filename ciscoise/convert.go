@@ -119,3 +119,13 @@ func responseInterfaceToString(v interface{}) string {
 	}
 	return fmt.Sprint(string(b))
 }
+
+func requestStringToInterface(v string) interface{} {
+	var result interface{}
+	blob := []byte(v)
+	err := json.Unmarshal(blob, &result)
+	if err != nil {
+		return v
+	}
+	return result
+}

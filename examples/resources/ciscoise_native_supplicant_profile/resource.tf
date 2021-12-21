@@ -1,7 +1,7 @@
 
 resource "ciscoise_native_supplicant_profile" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"

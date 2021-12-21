@@ -7,4 +7,5 @@ data "ciscoise_active_directory_leave_domain_with_all_nodes" "example" {
     name  = "string"
     value = "string"
   }
+
 }

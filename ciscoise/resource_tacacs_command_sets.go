@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,39 +39,33 @@ func resourceTacacsCommandSets() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"commands": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"command_list": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"arguments": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"command": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"grant": &schema.Schema{
 													Description: `Allowed values: PERMIT, DENY, DENY_ALWAYS`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 											},
@@ -82,12 +76,10 @@ func resourceTacacsCommandSets() *schema.Resource {
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -113,14 +105,69 @@ func resourceTacacsCommandSets() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+						"permit_unmatched": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"commands": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"command_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"arguments": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"command": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"grant": &schema.Schema{
+													Description: `Allowed values: PERMIT, DENY, DENY_ALWAYS`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"permit_unmatched": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -134,8 +181,8 @@ func resourceTacacsCommandSetsCreate(ctx context.Context, d *schema.ResourceData
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestTacacsCommandSetsCreateTacacsCommandSets(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestTacacsCommandSetsCreateTacacsCommandSets(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -149,7 +196,7 @@ func resourceTacacsCommandSetsCreate(ctx context.Context, d *schema.ResourceData
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceTacacsCommandSetsRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -159,7 +206,7 @@ func resourceTacacsCommandSetsCreate(ctx context.Context, d *schema.ResourceData
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceTacacsCommandSetsRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.TacacsCommandSets.CreateTacacsCommandSets(request1)
@@ -181,7 +228,7 @@ func resourceTacacsCommandSetsCreate(ctx context.Context, d *schema.ResourceData
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceTacacsCommandSetsRead(ctx, d, m)
 }
 
 func resourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -204,9 +251,12 @@ func resourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Selected method: GetTacacsCommandSetsByName")
 		vvName := vName
 
-		response1, _, err := client.TacacsCommandSets.GetTacacsCommandSetsByName(vvName)
+		response1, restyResp1, err := client.TacacsCommandSets.GetTacacsCommandSetsByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsCommandSetsByName", err,
 				"Failure at GetTacacsCommandSetsByName, unexpected response", ""))
@@ -229,9 +279,12 @@ func resourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Selected method: GetTacacsCommandSetsByID")
 		vvID := vID
 
-		response2, _, err := client.TacacsCommandSets.GetTacacsCommandSetsByID(vvID)
+		response2, restyResp2, err := client.TacacsCommandSets.GetTacacsCommandSetsByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsCommandSetsByID", err,
 				"Failure at GetTacacsCommandSetsByID, unexpected response", ""))
@@ -288,9 +341,9 @@ func resourceTacacsCommandSetsUpdate(ctx context.Context, d *schema.ResourceData
 			vvID = getResp.TacacsCommandSets.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByID(ctx, "item.0", d)
+		request1 := expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.TacacsCommandSets.UpdateTacacsCommandSetsByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -381,16 +434,16 @@ func expandRequestTacacsCommandSetsCreateTacacsCommandSets(ctx context.Context, 
 
 func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSets(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSets {
 	request := isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSets{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".permit_unmatched"); !isEmptyValue(reflect.ValueOf(d.Get(key+".permit_unmatched"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".permit_unmatched"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".permit_unmatched")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".permit_unmatched")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".permit_unmatched")))) {
 		request.PermitUnmatched = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".commands")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".commands")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".commands")))) {
 		request.Commands = expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommands(ctx, key+".commands.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -401,7 +454,7 @@ func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSets(ctx 
 
 func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommands(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommands {
 	request := isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommands{}
-	if v, ok := d.GetOkExists(key + ".command_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".command_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".command_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".command_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".command_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".command_list")))) {
 		request.CommandList = expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandListArray(ctx, key+".command_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -412,6 +465,7 @@ func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsComma
 
 func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandList {
 	request := []isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -434,13 +488,13 @@ func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsComma
 
 func expandRequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandList {
 	request := isegosdk.RequestTacacsCommandSetsCreateTacacsCommandSetsTacacsCommandSetsCommandsCommandList{}
-	if v, ok := d.GetOkExists(key + ".grant"); !isEmptyValue(reflect.ValueOf(d.Get(key+".grant"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".grant"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".grant")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".grant")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".grant")))) {
 		request.Grant = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".command"); !isEmptyValue(reflect.ValueOf(d.Get(key+".command"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".command"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".command")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".command")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".command")))) {
 		request.Command = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".arguments"); !isEmptyValue(reflect.ValueOf(d.Get(key+".arguments"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".arguments"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".arguments")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".arguments")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".arguments")))) {
 		request.Arguments = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -460,19 +514,19 @@ func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByID(ctx context.Conte
 
 func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSets(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSets {
 	request := isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSets{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".permit_unmatched"); !isEmptyValue(reflect.ValueOf(d.Get(key+".permit_unmatched"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".permit_unmatched"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".permit_unmatched")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".permit_unmatched")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".permit_unmatched")))) {
 		request.PermitUnmatched = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".commands"); !isEmptyValue(reflect.ValueOf(d.Get(key+".commands"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".commands"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".commands")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".commands")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".commands")))) {
 		request.Commands = expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommands(ctx, key+".commands.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -483,7 +537,7 @@ func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSets(
 
 func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommands(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommands {
 	request := isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommands{}
-	if v, ok := d.GetOkExists(key + ".command_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".command_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".command_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".command_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".command_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".command_list")))) {
 		request.CommandList = expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandListArray(ctx, key+".command_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -494,6 +548,7 @@ func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsC
 
 func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList {
 	request := []isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -516,13 +571,13 @@ func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsC
 
 func expandRequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList {
 	request := isegosdk.RequestTacacsCommandSetsUpdateTacacsCommandSetsByIDTacacsCommandSetsCommandsCommandList{}
-	if v, ok := d.GetOkExists(key + ".grant"); !isEmptyValue(reflect.ValueOf(d.Get(key+".grant"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".grant"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".grant")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".grant")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".grant")))) {
 		request.Grant = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".command"); !isEmptyValue(reflect.ValueOf(d.Get(key+".command"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".command"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".command")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".command")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".command")))) {
 		request.Command = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".arguments"); !isEmptyValue(reflect.ValueOf(d.Get(key+".arguments"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".arguments"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".arguments")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".arguments")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".arguments")))) {
 		request.Arguments = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

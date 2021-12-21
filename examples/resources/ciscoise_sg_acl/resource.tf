@@ -1,16 +1,15 @@
 
 resource "ciscoise_sg_acl" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    aclcontent       = "string"
-    description      = "string"
-    generation_id    = "string"
-    id               = "string"
-    ip_version       = "string"
-    is_read_only     = "false"
-    modelled_content = "string"
-    name             = "string"
+    aclcontent    = "string"
+    description   = "string"
+    generation_id = "string"
+    id            = "string"
+    ip_version    = "string"
+    is_read_only  = "false"
+    name          = "string"
   }
 }
 

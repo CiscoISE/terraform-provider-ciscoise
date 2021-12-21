@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -97,6 +97,7 @@ func dataSourceActiveDirectoryIsUserMemberOfGroupRead(ctx context.Context, d *sc
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -192,5 +193,4 @@ func flattenActiveDirectoryIsUserMemberOfGroupsItemGroups(items *[]isegosdk.Resp
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

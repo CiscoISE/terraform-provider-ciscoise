@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -422,9 +422,12 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method 2: GetRestIDStoreByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.RestidStore.GetRestIDStoreByName(vvName)
+		response2, restyResp2, err := client.RestidStore.GetRestIDStoreByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRestIDStoreByName", err,
 				"Failure at GetRestIDStoreByName, unexpected response", ""))
@@ -448,9 +451,12 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method 3: GetRestIDStoreByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.RestidStore.GetRestIDStoreByID(vvID)
+		response3, restyResp3, err := client.RestidStore.GetRestIDStoreByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRestIDStoreByID", err,
 				"Failure at GetRestIDStoreByID, unexpected response", ""))
@@ -547,7 +553,6 @@ func flattenRestidStoreGetRestIDStoreByNameItemNameErsRestIDStoreAttributesHeade
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenRestidStoreGetRestIDStoreByNameItemNameLink(item *isegosdk.ResponseRestidStoreGetRestIDStoreByNameERSRestIDStoreLink) []map[string]interface{} {
@@ -608,7 +613,6 @@ func flattenRestidStoreGetRestIDStoreByIDItemIDErsRestIDStoreAttributesHeaders(i
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenRestidStoreGetRestIDStoreByIDItemIDLink(item *isegosdk.ResponseRestidStoreGetRestIDStoreByIDERSRestIDStoreLink) []map[string]interface{} {

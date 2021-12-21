@@ -8,8 +8,8 @@ output "ciscoise_repository_example" {
 }
 
 data "ciscoise_repository" "example" {
-  provider = ciscoise
-  name     = "string"
+  provider        = ciscoise
+  repository_name = "string"
 }
 
 output "ciscoise_repository_example" {

@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -21,14 +21,14 @@ func dataSourceTrustedCertificateImport() *schema.Resource {
 - Import an X509 certificate as a trust certificate.
 
 NOTE:
-Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 `,
 
 		ReadContext: dataSourceTrustedCertificateImportRead,
 		Schema: map[string]*schema.Schema{
 			"allow_basic_constraint_cafalse": &schema.Schema{
-				Description:  `Allow Certificates with Basic Constraints CA Field as False (required)`,
+				Description:  `Allow certificates with Basic Constraints CA Field as False (required)`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -103,7 +103,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 				Optional:     true,
 			},
 			"trust_for_ise_auth": &schema.Schema{
-				Description:  `Trust for authentication within ISE`,
+				Description:  `Trust for authentication within Cisco ISE`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -125,30 +125,31 @@ func dataSourceTrustedCertificateImportRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ImportTrustCertificate")
-		request1 := expandRequestTrustedCertificateImportImportTrustCertificate(ctx, "", d)
+		log.Printf("[DEBUG] Selected method 1: ImportTrustCert")
+		request1 := expandRequestTrustedCertificateImportImportTrustCert(ctx, "", d)
 
-		response1, restyResp1, err := client.Certificates.ImportTrustCertificate(request1)
+		response1, restyResp1, err := client.Certificates.ImportTrustCert(request1)
 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing ImportTrustCertificate", err,
-				"Failure at ImportTrustCertificate, unexpected response", ""))
+				"Failure when executing ImportTrustCert", err,
+				"Failure at ImportTrustCert, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenCertificatesImportTrustCertificateItem(response1.Response)
+		vItem1 := flattenCertificatesImportTrustCertItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting ImportTrustCertificate response",
+				"Failure when setting ImportTrustCert response",
 				err))
 			return diags
 		}
@@ -159,8 +160,8 @@ func dataSourceTrustedCertificateImportRead(ctx context.Context, d *schema.Resou
 	return diags
 }
 
-func expandRequestTrustedCertificateImportImportTrustCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesImportTrustCertificate {
-	request := isegosdk.RequestCertificatesImportTrustCertificate{}
+func expandRequestTrustedCertificateImportImportTrustCert(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesImportTrustCert {
+	request := isegosdk.RequestCertificatesImportTrustCert{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_basic_constraint_cafalse")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_basic_constraint_cafalse")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_basic_constraint_cafalse")))) {
 		request.AllowBasicConstraintCaFalse = interfaceToBoolPtr(v)
 	}
@@ -179,9 +180,6 @@ func expandRequestTrustedCertificateImportImportTrustCertificate(ctx context.Con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".validate_certificate_extensions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".validate_certificate_extensions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".validate_certificate_extensions")))) {
-		request.ValidateCertificateExtensions = interfaceToBoolPtr(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".trust_for_certificate_based_admin_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".trust_for_certificate_based_admin_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".trust_for_certificate_based_admin_auth")))) {
 		request.TrustForCertificateBasedAdminAuth = interfaceToBoolPtr(v)
 	}
@@ -194,10 +192,13 @@ func expandRequestTrustedCertificateImportImportTrustCertificate(ctx context.Con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".trust_for_ise_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".trust_for_ise_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".trust_for_ise_auth")))) {
 		request.TrustForIseAuth = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".validate_certificate_extensions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".validate_certificate_extensions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".validate_certificate_extensions")))) {
+		request.ValidateCertificateExtensions = interfaceToBoolPtr(v)
+	}
 	return &request
 }
 
-func flattenCertificatesImportTrustCertificateItem(item *isegosdk.ResponseCertificatesImportTrustCertificateResponse) []map[string]interface{} {
+func flattenCertificatesImportTrustCertItem(item *isegosdk.ResponseCertificatesImportTrustCertResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

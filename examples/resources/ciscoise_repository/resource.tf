@@ -1,7 +1,7 @@
 
 resource "ciscoise_repository" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     enable_pki  = "false"
     name        = "string"

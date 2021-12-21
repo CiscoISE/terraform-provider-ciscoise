@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -20,8 +20,8 @@ func dataSourceRepositoryFiles() *schema.Resource {
 
 		ReadContext: dataSourceRepositoryFilesRead,
 		Schema: map[string]*schema.Schema{
-			"name": &schema.Schema{
-				Description: `name path parameter. Unique name for a repository`,
+			"repository_name": &schema.Schema{
+				Description: `repositoryName path parameter. Unique name for a repository`,
 				Type:        schema.TypeString,
 				Required:    true,
 			},
@@ -53,14 +53,14 @@ func dataSourceRepositoryFilesRead(ctx context.Context, d *schema.ResourceData, 
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	vName := d.Get("name")
+	vRepositoryName := d.Get("repository_name")
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetRepositoryFiles")
-		vvName := vName.(string)
+		vvRepositoryName := vRepositoryName.(string)
 
-		response1, restyResp1, err := client.Repository.GetRepositoryFiles(vvName)
+		response1, restyResp1, err := client.Repository.GetRepositoryFiles(vvRepositoryName)
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

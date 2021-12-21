@@ -152,7 +152,7 @@ Read-Only:
 
 Read-Only:
 
-- **node** (List of String)
+- **node** (String)
 
 
 
@@ -172,7 +172,7 @@ Read-Only:
 
 Read-Only:
 
-- **node_and_scope** (List of String)
+- **node_and_scope** (String)
 
 
 
@@ -197,7 +197,7 @@ Read-Only:
 
 Read-Only:
 
-- **node_and_scope** (List of String)
+- **node_and_scope** (String)
 
 
 
@@ -218,7 +218,7 @@ Read-Only:
 
 Read-Only:
 
-- **node_and_scope** (List of String)
+- **node_and_scope** (String)
 
 
 

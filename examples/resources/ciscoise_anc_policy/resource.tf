@@ -1,7 +1,7 @@
 
 resource "ciscoise_anc_policy" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     actions = ["string"]
     id      = "string"

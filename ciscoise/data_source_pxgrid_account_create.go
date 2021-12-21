@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,7 +18,8 @@ func dataSourcePxgridAccountCreate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Consumer.
 
-- 🚧 AccountCreate`,
+- 🚧 AccountCreate
+`,
 
 		ReadContext: dataSourcePxgridAccountCreateRead,
 		Schema: map[string]*schema.Schema{
@@ -49,6 +50,7 @@ func dataSourcePxgridAccountCreateRead(ctx context.Context, d *schema.ResourceDa
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateAccount", err,

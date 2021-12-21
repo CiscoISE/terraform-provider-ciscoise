@@ -3,7 +3,8 @@ module terraform-provider-ciscoise
 go 1.17
 
 require (
-	github.com/CiscoISE/ciscoise-go-sdk v0.0.8
+	github.com/CiscoISE/ciscoise-go-sdk v1.1.1
+	github.com/hashicorp/terraform-plugin-docs v0.5.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.7.1
 )
 
@@ -41,7 +42,6 @@ require (
 	github.com/hashicorp/hcl/v2 v2.3.0 // indirect
 	github.com/hashicorp/terraform-exec v0.14.0 // indirect
 	github.com/hashicorp/terraform-json v0.12.0 // indirect
-	github.com/hashicorp/terraform-plugin-docs v0.5.0 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.3.0 // indirect
 	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect

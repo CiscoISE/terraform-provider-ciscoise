@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -63,10 +63,6 @@ ERS Admins are allowed to create requests for any CN`,
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"item": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
-			},
 			"password": &schema.Schema{
 				Description: `Protects the private key. Must have more than 8 characters, less than 15 characters,
 at least one upper case letter, at least one lower case letter, at least one digit,
@@ -89,12 +85,13 @@ func dataSourceEndpointCertificateRead(ctx context.Context, d *schema.ResourceDa
 		log.Printf("[DEBUG] Selected method 1: CreateEndpointCertificate")
 		request1 := expandRequestEndpointCertificateCreateEndpointCertificate(ctx, "", d)
 
-		response1, restyResp1, err := client.EndpointCertificate.CreateEndpointCertificate(request1)
+		response1, _, err := client.EndpointCertificate.CreateEndpointCertificate(request1)
+
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 
 		if err != nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
 			diags = append(diags, diagError(
 				"Failure when executing CreateEndpointCertificate", err))
 			return diags

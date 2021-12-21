@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,19 +38,16 @@ func resourceNetworkDeviceGroup() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -76,13 +73,36 @@ func resourceNetworkDeviceGroup() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"othername": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"othername": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -96,8 +116,8 @@ func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceDat
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestNetworkDeviceGroupCreateNetworkDeviceGroup(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestNetworkDeviceGroupCreateNetworkDeviceGroup(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -111,7 +131,7 @@ func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceDat
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceNetworkDeviceGroupRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -121,7 +141,7 @@ func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceDat
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceNetworkDeviceGroupRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.NetworkDeviceGroup.CreateNetworkDeviceGroup(request1)
@@ -143,7 +163,7 @@ func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceDat
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceNetworkDeviceGroupRead(ctx, d, m)
 }
 
 func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -166,9 +186,12 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Selected method: GetNetworkDeviceGroupByName")
 		vvName := vName
 
-		response1, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
+		response1, restyResp1, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceGroupByName", err,
 				"Failure at GetNetworkDeviceGroupByName, unexpected response", ""))
@@ -191,9 +214,12 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Selected method: GetNetworkDeviceGroupByID")
 		vvID := vID
 
-		response2, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByID(vvID)
+		response2, restyResp2, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceGroupByID", err,
 				"Failure at GetNetworkDeviceGroupByID, unexpected response", ""))
@@ -238,7 +264,7 @@ func resourceNetworkDeviceGroupUpdate(ctx context.Context, d *schema.ResourceDat
 	}
 	if selectedMethod == 2 {
 		vvName = vName
-		getResp, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
+		getResp, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(vvName)
 		if err != nil || getResp == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceGroupByName", err,
@@ -250,9 +276,9 @@ func resourceNetworkDeviceGroupUpdate(ctx context.Context, d *schema.ResourceDat
 			vvID = getResp.NetworkDeviceGroup.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestNetworkDeviceGroupUpdateNetworkDeviceGroupByID(ctx, "item.0", d)
+		request1 := expandRequestNetworkDeviceGroupUpdateNetworkDeviceGroupByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkDeviceGroup.UpdateNetworkDeviceGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -301,7 +327,7 @@ func resourceNetworkDeviceGroupDelete(ctx context.Context, d *schema.ResourceDat
 	}
 	if selectedMethod == 2 {
 		vvName = vName
-		getResp, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
+		getResp, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(vvName)
 		if err != nil || getResp == nil {
 			// Assume that element it is already gone
 			return diags
@@ -343,13 +369,13 @@ func expandRequestNetworkDeviceGroupCreateNetworkDeviceGroup(ctx context.Context
 
 func expandRequestNetworkDeviceGroupCreateNetworkDeviceGroupNetworkDeviceGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceGroupCreateNetworkDeviceGroupNetworkDeviceGroup {
 	request := isegosdk.RequestNetworkDeviceGroupCreateNetworkDeviceGroupNetworkDeviceGroup{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".othername"); !isEmptyValue(reflect.ValueOf(d.Get(key+".othername"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".othername"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".othername")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".othername")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".othername")))) {
 		request.Othername = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -369,16 +395,16 @@ func expandRequestNetworkDeviceGroupUpdateNetworkDeviceGroupByID(ctx context.Con
 
 func expandRequestNetworkDeviceGroupUpdateNetworkDeviceGroupByIDNetworkDeviceGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceGroupUpdateNetworkDeviceGroupByIDNetworkDeviceGroup {
 	request := isegosdk.RequestNetworkDeviceGroupUpdateNetworkDeviceGroupByIDNetworkDeviceGroup{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".othername"); !isEmptyValue(reflect.ValueOf(d.Get(key+".othername"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".othername"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".othername")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".othername")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".othername")))) {
 		request.Othername = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

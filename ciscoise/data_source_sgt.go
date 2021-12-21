@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -108,11 +108,9 @@ string parameter. Each resource Data model description should specify if an attr
 					Schema: map[string]*schema.Schema{
 
 						"default_sgacls": &schema.Schema{
-							Type:     schema.TypeList,
+							// Replaced List to String
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -304,9 +302,12 @@ func dataSourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{
 		log.Printf("[DEBUG] Selected method 2: GetSecurityGroupByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SecurityGroups.GetSecurityGroupByID(vvID)
+		response2, restyResp2, err := client.SecurityGroups.GetSecurityGroupByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSecurityGroupByID", err,
 				"Failure at GetSecurityGroupByID, unexpected response", ""))
@@ -372,15 +373,23 @@ func flattenSecurityGroupsGetSecurityGroupByIDItem(item *isegosdk.ResponseSecuri
 	respItem["generation_id"] = item.GenerationID
 	respItem["is_read_only"] = boolPtrToString(item.IsReadOnly)
 	respItem["propogate_to_apic"] = boolPtrToString(item.PropogateToAPIc)
-	if item.DefaultSgACLs != nil {
-		respItem["default_sgacls"] = responseInterfaceToSliceString(*item.DefaultSgACLs)
-	} else {
-		respItem["default_sgacls"] = []string{}
-	}
+	respItem["default_sgacls"] = flattenSecurityGroupsGetSecurityGroupByIDItemDefaultSgACLs(item.DefaultSgACLs)
 	respItem["link"] = flattenSecurityGroupsGetSecurityGroupByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
 	}
+}
+
+func flattenSecurityGroupsGetSecurityGroupByIDItemDefaultSgACLs(items *[]isegosdk.ResponseSecurityGroupsGetSecurityGroupByIDSgtDefaultSgACLs) []interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []interface{}
+	for _, item := range *items {
+		respItem := item
+		respItems = append(respItems, responseInterfaceToString(respItem))
+	}
+	return respItems
 }
 
 func flattenSecurityGroupsGetSecurityGroupByIDItemLink(item *isegosdk.ResponseSecurityGroupsGetSecurityGroupByIDSgtLink) []map[string]interface{} {

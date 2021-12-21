@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -120,8 +120,10 @@ string parameter. Each resource Data model description should specify if an attr
 						},
 						"custom_attributes": &schema.Schema{
 							Description: `Key value map`,
-							Type:        schema.TypeMap,
-							Computed:    true,
+							// CHECK: The type of this param
+							// Replaced List to Map
+							Type:     schema.TypeMap,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -218,8 +220,10 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 						},
 						"custom_attributes": &schema.Schema{
 							Description: `Key value map`,
-							Type:        schema.TypeMap,
-							Computed:    true,
+							// CHECK: The type of this param
+							// Replaced List to Map
+							Type:     schema.TypeMap,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -444,9 +448,12 @@ func dataSourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Selected method 2: GetInternalUserByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.InternalUser.GetInternalUserByName(vvName)
+		response2, restyResp2, err := client.InternalUser.GetInternalUserByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetInternalUserByName", err,
 				"Failure at GetInternalUserByName, unexpected response", ""))
@@ -470,9 +477,12 @@ func dataSourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Selected method 3: GetInternalUserByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.InternalUser.GetInternalUserByID(vvID)
+		response3, restyResp3, err := client.InternalUser.GetInternalUserByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetInternalUserByID", err,
 				"Failure at GetInternalUserByID, unexpected response", ""))
@@ -544,14 +554,22 @@ func flattenInternalUserGetInternalUserByNameItemName(item *isegosdk.ResponseInt
 	respItem["expiry_date_enabled"] = boolPtrToString(item.ExpiryDateEnabled)
 	respItem["expiry_date"] = item.ExpiryDate
 	respItem["enable_password"] = item.EnablePassword
-	if item.CustomAttributes != nil {
-		respItem["custom_attributes"] = *item.CustomAttributes
-	}
+	respItem["custom_attributes"] = flattenInternalUserGetInternalUserByNameItemNameCustomAttributes(item.CustomAttributes)
 	respItem["password_idstore"] = item.PasswordIDStore
 	respItem["link"] = flattenInternalUserGetInternalUserByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
 	}
+}
+
+func flattenInternalUserGetInternalUserByNameItemNameCustomAttributes(item *isegosdk.ResponseInternalUserGetInternalUserByNameInternalUserCustomAttributes) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return respItem
+
 }
 
 func flattenInternalUserGetInternalUserByNameItemNameLink(item *isegosdk.ResponseInternalUserGetInternalUserByNameInternalUserLink) []map[string]interface{} {
@@ -587,14 +605,22 @@ func flattenInternalUserGetInternalUserByIDItemID(item *isegosdk.ResponseInterna
 	respItem["expiry_date_enabled"] = boolPtrToString(item.ExpiryDateEnabled)
 	respItem["expiry_date"] = item.ExpiryDate
 	respItem["enable_password"] = item.EnablePassword
-	if item.CustomAttributes != nil {
-		respItem["custom_attributes"] = *item.CustomAttributes
-	}
+	respItem["custom_attributes"] = flattenInternalUserGetInternalUserByIDItemIDCustomAttributes(item.CustomAttributes)
 	respItem["password_idstore"] = item.PasswordIDStore
 	respItem["link"] = flattenInternalUserGetInternalUserByIDItemIDLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
 	}
+}
+
+func flattenInternalUserGetInternalUserByIDItemIDCustomAttributes(item *isegosdk.ResponseInternalUserGetInternalUserByIDInternalUserCustomAttributes) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return respItem
+
 }
 
 func flattenInternalUserGetInternalUserByIDItemIDLink(item *isegosdk.ResponseInternalUserGetInternalUserByIDInternalUserLink) []map[string]interface{} {

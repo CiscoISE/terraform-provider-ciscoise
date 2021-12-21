@@ -19,10 +19,7 @@ It performs update operation on endpoint.
 data "ciscoise_endpoint_register" "example" {
   provider = ciscoise
   custom_attributes {
-    custom_attributes = {
-      key1 = "value1"
-      key2 = "value2"
-    }
+
   }
   description       = "string"
   group_id          = "string"
@@ -59,7 +56,7 @@ data "ciscoise_endpoint_register" "example" {
 
 ### Optional
 
-- **custom_attributes** (Map of String)
+- **custom_attributes** (Block List) (see [below for nested schema](#nestedblock--custom_attributes))
 - **description** (String)
 - **group_id** (String)
 - **id** (String) The ID of this resource.
@@ -76,6 +73,14 @@ data "ciscoise_endpoint_register" "example" {
 ### Read-Only
 
 - **item** (String)
+
+<a id="nestedblock--custom_attributes"></a>
+### Nested Schema for `custom_attributes`
+
+Optional:
+
+- **custom_attributes** (List of String) Key value map
+
 
 <a id="nestedblock--mdm_attributes"></a>
 ### Nested Schema for `mdm_attributes`

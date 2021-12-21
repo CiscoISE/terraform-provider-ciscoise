@@ -1,7 +1,7 @@
 
 resource "ciscoise_egress_matrix_cell" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     default_rule       = "string"
     description        = "string"

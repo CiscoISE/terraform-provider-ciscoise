@@ -1,7 +1,7 @@
 
 resource "ciscoise_self_registered_portal" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     customizations {
 

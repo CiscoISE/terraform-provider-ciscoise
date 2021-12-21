@@ -11,7 +11,6 @@ output "ciscoise_network_access_local_exception_rules_example" {
 data "ciscoise_network_access_local_exception_rules" "example" {
   provider  = ciscoise
   policy_id = "string"
-  id        = "string"
 }
 
 output "ciscoise_network_access_local_exception_rules_example" {

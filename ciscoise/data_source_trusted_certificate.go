@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,22 +17,41 @@ func dataSourceTrustedCertificate() *schema.Resource {
 
 - This data source supports Filtering, Sorting and Pagination.
 
-
 Filtering and Sorting supported on below mentioned attributes:
 
 
-	* [friendlyName, subject, issuedTo, issuedBy, validFrom, expirationDate]
+friendlyName
+
+subject
+
+issuedTo
+
+issuedBy
+
+validFrom
+
 
 Supported Date Format: yyyy-MM-dd HH:mm:ss
 
 Supported Operators: EQ, NEQ, GT and LT
 
 
-	* [status]
+expirationDate
+
+
+Supported Date Format: yyyy-MM-dd HH:mm:ss
+
+Supported Operators: EQ, NEQ, GT and LT
+
+
+status
+
 
 Allowed values: enabled, disabled
 
 Supported Operators: EQ, NEQ
+
+
 
 
 - This data source can displays details of a Trust Certificate based on a given ID.
@@ -49,6 +68,79 @@ Simple filtering
  should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
 "filterType=or"
  query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
+ 
+ 
+ 
+ 
+ 
+OPERATOR
+ 
+DESCRIPTION
+ 
+ 
+ 
+ 
+ 
+EQ
+ 
+Equals
+ 
+ 
+ 
+NEQ
+ 
+Not Equals
+ 
+ 
+ 
+GT
+ 
+Greater Than
+ 
+ 
+ 
+LT
+ 
+Less Then
+ 
+ 
+ 
+STARTSW
+ 
+Starts With
+ 
+ 
+ 
+NSTARTSW
+ 
+Not Starts With
+ 
+ 
+ 
+ENDSW
+ 
+Ends With
+ 
+ 
+ 
+NENDSW
+ 
+Not Ends With
+ 
+ 
+ 
+CONTAINS
+ 
+Contains
+ 
+ 
+ 
+NCONTAINS
+ 
+Not Contains
+ 
+ 
+ 
  `,
 				Type:     schema.TypeList,
 				Optional: true,
@@ -62,7 +154,7 @@ Simple filtering
 				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Description: `id path parameter. The id of the trust certificate`,
+				Description: `id path parameter. ID of the trust certificate`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -93,12 +185,12 @@ Simple filtering
 					Schema: map[string]*schema.Schema{
 
 						"authenticate_before_crl_received": &schema.Schema{
-							Description: `Switch to enable/disable authentication before receiving CRL`,
+							Description: `Switch to enable or disable authentication before receiving CRL`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"automatic_crl_update": &schema.Schema{
-							Description: `Switch to enable/disable automatic CRL update`,
+							Description: `Switch to enable or disable automatic CRL update`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -133,17 +225,17 @@ Simple filtering
 							Computed:    true,
 						},
 						"download_crl": &schema.Schema{
-							Description: `Switch to enable/disable download of CRL`,
+							Description: `Switch to enable or disable download of CRL`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"enable_ocsp_validation": &schema.Schema{
-							Description: `Switch to enable/disable OCSP Validation`,
+							Description: `Switch to enable or disable OCSP Validation`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"enable_server_identity_check": &schema.Schema{
-							Description: `Switch to enable/disable Server Identity Check`,
+							Description: `Switch to enable or disable Server Identity Check`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -163,7 +255,7 @@ Simple filtering
 							Computed:    true,
 						},
 						"ignore_crl_expiration": &schema.Schema{
-							Description: `Switch to enable/disable ignore CRL Expiration`,
+							Description: `Switch to enable or disable ignore CRL Expiration`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -278,182 +370,17 @@ Simple filtering
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"authenticate_before_crl_received": &schema.Schema{
-							Description: `Switch to enable/disable authentication before receiving CRL`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"automatic_crl_update": &schema.Schema{
-							Description: `Switch to enable/disable automatic CRL update`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"automatic_crl_update_period": &schema.Schema{
-							Description: `Automatic CRL update period`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"automatic_crl_update_units": &schema.Schema{
-							Description: `Unit of time of automatic CRL update`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"crl_distribution_url": &schema.Schema{
-							Description: `CRL Distribution URL`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"crl_download_failure_retries": &schema.Schema{
-							Description: `If CRL download fails, wait time before retry`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"crl_download_failure_retries_units": &schema.Schema{
-							Description: `Unit of time before retry if CRL download fails`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"description": &schema.Schema{
-							Description: `Description of trust certificate`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"download_crl": &schema.Schema{
-							Description: `Switch to enable/disable download of CRL`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"enable_ocsp_validation": &schema.Schema{
-							Description: `Switch to enable/disable OCSP Validation`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"enable_server_identity_check": &schema.Schema{
-							Description: `Switch to enable/disable Server Identity Check`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"expiration_date": &schema.Schema{
-							Description: `The time and date past which the certificate is no longer valid`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"friendly_name": &schema.Schema{
-							Description: `Friendly name of trust certificate`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"id": &schema.Schema{
-							Description: `ID of trust certificate`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"ignore_crl_expiration": &schema.Schema{
-							Description: `Switch to enable/disable ignore CRL Expiration`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"internal_ca": &schema.Schema{
+						"href": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"is_referred_in_policy": &schema.Schema{
+						"rel": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"issued_by": &schema.Schema{
-							Description: `The entity that verified the information and signed the certificate`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"issued_to": &schema.Schema{
-							Description: `Entity to which trust certificate is issued`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"key_size": &schema.Schema{
-							Description: `The length of key used for encrypting trust certificate`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"non_automatic_crl_update_period": &schema.Schema{
-							Description: `Non automatic CRL update period`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"non_automatic_crl_update_units": &schema.Schema{
-							Description: `Unit of time of non automatic CRL update`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"reject_if_no_status_from_ocs_p": &schema.Schema{
-							Description: `Switch to reject certificate if there is no status from OCSP`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"reject_if_unreachable_from_ocs_p": &schema.Schema{
-							Description: `Switch to reject certificate if unreachable from OCSP`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"selected_ocsp_service": &schema.Schema{
-							Description: `Name of selected OCSP Service`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"serial_number_decimal_format": &schema.Schema{
-							Description: `Used to uniquely identify the certificate within a CA's systems`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"sha256_fingerprint": &schema.Schema{
+						"type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
-						},
-						"signature_algorithm": &schema.Schema{
-							Description: `Algorithm used for encrypting trust certificate`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"status": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"subject": &schema.Schema{
-							Description: `The Subject or entity with which public key of trust certificate is associated`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"trusted_for": &schema.Schema{
-							Description: `Different services for which the certificated is trusted`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"valid_from": &schema.Schema{
-							Description: `The earliest time and date on which the certificate is valid`,
-							Type:        schema.TypeString,
-							Computed:    true,
 						},
 					},
 				},
@@ -553,9 +480,12 @@ func dataSourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 2: GetTrustedCertificateByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.Certificates.GetTrustedCertificateByID(vvID)
+		response2, restyResp2, err := client.Certificates.GetTrustedCertificateByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTrustedCertificateByID", err,
 				"Failure at GetTrustedCertificateByID, unexpected response", ""))

@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,7 +39,6 @@ func resourceHotspotPortal() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,21 +46,18 @@ func resourceHotspotPortal() *schema.Resource {
 						"customizations": &schema.Schema{
 							Description: `Defines all of the Portal Customizations available`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"global_customizations": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"background_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -69,7 +65,6 @@ func resourceHotspotPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -77,7 +72,6 @@ func resourceHotspotPortal() *schema.Resource {
 												},
 												"banner_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -85,7 +79,6 @@ func resourceHotspotPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -93,17 +86,14 @@ func resourceHotspotPortal() *schema.Resource {
 												},
 												"banner_title": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"contact_text": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"desktop_logo_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -111,7 +101,6 @@ func resourceHotspotPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -119,12 +108,10 @@ func resourceHotspotPortal() *schema.Resource {
 												},
 												"footer_element": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"mobile_logo_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -132,7 +119,6 @@ func resourceHotspotPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -145,14 +131,12 @@ func resourceHotspotPortal() *schema.Resource {
 										Description: `This property is supported only for Read operation and it allows to show the customizations in English.
 Other languages are not supported`,
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"view_language": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -160,26 +144,22 @@ Other languages are not supported`,
 									},
 									"page_customizations": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"key": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 															"value": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 														},
@@ -191,7 +171,6 @@ Other languages are not supported`,
 									"portal_theme": &schema.Schema{
 										Description: `Defines the configuration for portal theme`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -199,19 +178,16 @@ Other languages are not supported`,
 												"id": &schema.Schema{
 													Description: `The unique internal identifier of the portal theme`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"name": &schema.Schema{
 													Description: `The system- or user-assigned name of the portal theme`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"theme_data": &schema.Schema{
 													Description: `A CSS file, represented as a Base64-encoded byte array`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 											},
@@ -222,7 +198,6 @@ Other languages are not supported`,
 When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
 The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -230,22 +205,18 @@ The Tweak Settings can subsequently be changed by the user`,
 												"banner_color": &schema.Schema{
 													Description: `Hex value of color`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"banner_text_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"page_background_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"page_label_and_text_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -256,12 +227,10 @@ The Tweak Settings can subsequently be changed by the user`,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -287,13 +256,11 @@ The Tweak Settings can subsequently be changed by the user`,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"portal_test_url": &schema.Schema{
 							Description: `URL to bring up a test page for this portal`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"portal_type": &schema.Schema{
@@ -305,13 +272,11 @@ The Tweak Settings can subsequently be changed by the user`,
 - SPONSOR,
 - SPONSOREDGUEST`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"settings": &schema.Schema{
 							Description: `Defines all of the settings groups available for a BYOD`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -319,7 +284,6 @@ The Tweak Settings can subsequently be changed by the user`,
 									"aup_settings": &schema.Schema{
 										Description: `Configuration of the Acceptable Use Policy (AUP) for a portal`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -327,37 +291,29 @@ The Tweak Settings can subsequently be changed by the user`,
 												"access_code": &schema.Schema{
 													Description: `Access code that must be entered by the portal user (only valid if requireAccessCode = true)`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													Description:  `Require the portal user to read and accept an AUP`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Require the portal user to read and accept an AUP`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"require_access_code": &schema.Schema{
 													Description: `Require the portal user to enter an access code.
 Only used in Hotspot portal`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_scrolling": &schema.Schema{
-													Description:  `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"auth_success_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -365,7 +321,6 @@ Only used in Hotspot portal`,
 												"redirect_url": &schema.Schema{
 													Description: `Target URL for redirection, used when successRedirect = URL`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"success_redirect": &schema.Schema{
@@ -374,7 +329,6 @@ Only used in Hotspot portal`,
 - ORIGINATINGURL,
 - URL`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -383,7 +337,6 @@ Only used in Hotspot portal`,
 									"portal_settings": &schema.Schema{
 										Description: `The port, interface, certificate, and other basic settings of a portal`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -401,7 +354,6 @@ Allowed values:
 - bond1
 - bond2`,
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
@@ -410,13 +362,11 @@ Allowed values:
 												"always_used_language": &schema.Schema{
 													Description: `Used when displayLang = ALWAYSUSE`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"certificate_group_tag": &schema.Schema{
 													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"coa_type": &schema.Schema{
@@ -424,7 +374,6 @@ Allowed values:
 - COAREAUTHENTICATE,
 - COATERMINATE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"display_lang": &schema.Schema{
@@ -432,26 +381,22 @@ Allowed values:
 - USEBROWSERLOCALE,
 - ALWAYSUSE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"endpoint_identity_group": &schema.Schema{
 													Description: `Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"fallback_language": &schema.Schema{
 													Description: `Used when displayLang = USEBROWSERLOCALE`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"https_port": &schema.Schema{
 													Description: `The port number that the allowed interfaces will listen on.
 Range from 8000 to 8999`,
 													Type:     schema.TypeInt,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -459,33 +404,27 @@ Range from 8000 to 8999`,
 									},
 									"post_access_banner_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
 									},
 									"post_login_banner_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Description:  `Include a Post-Login Banner page`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Include a Post-Login Banner page`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -493,7 +432,6 @@ Range from 8000 to 8999`,
 									"support_info_settings": &schema.Schema{
 										Description: `Portal Support Information Settings`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -502,7 +440,6 @@ Range from 8000 to 8999`,
 													Description: `The default value displayed for an empty field.
 Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
@@ -512,44 +449,485 @@ Allowed values:
 - DISPLAYWITHNOVALUE,
 - DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
+												},
+												"include_browser_user_agent": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_failure_code": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_ip_address": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_mac_addr": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_policy_server": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_support_info_page": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"customizations": &schema.Schema{
+							Description: `Defines all of the Portal Customizations available`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"global_customizations": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"background_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"banner_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"banner_title": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"contact_text": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"desktop_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"footer_element": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"mobile_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"language": &schema.Schema{
+										Description: `This property is supported only for Read operation and it allows to show the customizations in English.
+Other languages are not supported`,
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"view_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"page_customizations": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"data": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"portal_theme": &schema.Schema{
+										Description: `Defines the configuration for portal theme`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"id": &schema.Schema{
+													Description: `The unique internal identifier of the portal theme`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"name": &schema.Schema{
+													Description: `The system- or user-assigned name of the portal theme`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"theme_data": &schema.Schema{
+													Description: `A CSS file, represented as a Base64-encoded byte array`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+											},
+										},
+									},
+									"portal_tweak_settings": &schema.Schema{
+										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user`,
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"banner_color": &schema.Schema{
+													Description: `Hex value of color`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"banner_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"page_background_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"page_label_and_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"portal_test_url": &schema.Schema{
+							Description: `URL to bring up a test page for this portal`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"portal_type": &schema.Schema{
+							Description: `Allowed values:
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"settings": &schema.Schema{
+							Description: `Defines all of the settings groups available for a BYOD`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"aup_settings": &schema.Schema{
+										Description: `Configuration of the Acceptable Use Policy (AUP) for a portal`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"access_code": &schema.Schema{
+													Description: `Access code that must be entered by the portal user (only valid if requireAccessCode = true)`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"include_aup": &schema.Schema{
+													Description:  `Require the portal user to read and accept an AUP`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"require_access_code": &schema.Schema{
+													Description: `Require the portal user to enter an access code.
+Only used in Hotspot portal`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"require_scrolling": &schema.Schema{
+													Description:  `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+											},
+										},
+									},
+									"auth_success_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"redirect_url": &schema.Schema{
+													Description: `Target URL for redirection, used when successRedirect = URL`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"success_redirect": &schema.Schema{
+													Description: `After an Authentication Success where should device be redirected. Allowed values:
+- AUTHSUCCESSPAGE,
+- ORIGINATINGURL,
+- URL`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"portal_settings": &schema.Schema{
+										Description: `The port, interface, certificate, and other basic settings of a portal`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"allowed_interfaces": &schema.Schema{
+													Description: `Interfaces that the portal will be reachable on.
+Allowed values:
+- eth0
+- eth1
+- eth2
+- eth3
+- eth4
+- eth5
+- bond0
+- bond1
+- bond2`,
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"always_used_language": &schema.Schema{
+													Description: `Used when displayLang = ALWAYSUSE`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"certificate_group_tag": &schema.Schema{
+													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"coa_type": &schema.Schema{
+													Description: `Allowed Values:
+- COAREAUTHENTICATE,
+- COATERMINATE`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"display_lang": &schema.Schema{
+													Description: `Allowed values:
+- USEBROWSERLOCALE,
+- ALWAYSUSE`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"endpoint_identity_group": &schema.Schema{
+													Description: `Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"fallback_language": &schema.Schema{
+													Description: `Used when displayLang = USEBROWSERLOCALE`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"https_port": &schema.Schema{
+													Description: `The port number that the allowed interfaces will listen on.
+Range from 8000 to 8999`,
+													Type:     schema.TypeInt,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"post_access_banner_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"include_post_access_banner": &schema.Schema{
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+											},
+										},
+									},
+									"post_login_banner_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"include_post_access_banner": &schema.Schema{
+													Description:  `Include a Post-Login Banner page`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+											},
+										},
+									},
+									"support_info_settings": &schema.Schema{
+										Description: `Portal Support Information Settings`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"default_empty_field_value": &schema.Schema{
+													Description: `The default value displayed for an empty field.
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"empty_field_display": &schema.Schema{
+													Description: `Specifies how empty fields are handled on the Support Information Page.
+Allowed values:
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_failure_code": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_ip_address": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_mac_addr": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_policy_server": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_support_info_page": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -569,8 +947,8 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestHotspotPortalCreateHotspotPortal(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestHotspotPortalCreateHotspotPortal(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -584,7 +962,7 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceHotspotPortalRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetHotspotPortalQueryParams{}
@@ -598,7 +976,7 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceHotspotPortalRead(ctx, d, m)
 			}
 		}
 	}
@@ -621,7 +999,7 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceHotspotPortalRead(ctx, d, m)
 }
 
 func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -647,9 +1025,12 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetHotspotPortal")
 		queryParams1 := isegosdk.GetHotspotPortalQueryParams{}
 
-		response1, _, err := client.HotspotPortal.GetHotspotPortal(&queryParams1)
+		response1, restyResp1, err := client.HotspotPortal.GetHotspotPortal(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetHotspotPortal", err,
 				"Failure at GetHotspotPortal, unexpected response", ""))
@@ -679,9 +1060,12 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetHotspotPortalByID")
 		vvID := vID
 
-		response2, _, err := client.HotspotPortal.GetHotspotPortalByID(vvID)
+		response2, restyResp2, err := client.HotspotPortal.GetHotspotPortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetHotspotPortalByID", err,
 				"Failure at GetHotspotPortalByID, unexpected response", ""))
@@ -710,7 +1094,6 @@ func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -740,9 +1123,9 @@ func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestHotspotPortalUpdateHotspotPortalByID(ctx, "item.0", d)
+		request1 := expandRequestHotspotPortalUpdateHotspotPortalByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.HotspotPortal.UpdateHotspotPortalByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -770,7 +1153,6 @@ func resourceHotspotPortalDelete(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -842,22 +1224,22 @@ func expandRequestHotspotPortalCreateHotspotPortal(ctx context.Context, key stri
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortal {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortal{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_type")))) {
 		request.PortalType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_test_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_test_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_test_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_test_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_test_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_test_url")))) {
 		request.PortalTestURL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".settings")))) {
 		request.Settings = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettings(ctx, key+".settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".customizations")))) {
 		request.Customizations = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizations(ctx, key+".customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -868,22 +1250,22 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortal(ctx context.Cont
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettings {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".portal_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_settings")))) {
 		request.PortalSettings = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPortalSettings(ctx, key+".portal_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_settings")))) {
 		request.AupSettings = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAupSettings(ctx, key+".aup_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".post_access_banner_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".post_access_banner_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".post_access_banner_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".post_access_banner_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".post_access_banner_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".post_access_banner_settings")))) {
 		request.PostAccessBannerSettings = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostAccessBannerSettings(ctx, key+".post_access_banner_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".auth_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auth_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auth_success_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_success_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_success_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_success_settings")))) {
 		request.AuthSuccessSettings = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAuthSuccessSettings(ctx, key+".auth_success_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".post_login_banner_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".post_login_banner_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".post_login_banner_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".post_login_banner_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".post_login_banner_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".post_login_banner_settings")))) {
 		request.PostLoginBannerSettings = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostLoginBannerSettings(ctx, key+".post_login_banner_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".support_info_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_info_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_info_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".support_info_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".support_info_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".support_info_settings")))) {
 		request.SupportInfoSettings = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsSupportInfoSettings(ctx, key+".support_info_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -894,28 +1276,28 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettings(ctx cont
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPortalSettings {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".https_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".https_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".https_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".https_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".https_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".https_port")))) {
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_interfaces")))) {
 		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_group_tag")))) {
 		request.CertificateGroupTag = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".endpoint_identity_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".endpoint_identity_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".endpoint_identity_group"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".endpoint_identity_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".endpoint_identity_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".endpoint_identity_group")))) {
 		request.EndpointIDentityGroup = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".coa_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".coa_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".coa_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coa_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coa_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coa_type")))) {
 		request.CoaType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_lang"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_lang"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_lang"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_lang")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_lang")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_lang")))) {
 		request.DisplayLang = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".fallback_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".fallback_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".fallback_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fallback_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fallback_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fallback_language")))) {
 		request.FallbackLanguage = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".always_used_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".always_used_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".always_used_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".always_used_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".always_used_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".always_used_language")))) {
 		request.AlwaysUsedLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -926,16 +1308,16 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPortalSet
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAupSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAupSettings {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAupSettings{}
-	if v, ok := d.GetOkExists(key + ".require_access_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_access_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_access_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_access_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_access_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_access_code")))) {
 		request.RequireAccessCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".access_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_code")))) {
 		request.AccessCode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_scrolling")))) {
 		request.RequireScrolling = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -946,7 +1328,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAupSettin
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostAccessBannerSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostAccessBannerSettings {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostAccessBannerSettings{}
-	if v, ok := d.GetOkExists(key + ".include_post_access_banner"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_post_access_banner"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_post_access_banner"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_post_access_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_post_access_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_post_access_banner")))) {
 		request.IncludePostAccessBanner = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -957,10 +1339,10 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostAcces
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAuthSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAuthSuccessSettings {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAuthSuccessSettings{}
-	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".success_redirect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".success_redirect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".success_redirect")))) {
 		request.SuccessRedirect = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".redirect_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".redirect_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".redirect_url")))) {
 		request.RedirectURL = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -971,7 +1353,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsAuthSucce
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostLoginBannerSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostLoginBannerSettings {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostLoginBannerSettings{}
-	if v, ok := d.GetOkExists(key + ".include_post_access_banner"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_post_access_banner"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_post_access_banner"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_post_access_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_post_access_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_post_access_banner")))) {
 		request.IncludePostAccessBanner = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -982,28 +1364,28 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsPostLogin
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsSupportInfoSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsSupportInfoSettings {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsSupportInfoSettings{}
-	if v, ok := d.GetOkExists(key + ".include_support_info_page"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_support_info_page"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_support_info_page"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_support_info_page")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_support_info_page")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_support_info_page")))) {
 		request.IncludeSupportInfoPage = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_mac_addr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_mac_addr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_mac_addr"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_mac_addr")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_mac_addr")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_mac_addr")))) {
 		request.IncludeMacAddr = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_ip_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_ip_address")))) {
 		request.IncludeIPAddress = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_browser_user_agent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_browser_user_agent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_browser_user_agent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_browser_user_agent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_browser_user_agent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_browser_user_agent")))) {
 		request.IncludeBrowserUserAgent = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_policy_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_policy_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_policy_server"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_policy_server")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_policy_server")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_policy_server")))) {
 		request.IncludePolicyServer = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_failure_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_failure_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_failure_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_failure_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_failure_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_failure_code")))) {
 		request.IncludeFailureCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".empty_field_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".empty_field_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".empty_field_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".empty_field_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".empty_field_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".empty_field_display")))) {
 		request.EmptyFieldDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_empty_field_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_empty_field_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_empty_field_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_empty_field_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_empty_field_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_empty_field_value")))) {
 		request.DefaultEmptyFieldValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1014,19 +1396,19 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalSettingsSupportIn
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizations {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".portal_theme"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_theme"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_theme"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_theme")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_theme")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_theme")))) {
 		request.PortalTheme = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPortalTheme(ctx, key+".portal_theme.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_tweak_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_tweak_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_tweak_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_tweak_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_tweak_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_tweak_settings")))) {
 		request.PortalTweakSettings = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPortalTweakSettings(ctx, key+".portal_tweak_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".language")))) {
 		request.Language = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsLanguage(ctx, key+".language.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".global_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".global_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".global_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".global_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".global_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".global_customizations")))) {
 		request.GlobalCustomizations = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizations(ctx, key+".global_customizations.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".page_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_customizations")))) {
 		request.PageCustomizations = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizations(ctx, key+".page_customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1037,13 +1419,13 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizations(ct
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPortalTheme {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPortalTheme{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".theme_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".theme_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".theme_data")))) {
 		request.ThemeData = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1054,16 +1436,16 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPor
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPortalTweakSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPortalTweakSettings {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPortalTweakSettings{}
-	if v, ok := d.GetOkExists(key + ".banner_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_color")))) {
 		request.BannerColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_text_color")))) {
 		request.BannerTextColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_background_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_background_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_background_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_background_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_background_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_background_color")))) {
 		request.PageBackgroundColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_label_and_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_label_and_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_label_and_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_label_and_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_label_and_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_label_and_text_color")))) {
 		request.PageLabelAndTextColor = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1074,7 +1456,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPor
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsLanguage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsLanguage {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsLanguage{}
-	if v, ok := d.GetOkExists(key + ".view_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".view_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".view_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view_language")))) {
 		request.ViewLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1085,25 +1467,25 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsLan
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizations {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".mobile_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mobile_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mobile_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mobile_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mobile_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mobile_logo_image")))) {
 		request.MobileLogoImage = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx, key+".mobile_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".desktop_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".desktop_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".desktop_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".desktop_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".desktop_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".desktop_logo_image")))) {
 		request.DesktopLogoImage = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx, key+".desktop_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".background_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".background_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".background_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".background_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".background_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".background_image")))) {
 		request.BackgroundImage = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx, key+".background_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_image")))) {
 		request.BannerImage = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsBannerImage(ctx, key+".banner_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_title"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_title")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_title")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_title")))) {
 		request.BannerTitle = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".contact_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".contact_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".contact_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".contact_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".contact_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".contact_text")))) {
 		request.ContactText = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".footer_element"); !isEmptyValue(reflect.ValueOf(d.Get(key+".footer_element"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".footer_element"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".footer_element")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".footer_element")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".footer_element")))) {
 		request.FooterElement = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1114,7 +1496,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlo
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1125,7 +1507,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlo
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1136,7 +1518,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlo
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1147,7 +1529,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlo
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsBannerImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsBannerImage {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlobalCustomizationsBannerImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1158,7 +1540,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsGlo
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizations{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1169,6 +1551,7 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPag
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -1191,10 +1574,10 @@ func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPag
 
 func expandRequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData {
 	request := isegosdk.RequestHotspotPortalCreateHotspotPortalHotspotPortalCustomizationsPageCustomizationsData{}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1214,25 +1597,25 @@ func expandRequestHotspotPortalUpdateHotspotPortalByID(ctx context.Context, key 
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortal {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortal{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_type")))) {
 		request.PortalType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_test_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_test_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_test_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_test_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_test_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_test_url")))) {
 		request.PortalTestURL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".settings")))) {
 		request.Settings = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettings(ctx, key+".settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".customizations")))) {
 		request.Customizations = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizations(ctx, key+".customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1243,22 +1626,22 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortal(ctx context.
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettings {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".portal_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_settings")))) {
 		request.PortalSettings = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPortalSettings(ctx, key+".portal_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_settings")))) {
 		request.AupSettings = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAupSettings(ctx, key+".aup_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".post_access_banner_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".post_access_banner_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".post_access_banner_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".post_access_banner_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".post_access_banner_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".post_access_banner_settings")))) {
 		request.PostAccessBannerSettings = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostAccessBannerSettings(ctx, key+".post_access_banner_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".auth_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auth_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auth_success_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_success_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_success_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_success_settings")))) {
 		request.AuthSuccessSettings = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAuthSuccessSettings(ctx, key+".auth_success_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".post_login_banner_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".post_login_banner_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".post_login_banner_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".post_login_banner_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".post_login_banner_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".post_login_banner_settings")))) {
 		request.PostLoginBannerSettings = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostLoginBannerSettings(ctx, key+".post_login_banner_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".support_info_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_info_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_info_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".support_info_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".support_info_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".support_info_settings")))) {
 		request.SupportInfoSettings = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsSupportInfoSettings(ctx, key+".support_info_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1269,28 +1652,28 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettings(ctx 
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPortalSettings {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".https_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".https_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".https_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".https_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".https_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".https_port")))) {
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_interfaces")))) {
 		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_group_tag")))) {
 		request.CertificateGroupTag = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".endpoint_identity_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".endpoint_identity_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".endpoint_identity_group"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".endpoint_identity_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".endpoint_identity_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".endpoint_identity_group")))) {
 		request.EndpointIDentityGroup = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".coa_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".coa_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".coa_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coa_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coa_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coa_type")))) {
 		request.CoaType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_lang"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_lang"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_lang"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_lang")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_lang")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_lang")))) {
 		request.DisplayLang = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".fallback_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".fallback_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".fallback_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fallback_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fallback_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fallback_language")))) {
 		request.FallbackLanguage = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".always_used_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".always_used_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".always_used_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".always_used_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".always_used_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".always_used_language")))) {
 		request.AlwaysUsedLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1301,16 +1684,16 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPorta
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAupSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAupSettings {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAupSettings{}
-	if v, ok := d.GetOkExists(key + ".require_access_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_access_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_access_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_access_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_access_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_access_code")))) {
 		request.RequireAccessCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".access_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_code")))) {
 		request.AccessCode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_scrolling")))) {
 		request.RequireScrolling = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1321,7 +1704,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAupSe
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostAccessBannerSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostAccessBannerSettings {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostAccessBannerSettings{}
-	if v, ok := d.GetOkExists(key + ".include_post_access_banner"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_post_access_banner"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_post_access_banner"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_post_access_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_post_access_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_post_access_banner")))) {
 		request.IncludePostAccessBanner = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1332,10 +1715,10 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostA
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAuthSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAuthSuccessSettings {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAuthSuccessSettings{}
-	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".success_redirect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".success_redirect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".success_redirect")))) {
 		request.SuccessRedirect = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".redirect_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".redirect_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".redirect_url")))) {
 		request.RedirectURL = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1346,7 +1729,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsAuthS
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostLoginBannerSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostLoginBannerSettings {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostLoginBannerSettings{}
-	if v, ok := d.GetOkExists(key + ".include_post_access_banner"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_post_access_banner"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_post_access_banner"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_post_access_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_post_access_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_post_access_banner")))) {
 		request.IncludePostAccessBanner = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1357,28 +1740,28 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsPostL
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsSupportInfoSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsSupportInfoSettings {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsSupportInfoSettings{}
-	if v, ok := d.GetOkExists(key + ".include_support_info_page"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_support_info_page"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_support_info_page"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_support_info_page")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_support_info_page")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_support_info_page")))) {
 		request.IncludeSupportInfoPage = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_mac_addr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_mac_addr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_mac_addr"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_mac_addr")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_mac_addr")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_mac_addr")))) {
 		request.IncludeMacAddr = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_ip_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_ip_address")))) {
 		request.IncludeIPAddress = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_browser_user_agent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_browser_user_agent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_browser_user_agent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_browser_user_agent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_browser_user_agent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_browser_user_agent")))) {
 		request.IncludeBrowserUserAgent = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_policy_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_policy_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_policy_server"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_policy_server")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_policy_server")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_policy_server")))) {
 		request.IncludePolicyServer = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_failure_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_failure_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_failure_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_failure_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_failure_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_failure_code")))) {
 		request.IncludeFailureCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".empty_field_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".empty_field_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".empty_field_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".empty_field_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".empty_field_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".empty_field_display")))) {
 		request.EmptyFieldDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_empty_field_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_empty_field_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_empty_field_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_empty_field_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_empty_field_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_empty_field_value")))) {
 		request.DefaultEmptyFieldValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1389,19 +1772,19 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalSettingsSuppo
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizations {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".portal_theme"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_theme"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_theme"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_theme")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_theme")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_theme")))) {
 		request.PortalTheme = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPortalTheme(ctx, key+".portal_theme.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_tweak_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_tweak_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_tweak_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_tweak_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_tweak_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_tweak_settings")))) {
 		request.PortalTweakSettings = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPortalTweakSettings(ctx, key+".portal_tweak_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".language")))) {
 		request.Language = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsLanguage(ctx, key+".language.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".global_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".global_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".global_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".global_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".global_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".global_customizations")))) {
 		request.GlobalCustomizations = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizations(ctx, key+".global_customizations.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".page_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_customizations")))) {
 		request.PageCustomizations = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations(ctx, key+".page_customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1412,13 +1795,13 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPortalTheme {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPortalTheme{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".theme_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".theme_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".theme_data")))) {
 		request.ThemeData = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1429,16 +1812,16 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPortalTweakSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPortalTweakSettings {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPortalTweakSettings{}
-	if v, ok := d.GetOkExists(key + ".banner_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_color")))) {
 		request.BannerColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_text_color")))) {
 		request.BannerTextColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_background_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_background_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_background_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_background_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_background_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_background_color")))) {
 		request.PageBackgroundColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_label_and_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_label_and_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_label_and_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_label_and_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_label_and_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_label_and_text_color")))) {
 		request.PageLabelAndTextColor = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1449,7 +1832,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsLanguage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsLanguage {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsLanguage{}
-	if v, ok := d.GetOkExists(key + ".view_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".view_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".view_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view_language")))) {
 		request.ViewLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1460,25 +1843,25 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizations {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".mobile_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mobile_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mobile_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mobile_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mobile_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mobile_logo_image")))) {
 		request.MobileLogoImage = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx, key+".mobile_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".desktop_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".desktop_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".desktop_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".desktop_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".desktop_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".desktop_logo_image")))) {
 		request.DesktopLogoImage = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx, key+".desktop_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".background_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".background_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".background_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".background_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".background_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".background_image")))) {
 		request.BackgroundImage = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx, key+".background_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_image")))) {
 		request.BannerImage = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBannerImage(ctx, key+".banner_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_title"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_title")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_title")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_title")))) {
 		request.BannerTitle = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".contact_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".contact_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".contact_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".contact_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".contact_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".contact_text")))) {
 		request.ContactText = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".footer_element"); !isEmptyValue(reflect.ValueOf(d.Get(key+".footer_element"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".footer_element"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".footer_element")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".footer_element")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".footer_element")))) {
 		request.FooterElement = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1489,7 +1872,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsMobileLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1500,7 +1883,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsDesktopLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1511,7 +1894,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBackgroundImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1522,7 +1905,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBannerImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBannerImage {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsGlobalCustomizationsBannerImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1533,7 +1916,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizations{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1544,6 +1927,7 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -1566,10 +1950,10 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 
 func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData {
 	request := isegosdk.RequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomizationsPageCustomizationsData{}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

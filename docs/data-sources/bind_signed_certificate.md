@@ -11,7 +11,7 @@ description: |-
   NOTE:
   The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
   NOTE:
-  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+  Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 ---
 
 # ciscoise_bind_signed_certificate (Data Source)
@@ -28,7 +28,7 @@ NOTE:
 The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
 
 NOTE:
-Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 ## Example Usage
 
@@ -60,16 +60,16 @@ data "ciscoise_bind_signed_certificate" "example" {
 
 ### Optional
 
-- **admin** (String) Use certificate to authenticate the ISE Admin Portal
-- **allow_extended_validity** (String) Allow import of certificates with validity greater than 398 days
+- **admin** (String) Use certificate to authenticate the Cisco ISE Admin Portal
+- **allow_extended_validity** (String) Allow import of certificates with validity greater than 398 days (required)
 - **allow_out_of_date_cert** (String) Allow out of date certificates (required)
 - **allow_replacement_of_certificates** (String) Allow Replacement of certificates (required)
 - **allow_replacement_of_portal_group_tag** (String) Allow Replacement of Portal Group Tag (required)
-- **data** (String) Signed Certificate in escaped format
+- **data** (String) Signed certificate data (required)
 - **eap** (String) Use certificate for EAP protocols that use SSL/TLS tunneling
-- **host_name** (String) Name of Host whose CSR ID has been provided
-- **id** (String) ID of the generated CSR
-- **ims** (String) Use certificate for the ISE Messaging Service
+- **host_name** (String) Name of Host whose CSR ID has been provided (required)
+- **id** (String) ID of the generated CSR (required)
+- **ims** (String) Use certificate for the Cisco ISE Messaging Service
 - **name** (String) Friendly Name of the certificate
 - **portal** (String) Use for portal
 - **portal_group_tag** (String) Set Group tag

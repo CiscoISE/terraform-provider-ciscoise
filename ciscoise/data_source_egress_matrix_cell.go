@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -311,9 +311,12 @@ func dataSourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Selected method 2: GetEgressMatrixCellByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.EgressMatrixCell.GetEgressMatrixCellByID(vvID)
+		response2, restyResp2, err := client.EgressMatrixCell.GetEgressMatrixCellByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEgressMatrixCellByID", err,
 				"Failure at GetEgressMatrixCellByID, unexpected response", ""))

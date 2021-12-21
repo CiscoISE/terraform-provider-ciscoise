@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,14 +39,12 @@ func resourceGuestSSID() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -73,8 +71,25 @@ func resourceGuestSSID() *schema.Resource {
 						"name": &schema.Schema{
 							Description: `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Description: `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 					},
 				},
@@ -88,15 +103,14 @@ func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestGuestSSIDCreateGuestSSID(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestGuestSSIDCreateGuestSSID(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-
 	if okID && vvID != "" {
 		getResponse2, _, err := client.GuestSSID.GetGuestSSIDByID(vvID)
 		if err == nil && getResponse2 != nil {
@@ -104,7 +118,7 @@ func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m inte
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceGuestSSIDRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetGuestSSIDQueryParams{}
@@ -118,7 +132,7 @@ func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m inte
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceGuestSSIDRead(ctx, d, m)
 			}
 		}
 	}
@@ -141,7 +155,7 @@ func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m inte
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceGuestSSIDRead(ctx, d, m)
 }
 
 func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -167,9 +181,12 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method: GetGuestSSID")
 		queryParams1 := isegosdk.GetGuestSSIDQueryParams{}
 
-		response1, _, err := client.GuestSSID.GetGuestSSID(&queryParams1)
+		response1, restyResp1, err := client.GuestSSID.GetGuestSSID(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestSSID", err,
 				"Failure at GetGuestSSID, unexpected response", ""))
@@ -199,9 +216,12 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method: GetGuestSSIDByID")
 		vvID := vID
 
-		response2, _, err := client.GuestSSID.GetGuestSSIDByID(vvID)
+		response2, restyResp2, err := client.GuestSSID.GetGuestSSIDByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestSSIDByID", err,
 				"Failure at GetGuestSSIDByID, unexpected response", ""))
@@ -261,9 +281,9 @@ func resourceGuestSSIDUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestGuestSSIDUpdateGuestSSIDByID(ctx, "item.0", d)
+		request1 := expandRequestGuestSSIDUpdateGuestSSIDByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.GuestSSID.UpdateGuestSSIDByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -291,7 +311,6 @@ func resourceGuestSSIDDelete(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -363,7 +382,7 @@ func expandRequestGuestSSIDCreateGuestSSID(ctx context.Context, key string, d *s
 
 func expandRequestGuestSSIDCreateGuestSSIDGuestSSID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestSSIDCreateGuestSSIDGuestSSID {
 	request := isegosdk.RequestGuestSSIDCreateGuestSSIDGuestSSID{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -383,10 +402,10 @@ func expandRequestGuestSSIDUpdateGuestSSIDByID(ctx context.Context, key string, 
 
 func expandRequestGuestSSIDUpdateGuestSSIDByIDGuestSSID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestSSIDUpdateGuestSSIDByIDGuestSSID {
 	request := isegosdk.RequestGuestSSIDUpdateGuestSSIDByIDGuestSSID{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

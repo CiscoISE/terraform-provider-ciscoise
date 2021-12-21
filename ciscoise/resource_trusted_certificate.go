@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -16,12 +16,12 @@ import (
 func resourceTrustedCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages read, update and delete operations on Certificates.
-  
-  - Update a trusted certificate present in ISE trust store.
-  
-  
-  - This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
-  `,
+
+- Update a trusted certificate present in Cisco ISE trust store.
+
+
+- This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
+`,
 
 		CreateContext: resourceTrustedCertificateCreate,
 		ReadContext:   resourceTrustedCertificateRead,
@@ -38,168 +38,64 @@ func resourceTrustedCertificate() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"authenticate_before_crl_received": &schema.Schema{
-							Description: `Switch to enable/disable CRL Verification if CRL is not Received
-  ERROR: Different types for param authenticateBeforeCRLReceived schema.TypeBool schema.TypeString`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
-							Optional:     true,
-							Computed:     true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								if old == "off" {
-									return old == new || "false" == new
-								}
-								if old == "false" {
-									return old == new || "off" == new
-								}
-								if old == "on" {
-									return old == new || "true" == new
-								}
-								if old == "true" {
-									return old == new || "on" == new
-								}
-								return true
-							},
+							Description: `Switch to enable or disable authentication before receiving CRL`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"automatic_crl_update": &schema.Schema{
-							Description: `Switch to enable/disable automatic CRL update
-  ERROR: Different types for param automaticCRLUpdate schema.TypeBool schema.TypeString`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
-							Optional:     true,
-							Computed:     true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								if old == "off" {
-									return old == new || "false" == new
-								}
-								if old == "false" {
-									return old == new || "off" == new
-								}
-								if old == "on" {
-									return old == new || "true" == new
-								}
-								if old == "true" {
-									return old == new || "on" == new
-								}
-								return true
-							},
+							Description: `Switch to enable or disable automatic CRL update`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"automatic_crl_update_period": &schema.Schema{
-							Description: `Automatic CRL update period
-  ERROR: Different types for param automaticCRLUpdatePeriod schema.TypeInt schema.TypeString`,
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `Automatic CRL update period`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"automatic_crl_update_units": &schema.Schema{
-							Description: `Unit of time for automatic CRL update`,
+							Description: `Unit of time of automatic CRL update`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"crl_distribution_url": &schema.Schema{
 							Description: `CRL Distribution URL`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"crl_download_failure_retries": &schema.Schema{
-							Description: `If CRL download fails, wait time before retry
-  ERROR: Different types for param crlDownloadFailureRetries schema.TypeInt schema.TypeString`,
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `If CRL download fails, wait time before retry`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"crl_download_failure_retries_units": &schema.Schema{
 							Description: `Unit of time before retry if CRL download fails`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"description": &schema.Schema{
-							Description: `Description for trust certificate`,
+							Description: `Description of trust certificate`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"download_crl": &schema.Schema{
-							Description: `Switch to enable/disable download of CRL
-  ERROR: Different types for param downloadCRL schema.TypeBool schema.TypeString`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
-							Optional:     true,
-							Computed:     true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								if old == "off" {
-									return old == new || "false" == new
-								}
-								if old == "false" {
-									return old == new || "off" == new
-								}
-								if old == "on" {
-									return old == new || "true" == new
-								}
-								if old == "true" {
-									return old == new || "on" == new
-								}
-								return true
-							},
+							Description: `Switch to enable or disable download of CRL`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"enable_ocsp_validation": &schema.Schema{
-							Description: `Switch to enable/disable OCSP Validation
-  ERROR: Different types for param enableOCSPValidation schema.TypeBool schema.TypeString`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
-							Optional:     true,
-							Computed:     true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								if old == "off" {
-									return old == new || "false" == new
-								}
-								if old == "false" {
-									return old == new || "off" == new
-								}
-								if old == "on" {
-									return old == new || "true" == new
-								}
-								if old == "true" {
-									return old == new || "on" == new
-								}
-								return true
-							},
+							Description: `Switch to enable or disable OCSP Validation`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"enable_server_identity_check": &schema.Schema{
-							Description: `Switch to enable/disable verification if HTTPS or LDAP server certificate name fits the configured server URL
-  ERROR: Different types for param enableServerIdentityCheck schema.TypeBool schema.TypeString`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
-							Optional:     true,
-							Computed:     true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								if old == "off" {
-									return old == new || "false" == new
-								}
-								if old == "false" {
-									return old == new || "off" == new
-								}
-								if old == "on" {
-									return old == new || "true" == new
-								}
-								if old == "true" {
-									return old == new || "on" == new
-								}
-								return true
-							},
+							Description: `Switch to enable or disable Server Identity Check`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"expiration_date": &schema.Schema{
 							Description: `The time and date past which the certificate is no longer valid`,
@@ -214,31 +110,12 @@ func resourceTrustedCertificate() *schema.Resource {
 						"id": &schema.Schema{
 							Description: `ID of trust certificate`,
 							Type:        schema.TypeString,
-							Optional:    true,
+							Computed:    true,
 						},
 						"ignore_crl_expiration": &schema.Schema{
-							Description: `Switch to enable/disable ignore CRL Expiration
-  ERROR: Different types for param ignoreCRLExpiration schema.TypeBool schema.TypeString`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
-							Optional:     true,
-							Computed:     true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								if old == "off" {
-									return old == new || "false" == new
-								}
-								if old == "false" {
-									return old == new || "off" == new
-								}
-								if old == "on" {
-									return old == new || "true" == new
-								}
-								if old == "true" {
-									return old == new || "on" == new
-								}
-								return true
-							},
+							Description: `Switch to enable or disable ignore CRL Expiration`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"internal_ca": &schema.Schema{
 							Type:     schema.TypeString,
@@ -284,76 +161,29 @@ func resourceTrustedCertificate() *schema.Resource {
 								},
 							},
 						},
-						"name": &schema.Schema{
-							Description: `Friendly name of the certificate`,
-							Type:        schema.TypeString,
-							Required:    true,
-						},
 						"non_automatic_crl_update_period": &schema.Schema{
-							Description: `Non automatic CRL update period
-  ERROR: Different types for param nonAutomaticCRLUpdatePeriod schema.TypeInt schema.TypeString`,
-							Type:     schema.TypeInt,
-							Optional: true,
-							Computed: true,
+							Description: `Non automatic CRL update period`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"non_automatic_crl_update_units": &schema.Schema{
 							Description: `Unit of time of non automatic CRL update`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"reject_if_no_status_from_ocs_p": &schema.Schema{
-							Description: `Switch to reject certificate if there is no status from OCSP
-  ERROR: Different types for param rejectIfNoStatusFromOCSP schema.TypeBool schema.TypeString`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
-							Optional:     true,
-							Computed:     true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								if old == "off" {
-									return old == new || "false" == new
-								}
-								if old == "false" {
-									return old == new || "off" == new
-								}
-								if old == "on" {
-									return old == new || "true" == new
-								}
-								if old == "true" {
-									return old == new || "on" == new
-								}
-								return true
-							},
+							Description: `Switch to reject certificate if there is no status from OCSP`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"reject_if_unreachable_from_ocs_p": &schema.Schema{
-							Description: `Switch to reject certificate if unreachable from OCSP
-  ERROR: Different types for param rejectIfUnreachableFromOCSP schema.TypeBool schema.TypeString`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false", "on", "off"}),
-							Optional:     true,
-							Computed:     true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								if old == "off" {
-									return old == new || "false" == new
-								}
-								if old == "false" {
-									return old == new || "off" == new
-								}
-								if old == "on" {
-									return old == new || "true" == new
-								}
-								if old == "true" {
-									return old == new || "on" == new
-								}
-								return true
-							},
+							Description: `Switch to reject certificate if unreachable from OCSP`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"selected_ocsp_service": &schema.Schema{
 							Description: `Name of selected OCSP Service`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"serial_number_decimal_format": &schema.Schema{
@@ -372,13 +202,141 @@ func resourceTrustedCertificate() *schema.Resource {
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"subject": &schema.Schema{
 							Description: `The Subject or entity with which public key of trust certificate is associated`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+						"trusted_for": &schema.Schema{
+							Description: `Different services for which the certificated is trusted`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"valid_from": &schema.Schema{
+							Description: `The earliest time and date on which the certificate is valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"authenticate_before_crl_received": &schema.Schema{
+							Description:      `Switch to enable or disable CRL verification if CRL is not received`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSuppressBooleans(),
+						},
+						"automatic_crl_update": &schema.Schema{
+							Description:      `Switch to enable or disable automatic CRL update`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSuppressBooleans(),
+						},
+						"automatic_crl_update_period": &schema.Schema{
+							Description: `Automatic CRL update period`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+						"automatic_crl_update_units": &schema.Schema{
+							Description: `Unit of time for automatic CRL update`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"crl_distribution_url": &schema.Schema{
+							Description: `CRL Distribution URL`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"crl_download_failure_retries": &schema.Schema{
+							Description: `If CRL download fails, wait time before retry`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+						"crl_download_failure_retries_units": &schema.Schema{
+							Description: `Unit of time before retry if CRL download fails`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"description": &schema.Schema{
+							Description: `Description for trust certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"download_crl": &schema.Schema{
+							Description:      `Switch to enable or disable download of CRL`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSuppressBooleans(),
+						},
+						"enable_ocsp_validation": &schema.Schema{
+							Description:      `Switch to enable or disable OCSP Validation`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSuppressBooleans(),
+						},
+						"enable_server_identity_check": &schema.Schema{
+							Description:      `Switch to enable or disable verification if HTTPS or LDAP server certificate name fits the configured server URL`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSuppressBooleans(),
+						},
+						"ignore_crl_expiration": &schema.Schema{
+							Description:      `Switch to enable or disable ignore CRL expiration`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSuppressBooleans(),
+						},
+						"name": &schema.Schema{
+							Description: `Friendly name of the certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"non_automatic_crl_update_period": &schema.Schema{
+							Description: `Non automatic CRL update period`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+						"non_automatic_crl_update_units": &schema.Schema{
+							Description: `Unit of time of non automatic CRL update`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"reject_if_no_status_from_ocs_p": &schema.Schema{
+							Description:      `Switch to reject certificate if there is no status from OCSP`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSuppressBooleans(),
+						},
+						"reject_if_unreachable_from_ocs_p": &schema.Schema{
+							Description:      `Switch to reject certificate if unreachable from OCSP`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSuppressBooleans(),
+						},
+						"selected_ocsp_service": &schema.Schema{
+							Description: `Name of selected OCSP Service`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"trust_for_certificate_based_admin_auth": &schema.Schema{
 							Description:  `Trust for Certificate based Admin authentication`,
@@ -399,20 +357,10 @@ func resourceTrustedCertificate() *schema.Resource {
 							Optional:     true,
 						},
 						"trust_for_ise_auth": &schema.Schema{
-							Description:  `Trust for authentication within ISE`,
+							Description:  `Trust for authentication within Cisco ISE`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-						},
-						"trusted_for": &schema.Schema{
-							Description: `Different services for which the certificated is trusted`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"valid_from": &schema.Schema{
-							Description: `The earliest time and date on which the certificate is valid`,
-							Type:        schema.TypeString,
-							Computed:    true,
 						},
 					},
 				},
@@ -422,14 +370,15 @@ func resourceTrustedCertificate() *schema.Resource {
 }
 
 func resourceTrustedCertificateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	resourceItem := *getResourceItem(d.Get("item"))
+	// var diags diag.Diagnostics
+	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// NOTE: Function does not perform create on ISE
+	// TODO: Add the path params to `item` schema
+	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	resourceMap["name"] = interfaceToString(resourceItem["name"])
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceTrustedCertificateRead(ctx, d, m)
 }
 
 func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -453,9 +402,13 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetTrustedCertificates")
 		queryParams1 := isegosdk.GetTrustedCertificatesQueryParams{}
-		response1, _, err := client.Certificates.GetTrustedCertificates(&queryParams1)
+
+		response1, restyResp1, err := client.Certificates.GetTrustedCertificates(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTrustedCertificates", err,
 				"Failure at GetTrustedCertificates, unexpected response", ""))
@@ -483,10 +436,14 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetTrustedCertificateByID")
+		vvID := vID
 
-		response2, _, err := client.Certificates.GetTrustedCertificateByID(vvID)
+		response2, restyResp2, err := client.Certificates.GetTrustedCertificateByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTrustedCertificateByID", err,
 				"Failure at GetTrustedCertificateByID, unexpected response", ""))
@@ -544,9 +501,9 @@ func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceDat
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestTrustedCertificateUpdateTrustedCertificate(ctx, "item.0", d)
+		request1 := expandRequestTrustedCertificateUpdateTrustedCertificate(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Certificates.UpdateTrustedCertificate(vvID, request1)
 		if err != nil || response1 == nil {

@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,7 +39,6 @@ func resourceAuthorizationProfile() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -49,46 +48,38 @@ func resourceAuthorizationProfile() *schema.Resource {
 - ACCESS_ACCEPT,
 - ACCESS_REJECT`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"acl": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"advanced_attributes": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"left_hand_side_dictionary_attribue": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"advanced_attribute_value_type": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"attribute_name": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"dictionary_name": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -99,29 +90,24 @@ func resourceAuthorizationProfile() *schema.Resource {
 For AttributeValue the value is String,
 For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties`,
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"advanced_attribute_value_type": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"attribute_name": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"dictionary_name": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -131,24 +117,19 @@ For AdvancedDictionaryAttribute the value is dictionaryName and attributeName pr
 							},
 						},
 						"agentless_posture": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"airespace_acl": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"airespace_ipv6_acl": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"asa_vpn": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"authz_profile_type": &schema.Schema{
@@ -158,54 +139,43 @@ For AdvancedDictionaryAttribute the value is dictionaryName and attributeName pr
 - TACACS
 SWITCH is used for Standard Authorization Profiles`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"auto_smart_port": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"avc_profile": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"dacl_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"easywired_session_candidate": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"id": &schema.Schema{
 							Description: `Resource UUID value`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"interface_template": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"ipv6_acl_filter": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"ipv6_dacl_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -235,29 +205,23 @@ SWITCH is used for Standard Authorization Profiles`,
 - MUST_NOT_SECURE,
 - SHOULD_SECURE`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"name": &schema.Schema{
 							Description: `Resource Name`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"neat": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"profile_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"reauth": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -267,66 +231,52 @@ SWITCH is used for Standard Authorization Profiles`,
 - DEFAULT,
 - RADIUS_REQUEST`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"timer": &schema.Schema{
 										Description: `Valid range is 1-65535`,
 										Type:        schema.TypeInt,
-										Optional:    true,
 										Computed:    true,
 									},
 								},
 							},
 						},
 						"service_template": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"track_movement": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"vlan": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"name_id": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"tag_id": &schema.Schema{
 										Description: `Valid range is 0-31`,
 										Type:        schema.TypeInt,
-										Optional:    true,
 										Computed:    true,
 									},
 								},
 							},
 						},
 						"voice_domain_permission": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"web_auth": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"web_redirection": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -335,13 +285,277 @@ SWITCH is used for Standard Authorization Profiles`,
 										Description: `Value MUST be one of the following:CentralizedWebAuth, HotSpot, NativeSupplicanProvisioning, ClientProvisioning. 
 The WebRedirectionType must fit the portalName`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"acl": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
+									},
+									"display_certificates_renewal_messages": &schema.Schema{
+										Description: `The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
+For all other 'WebRedirectionType' values the field must be ignored`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"portal_name": &schema.Schema{
+										Description: `A portal that exist in the DB and fits the WebRedirectionType`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"static_iphost_name_fqd_n": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"access_type": &schema.Schema{
+							Description: `Allowed Values:
+- ACCESS_ACCEPT,
+- ACCESS_REJECT`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"advanced_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"left_hand_side_dictionary_attribue": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"advanced_attribute_value_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"attribute_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"dictionary_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"value": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"right_hand_side_attribue_value": &schema.Schema{
+										Description: `Attribute value can be of type AttributeValue or AdvancedDictionaryAttribute.
+For AttributeValue the value is String,
+For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties`,
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"advanced_attribute_value_type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"attribute_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"dictionary_name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"value": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"agentless_posture": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"airespace_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"airespace_ipv6_acl": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"asa_vpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"authz_profile_type": &schema.Schema{
+							Description: `Allowed Values:
+- SWITCH,
+- TRUSTSEC,
+- TACACS
+SWITCH is used for Standard Authorization Profiles`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"auto_smart_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"avc_profile": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"easywired_session_candidate": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"id": &schema.Schema{
+							Description: `Resource UUID value`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"interface_template": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"ipv6_acl_filter": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"ipv6_dacl_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"mac_sec_policy": &schema.Schema{
+							Description: `Allowed Values:
+- MUST_SECURE,
+- MUST_NOT_SECURE,
+- SHOULD_SECURE`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Description: `Resource Name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"neat": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"profile_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"reauth": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"connectivity": &schema.Schema{
+										Description: `Allowed Values:
+- DEFAULT,
+- RADIUS_REQUEST`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"timer": &schema.Schema{
+										Description: `Valid range is 1-65535`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+									},
+								},
+							},
+						},
+						"service_template": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"track_movement": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"vlan": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"name_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"tag_id": &schema.Schema{
+										Description: `Valid range is 0-31`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+									},
+								},
+							},
+						},
+						"voice_domain_permission": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"web_auth": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"web_redirection": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"web_redirection_type": &schema.Schema{
+										Description: `Value MUST be one of the following:CentralizedWebAuth, HotSpot, NativeSupplicanProvisioning, ClientProvisioning. 
+The WebRedirectionType must fit the portalName`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"acl": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
 									},
 									"display_certificates_renewal_messages": &schema.Schema{
 										Description: `The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
@@ -349,18 +563,15 @@ For all other 'WebRedirectionType' values the field must be ignored`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"portal_name": &schema.Schema{
 										Description: `A portal that exist in the DB and fits the WebRedirectionType`,
 										Type:        schema.TypeString,
 										Optional:    true,
-										Computed:    true,
 									},
 									"static_iphost_name_fqd_n": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -377,8 +588,8 @@ func resourceAuthorizationProfileCreate(ctx context.Context, d *schema.ResourceD
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestAuthorizationProfileCreateAuthorizationProfile(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestAuthorizationProfileCreateAuthorizationProfile(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -392,7 +603,7 @@ func resourceAuthorizationProfileCreate(ctx context.Context, d *schema.ResourceD
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceAuthorizationProfileRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -402,7 +613,7 @@ func resourceAuthorizationProfileCreate(ctx context.Context, d *schema.ResourceD
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceAuthorizationProfileRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.AuthorizationProfile.CreateAuthorizationProfile(request1)
@@ -424,7 +635,7 @@ func resourceAuthorizationProfileCreate(ctx context.Context, d *schema.ResourceD
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceAuthorizationProfileRead(ctx, d, m)
 }
 
 func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -447,9 +658,12 @@ func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method: GetAuthorizationProfileByName")
 		vvName := vName
 
-		response1, _, err := client.AuthorizationProfile.GetAuthorizationProfileByName(vvName)
+		response1, restyResp1, err := client.AuthorizationProfile.GetAuthorizationProfileByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAuthorizationProfileByName", err,
 				"Failure at GetAuthorizationProfileByName, unexpected response", ""))
@@ -472,9 +686,12 @@ func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method: GetAuthorizationProfileByID")
 		vvID := vID
 
-		response2, _, err := client.AuthorizationProfile.GetAuthorizationProfileByID(vvID)
+		response2, restyResp2, err := client.AuthorizationProfile.GetAuthorizationProfileByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAuthorizationProfileByID", err,
 				"Failure at GetAuthorizationProfileByID, unexpected response", ""))
@@ -531,9 +748,9 @@ func resourceAuthorizationProfileUpdate(ctx context.Context, d *schema.ResourceD
 			vvID = getResp.AuthorizationProfile.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestAuthorizationProfileUpdateAuthorizationProfileByID(ctx, "item.0", d)
+		request1 := expandRequestAuthorizationProfileUpdateAuthorizationProfileByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.AuthorizationProfile.UpdateAuthorizationProfileByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -624,88 +841,88 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfile(ctx context.Con
 
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfile(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfile {
 	request := isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfile{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".advanced_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_attributes"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_attributes")))) {
 		request.AdvancedAttributes = expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesArray(ctx, key+".advanced_attributes", d)
 	}
-	if v, ok := d.GetOkExists(key + ".access_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_type")))) {
 		request.AccessType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".authz_profile_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authz_profile_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authz_profile_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authz_profile_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authz_profile_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authz_profile_type")))) {
 		request.AuthzProfileType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".vlan"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vlan"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vlan"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan")))) {
 		request.VLAN = expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileVLAN(ctx, key+".vlan.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".reauth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".reauth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".reauth"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".reauth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".reauth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".reauth")))) {
 		request.Reauth = expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileReauth(ctx, key+".reauth.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".airespace_acl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".airespace_acl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".airespace_acl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".airespace_acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".airespace_acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".airespace_acl")))) {
 		request.AirespaceACL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".airespace_ipv6_acl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".airespace_ipv6_acl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".airespace_ipv6_acl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".airespace_ipv6_acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".airespace_ipv6_acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".airespace_ipv6_acl")))) {
 		request.AirespaceIPv6ACL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".web_redirection"); !isEmptyValue(reflect.ValueOf(d.Get(key+".web_redirection"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".web_redirection"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_redirection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_redirection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_redirection")))) {
 		request.WebRedirection = expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileWebRedirection(ctx, key+".web_redirection.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".acl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".acl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".acl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".acl")))) {
 		request.ACL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".track_movement"); !isEmptyValue(reflect.ValueOf(d.Get(key+".track_movement"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".track_movement"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".track_movement")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".track_movement")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".track_movement")))) {
 		request.TrackMovement = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".agentless_posture"); !isEmptyValue(reflect.ValueOf(d.Get(key+".agentless_posture"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".agentless_posture"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".agentless_posture")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".agentless_posture")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".agentless_posture")))) {
 		request.AgentlessPosture = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".service_template"); !isEmptyValue(reflect.ValueOf(d.Get(key+".service_template"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".service_template"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".service_template")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".service_template")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".service_template")))) {
 		request.ServiceTemplate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".easywired_session_candidate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".easywired_session_candidate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".easywired_session_candidate"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".easywired_session_candidate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".easywired_session_candidate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".easywired_session_candidate")))) {
 		request.EasywiredSessionCandidate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dacl_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dacl_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dacl_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dacl_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dacl_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dacl_name")))) {
 		request.DaclName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".voice_domain_permission"); !isEmptyValue(reflect.ValueOf(d.Get(key+".voice_domain_permission"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".voice_domain_permission"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".voice_domain_permission")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".voice_domain_permission")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".voice_domain_permission")))) {
 		request.VoiceDomainPermission = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".neat"); !isEmptyValue(reflect.ValueOf(d.Get(key+".neat"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".neat"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".neat")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".neat")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".neat")))) {
 		request.Neat = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".web_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".web_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".web_auth"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_auth")))) {
 		request.WebAuth = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".auto_smart_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auto_smart_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auto_smart_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_smart_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_smart_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_smart_port")))) {
 		request.AutoSmartPort = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".interface_template"); !isEmptyValue(reflect.ValueOf(d.Get(key+".interface_template"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".interface_template"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_template")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_template")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_template")))) {
 		request.InterfaceTemplate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ipv6_acl_filter"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ipv6_acl_filter"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ipv6_acl_filter"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_acl_filter")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_acl_filter")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_acl_filter")))) {
 		request.IPv6ACLFilter = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".avc_profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".avc_profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".avc_profile"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".avc_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".avc_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".avc_profile")))) {
 		request.AvcProfile = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mac_sec_policy"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac_sec_policy"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac_sec_policy"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_sec_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_sec_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_sec_policy")))) {
 		request.MacSecPolicy = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".asa_vpn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".asa_vpn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".asa_vpn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".asa_vpn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".asa_vpn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".asa_vpn")))) {
 		request.AsaVpn = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".profile_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_name")))) {
 		request.ProfileName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ipv6_dacl_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ipv6_dacl_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ipv6_dacl_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_dacl_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_dacl_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_dacl_name")))) {
 		request.IPv6DaclName = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -716,6 +933,7 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributes {
 	request := []isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributes{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -738,10 +956,10 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributes {
 	request := isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributes{}
-	if v, ok := d.GetOkExists(key + ".left_hand_side_dictionary_attribue"); !isEmptyValue(reflect.ValueOf(d.Get(key+".left_hand_side_dictionary_attribue"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".left_hand_side_dictionary_attribue"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".left_hand_side_dictionary_attribue")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".left_hand_side_dictionary_attribue")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".left_hand_side_dictionary_attribue")))) {
 		request.LeftHandSideDictionaryAttribue = expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue(ctx, key+".left_hand_side_dictionary_attribue.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".right_hand_side_attribue_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".right_hand_side_attribue_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".right_hand_side_attribue_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".right_hand_side_attribue_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".right_hand_side_attribue_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".right_hand_side_attribue_value")))) {
 		request.RightHandSideAttribueValue = expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue(ctx, key+".right_hand_side_attribue_value.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -752,16 +970,16 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue {
 	request := isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue{}
-	if v, ok := d.GetOkExists(key + ".advanced_attribute_value_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_attribute_value_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_attribute_value_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_attribute_value_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_attribute_value_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_attribute_value_type")))) {
 		request.AdvancedAttributeValueType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -772,16 +990,16 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue {
 	request := isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue{}
-	if v, ok := d.GetOkExists(key + ".advanced_attribute_value_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_attribute_value_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_attribute_value_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_attribute_value_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_attribute_value_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_attribute_value_type")))) {
 		request.AdvancedAttributeValueType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -792,10 +1010,10 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileVLAN(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileVLAN {
 	request := isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileVLAN{}
-	if v, ok := d.GetOkExists(key + ".name_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name_id")))) {
 		request.NameID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".tag_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".tag_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".tag_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tag_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tag_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tag_id")))) {
 		request.TagID = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -806,10 +1024,10 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileReauth(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileReauth {
 	request := isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileReauth{}
-	if v, ok := d.GetOkExists(key + ".timer"); !isEmptyValue(reflect.ValueOf(d.Get(key+".timer"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".timer"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".timer")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".timer")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".timer")))) {
 		request.Timer = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".connectivity"); !isEmptyValue(reflect.ValueOf(d.Get(key+".connectivity"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".connectivity"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connectivity")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connectivity")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connectivity")))) {
 		request.Connectivity = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -820,19 +1038,19 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 
 func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileWebRedirection(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileWebRedirection {
 	request := isegosdk.RequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileWebRedirection{}
-	if v, ok := d.GetOkExists(key + ".web_redirection_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".web_redirection_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".web_redirection_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_redirection_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_redirection_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_redirection_type")))) {
 		request.WebRedirectionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".acl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".acl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".acl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".acl")))) {
 		request.ACL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_name")))) {
 		request.PortalName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".static_iphost_name_fqd_n"); !isEmptyValue(reflect.ValueOf(d.Get(key+".static_iphost_name_fqd_n"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".static_iphost_name_fqd_n"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".static_iphost_name_fqd_n")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".static_iphost_name_fqd_n")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".static_iphost_name_fqd_n")))) {
 		request.StaticIPHostNameFQDN = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_certificates_renewal_messages"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_certificates_renewal_messages"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_certificates_renewal_messages"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_certificates_renewal_messages")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_certificates_renewal_messages")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_certificates_renewal_messages")))) {
 		request.DisplayCertificatesRenewalMessages = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -852,88 +1070,88 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByID(ctx context
 
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfile(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfile {
 	request := isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfile{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".advanced_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_attributes"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_attributes")))) {
 		request.AdvancedAttributes = expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesArray(ctx, key+".advanced_attributes", d)
 	}
-	if v, ok := d.GetOkExists(key + ".access_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_type")))) {
 		request.AccessType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".authz_profile_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authz_profile_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authz_profile_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authz_profile_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authz_profile_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authz_profile_type")))) {
 		request.AuthzProfileType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".vlan"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vlan"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vlan"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vlan")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vlan")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vlan")))) {
 		request.VLAN = expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileVLAN(ctx, key+".vlan.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".reauth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".reauth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".reauth"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".reauth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".reauth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".reauth")))) {
 		request.Reauth = expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileReauth(ctx, key+".reauth.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".airespace_acl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".airespace_acl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".airespace_acl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".airespace_acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".airespace_acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".airespace_acl")))) {
 		request.AirespaceACL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".airespace_ipv6_acl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".airespace_ipv6_acl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".airespace_ipv6_acl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".airespace_ipv6_acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".airespace_ipv6_acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".airespace_ipv6_acl")))) {
 		request.AirespaceIPv6ACL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".web_redirection"); !isEmptyValue(reflect.ValueOf(d.Get(key+".web_redirection"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".web_redirection"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_redirection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_redirection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_redirection")))) {
 		request.WebRedirection = expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileWebRedirection(ctx, key+".web_redirection.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".acl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".acl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".acl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".acl")))) {
 		request.ACL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".track_movement"); !isEmptyValue(reflect.ValueOf(d.Get(key+".track_movement"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".track_movement"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".track_movement")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".track_movement")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".track_movement")))) {
 		request.TrackMovement = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".agentless_posture"); !isEmptyValue(reflect.ValueOf(d.Get(key+".agentless_posture"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".agentless_posture"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".agentless_posture")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".agentless_posture")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".agentless_posture")))) {
 		request.AgentlessPosture = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".service_template"); !isEmptyValue(reflect.ValueOf(d.Get(key+".service_template"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".service_template"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".service_template")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".service_template")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".service_template")))) {
 		request.ServiceTemplate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".easywired_session_candidate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".easywired_session_candidate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".easywired_session_candidate"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".easywired_session_candidate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".easywired_session_candidate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".easywired_session_candidate")))) {
 		request.EasywiredSessionCandidate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dacl_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dacl_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dacl_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dacl_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dacl_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dacl_name")))) {
 		request.DaclName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".voice_domain_permission"); !isEmptyValue(reflect.ValueOf(d.Get(key+".voice_domain_permission"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".voice_domain_permission"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".voice_domain_permission")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".voice_domain_permission")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".voice_domain_permission")))) {
 		request.VoiceDomainPermission = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".neat"); !isEmptyValue(reflect.ValueOf(d.Get(key+".neat"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".neat"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".neat")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".neat")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".neat")))) {
 		request.Neat = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".web_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".web_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".web_auth"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_auth")))) {
 		request.WebAuth = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".auto_smart_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auto_smart_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auto_smart_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_smart_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_smart_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_smart_port")))) {
 		request.AutoSmartPort = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".interface_template"); !isEmptyValue(reflect.ValueOf(d.Get(key+".interface_template"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".interface_template"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".interface_template")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".interface_template")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".interface_template")))) {
 		request.InterfaceTemplate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ipv6_acl_filter"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ipv6_acl_filter"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ipv6_acl_filter"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_acl_filter")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_acl_filter")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_acl_filter")))) {
 		request.IPv6ACLFilter = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".avc_profile"); !isEmptyValue(reflect.ValueOf(d.Get(key+".avc_profile"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".avc_profile"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".avc_profile")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".avc_profile")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".avc_profile")))) {
 		request.AvcProfile = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mac_sec_policy"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac_sec_policy"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac_sec_policy"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_sec_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_sec_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_sec_policy")))) {
 		request.MacSecPolicy = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".asa_vpn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".asa_vpn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".asa_vpn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".asa_vpn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".asa_vpn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".asa_vpn")))) {
 		request.AsaVpn = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".profile_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_name")))) {
 		request.ProfileName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ipv6_dacl_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ipv6_dacl_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ipv6_dacl_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipv6_dacl_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipv6_dacl_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipv6_dacl_name")))) {
 		request.IPv6DaclName = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -944,6 +1162,7 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes {
 	request := []isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -966,10 +1185,10 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes {
 	request := isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes{}
-	if v, ok := d.GetOkExists(key + ".left_hand_side_dictionary_attribue"); !isEmptyValue(reflect.ValueOf(d.Get(key+".left_hand_side_dictionary_attribue"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".left_hand_side_dictionary_attribue"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".left_hand_side_dictionary_attribue")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".left_hand_side_dictionary_attribue")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".left_hand_side_dictionary_attribue")))) {
 		request.LeftHandSideDictionaryAttribue = expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue(ctx, key+".left_hand_side_dictionary_attribue.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".right_hand_side_attribue_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".right_hand_side_attribue_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".right_hand_side_attribue_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".right_hand_side_attribue_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".right_hand_side_attribue_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".right_hand_side_attribue_value")))) {
 		request.RightHandSideAttribueValue = expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue(ctx, key+".right_hand_side_attribue_value.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -980,16 +1199,16 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue {
 	request := isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue{}
-	if v, ok := d.GetOkExists(key + ".advanced_attribute_value_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_attribute_value_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_attribute_value_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_attribute_value_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_attribute_value_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_attribute_value_type")))) {
 		request.AdvancedAttributeValueType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1000,16 +1219,16 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue {
 	request := isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesRightHandSideAttribueValue{}
-	if v, ok := d.GetOkExists(key + ".advanced_attribute_value_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advanced_attribute_value_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advanced_attribute_value_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_attribute_value_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_attribute_value_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_attribute_value_type")))) {
 		request.AdvancedAttributeValueType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1020,10 +1239,10 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileVLAN(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileVLAN {
 	request := isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileVLAN{}
-	if v, ok := d.GetOkExists(key + ".name_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name_id")))) {
 		request.NameID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".tag_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".tag_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".tag_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tag_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tag_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tag_id")))) {
 		request.TagID = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1034,10 +1253,10 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileReauth(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileReauth {
 	request := isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileReauth{}
-	if v, ok := d.GetOkExists(key + ".timer"); !isEmptyValue(reflect.ValueOf(d.Get(key+".timer"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".timer"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".timer")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".timer")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".timer")))) {
 		request.Timer = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".connectivity"); !isEmptyValue(reflect.ValueOf(d.Get(key+".connectivity"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".connectivity"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connectivity")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connectivity")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connectivity")))) {
 		request.Connectivity = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1048,19 +1267,19 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 
 func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileWebRedirection(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileWebRedirection {
 	request := isegosdk.RequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileWebRedirection{}
-	if v, ok := d.GetOkExists(key + ".web_redirection_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".web_redirection_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".web_redirection_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".web_redirection_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".web_redirection_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".web_redirection_type")))) {
 		request.WebRedirectionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".acl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".acl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".acl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".acl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".acl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".acl")))) {
 		request.ACL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_name")))) {
 		request.PortalName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".static_iphost_name_fqd_n"); !isEmptyValue(reflect.ValueOf(d.Get(key+".static_iphost_name_fqd_n"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".static_iphost_name_fqd_n"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".static_iphost_name_fqd_n")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".static_iphost_name_fqd_n")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".static_iphost_name_fqd_n")))) {
 		request.StaticIPHostNameFQDN = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_certificates_renewal_messages"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_certificates_renewal_messages"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_certificates_renewal_messages"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_certificates_renewal_messages")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_certificates_renewal_messages")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_certificates_renewal_messages")))) {
 		request.DisplayCertificatesRenewalMessages = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -296,9 +296,12 @@ func dataSourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m
 		log.Printf("[DEBUG] Selected method 2: GetSxpConnectionsByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SxpConnections.GetSxpConnectionsByID(vvID)
+		response2, restyResp2, err := client.SxpConnections.GetSxpConnectionsByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpConnectionsByID", err,
 				"Failure at GetSxpConnectionsByID, unexpected response", ""))

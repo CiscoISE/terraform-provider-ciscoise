@@ -2,10 +2,11 @@ package ciscoise
 
 import (
 	"context"
-	"log"
 	"reflect"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -41,7 +42,6 @@ func resourceGuestUser() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -49,49 +49,40 @@ func resourceGuestUser() *schema.Resource {
 						"custom_fields": &schema.Schema{
 							Description: `Key value map`,
 							Type:        schema.TypeMap,
-							Optional:    true,
 							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"guest_access_info": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"from_date": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"group_tag": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"location": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"ssid": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"to_date": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"valid_days": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -99,69 +90,56 @@ func resourceGuestUser() *schema.Resource {
 						},
 						"guest_info": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"company": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"creation_time": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"email_address": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										Description:  `This field is only for Get operation not applicable for Create, Update operations`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Description: `This field is only for Get operation not applicable for Create, Update operations`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"first_name": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"last_name": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"notification_language": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"password": &schema.Schema{
 										Type:      schema.TypeString,
-										Optional:  true,
 										Sensitive: true,
 										Computed:  true,
 									},
 									"phone_number": &schema.Schema{
 										Description: `Phone number should be E.164 format`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 									"sms_service_provider": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"user_name": &schema.Schema{
 										Description: `If account needs be created with mobile number, please provide mobile number here`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 								},
@@ -169,12 +147,10 @@ func resourceGuestUser() *schema.Resource {
 						},
 						"guest_type": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -200,38 +176,178 @@ func resourceGuestUser() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"portal_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"reason_for_visit": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"sponsor_user_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"sponsor_user_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"status_reason": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"custom_fields": &schema.Schema{
+							Description: `Key value map`,
+							Type:        schema.TypeMap,
+							Optional:    true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"guest_access_info": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"from_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"group_tag": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"location": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"ssid": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"to_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"valid_days": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"guest_info": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"company": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"creation_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"email_address": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"enabled": &schema.Schema{
+										Description:  `This field is only for Get operation not applicable for Create, Update operations`,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"first_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"last_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"notification_language": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"password": &schema.Schema{
+										Type:      schema.TypeString,
+										Optional:  true,
+										Sensitive: true,
+									},
+									"phone_number": &schema.Schema{
+										Description: `Phone number should be E.164 format`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"sms_service_provider": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"user_name": &schema.Schema{
+										Description: `If account needs be created with mobile number, please provide mobile number here`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+								},
+							},
+						},
+						"guest_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"portal_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"reason_for_visit": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"sponsor_user_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"sponsor_user_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"status_reason": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -245,8 +361,8 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestGuestUserCreateGuestUser(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestGuestUserCreateGuestUser(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -260,7 +376,7 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceGuestUserRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -270,7 +386,7 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceGuestUserRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.GuestUser.CreateGuestUser(request1)
@@ -292,7 +408,7 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceGuestUserRead(ctx, d, m)
 }
 
 func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -315,9 +431,12 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method: GetGuestUserByName")
 		vvName := vName
 
-		response1, _, err := client.GuestUser.GetGuestUserByName(vvName)
+		response1, restyResp1, err := client.GuestUser.GetGuestUserByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestUserByName", err,
 				"Failure at GetGuestUserByName, unexpected response", ""))
@@ -340,9 +459,12 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method: GetGuestUserByID")
 		vvID := vID
 
-		response2, _, err := client.GuestUser.GetGuestUserByID(vvID)
+		response2, restyResp2, err := client.GuestUser.GetGuestUserByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestUserByID", err,
 				"Failure at GetGuestUserByID, unexpected response", ""))
@@ -399,9 +521,9 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 			vvID = getResp.GuestUser.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestGuestUserUpdateGuestUserByID(ctx, "item.0", d)
+		request1 := expandRequestGuestUserUpdateGuestUserByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.GuestUser.UpdateGuestUserByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -492,43 +614,41 @@ func expandRequestGuestUserCreateGuestUser(ctx context.Context, key string, d *s
 
 func expandRequestGuestUserCreateGuestUserGuestUser(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserCreateGuestUserGuestUser {
 	request := isegosdk.RequestGuestUserCreateGuestUserGuestUser{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_type")))) {
 		request.GuestType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".status"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".status")))) {
 		request.Status = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".status_reason"); !isEmptyValue(reflect.ValueOf(d.Get(key+".status_reason"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".status_reason"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".status_reason")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".status_reason")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".status_reason")))) {
 		request.StatusReason = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".reason_for_visit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".reason_for_visit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".reason_for_visit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".reason_for_visit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".reason_for_visit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".reason_for_visit")))) {
 		request.ReasonForVisit = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sponsor_user_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sponsor_user_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sponsor_user_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sponsor_user_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sponsor_user_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sponsor_user_id")))) {
 		request.SponsorUserID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sponsor_user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sponsor_user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sponsor_user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sponsor_user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sponsor_user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sponsor_user_name")))) {
 		request.SponsorUserName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_info"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_info"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_info"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_info")))) {
 		request.GuestInfo = expandRequestGuestUserCreateGuestUserGuestUserGuestInfo(ctx, key+".guest_info.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_access_info"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_access_info"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_access_info"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_access_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_access_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_access_info")))) {
 		request.GuestAccessInfo = expandRequestGuestUserCreateGuestUserGuestUserGuestAccessInfo(ctx, key+".guest_access_info.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_id")))) {
 		request.PortalID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".custom_fields"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_fields"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_fields"))) {
-		customFields := v.(map[string]interface{})
-		var customFields2 isegosdk.RequestGuestUserCreateGuestUserGuestUserCustomFields = customFields
-		request.CustomFields = &customFields2
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_fields")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_fields")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_fields")))) {
+		request.CustomFields = expandRequestGuestUserCreateGuestUserGuestUserCustomFields(ctx, key+".custom_fields.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -538,37 +658,37 @@ func expandRequestGuestUserCreateGuestUserGuestUser(ctx context.Context, key str
 
 func expandRequestGuestUserCreateGuestUserGuestUserGuestInfo(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserCreateGuestUserGuestUserGuestInfo {
 	request := isegosdk.RequestGuestUserCreateGuestUserGuestUserGuestInfo{}
-	if v, ok := d.GetOkExists(key + ".first_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".first_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".first_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".first_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".first_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".first_name")))) {
 		request.FirstName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".last_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".last_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".last_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_name")))) {
 		request.LastName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".company"); !isEmptyValue(reflect.ValueOf(d.Get(key+".company"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".company"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".company")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".company")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".company")))) {
 		request.Company = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".creation_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".creation_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".creation_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".creation_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".creation_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".creation_time")))) {
 		request.CreationTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".notification_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".notification_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".notification_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".notification_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".notification_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".notification_language")))) {
 		request.NotificationLanguage = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".user_name")))) {
 		request.UserName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".email_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".email_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".email_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".email_address")))) {
 		request.EmailAddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".phone_number"); !isEmptyValue(reflect.ValueOf(d.Get(key+".phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".phone_number"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".phone_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".phone_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".phone_number")))) {
 		request.PhoneNumber = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
 		request.Enabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sms_service_provider"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sms_service_provider"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sms_service_provider"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sms_service_provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sms_service_provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sms_service_provider")))) {
 		request.SmsServiceProvider = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -579,27 +699,34 @@ func expandRequestGuestUserCreateGuestUserGuestUserGuestInfo(ctx context.Context
 
 func expandRequestGuestUserCreateGuestUserGuestUserGuestAccessInfo(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserCreateGuestUserGuestUserGuestAccessInfo {
 	request := isegosdk.RequestGuestUserCreateGuestUserGuestUserGuestAccessInfo{}
-	if v, ok := d.GetOkExists(key + ".valid_days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".valid_days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".valid_days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".valid_days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".valid_days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".valid_days")))) {
 		request.ValidDays = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".from_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".from_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".from_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".from_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".from_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".from_date")))) {
 		request.FromDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".to_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".to_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".to_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".to_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".to_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".to_date")))) {
 		request.ToDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".location"); !isEmptyValue(reflect.ValueOf(d.Get(key+".location"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".location"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".location")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".location")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".location")))) {
 		request.Location = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ssid"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ssid"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ssid"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid")))) {
 		request.SSID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".group_tag")))) {
 		request.GroupTag = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestGuestUserCreateGuestUserGuestUserCustomFields(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserCreateGuestUserGuestUserCustomFields {
+	var request isegosdk.RequestGuestUserCreateGuestUserGuestUserCustomFields
+	v := d.Get(fixKeyAccess(key))
+	request = v.(map[string]interface{})
 	return &request
 }
 
@@ -614,46 +741,44 @@ func expandRequestGuestUserUpdateGuestUserByID(ctx context.Context, key string, 
 
 func expandRequestGuestUserUpdateGuestUserByIDGuestUser(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUser {
 	request := isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUser{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_type")))) {
 		request.GuestType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".status"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".status")))) {
 		request.Status = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".status_reason"); !isEmptyValue(reflect.ValueOf(d.Get(key+".status_reason"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".status_reason"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".status_reason")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".status_reason")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".status_reason")))) {
 		request.StatusReason = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".reason_for_visit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".reason_for_visit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".reason_for_visit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".reason_for_visit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".reason_for_visit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".reason_for_visit")))) {
 		request.ReasonForVisit = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sponsor_user_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sponsor_user_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sponsor_user_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sponsor_user_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sponsor_user_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sponsor_user_id")))) {
 		request.SponsorUserID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sponsor_user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sponsor_user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sponsor_user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sponsor_user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sponsor_user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sponsor_user_name")))) {
 		request.SponsorUserName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_info"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_info"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_info"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_info")))) {
 		request.GuestInfo = expandRequestGuestUserUpdateGuestUserByIDGuestUserGuestInfo(ctx, key+".guest_info.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_access_info"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_access_info"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_access_info"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_access_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_access_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_access_info")))) {
 		request.GuestAccessInfo = expandRequestGuestUserUpdateGuestUserByIDGuestUserGuestAccessInfo(ctx, key+".guest_access_info.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_id")))) {
 		request.PortalID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".custom_fields"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_fields"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_fields"))) {
-		customFields := v.(map[string]interface{})
-		var customFields2 isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUserCustomFields = customFields
-		request.CustomFields = &customFields2
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_fields")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_fields")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_fields")))) {
+		request.CustomFields = expandRequestGuestUserUpdateGuestUserByIDGuestUserCustomFields(ctx, key+".custom_fields.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -663,37 +788,37 @@ func expandRequestGuestUserUpdateGuestUserByIDGuestUser(ctx context.Context, key
 
 func expandRequestGuestUserUpdateGuestUserByIDGuestUserGuestInfo(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUserGuestInfo {
 	request := isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUserGuestInfo{}
-	if v, ok := d.GetOkExists(key + ".first_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".first_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".first_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".first_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".first_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".first_name")))) {
 		request.FirstName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".last_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".last_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".last_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_name")))) {
 		request.LastName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".company"); !isEmptyValue(reflect.ValueOf(d.Get(key+".company"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".company"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".company")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".company")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".company")))) {
 		request.Company = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".creation_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".creation_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".creation_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".creation_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".creation_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".creation_time")))) {
 		request.CreationTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".notification_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".notification_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".notification_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".notification_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".notification_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".notification_language")))) {
 		request.NotificationLanguage = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".user_name")))) {
 		request.UserName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".email_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".email_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".email_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".email_address")))) {
 		request.EmailAddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".phone_number"); !isEmptyValue(reflect.ValueOf(d.Get(key+".phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".phone_number"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".phone_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".phone_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".phone_number")))) {
 		request.PhoneNumber = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
 		request.Enabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sms_service_provider"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sms_service_provider"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sms_service_provider"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sms_service_provider")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sms_service_provider")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sms_service_provider")))) {
 		request.SmsServiceProvider = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -704,26 +829,33 @@ func expandRequestGuestUserUpdateGuestUserByIDGuestUserGuestInfo(ctx context.Con
 
 func expandRequestGuestUserUpdateGuestUserByIDGuestUserGuestAccessInfo(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUserGuestAccessInfo {
 	request := isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUserGuestAccessInfo{}
-	if v, ok := d.GetOkExists(key + ".valid_days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".valid_days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".valid_days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".valid_days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".valid_days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".valid_days")))) {
 		request.ValidDays = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".from_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".from_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".from_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".from_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".from_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".from_date")))) {
 		request.FromDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".to_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".to_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".to_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".to_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".to_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".to_date")))) {
 		request.ToDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".location"); !isEmptyValue(reflect.ValueOf(d.Get(key+".location"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".location"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".location")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".location")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".location")))) {
 		request.Location = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ssid"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ssid"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ssid"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid")))) {
 		request.SSID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".group_tag")))) {
 		request.GroupTag = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestGuestUserUpdateGuestUserByIDGuestUserCustomFields(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUserCustomFields {
+	var request isegosdk.RequestGuestUserUpdateGuestUserByIDGuestUserCustomFields
+	v := d.Get(fixKeyAccess(key))
+	request = v.(map[string]interface{})
 	return &request
 }

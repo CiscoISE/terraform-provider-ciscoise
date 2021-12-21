@@ -1,7 +1,7 @@
 
 resource "ciscoise_certificate_profile" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     allowed_as_user_name         = "false"
     certificate_attribute_name   = "string"

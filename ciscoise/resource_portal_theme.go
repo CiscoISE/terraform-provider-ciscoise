@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,19 +39,16 @@ func resourcePortalTheme() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -77,14 +74,38 @@ func resourcePortalTheme() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"theme_data": &schema.Schema{
 							Description: `Portal Theme for all portals`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"theme_data": &schema.Schema{
+							Description: `Portal Theme for all portals`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 					},
 				},
@@ -98,8 +119,8 @@ func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m in
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestPortalThemeCreatePortalTheme(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestPortalThemeCreatePortalTheme(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -113,7 +134,7 @@ func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m in
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourcePortalThemeRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetPortalThemesQueryParams{}
@@ -127,7 +148,7 @@ func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m in
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourcePortalThemeRead(ctx, d, m)
 			}
 		}
 	}
@@ -150,7 +171,7 @@ func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m in
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourcePortalThemeRead(ctx, d, m)
 }
 
 func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -176,9 +197,12 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method: GetPortalThemes")
 		queryParams1 := isegosdk.GetPortalThemesQueryParams{}
 
-		response1, _, err := client.PortalTheme.GetPortalThemes(&queryParams1)
+		response1, restyResp1, err := client.PortalTheme.GetPortalThemes(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPortalThemes", err,
 				"Failure at GetPortalThemes, unexpected response", ""))
@@ -208,9 +232,12 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method: GetPortalThemeByID")
 		vvID := vID
 
-		response2, _, err := client.PortalTheme.GetPortalThemeByID(vvID)
+		response2, restyResp2, err := client.PortalTheme.GetPortalThemeByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPortalThemeByID", err,
 				"Failure at GetPortalThemeByID, unexpected response", ""))
@@ -270,9 +297,9 @@ func resourcePortalThemeUpdate(ctx context.Context, d *schema.ResourceData, m in
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestPortalThemeUpdatePortalThemeByID(ctx, "item.0", d)
+		request1 := expandRequestPortalThemeUpdatePortalThemeByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.PortalTheme.UpdatePortalThemeByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -300,7 +327,6 @@ func resourcePortalThemeDelete(ctx context.Context, d *schema.ResourceData, m in
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -361,7 +387,6 @@ func resourcePortalThemeDelete(ctx context.Context, d *schema.ResourceData, m in
 
 	return diags
 }
-
 func expandRequestPortalThemeCreatePortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestPortalThemeCreatePortalTheme {
 	request := isegosdk.RequestPortalThemeCreatePortalTheme{}
 	request.PortalTheme = expandRequestPortalThemeCreatePortalThemePortalTheme(ctx, key, d)
@@ -373,13 +398,13 @@ func expandRequestPortalThemeCreatePortalTheme(ctx context.Context, key string, 
 
 func expandRequestPortalThemeCreatePortalThemePortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestPortalThemeCreatePortalThemePortalTheme {
 	request := isegosdk.RequestPortalThemeCreatePortalThemePortalTheme{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".theme_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".theme_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".theme_data")))) {
 		request.ThemeData = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -399,16 +424,16 @@ func expandRequestPortalThemeUpdatePortalThemeByID(ctx context.Context, key stri
 
 func expandRequestPortalThemeUpdatePortalThemeByIDPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestPortalThemeUpdatePortalThemeByIDPortalTheme {
 	request := isegosdk.RequestPortalThemeUpdatePortalThemeByIDPortalTheme{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".theme_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".theme_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".theme_data")))) {
 		request.ThemeData = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

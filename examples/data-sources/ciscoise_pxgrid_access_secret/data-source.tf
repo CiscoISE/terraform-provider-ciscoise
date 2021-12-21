@@ -1,5 +1,6 @@
 
 data "ciscoise_pxgrid_access_secret" "example" {
-  provider       = ciscoise
+  provider = ciscoise
+
   peer_node_name = "string"
 }

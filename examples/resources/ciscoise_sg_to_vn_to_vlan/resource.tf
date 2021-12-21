@@ -1,7 +1,7 @@
 
 resource "ciscoise_sg_to_vn_to_vlan" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"

@@ -1,13 +1,9 @@
 
 resource "ciscoise_internal_user" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    change_password = "false"
-    custom_attributes = {
-      key1 = "value1"
-      key2 = "value2"
-    }
+    change_password     = "false"
     description         = "string"
     email               = "string"
     enable_password     = "string"

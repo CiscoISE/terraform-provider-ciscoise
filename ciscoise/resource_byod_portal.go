@@ -3,10 +3,11 @@ package ciscoise
 import (
 	"context"
 	"fmt"
-	"log"
 	"reflect"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	"log"
+
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,7 +39,6 @@ func resourceByodPortal() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -46,7 +46,6 @@ func resourceByodPortal() *schema.Resource {
 						"customizations": &schema.Schema{
 							Description: `Defines all of the Portal Customizations available for a BYOD`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -54,14 +53,12 @@ func resourceByodPortal() *schema.Resource {
 									"global_customizations": &schema.Schema{
 										Description: `Represent the portal Global customizations`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"background_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -69,7 +66,6 @@ func resourceByodPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -77,7 +73,6 @@ func resourceByodPortal() *schema.Resource {
 												},
 												"banner_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -85,7 +80,6 @@ func resourceByodPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -93,17 +87,14 @@ func resourceByodPortal() *schema.Resource {
 												},
 												"banner_title": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"contact_text": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"desktop_logo_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -111,7 +102,6 @@ func resourceByodPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -119,12 +109,10 @@ func resourceByodPortal() *schema.Resource {
 												},
 												"footer_element": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"mobile_logo_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -132,7 +120,6 @@ func resourceByodPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -145,14 +132,12 @@ func resourceByodPortal() *schema.Resource {
 										Description: `This property is supported only for Read operation and it allows to show the customizations in English.
 Other languages are not supported`,
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"view_language": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -161,7 +146,6 @@ Other languages are not supported`,
 									"page_customizations": &schema.Schema{
 										Description: `Represent the entire page customization as a giant dictionary`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -169,19 +153,16 @@ Other languages are not supported`,
 												"data": &schema.Schema{
 													Description: `The Dictionary will be exposed here as key value pair`,
 													Type:        schema.TypeList,
-													Optional:    true,
 													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"key": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 															"value": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 														},
@@ -193,7 +174,6 @@ Other languages are not supported`,
 									"portal_theme": &schema.Schema{
 										Description: `Defines the configuration for portal theme`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -201,19 +181,16 @@ Other languages are not supported`,
 												"id": &schema.Schema{
 													Description: `The unique internal identifier of the portal theme`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"name": &schema.Schema{
 													Description: `The system- or user-assigned name of the portal theme`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"theme_data": &schema.Schema{
 													Description: `A CSS file, represented as a Base64-encoded byte array`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 											},
@@ -224,7 +201,6 @@ Other languages are not supported`,
 When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
 The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -232,22 +208,18 @@ The Tweak Settings can subsequently be changed by the user`,
 												"banner_color": &schema.Schema{
 													Description: `Hex value of color`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"banner_text_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"page_background_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"page_label_and_text_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -258,13 +230,11 @@ The Tweak Settings can subsequently be changed by the user`,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Description: `Resource UUID, mandatory for update`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"link": &schema.Schema{
@@ -291,13 +261,11 @@ The Tweak Settings can subsequently be changed by the user`,
 						"name": &schema.Schema{
 							Description: `Resource Name`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"portal_test_url": &schema.Schema{
 							Description: `URL to bring up a test page for this portal`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"portal_type": &schema.Schema{
@@ -309,13 +277,11 @@ The Tweak Settings can subsequently be changed by the user`,
 - SPONSOR,
 - SPONSOREDGUEST`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"settings": &schema.Schema{
 							Description: `Defines all of the settings groups available for a BYOD`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -323,35 +289,29 @@ The Tweak Settings can subsequently be changed by the user`,
 									"byod_settings": &schema.Schema{
 										Description: `Configuration of BYOD Device Welcome, Registration and Success steps`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"byod_registration_settings": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"end_point_identity_group_id": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 															"show_device_id": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
 												},
 												"byod_registration_success_settings": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -359,13 +319,11 @@ The Tweak Settings can subsequently be changed by the user`,
 															"redirect_url": &schema.Schema{
 																Description: `Target URL for redirection, used when successRedirect = URL`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 															"success_redirect": &schema.Schema{
 																Description: `After an Authentication Success where should device be redirected. Allowed values:`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -374,7 +332,6 @@ The Tweak Settings can subsequently be changed by the user`,
 												"byod_welcome_settings": &schema.Schema{
 													Description: `Configuration of BYOD endpoint welcome step configuration`,
 													Type:        schema.TypeList,
-													Optional:    true,
 													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -386,45 +343,32 @@ Allowed values:
 - ONPAGE,
 - ASLINK`,
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"enable_guest_access": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"include_aup": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"require_mdm": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"require_scrolling": &schema.Schema{
-																Description:  `Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true`,
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Description: `Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -435,7 +379,6 @@ Allowed values:
 									"portal_settings": &schema.Schema{
 										Description: `The port, interface, certificate, and other basic settings of a portal`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -453,7 +396,6 @@ Allowed values:
 - bond1,
 - bond2`,
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
@@ -462,13 +404,11 @@ Allowed values:
 												"always_used_language": &schema.Schema{
 													Description: `Used when displayLang = ALWAYSUSE`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"certificate_group_tag": &schema.Schema{
 													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"display_lang": &schema.Schema{
@@ -476,25 +416,21 @@ Allowed values:
 - USEBROWSERLOCALE,
 - ALWAYSUSE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"endpoint_identity_group": &schema.Schema{
 													Description: `Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"fallback_language": &schema.Schema{
 													Description: `Used when displayLang = USEBROWSERLOCALE`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"https_port": &schema.Schema{
 													Description: `The port number that the allowed interfaces will listen on. Range from 8000 to 8999`,
 													Type:        schema.TypeInt,
-													Optional:    true,
 													Computed:    true,
 												},
 											},
@@ -502,7 +438,6 @@ Allowed values:
 									},
 									"support_info_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -511,7 +446,6 @@ Allowed values:
 													Description: `The default value displayed for an empty field.
 Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
@@ -521,44 +455,493 @@ Allowed values:
 - DISPLAYWITHNOVALUE,
 - DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
+												},
+												"include_browser_user_agent": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_failure_code": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_ip_address": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_mac_addr": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_policy_server": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_support_info_page": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"customizations": &schema.Schema{
+							Description: `Defines all of the Portal Customizations available for a BYOD`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"global_customizations": &schema.Schema{
+										Description: `Represent the portal Global customizations`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"background_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"banner_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"banner_title": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"contact_text": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"desktop_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"footer_element": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"mobile_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"language": &schema.Schema{
+										Description: `This property is supported only for Read operation and it allows to show the customizations in English.
+Other languages are not supported`,
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"view_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"page_customizations": &schema.Schema{
+										Description: `Represent the entire page customization as a giant dictionary`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"data": &schema.Schema{
+													Description: `The Dictionary will be exposed here as key value pair`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"portal_theme": &schema.Schema{
+										Description: `Defines the configuration for portal theme`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"id": &schema.Schema{
+													Description: `The unique internal identifier of the portal theme`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"name": &schema.Schema{
+													Description: `The system- or user-assigned name of the portal theme`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"theme_data": &schema.Schema{
+													Description: `A CSS file, represented as a Base64-encoded byte array`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+											},
+										},
+									},
+									"portal_tweak_settings": &schema.Schema{
+										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user`,
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"banner_color": &schema.Schema{
+													Description: `Hex value of color`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"banner_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"page_background_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"page_label_and_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Description: `Resource UUID, mandatory for update`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"name": &schema.Schema{
+							Description: `Resource Name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"portal_test_url": &schema.Schema{
+							Description: `URL to bring up a test page for this portal`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"portal_type": &schema.Schema{
+							Description: `Allowed values:
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"settings": &schema.Schema{
+							Description: `Defines all of the settings groups available for a BYOD`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"byod_settings": &schema.Schema{
+										Description: `Configuration of BYOD Device Welcome, Registration and Success steps`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"byod_registration_settings": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_point_identity_group_id": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"show_device_id": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+														},
+													},
+												},
+												"byod_registration_success_settings": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"redirect_url": &schema.Schema{
+																Description: `Target URL for redirection, used when successRedirect = URL`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+															"success_redirect": &schema.Schema{
+																Description: `After an Authentication Success where should device be redirected. Allowed values:`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"byod_welcome_settings": &schema.Schema{
+													Description: `Configuration of BYOD endpoint welcome step configuration`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"aup_display": &schema.Schema{
+																Description: `How the AUP should be displayed, either on page or as a link.
+Only valid if includeAup = true.
+Allowed values:
+- ONPAGE,
+- ASLINK`,
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enable_byo_d": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"enable_guest_access": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"include_aup": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"require_aup_acceptance": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"require_mdm": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"require_scrolling": &schema.Schema{
+																Description:  `Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true`,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"portal_settings": &schema.Schema{
+										Description: `The port, interface, certificate, and other basic settings of a portal`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"allowed_interfaces": &schema.Schema{
+													Description: `Interfaces that the portal will be reachable on.
+Allowed values:
+- eth0,
+- eth1,
+- eth2,
+- eth3,
+- eth4,
+- eth5,
+- bond0,
+- bond1,
+- bond2`,
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"always_used_language": &schema.Schema{
+													Description: `Used when displayLang = ALWAYSUSE`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"certificate_group_tag": &schema.Schema{
+													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"display_lang": &schema.Schema{
+													Description: `Allowed values:
+- USEBROWSERLOCALE,
+- ALWAYSUSE`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"endpoint_identity_group": &schema.Schema{
+													Description: `Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"fallback_language": &schema.Schema{
+													Description: `Used when displayLang = USEBROWSERLOCALE`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"https_port": &schema.Schema{
+													Description: `The port number that the allowed interfaces will listen on. Range from 8000 to 8999`,
+													Type:        schema.TypeInt,
+													Optional:    true,
+												},
+											},
+										},
+									},
+									"support_info_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"default_empty_field_value": &schema.Schema{
+													Description: `The default value displayed for an empty field.
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"empty_field_display": &schema.Schema{
+													Description: `Specifies how empty fields are handled on the Support Information Page.
+Allowed values:
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_failure_code": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_ip_address": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_mac_addr": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_policy_server": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_support_info_page": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -578,8 +961,8 @@ func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m int
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestByodPortalCreateByodPortal(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestByodPortalCreateByodPortal(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -593,7 +976,7 @@ func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m int
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceByodPortalRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetByodPortalQueryParams{}
@@ -607,7 +990,7 @@ func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m int
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceByodPortalRead(ctx, d, m)
 			}
 		}
 	}
@@ -630,7 +1013,7 @@ func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m int
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceByodPortalRead(ctx, d, m)
 }
 
 func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -655,9 +1038,12 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 
 		log.Printf("[DEBUG] Selected method: GetByodPortal")
 		queryParams1 := isegosdk.GetByodPortalQueryParams{}
-		response1, _, err := client.ByodPortal.GetByodPortal(&queryParams1)
+		response1, restyResp1, err := client.ByodPortal.GetByodPortal(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetByodPortal", err,
 				"Failure at GetByodPortal, unexpected response", ""))
@@ -681,15 +1067,18 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 				err))
 			return diags
 		}
-		// TODO: Review, what happens if you reset the Id
+
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetByodPortalByID")
 		vvID := vID
 
-		response2, _, err := client.ByodPortal.GetByodPortalByID(vvID)
+		response2, restyResp2, err := client.ByodPortal.GetByodPortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetByodPortalByID", err,
 				"Failure at GetByodPortalByID, unexpected response", ""))
@@ -748,9 +1137,9 @@ func resourceByodPortalUpdate(ctx context.Context, d *schema.ResourceData, m int
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestByodPortalUpdateByodPortalByID(ctx, "item.0", d)
+		request1 := expandRequestByodPortalUpdateByodPortalByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.ByodPortal.UpdateByodPortalByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -849,25 +1238,25 @@ func expandRequestByodPortalCreateByodPortal(ctx context.Context, key string, d 
 
 func expandRequestByodPortalCreateByodPortalByodPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortal {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortal{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_type")))) {
 		request.PortalType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_test_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_test_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_test_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_test_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_test_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_test_url")))) {
 		request.PortalTestURL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".settings")))) {
 		request.Settings = expandRequestByodPortalCreateByodPortalByodPortalSettings(ctx, key+".settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".customizations")))) {
 		request.Customizations = expandRequestByodPortalCreateByodPortalByodPortalCustomizations(ctx, key+".customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -878,13 +1267,13 @@ func expandRequestByodPortalCreateByodPortalByodPortal(ctx context.Context, key 
 
 func expandRequestByodPortalCreateByodPortalByodPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettings {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".portal_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_settings")))) {
 		request.PortalSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings(ctx, key+".portal_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_settings")))) {
 		request.ByodSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettings(ctx, key+".byod_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".support_info_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_info_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_info_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".support_info_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".support_info_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".support_info_settings")))) {
 		request.SupportInfoSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSettings(ctx, key+".support_info_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -895,25 +1284,25 @@ func expandRequestByodPortalCreateByodPortalByodPortalSettings(ctx context.Conte
 
 func expandRequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".https_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".https_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".https_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".https_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".https_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".https_port")))) {
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_interfaces")))) {
 		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_group_tag")))) {
 		request.CertificateGroupTag = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".endpoint_identity_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".endpoint_identity_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".endpoint_identity_group"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".endpoint_identity_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".endpoint_identity_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".endpoint_identity_group")))) {
 		request.EndpointIDentityGroup = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_lang"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_lang"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_lang"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_lang")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_lang")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_lang")))) {
 		request.DisplayLang = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".fallback_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".fallback_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".fallback_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fallback_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fallback_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fallback_language")))) {
 		request.FallbackLanguage = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".always_used_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".always_used_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".always_used_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".always_used_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".always_used_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".always_used_language")))) {
 		request.AlwaysUsedLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -924,13 +1313,13 @@ func expandRequestByodPortalCreateByodPortalByodPortalSettingsPortalSettings(ctx
 
 func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettings {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettings{}
-	if v, ok := d.GetOkExists(key + ".byod_welcome_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_welcome_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_welcome_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_welcome_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_welcome_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_welcome_settings")))) {
 		request.ByodWelcomeSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWelcomeSettings(ctx, key+".byod_welcome_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_registration_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_registration_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_registration_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_registration_settings")))) {
 		request.ByodRegistrationSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSettings(ctx, key+".byod_registration_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_registration_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_success_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_registration_success_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_registration_success_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_registration_success_settings")))) {
 		request.ByodRegistrationSuccessSettings = expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx, key+".byod_registration_success_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -941,25 +1330,25 @@ func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettings(ctx c
 
 func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWelcomeSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWelcomeSettings {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWelcomeSettings{}
-	if v, ok := d.GetOkExists(key + ".enable_byo_d"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_byo_d"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_byo_d"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_byo_d")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_byo_d")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_byo_d")))) {
 		request.EnableByod = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_guest_access"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_guest_access"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_guest_access"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_guest_access")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_guest_access")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_guest_access")))) {
 		request.EnableGuestAccess = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_mdm"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_mdm"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_mdm"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_mdm")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_mdm")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_mdm")))) {
 		request.RequireMdm = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_display")))) {
 		request.AupDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_aup_acceptance"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_acceptance"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_acceptance"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_aup_acceptance")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_aup_acceptance")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_aup_acceptance")))) {
 		request.RequireAupAcceptance = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_scrolling")))) {
 		request.RequireScrolling = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -970,10 +1359,10 @@ func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodWe
 
 func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSettings {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSettings{}
-	if v, ok := d.GetOkExists(key + ".show_device_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".show_device_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".show_device_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".show_device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".show_device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".show_device_id")))) {
 		request.ShowDeviceID = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".end_point_identity_group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_point_identity_group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_point_identity_group_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_point_identity_group_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_point_identity_group_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_point_identity_group_id")))) {
 		request.EndPointIDentityGroupID = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -984,10 +1373,10 @@ func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRe
 
 func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSuccessSettings {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRegistrationSuccessSettings{}
-	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".success_redirect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".success_redirect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".success_redirect")))) {
 		request.SuccessRedirect = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".redirect_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".redirect_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".redirect_url")))) {
 		request.RedirectURL = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -998,28 +1387,28 @@ func expandRequestByodPortalCreateByodPortalByodPortalSettingsByodSettingsByodRe
 
 func expandRequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSettings {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSettings{}
-	if v, ok := d.GetOkExists(key + ".include_support_info_page"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_support_info_page"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_support_info_page"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_support_info_page")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_support_info_page")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_support_info_page")))) {
 		request.IncludeSupportInfoPage = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_mac_addr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_mac_addr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_mac_addr"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_mac_addr")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_mac_addr")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_mac_addr")))) {
 		request.IncludeMacAddr = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_ip_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_ip_address")))) {
 		request.IncludeIPAddress = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_browser_user_agent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_browser_user_agent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_browser_user_agent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_browser_user_agent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_browser_user_agent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_browser_user_agent")))) {
 		request.IncludeBrowserUserAgent = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_policy_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_policy_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_policy_server"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_policy_server")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_policy_server")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_policy_server")))) {
 		request.IncludePolicyServer = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_failure_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_failure_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_failure_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_failure_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_failure_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_failure_code")))) {
 		request.IncludeFailureCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".empty_field_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".empty_field_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".empty_field_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".empty_field_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".empty_field_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".empty_field_display")))) {
 		request.EmptyFieldDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_empty_field_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_empty_field_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_empty_field_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_empty_field_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_empty_field_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_empty_field_value")))) {
 		request.DefaultEmptyFieldValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1030,19 +1419,19 @@ func expandRequestByodPortalCreateByodPortalByodPortalSettingsSupportInfoSetting
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizations {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".portal_theme"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_theme"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_theme"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_theme")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_theme")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_theme")))) {
 		request.PortalTheme = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme(ctx, key+".portal_theme.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_tweak_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_tweak_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_tweak_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_tweak_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_tweak_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_tweak_settings")))) {
 		request.PortalTweakSettings = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakSettings(ctx, key+".portal_tweak_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".language")))) {
 		request.Language = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage(ctx, key+".language.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".global_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".global_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".global_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".global_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".global_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".global_customizations")))) {
 		request.GlobalCustomizations = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizations(ctx, key+".global_customizations.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".page_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_customizations")))) {
 		request.PageCustomizations = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations(ctx, key+".page_customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1053,13 +1442,13 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizations(ctx context
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".theme_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".theme_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".theme_data")))) {
 		request.ThemeData = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1070,16 +1459,16 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTheme(
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakSettings {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakSettings{}
-	if v, ok := d.GetOkExists(key + ".banner_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_color")))) {
 		request.BannerColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_text_color")))) {
 		request.BannerTextColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_background_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_background_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_background_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_background_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_background_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_background_color")))) {
 		request.PageBackgroundColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_label_and_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_label_and_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_label_and_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_label_and_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_label_and_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_label_and_text_color")))) {
 		request.PageLabelAndTextColor = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1090,7 +1479,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPortalTweakS
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage{}
-	if v, ok := d.GetOkExists(key + ".view_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".view_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".view_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view_language")))) {
 		request.ViewLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1101,25 +1490,25 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsLanguage(ctx
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizations {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".mobile_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mobile_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mobile_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mobile_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mobile_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mobile_logo_image")))) {
 		request.MobileLogoImage = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx, key+".mobile_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".desktop_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".desktop_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".desktop_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".desktop_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".desktop_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".desktop_logo_image")))) {
 		request.DesktopLogoImage = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx, key+".desktop_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_image")))) {
 		request.BannerImage = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBannerImage(ctx, key+".banner_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".background_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".background_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".background_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".background_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".background_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".background_image")))) {
 		request.BackgroundImage = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx, key+".background_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_title"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_title")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_title")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_title")))) {
 		request.BannerTitle = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".contact_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".contact_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".contact_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".contact_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".contact_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".contact_text")))) {
 		request.ContactText = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".footer_element"); !isEmptyValue(reflect.ValueOf(d.Get(key+".footer_element"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".footer_element"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".footer_element")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".footer_element")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".footer_element")))) {
 		request.FooterElement = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1130,7 +1519,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustom
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsMobileLogoImage {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsMobileLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1141,7 +1530,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustom
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1152,7 +1541,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustom
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBannerImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBannerImage {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBannerImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1163,7 +1552,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustom
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBackgroundImage {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustomizationsBackgroundImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1174,7 +1563,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsGlobalCustom
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizations{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1185,6 +1574,7 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomiz
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -1207,10 +1597,10 @@ func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomiz
 
 func expandRequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData {
 	request := isegosdk.RequestByodPortalCreateByodPortalByodPortalCustomizationsPageCustomizationsData{}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1230,25 +1620,25 @@ func expandRequestByodPortalUpdateByodPortalByID(ctx context.Context, key string
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortal {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortal{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_type")))) {
 		request.PortalType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_test_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_test_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_test_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_test_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_test_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_test_url")))) {
 		request.PortalTestURL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".settings")))) {
 		request.Settings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettings(ctx, key+".settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".customizations")))) {
 		request.Customizations = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizations(ctx, key+".customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1259,13 +1649,13 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortal(ctx context.Context, 
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettings {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".portal_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_settings")))) {
 		request.PortalSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings(ctx, key+".portal_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_settings")))) {
 		request.ByodSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings(ctx, key+".byod_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".support_info_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_info_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_info_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".support_info_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".support_info_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".support_info_settings")))) {
 		request.SupportInfoSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSettings(ctx, key+".support_info_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1276,25 +1666,25 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettings(ctx context.C
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".https_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".https_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".https_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".https_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".https_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".https_port")))) {
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_interfaces")))) {
 		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_group_tag")))) {
 		request.CertificateGroupTag = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".endpoint_identity_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".endpoint_identity_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".endpoint_identity_group"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".endpoint_identity_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".endpoint_identity_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".endpoint_identity_group")))) {
 		request.EndpointIDentityGroup = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_lang"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_lang"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_lang"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_lang")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_lang")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_lang")))) {
 		request.DisplayLang = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".fallback_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".fallback_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".fallback_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fallback_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fallback_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fallback_language")))) {
 		request.FallbackLanguage = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".always_used_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".always_used_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".always_used_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".always_used_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".always_used_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".always_used_language")))) {
 		request.AlwaysUsedLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1305,13 +1695,13 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsPortalSettings
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings{}
-	if v, ok := d.GetOkExists(key + ".byod_welcome_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_welcome_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_welcome_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_welcome_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_welcome_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_welcome_settings")))) {
 		request.ByodWelcomeSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings(ctx, key+".byod_welcome_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_registration_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_registration_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_registration_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_registration_settings")))) {
 		request.ByodRegistrationSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings(ctx, key+".byod_registration_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_registration_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_success_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_registration_success_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_registration_success_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_registration_success_settings")))) {
 		request.ByodRegistrationSuccessSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx, key+".byod_registration_success_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1322,25 +1712,25 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettings(c
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodWelcomeSettings{}
-	if v, ok := d.GetOkExists(key + ".enable_byo_d"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_byo_d"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_byo_d"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_byo_d")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_byo_d")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_byo_d")))) {
 		request.EnableByod = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_guest_access"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_guest_access"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_guest_access"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_guest_access")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_guest_access")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_guest_access")))) {
 		request.EnableGuestAccess = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_mdm"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_mdm"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_mdm"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_mdm")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_mdm")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_mdm")))) {
 		request.RequireMdm = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_display")))) {
 		request.AupDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_aup_acceptance"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_acceptance"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_acceptance"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_aup_acceptance")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_aup_acceptance")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_aup_acceptance")))) {
 		request.RequireAupAcceptance = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_scrolling")))) {
 		request.RequireScrolling = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1351,10 +1741,10 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsBy
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSettings{}
-	if v, ok := d.GetOkExists(key + ".show_device_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".show_device_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".show_device_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".show_device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".show_device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".show_device_id")))) {
 		request.ShowDeviceID = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".end_point_identity_group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_point_identity_group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_point_identity_group_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_point_identity_group_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_point_identity_group_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_point_identity_group_id")))) {
 		request.EndPointIDentityGroupID = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1365,10 +1755,10 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsBy
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsByodRegistrationSuccessSettings{}
-	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".success_redirect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".success_redirect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".success_redirect")))) {
 		request.SuccessRedirect = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".redirect_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".redirect_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".redirect_url")))) {
 		request.RedirectURL = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1379,28 +1769,28 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsByodSettingsBy
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSettings {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSettings{}
-	if v, ok := d.GetOkExists(key + ".include_support_info_page"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_support_info_page"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_support_info_page"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_support_info_page")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_support_info_page")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_support_info_page")))) {
 		request.IncludeSupportInfoPage = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_mac_addr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_mac_addr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_mac_addr"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_mac_addr")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_mac_addr")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_mac_addr")))) {
 		request.IncludeMacAddr = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_ip_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_ip_address")))) {
 		request.IncludeIPAddress = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_browser_user_agent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_browser_user_agent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_browser_user_agent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_browser_user_agent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_browser_user_agent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_browser_user_agent")))) {
 		request.IncludeBrowserUserAgent = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_policy_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_policy_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_policy_server"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_policy_server")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_policy_server")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_policy_server")))) {
 		request.IncludePolicyServer = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_failure_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_failure_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_failure_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_failure_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_failure_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_failure_code")))) {
 		request.IncludeFailureCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".empty_field_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".empty_field_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".empty_field_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".empty_field_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".empty_field_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".empty_field_display")))) {
 		request.EmptyFieldDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_empty_field_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_empty_field_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_empty_field_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_empty_field_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_empty_field_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_empty_field_value")))) {
 		request.DefaultEmptyFieldValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1411,19 +1801,19 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalSettingsSupportInfoSet
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizations {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".portal_theme"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_theme"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_theme"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_theme")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_theme")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_theme")))) {
 		request.PortalTheme = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTheme(ctx, key+".portal_theme.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_tweak_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_tweak_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_tweak_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_tweak_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_tweak_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_tweak_settings")))) {
 		request.PortalTweakSettings = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTweakSettings(ctx, key+".portal_tweak_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".language")))) {
 		request.Language = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage(ctx, key+".language.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".global_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".global_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".global_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".global_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".global_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".global_customizations")))) {
 		request.GlobalCustomizations = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizations(ctx, key+".global_customizations.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".page_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_customizations")))) {
 		request.PageCustomizations = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations(ctx, key+".page_customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1434,13 +1824,13 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizations(ctx con
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTheme {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTheme{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".theme_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".theme_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".theme_data")))) {
 		request.ThemeData = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1451,16 +1841,16 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTh
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTweakSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTweakSettings {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTweakSettings{}
-	if v, ok := d.GetOkExists(key + ".banner_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_color")))) {
 		request.BannerColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_text_color")))) {
 		request.BannerTextColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_background_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_background_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_background_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_background_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_background_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_background_color")))) {
 		request.PageBackgroundColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_label_and_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_label_and_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_label_and_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_label_and_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_label_and_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_label_and_text_color")))) {
 		request.PageLabelAndTextColor = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1471,7 +1861,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPortalTw
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage{}
-	if v, ok := d.GetOkExists(key + ".view_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".view_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".view_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view_language")))) {
 		request.ViewLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1482,25 +1872,25 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsLanguage
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizations {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".mobile_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mobile_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mobile_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mobile_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mobile_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mobile_logo_image")))) {
 		request.MobileLogoImage = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx, key+".mobile_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".desktop_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".desktop_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".desktop_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".desktop_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".desktop_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".desktop_logo_image")))) {
 		request.DesktopLogoImage = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx, key+".desktop_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_image")))) {
 		request.BannerImage = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage(ctx, key+".banner_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".background_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".background_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".background_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".background_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".background_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".background_image")))) {
 		request.BackgroundImage = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx, key+".background_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_title"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_title")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_title")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_title")))) {
 		request.BannerTitle = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".contact_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".contact_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".contact_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".contact_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".contact_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".contact_text")))) {
 		request.ContactText = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".footer_element"); !isEmptyValue(reflect.ValueOf(d.Get(key+".footer_element"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".footer_element"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".footer_element")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".footer_element")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".footer_element")))) {
 		request.FooterElement = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1511,7 +1901,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCu
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsMobileLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1522,7 +1912,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCu
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsDesktopLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1533,7 +1923,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCu
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBannerImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1544,7 +1934,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCu
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCustomizationsBackgroundImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1555,7 +1945,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsGlobalCu
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizations{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1566,6 +1956,7 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCust
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -1588,10 +1979,10 @@ func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCust
 
 func expandRequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData {
 	request := isegosdk.RequestByodPortalUpdateByodPortalByIDByodPortalCustomizationsPageCustomizationsData{}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
