@@ -130,6 +130,7 @@ output "ciscoise_device_administration_global_exception_rules_example" {
 Optional:
 
 - **commands** (List of String) Command sets enforce the specified list of commands that can be executed by a device administrator
+- **id** (String) id path parameter. Rule id
 - **profile** (String) Device admin profiles control the initial login session of the device administrator
 - **rule** (Block List, Max: 1) Common attributes in rule authentication/authorization (see [below for nested schema](#nestedblock--parameters--rule))
 

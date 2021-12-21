@@ -56,6 +56,7 @@ output "ciscoise_filter_policy_example" {
 Optional:
 
 - **domains** (String) List of SXP Domains, separated with comma
+- **id** (String) id path parameter.
 - **sgt** (String) SGT name or ID. At least one of subnet or sgt or vn should be defined
 - **subnet** (String) Subnet for filter policy (hostname is not supported).
 At least one of subnet or sgt or vn should be defined

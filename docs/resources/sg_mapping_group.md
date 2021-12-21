@@ -60,6 +60,7 @@ Optional:
 - ALL,
 - ND,
 - NDG
+- **id** (String) id path parameter.
 - **name** (String)
 - **sgt** (String) Mandatory unless mappingGroup is set
 

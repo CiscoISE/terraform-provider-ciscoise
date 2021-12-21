@@ -129,6 +129,7 @@ output "ciscoise_device_administration_authorization_rules_example" {
 Optional:
 
 - **commands** (List of String) Command sets enforce the specified list of commands that can be executed by a device administrator
+- **id** (String) id path parameter. Rule id
 - **policy_id** (String) policyId path parameter. Policy id
 - **profile** (String) Device admin profiles control the initial login session of the device administrator
 - **rule** (Block List, Max: 1) Common attributes in rule authentication/authorization (see [below for nested schema](#nestedblock--parameters--rule))

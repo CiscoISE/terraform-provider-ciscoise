@@ -128,6 +128,7 @@ output "ciscoise_network_access_local_exception_rules_example" {
 
 Optional:
 
+- **id** (String) id path parameter. Rule id
 - **policy_id** (String) policyId path parameter. Policy id
 - **profile** (List of String) The authorization profile/s
 - **rule** (Block List, Max: 1) Common attributes in rule authentication/authorization (see [below for nested schema](#nestedblock--parameters--rule))
@@ -223,7 +224,6 @@ Optional:
 Read-Only:
 
 - **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **policy_id** (String)
 - **profile** (List of String)
 - **rule** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule))
 - **security_group** (String)

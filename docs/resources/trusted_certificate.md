@@ -84,6 +84,7 @@ Optional:
 - **download_crl** (String) Switch to enable or disable download of CRL
 - **enable_ocsp_validation** (String) Switch to enable or disable OCSP Validation
 - **enable_server_identity_check** (String) Switch to enable or disable verification if HTTPS or LDAP server certificate name fits the configured server URL
+- **id** (String) id path parameter. ID of the trust certificate
 - **ignore_crl_expiration** (String) Switch to enable or disable ignore CRL expiration
 - **name** (String) Friendly name of the certificate
 - **non_automatic_crl_update_period** (Number) Non automatic CRL update period

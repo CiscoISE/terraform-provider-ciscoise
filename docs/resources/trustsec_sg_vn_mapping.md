@@ -48,6 +48,7 @@ output "ciscoise_trustsec_sg_vn_mapping_example" {
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
 <a id="nestedblock--parameters"></a>
@@ -61,6 +62,19 @@ Optional:
 - **sgt_id** (String) Identifier of the associated Security Group which is required unless its name is provided
 - **vn_id** (String) Identifier for the associated Virtual Network which is required unless its name is provided
 - **vn_name** (String) Name of the associated Virtual Network to be used for identity if id is not provided
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **id** (String)
+- **last_update** (String)
+- **sg_name** (String)
+- **sgt_id** (String)
+- **vn_id** (String)
+- **vn_name** (String)
 
 ## Import
 

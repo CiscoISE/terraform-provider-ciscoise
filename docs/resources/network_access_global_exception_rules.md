@@ -129,6 +129,7 @@ output "ciscoise_network_access_global_exception_rules_example" {
 
 Optional:
 
+- **id** (String) id path parameter. Rule id
 - **profile** (List of String) The authorization profile/s
 - **rule** (Block List, Max: 1) Common attributes in rule authentication/authorization (see [below for nested schema](#nestedblock--parameters--rule))
 - **security_group** (String) Security group used in authorization policies

@@ -93,7 +93,7 @@ output "ciscoise_node_services_profiler_probe_config_example" {
 
 Required:
 
-- **hostname** (String) hostname path parameter.
+- **hostname** (String) hostname path parameter. Hostname of the node.
 
 Optional:
 

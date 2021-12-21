@@ -69,7 +69,7 @@ Optional:
 
 - **allow_cert_import** (String) Consent to import the self-signed certificate of the registering node.
 - **fqdn** (String)
-- **hostname** (String)
+- **hostname** (String) hostname path parameter. Hostname of the deployed node.
 - **password** (String, Sensitive)
 - **roles** (List of String) Roles can be empty or have many values for a node.
 - **services** (List of String) Services can be empty or have many values for a node.

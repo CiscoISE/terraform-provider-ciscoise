@@ -59,7 +59,7 @@ output "ciscoise_repository_example" {
 Optional:
 
 - **enable_pki** (String)
-- **name** (String) Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.
+- **name** (String) repositoryName path parameter. Unique name for a repository. Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.
 - **password** (String, Sensitive) Password can contain alphanumeric and/or special characters.
 - **path** (String) Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.
 - **protocol** (String)

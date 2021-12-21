@@ -128,6 +128,7 @@ output "ciscoise_network_access_authorization_rules_example" {
 
 Optional:
 
+- **id** (String) id path parameter. Rule id
 - **policy_id** (String) policyId path parameter. Policy id
 - **profile** (List of String) The authorization profile/s
 - **rule** (Block List, Max: 1) Common attributes in rule authentication/authorization (see [below for nested schema](#nestedblock--parameters--rule))

@@ -48,7 +48,7 @@ output "ciscoise_node_services_sxp_interfaces_example" {
 
 Required:
 
-- **hostname** (String) hostname path parameter.
+- **hostname** (String) hostname path parameter. Hostname of the node.
 
 Optional:
 
