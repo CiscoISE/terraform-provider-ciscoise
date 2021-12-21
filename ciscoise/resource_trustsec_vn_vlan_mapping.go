@@ -90,6 +90,55 @@ func resourceTrustsecVnVLANMapping() *schema.Resource {
 					},
 				},
 			},
+			"item": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"id": &schema.Schema{
+							Description: `Identifier of the VN-Vlan Mapping`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"is_data": &schema.Schema{
+							Description: `Flag which indicates whether the Vlan is data or voice type`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"is_default_vlan": &schema.Schema{
+							Description: `Flag which indicates if the Vlan is default`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"last_update": &schema.Schema{
+							Description: `Timestamp for the last update of the VN-Vlan Mapping`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"max_value": &schema.Schema{
+							Description: `Max value`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"name": &schema.Schema{
+							Description: `Name of the Vlan`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"vn_id": &schema.Schema{
+							Description: `Identifier for the associated Virtual Network which is required unless its name is provided`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"vn_name": &schema.Schema{
+							Description: `Name of the associated Virtual Network to be used for identity if id is not provided`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -205,7 +254,7 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 				"Failure when searching item from GetVnVLANMappings, unexpected response", ""))
 			return diags
 		}
-		vItem1 := flattenVnVLANMappingGetVnVLANMappingsItems(&items1)
+		vItem1 := flattenVnVLANMappingGetVnVLANMappingByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetVnVLANMappings search response",
