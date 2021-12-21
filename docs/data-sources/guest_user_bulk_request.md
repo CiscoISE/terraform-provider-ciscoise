@@ -17,7 +17,8 @@ It performs update operation on GuestUser.
 
 ```terraform
 data "ciscoise_guest_user_bulk_request" "example" {
-  provider            = ciscoise
+  provider = ciscoise
+
   operation_type      = "string"
   resource_media_type = "string"
 }

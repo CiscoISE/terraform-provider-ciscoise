@@ -3,6 +3,7 @@ resource "ciscoise_node_services_sxp_interfaces" "example" {
   provider = ciscoise
   parameters {
 
+    hostname  = "string"
     interface = "string"
   }
 }

@@ -3,8 +3,10 @@ resource "ciscoise_network_access_authorization_rules" "example" {
   provider = ciscoise
   parameters {
 
+    id = "string"
 
-    profile = ["string"]
+    policy_id = "string"
+    profile   = ["string"]
     rule {
 
       condition {

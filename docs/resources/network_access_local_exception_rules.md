@@ -22,23 +22,17 @@ It manages create, read, update and delete operations on Network Access - Author
 
 - Network Access Create local authorization exception rule:
 
-
-
  Rule must include name and condition.
-
 
  Condition has hierarchical structure which define a set of conditions for which authoriztion policy rule could be
 match.
 
-
  Condition can be either reference to a stored Library condition, using model
 ConditionReference
 
-
-or dynamically built conditions which are not stored in the conditions Library, using models
+ or dynamically built conditions which are not stored in the conditions Library, using models
 ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 .
-
 
 
 - Network Access Update local exception rule.
@@ -50,22 +44,23 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 ```terraform
 resource "ciscoise_network_access_local_exception_rules" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    id        = "string"
+    id = "string"
+
     policy_id = "string"
     profile   = ["string"]
     rule {
 
       condition {
 
-        attribute_id    = "string"
         attribute_name  = "string"
         attribute_value = "string"
         children {
 
           condition_type = "string"
           is_negate      = "false"
+
         }
         condition_type = "string"
         dates_range {
@@ -91,8 +86,9 @@ resource "ciscoise_network_access_local_exception_rules" "example" {
           end_time   = "string"
           start_time = "string"
         }
-        id                  = "string"
-        is_negate           = "false"
+        id        = "string"
+        is_negate = "false"
+
         name                = "string"
         operator            = "string"
         week_days           = ["string"]
@@ -120,33 +116,29 @@ output "ciscoise_network_access_local_exception_rules_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **id** (String) id path parameter. Rule id
 - **policy_id** (String) policyId path parameter. Policy id
 - **profile** (List of String) The authorization profile/s
-- **rule** (Block List) Common attributes in rule authentication/authorization (see [below for nested schema](#nestedblock--item--rule))
+- **rule** (Block List, Max: 1) Common attributes in rule authentication/authorization (see [below for nested schema](#nestedblock--parameters--rule))
 - **security_group** (String) Security group used in authorization policies
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--rule"></a>
-### Nested Schema for `item.rule`
+<a id="nestedblock--parameters--rule"></a>
+### Nested Schema for `parameters.rule`
 
 Optional:
 
-- **condition** (Block List) (see [below for nested schema](#nestedblock--item--rule--condition))
+- **condition** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--rule--condition))
 - **default** (String) Indicates if this rule is the default one
 - **hit_counts** (Number) The amount of times the rule was matched
 - **id** (String) The identifier of the rule
@@ -154,23 +146,22 @@ Optional:
 - **rank** (Number) The rank(priority) in relation to other rules. Lower rank is higher priority.
 - **state** (String) The state that the rule is in. A disabled rule cannot be matched.
 
-<a id="nestedblock--item--rule--condition"></a>
-### Nested Schema for `item.rule.condition`
+<a id="nestedblock--parameters--rule--condition"></a>
+### Nested Schema for `parameters.rule.condition`
 
 Optional:
 
-- **attribute_id** (String) Dictionary attribute id (Optional), used for additional verification
 - **attribute_name** (String) Dictionary attribute name
 - **attribute_value** (String) <ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>
-- **children** (Block List) In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition (see [below for nested schema](#nestedblock--item--rule--condition--children))
+- **children** (Block List) In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition (see [below for nested schema](#nestedblock--parameters--rule--condition--children))
 - **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
-- **dates_range** (Block List) <p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--item--rule--condition--dates_range))
-- **dates_range_exception** (Block List) <p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--item--rule--condition--dates_range_exception))
+- **dates_range** (Block List, Max: 1) <p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--parameters--rule--condition--dates_range))
+- **dates_range_exception** (Block List, Max: 1) <p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--parameters--rule--condition--dates_range_exception))
 - **description** (String) Condition description
 - **dictionary_name** (String) Dictionary name
 - **dictionary_value** (String) Dictionary value
-- **hours_range** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--rule--condition--hours_range))
-- **hours_range_exception** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--rule--condition--hours_range_exception))
+- **hours_range** (Block List, Max: 1) <p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--parameters--rule--condition--hours_range))
+- **hours_range_exception** (Block List, Max: 1) <p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--parameters--rule--condition--hours_range_exception))
 - **id** (String) The ID of this resource.
 - **is_negate** (String) Indicates whereas this condition is in negate mode
 - **name** (String) Condition name
@@ -178,35 +169,17 @@ Optional:
 - **week_days** (List of String) <p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>
 - **week_days_exception** (List of String) <p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--rule--condition--link))
-
-<a id="nestedblock--item--rule--condition--children"></a>
-### Nested Schema for `item.rule.condition.link`
+<a id="nestedblock--parameters--rule--condition--children"></a>
+### Nested Schema for `parameters.rule.condition.week_days_exception`
 
 Optional:
 
 - **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
 - **is_negate** (String) Indicates whereas this condition is in negate mode
 
-Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--rule--condition--link--link))
-
-<a id="nestedatt--item--rule--condition--link--link"></a>
-### Nested Schema for `item.rule.condition.link.link`
-
-Read-Only:
-
-- **href** (String)
-- **rel** (String)
-- **type** (String)
-
-
-
-<a id="nestedblock--item--rule--condition--dates_range"></a>
-### Nested Schema for `item.rule.condition.link`
+<a id="nestedblock--parameters--rule--condition--dates_range"></a>
+### Nested Schema for `parameters.rule.condition.week_days_exception`
 
 Optional:
 
@@ -214,8 +187,8 @@ Optional:
 - **start_date** (String)
 
 
-<a id="nestedblock--item--rule--condition--dates_range_exception"></a>
-### Nested Schema for `item.rule.condition.link`
+<a id="nestedblock--parameters--rule--condition--dates_range_exception"></a>
+### Nested Schema for `parameters.rule.condition.week_days_exception`
 
 Optional:
 
@@ -223,8 +196,8 @@ Optional:
 - **start_date** (String)
 
 
-<a id="nestedblock--item--rule--condition--hours_range"></a>
-### Nested Schema for `item.rule.condition.link`
+<a id="nestedblock--parameters--rule--condition--hours_range"></a>
+### Nested Schema for `parameters.rule.condition.week_days_exception`
 
 Optional:
 
@@ -232,8 +205,8 @@ Optional:
 - **start_time** (String)
 
 
-<a id="nestedblock--item--rule--condition--hours_range_exception"></a>
-### Nested Schema for `item.rule.condition.link`
+<a id="nestedblock--parameters--rule--condition--hours_range_exception"></a>
+### Nested Schema for `parameters.rule.condition.week_days_exception`
 
 Optional:
 
@@ -241,20 +214,125 @@ Optional:
 - **start_time** (String)
 
 
-<a id="nestedatt--item--rule--condition--link"></a>
-### Nested Schema for `item.rule.condition.link`
+
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **policy_id** (String)
+- **profile** (List of String)
+- **rule** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule))
+- **security_group** (String)
 
-
-
-
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
+
+
+<a id="nestedobjatt--item--rule"></a>
+### Nested Schema for `item.rule`
+
+Read-Only:
+
+- **condition** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition))
+- **default** (String)
+- **hit_counts** (Number)
+- **id** (String)
+- **name** (String)
+- **rank** (Number)
+- **state** (String)
+
+<a id="nestedobjatt--item--rule--condition"></a>
+### Nested Schema for `item.rule.condition`
+
+Read-Only:
+
+- **attribute_name** (String)
+- **attribute_value** (String)
+- **children** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--children))
+- **condition_type** (String)
+- **dates_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--dates_range))
+- **dates_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--dates_range_exception))
+- **description** (String)
+- **dictionary_name** (String)
+- **dictionary_value** (String)
+- **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--hours_range))
+- **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--hours_range_exception))
+- **id** (String)
+- **is_negate** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--link))
+- **name** (String)
+- **operator** (String)
+- **week_days** (List of String)
+- **week_days_exception** (List of String)
+
+<a id="nestedobjatt--item--rule--condition--children"></a>
+### Nested Schema for `item.rule.condition.week_days_exception`
+
+Read-Only:
+
+- **condition_type** (String)
+- **is_negate** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--week_days_exception--link))
+
+<a id="nestedobjatt--item--rule--condition--week_days_exception--link"></a>
+### Nested Schema for `item.rule.condition.week_days_exception.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
+
+
+
+<a id="nestedobjatt--item--rule--condition--dates_range"></a>
+### Nested Schema for `item.rule.condition.week_days_exception`
+
+Read-Only:
+
+- **end_date** (String)
+- **start_date** (String)
+
+
+<a id="nestedobjatt--item--rule--condition--dates_range_exception"></a>
+### Nested Schema for `item.rule.condition.week_days_exception`
+
+Read-Only:
+
+- **end_date** (String)
+- **start_date** (String)
+
+
+<a id="nestedobjatt--item--rule--condition--hours_range"></a>
+### Nested Schema for `item.rule.condition.week_days_exception`
+
+Read-Only:
+
+- **end_time** (String)
+- **start_time** (String)
+
+
+<a id="nestedobjatt--item--rule--condition--hours_range_exception"></a>
+### Nested Schema for `item.rule.condition.week_days_exception`
+
+Read-Only:
+
+- **end_time** (String)
+- **start_time** (String)
+
+
+<a id="nestedobjatt--item--rule--condition--link"></a>
+### Nested Schema for `item.rule.condition.week_days_exception`
 
 Read-Only:
 

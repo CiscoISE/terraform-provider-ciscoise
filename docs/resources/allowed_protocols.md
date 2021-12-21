@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on AllowedProtocols.
 ```terraform
 resource "ciscoise_allowed_protocols" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     allow_chap                   = "false"
     allow_eap_fast               = "false"
@@ -129,14 +129,15 @@ output "ciscoise_allowed_protocols_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -154,14 +155,14 @@ Optional:
 - **allow_teap** (String)
 - **allow_weak_ciphers_for_eap** (String)
 - **description** (String)
-- **eap_fast** (Block List) The eapFast is required only if allowEapFast is true, otherwise it must be ignored. The object eapFast contains the settings for EAP FAST protocol (see [below for nested schema](#nestedblock--item--eap_fast))
-- **eap_tls** (Block List) The eapTls is required only if allowEapTls is true, otherwise it must be ignored. The object eapTls contains the settings for EAP TLS protocol (see [below for nested schema](#nestedblock--item--eap_tls))
+- **eap_fast** (Block List, Max: 1) The eapFast is required only if allowEapFast is true, otherwise it must be ignored. The object eapFast contains the settings for EAP FAST protocol (see [below for nested schema](#nestedblock--parameters--eap_fast))
+- **eap_tls** (Block List, Max: 1) The eapTls is required only if allowEapTls is true, otherwise it must be ignored. The object eapTls contains the settings for EAP TLS protocol (see [below for nested schema](#nestedblock--parameters--eap_tls))
 - **eap_tls_l_bit** (String)
-- **eap_ttls** (Block List) The eapTtls is required only if allowEapTtls is true, otherwise it must be ignored.
-The object eapTtls contains the settings for EAP TTLS protocol (see [below for nested schema](#nestedblock--item--eap_ttls))
+- **eap_ttls** (Block List, Max: 1) The eapTtls is required only if allowEapTtls is true, otherwise it must be ignored.
+The object eapTtls contains the settings for EAP TTLS protocol (see [below for nested schema](#nestedblock--parameters--eap_ttls))
 - **id** (String) Resource UUID, Mandatory for update
 - **name** (String) Resource Name
-- **peap** (Block List) (see [below for nested schema](#nestedblock--item--peap))
+- **peap** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--peap))
 - **preferred_eap_protocol** (String) The preferredEapProtocol is required only if allowPreferredEapProtocol is true, otherwise it must be ignored.
 Allowed Values: 
 - EAP_FAST,
@@ -173,15 +174,11 @@ Allowed Values:
 - TEAP
 - **process_host_lookup** (String)
 - **require_message_auth** (String)
-- **teap** (Block List) The teap is required only if allowTeap is true, otherwise it must be ignored.
-The object teap contains the settings for TEAP protocol (see [below for nested schema](#nestedblock--item--teap))
+- **teap** (Block List, Max: 1) The teap is required only if allowTeap is true, otherwise it must be ignored.
+The object teap contains the settings for TEAP protocol (see [below for nested schema](#nestedblock--parameters--teap))
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--eap_fast"></a>
-### Nested Schema for `item.eap_fast`
+<a id="nestedblock--parameters--eap_fast"></a>
+### Nested Schema for `parameters.eap_fast`
 
 Optional:
 
@@ -240,8 +237,8 @@ Allowed Values:
 otherwise it must be ignored
 
 
-<a id="nestedblock--item--eap_tls"></a>
-### Nested Schema for `item.eap_tls`
+<a id="nestedblock--parameters--eap_tls"></a>
+### Nested Schema for `parameters.eap_tls`
 
 Optional:
 
@@ -259,8 +256,8 @@ otherwise it must be ignored. Allowed Values:
 - WEEKS
 
 
-<a id="nestedblock--item--eap_ttls"></a>
-### Nested Schema for `item.eap_ttls`
+<a id="nestedblock--parameters--eap_ttls"></a>
+### Nested Schema for `parameters.eap_ttls`
 
 Optional:
 
@@ -275,8 +272,8 @@ otherwise it must be ignored. Valid range is 0-3
 - **eap_ttls_pap_ascii** (String)
 
 
-<a id="nestedblock--item--peap"></a>
-### Nested Schema for `item.peap`
+<a id="nestedblock--parameters--peap"></a>
+### Nested Schema for `parameters.peap`
 
 Optional:
 
@@ -295,8 +292,8 @@ otherwise it must be ignored. Valid range is 0-3
 - **require_cryptobinding** (String)
 
 
-<a id="nestedblock--item--teap"></a>
-### Nested Schema for `item.teap`
+<a id="nestedblock--parameters--teap"></a>
+### Nested Schema for `parameters.teap`
 
 Optional:
 
@@ -312,7 +309,99 @@ Valid range is 0-3
 - **enable_eap_chaining** (String)
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **allow_chap** (String)
+- **allow_eap_fast** (String)
+- **allow_eap_md5** (String)
+- **allow_eap_tls** (String)
+- **allow_eap_ttls** (String)
+- **allow_leap** (String)
+- **allow_ms_chap_v1** (String)
+- **allow_ms_chap_v2** (String)
+- **allow_pap_ascii** (String)
+- **allow_peap** (String)
+- **allow_preferred_eap_protocol** (String)
+- **allow_teap** (String)
+- **allow_weak_ciphers_for_eap** (String)
+- **description** (String)
+- **eap_fast** (List of Object) (see [below for nested schema](#nestedobjatt--item--eap_fast))
+- **eap_tls** (List of Object) (see [below for nested schema](#nestedobjatt--item--eap_tls))
+- **eap_tls_l_bit** (String)
+- **eap_ttls** (List of Object) (see [below for nested schema](#nestedobjatt--item--eap_ttls))
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **peap** (List of Object) (see [below for nested schema](#nestedobjatt--item--peap))
+- **preferred_eap_protocol** (String)
+- **process_host_lookup** (String)
+- **require_message_auth** (String)
+- **teap** (List of Object) (see [below for nested schema](#nestedobjatt--item--teap))
+
+<a id="nestedobjatt--item--eap_fast"></a>
+### Nested Schema for `item.eap_fast`
+
+Read-Only:
+
+- **allow_eap_fast_eap_gtc** (String)
+- **allow_eap_fast_eap_gtc_pwd_change** (String)
+- **allow_eap_fast_eap_gtc_pwd_change_retries** (Number)
+- **allow_eap_fast_eap_ms_chap_v2** (String)
+- **allow_eap_fast_eap_ms_chap_v2_pwd_change** (String)
+- **allow_eap_fast_eap_ms_chap_v2_pwd_change_retries** (Number)
+- **allow_eap_fast_eap_tls** (String)
+- **allow_eap_fast_eap_tls_auth_of_expired_certs** (String)
+- **eap_fast_dont_use_pacs_accept_client_cert** (String)
+- **eap_fast_dont_use_pacs_allow_machine_authentication** (String)
+- **eap_fast_enable_eap_chaining** (String)
+- **eap_fast_use_pacs** (String)
+- **eap_fast_use_pacs_accept_client_cert** (String)
+- **eap_fast_use_pacs_allow_anonym_provisioning** (String)
+- **eap_fast_use_pacs_allow_authen_provisioning** (String)
+- **eap_fast_use_pacs_allow_machine_authentication** (String)
+- **eap_fast_use_pacs_authorization_pac_ttl** (Number)
+- **eap_fast_use_pacs_authorization_pac_ttl_units** (String)
+- **eap_fast_use_pacs_machine_pac_ttl** (Number)
+- **eap_fast_use_pacs_machine_pac_ttl_units** (String)
+- **eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning** (String)
+- **eap_fast_use_pacs_stateless_session_resume** (String)
+- **eap_fast_use_pacs_tunnel_pac_ttl** (Number)
+- **eap_fast_use_pacs_tunnel_pac_ttl_units** (String)
+- **eap_fast_use_pacs_use_proactive_pac_update_precentage** (Number)
+
+
+<a id="nestedobjatt--item--eap_tls"></a>
+### Nested Schema for `item.eap_tls`
+
+Read-Only:
+
+- **allow_eap_tls_auth_of_expired_certs** (String)
+- **eap_tls_enable_stateless_session_resume** (String)
+- **eap_tls_session_ticket_precentage** (Number)
+- **eap_tls_session_ticket_ttl** (Number)
+- **eap_tls_session_ticket_ttl_units** (String)
+
+
+<a id="nestedobjatt--item--eap_ttls"></a>
+### Nested Schema for `item.eap_ttls`
+
+Read-Only:
+
+- **eap_ttls_chap** (String)
+- **eap_ttls_eap_md5** (String)
+- **eap_ttls_eap_ms_chap_v2** (String)
+- **eap_ttls_eap_ms_chap_v2_pwd_change** (String)
+- **eap_ttls_eap_ms_chap_v2_pwd_change_retries** (Number)
+- **eap_ttls_ms_chap_v1** (String)
+- **eap_ttls_ms_chap_v2** (String)
+- **eap_ttls_pap_ascii** (String)
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
@@ -320,6 +409,38 @@ Read-Only:
 - **href** (String)
 - **rel** (String)
 - **type** (String)
+
+
+<a id="nestedobjatt--item--peap"></a>
+### Nested Schema for `item.peap`
+
+Read-Only:
+
+- **allow_peap_eap_gtc** (String)
+- **allow_peap_eap_gtc_pwd_change** (String)
+- **allow_peap_eap_gtc_pwd_change_retries** (Number)
+- **allow_peap_eap_ms_chap_v2** (String)
+- **allow_peap_eap_ms_chap_v2_pwd_change** (String)
+- **allow_peap_eap_ms_chap_v2_pwd_change_retries** (Number)
+- **allow_peap_eap_tls** (String)
+- **allow_peap_eap_tls_auth_of_expired_certs** (String)
+- **allow_peap_v0** (String)
+- **require_cryptobinding** (String)
+
+
+<a id="nestedobjatt--item--teap"></a>
+### Nested Schema for `item.teap`
+
+Read-Only:
+
+- **accept_client_cert_during_tunnel_est** (String)
+- **allow_downgrade_msk** (String)
+- **allow_teap_eap_ms_chap_v2** (String)
+- **allow_teap_eap_ms_chap_v2_pwd_change** (String)
+- **allow_teap_eap_ms_chap_v2_pwd_change_retries** (Number)
+- **allow_teap_eap_tls** (String)
+- **allow_teap_eap_tls_auth_of_expired_certs** (String)
+- **enable_eap_chaining** (String)
 
 ## Import
 

@@ -17,7 +17,8 @@ It performs update operation on SXPConnections.
 
 ```terraform
 data "ciscoise_sxp_connections_bulk_request" "example" {
-  provider            = ciscoise
+  provider = ciscoise
+
   operation_type      = "string"
   resource_media_type = "string"
 }

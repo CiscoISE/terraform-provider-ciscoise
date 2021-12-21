@@ -5,6 +5,7 @@ resource "ciscoise_node_deployment" "example" {
 
     allow_cert_import = "false"
     fqdn              = "string"
+    hostname          = "string"
     password          = "******"
     roles             = ["string"]
     services          = ["string"]

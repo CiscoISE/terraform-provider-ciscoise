@@ -18,6 +18,7 @@ It performs create operation on Provider.
 ```terraform
 data "ciscoise_pxgrid_service_unregister" "example" {
   provider = ciscoise
+
 }
 ```
 

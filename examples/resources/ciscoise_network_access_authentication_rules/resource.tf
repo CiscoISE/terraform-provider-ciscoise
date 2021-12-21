@@ -3,11 +3,13 @@ resource "ciscoise_network_access_authentication_rules" "example" {
   provider = ciscoise
   parameters {
 
+    id                   = "string"
     identity_source_name = "string"
     if_auth_fail         = "string"
     if_process_fail      = "string"
     if_user_not_found    = "string"
 
+    policy_id = "string"
     rule {
 
       condition {

@@ -14,6 +14,7 @@ resource "ciscoise_trusted_certificate" "example" {
     download_crl                           = "false"
     enable_ocsp_validation                 = "false"
     enable_server_identity_check           = "false"
+    id                                     = "string"
     ignore_crl_expiration                  = "false"
     name                                   = "string"
     non_automatic_crl_update_period        = 1

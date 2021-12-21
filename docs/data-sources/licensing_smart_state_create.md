@@ -18,6 +18,7 @@ It performs create operation on Licensing.
 ```terraform
 data "ciscoise_licensing_smart_state_create" "example" {
   provider = ciscoise
+
 }
 ```
 

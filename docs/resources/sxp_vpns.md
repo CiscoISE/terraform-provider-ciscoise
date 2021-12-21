@@ -20,7 +20,8 @@ It manages create, read and delete operations on SXPVPNs.
 ```terraform
 resource "ciscoise_sxp_vpns" "example" {
   provider = ciscoise
-  item {
+  parameters {
+
     id           = "string"
     sxp_vpn_name = "string"
   }
@@ -37,25 +38,31 @@ output "ciscoise_sxp_vpns_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
 - **sxp_vpn_name** (String)
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **id** (String) The ID of this resource.
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **sxp_vpn_name** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

@@ -26,7 +26,8 @@ data "ciscoise_endpoint_register" "example" {
   id                = "string"
   identity_store    = "string"
   identity_store_id = "string"
-  mac               = "string"
+
+  mac = "string"
   mdm_attributes {
 
     mdm_compliance_status = "false"
@@ -79,7 +80,7 @@ data "ciscoise_endpoint_register" "example" {
 
 Optional:
 
-- **custom_attributes** (List of String) Key value map
+- **custom_attributes** (Map of String) Key value map
 
 
 <a id="nestedblock--mdm_attributes"></a>

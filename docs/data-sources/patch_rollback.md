@@ -21,7 +21,8 @@ a certain period of time.
 
 ```terraform
 data "ciscoise_patch_rollback" "example" {
-  provider     = ciscoise
+  provider = ciscoise
+
   patch_number = 1
 }
 ```

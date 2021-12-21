@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on FilterPolicy.
 ```terraform
 resource "ciscoise_filter_policy" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     domains = "string"
     id      = "string"
@@ -43,24 +43,35 @@ output "ciscoise_filter_policy_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
 - **domains** (String) List of SXP Domains, separated with comma
-- **id** (String) id path parameter.
 - **sgt** (String) SGT name or ID. At least one of subnet or sgt or vn should be defined
 - **subnet** (String) Subnet for filter policy (hostname is not supported).
 At least one of subnet or sgt or vn should be defined
 - **vn** (String) Virtual Network.
 At least one of subnet or sgt or vn should be defined
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **domains** (String)
+- **sgt** (String)
+- **subnet** (String)
+- **vn** (String)
 
 ## Import
 

@@ -18,6 +18,7 @@ It performs update operation on ACISettings.
 ```terraform
 data "ciscoise_aci_test_connectivity" "example" {
   provider = ciscoise
+
 }
 ```
 

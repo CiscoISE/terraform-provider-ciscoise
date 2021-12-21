@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on NetworkDeviceGroup.
 ```terraform
 resource "ciscoise_network_device_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"
@@ -42,14 +42,15 @@ output "ciscoise_network_device_group_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -58,11 +59,19 @@ Optional:
 - **name** (String)
 - **othername** (String)
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **description** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **othername** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

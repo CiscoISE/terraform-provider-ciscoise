@@ -26,7 +26,7 @@ It manages create, read, update and delete operations on NetworkDevice.
 ```terraform
 resource "ciscoise_network_device" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     network_device_group_list = ["string"]
     network_device_iplist {
@@ -111,18 +111,19 @@ output "ciscoise_network_device_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **authentication_settings** (Block List) (see [below for nested schema](#nestedblock--item--authentication_settings))
+- **authentication_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--authentication_settings))
 - **coa_port** (Number)
 - **description** (String)
 - **dtls_dns_name** (String) This value is used to verify the client identity contained in the X.509 RADIUS/DTLS client certificate
@@ -130,19 +131,15 @@ Optional:
 - **model_name** (String)
 - **name** (String)
 - **network_device_group_list** (List of String) List of Network Device Group names for this node
-- **network_device_iplist** (Block List) List of IP Subnets for this node (see [below for nested schema](#nestedblock--item--network_device_iplist))
+- **network_device_iplist** (Block List) List of IP Subnets for this node (see [below for nested schema](#nestedblock--parameters--network_device_iplist))
 - **profile_name** (String)
-- **snmpsettings** (Block List) (see [below for nested schema](#nestedblock--item--snmpsettings))
+- **snmpsettings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--snmpsettings))
 - **software_version** (String)
-- **tacacs_settings** (Block List) (see [below for nested schema](#nestedblock--item--tacacs_settings))
-- **trustsecsettings** (Block List) (see [below for nested schema](#nestedblock--item--trustsecsettings))
+- **tacacs_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--tacacs_settings))
+- **trustsecsettings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--trustsecsettings))
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--authentication_settings"></a>
-### Nested Schema for `item.authentication_settings`
+<a id="nestedblock--parameters--authentication_settings"></a>
+### Nested Schema for `parameters.authentication_settings`
 
 Optional:
 
@@ -162,8 +159,8 @@ Optional:
 - **second_radius_shared_secret** (String)
 
 
-<a id="nestedblock--item--network_device_iplist"></a>
-### Nested Schema for `item.network_device_iplist`
+<a id="nestedblock--parameters--network_device_iplist"></a>
+### Nested Schema for `parameters.network_device_iplist`
 
 Optional:
 
@@ -172,8 +169,8 @@ Optional:
 - **mask** (Number)
 
 
-<a id="nestedblock--item--snmpsettings"></a>
-### Nested Schema for `item.snmpsettings`
+<a id="nestedblock--parameters--snmpsettings"></a>
+### Nested Schema for `parameters.snmpsettings`
 
 Optional:
 
@@ -185,8 +182,8 @@ Optional:
 - **version** (String)
 
 
-<a id="nestedblock--item--tacacs_settings"></a>
-### Nested Schema for `item.tacacs_settings`
+<a id="nestedblock--parameters--tacacs_settings"></a>
+### Nested Schema for `parameters.tacacs_settings`
 
 Optional:
 
@@ -197,18 +194,18 @@ Optional:
 - **shared_secret** (String)
 
 
-<a id="nestedblock--item--trustsecsettings"></a>
-### Nested Schema for `item.trustsecsettings`
+<a id="nestedblock--parameters--trustsecsettings"></a>
+### Nested Schema for `parameters.trustsecsettings`
 
 Optional:
 
-- **device_authentication_settings** (Block List) (see [below for nested schema](#nestedblock--item--trustsecsettings--device_authentication_settings))
-- **device_configuration_deployment** (Block List) (see [below for nested schema](#nestedblock--item--trustsecsettings--device_configuration_deployment))
+- **device_authentication_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--trustsecsettings--device_authentication_settings))
+- **device_configuration_deployment** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--trustsecsettings--device_configuration_deployment))
 - **push_id_support** (String)
-- **sga_notification_and_updates** (Block List) (see [below for nested schema](#nestedblock--item--trustsecsettings--sga_notification_and_updates))
+- **sga_notification_and_updates** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--trustsecsettings--sga_notification_and_updates))
 
-<a id="nestedblock--item--trustsecsettings--device_authentication_settings"></a>
-### Nested Schema for `item.trustsecsettings.device_authentication_settings`
+<a id="nestedblock--parameters--trustsecsettings--device_authentication_settings"></a>
+### Nested Schema for `parameters.trustsecsettings.device_authentication_settings`
 
 Optional:
 
@@ -216,8 +213,8 @@ Optional:
 - **sga_device_password** (String)
 
 
-<a id="nestedblock--item--trustsecsettings--device_configuration_deployment"></a>
-### Nested Schema for `item.trustsecsettings.device_configuration_deployment`
+<a id="nestedblock--parameters--trustsecsettings--device_configuration_deployment"></a>
+### Nested Schema for `parameters.trustsecsettings.device_configuration_deployment`
 
 Optional:
 
@@ -227,8 +224,8 @@ Optional:
 - **include_when_deploying_sgt_updates** (String)
 
 
-<a id="nestedblock--item--trustsecsettings--sga_notification_and_updates"></a>
-### Nested Schema for `item.trustsecsettings.sga_notification_and_updates`
+<a id="nestedblock--parameters--trustsecsettings--sga_notification_and_updates"></a>
+### Nested Schema for `parameters.trustsecsettings.sga_notification_and_updates`
 
 Optional:
 
@@ -246,7 +243,46 @@ Optional:
 
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **authentication_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--authentication_settings))
+- **coa_port** (Number)
+- **description** (String)
+- **dtls_dns_name** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **model_name** (String)
+- **name** (String)
+- **network_device_group_list** (List of String)
+- **network_device_iplist** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_device_iplist))
+- **profile_name** (String)
+- **snmpsettings** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmpsettings))
+- **software_version** (String)
+- **tacacs_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--tacacs_settings))
+- **trustsecsettings** (List of Object) (see [below for nested schema](#nestedobjatt--item--trustsecsettings))
+
+<a id="nestedobjatt--item--authentication_settings"></a>
+### Nested Schema for `item.authentication_settings`
+
+Read-Only:
+
+- **dtls_required** (String)
+- **enable_key_wrap** (String)
+- **enable_multi_secret** (String)
+- **enabled** (String)
+- **key_encryption_key** (String)
+- **key_input_format** (String)
+- **message_authenticator_code_key** (String)
+- **network_protocol** (String)
+- **radius_shared_secret** (String)
+- **second_radius_shared_secret** (String)
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
@@ -254,6 +290,83 @@ Read-Only:
 - **href** (String)
 - **rel** (String)
 - **type** (String)
+
+
+<a id="nestedobjatt--item--network_device_iplist"></a>
+### Nested Schema for `item.network_device_iplist`
+
+Read-Only:
+
+- **get_ipaddress_exclude** (String)
+- **ipaddress** (String)
+- **mask** (Number)
+
+
+<a id="nestedobjatt--item--snmpsettings"></a>
+### Nested Schema for `item.snmpsettings`
+
+Read-Only:
+
+- **link_trap_query** (String)
+- **mac_trap_query** (String)
+- **originating_policy_services_node** (String)
+- **polling_interval** (Number)
+- **ro_community** (String)
+- **version** (String)
+
+
+<a id="nestedobjatt--item--tacacs_settings"></a>
+### Nested Schema for `item.tacacs_settings`
+
+Read-Only:
+
+- **connect_mode_options** (String)
+- **shared_secret** (String)
+
+
+<a id="nestedobjatt--item--trustsecsettings"></a>
+### Nested Schema for `item.trustsecsettings`
+
+Read-Only:
+
+- **device_authentication_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--trustsecsettings--device_authentication_settings))
+- **device_configuration_deployment** (List of Object) (see [below for nested schema](#nestedobjatt--item--trustsecsettings--device_configuration_deployment))
+- **push_id_support** (String)
+- **sga_notification_and_updates** (List of Object) (see [below for nested schema](#nestedobjatt--item--trustsecsettings--sga_notification_and_updates))
+
+<a id="nestedobjatt--item--trustsecsettings--device_authentication_settings"></a>
+### Nested Schema for `item.trustsecsettings.device_authentication_settings`
+
+Read-Only:
+
+- **sga_device_id** (String)
+- **sga_device_password** (String)
+
+
+<a id="nestedobjatt--item--trustsecsettings--device_configuration_deployment"></a>
+### Nested Schema for `item.trustsecsettings.device_configuration_deployment`
+
+Read-Only:
+
+- **enable_mode_password** (String)
+- **exec_mode_password** (String)
+- **exec_mode_username** (String)
+- **include_when_deploying_sgt_updates** (String)
+
+
+<a id="nestedobjatt--item--trustsecsettings--sga_notification_and_updates"></a>
+### Nested Schema for `item.trustsecsettings.sga_notification_and_updates`
+
+Read-Only:
+
+- **coa_source_host** (String)
+- **downlaod_environment_data_every_x_seconds** (Number)
+- **downlaod_peer_authorization_policy_every_x_seconds** (Number)
+- **download_sga_cllists_every_x_seconds** (Number)
+- **other_sga_devices_to_trust_this_device** (String)
+- **re_authentication_every_x_seconds** (Number)
+- **send_configuration_to_device** (String)
+- **send_configuration_to_device_using** (String)
 
 ## Import
 

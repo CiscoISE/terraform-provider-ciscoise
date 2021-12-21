@@ -48,23 +48,24 @@ data "ciscoise_selfsigned_certificate_generate" "example" {
   expiration_ttl                             = 1
   expiration_ttl_unit                        = "string"
   host_name                                  = "string"
-  key_length                                 = "string"
-  key_type                                   = "string"
-  name                                       = "string"
-  portal                                     = "false"
-  portal_group_tag                           = "string"
-  pxgrid                                     = "false"
-  radius                                     = "false"
-  saml                                       = "false"
-  san_dns                                    = ["string"]
-  san_ip                                     = ["string"]
-  san_uri                                    = ["string"]
-  subject_city                               = "string"
-  subject_common_name                        = "string"
-  subject_country                            = "string"
-  subject_org                                = "string"
-  subject_org_unit                           = "string"
-  subject_state                              = "string"
+
+  key_length          = "string"
+  key_type            = "string"
+  name                = "string"
+  portal              = "false"
+  portal_group_tag    = "string"
+  pxgrid              = "false"
+  radius              = "false"
+  saml                = "false"
+  san_dns             = ["string"]
+  san_ip              = ["string"]
+  san_uri             = ["string"]
+  subject_city        = "string"
+  subject_common_name = "string"
+  subject_country     = "string"
+  subject_org         = "string"
+  subject_org_unit    = "string"
+  subject_state       = "string"
 }
 ```
 

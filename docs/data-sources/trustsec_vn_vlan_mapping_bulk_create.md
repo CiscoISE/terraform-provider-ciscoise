@@ -18,6 +18,7 @@ It performs create operation on vnVlanMapping.
 ```terraform
 data "ciscoise_trustsec_vn_vlan_mapping_bulk_create" "example" {
   provider = ciscoise
+
   payload {
 
     id              = "string"

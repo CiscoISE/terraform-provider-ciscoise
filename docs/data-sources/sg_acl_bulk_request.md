@@ -17,7 +17,8 @@ It performs update operation on SecurityGroupsACLs.
 
 ```terraform
 data "ciscoise_sg_acl_bulk_request" "example" {
-  provider            = ciscoise
+  provider = ciscoise
+
   operation_type      = "string"
   resource_media_type = "string"
 }

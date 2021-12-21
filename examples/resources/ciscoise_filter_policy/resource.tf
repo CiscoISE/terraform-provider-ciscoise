@@ -4,6 +4,7 @@ resource "ciscoise_filter_policy" "example" {
   parameters {
 
     domains = "string"
+    id      = "string"
     sgt     = "string"
     subnet  = "string"
     vn      = "string"

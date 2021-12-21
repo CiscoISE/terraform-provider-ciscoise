@@ -21,6 +21,7 @@ It performs create operation on Node Deployment.
 data "ciscoise_node_deployment_sync" "example" {
   provider = ciscoise
   hostname = "string"
+
 }
 ```
 
