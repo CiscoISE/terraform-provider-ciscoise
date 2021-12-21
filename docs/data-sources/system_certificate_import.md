@@ -40,15 +40,16 @@ data "ciscoise_system_certificate_import" "example" {
   data                                       = "string"
   eap                                        = "false"
   ims                                        = "false"
-  name                                       = "string"
-  password                                   = "******"
-  portal                                     = "false"
-  portal_group_tag                           = "string"
-  private_key_data                           = "string"
-  pxgrid                                     = "false"
-  radius                                     = "false"
-  saml                                       = "false"
-  validate_certificate_extensions            = "false"
+
+  name                            = "string"
+  password                        = "******"
+  portal                          = "false"
+  portal_group_tag                = "string"
+  private_key_data                = "string"
+  pxgrid                          = "false"
+  radius                          = "false"
+  saml                            = "false"
+  validate_certificate_extensions = "false"
 }
 ```
 

@@ -4,16 +4,14 @@ page_title: "ciscoise_repository Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Repository.
-  Create a new repository in the system. The name provided for the
-  repository must be unique.Update the definition of a specific repository, providing ALL parameters for the repository.Long description TBD
+  Create a new repository in the system. The name provided for the repository must be unique.Update the definition of a specific repository, providing ALL parameters for the repository.Long description TBD
 ---
 
 # ciscoise_repository (Resource)
 
 It manages create, read, update and delete operations on Repository.
 
-- Create a new repository in the system. The name provided for the
-repository must be unique.
+- Create a new repository in the system. The name provided for the repository must be unique.
 
 - Update the definition of a specific repository, providing ALL parameters for the repository.
 
@@ -24,15 +22,16 @@ repository must be unique.
 ```terraform
 resource "ciscoise_repository" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    enable_pki  = "false"
-    name        = "string"
-    password    = "******"
-    path        = "string"
-    protocol    = "string"
-    server_name = "string"
-    user_name   = "string"
+    enable_pki      = "false"
+    name            = "string"
+    password        = "******"
+    path            = "string"
+    protocol        = "string"
+    repository_name = "string"
+    server_name     = "string"
+    user_name       = "string"
   }
 }
 
@@ -47,14 +46,15 @@ output "ciscoise_repository_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -64,12 +64,26 @@ Optional:
 - **path** (String) Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.
 - **protocol** (String)
 - **server_name** (String)
-- **user_name** (String) Username can contain alphanumeric characters.
+- **user_name** (String) Username may contain alphanumeric and _-./@\\$ characters.
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **enable_pki** (String)
+- **name** (String)
+- **password** (String)
+- **path** (String)
+- **protocol** (String)
+- **server_name** (String)
+- **user_name** (String)
 
 ## Import
 
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_repository.example "name:=string"
+terraform import ciscoise_repository.example "repository_name:=string"
 ```

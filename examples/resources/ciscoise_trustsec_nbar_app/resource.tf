@@ -3,6 +3,7 @@ resource "ciscoise_trustsec_nbar_app" "example" {
   provider = ciscoise
   parameters {
 
+    id       = "string"
     ports    = "string"
     protocol = "string"
   }

@@ -18,6 +18,7 @@ It performs create operation on virtualNetwork.
 ```terraform
 data "ciscoise_trustsec_vn_bulk_create" "example" {
   provider = ciscoise
+
   payload {
 
     additional_attributes = "string"

@@ -21,8 +21,9 @@ unavailable for a certain period of time.
 
 ```terraform
 data "ciscoise_hotpatch_rollback" "example" {
-  provider        = ciscoise
-  hotpatch_name   = "string"
+  provider      = ciscoise
+  hotpatch_name = "string"
+
   repository_name = "string"
 }
 ```

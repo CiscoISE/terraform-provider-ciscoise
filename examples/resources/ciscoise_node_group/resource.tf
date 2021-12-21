@@ -11,7 +11,8 @@ resource "ciscoise_node_group" "example" {
       replication_attempts = 1
       replication_timeout  = 1
     }
-    name = "string"
+    name            = "string"
+    node_group_name = "string"
   }
 }
 

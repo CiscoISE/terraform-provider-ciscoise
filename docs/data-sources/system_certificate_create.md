@@ -44,6 +44,7 @@ data "ciscoise_system_certificate_create" "example" {
     selected_expiration_ttl_unit = "string"
     xgrid_certificate            = "string"
   }
+
   node_id = "string"
 }
 ```

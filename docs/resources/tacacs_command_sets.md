@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on TACACSCommandSets.
 ```terraform
 resource "ciscoise_tacacs_command_sets" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     commands {
 
@@ -51,36 +51,33 @@ output "ciscoise_tacacs_command_sets_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **commands** (Block List) (see [below for nested schema](#nestedblock--item--commands))
+- **commands** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--commands))
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
 - **permit_unmatched** (String)
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--commands"></a>
-### Nested Schema for `item.commands`
+<a id="nestedblock--parameters--commands"></a>
+### Nested Schema for `parameters.commands`
 
 Optional:
 
-- **command_list** (Block List) (see [below for nested schema](#nestedblock--item--commands--command_list))
+- **command_list** (Block List) (see [below for nested schema](#nestedblock--parameters--commands--command_list))
 
-<a id="nestedblock--item--commands--command_list"></a>
-### Nested Schema for `item.commands.command_list`
+<a id="nestedblock--parameters--commands--command_list"></a>
+### Nested Schema for `parameters.commands.command_list`
 
 Optional:
 
@@ -90,7 +87,38 @@ Optional:
 
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **commands** (List of Object) (see [below for nested schema](#nestedobjatt--item--commands))
+- **description** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **permit_unmatched** (String)
+
+<a id="nestedobjatt--item--commands"></a>
+### Nested Schema for `item.commands`
+
+Read-Only:
+
+- **command_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--commands--command_list))
+
+<a id="nestedobjatt--item--commands--command_list"></a>
+### Nested Schema for `item.commands.command_list`
+
+Read-Only:
+
+- **arguments** (String)
+- **command** (String)
+- **grant** (String)
+
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

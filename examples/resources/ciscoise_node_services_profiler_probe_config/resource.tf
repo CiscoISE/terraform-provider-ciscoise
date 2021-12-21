@@ -4,6 +4,7 @@ resource "ciscoise_node_services_profiler_probe_config" "example" {
   parameters {
 
     days_before_rescan = 1
+    hostname           = "string"
   }
 }
 

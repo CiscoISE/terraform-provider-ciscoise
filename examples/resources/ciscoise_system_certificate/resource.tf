@@ -11,6 +11,8 @@ resource "ciscoise_system_certificate" "example" {
     eap                                        = "false"
     expiration_ttl_period                      = 1
     expiration_ttl_units                       = "string"
+    host_name                                  = "string"
+    id                                         = "string"
     ims                                        = "false"
     name                                       = "string"
     portal                                     = "false"

@@ -4,6 +4,7 @@ resource "ciscoise_device_administration_global_exception_rules" "example" {
   parameters {
 
     commands = ["string"]
+    id       = "string"
 
     profile = "string"
     rule {

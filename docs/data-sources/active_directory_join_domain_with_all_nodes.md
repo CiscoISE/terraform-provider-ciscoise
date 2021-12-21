@@ -24,6 +24,7 @@ data "ciscoise_active_directory_join_domain_with_all_nodes" "example" {
     name  = "string"
     value = "string"
   }
+
 }
 ```
 

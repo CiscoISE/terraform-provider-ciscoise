@@ -18,6 +18,7 @@ It performs create operation on sgVnMapping.
 ```terraform
 data "ciscoise_trustsec_sg_vn_mapping_bulk_create" "example" {
   provider = ciscoise
+
   payload {
 
     id          = "string"

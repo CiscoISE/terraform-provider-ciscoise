@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on IPToSGTMappingGroup.
 ```terraform
 resource "ciscoise_sg_mapping_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     deploy_to   = "string"
     deploy_type = "string"
@@ -43,14 +43,15 @@ output "ciscoise_sg_mapping_group_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -59,15 +60,22 @@ Optional:
 - ALL,
 - ND,
 - NDG
-- **id** (String) id path parameter.
 - **name** (String)
 - **sgt** (String) Mandatory unless mappingGroup is set
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **deploy_to** (String)
+- **deploy_type** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **sgt** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

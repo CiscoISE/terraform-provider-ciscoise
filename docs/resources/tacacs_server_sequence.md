@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on TacacsServerSequence.
 ```terraform
 resource "ciscoise_tacacs_server_sequence" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description       = "string"
     id                = "string"
@@ -48,14 +48,15 @@ output "ciscoise_tacacs_server_sequence_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -71,11 +72,25 @@ The order of the names in the string is the order of servers that will be used d
 - **suffix_delimiter** (String) The delimiter that will be used for suffix strip
 - **suffix_strip** (String) Define if a delimiter will be used for suffix strip
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **description** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **local_accounting** (String)
+- **name** (String)
+- **prefix_delimiter** (String)
+- **prefix_strip** (String)
+- **remote_accounting** (String)
+- **server_list** (String)
+- **suffix_delimiter** (String)
+- **suffix_strip** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

@@ -4,8 +4,10 @@ resource "ciscoise_device_administration_local_exception_rules" "example" {
   parameters {
 
     commands = ["string"]
+    id       = "string"
 
-    profile = "string"
+    policy_id = "string"
+    profile   = "string"
     rule {
 
       condition {

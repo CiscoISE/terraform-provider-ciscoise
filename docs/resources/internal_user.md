@@ -26,13 +26,9 @@ It manages create, read, update and delete operations on InternalUser.
 ```terraform
 resource "ciscoise_internal_user" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    change_password = "false"
-    custom_attributes = {
-      key1 = "value1"
-      key2 = "value2"
-    }
+    change_password     = "false"
     description         = "string"
     email               = "string"
     enable_password     = "string"
@@ -60,14 +56,15 @@ output "ciscoise_internal_user_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -88,11 +85,30 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 - **password** (String, Sensitive)
 - **password_idstore** (String, Sensitive) The id store where the internal user's password is kept
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **change_password** (String)
+- **custom_attributes** (Map of String)
+- **description** (String)
+- **email** (String)
+- **enable_password** (String)
+- **enabled** (String)
+- **expiry_date** (String)
+- **expiry_date_enabled** (String)
+- **first_name** (String)
+- **id** (String)
+- **identity_groups** (String)
+- **last_name** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **password** (String)
+- **password_idstore** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

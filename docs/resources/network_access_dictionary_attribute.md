@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on Network Access - Dictio
 ```terraform
 resource "ciscoise_network_access_dictionary_attribute" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     allowed_values {
 
@@ -51,18 +51,19 @@ output "ciscoise_network_access_dictionary_attribute_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **allowed_values** (Block List) all of the allowed values for the dictionary attribute (see [below for nested schema](#nestedblock--item--allowed_values))
+- **allowed_values** (Block List) all of the allowed values for the dictionary attribute (see [below for nested schema](#nestedblock--parameters--allowed_values))
 - **data_type** (String) the data type for the dictionary attribute
 - **description** (String) The description of the Dictionary attribute
 - **dictionary_name** (String) the name of the dictionary which the dictionary attribute belongs to
@@ -71,12 +72,37 @@ Optional:
 - **internal_name** (String) the internal name of the dictionary attribute
 - **name** (String) The dictionary attribute's name
 
-<a id="nestedblock--item--allowed_values"></a>
-### Nested Schema for `item.allowed_values`
+<a id="nestedblock--parameters--allowed_values"></a>
+### Nested Schema for `parameters.allowed_values`
 
 Optional:
 
 - **is_default** (String) true if this key value is the default between the allowed values of the dictionary attribute
+- **key** (String)
+- **value** (String)
+
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **allowed_values** (List of Object) (see [below for nested schema](#nestedobjatt--item--allowed_values))
+- **data_type** (String)
+- **description** (String)
+- **dictionary_name** (String)
+- **direction_type** (String)
+- **id** (String)
+- **internal_name** (String)
+- **name** (String)
+
+<a id="nestedobjatt--item--allowed_values"></a>
+### Nested Schema for `item.allowed_values`
+
+Read-Only:
+
+- **is_default** (String)
 - **key** (String)
 - **value** (String)
 

@@ -22,11 +22,10 @@ It manages create, read, update and delete operations on SecurityGroups.
 ```terraform
 resource "ciscoise_sgt" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    default_sgacls    = ["string"]
     description       = "string"
-    generation_id     = 1
+    generation_id     = "string"
     id                = "string"
     is_read_only      = "false"
     name              = "string"
@@ -46,14 +45,15 @@ output "ciscoise_sgt_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -66,11 +66,23 @@ Optional:
 - **propogate_to_apic** (String)
 - **value** (Number) Value range: 2 ot 65519 or -1 to auto-generate
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **default_sgacls** (String)
+- **description** (String)
+- **generation_id** (String)
+- **id** (String)
+- **is_read_only** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **propogate_to_apic** (String)
+- **value** (Number)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

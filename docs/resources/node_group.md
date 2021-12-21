@@ -4,37 +4,43 @@ page_title: "ciscoise_node_group Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Node Group.
-  Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
-  pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.API updates an existing node group in the system.Developers need to delete node group in the system.
+  This resource creates a node group in the cluster.  A node group is a group of PSNs, where the PSNs maintain a
+  heartbeat with each other. It is used primarily to terminate or transfer posture-pending sessions when a PSN in a local
+  node group fails.  Node group members can communicate over TCP/7800.Purpose of this API is to update an existing node group.Delete an existing node group in the cluster. Deleting the node group does not delete the nodes, but failover is no
+  longer carried out among the nodes.
 ---
 
 # ciscoise_node_group (Resource)
 
 It manages create, read, update and delete operations on Node Group.
 
-- Developers need to create node group in the system.Node Group is a group of PSNs, mainly used for terminating posture
-pending sessions when a PSN in local node group fails.Node group members can communicate over TCP/7800.
+- This resource creates a node group in the cluster.  A node group is a group of PSNs, where the PSNs maintain a
+heartbeat with each other. It is used primarily to terminate or transfer posture-pending sessions when a PSN in a local
+node group fails.  Node group members can communicate over TCP/7800.
 
-- API updates an existing node group in the system.
 
-- Developers need to delete node group in the system.
+- Purpose of this API is to update an existing node group.
+
+
+- Delete an existing node group in the cluster. Deleting the node group does not delete the nodes, but failover is no
+longer carried out among the nodes.
 
 ## Example Usage
 
 ```terraform
 resource "ciscoise_node_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     mar_cache {
 
-      enabled              = "false"
       query_attempts       = 1
       query_timeout        = 1
       replication_attempts = 1
       replication_timeout  = 1
     }
+    name            = "string"
     node_group_name = "string"
   }
 }
@@ -50,31 +56,48 @@ output "ciscoise_node_group_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
 - **description** (String)
-- **mar_cache** (Block List) (see [below for nested schema](#nestedblock--item--mar_cache))
-- **node_group_name** (String) node-group-name path parameter. ID of the existing node group.
-
-Read-Only:
-
+- **mar_cache** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--mar_cache))
 - **name** (String)
 
-<a id="nestedblock--item--mar_cache"></a>
-### Nested Schema for `item.mar_cache`
+<a id="nestedblock--parameters--mar_cache"></a>
+### Nested Schema for `parameters.mar_cache`
 
 Optional:
 
-- **enabled** (String)
+- **query_attempts** (Number) The number of times Cisco ISE attempts to perform the cache entry query. (0 - 5).
+- **query_timeout** (Number) The time, in seconds, after which the cache entry query times out. (1 - 10).
+- **replication_attempts** (Number) The number of times Cisco ISE attempts to perform MAR cache entry replication. (0 - 5).
+- **replication_timeout** (Number) The time, in seconds, after which the cache entry replication times out. (1 - 10).
+
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **description** (String)
+- **mar_cache** (List of Object) (see [below for nested schema](#nestedobjatt--item--mar_cache))
+- **name** (String)
+
+<a id="nestedobjatt--item--mar_cache"></a>
+### Nested Schema for `item.mar_cache`
+
+Read-Only:
+
 - **query_attempts** (Number)
 - **query_timeout** (Number)
 - **replication_attempts** (Number)

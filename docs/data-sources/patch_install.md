@@ -21,7 +21,8 @@ unavailable for  a certain period of time.
 
 ```terraform
 data "ciscoise_patch_install" "example" {
-  provider        = ciscoise
+  provider = ciscoise
+
   patch_name      = "string"
   repository_name = "string"
 }

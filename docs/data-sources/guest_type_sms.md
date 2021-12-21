@@ -24,6 +24,7 @@ data "ciscoise_guest_type_sms" "example" {
     name  = "string"
     value = "string"
   }
+
 }
 ```
 
