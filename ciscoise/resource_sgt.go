@@ -107,8 +107,11 @@ func resourceSgt() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"default_sgacls": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -482,7 +485,8 @@ func expandRequestSgtCreateSecurityGroupSgtDefaultSgACLsArray(ctx context.Contex
 
 func expandRequestSgtCreateSecurityGroupSgtDefaultSgACLs(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSecurityGroupsCreateSecurityGroupSgtDefaultSgACLs {
 	var request isegosdk.RequestSecurityGroupsCreateSecurityGroupSgtDefaultSgACLs
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 
@@ -552,7 +556,8 @@ func expandRequestSgtUpdateSecurityGroupByIDSgtDefaultSgACLsArray(ctx context.Co
 
 func expandRequestSgtUpdateSecurityGroupByIDSgtDefaultSgACLs(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSecurityGroupsUpdateSecurityGroupByIDSgtDefaultSgACLs {
 	var request isegosdk.RequestSecurityGroupsUpdateSecurityGroupByIDSgtDefaultSgACLs
-	request = d.Get(fixKeyAccess(key))
+	keyValue := d.Get(fixKeyAccess(key))
+	request = requestStringToInterface(interfaceToString(keyValue))
 	return &request
 }
 
