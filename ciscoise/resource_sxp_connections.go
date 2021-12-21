@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,30 +39,24 @@ func resourceSxpConnections() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"enabled": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"ip_address": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -88,28 +82,69 @@ func resourceSxpConnections() *schema.Resource {
 						},
 						"sxp_mode": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"sxp_node": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"sxp_peer": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"sxp_version": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"sxp_vpn": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"enabled": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"ip_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"sxp_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"sxp_node": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"sxp_peer": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"sxp_version": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"sxp_vpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -123,8 +158,8 @@ func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestSxpConnectionsCreateSxpConnections(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestSxpConnectionsCreateSxpConnections(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -135,7 +170,7 @@ func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceSxpConnectionsRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetSxpConnectionsQueryParams{}
@@ -148,7 +183,7 @@ func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceSxpConnectionsRead(ctx, d, m)
 			}
 		}
 	}
@@ -170,7 +205,7 @@ func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceSxpConnectionsRead(ctx, d, m)
 }
 
 func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -180,7 +215,6 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
@@ -191,13 +225,15 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
 		vvID := vID
-
 		log.Printf("[DEBUG] Selected method: GetSxpConnections")
 		queryParams1 := isegosdk.GetSxpConnectionsQueryParams{}
 
-		response1, _, err := client.SxpConnections.GetSxpConnections(&queryParams1)
+		response1, restyResp1, err := client.SxpConnections.GetSxpConnections(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpConnections", err,
 				"Failure at GetSxpConnections, unexpected response", ""))
@@ -227,9 +263,12 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Selected method: GetSxpConnectionsByID")
 		vvID := vID
 
-		response2, _, err := client.SxpConnections.GetSxpConnectionsByID(vvID)
+		response2, restyResp2, err := client.SxpConnections.GetSxpConnectionsByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpConnectionsByID", err,
 				"Failure at GetSxpConnectionsByID, unexpected response", ""))
@@ -258,7 +297,6 @@ func resourceSxpConnectionsUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
@@ -269,12 +307,13 @@ func resourceSxpConnectionsUpdate(ctx context.Context, d *schema.ResourceData, m
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
 	// NOTE: Consider adding getAllItems and search function to get missing params
+
 	if selectedMethod == 2 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestSxpConnectionsUpdateSxpConnectionsByID(ctx, "item.0", d)
+		request1 := expandRequestSxpConnectionsUpdateSxpConnectionsByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SxpConnections.UpdateSxpConnectionsByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -302,7 +341,6 @@ func resourceSxpConnectionsDelete(ctx context.Context, d *schema.ResourceData, m
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
@@ -373,28 +411,28 @@ func expandRequestSxpConnectionsCreateSxpConnections(ctx context.Context, key st
 
 func expandRequestSxpConnectionsCreateSxpConnectionsERSSxpConnection(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSxpConnectionsCreateSxpConnectionsERSSxpConnection {
 	request := isegosdk.RequestSxpConnectionsCreateSxpConnectionsERSSxpConnection{}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_peer"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_peer"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_peer"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_peer")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_peer")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_peer")))) {
 		request.SxpPeer = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_vpn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_vpn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_vpn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_vpn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_vpn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_vpn")))) {
 		request.SxpVpn = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_node"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_node"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_node"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_node")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_node")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_node")))) {
 		request.SxpNode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_address")))) {
 		request.IPAddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_mode"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_mode"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_mode"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_mode")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_mode")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_mode")))) {
 		request.SxpMode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_version"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_version")))) {
 		request.SxpVersion = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
 		request.Enabled = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -414,31 +452,31 @@ func expandRequestSxpConnectionsUpdateSxpConnectionsByID(ctx context.Context, ke
 
 func expandRequestSxpConnectionsUpdateSxpConnectionsByIDERSSxpConnection(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSxpConnectionsUpdateSxpConnectionsByIDERSSxpConnection {
 	request := isegosdk.RequestSxpConnectionsUpdateSxpConnectionsByIDERSSxpConnection{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_peer"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_peer"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_peer"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_peer")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_peer")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_peer")))) {
 		request.SxpPeer = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_vpn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_vpn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_vpn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_vpn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_vpn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_vpn")))) {
 		request.SxpVpn = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_node"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_node"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_node"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_node")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_node")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_node")))) {
 		request.SxpNode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_address")))) {
 		request.IPAddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_mode"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_mode"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_mode"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_mode")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_mode")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_mode")))) {
 		request.SxpMode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_version"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_version")))) {
 		request.SxpVersion = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
 		request.Enabled = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

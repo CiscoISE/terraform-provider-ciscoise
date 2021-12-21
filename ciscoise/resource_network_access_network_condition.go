@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,7 +39,6 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,12 +46,10 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 						"condition_type": &schema.Schema{
 							Description: `This field determines the content of the conditions field`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"conditions": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -60,16 +57,23 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 									"cli_dnis_list": &schema.Schema{
 										Description: `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
+									"condition_type": &schema.Schema{
+										Description: `This field determines the content of the conditions field`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"description": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"device_group_list": &schema.Schema{
 										Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
@@ -78,41 +82,66 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 									"device_list": &schema.Schema{
 										Description: `<p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"ip_addr_list": &schema.Schema{
 										Description: `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
+										},
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
 										},
 									},
 									"mac_addr_list": &schema.Schema{
 										Description: `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
+									},
+									"name": &schema.Schema{
+										Description: `Network Condition name`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -139,8 +168,103 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 						"name": &schema.Schema{
 							Description: `Network Condition name`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"condition_type": &schema.Schema{
+							Description: `This field determines the content of the conditions field`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"conditions": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"cli_dnis_list": &schema.Schema{
+										Description: `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"condition_type": &schema.Schema{
+										Description: `This field determines the content of the conditions field`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"description": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"device_group_list": &schema.Schema{
+										Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"device_list": &schema.Schema{
+										Description: `<p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"ip_addr_list": &schema.Schema{
+										Description: `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+
+									"mac_addr_list": &schema.Schema{
+										Description: `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Schema{
+											Type: schema.TypeString,
+										},
+									},
+									"name": &schema.Schema{
+										Description: `Network Condition name`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+
+						"name": &schema.Schema{
+							Description: `Network Condition name`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 					},
 				},
@@ -154,8 +278,8 @@ func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkCondition(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkCondition(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -169,7 +293,7 @@ func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceNetworkAccessNetworkConditionRead(ctx, d, m)
 		}
 	} else {
 		response2, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditions()
@@ -181,7 +305,7 @@ func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceNetworkAccessNetworkConditionRead(ctx, d, m)
 			}
 		}
 	}
@@ -206,7 +330,7 @@ func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceNetworkAccessNetworkConditionRead(ctx, d, m)
 }
 
 func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -229,9 +353,12 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetNetworkAccessNetworkConditions")
 
-		response1, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditions()
+		response1, restyResp1, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditions()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessNetworkConditions", err,
 				"Failure at GetNetworkAccessNetworkConditions, unexpected response", ""))
@@ -260,9 +387,12 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetNetworkAccessNetworkConditionByID")
 
-		response2, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditionByID(vvID)
+		response2, restyResp2, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditionByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessNetworkConditionByID", err,
 				"Failure at GetNetworkAccessNetworkConditionByID, unexpected response", ""))
@@ -319,9 +449,9 @@ func resourceNetworkAccessNetworkConditionUpdate(ctx context.Context, d *schema.
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByID(ctx, "item.0", d)
+		request1 := expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessNetworkConditions.UpdateNetworkAccessNetworkConditionByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -410,20 +540,19 @@ func resourceNetworkAccessNetworkConditionDelete(ctx context.Context, d *schema.
 }
 func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkCondition(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkCondition {
 	request := isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkCondition{}
-	if v, ok := d.GetOkExists(key + ".condition_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".condition_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".condition_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".conditions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".conditions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".conditions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".conditions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".conditions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".conditions")))) {
 		request.Conditions = expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionConditionsArray(ctx, key+".conditions", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -434,13 +563,13 @@ func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditi
 
 func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionLink {
 	request := isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionLink{}
-	if v, ok := d.GetOkExists(key + ".href"); !isEmptyValue(reflect.ValueOf(d.Get(key+".href"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".href"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".rel"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rel"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rel"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
 		request.Rel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -451,6 +580,7 @@ func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditi
 
 func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionConditionsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionConditions {
 	request := []isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionConditions{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -473,20 +603,49 @@ func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditi
 
 func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionConditions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionConditions {
 	request := isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionConditions{}
-	if v, ok := d.GetOkExists(key + ".cli_dnis_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".cli_dnis_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".cli_dnis_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli_dnis_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli_dnis_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli_dnis_list")))) {
 		request.CliDnisList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ip_addr_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_addr_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_addr_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
+		request.ConditionType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_addr_list")))) {
 		request.IPAddrList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mac_addr_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac_addr_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac_addr_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_addr_list")))) {
 		request.MacAddrList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".device_group_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".device_group_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".device_group_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_group_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_group_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_group_list")))) {
 		request.DeviceGroupList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".device_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".device_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".device_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_list")))) {
 		request.DeviceList = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditionConditionsLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionConditionsLink {
+	request := isegosdk.RequestNetworkAccessNetworkConditionsCreateNetworkAccessNetworkConditionConditionsLink{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
+		request.Href = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
+		request.Rel = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+		request.Type = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -496,20 +655,19 @@ func expandRequestNetworkAccessNetworkConditionCreateNetworkAccessNetworkConditi
 
 func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByID {
 	request := isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByID{}
-	if v, ok := d.GetOkExists(key + ".condition_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".condition_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".condition_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".conditions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".conditions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".conditions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".conditions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".conditions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".conditions")))) {
 		request.Conditions = expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDConditionsArray(ctx, key+".conditions", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -520,13 +678,13 @@ func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditi
 
 func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDLink {
 	request := isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDLink{}
-	if v, ok := d.GetOkExists(key + ".href"); !isEmptyValue(reflect.ValueOf(d.Get(key+".href"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".href"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".rel"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rel"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rel"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
 		request.Rel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -537,6 +695,7 @@ func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditi
 
 func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDConditionsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDConditions {
 	request := []isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDConditions{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -559,20 +718,49 @@ func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditi
 
 func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDConditions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDConditions {
 	request := isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDConditions{}
-	if v, ok := d.GetOkExists(key + ".cli_dnis_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".cli_dnis_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".cli_dnis_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli_dnis_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli_dnis_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli_dnis_list")))) {
 		request.CliDnisList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ip_addr_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_addr_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_addr_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
+		request.ConditionType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_addr_list")))) {
 		request.IPAddrList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mac_addr_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac_addr_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac_addr_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_addr_list")))) {
 		request.MacAddrList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".device_group_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".device_group_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".device_group_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_group_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_group_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_group_list")))) {
 		request.DeviceGroupList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".device_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".device_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".device_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_list")))) {
 		request.DeviceList = interfaceToSliceString(v)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestNetworkAccessNetworkConditionUpdateNetworkAccessNetworkConditionByIDConditionsLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDConditionsLink {
+	request := isegosdk.RequestNetworkAccessNetworkConditionsUpdateNetworkAccessNetworkConditionByIDConditionsLink{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
+		request.Href = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
+		request.Rel = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+		request.Type = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

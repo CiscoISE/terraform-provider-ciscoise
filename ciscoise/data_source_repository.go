@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,8 +22,8 @@ func dataSourceRepository() *schema.Resource {
 
 		ReadContext: dataSourceRepositoryRead,
 		Schema: map[string]*schema.Schema{
-			"name": &schema.Schema{
-				Description: `name path parameter. Unique name for a repository`,
+			"repository_name": &schema.Schema{
+				Description: `repositoryName path parameter. Unique name for a repository`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -62,7 +62,7 @@ func dataSourceRepository() *schema.Resource {
 							Computed: true,
 						},
 						"user_name": &schema.Schema{
-							Description: `Username can contain alphanumeric characters.`,
+							Description: `Username may contain alphanumeric and _-./@\\$ characters.`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -104,7 +104,7 @@ func dataSourceRepository() *schema.Resource {
 							Computed: true,
 						},
 						"user_name": &schema.Schema{
-							Description: `Username can contain alphanumeric characters.`,
+							Description: `Username may contain alphanumeric and _-./@\\$ characters.`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -119,11 +119,11 @@ func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m int
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	vName, okName := d.GetOk("name")
+	vRepositoryName, okRepositoryName := d.GetOk("repository_name")
 
 	method1 := []bool{}
 	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okName}
+	method2 := []bool{okRepositoryName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -157,11 +157,14 @@ func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m int
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method 2: GetRepository")
-		vvName := vName.(string)
+		vvRepositoryName := vRepositoryName.(string)
 
-		response2, _, err := client.Repository.GetRepository(vvName)
+		response2, restyResp2, err := client.Repository.GetRepository(vvRepositoryName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRepository", err,
 				"Failure at GetRepository, unexpected response", ""))

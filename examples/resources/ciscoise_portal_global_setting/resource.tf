@@ -1,7 +1,7 @@
 
 resource "ciscoise_portal_global_setting" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     customization = "string"
     id            = "string"

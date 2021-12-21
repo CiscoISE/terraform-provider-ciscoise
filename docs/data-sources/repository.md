@@ -27,8 +27,8 @@ output "ciscoise_repository_example" {
 }
 
 data "ciscoise_repository" "example" {
-  provider = ciscoise
-  name     = "string"
+  provider        = ciscoise
+  repository_name = "string"
 }
 
 output "ciscoise_repository_example" {
@@ -42,7 +42,7 @@ output "ciscoise_repository_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **name** (String) name path parameter. Unique name for a repository
+- **repository_name** (String) repositoryName path parameter. Unique name for a repository
 
 ### Read-Only
 

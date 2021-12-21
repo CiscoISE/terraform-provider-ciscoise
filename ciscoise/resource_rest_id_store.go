@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -43,38 +43,32 @@ func resourceRestIDStore() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"ers_rest_idstore_attributes": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"headers": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"key": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -87,19 +81,16 @@ Options are:
 - Okta,
 - None`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"root_url": &schema.Schema{
 										Description: `url of the root of the RestIDStore`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 									"username_suffix": &schema.Schema{
 										Description: `Suffix of the username domain`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 								},
@@ -107,7 +98,6 @@ Options are:
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -133,8 +123,74 @@ Options are:
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"ers_rest_idstore_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"headers": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"key": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"value": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"predefined": &schema.Schema{
+										Description: `The cloud provider connected to of the RestIDStore.
+Options are:
+- Azure,
+- Okta,
+- None`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"root_url": &schema.Schema{
+										Description: `url of the root of the RestIDStore`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"username_suffix": &schema.Schema{
+										Description: `Suffix of the username domain`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+								},
+							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -148,8 +204,8 @@ func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m in
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestRestIDStoreCreateRestIDStore(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestRestIDStoreCreateRestIDStore(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -163,7 +219,7 @@ func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m in
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceRestIDStoreRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -173,7 +229,7 @@ func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m in
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceRestIDStoreRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.RestidStore.CreateRestIDStore(request1)
@@ -195,7 +251,7 @@ func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m in
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceRestIDStoreRead(ctx, d, m)
 }
 
 func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -218,9 +274,12 @@ func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method: GetRestIDStoreByName")
 		vvName := vName
 
-		response1, _, err := client.RestidStore.GetRestIDStoreByName(vvName)
+		response1, restyResp1, err := client.RestidStore.GetRestIDStoreByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRestIDStoreByName", err,
 				"Failure at GetRestIDStoreByName, unexpected response", ""))
@@ -243,9 +302,12 @@ func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method: GetRestIDStoreByID")
 		vvID := vID
 
-		response2, _, err := client.RestidStore.GetRestIDStoreByID(vvID)
+		response2, restyResp2, err := client.RestidStore.GetRestIDStoreByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRestIDStoreByID", err,
 				"Failure at GetRestIDStoreByID, unexpected response", ""))
@@ -302,9 +364,9 @@ func resourceRestIDStoreUpdate(ctx context.Context, d *schema.ResourceData, m in
 			vvID = getResp.ERSRestIDStore.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestRestIDStoreUpdateRestIDStoreByID(ctx, "item.0", d)
+		request1 := expandRequestRestIDStoreUpdateRestIDStoreByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.RestidStore.UpdateRestIDStoreByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -395,13 +457,13 @@ func expandRequestRestIDStoreCreateRestIDStore(ctx context.Context, key string, 
 
 func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStore(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStore {
 	request := isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStore{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ers_rest_idstore_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ers_rest_idstore_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ers_rest_idstore_attributes"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ers_rest_idstore_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ers_rest_idstore_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ers_rest_idstore_attributes")))) {
 		request.ErsRestIDStoreAttributes = expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributes(ctx, key+".ers_rest_idstore_attributes.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -412,16 +474,16 @@ func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStore(ctx context.Context
 
 func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributes {
 	request := isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributes{}
-	if v, ok := d.GetOkExists(key + ".username_suffix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".username_suffix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".username_suffix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username_suffix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username_suffix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username_suffix")))) {
 		request.UsernameSuffix = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".root_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".root_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".root_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".root_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".root_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".root_url")))) {
 		request.RootURL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".predefined"); !isEmptyValue(reflect.ValueOf(d.Get(key+".predefined"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".predefined"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".predefined")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".predefined")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".predefined")))) {
 		request.Predefined = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".headers"); !isEmptyValue(reflect.ValueOf(d.Get(key+".headers"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".headers"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".headers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".headers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".headers")))) {
 		request.Headers = expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx, key+".headers", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -432,6 +494,7 @@ func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttrib
 
 func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeaders {
 	request := []isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeaders{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -454,10 +517,10 @@ func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttrib
 
 func expandRequestRestIDStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeaders(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeaders {
 	request := isegosdk.RequestRestidStoreCreateRestIDStoreERSRestIDStoreErsRestIDStoreAttributesHeaders{}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -477,16 +540,16 @@ func expandRequestRestIDStoreUpdateRestIDStoreByID(ctx context.Context, key stri
 
 func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStore(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStore {
 	request := isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStore{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ers_rest_idstore_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ers_rest_idstore_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ers_rest_idstore_attributes"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ers_rest_idstore_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ers_rest_idstore_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ers_rest_idstore_attributes")))) {
 		request.ErsRestIDStoreAttributes = expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributes(ctx, key+".ers_rest_idstore_attributes.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -497,16 +560,16 @@ func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStore(ctx context.Con
 
 func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributes {
 	request := isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributes{}
-	if v, ok := d.GetOkExists(key + ".username_suffix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".username_suffix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".username_suffix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username_suffix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username_suffix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username_suffix")))) {
 		request.UsernameSuffix = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".root_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".root_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".root_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".root_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".root_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".root_url")))) {
 		request.RootURL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".predefined"); !isEmptyValue(reflect.ValueOf(d.Get(key+".predefined"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".predefined"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".predefined")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".predefined")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".predefined")))) {
 		request.Predefined = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".headers"); !isEmptyValue(reflect.ValueOf(d.Get(key+".headers"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".headers"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".headers")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".headers")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".headers")))) {
 		request.Headers = expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx, key+".headers", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -517,6 +580,7 @@ func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAt
 
 func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeadersArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders {
 	request := []isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -539,10 +603,10 @@ func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAt
 
 func expandRequestRestIDStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders {
 	request := isegosdk.RequestRestidStoreUpdateRestIDStoreByIDERSRestIDStoreErsRestIDStoreAttributesHeaders{}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

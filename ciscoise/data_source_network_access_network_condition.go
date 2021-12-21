@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -52,6 +52,15 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
+									"condition_type": &schema.Schema{
+										Description: `This field determines the content of the conditions field`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"description": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"device_group_list": &schema.Schema{
 										Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
 										Type:        schema.TypeList,
@@ -68,12 +77,37 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"ip_addr_list": &schema.Schema{
 										Description: `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
+										},
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
 										},
 									},
 									"mac_addr_list": &schema.Schema{
@@ -83,6 +117,11 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
+									},
+									"name": &schema.Schema{
+										Description: `Network Condition name`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},
@@ -149,6 +188,15 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
+									"condition_type": &schema.Schema{
+										Description: `This field determines the content of the conditions field`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"description": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"device_group_list": &schema.Schema{
 										Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
 										Type:        schema.TypeList,
@@ -165,12 +213,37 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 											Type: schema.TypeString,
 										},
 									},
+									"id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 									"ip_addr_list": &schema.Schema{
 										Description: `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
+										},
+									},
+									"link": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
 										},
 									},
 									"mac_addr_list": &schema.Schema{
@@ -180,6 +253,11 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
+									},
+									"name": &schema.Schema{
+										Description: `Network Condition name`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},
@@ -269,9 +347,12 @@ func dataSourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.
 		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessNetworkConditionByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditionByID(vvID)
+		response2, restyResp2, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditionByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessNetworkConditionByID", err,
 				"Failure at GetNetworkAccessNetworkConditionByID, unexpected response", ""))
@@ -335,13 +416,32 @@ func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItems
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["cli_dnis_list"] = item.CliDnisList
+		respItem["condition_type"] = item.ConditionType
+		respItem["description"] = item.Description
+		respItem["id"] = item.ID
 		respItem["ip_addr_list"] = item.IPAddrList
+		respItem["link"] = flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItemsConditionsLink(item.Link)
 		respItem["mac_addr_list"] = item.MacAddrList
+		respItem["name"] = item.Name
 		respItem["device_group_list"] = item.DeviceGroupList
 		respItem["device_list"] = item.DeviceList
 		respItems = append(respItems, respItem)
 	}
 	return respItems
+}
+
+func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsItemsConditionsLink(item *isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsResponseConditionsLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["href"] = item.Href
+	respItem["rel"] = item.Rel
+	respItem["type"] = item.Type
+
+	return []map[string]interface{}{
+		respItem,
+	}
 
 }
 
@@ -384,12 +484,31 @@ func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDIt
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["cli_dnis_list"] = item.CliDnisList
+		respItem["condition_type"] = item.ConditionType
+		respItem["description"] = item.Description
+		respItem["id"] = item.ID
 		respItem["ip_addr_list"] = item.IPAddrList
+		respItem["link"] = flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItemConditionsLink(item.Link)
 		respItem["mac_addr_list"] = item.MacAddrList
+		respItem["name"] = item.Name
 		respItem["device_group_list"] = item.DeviceGroupList
 		respItem["device_list"] = item.DeviceList
 		respItems = append(respItems, respItem)
 	}
 	return respItems
+}
+
+func flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItemConditionsLink(item *isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDResponseConditionsLink) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["href"] = item.Href
+	respItem["rel"] = item.Rel
+	respItem["type"] = item.Type
+
+	return []map[string]interface{}{
+		respItem,
+	}
 
 }

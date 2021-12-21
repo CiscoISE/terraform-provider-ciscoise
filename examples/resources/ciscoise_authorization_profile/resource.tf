@@ -1,7 +1,7 @@
 
 resource "ciscoise_authorization_profile" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     access_type = "string"
     acl         = "string"

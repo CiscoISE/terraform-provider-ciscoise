@@ -1,7 +1,7 @@
 
 resource "ciscoise_sponsor_portal" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     customizations {
 

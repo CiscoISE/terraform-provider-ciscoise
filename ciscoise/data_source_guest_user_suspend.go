@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -106,6 +106,10 @@ func dataSourceGuestUserSuspendRead(ctx context.Context, d *schema.ResourceData,
 
 		response2, err := client.GuestUser.SuspendGuestUserByID(vvID, request2)
 
+		if request2 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request2))
+		}
+
 		if err != nil || response2 == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing SuspendGuestUserByID", err,
@@ -113,7 +117,7 @@ func dataSourceGuestUserSuspendRead(ctx context.Context, d *schema.ResourceData,
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
+		log.Printf("[DEBUG] Retrieved response %s", response2.String())
 
 		if err := d.Set("item", response2.String()); err != nil {
 			diags = append(diags, diagError(

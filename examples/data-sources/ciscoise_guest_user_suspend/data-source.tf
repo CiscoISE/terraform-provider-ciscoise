@@ -8,4 +8,5 @@ data "ciscoise_guest_user_suspend" "example" {
     name  = "string"
     value = "string"
   }
+
 }

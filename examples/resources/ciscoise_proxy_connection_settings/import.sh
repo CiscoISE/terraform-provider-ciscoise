@@ -1,0 +1,1 @@
+terraform import ciscoise_proxy_connection_settings.example "fqdn:=string"

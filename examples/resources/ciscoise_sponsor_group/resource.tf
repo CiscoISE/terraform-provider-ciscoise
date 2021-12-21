@@ -1,7 +1,7 @@
 
 resource "ciscoise_sponsor_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     auto_notification = "false"
     create_permissions {

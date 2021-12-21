@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,29 +39,24 @@ func resourceSgACL() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"aclcontent": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"generation_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"ip_version": &schema.Schema{
@@ -70,14 +65,11 @@ func resourceSgACL() *schema.Resource {
 - IPV6,
 - IP_AGNOSTIC`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"is_read_only": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -103,13 +95,58 @@ func resourceSgACL() *schema.Resource {
 						"modelled_content": &schema.Schema{
 							Description: `Modelled content of contract`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"aclcontent": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"generation_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"ip_version": &schema.Schema{
+							Description: `Allowed values:
+- IPV4,
+- IPV6,
+- IP_AGNOSTIC`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"is_read_only": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"modelled_content": &schema.Schema{
+							Description: `Modelled content of contract`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -123,8 +160,8 @@ func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interfac
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestSgACLCreateSecurityGroupsACL(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestSgACLCreateSecurityGroupsACL(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -138,7 +175,7 @@ func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interfac
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceSgACLRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetSecurityGroupsACLQueryParams{}
@@ -152,7 +189,7 @@ func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interfac
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceSgACLRead(ctx, d, m)
 			}
 		}
 	}
@@ -175,7 +212,7 @@ func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceSgACLRead(ctx, d, m)
 }
 
 func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -185,7 +222,6 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -201,9 +237,12 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 		log.Printf("[DEBUG] Selected method: GetSecurityGroupsACL")
 		queryParams1 := isegosdk.GetSecurityGroupsACLQueryParams{}
 
-		response1, _, err := client.SecurityGroupsACLs.GetSecurityGroupsACL(&queryParams1)
+		response1, restyResp1, err := client.SecurityGroupsACLs.GetSecurityGroupsACL(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSecurityGroupsACL", err,
 				"Failure at GetSecurityGroupsACL, unexpected response", ""))
@@ -233,9 +272,12 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 		log.Printf("[DEBUG] Selected method: GetSecurityGroupsACLByID")
 		vvID := vID
 
-		response2, _, err := client.SecurityGroupsACLs.GetSecurityGroupsACLByID(vvID)
+		response2, restyResp2, err := client.SecurityGroupsACLs.GetSecurityGroupsACLByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSecurityGroupsACLByID", err,
 				"Failure at GetSecurityGroupsACLByID, unexpected response", ""))
@@ -295,9 +337,9 @@ func resourceSgACLUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestSgACLUpdateSecurityGroupsACLByID(ctx, "item.0", d)
+		request1 := expandRequestSgACLUpdateSecurityGroupsACLByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SecurityGroupsACLs.UpdateSecurityGroupsACLByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -397,31 +439,36 @@ func expandRequestSgACLCreateSecurityGroupsACL(ctx context.Context, key string, 
 
 func expandRequestSgACLCreateSecurityGroupsACLSgacl(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSecurityGroupsACLsCreateSecurityGroupsACLSgacl {
 	request := isegosdk.RequestSecurityGroupsACLsCreateSecurityGroupsACLSgacl{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".generation_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".generation_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".generation_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".generation_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".generation_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".generation_id")))) {
 		request.GenerationID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".aclcontent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aclcontent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aclcontent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aclcontent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aclcontent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aclcontent")))) {
 		request.ACLcontent = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_read_only"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_read_only"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_read_only"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_read_only")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_read_only")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_read_only")))) {
 		request.IsReadOnly = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".modelled_content"); !isEmptyValue(reflect.ValueOf(d.Get(key+".modelled_content"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".modelled_content"))) {
-		var v1 isegosdk.RequestSecurityGroupsACLsCreateSecurityGroupsACLSgaclModelledContent = v
-		request.ModelledContent = &v1
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".modelled_content")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".modelled_content")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".modelled_content")))) {
+		request.ModelledContent = expandRequestSgACLCreateSecurityGroupsACLSgaclModelledContent(ctx, key+".modelled_content.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".ip_version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_version"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_version")))) {
 		request.IPVersion = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestSgACLCreateSecurityGroupsACLSgaclModelledContent(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSecurityGroupsACLsCreateSecurityGroupsACLSgaclModelledContent {
+	var request isegosdk.RequestSecurityGroupsACLsCreateSecurityGroupsACLSgaclModelledContent
+	request = d.Get(fixKeyAccess(key))
 	return &request
 }
 
@@ -436,34 +483,39 @@ func expandRequestSgACLUpdateSecurityGroupsACLByID(ctx context.Context, key stri
 
 func expandRequestSgACLUpdateSecurityGroupsACLByIDSgacl(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSecurityGroupsACLsUpdateSecurityGroupsACLByIDSgacl {
 	request := isegosdk.RequestSecurityGroupsACLsUpdateSecurityGroupsACLByIDSgacl{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".generation_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".generation_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".generation_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".generation_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".generation_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".generation_id")))) {
 		request.GenerationID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".aclcontent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aclcontent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aclcontent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aclcontent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aclcontent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aclcontent")))) {
 		request.ACLcontent = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_read_only"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_read_only"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_read_only"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_read_only")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_read_only")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_read_only")))) {
 		request.IsReadOnly = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".modelled_content"); !isEmptyValue(reflect.ValueOf(d.Get(key+".modelled_content"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".modelled_content"))) {
-		var v1 isegosdk.RequestSecurityGroupsACLsUpdateSecurityGroupsACLByIDSgaclModelledContent = v
-		request.ModelledContent = &v1
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".modelled_content")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".modelled_content")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".modelled_content")))) {
+		request.ModelledContent = expandRequestSgACLUpdateSecurityGroupsACLByIDSgaclModelledContent(ctx, key+".modelled_content.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".ip_version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_version"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_version")))) {
 		request.IPVersion = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestSgACLUpdateSecurityGroupsACLByIDSgaclModelledContent(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSecurityGroupsACLsUpdateSecurityGroupsACLByIDSgaclModelledContent {
+	var request isegosdk.RequestSecurityGroupsACLsUpdateSecurityGroupsACLByIDSgaclModelledContent
+	request = d.Get(fixKeyAccess(key))
 	return &request
 }
 

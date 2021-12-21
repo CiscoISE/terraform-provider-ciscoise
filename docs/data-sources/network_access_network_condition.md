@@ -66,10 +66,25 @@ Read-Only:
 Read-Only:
 
 - **cli_dnis_list** (List of String)
+- **condition_type** (String)
+- **description** (String)
 - **device_group_list** (List of String)
 - **device_list** (List of String)
+- **id** (String)
 - **ip_addr_list** (List of String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions--link))
 - **mac_addr_list** (List of String)
+- **name** (String)
+
+<a id="nestedobjatt--item--conditions--link"></a>
+### Nested Schema for `item.conditions.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
+
 
 
 <a id="nestedobjatt--item--link"></a>
@@ -101,10 +116,25 @@ Read-Only:
 Read-Only:
 
 - **cli_dnis_list** (List of String)
+- **condition_type** (String)
+- **description** (String)
 - **device_group_list** (List of String)
 - **device_list** (List of String)
+- **id** (String)
 - **ip_addr_list** (List of String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--conditions--link))
 - **mac_addr_list** (List of String)
+- **name** (String)
+
+<a id="nestedobjatt--items--conditions--link"></a>
+### Nested Schema for `items.conditions.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
+
 
 
 <a id="nestedobjatt--items--link"></a>

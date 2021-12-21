@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -117,6 +117,8 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 						},
 						"custom_attributes": &schema.Schema{
+							// CHECK: The type of this param
+							// Replaced List to Map
 							Type:     schema.TypeMap,
 							Computed: true,
 						},
@@ -314,9 +316,12 @@ func dataSourceAdminUserRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method 2: GetAdminUserByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.AdminUser.GetAdminUserByID(vvID)
+		response2, restyResp2, err := client.AdminUser.GetAdminUserByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAdminUserByID", err,
 				"Failure at GetAdminUserByID, unexpected response", ""))
@@ -385,13 +390,21 @@ func flattenAdminUserGetAdminUserByIDItem(item *isegosdk.ResponseAdminUserGetAdm
 	respItem["external_user"] = boolPtrToString(item.ExternalUser)
 	respItem["inactive_account_never_disabled"] = boolPtrToString(item.InactiveAccountNeverDisabled)
 	respItem["admin_groups"] = item.AdminGroups
-	if item.CustomAttributes != nil {
-		respItem["custom_attributes"] = item.CustomAttributes
-	}
+	respItem["custom_attributes"] = flattenAdminUserGetAdminUserByIDItemCustomAttributes(item.CustomAttributes)
 	respItem["link"] = flattenAdminUserGetAdminUserByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
 	}
+}
+
+func flattenAdminUserGetAdminUserByIDItemCustomAttributes(item *isegosdk.ResponseAdminUserGetAdminUserByIDAdminUserCustomAttributes) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return respItem
+
 }
 
 func flattenAdminUserGetAdminUserByIDItemLink(item *isegosdk.ResponseAdminUserGetAdminUserByIDAdminUserLink) []map[string]interface{} {

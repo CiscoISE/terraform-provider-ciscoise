@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,28 +39,23 @@ func resourceGuestType() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"access_time": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"allow_access_on_specific_days_times": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"day_time_limits": &schema.Schema{
 										Description: `List of Time Ranges for account access`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -77,7 +72,6 @@ Allowed values are:
 - Friday,
 - Saturday`,
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
@@ -86,13 +80,11 @@ Allowed values are:
 												"end_time": &schema.Schema{
 													Description: `End time in HH:mm format`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"start_time": &schema.Schema{
 													Description: `Start time in HH:mm format`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 											},
@@ -100,7 +92,6 @@ Allowed values are:
 									},
 									"default_duration": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
 										Computed: true,
 									},
 									"duration_time_unit": &schema.Schema{
@@ -109,20 +100,16 @@ Allowed values are:
 - HOURS,
 - MINUTES`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"from_first_login": &schema.Schema{
-										Description:  `When Account Duration starts from first login or specified date`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Description: `When Account Duration starts from first login or specified date`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"max_account_duration": &schema.Schema{
 										Description: `Maximum value of Account Duration`,
 										Type:        schema.TypeInt,
-										Optional:    true,
 										Computed:    true,
 									},
 								},
@@ -130,13 +117,11 @@ Allowed values are:
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"expiration_notification": &schema.Schema{
 							Description: `Expiration Notification Settings`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -144,7 +129,6 @@ Allowed values are:
 									"advance_notification_duration": &schema.Schema{
 										Description: `Send Account Expiration Notification Duration before ( Days, Hours, Minutes )`,
 										Type:        schema.TypeInt,
-										Optional:    true,
 										Computed:    true,
 									},
 									"advance_notification_units": &schema.Schema{
@@ -153,38 +137,29 @@ Allowed values are:
 - HOURS,
 - MINUTES`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"email_text": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"enable_notification": &schema.Schema{
-										Description:  `Enable Notification settings`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Description: `Enable Notification settings`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"send_email_notification": &schema.Schema{
-										Description:  `Enable Email Notification`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Description: `Enable Email Notification`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"send_sms_notification": &schema.Schema{
-										Description:  `Maximum devices guests can register`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Description: `Maximum devices guests can register`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"sms_text": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -192,14 +167,11 @@ Allowed values are:
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"is_default_type": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -224,8 +196,206 @@ Allowed values are:
 						},
 						"login_options": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_guest_portal_bypass": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"failure_action": &schema.Schema{
+										Description: `When Guest Exceeds limit this action will be invoked.
+Allowed values are:
+- Disconnect_Oldest_Connection,
+- Disconnect_Newest_Connection`,
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"identity_group_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"limit_simultaneous_logins": &schema.Schema{
+										Description: `Enable Simultaneous Logins`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"max_registered_devices": &schema.Schema{
+										Description: `Maximum devices guests can register`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+									"max_simultaneous_logins": &schema.Schema{
+										Description: `Number of Simultaneous Logins`,
+										Type:        schema.TypeInt,
+										Computed:    true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sponsor_groups": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"access_time": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"allow_access_on_specific_days_times": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"day_time_limits": &schema.Schema{
+										Description: `List of Time Ranges for account access`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"days": &schema.Schema{
+													Description: `List of Days
+Values should be one of Week day.
+Allowed values are:
+- Sunday,
+- Monday,
+- Tuesday,
+- Wednesday,
+- Thursday,
+- Friday,
+- Saturday`,
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"end_time": &schema.Schema{
+													Description: `End time in HH:mm format`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"start_time": &schema.Schema{
+													Description: `Start time in HH:mm format`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+											},
+										},
+									},
+									"default_duration": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+									"duration_time_unit": &schema.Schema{
+										Description: `Allowed values are:
+- DAYS,
+- HOURS,
+- MINUTES`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"from_first_login": &schema.Schema{
+										Description:  `When Account Duration starts from first login or specified date`,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"max_account_duration": &schema.Schema{
+										Description: `Maximum value of Account Duration`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"expiration_notification": &schema.Schema{
+							Description: `Expiration Notification Settings`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"advance_notification_duration": &schema.Schema{
+										Description: `Send Account Expiration Notification Duration before ( Days, Hours, Minutes )`,
+										Type:        schema.TypeInt,
+										Optional:    true,
+									},
+									"advance_notification_units": &schema.Schema{
+										Description: `Allowed values are:
+- DAYS,
+- HOURS,
+- MINUTES`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"email_text": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"enable_notification": &schema.Schema{
+										Description:  `Enable Notification settings`,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"send_email_notification": &schema.Schema{
+										Description:  `Enable Email Notification`,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"send_sms_notification": &schema.Schema{
+										Description:  `Maximum devices guests can register`,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"sms_text": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"is_default_type": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"login_options": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -233,7 +403,6 @@ Allowed values are:
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"failure_action": &schema.Schema{
 										Description: `When Guest Exceeds limit this action will be invoked.
@@ -242,31 +411,26 @@ Allowed values are:
 - Disconnect_Newest_Connection`,
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"identity_group_id": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"limit_simultaneous_logins": &schema.Schema{
 										Description:  `Enable Simultaneous Logins`,
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"max_registered_devices": &schema.Schema{
 										Description: `Maximum devices guests can register`,
 										Type:        schema.TypeInt,
 										Optional:    true,
-										Computed:    true,
 									},
 									"max_simultaneous_logins": &schema.Schema{
 										Description: `Number of Simultaneous Logins`,
 										Type:        schema.TypeInt,
 										Optional:    true,
-										Computed:    true,
 									},
 								},
 							},
@@ -274,12 +438,10 @@ Allowed values are:
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sponsor_groups": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
-							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -296,8 +458,8 @@ func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestGuestTypeCreateGuestType(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestGuestTypeCreateGuestType(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -311,7 +473,7 @@ func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m inte
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceGuestTypeRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetGuestTypeQueryParams{}
@@ -325,7 +487,7 @@ func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m inte
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceGuestTypeRead(ctx, d, m)
 			}
 		}
 	}
@@ -348,7 +510,7 @@ func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m inte
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceGuestTypeRead(ctx, d, m)
 }
 
 func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -358,7 +520,6 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -374,9 +535,12 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method: GetGuestType")
 		queryParams1 := isegosdk.GetGuestTypeQueryParams{}
 
-		response1, _, err := client.GuestType.GetGuestType(&queryParams1)
+		response1, restyResp1, err := client.GuestType.GetGuestType(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestType", err,
 				"Failure at GetGuestType, unexpected response", ""))
@@ -406,9 +570,12 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method: GetGuestTypeByID")
 		vvID := vID
 
-		response2, _, err := client.GuestType.GetGuestTypeByID(vvID)
+		response2, restyResp2, err := client.GuestType.GetGuestTypeByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestTypeByID", err,
 				"Failure at GetGuestTypeByID, unexpected response", ""))
@@ -437,7 +604,6 @@ func resourceGuestTypeUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -467,9 +633,9 @@ func resourceGuestTypeUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestGuestTypeUpdateGuestTypeByID(ctx, "item.0", d)
+		request1 := expandRequestGuestTypeUpdateGuestTypeByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.GuestType.UpdateGuestTypeByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -497,7 +663,6 @@ func resourceGuestTypeDelete(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -569,25 +734,25 @@ func expandRequestGuestTypeCreateGuestType(ctx context.Context, key string, d *s
 
 func expandRequestGuestTypeCreateGuestTypeGuestType(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeCreateGuestTypeGuestType {
 	request := isegosdk.RequestGuestTypeCreateGuestTypeGuestType{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_default_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_default_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_default_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_default_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_default_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_default_type")))) {
 		request.IsDefaultType = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".access_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_time")))) {
 		request.AccessTime = expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTime(ctx, key+".access_time.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".login_options"); !isEmptyValue(reflect.ValueOf(d.Get(key+".login_options"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".login_options"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".login_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".login_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".login_options")))) {
 		request.LoginOptions = expandRequestGuestTypeCreateGuestTypeGuestTypeLoginOptions(ctx, key+".login_options.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".expiration_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiration_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiration_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".expiration_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".expiration_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".expiration_notification")))) {
 		request.ExpirationNotification = expandRequestGuestTypeCreateGuestTypeGuestTypeExpirationNotification(ctx, key+".expiration_notification.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".sponsor_groups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sponsor_groups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sponsor_groups"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sponsor_groups")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sponsor_groups")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sponsor_groups")))) {
 		request.SponsorGroups = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -598,22 +763,22 @@ func expandRequestGuestTypeCreateGuestTypeGuestType(ctx context.Context, key str
 
 func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTime(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeAccessTime {
 	request := isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeAccessTime{}
-	if v, ok := d.GetOkExists(key + ".from_first_login"); !isEmptyValue(reflect.ValueOf(d.Get(key+".from_first_login"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".from_first_login"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".from_first_login")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".from_first_login")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".from_first_login")))) {
 		request.FromFirstLogin = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".max_account_duration"); !isEmptyValue(reflect.ValueOf(d.Get(key+".max_account_duration"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".max_account_duration"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_account_duration")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_account_duration")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_account_duration")))) {
 		request.MaxAccountDuration = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".duration_time_unit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".duration_time_unit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".duration_time_unit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".duration_time_unit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".duration_time_unit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".duration_time_unit")))) {
 		request.DurationTimeUnit = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_duration"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_duration"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_duration"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_duration")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_duration")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_duration")))) {
 		request.DefaultDuration = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_access_on_specific_days_times"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_access_on_specific_days_times"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_access_on_specific_days_times"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_access_on_specific_days_times")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_access_on_specific_days_times")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_access_on_specific_days_times")))) {
 		request.AllowAccessOnSpecificDaysTimes = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".day_time_limits"); !isEmptyValue(reflect.ValueOf(d.Get(key+".day_time_limits"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".day_time_limits"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".day_time_limits")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".day_time_limits")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".day_time_limits")))) {
 		request.DayTimeLimits = expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimitsArray(ctx, key+".day_time_limits", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -624,6 +789,7 @@ func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTime(ctx context.Contex
 
 func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimitsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits {
 	request := []isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -646,13 +812,13 @@ func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimitsArray(
 
 func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits {
 	request := isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits{}
-	if v, ok := d.GetOkExists(key + ".start_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
 		request.StartTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".end_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
 		request.EndTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".days")))) {
 		request.Days = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -663,22 +829,22 @@ func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits(ctx c
 
 func expandRequestGuestTypeCreateGuestTypeGuestTypeLoginOptions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeLoginOptions {
 	request := isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeLoginOptions{}
-	if v, ok := d.GetOkExists(key + ".limit_simultaneous_logins"); !isEmptyValue(reflect.ValueOf(d.Get(key+".limit_simultaneous_logins"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".limit_simultaneous_logins"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".limit_simultaneous_logins")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".limit_simultaneous_logins")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".limit_simultaneous_logins")))) {
 		request.LimitSimultaneousLogins = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".max_simultaneous_logins"); !isEmptyValue(reflect.ValueOf(d.Get(key+".max_simultaneous_logins"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".max_simultaneous_logins"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_simultaneous_logins")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_simultaneous_logins")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_simultaneous_logins")))) {
 		request.MaxSimultaneousLogins = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".failure_action"); !isEmptyValue(reflect.ValueOf(d.Get(key+".failure_action"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".failure_action"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failure_action")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failure_action")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failure_action")))) {
 		request.FailureAction = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".max_registered_devices"); !isEmptyValue(reflect.ValueOf(d.Get(key+".max_registered_devices"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".max_registered_devices"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_registered_devices")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_registered_devices")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_registered_devices")))) {
 		request.MaxRegisteredDevices = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".identity_group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_group_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_group_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_group_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_group_id")))) {
 		request.IDentityGroupID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_guest_portal_bypass"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_guest_portal_bypass"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_guest_portal_bypass"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_guest_portal_bypass")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_guest_portal_bypass")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_guest_portal_bypass")))) {
 		request.AllowGuestPortalBypass = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -689,25 +855,25 @@ func expandRequestGuestTypeCreateGuestTypeGuestTypeLoginOptions(ctx context.Cont
 
 func expandRequestGuestTypeCreateGuestTypeGuestTypeExpirationNotification(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeExpirationNotification {
 	request := isegosdk.RequestGuestTypeCreateGuestTypeGuestTypeExpirationNotification{}
-	if v, ok := d.GetOkExists(key + ".enable_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_notification")))) {
 		request.EnableNotification = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".advance_notification_duration"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advance_notification_duration"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advance_notification_duration"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advance_notification_duration")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advance_notification_duration")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advance_notification_duration")))) {
 		request.AdvanceNotificationDuration = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".advance_notification_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advance_notification_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advance_notification_units"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advance_notification_units")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advance_notification_units")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advance_notification_units")))) {
 		request.AdvanceNotificationUnits = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".send_email_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".send_email_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".send_email_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".send_email_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".send_email_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".send_email_notification")))) {
 		request.SendEmailNotification = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".email_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".email_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".email_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".email_text")))) {
 		request.EmailText = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".send_sms_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".send_sms_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".send_sms_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".send_sms_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".send_sms_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".send_sms_notification")))) {
 		request.SendSmsNotification = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sms_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sms_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sms_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sms_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sms_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sms_text")))) {
 		request.SmsText = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -727,28 +893,28 @@ func expandRequestGuestTypeUpdateGuestTypeByID(ctx context.Context, key string, 
 
 func expandRequestGuestTypeUpdateGuestTypeByIDGuestType(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestType {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestType{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_default_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_default_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_default_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_default_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_default_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_default_type")))) {
 		request.IsDefaultType = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".access_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_time")))) {
 		request.AccessTime = expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTime(ctx, key+".access_time.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".login_options"); !isEmptyValue(reflect.ValueOf(d.Get(key+".login_options"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".login_options"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".login_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".login_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".login_options")))) {
 		request.LoginOptions = expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeLoginOptions(ctx, key+".login_options.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".expiration_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiration_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiration_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".expiration_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".expiration_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".expiration_notification")))) {
 		request.ExpirationNotification = expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeExpirationNotification(ctx, key+".expiration_notification.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".sponsor_groups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sponsor_groups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sponsor_groups"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sponsor_groups")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sponsor_groups")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sponsor_groups")))) {
 		request.SponsorGroups = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -759,22 +925,22 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestType(ctx context.Context, key
 
 func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTime(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTime {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTime{}
-	if v, ok := d.GetOkExists(key + ".from_first_login"); !isEmptyValue(reflect.ValueOf(d.Get(key+".from_first_login"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".from_first_login"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".from_first_login")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".from_first_login")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".from_first_login")))) {
 		request.FromFirstLogin = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".max_account_duration"); !isEmptyValue(reflect.ValueOf(d.Get(key+".max_account_duration"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".max_account_duration"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_account_duration")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_account_duration")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_account_duration")))) {
 		request.MaxAccountDuration = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".duration_time_unit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".duration_time_unit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".duration_time_unit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".duration_time_unit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".duration_time_unit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".duration_time_unit")))) {
 		request.DurationTimeUnit = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_duration"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_duration"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_duration"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_duration")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_duration")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_duration")))) {
 		request.DefaultDuration = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_access_on_specific_days_times"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_access_on_specific_days_times"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_access_on_specific_days_times"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_access_on_specific_days_times")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_access_on_specific_days_times")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_access_on_specific_days_times")))) {
 		request.AllowAccessOnSpecificDaysTimes = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".day_time_limits"); !isEmptyValue(reflect.ValueOf(d.Get(key+".day_time_limits"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".day_time_limits"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".day_time_limits")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".day_time_limits")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".day_time_limits")))) {
 		request.DayTimeLimits = expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimitsArray(ctx, key+".day_time_limits", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -785,6 +951,7 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTime(ctx context.Co
 
 func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimitsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits {
 	request := []isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -807,13 +974,13 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimitsAr
 
 func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits{}
-	if v, ok := d.GetOkExists(key + ".start_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
 		request.StartTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".end_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
 		request.EndTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".days")))) {
 		request.Days = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -824,22 +991,22 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits(c
 
 func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeLoginOptions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeLoginOptions {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeLoginOptions{}
-	if v, ok := d.GetOkExists(key + ".limit_simultaneous_logins"); !isEmptyValue(reflect.ValueOf(d.Get(key+".limit_simultaneous_logins"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".limit_simultaneous_logins"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".limit_simultaneous_logins")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".limit_simultaneous_logins")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".limit_simultaneous_logins")))) {
 		request.LimitSimultaneousLogins = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".max_simultaneous_logins"); !isEmptyValue(reflect.ValueOf(d.Get(key+".max_simultaneous_logins"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".max_simultaneous_logins"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_simultaneous_logins")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_simultaneous_logins")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_simultaneous_logins")))) {
 		request.MaxSimultaneousLogins = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".failure_action"); !isEmptyValue(reflect.ValueOf(d.Get(key+".failure_action"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".failure_action"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failure_action")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failure_action")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failure_action")))) {
 		request.FailureAction = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".max_registered_devices"); !isEmptyValue(reflect.ValueOf(d.Get(key+".max_registered_devices"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".max_registered_devices"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_registered_devices")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_registered_devices")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_registered_devices")))) {
 		request.MaxRegisteredDevices = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".identity_group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_group_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_group_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_group_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_group_id")))) {
 		request.IDentityGroupID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_guest_portal_bypass"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_guest_portal_bypass"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_guest_portal_bypass"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_guest_portal_bypass")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_guest_portal_bypass")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_guest_portal_bypass")))) {
 		request.AllowGuestPortalBypass = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -850,25 +1017,25 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeLoginOptions(ctx context.
 
 func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeExpirationNotification(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeExpirationNotification {
 	request := isegosdk.RequestGuestTypeUpdateGuestTypeByIDGuestTypeExpirationNotification{}
-	if v, ok := d.GetOkExists(key + ".enable_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_notification")))) {
 		request.EnableNotification = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".advance_notification_duration"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advance_notification_duration"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advance_notification_duration"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advance_notification_duration")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advance_notification_duration")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advance_notification_duration")))) {
 		request.AdvanceNotificationDuration = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".advance_notification_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".advance_notification_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".advance_notification_units"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advance_notification_units")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advance_notification_units")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advance_notification_units")))) {
 		request.AdvanceNotificationUnits = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".send_email_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".send_email_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".send_email_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".send_email_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".send_email_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".send_email_notification")))) {
 		request.SendEmailNotification = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".email_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".email_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".email_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".email_text")))) {
 		request.EmailText = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".send_sms_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".send_sms_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".send_sms_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".send_sms_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".send_sms_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".send_sms_notification")))) {
 		request.SendSmsNotification = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sms_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sms_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sms_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sms_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sms_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sms_text")))) {
 		request.SmsText = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,8 +17,7 @@ func resourceRepository() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Repository.
 
-- Create a new repository in the system. The name provided for the
-repository must be unique.
+- Create a new repository in the system. The name provided for the repository must be unique.
 
 - Update the definition of a specific repository, providing ALL parameters for the repository.
 
@@ -40,8 +39,49 @@ repository must be unique.
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"enable_pki": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"password": &schema.Schema{
+							Description: `Password can contain alphanumeric and/or special characters.`,
+							Type:        schema.TypeString,
+							Sensitive:   true,
+							Computed:    true,
+						},
+						"path": &schema.Schema{
+							Description: `Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"server_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"user_name": &schema.Schema{
+							Description: `Username may contain alphanumeric and _-./@\\$ characters.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -49,42 +89,35 @@ repository must be unique.
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"password": &schema.Schema{
 							Description: `Password can contain alphanumeric and/or special characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							Sensitive:   true,
-							Computed:    true,
 						},
 						"path": &schema.Schema{
 							Description: `Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"server_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"user_name": &schema.Schema{
-							Description: `Username can contain alphanumeric characters.`,
+							Description: `Username may contain alphanumeric and _-./@\\$ characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -98,8 +131,8 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestRepositoryCreateRepository(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestRepositoryCreateRepository(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vName, okName := resourceItem["name"]
@@ -110,7 +143,7 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 			resourceMap := make(map[string]string)
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceRepositoryRead(ctx, d, m)
 		}
 	} else {
 		response2, _, err := client.Repository.GetRepositories()
@@ -121,7 +154,7 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 				resourceMap := make(map[string]string)
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceRepositoryRead(ctx, d, m)
 			}
 		}
 	}
@@ -139,7 +172,7 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 	resourceMap := make(map[string]string)
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceRepositoryRead(ctx, d, m)
 }
 
 func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -161,9 +194,12 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 		vvName := vName
 		log.Printf("[DEBUG] Selected method: GetRepositories")
 
-		response1, _, err := client.Repository.GetRepositories()
+		response1, restyResp1, err := client.Repository.GetRepositories()
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRepositories", err,
 				"Failure at GetRepositories, unexpected response", ""))
@@ -193,9 +229,12 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 		log.Printf("[DEBUG] Selected method: GetRepository")
 		vvName := vName
 
-		response2, _, err := client.Repository.GetRepository(vvName)
+		response2, restyResp2, err := client.Repository.GetRepository(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRepository", err,
 				"Failure at GetRepository, unexpected response", ""))
@@ -237,9 +276,9 @@ func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m int
 	if selectedMethod == 2 {
 		vvName = vName
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
-		request1 := expandRequestRepositoryUpdateRepository(ctx, "item.0", d)
+		request1 := expandRequestRepositoryUpdateRepository(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.Repository.UpdateRepository(vvName, request1)
 		if err != nil || response1 == nil {
@@ -327,25 +366,25 @@ func resourceRepositoryDelete(ctx context.Context, d *schema.ResourceData, m int
 }
 func expandRequestRepositoryCreateRepository(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRepositoryCreateRepository {
 	request := isegosdk.RequestRepositoryCreateRepository{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".protocol"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protocol")))) {
 		request.Protocol = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".path"); !isEmptyValue(reflect.ValueOf(d.Get(key+".path"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".path"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".path")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".path")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".path")))) {
 		request.Path = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".server_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".server_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".server_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".server_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".server_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".server_name")))) {
 		request.ServerName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".user_name")))) {
 		request.UserName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_pki"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_pki"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_pki"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_pki")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_pki")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_pki")))) {
 		request.EnablePki = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -356,25 +395,25 @@ func expandRequestRepositoryCreateRepository(ctx context.Context, key string, d 
 
 func expandRequestRepositoryUpdateRepository(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRepositoryUpdateRepository {
 	request := isegosdk.RequestRepositoryUpdateRepository{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".protocol"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".protocol")))) {
 		request.Protocol = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".path"); !isEmptyValue(reflect.ValueOf(d.Get(key+".path"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".path"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".path")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".path")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".path")))) {
 		request.Path = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".server_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".server_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".server_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".server_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".server_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".server_name")))) {
 		request.ServerName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".user_name")))) {
 		request.UserName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_pki"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_pki"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_pki"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_pki")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_pki")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_pki")))) {
 		request.EnablePki = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

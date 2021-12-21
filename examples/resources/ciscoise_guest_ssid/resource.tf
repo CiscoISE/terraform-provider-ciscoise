@@ -1,7 +1,7 @@
 
 resource "ciscoise_guest_ssid" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     id   = "string"
     name = "string"

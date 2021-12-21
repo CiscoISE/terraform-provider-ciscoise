@@ -2,17 +2,15 @@
 data "ciscoise_endpoint_register" "example" {
   provider = ciscoise
   custom_attributes {
-    custom_attributes = {
-      key1 = "value1"
-      key2 = "value2"
-    }
+
   }
   description       = "string"
   group_id          = "string"
   id                = "string"
   identity_store    = "string"
   identity_store_id = "string"
-  mac               = "string"
+
+  mac = "string"
   mdm_attributes {
 
     mdm_compliance_status = "false"

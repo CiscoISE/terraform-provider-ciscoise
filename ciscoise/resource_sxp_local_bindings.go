@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,7 +39,6 @@ func resourceSxpLocalBindings() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,23 +46,19 @@ func resourceSxpLocalBindings() *schema.Resource {
 						"binding_name": &schema.Schema{
 							Description: `This field is depricated from Cisco ISE 3.0`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"ip_address_or_host": &schema.Schema{
 							Description: `IP address for static mapping (hostname is not supported)`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"link": &schema.Schema{
@@ -88,23 +83,62 @@ func resourceSxpLocalBindings() *schema.Resource {
 							},
 						},
 						"sgt": &schema.Schema{
+							Description: `SGT name or ID`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"sxp_vpn": &schema.Schema{
+							Description: `List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"vns": &schema.Schema{
+							Description: `List of Virtual Networks, separated with comma. At least one of: sxpVpn or vns should be defined`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"binding_name": &schema.Schema{
+							Description: `This field is depricated from Cisco ISE 3.0`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"ip_address_or_host": &schema.Schema{
+							Description: `IP address for static mapping (hostname is not supported)`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"sgt": &schema.Schema{
 							Description:      `SGT name or ID`,
 							Type:             schema.TypeString,
 							Optional:         true,
-							Computed:         true,
 							DiffSuppressFunc: diffSuppressSgt(),
 						},
 						"sxp_vpn": &schema.Schema{
 							Description: `List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined`,
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"vns": &schema.Schema{
 							Description: `List of Virtual Networks, separated with comma. At least one of: sxpVpn or vns should be defined`,
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -118,8 +152,8 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestSxpLocalBindingsCreateSxpLocalBindings(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestSxpLocalBindingsCreateSxpLocalBindings(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -130,7 +164,7 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceSxpLocalBindingsRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetSxpLocalBindingsQueryParams{}
@@ -143,7 +177,7 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceSxpLocalBindingsRead(ctx, d, m)
 			}
 		}
 	}
@@ -165,7 +199,7 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceSxpLocalBindingsRead(ctx, d, m)
 }
 
 func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -175,7 +209,6 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
@@ -189,9 +222,12 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 		log.Printf("[DEBUG] Selected method: GetSxpLocalBindings")
 		queryParams1 := isegosdk.GetSxpLocalBindingsQueryParams{}
 
-		response1, _, err := client.SxpLocalBindings.GetSxpLocalBindings(&queryParams1)
+		response1, restyResp1, err := client.SxpLocalBindings.GetSxpLocalBindings(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpLocalBindings", err,
 				"Failure at GetSxpLocalBindings, unexpected response", ""))
@@ -221,9 +257,12 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 		log.Printf("[DEBUG] Selected method: GetSxpLocalBindingsByID")
 		vvID := vID
 
-		response2, _, err := client.SxpLocalBindings.GetSxpLocalBindingsByID(vvID)
+		response2, restyResp2, err := client.SxpLocalBindings.GetSxpLocalBindingsByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpLocalBindingsByID", err,
 				"Failure at GetSxpLocalBindingsByID, unexpected response", ""))
@@ -252,7 +291,6 @@ func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData,
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
@@ -262,12 +300,13 @@ func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
+	// NOTE: Consider adding getAllItems and search function to get missing params
 	if selectedMethod == 2 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestSxpLocalBindingsUpdateSxpLocalBindingsByID(ctx, "item.0", d)
+		request1 := expandRequestSxpLocalBindingsUpdateSxpLocalBindingsByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SxpLocalBindings.UpdateSxpLocalBindingsByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -295,7 +334,6 @@ func resourceSxpLocalBindingsDelete(ctx context.Context, d *schema.ResourceData,
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
@@ -305,6 +343,7 @@ func resourceSxpLocalBindingsDelete(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
+	// REVIEW: Add getAllItems and search function to get missing params
 	if selectedMethod == 1 {
 		queryParams1 := isegosdk.GetSxpLocalBindingsQueryParams{}
 
@@ -365,26 +404,26 @@ func expandRequestSxpLocalBindingsCreateSxpLocalBindings(ctx context.Context, ke
 
 func expandRequestSxpLocalBindingsCreateSxpLocalBindingsERSSxpLocalBindings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSxpLocalBindingsCreateSxpLocalBindingsERSSxpLocalBindings {
 	request := isegosdk.RequestSxpLocalBindingsCreateSxpLocalBindingsERSSxpLocalBindings{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".binding_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".binding_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".binding_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".binding_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".binding_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".binding_name")))) {
 		request.BindingName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ip_address_or_host"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_address_or_host"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_address_or_host"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_address_or_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_address_or_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_address_or_host")))) {
 		request.IPAddressOrHost = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_vpn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_vpn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_vpn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_vpn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_vpn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_vpn")))) {
 		request.SxpVpn = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sgt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sgt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sgt")))) {
 		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
 		request.Sgt = first
 	}
-	if v, ok := d.GetOkExists(key + ".vns"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vns"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vns"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vns")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vns")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vns")))) {
 		request.Vns = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -404,26 +443,26 @@ func expandRequestSxpLocalBindingsUpdateSxpLocalBindingsByID(ctx context.Context
 
 func expandRequestSxpLocalBindingsUpdateSxpLocalBindingsByIDERSSxpLocalBindings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSxpLocalBindingsUpdateSxpLocalBindingsByIDERSSxpLocalBindings {
 	request := isegosdk.RequestSxpLocalBindingsUpdateSxpLocalBindingsByIDERSSxpLocalBindings{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".binding_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".binding_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".binding_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".binding_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".binding_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".binding_name")))) {
 		request.BindingName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ip_address_or_host"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ip_address_or_host"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ip_address_or_host"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_address_or_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_address_or_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_address_or_host")))) {
 		request.IPAddressOrHost = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sxp_vpn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_vpn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_vpn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_vpn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_vpn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_vpn")))) {
 		request.SxpVpn = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sgt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sgt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sgt")))) {
 		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
 		request.Sgt = first
 	}
-	if v, ok := d.GetOkExists(key + ".vns"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vns"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vns"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vns")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vns")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vns")))) {
 		request.Vns = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -906,9 +906,12 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 2: GetSponsoredGuestPortalByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SponsoredGuestPortal.GetSponsoredGuestPortalByID(vvID)
+		response2, restyResp2, err := client.SponsoredGuestPortal.GetSponsoredGuestPortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsoredGuestPortalByID", err,
 				"Failure at GetSponsoredGuestPortalByID, unexpected response", ""))
@@ -1058,7 +1061,6 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsLoginPage
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemSettingsAupSettings(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAupSettings) []map[string]interface{} {
@@ -1386,7 +1388,6 @@ func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemCustomizationsPag
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItemLink(item *isegosdk.ResponseSponsoredGuestPortalGetSponsoredGuestPortalByIDSponsoredGuestPortalLink) []map[string]interface{} {

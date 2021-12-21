@@ -1,10 +1,9 @@
 
 resource "ciscoise_filter_policy" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     domains = "string"
-    id      = "string"
     sgt     = "string"
     subnet  = "string"
     vn      = "string"

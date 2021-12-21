@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,8 +15,8 @@ func dataSourceDeviceAdministrationProfiles() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Profiles.
 
-- Device Admin Returns list of profiles.
- (Other CRUD APIs available throught ERS)
+- Device Admin Returns list of shell profiles.
+ (Other CRUD APIs available through ERS)
 `,
 
 		ReadContext: dataSourceDeviceAdministrationProfilesRead,

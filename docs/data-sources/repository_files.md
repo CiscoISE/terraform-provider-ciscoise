@@ -17,8 +17,8 @@ It performs read operation on Repository.
 
 ```terraform
 data "ciscoise_repository_files" "example" {
-  provider = ciscoise
-  name     = "string"
+  provider        = ciscoise
+  repository_name = "string"
 }
 
 output "ciscoise_repository_files_example" {
@@ -31,7 +31,7 @@ output "ciscoise_repository_files_example" {
 
 ### Required
 
-- **name** (String) name path parameter. Unique name for a repository
+- **repository_name** (String) repositoryName path parameter. Unique name for a repository
 
 ### Optional
 

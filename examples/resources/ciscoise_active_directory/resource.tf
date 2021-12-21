@@ -1,7 +1,7 @@
 
 resource "ciscoise_active_directory" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     ad_attributes {
 

@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -37,7 +37,6 @@ func resourceSxpVpns() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -69,8 +68,20 @@ func resourceSxpVpns() *schema.Resource {
 						},
 						"sxp_vpn_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"sxp_vpn_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -84,8 +95,8 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestSxpVpnsCreateSxpVpn(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestSxpVpnsCreateSxpVpn(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -99,7 +110,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 			resourceMap["id"] = vvID
 			resourceMap["sxp_vpn_name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceSxpVpnsRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetSxpVpnsQueryParams{}
@@ -113,7 +124,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 				resourceMap["id"] = vvID
 				resourceMap["sxp_vpn_name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceSxpVpnsRead(ctx, d, m)
 			}
 		}
 	}
@@ -136,7 +147,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 	resourceMap["id"] = vvID
 	resourceMap["sxp_vpn_name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceSxpVpnsRead(ctx, d, m)
 }
 
 func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -161,9 +172,12 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 		log.Printf("[DEBUG] Selected method: GetSxpVpns")
 		queryParams1 := isegosdk.GetSxpVpnsQueryParams{}
 
-		response1, _, err := client.SxpVpns.GetSxpVpns(&queryParams1)
+		response1, restyResp1, err := client.SxpVpns.GetSxpVpns(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpVpns", err,
 				"Failure at GetSxpVpns, unexpected response", ""))
@@ -191,10 +205,14 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetSxpVpnByID")
+		vvID := vID
 
-		response2, _, err := client.SxpVpns.GetSxpVpnByID(vvID)
+		response2, restyResp2, err := client.SxpVpns.GetSxpVpnByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpVpnByID", err,
 				"Failure at GetSxpVpnByID, unexpected response", ""))
@@ -298,7 +316,7 @@ func expandRequestSxpVpnsCreateSxpVpn(ctx context.Context, key string, d *schema
 
 func expandRequestSxpVpnsCreateSxpVpnERSSxpVpn(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSxpVpnsCreateSxpVpnERSSxpVpn {
 	request := isegosdk.RequestSxpVpnsCreateSxpVpnERSSxpVpn{}
-	if v, ok := d.GetOkExists(key + ".sxp_vpn_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sxp_vpn_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sxp_vpn_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sxp_vpn_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sxp_vpn_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sxp_vpn_name")))) {
 		request.SxpVpnName = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

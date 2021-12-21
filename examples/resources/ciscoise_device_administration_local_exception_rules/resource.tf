@@ -1,23 +1,22 @@
 
 resource "ciscoise_device_administration_local_exception_rules" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    commands  = ["string"]
-    id        = "string"
-    policy_id = "string"
-    profile   = "string"
+    commands = ["string"]
+
+    profile = "string"
     rule {
 
       condition {
 
-        attribute_id    = "string"
         attribute_name  = "string"
         attribute_value = "string"
         children {
 
           condition_type = "string"
           is_negate      = "false"
+
         }
         condition_type = "string"
         dates_range {
@@ -43,8 +42,9 @@ resource "ciscoise_device_administration_local_exception_rules" "example" {
           end_time   = "string"
           start_time = "string"
         }
-        id                  = "string"
-        is_negate           = "false"
+        id        = "string"
+        is_negate = "false"
+
         name                = "string"
         operator            = "string"
         week_days           = ["string"]

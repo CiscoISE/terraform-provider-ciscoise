@@ -4,7 +4,7 @@ page_title: "ciscoise_network_access_profiles Data Source - terraform-provider-c
 subcategory: ""
 description: |-
   It performs read operation on Network Access - Profiles.
-  Network Access Returns list of profiles.
+  Network Access Returns list of authorization profiles.
   (Other CRUD APIs available throught ERS)
 ---
 
@@ -12,7 +12,7 @@ description: |-
 
 It performs read operation on Network Access - Profiles.
 
-- Network Access Returns list of profiles.
+- Network Access Returns list of authorization profiles.
  (Other CRUD APIs available throught ERS)
 
 ## Example Usage

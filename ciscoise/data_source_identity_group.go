@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -340,9 +340,12 @@ func dataSourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Selected method 2: GetIDentityGroupByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.IDentityGroups.GetIDentityGroupByName(vvName)
+		response2, restyResp2, err := client.IDentityGroups.GetIDentityGroupByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetIDentityGroupByName", err,
 				"Failure at GetIDentityGroupByName, unexpected response", ""))
@@ -366,9 +369,12 @@ func dataSourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Selected method 3: GetIDentityGroupByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.IDentityGroups.GetIDentityGroupByID(vvID)
+		response3, restyResp3, err := client.IDentityGroups.GetIDentityGroupByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetIDentityGroupByID", err,
 				"Failure at GetIDentityGroupByID, unexpected response", ""))

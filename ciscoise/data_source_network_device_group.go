@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -341,9 +341,12 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 2: GetNetworkDeviceGroupByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
+		response2, restyResp2, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceGroupByName", err,
 				"Failure at GetNetworkDeviceGroupByName, unexpected response", ""))
@@ -367,9 +370,12 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 3: GetNetworkDeviceGroupByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByID(vvID)
+		response3, restyResp3, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceGroupByID", err,
 				"Failure at GetNetworkDeviceGroupByID, unexpected response", ""))

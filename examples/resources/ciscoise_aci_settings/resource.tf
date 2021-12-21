@@ -1,7 +1,7 @@
 
 resource "ciscoise_aci_settings" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     aci50                     = "false"
     aci51                     = "false"

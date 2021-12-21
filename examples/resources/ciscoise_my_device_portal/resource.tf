@@ -1,7 +1,7 @@
 
 resource "ciscoise_my_device_portal" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     customizations {
 
@@ -78,7 +78,6 @@ resource "ciscoise_my_device_portal" "example" {
         max_failed_attempts_before_rate_limit = 1
         require_aup_acceptance                = "false"
         require_scrolling                     = "false"
-        social_configs                        = ["string"]
         time_between_logins_during_rate_limit = 1
       }
       portal_settings {

@@ -41,7 +41,6 @@ output "ciscoise_device_administration_conditions_for_authentication_rule_exampl
 
 Read-Only:
 
-- **attribute_id** (String)
 - **attribute_name** (String)
 - **attribute_value** (String)
 - **children** (List of Object) (see [below for nested schema](#nestedobjatt--items--children))

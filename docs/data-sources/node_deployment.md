@@ -4,26 +4,28 @@ page_title: "ciscoise_node_deployment Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on Node Deployment.
-  Discovers all deployment nodes in the cluster.
-  It provides basic information about each of deployed nodes in the cluster like Hostname, personas, status, roles and
-  services.It provides detailed information of the deployed node in the cluster.
+  The API lists all the nodes that are deployed in the cluster.
+  Returns basic information about each of the deployed nodes in the cluster like hostname, status, roles, and services.
+  Supports filtering on FQDN, hostname, IP address, roles, services and node status.This data source retrieves detailed information of the deployed node.
 ---
 
 # ciscoise_node_deployment (Data Source)
 
 It performs read operation on Node Deployment.
 
-- Discovers all deployment nodes in the cluster.
-It provides basic information about each of deployed nodes in the cluster like Hostname, personas, status, roles and
-services.
+- The API lists all the nodes that are deployed in the cluster.
+ Returns basic information about each of the deployed nodes in the cluster like hostname, status, roles, and services.
+ Supports filtering on FQDN, hostname, IP address, roles, services and node status.
 
-- It provides detailed information of the deployed node in the cluster.
+- This data source retrieves detailed information of the deployed node.
 
 ## Example Usage
 
 ```terraform
 data "ciscoise_node_deployment" "example" {
-  provider = ciscoise
+  provider    = ciscoise
+  filter      = ["string"]
+  filter_type = "string"
 }
 
 output "ciscoise_node_deployment_example" {
@@ -45,7 +47,74 @@ output "ciscoise_node_deployment_example" {
 
 ### Optional
 
-- **hostname** (String) hostname path parameter. ID of the existing deployed node.
+- **filter** (List of String) filter query parameter. 
+ 
+ 
+ 
+Simple filtering
+ is available through the filter query string parameter. The structure of a filter is a triplet of field operator and value, separated by dots. More than one filter can be sent. The logical operator common to all filter criteria is AND by default, and can be changed by using the 
+"filterType=or"
+ query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
+ 
+ 
+ 
+ 
+ 
+OPERATOR
+ 
+DESCRIPTION
+ 
+ 
+ 
+ 
+ 
+EQ
+ 
+Equals
+ 
+ 
+ 
+NEQ
+ 
+Not Equals
+ 
+ 
+ 
+STARTSW
+ 
+Starts With
+ 
+ 
+ 
+NSTARTSW
+ 
+Not Starts With
+ 
+ 
+ 
+ENDSW
+ 
+Ends With
+ 
+ 
+ 
+NENDSW
+ 
+Not Ends With
+ 
+ 
+ 
+CONTAINS
+ 
+Contains
+ 
+ 
+ 
+NCONTAINS
+ 
+Not Contains
+- **filter_type** (String) filterType query parameter. The logical operator common to all filter criteria is AND by default, and can be changed by using this parameter.
+- **hostname** (String) hostname path parameter. Hostname of the deployed node.
 - **id** (String) The ID of this resource.
 
 ### Read-Only
@@ -58,205 +127,12 @@ output "ciscoise_node_deployment_example" {
 
 Read-Only:
 
-- **administration** (List of Object) (see [below for nested schema](#nestedobjatt--item--administration))
 - **fqdn** (String)
-- **general_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--general_settings))
 - **hostname** (String)
 - **ip_address** (String)
-- **node_type** (String)
-- **profiling_configuration** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration))
-
-<a id="nestedobjatt--item--administration"></a>
-### Nested Schema for `item.administration`
-
-Read-Only:
-
-- **is_enabled** (String)
-- **role** (String)
-
-
-<a id="nestedobjatt--item--general_settings"></a>
-### Nested Schema for `item.general_settings`
-
-Read-Only:
-
-- **monitoring** (List of Object) (see [below for nested schema](#nestedobjatt--item--general_settings--monitoring))
-
-<a id="nestedobjatt--item--general_settings--monitoring"></a>
-### Nested Schema for `item.general_settings.monitoring`
-
-Read-Only:
-
-- **enable_pxgrid** (String)
-- **is_enabled** (String)
-- **is_mnt_dedicated** (String)
-- **other_monitoring_node** (String)
-- **policyservice** (List of Object) (see [below for nested schema](#nestedobjatt--item--general_settings--monitoring--policyservice))
-- **role** (String)
-
-<a id="nestedobjatt--item--general_settings--monitoring--policyservice"></a>
-### Nested Schema for `item.general_settings.monitoring.role`
-
-Read-Only:
-
-- **enable_device_admin_service** (String)
-- **enable_nac_service** (String)
-- **enable_passive_identity_service** (String)
-- **enable_profiling_service** (String)
-- **enabled** (String)
-- **session_service** (List of Object) (see [below for nested schema](#nestedobjatt--item--general_settings--monitoring--role--session_service))
-- **sxpservice** (List of Object) (see [below for nested schema](#nestedobjatt--item--general_settings--monitoring--role--sxpservice))
-
-<a id="nestedobjatt--item--general_settings--monitoring--role--session_service"></a>
-### Nested Schema for `item.general_settings.monitoring.role.session_service`
-
-Read-Only:
-
-- **is_enabled** (String)
-- **nodegroup** (String)
-
-
-<a id="nestedobjatt--item--general_settings--monitoring--role--sxpservice"></a>
-### Nested Schema for `item.general_settings.monitoring.role.sxpservice`
-
-Read-Only:
-
-- **is_enabled** (String)
-- **user_interface** (String)
-
-
-
-
-
-<a id="nestedobjatt--item--profiling_configuration"></a>
-### Nested Schema for `item.profiling_configuration`
-
-Read-Only:
-
-- **active_directory** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--active_directory))
-- **dhcp** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--dhcp))
-- **dhcp_span** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--dhcp_span))
-- **dns** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--dns))
-- **http** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--http))
-- **netflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--netflow))
-- **nmap** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--nmap))
-- **pxgrid** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--pxgrid))
-- **radius** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--radius))
-- **snmp_query** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--snmp_query))
-- **snmp_trap** (List of Object) (see [below for nested schema](#nestedobjatt--item--profiling_configuration--snmp_trap))
-
-<a id="nestedobjatt--item--profiling_configuration--active_directory"></a>
-### Nested Schema for `item.profiling_configuration.active_directory`
-
-Read-Only:
-
-- **days_before_rescan** (Number)
-- **description** (String)
-- **enabled** (String)
-
-
-<a id="nestedobjatt--item--profiling_configuration--dhcp"></a>
-### Nested Schema for `item.profiling_configuration.dhcp`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-- **interface** (String)
-- **port** (Number)
-
-
-<a id="nestedobjatt--item--profiling_configuration--dhcp_span"></a>
-### Nested Schema for `item.profiling_configuration.dhcp_span`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-- **interface** (String)
-
-
-<a id="nestedobjatt--item--profiling_configuration--dns"></a>
-### Nested Schema for `item.profiling_configuration.dns`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-
-
-<a id="nestedobjatt--item--profiling_configuration--http"></a>
-### Nested Schema for `item.profiling_configuration.http`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-- **interface** (String)
-
-
-<a id="nestedobjatt--item--profiling_configuration--netflow"></a>
-### Nested Schema for `item.profiling_configuration.netflow`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-- **interface** (String)
-- **port** (Number)
-
-
-<a id="nestedobjatt--item--profiling_configuration--nmap"></a>
-### Nested Schema for `item.profiling_configuration.nmap`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-
-
-<a id="nestedobjatt--item--profiling_configuration--pxgrid"></a>
-### Nested Schema for `item.profiling_configuration.pxgrid`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-
-
-<a id="nestedobjatt--item--profiling_configuration--radius"></a>
-### Nested Schema for `item.profiling_configuration.radius`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-
-
-<a id="nestedobjatt--item--profiling_configuration--snmp_query"></a>
-### Nested Schema for `item.profiling_configuration.snmp_query`
-
-Read-Only:
-
-- **description** (String)
-- **enabled** (String)
-- **event_timeout** (Number)
-- **retries** (Number)
-- **timeout** (Number)
-
-
-<a id="nestedobjatt--item--profiling_configuration--snmp_trap"></a>
-### Nested Schema for `item.profiling_configuration.snmp_trap`
-
-Read-Only:
-
-- **description** (String)
-- **interface** (String)
-- **link_trap_query** (String)
-- **mac_trap_query** (String)
-- **port** (Number)
-
-
+- **node_status** (String)
+- **roles** (List of String)
+- **services** (List of String)
 
 
 <a id="nestedatt--items"></a>
@@ -264,9 +140,10 @@ Read-Only:
 
 Read-Only:
 
+- **fqdn** (String)
 - **hostname** (String)
+- **ip_address** (String)
 - **node_status** (String)
-- **persona_type** (List of String)
 - **roles** (List of String)
 - **services** (List of String)
 

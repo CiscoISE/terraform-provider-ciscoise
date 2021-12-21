@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,7 +38,6 @@ func resourceTacacsExternalServers() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -46,23 +45,19 @@ func resourceTacacsExternalServers() *schema.Resource {
 						"connection_port": &schema.Schema{
 							Description: `The port to connect the server`,
 							Type:        schema.TypeInt,
-							Optional:    true,
 							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"host_ip": &schema.Schema{
 							Description: `The server IPV4 address`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -88,27 +83,69 @@ func resourceTacacsExternalServers() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"shared_secret": &schema.Schema{
 							Description: `The server shared secret`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+						"single_connect": &schema.Schema{
+							Description: `Define the use of single connection`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"timeout": &schema.Schema{
+							Description: `The server timeout`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"connection_port": &schema.Schema{
+							Description: `The port to connect the server`,
+							Type:        schema.TypeInt,
+							Optional:    true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"host_ip": &schema.Schema{
+							Description: `The server IPV4 address`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"shared_secret": &schema.Schema{
+							Description: `The server shared secret`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"single_connect": &schema.Schema{
 							Description:  `Define the use of single connection`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"timeout": &schema.Schema{
 							Description: `The server timeout`,
 							Type:        schema.TypeInt,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -122,8 +159,8 @@ func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.Resource
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestTacacsExternalServersCreateTacacsExternalServers(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestTacacsExternalServersCreateTacacsExternalServers(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -137,7 +174,7 @@ func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.Resource
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceTacacsExternalServersRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -147,7 +184,7 @@ func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.Resource
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceTacacsExternalServersRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.TacacsExternalServers.CreateTacacsExternalServers(request1)
@@ -169,7 +206,7 @@ func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.Resource
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceTacacsExternalServersRead(ctx, d, m)
 }
 
 func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -192,9 +229,12 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 		log.Printf("[DEBUG] Selected method: GetTacacsExternalServersByName")
 		vvName := vName
 
-		response1, _, err := client.TacacsExternalServers.GetTacacsExternalServersByName(vvName)
+		response1, restyResp1, err := client.TacacsExternalServers.GetTacacsExternalServersByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsExternalServersByName", err,
 				"Failure at GetTacacsExternalServersByName, unexpected response", ""))
@@ -217,9 +257,12 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 		log.Printf("[DEBUG] Selected method: GetTacacsExternalServersByID")
 		vvID := vID
 
-		response2, _, err := client.TacacsExternalServers.GetTacacsExternalServersByID(vvID)
+		response2, restyResp2, err := client.TacacsExternalServers.GetTacacsExternalServersByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsExternalServersByID", err,
 				"Failure at GetTacacsExternalServersByID, unexpected response", ""))
@@ -276,9 +319,9 @@ func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.Resource
 			vvID = getResp.TacacsExternalServer.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestTacacsExternalServersUpdateTacacsExternalServersByID(ctx, "item.0", d)
+		request1 := expandRequestTacacsExternalServersUpdateTacacsExternalServersByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.TacacsExternalServers.UpdateTacacsExternalServersByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -369,25 +412,25 @@ func expandRequestTacacsExternalServersCreateTacacsExternalServers(ctx context.C
 
 func expandRequestTacacsExternalServersCreateTacacsExternalServersTacacsExternalServer(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsExternalServersCreateTacacsExternalServersTacacsExternalServer {
 	request := isegosdk.RequestTacacsExternalServersCreateTacacsExternalServersTacacsExternalServer{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".host_ip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".host_ip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".host_ip"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".host_ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".host_ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".host_ip")))) {
 		request.HostIP = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".connection_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".connection_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".connection_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connection_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connection_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connection_port")))) {
 		request.ConnectionPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".single_connect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".single_connect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".single_connect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".single_connect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".single_connect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".single_connect")))) {
 		request.SingleConnect = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".shared_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".shared_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".shared_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".shared_secret")))) {
 		request.SharedSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".timeout"); !isEmptyValue(reflect.ValueOf(d.Get(key+".timeout"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".timeout"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".timeout")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".timeout")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".timeout")))) {
 		request.Timeout = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -407,28 +450,28 @@ func expandRequestTacacsExternalServersUpdateTacacsExternalServersByID(ctx conte
 
 func expandRequestTacacsExternalServersUpdateTacacsExternalServersByIDTacacsExternalServer(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsExternalServersUpdateTacacsExternalServersByIDTacacsExternalServer {
 	request := isegosdk.RequestTacacsExternalServersUpdateTacacsExternalServersByIDTacacsExternalServer{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".host_ip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".host_ip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".host_ip"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".host_ip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".host_ip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".host_ip")))) {
 		request.HostIP = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".connection_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".connection_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".connection_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connection_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connection_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connection_port")))) {
 		request.ConnectionPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".single_connect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".single_connect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".single_connect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".single_connect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".single_connect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".single_connect")))) {
 		request.SingleConnect = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".shared_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".shared_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".shared_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".shared_secret")))) {
 		request.SharedSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".timeout"); !isEmptyValue(reflect.ValueOf(d.Get(key+".timeout"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".timeout"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".timeout")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".timeout")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".timeout")))) {
 		request.Timeout = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

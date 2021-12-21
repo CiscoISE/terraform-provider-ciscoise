@@ -1,13 +1,14 @@
 
 resource "ciscoise_network_access_dictionary" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description          = "string"
     dictionary_attr_type = "string"
     id                   = "string"
-    name                 = "string"
-    version              = "string"
+
+    name    = "string"
+    version = "string"
   }
 }
 

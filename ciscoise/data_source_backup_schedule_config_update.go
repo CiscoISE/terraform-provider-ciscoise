@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -45,9 +45,8 @@ only helps in editing the schedule.
 				Optional:    true,
 			},
 			"frequency": &schema.Schema{
-				Description: `Frequency with which the backup will get scheduled in the ISE node. Allowed values - ONCE, DAILY, WEEKLY, MONTHLY`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -100,9 +99,8 @@ only helps in editing the schedule.
 				Optional:    true,
 			},
 			"status": &schema.Schema{
-				Description: `Enable or disable scheduled backup.`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"time": &schema.Schema{
 				Description: `Time at which backup job get scheduled. example- 12:00 AM`,
@@ -110,9 +108,8 @@ only helps in editing the schedule.
 				Optional:    true,
 			},
 			"week_day": &schema.Schema{
-				Description: `Day of week you want backup to be performed on when scheduled frequency is WEEKLY. Allowed values - MON, TUE, WED, THU, FRI, SAT, SUN.`,
-				Type:        schema.TypeString,
-				Optional:    true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 		},
 	}
@@ -123,12 +120,7 @@ func dataSourceBackupScheduleConfigUpdateRead(ctx context.Context, d *schema.Res
 
 	var diags diag.Diagnostics
 
-	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
+	selectedMethod := 1
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: UpdateScheduledConfigBackup")
 		request1 := expandRequestBackupScheduleConfigUpdateUpdateScheduledConfigBackup(ctx, "", d)
@@ -138,6 +130,7 @@ func dataSourceBackupScheduleConfigUpdateRead(ctx context.Context, d *schema.Res
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
@@ -159,22 +152,6 @@ func dataSourceBackupScheduleConfigUpdateRead(ctx context.Context, d *schema.Res
 		}
 		d.SetId(getUnixTimeString())
 		return diags
-
-	}
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: CreateScheduledConfigBackup")
-		request2 := expandRequestBackupScheduleConfigUpdateCreateScheduledConfigBackup(ctx, "", d)
-
-		response2, _, err := client.BackupAndRestore.CreateScheduledConfigBackup(request2)
-
-		if err != nil || response2 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing CreateScheduledConfigBackup", err,
-				"Failure at CreateScheduledConfigBackup, unexpected response", ""))
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 	}
 	return diags
@@ -243,42 +220,4 @@ func flattenBackupAndRestoreUpdateScheduledConfigBackupItemLink(item *isegosdk.R
 		respItem,
 	}
 
-}
-
-func expandRequestBackupScheduleConfigUpdateCreateScheduledConfigBackup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestBackupAndRestoreCreateScheduledConfigBackup {
-	request := isegosdk.RequestBackupAndRestoreCreateScheduledConfigBackup{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_description")))) {
-		request.BackupDescription = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_encryption_key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_encryption_key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_encryption_key")))) {
-		request.BackupEncryptionKey = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".backup_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".backup_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".backup_name")))) {
-		request.BackupName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_date")))) {
-		request.EndDate = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".frequency")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".frequency")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".frequency")))) {
-		request.Frequency = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".month_day")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".month_day")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".month_day")))) {
-		request.MonthDay = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".repository_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".repository_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".repository_name")))) {
-		request.RepositoryName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date")))) {
-		request.StartDate = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".status")))) {
-		request.Status = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time")))) {
-		request.Time = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".week_day")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".week_day")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".week_day")))) {
-		request.WeekDay = interfaceToString(v)
-	}
-	return &request
 }

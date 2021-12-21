@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,17 +17,24 @@ func dataSourceCsr() *schema.Resource {
 
 - This data source supports Filtering, Sorting and Pagination.
 
-
 Filtering and Sorting supported on below mentioned attributes:
-[friendlyName, subject, timeStamp]
+
+
+friendlyName
+
+subject
+
+timeStamp
+
 
 Supported Date Format: yyyy-MM-dd HH:mm:ss.SSS
 
-
 Supported Operators: EQ, NEQ, GT and LT
 
-- This data source displays details of a Certificate Signing Request of a particular node based on a given HostName and
-ID.
+
+
+
+- This data source displays details of a Certificate Signing Request of a particular node for given HostName and ID.
 `,
 
 		ReadContext: dataSourceCsrRead,
@@ -41,6 +48,79 @@ Simple filtering
  should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
 "filterType=or"
  query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
+ 
+ 
+ 
+ 
+ 
+OPERATOR
+ 
+DESCRIPTION
+ 
+ 
+ 
+ 
+ 
+EQ
+ 
+Equals
+ 
+ 
+ 
+NEQ
+ 
+Not Equals
+ 
+ 
+ 
+GT
+ 
+Greater Than
+ 
+ 
+ 
+LT
+ 
+Less Then
+ 
+ 
+ 
+STARTSW
+ 
+Starts With
+ 
+ 
+ 
+NSTARTSW
+ 
+Not Starts With
+ 
+ 
+ 
+ENDSW
+ 
+Ends With
+ 
+ 
+ 
+NENDSW
+ 
+Not Ends With
+ 
+ 
+ 
+CONTAINS
+ 
+Contains
+ 
+ 
+ 
+NCONTAINS
+ 
+Not Contains
+ 
+ 
+ 
  `,
 				Type:     schema.TypeList,
 				Optional: true,
@@ -59,7 +139,7 @@ Simple filtering
 				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Description: `id path parameter. The ID of the Certificate Signing Request returned`,
+				Description: `id path parameter. ID of the Certificate Signing Request returned`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -105,7 +185,7 @@ Simple filtering
 							Computed:    true,
 						},
 						"host_name": &schema.Schema{
-							Description: `Hostname or IP address of the ISE node.`,
+							Description: `Hostname or IP address of the Cisco ISE node.`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -156,7 +236,7 @@ Simple filtering
 							Computed:    true,
 						},
 						"used_for": &schema.Schema{
-							Description: `Services for which the certificate is used for(for eg- MGMT, GENERIC).`,
+							Description: `Services for which the certificate is used for (for eg- MGMT, GENERIC).`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -169,71 +249,17 @@ Simple filtering
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"friendly_name": &schema.Schema{
-							Description: `Friendly name of the certificate.`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"group_tag": &schema.Schema{
-							Description: `GroupTag of the certificate.`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"host_name": &schema.Schema{
-							Description: `Hostname or IP address of the ISE node.`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"id": &schema.Schema{
-							Description: `ID of the certificate.`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"key_size": &schema.Schema{
-							Description: `Size of the cryptographic key used.`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
+						"href": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
 						},
-						"signature_algorithm": &schema.Schema{
-							Description: `Algorithm used for encrypting CSR`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"rel": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
-						"subject": &schema.Schema{
-							Description: `Subject of the certificate. Includes Common Name (CN), Organizational Unit (OU), etc.`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"time_stamp": &schema.Schema{
-							Description: `Timestamp of the certificate generation.`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"used_for": &schema.Schema{
-							Description: `Services for which the certificate is used for(for eg- MGMT, GENERIC).`,
-							Type:        schema.TypeString,
-							Computed:    true,
+						"type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -335,9 +361,12 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)
 
-		response2, _, err := client.Certificates.GetCsrByID(vvHostName, vvID)
+		response2, restyResp2, err := client.Certificates.GetCsrByID(vvHostName, vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetCsrByID", err,
 				"Failure at GetCsrByID, unexpected response", ""))

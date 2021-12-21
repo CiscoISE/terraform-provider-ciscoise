@@ -4,18 +4,18 @@ page_title: "ciscoise_ise_root_ca_regenerate Data Source - terraform-provider-ci
 subcategory: ""
 description: |-
   It performs create operation on Certificates.
-  This data source action will initiate regeneration of ISE root CA certificate chain. Response contains id which can be
-  used to track the status.
-  Setting "removeExistingISEIntermediateCSR" to true will remove existing ISE Intermediate CSR
+  This data source action initiates regeneration of Cisco ISE root CA certificate chain. Response contains ID which can
+  be used to track the status.
+  Setting "removeExistingISEIntermediateCSR" to true removes existing Cisco ISE Intermediate CSR
 ---
 
 # ciscoise_ise_root_ca_regenerate (Data Source)
 
 It performs create operation on Certificates.
 
-- This data source action will initiate regeneration of ISE root CA certificate chain. Response contains id which can be
-used to track the status.
-  Setting "removeExistingISEIntermediateCSR" to true will remove existing ISE Intermediate CSR
+- This data source action initiates regeneration of Cisco ISE root CA certificate chain. Response contains ID which can
+be used to track the status.
+  Setting "removeExistingISEIntermediateCSR" to true removes existing Cisco ISE Intermediate CSR
 
 ## Example Usage
 
@@ -32,7 +32,7 @@ data "ciscoise_ise_root_ca_regenerate" "example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **remove_existing_ise_intermediate_csr** (String) Setting this attribute to true will remove existing ISE Intermediate CSR
+- **remove_existing_ise_intermediate_csr** (String) Setting this attribute to true removes existing Cisco ISE Intermediate CSR
 
 ### Read-Only
 

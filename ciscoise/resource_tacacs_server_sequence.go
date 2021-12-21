@@ -6,7 +6,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -38,19 +38,16 @@ func resourceTacacsServerSequence() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -75,54 +72,101 @@ func resourceTacacsServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"prefix_delimiter": &schema.Schema{
 							Description: `The delimiter that will be used for prefix strip`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+						"prefix_strip": &schema.Schema{
+							Description: `Define if a delimiter will be used for prefix strip`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"remote_accounting": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"server_list": &schema.Schema{
+							Description: `The names of Tacacs external servers separated by commas.
+The order of the names in the string is the order of servers that will be used during authentication`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_delimiter": &schema.Schema{
+							Description: `The delimiter that will be used for suffix strip`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"suffix_strip": &schema.Schema{
+							Description: `Define if a delimiter will be used for suffix strip`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"local_accounting": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"prefix_delimiter": &schema.Schema{
+							Description: `The delimiter that will be used for prefix strip`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"prefix_strip": &schema.Schema{
 							Description:  `Define if a delimiter will be used for prefix strip`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"remote_accounting": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"server_list": &schema.Schema{
 							Description: `The names of Tacacs external servers separated by commas.
 The order of the names in the string is the order of servers that will be used during authentication`,
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"suffix_delimiter": &schema.Schema{
 							Description: `The delimiter that will be used for suffix strip`,
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"suffix_strip": &schema.Schema{
 							Description:  `Define if a delimiter will be used for suffix strip`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -136,8 +180,8 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestTacacsServerSequenceCreateTacacsServerSequence(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestTacacsServerSequenceCreateTacacsServerSequence(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -151,7 +195,7 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceTacacsServerSequenceRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -161,7 +205,7 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceTacacsServerSequenceRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.TacacsServerSequence.CreateTacacsServerSequence(request1)
@@ -183,7 +227,7 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceTacacsServerSequenceRead(ctx, d, m)
 }
 
 func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -206,9 +250,12 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method: GetTacacsServerSequenceByName")
 		vvName := vName
 
-		response1, _, err := client.TacacsServerSequence.GetTacacsServerSequenceByName(vvName)
+		response1, restyResp1, err := client.TacacsServerSequence.GetTacacsServerSequenceByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsServerSequenceByName", err,
 				"Failure at GetTacacsServerSequenceByName, unexpected response", ""))
@@ -231,9 +278,12 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method: GetTacacsServerSequenceByID")
 		vvID := vID
 
-		response2, _, err := client.TacacsServerSequence.GetTacacsServerSequenceByID(vvID)
+		response2, restyResp2, err := client.TacacsServerSequence.GetTacacsServerSequenceByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsServerSequenceByID", err,
 				"Failure at GetTacacsServerSequenceByID, unexpected response", ""))
@@ -290,9 +340,9 @@ func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 			vvID = getResp.TacacsServerSequence.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestTacacsServerSequenceUpdateTacacsServerSequenceByID(ctx, "item.0", d)
+		request1 := expandRequestTacacsServerSequenceUpdateTacacsServerSequenceByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.TacacsServerSequence.UpdateTacacsServerSequenceByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -383,31 +433,31 @@ func expandRequestTacacsServerSequenceCreateTacacsServerSequence(ctx context.Con
 
 func expandRequestTacacsServerSequenceCreateTacacsServerSequenceTacacsServerSequence(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsServerSequenceCreateTacacsServerSequenceTacacsServerSequence {
 	request := isegosdk.RequestTacacsServerSequenceCreateTacacsServerSequenceTacacsServerSequence{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".server_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".server_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".server_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".server_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".server_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".server_list")))) {
 		request.ServerList = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".local_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".local_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".local_accounting"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_accounting")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_accounting")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_accounting")))) {
 		request.LocalAccounting = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".remote_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".remote_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".remote_accounting"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_accounting")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_accounting")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_accounting")))) {
 		request.RemoteAccounting = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".prefix_strip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_strip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_strip"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".prefix_strip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".prefix_strip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".prefix_strip")))) {
 		request.PrefixStrip = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".prefix_delimiter"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_delimiter"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_delimiter"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".prefix_delimiter")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".prefix_delimiter")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".prefix_delimiter")))) {
 		request.PrefixDelimiter = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".suffix_strip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_strip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_strip"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".suffix_strip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".suffix_strip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".suffix_strip")))) {
 		request.SuffixStrip = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".suffix_delimiter"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_delimiter"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_delimiter"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".suffix_delimiter")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".suffix_delimiter")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".suffix_delimiter")))) {
 		request.SuffixDelimiter = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -427,34 +477,34 @@ func expandRequestTacacsServerSequenceUpdateTacacsServerSequenceByID(ctx context
 
 func expandRequestTacacsServerSequenceUpdateTacacsServerSequenceByIDTacacsServerSequence(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsServerSequenceUpdateTacacsServerSequenceByIDTacacsServerSequence {
 	request := isegosdk.RequestTacacsServerSequenceUpdateTacacsServerSequenceByIDTacacsServerSequence{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".server_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".server_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".server_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".server_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".server_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".server_list")))) {
 		request.ServerList = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".local_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".local_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".local_accounting"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_accounting")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_accounting")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_accounting")))) {
 		request.LocalAccounting = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".remote_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".remote_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".remote_accounting"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_accounting")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_accounting")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_accounting")))) {
 		request.RemoteAccounting = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".prefix_strip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_strip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_strip"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".prefix_strip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".prefix_strip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".prefix_strip")))) {
 		request.PrefixStrip = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".prefix_delimiter"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_delimiter"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_delimiter"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".prefix_delimiter")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".prefix_delimiter")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".prefix_delimiter")))) {
 		request.PrefixDelimiter = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".suffix_strip"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_strip"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_strip"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".suffix_strip")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".suffix_strip")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".suffix_strip")))) {
 		request.SuffixStrip = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".suffix_delimiter"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_delimiter"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_delimiter"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".suffix_delimiter")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".suffix_delimiter")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".suffix_delimiter")))) {
 		request.SuffixDelimiter = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

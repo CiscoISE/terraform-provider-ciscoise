@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,7 +39,6 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,21 +46,18 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 						"customizations": &schema.Schema{
 							Description: `Defines all of the Portal Customizations available`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"global_customizations": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"background_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -69,7 +65,6 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -77,7 +72,6 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 												},
 												"banner_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -85,7 +79,6 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -93,17 +86,14 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 												},
 												"banner_title": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"contact_text": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"desktop_logo_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -111,7 +101,6 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -119,12 +108,10 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 												},
 												"footer_element": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"mobile_logo_image": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -132,7 +119,6 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 															"data": &schema.Schema{
 																Description: `Represented as base 64 encoded string of the image byte array`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 														},
@@ -144,14 +130,12 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 									"language": &schema.Schema{
 										Description: `This property is supported only for Read operation and it allows to show the customizations in English. Other languages are not supported`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"view_language": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -160,7 +144,6 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 									"page_customizations": &schema.Schema{
 										Description: `Represent the entire page customization as a giant dictionary`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -168,19 +151,16 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 												"data": &schema.Schema{
 													Description: `The Dictionary will be exposed here as key value pair`,
 													Type:        schema.TypeList,
-													Optional:    true,
 													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"key": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 															"value": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 														},
@@ -191,26 +171,22 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 									},
 									"portal_theme": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"id": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"name": &schema.Schema{
 													Description: `The system- or user-assigned name of the portal theme`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"theme_data": &schema.Schema{
 													Description: `A CSS file, represented as a Base64-encoded byte array`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 											},
@@ -221,7 +197,6 @@ func resourceSponsoredGuestPortal() *schema.Resource {
 When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
 The Tweak Settings can subsequently be changed by the user`,
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -229,22 +204,18 @@ The Tweak Settings can subsequently be changed by the user`,
 												"banner_color": &schema.Schema{
 													Description: `Hex value of color`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"banner_text_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"page_background_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"page_label_and_text_color": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -255,12 +226,10 @@ The Tweak Settings can subsequently be changed by the user`,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -286,13 +255,11 @@ The Tweak Settings can subsequently be changed by the user`,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"portal_test_url": &schema.Schema{
 							Description: `URL to bring up a test page for this portal`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"portal_type": &schema.Schema{
@@ -304,20 +271,17 @@ The Tweak Settings can subsequently be changed by the user`,
 - SPONSOR,
 - SPONSOREDGUEST`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"settings": &schema.Schema{
 							Description: `Defines all of the settings groups available for a portal`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"aup_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -328,54 +292,41 @@ The Tweak Settings can subsequently be changed by the user`,
 - EVERYLOGIN,
 - RECURRING`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"display_frequency_interval_days": &schema.Schema{
 													Description: `Number of days between AUP confirmations (when displayFrequency = recurring)`,
 													Type:        schema.TypeInt,
-													Optional:    true,
 													Computed:    true,
 												},
 												"include_aup": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_aup_scrolling": &schema.Schema{
-													Description:  `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"require_scrolling": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"skip_aup_for_employees": &schema.Schema{
-													Description:  `Only valid if requireAupAcceptance = true`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Only valid if requireAupAcceptance = true`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"use_diff_aup_for_employees": &schema.Schema{
-													Description:  `Only valid if requireAupAcceptance = true`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Only valid if requireAupAcceptance = true`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"auth_success_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -383,7 +334,6 @@ The Tweak Settings can subsequently be changed by the user`,
 												"redirect_url": &schema.Schema{
 													Description: `Target URL for redirection, used when successRedirect = URL`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"success_redirect": &schema.Schema{
@@ -393,7 +343,6 @@ Allowed values:
 - ORIGINATINGURL,
 - URL`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -401,7 +350,6 @@ Allowed values:
 									},
 									"byod_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -409,7 +357,6 @@ Allowed values:
 												"byod_registration_settings": &schema.Schema{
 													Description: `Configuration of BYOD endpoint Registration step configuration`,
 													Type:        schema.TypeList,
-													Optional:    true,
 													Computed:    true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -417,22 +364,18 @@ Allowed values:
 															"end_point_identity_group_id": &schema.Schema{
 																Description: `Identity group id for which endpoint belongs`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 															"show_device_id": &schema.Schema{
-																Description:  `Display Device ID field during registration`,
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Description: `Display Device ID field during registration`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
 												},
 												"byod_registration_success_settings": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -440,7 +383,6 @@ Allowed values:
 															"redirect_url": &schema.Schema{
 																Description: `Target URL for redirection, used when successRedirect = URL`,
 																Type:        schema.TypeString,
-																Optional:    true,
 																Computed:    true,
 															},
 															"success_redirect": &schema.Schema{
@@ -449,7 +391,6 @@ Allowed values:
 - ORIGINATINGURL,
 - URL`,
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 														},
@@ -457,7 +398,6 @@ Allowed values:
 												},
 												"byod_welcome_settings": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
@@ -469,46 +409,33 @@ Allowed values:
 - ONPAGE,
 - ASLINK`,
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 															"enable_byo_d": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"enable_guest_access": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"include_aup": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"require_aup_acceptance": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"require_mdm": &schema.Schema{
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 															"require_scrolling": &schema.Schema{
 																Description: `Require BYOD devices to scroll down to the bottom of the AUP.
 Only valid if includeAup = true`,
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
-																Computed:     true,
+																Type:     schema.TypeString,
+																Computed: true,
 															},
 														},
 													},
@@ -518,41 +445,33 @@ Only valid if includeAup = true`,
 									},
 									"guest_change_password_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"allow_change_passwd_at_first_login": &schema.Schema{
-													Description:  `Allow guest to change their own passwords`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Allow guest to change their own passwords`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"guest_device_registration_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"allow_guests_to_register_devices": &schema.Schema{
-													Description:  `Allow guests to register devices`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Allow guests to register devices`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"auto_register_guest_devices": &schema.Schema{
-													Description:  `Automatically register guest devices`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Automatically register guest devices`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -560,7 +479,6 @@ Only valid if includeAup = true`,
 									"login_page_settings": &schema.Schema{
 										Description: `Portal Login Page settings groups follow`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -568,33 +486,24 @@ Only valid if includeAup = true`,
 												"access_code": &schema.Schema{
 													Description: `Access code that must be entered by the portal user (only valid if requireAccessCode = true)`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"allow_alternate_guest_portal": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"allow_forgot_password": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"allow_guest_to_change_password": &schema.Schema{
-													Description:  `Require the portal user to enter an access code`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Require the portal user to enter an access code`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"allow_guest_to_create_accounts": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"aup_display": &schema.Schema{
 													Description: `How the AUP should be displayed, either on page or as a link.
@@ -603,51 +512,40 @@ Allowed values:
 -  ONPAGE,
 - ASLINK`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"include_aup": &schema.Schema{
-													Description:  `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 												"max_failed_attempts_before_rate_limit": &schema.Schema{
 													Description: `Maximum failed login attempts before rate limiting`,
 													Type:        schema.TypeInt,
-													Optional:    true,
 													Computed:    true,
 												},
 												"require_access_code": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"require_aup_acceptance": &schema.Schema{
 													Description: `Require the portal user to accept the AUP.
 Only valid if includeAup = true`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 												"social_configs": &schema.Schema{
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"social_media_type": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 															"social_media_value": &schema.Schema{
 																Type:     schema.TypeString,
-																Optional: true,
 																Computed: true,
 															},
 														},
@@ -656,7 +554,6 @@ Only valid if includeAup = true`,
 												"time_between_logins_during_rate_limit": &schema.Schema{
 													Description: `Time between login attempts when rate limiting`,
 													Type:        schema.TypeInt,
-													Optional:    true,
 													Computed:    true,
 												},
 											},
@@ -665,7 +562,6 @@ Only valid if includeAup = true`,
 									"portal_settings": &schema.Schema{
 										Description: `The port, interface, certificate, and other basic settings of a portal`,
 										Type:        schema.TypeList,
-										Optional:    true,
 										Computed:    true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -683,7 +579,6 @@ Allowed values:
 - bond1,
 - bond2`,
 													Type:     schema.TypeList,
-													Optional: true,
 													Computed: true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
@@ -691,26 +586,22 @@ Allowed values:
 												},
 												"always_used_language": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"assigned_guest_type_for_employee": &schema.Schema{
 													Description: `Unique Id of a guest type.
 Employees using this portal as a guest inherit login options from the guest type`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"authentication_method": &schema.Schema{
 													Description: `Unique Id of the identity source sequence`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"certificate_group_tag": &schema.Schema{
 													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"display_lang": &schema.Schema{
@@ -718,20 +609,17 @@ Employees using this portal as a guest inherit login options from the guest type
 - USEBROWSERLOCALE,
 - ALWAYSUSE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"fallback_language": &schema.Schema{
 													Description: `Used when displayLang = USEBROWSERLOCALE`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"https_port": &schema.Schema{
 													Description: `The port number that the allowed interfaces will listen on.
 Range from 8000 to 8999`,
 													Type:     schema.TypeInt,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -739,40 +627,33 @@ Range from 8000 to 8999`,
 									},
 									"post_access_banner_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeString,
+													Computed: true,
 												},
 											},
 										},
 									},
 									"post_login_banner_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Description:  `Include a Post-Login Banner page`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
-													Computed:     true,
+													Description: `Include a Post-Login Banner page`,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
 									},
 									"support_info_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
@@ -781,7 +662,6 @@ Range from 8000 to 8999`,
 													Description: `The default value displayed for an empty field.
 Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"empty_field_display": &schema.Schema{
@@ -790,44 +670,732 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 - DISPLAYWITHNOVALUE,
 - DISPLAYWITHDEFAULTVALUE`,
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
+												},
+												"include_browser_user_agent": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_failure_code": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_ip_address": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_mac_addr": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_policy_server": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"include_support_info_page": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"customizations": &schema.Schema{
+							Description: `Defines all of the Portal Customizations available`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"global_customizations": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"background_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"banner_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"banner_title": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"contact_text": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"desktop_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+												"footer_element": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"mobile_logo_image": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"data": &schema.Schema{
+																Description: `Represented as base 64 encoded string of the image byte array`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"language": &schema.Schema{
+										Description: `This property is supported only for Read operation and it allows to show the customizations in English. Other languages are not supported`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"view_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"page_customizations": &schema.Schema{
+										Description: `Represent the entire page customization as a giant dictionary`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"data": &schema.Schema{
+													Description: `The Dictionary will be exposed here as key value pair`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"key": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"value": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"portal_theme": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"name": &schema.Schema{
+													Description: `The system- or user-assigned name of the portal theme`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"theme_data": &schema.Schema{
+													Description: `A CSS file, represented as a Base64-encoded byte array`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+											},
+										},
+									},
+									"portal_tweak_settings": &schema.Schema{
+										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+The Tweak Settings can subsequently be changed by the user`,
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"banner_color": &schema.Schema{
+													Description: `Hex value of color`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"banner_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"page_background_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"page_label_and_text_color": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"portal_test_url": &schema.Schema{
+							Description: `URL to bring up a test page for this portal`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"portal_type": &schema.Schema{
+							Description: `Allowed values:
+- BYOD,
+- HOTSPOTGUEST,
+- MYDEVICE,
+- SELFREGGUEST,
+- SPONSOR,
+- SPONSOREDGUEST`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"settings": &schema.Schema{
+							Description: `Defines all of the settings groups available for a portal`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"aup_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"display_frequency": &schema.Schema{
+													Description: `How the AUP should be displayed, either on page or as a link. Only valid if includeAup = true. Allowed Values:
+- FIRSTLOGIN,
+- EVERYLOGIN,
+- RECURRING`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"display_frequency_interval_days": &schema.Schema{
+													Description: `Number of days between AUP confirmations (when displayFrequency = recurring)`,
+													Type:        schema.TypeInt,
+													Optional:    true,
+												},
+												"include_aup": &schema.Schema{
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"require_aup_scrolling": &schema.Schema{
+													Description:  `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"require_scrolling": &schema.Schema{
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"skip_aup_for_employees": &schema.Schema{
+													Description:  `Only valid if requireAupAcceptance = true`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"use_diff_aup_for_employees": &schema.Schema{
+													Description:  `Only valid if requireAupAcceptance = true`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+											},
+										},
+									},
+									"auth_success_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"redirect_url": &schema.Schema{
+													Description: `Target URL for redirection, used when successRedirect = URL`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"success_redirect": &schema.Schema{
+													Description: `After an Authentication Success where should device be redirected.
+Allowed values:
+- AUTHSUCCESSPAGE,
+- ORIGINATINGURL,
+- URL`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"byod_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"byod_registration_settings": &schema.Schema{
+													Description: `Configuration of BYOD endpoint Registration step configuration`,
+													Type:        schema.TypeList,
+													Optional:    true,
+													MaxItems:    1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_point_identity_group_id": &schema.Schema{
+																Description: `Identity group id for which endpoint belongs`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+															"show_device_id": &schema.Schema{
+																Description:  `Display Device ID field during registration`,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+														},
+													},
+												},
+												"byod_registration_success_settings": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"redirect_url": &schema.Schema{
+																Description: `Target URL for redirection, used when successRedirect = URL`,
+																Type:        schema.TypeString,
+																Optional:    true,
+															},
+															"success_redirect": &schema.Schema{
+																Description: `After an Authentication Success where should device be redirected. Allowed values:
+- AUTHSUCCESSPAGE,
+- ORIGINATINGURL,
+- URL`,
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"byod_welcome_settings": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													MaxItems: 1,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"aup_display": &schema.Schema{
+																Description: `How the AUP should be displayed, either on page or as a link.
+Only valid if includeAup = true.
+Allowed values:
+- ONPAGE,
+- ASLINK`,
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"enable_byo_d": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"enable_guest_access": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"include_aup": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"require_aup_acceptance": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"require_mdm": &schema.Schema{
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+															"require_scrolling": &schema.Schema{
+																Description: `Require BYOD devices to scroll down to the bottom of the AUP.
+Only valid if includeAup = true`,
+																Type:         schema.TypeString,
+																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+																Optional:     true,
+															},
+														},
+													},
+												},
+											},
+										},
+									},
+									"guest_change_password_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"allow_change_passwd_at_first_login": &schema.Schema{
+													Description:  `Allow guest to change their own passwords`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+											},
+										},
+									},
+									"guest_device_registration_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"allow_guests_to_register_devices": &schema.Schema{
+													Description:  `Allow guests to register devices`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"auto_register_guest_devices": &schema.Schema{
+													Description:  `Automatically register guest devices`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+											},
+										},
+									},
+									"login_page_settings": &schema.Schema{
+										Description: `Portal Login Page settings groups follow`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"access_code": &schema.Schema{
+													Description: `Access code that must be entered by the portal user (only valid if requireAccessCode = true)`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"allow_alternate_guest_portal": &schema.Schema{
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"allow_forgot_password": &schema.Schema{
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"allow_guest_to_change_password": &schema.Schema{
+													Description:  `Require the portal user to enter an access code`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"allow_guest_to_create_accounts": &schema.Schema{
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"aup_display": &schema.Schema{
+													Description: `How the AUP should be displayed, either on page or as a link.
+Only valid if includeAup = true.
+Allowed values:
+-  ONPAGE,
+- ASLINK`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"include_aup": &schema.Schema{
+													Description:  `Include an Acceptable Use Policy (AUP) that should be displayed during login`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"max_failed_attempts_before_rate_limit": &schema.Schema{
+													Description: `Maximum failed login attempts before rate limiting`,
+													Type:        schema.TypeInt,
+													Optional:    true,
+												},
+												"require_access_code": &schema.Schema{
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"require_aup_acceptance": &schema.Schema{
+													Description: `Require the portal user to accept the AUP.
+Only valid if includeAup = true`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+												"social_configs": &schema.Schema{
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"social_media_type": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+															"social_media_value": &schema.Schema{
+																Type:     schema.TypeString,
+																Optional: true,
+															},
+														},
+													},
+												},
+												"time_between_logins_during_rate_limit": &schema.Schema{
+													Description: `Time between login attempts when rate limiting`,
+													Type:        schema.TypeInt,
+													Optional:    true,
+												},
+											},
+										},
+									},
+									"portal_settings": &schema.Schema{
+										Description: `The port, interface, certificate, and other basic settings of a portal`,
+										Type:        schema.TypeList,
+										Optional:    true,
+										MaxItems:    1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"allowed_interfaces": &schema.Schema{
+													Description: `Interfaces that the portal will be reachable on.
+Allowed values:
+- eth0,
+- eth1,
+- eth2,
+- eth3,
+- eth4,
+- eth5,
+- bond0,
+- bond1,
+- bond2`,
+													Type:     schema.TypeList,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"always_used_language": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"assigned_guest_type_for_employee": &schema.Schema{
+													Description: `Unique Id of a guest type.
+Employees using this portal as a guest inherit login options from the guest type`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"authentication_method": &schema.Schema{
+													Description: `Unique Id of the identity source sequence`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"certificate_group_tag": &schema.Schema{
+													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"display_lang": &schema.Schema{
+													Description: `Allowed values:
+- USEBROWSERLOCALE,
+- ALWAYSUSE`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"fallback_language": &schema.Schema{
+													Description: `Used when displayLang = USEBROWSERLOCALE`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"https_port": &schema.Schema{
+													Description: `The port number that the allowed interfaces will listen on.
+Range from 8000 to 8999`,
+													Type:     schema.TypeInt,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"post_access_banner_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"include_post_access_banner": &schema.Schema{
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+											},
+										},
+									},
+									"post_login_banner_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"include_post_access_banner": &schema.Schema{
+													Description:  `Include a Post-Login Banner page`,
+													Type:         schema.TypeString,
+													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:     true,
+												},
+											},
+										},
+									},
+									"support_info_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"default_empty_field_value": &schema.Schema{
+													Description: `The default value displayed for an empty field.
+Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"empty_field_display": &schema.Schema{
+													Description: `Specifies how empty fields are handled on the Support Information Page. Allowed values:
+- HIDE,
+- DISPLAYWITHNOVALUE,
+- DISPLAYWITHDEFAULTVALUE`,
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 												"include_browser_user_agent": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_failure_code": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_ip_address": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_mac_addr": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_policy_server": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"include_support_info_page": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -847,8 +1415,8 @@ func resourceSponsoredGuestPortalCreate(ctx context.Context, d *schema.ResourceD
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestSponsoredGuestPortalCreateSponsoredGuestPortal(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestSponsoredGuestPortalCreateSponsoredGuestPortal(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vID, okID := resourceItem["id"]
@@ -862,7 +1430,7 @@ func resourceSponsoredGuestPortalCreate(ctx context.Context, d *schema.ResourceD
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceSponsoredGuestPortalRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetSponsoredGuestPortalsQueryParams{}
@@ -876,7 +1444,7 @@ func resourceSponsoredGuestPortalCreate(ctx context.Context, d *schema.ResourceD
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceSponsoredGuestPortalRead(ctx, d, m)
 			}
 		}
 	}
@@ -899,7 +1467,7 @@ func resourceSponsoredGuestPortalCreate(ctx context.Context, d *schema.ResourceD
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceSponsoredGuestPortalRead(ctx, d, m)
 }
 
 func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -909,7 +1477,6 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -925,9 +1492,12 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method: GetSponsoredGuestPortals")
 		queryParams1 := isegosdk.GetSponsoredGuestPortalsQueryParams{}
 
-		response1, _, err := client.SponsoredGuestPortal.GetSponsoredGuestPortals(&queryParams1)
+		response1, restyResp1, err := client.SponsoredGuestPortal.GetSponsoredGuestPortals(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsoredGuestPortals", err,
 				"Failure at GetSponsoredGuestPortals, unexpected response", ""))
@@ -957,9 +1527,12 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method: GetSponsoredGuestPortalByID")
 		vvID := vID
 
-		response2, _, err := client.SponsoredGuestPortal.GetSponsoredGuestPortalByID(vvID)
+		response2, restyResp2, err := client.SponsoredGuestPortal.GetSponsoredGuestPortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsoredGuestPortalByID", err,
 				"Failure at GetSponsoredGuestPortalByID, unexpected response", ""))
@@ -1019,9 +1592,9 @@ func resourceSponsoredGuestPortalUpdate(ctx context.Context, d *schema.ResourceD
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByID(ctx, "item.0", d)
+		request1 := expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByID(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.SponsoredGuestPortal.UpdateSponsoredGuestPortalByID(vvID, request1)
 		if err != nil || response1 == nil {
@@ -1049,7 +1622,6 @@ func resourceSponsoredGuestPortalDelete(ctx context.Context, d *schema.ResourceD
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -1121,22 +1693,22 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortal(ctx context.Con
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortal {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortal{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_type")))) {
 		request.PortalType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_test_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_test_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_test_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_test_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_test_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_test_url")))) {
 		request.PortalTestURL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".settings")))) {
 		request.Settings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettings(ctx, key+".settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".customizations")))) {
 		request.Customizations = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizations(ctx, key+".customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1147,34 +1719,34 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".portal_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_settings")))) {
 		request.PortalSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPortalSettings(ctx, key+".portal_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".login_page_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".login_page_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".login_page_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".login_page_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".login_page_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".login_page_settings")))) {
 		request.LoginPageSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettings(ctx, key+".login_page_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_settings")))) {
 		request.AupSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsAupSettings(ctx, key+".aup_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_change_password_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_change_password_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_change_password_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_change_password_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_change_password_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_change_password_settings")))) {
 		request.GuestChangePasswordSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsGuestChangePasswordSettings(ctx, key+".guest_change_password_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_device_registration_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_device_registration_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_device_registration_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_device_registration_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_device_registration_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_device_registration_settings")))) {
 		request.GuestDeviceRegistrationSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings(ctx, key+".guest_device_registration_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_settings")))) {
 		request.ByodSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettings(ctx, key+".byod_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".post_access_banner_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".post_access_banner_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".post_access_banner_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".post_access_banner_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".post_access_banner_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".post_access_banner_settings")))) {
 		request.PostAccessBannerSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPostAccessBannerSettings(ctx, key+".post_access_banner_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".auth_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auth_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auth_success_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_success_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_success_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_success_settings")))) {
 		request.AuthSuccessSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsAuthSuccessSettings(ctx, key+".auth_success_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".post_login_banner_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".post_login_banner_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".post_login_banner_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".post_login_banner_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".post_login_banner_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".post_login_banner_settings")))) {
 		request.PostLoginBannerSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPostLoginBannerSettings(ctx, key+".post_login_banner_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".support_info_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_info_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_info_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".support_info_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".support_info_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".support_info_settings")))) {
 		request.SupportInfoSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsSupportInfoSettings(ctx, key+".support_info_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1185,28 +1757,28 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPortalSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".https_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".https_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".https_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".https_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".https_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".https_port")))) {
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_interfaces")))) {
 		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_group_tag")))) {
 		request.CertificateGroupTag = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".authentication_method"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authentication_method"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authentication_method"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authentication_method")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authentication_method")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authentication_method")))) {
 		request.AuthenticationMethod = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".assigned_guest_type_for_employee"); !isEmptyValue(reflect.ValueOf(d.Get(key+".assigned_guest_type_for_employee"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".assigned_guest_type_for_employee"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".assigned_guest_type_for_employee")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".assigned_guest_type_for_employee")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".assigned_guest_type_for_employee")))) {
 		request.AssignedGuestTypeForEmployee = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_lang"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_lang"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_lang"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_lang")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_lang")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_lang")))) {
 		request.DisplayLang = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".fallback_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".fallback_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".fallback_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fallback_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fallback_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fallback_language")))) {
 		request.FallbackLanguage = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".always_used_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".always_used_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".always_used_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".always_used_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".always_used_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".always_used_language")))) {
 		request.AlwaysUsedLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1217,40 +1789,40 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettings{}
-	if v, ok := d.GetOkExists(key + ".require_access_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_access_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_access_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_access_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_access_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_access_code")))) {
 		request.RequireAccessCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".max_failed_attempts_before_rate_limit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".max_failed_attempts_before_rate_limit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".max_failed_attempts_before_rate_limit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_failed_attempts_before_rate_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_failed_attempts_before_rate_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_failed_attempts_before_rate_limit")))) {
 		request.MaxFailedAttemptsBeforeRateLimit = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".time_between_logins_during_rate_limit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".time_between_logins_during_rate_limit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".time_between_logins_during_rate_limit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_between_logins_during_rate_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_between_logins_during_rate_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_between_logins_during_rate_limit")))) {
 		request.TimeBetweenLoginsDuringRateLimit = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_display")))) {
 		request.AupDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_aup_acceptance"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_acceptance"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_acceptance"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_aup_acceptance")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_aup_acceptance")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_aup_acceptance")))) {
 		request.RequireAupAcceptance = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".access_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_code")))) {
 		request.AccessCode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_guest_to_create_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_guest_to_create_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_guest_to_create_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_guest_to_create_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_guest_to_create_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_guest_to_create_accounts")))) {
 		request.AllowGuestToCreateAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_forgot_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_forgot_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_forgot_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_forgot_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_forgot_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_forgot_password")))) {
 		request.AllowForgotPassword = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_guest_to_change_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_guest_to_change_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_guest_to_change_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_guest_to_change_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_guest_to_change_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_guest_to_change_password")))) {
 		request.AllowGuestToChangePassword = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_alternate_guest_portal"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_alternate_guest_portal"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_alternate_guest_portal"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_alternate_guest_portal")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_alternate_guest_portal")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_alternate_guest_portal")))) {
 		request.AllowAlternateGuestPortal = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".social_configs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_configs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_configs"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".social_configs")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".social_configs")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".social_configs")))) {
 		request.SocialConfigs = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key+".social_configs", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1261,6 +1833,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs {
 	request := []isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -1283,10 +1856,10 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs{}
-	if v, ok := d.GetOkExists(key + ".social_media_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_media_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".social_media_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".social_media_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".social_media_type")))) {
 		request.SocialMediaType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".social_media_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_media_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_media_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".social_media_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".social_media_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".social_media_value")))) {
 		request.SocialMediaValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1297,25 +1870,25 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsAupSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsAupSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsAupSettings{}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_aup_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_aup_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_aup_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_aup_scrolling")))) {
 		request.RequireAupScrolling = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_diff_aup_for_employees"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_diff_aup_for_employees"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_diff_aup_for_employees"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_diff_aup_for_employees")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_diff_aup_for_employees")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_diff_aup_for_employees")))) {
 		request.UseDiffAupForEmployees = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".skip_aup_for_employees"); !isEmptyValue(reflect.ValueOf(d.Get(key+".skip_aup_for_employees"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".skip_aup_for_employees"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".skip_aup_for_employees")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".skip_aup_for_employees")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".skip_aup_for_employees")))) {
 		request.SkipAupForEmployees = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_frequency_interval_days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_frequency_interval_days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_frequency_interval_days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_frequency_interval_days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_frequency_interval_days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_frequency_interval_days")))) {
 		request.DisplayFrequencyIntervalDays = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_scrolling")))) {
 		request.RequireScrolling = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_frequency"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_frequency"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_frequency"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_frequency")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_frequency")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_frequency")))) {
 		request.DisplayFrequency = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1326,7 +1899,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsGuestChangePasswordSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsGuestChangePasswordSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsGuestChangePasswordSettings{}
-	if v, ok := d.GetOkExists(key + ".allow_change_passwd_at_first_login"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_change_passwd_at_first_login"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_change_passwd_at_first_login"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_change_passwd_at_first_login")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_change_passwd_at_first_login")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_change_passwd_at_first_login")))) {
 		request.AllowChangePasswdAtFirstLogin = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1337,10 +1910,10 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings{}
-	if v, ok := d.GetOkExists(key + ".auto_register_guest_devices"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auto_register_guest_devices"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auto_register_guest_devices"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_register_guest_devices")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_register_guest_devices")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_register_guest_devices")))) {
 		request.AutoRegisterGuestDevices = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_guests_to_register_devices"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_guests_to_register_devices"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_guests_to_register_devices"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_guests_to_register_devices")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_guests_to_register_devices")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_guests_to_register_devices")))) {
 		request.AllowGuestsToRegisterDevices = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1351,13 +1924,13 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettings{}
-	if v, ok := d.GetOkExists(key + ".byod_welcome_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_welcome_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_welcome_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_welcome_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_welcome_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_welcome_settings")))) {
 		request.ByodWelcomeSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings(ctx, key+".byod_welcome_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_registration_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_registration_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_registration_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_registration_settings")))) {
 		request.ByodRegistrationSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings(ctx, key+".byod_registration_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_registration_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_success_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_registration_success_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_registration_success_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_registration_success_settings")))) {
 		request.ByodRegistrationSuccessSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx, key+".byod_registration_success_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1368,25 +1941,25 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings{}
-	if v, ok := d.GetOkExists(key + ".enable_byo_d"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_byo_d"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_byo_d"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_byo_d")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_byo_d")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_byo_d")))) {
 		request.EnableByod = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_guest_access"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_guest_access"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_guest_access"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_guest_access")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_guest_access")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_guest_access")))) {
 		request.EnableGuestAccess = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_mdm"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_mdm"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_mdm"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_mdm")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_mdm")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_mdm")))) {
 		request.RequireMdm = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_display")))) {
 		request.AupDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_aup_acceptance"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_acceptance"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_acceptance"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_aup_acceptance")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_aup_acceptance")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_aup_acceptance")))) {
 		request.RequireAupAcceptance = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_scrolling")))) {
 		request.RequireScrolling = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1397,10 +1970,10 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings{}
-	if v, ok := d.GetOkExists(key + ".show_device_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".show_device_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".show_device_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".show_device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".show_device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".show_device_id")))) {
 		request.ShowDeviceID = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".end_point_identity_group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_point_identity_group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_point_identity_group_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_point_identity_group_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_point_identity_group_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_point_identity_group_id")))) {
 		request.EndPointIDentityGroupID = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1411,10 +1984,10 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings{}
-	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".success_redirect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".success_redirect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".success_redirect")))) {
 		request.SuccessRedirect = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".redirect_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".redirect_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".redirect_url")))) {
 		request.RedirectURL = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1425,7 +1998,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPostAccessBannerSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPostAccessBannerSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPostAccessBannerSettings{}
-	if v, ok := d.GetOkExists(key + ".include_post_access_banner"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_post_access_banner"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_post_access_banner"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_post_access_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_post_access_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_post_access_banner")))) {
 		request.IncludePostAccessBanner = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1436,10 +2009,10 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsAuthSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsAuthSuccessSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsAuthSuccessSettings{}
-	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".success_redirect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".success_redirect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".success_redirect")))) {
 		request.SuccessRedirect = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".redirect_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".redirect_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".redirect_url")))) {
 		request.RedirectURL = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1450,7 +2023,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPostLoginBannerSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPostLoginBannerSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsPostLoginBannerSettings{}
-	if v, ok := d.GetOkExists(key + ".include_post_access_banner"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_post_access_banner"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_post_access_banner"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_post_access_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_post_access_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_post_access_banner")))) {
 		request.IncludePostAccessBanner = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1461,28 +2034,28 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsSupportInfoSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsSupportInfoSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalSettingsSupportInfoSettings{}
-	if v, ok := d.GetOkExists(key + ".include_support_info_page"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_support_info_page"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_support_info_page"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_support_info_page")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_support_info_page")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_support_info_page")))) {
 		request.IncludeSupportInfoPage = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_mac_addr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_mac_addr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_mac_addr"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_mac_addr")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_mac_addr")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_mac_addr")))) {
 		request.IncludeMacAddr = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_ip_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_ip_address")))) {
 		request.IncludeIPAddress = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_browser_user_agent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_browser_user_agent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_browser_user_agent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_browser_user_agent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_browser_user_agent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_browser_user_agent")))) {
 		request.IncludeBrowserUserAgent = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_policy_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_policy_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_policy_server"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_policy_server")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_policy_server")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_policy_server")))) {
 		request.IncludePolicyServer = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_failure_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_failure_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_failure_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_failure_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_failure_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_failure_code")))) {
 		request.IncludeFailureCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".empty_field_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".empty_field_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".empty_field_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".empty_field_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".empty_field_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".empty_field_display")))) {
 		request.EmptyFieldDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_empty_field_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_empty_field_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_empty_field_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_empty_field_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_empty_field_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_empty_field_value")))) {
 		request.DefaultEmptyFieldValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1493,19 +2066,19 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizations {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".portal_theme"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_theme"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_theme"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_theme")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_theme")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_theme")))) {
 		request.PortalTheme = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPortalTheme(ctx, key+".portal_theme.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_tweak_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_tweak_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_tweak_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_tweak_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_tweak_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_tweak_settings")))) {
 		request.PortalTweakSettings = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPortalTweakSettings(ctx, key+".portal_tweak_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".language")))) {
 		request.Language = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsLanguage(ctx, key+".language.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".global_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".global_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".global_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".global_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".global_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".global_customizations")))) {
 		request.GlobalCustomizations = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizations(ctx, key+".global_customizations.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".page_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_customizations")))) {
 		request.PageCustomizations = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizations(ctx, key+".page_customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1516,13 +2089,13 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPortalTheme {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPortalTheme{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".theme_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".theme_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".theme_data")))) {
 		request.ThemeData = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1533,16 +2106,16 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPortalTweakSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPortalTweakSettings {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPortalTweakSettings{}
-	if v, ok := d.GetOkExists(key + ".banner_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_color")))) {
 		request.BannerColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_text_color")))) {
 		request.BannerTextColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_background_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_background_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_background_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_background_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_background_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_background_color")))) {
 		request.PageBackgroundColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_label_and_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_label_and_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_label_and_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_label_and_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_label_and_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_label_and_text_color")))) {
 		request.PageLabelAndTextColor = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1553,7 +2126,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsLanguage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsLanguage {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsLanguage{}
-	if v, ok := d.GetOkExists(key + ".view_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".view_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".view_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view_language")))) {
 		request.ViewLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1564,25 +2137,25 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizations {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".mobile_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mobile_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mobile_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mobile_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mobile_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mobile_logo_image")))) {
 		request.MobileLogoImage = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx, key+".mobile_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".desktop_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".desktop_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".desktop_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".desktop_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".desktop_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".desktop_logo_image")))) {
 		request.DesktopLogoImage = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx, key+".desktop_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_image")))) {
 		request.BannerImage = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage(ctx, key+".banner_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".background_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".background_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".background_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".background_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".background_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".background_image")))) {
 		request.BackgroundImage = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx, key+".background_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_title"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_title")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_title")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_title")))) {
 		request.BannerTitle = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".contact_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".contact_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".contact_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".contact_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".contact_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".contact_text")))) {
 		request.ContactText = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".footer_element"); !isEmptyValue(reflect.ValueOf(d.Get(key+".footer_element"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".footer_element"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".footer_element")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".footer_element")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".footer_element")))) {
 		request.FooterElement = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1593,7 +2166,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1604,7 +2177,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1615,7 +2188,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1626,7 +2199,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1637,7 +2210,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizations{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1648,6 +2221,7 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -1670,10 +2244,10 @@ func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPo
 
 func expandRequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsData {
 	request := isegosdk.RequestSponsoredGuestPortalCreateSponsoredGuestPortalSponsoredGuestPortalCustomizationsPageCustomizationsData{}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1693,25 +2267,25 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByID(ctx context
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortal(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortal {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortal{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_type")))) {
 		request.PortalType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_test_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_test_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_test_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_test_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_test_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_test_url")))) {
 		request.PortalTestURL = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".settings")))) {
 		request.Settings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettings(ctx, key+".settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".customizations")))) {
 		request.Customizations = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizations(ctx, key+".customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1722,34 +2296,34 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".portal_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_settings")))) {
 		request.PortalSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPortalSettings(ctx, key+".portal_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".login_page_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".login_page_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".login_page_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".login_page_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".login_page_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".login_page_settings")))) {
 		request.LoginPageSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettings(ctx, key+".login_page_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_settings")))) {
 		request.AupSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAupSettings(ctx, key+".aup_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_change_password_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_change_password_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_change_password_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_change_password_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_change_password_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_change_password_settings")))) {
 		request.GuestChangePasswordSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestChangePasswordSettings(ctx, key+".guest_change_password_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_device_registration_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_device_registration_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_device_registration_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_device_registration_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_device_registration_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_device_registration_settings")))) {
 		request.GuestDeviceRegistrationSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings(ctx, key+".guest_device_registration_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_settings")))) {
 		request.ByodSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettings(ctx, key+".byod_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".post_access_banner_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".post_access_banner_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".post_access_banner_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".post_access_banner_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".post_access_banner_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".post_access_banner_settings")))) {
 		request.PostAccessBannerSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostAccessBannerSettings(ctx, key+".post_access_banner_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".auth_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auth_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auth_success_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_success_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_success_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_success_settings")))) {
 		request.AuthSuccessSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAuthSuccessSettings(ctx, key+".auth_success_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".post_login_banner_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".post_login_banner_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".post_login_banner_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".post_login_banner_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".post_login_banner_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".post_login_banner_settings")))) {
 		request.PostLoginBannerSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostLoginBannerSettings(ctx, key+".post_login_banner_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".support_info_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".support_info_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".support_info_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".support_info_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".support_info_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".support_info_settings")))) {
 		request.SupportInfoSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsSupportInfoSettings(ctx, key+".support_info_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1760,28 +2334,28 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPortalSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPortalSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPortalSettings{}
-	if v, ok := d.GetOkExists(key + ".https_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".https_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".https_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".https_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".https_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".https_port")))) {
 		request.HTTPSPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_interfaces"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_interfaces"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_interfaces"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_interfaces")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_interfaces")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_interfaces")))) {
 		request.AllowedInterfaces = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_group_tag")))) {
 		request.CertificateGroupTag = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".authentication_method"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authentication_method"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authentication_method"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authentication_method")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authentication_method")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authentication_method")))) {
 		request.AuthenticationMethod = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".assigned_guest_type_for_employee"); !isEmptyValue(reflect.ValueOf(d.Get(key+".assigned_guest_type_for_employee"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".assigned_guest_type_for_employee"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".assigned_guest_type_for_employee")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".assigned_guest_type_for_employee")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".assigned_guest_type_for_employee")))) {
 		request.AssignedGuestTypeForEmployee = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_lang"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_lang"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_lang"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_lang")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_lang")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_lang")))) {
 		request.DisplayLang = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".fallback_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".fallback_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".fallback_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".fallback_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".fallback_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".fallback_language")))) {
 		request.FallbackLanguage = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".always_used_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".always_used_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".always_used_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".always_used_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".always_used_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".always_used_language")))) {
 		request.AlwaysUsedLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1792,40 +2366,40 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettings{}
-	if v, ok := d.GetOkExists(key + ".require_access_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_access_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_access_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_access_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_access_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_access_code")))) {
 		request.RequireAccessCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".max_failed_attempts_before_rate_limit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".max_failed_attempts_before_rate_limit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".max_failed_attempts_before_rate_limit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".max_failed_attempts_before_rate_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".max_failed_attempts_before_rate_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".max_failed_attempts_before_rate_limit")))) {
 		request.MaxFailedAttemptsBeforeRateLimit = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".time_between_logins_during_rate_limit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".time_between_logins_during_rate_limit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".time_between_logins_during_rate_limit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".time_between_logins_during_rate_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".time_between_logins_during_rate_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".time_between_logins_during_rate_limit")))) {
 		request.TimeBetweenLoginsDuringRateLimit = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_display")))) {
 		request.AupDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_aup_acceptance"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_acceptance"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_acceptance"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_aup_acceptance")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_aup_acceptance")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_aup_acceptance")))) {
 		request.RequireAupAcceptance = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".access_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".access_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".access_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".access_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".access_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".access_code")))) {
 		request.AccessCode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_guest_to_create_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_guest_to_create_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_guest_to_create_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_guest_to_create_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_guest_to_create_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_guest_to_create_accounts")))) {
 		request.AllowGuestToCreateAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_forgot_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_forgot_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_forgot_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_forgot_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_forgot_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_forgot_password")))) {
 		request.AllowForgotPassword = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_guest_to_change_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_guest_to_change_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_guest_to_change_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_guest_to_change_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_guest_to_change_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_guest_to_change_password")))) {
 		request.AllowGuestToChangePassword = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_alternate_guest_portal"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_alternate_guest_portal"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_alternate_guest_portal"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_alternate_guest_portal")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_alternate_guest_portal")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_alternate_guest_portal")))) {
 		request.AllowAlternateGuestPortal = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".social_configs"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_configs"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_configs"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".social_configs")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".social_configs")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".social_configs")))) {
 		request.SocialConfigs = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key+".social_configs", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1836,6 +2410,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs {
 	request := []isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -1858,10 +2433,10 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsLoginPageSettingsSocialConfigs{}
-	if v, ok := d.GetOkExists(key + ".social_media_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_media_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_media_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".social_media_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".social_media_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".social_media_type")))) {
 		request.SocialMediaType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".social_media_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".social_media_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".social_media_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".social_media_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".social_media_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".social_media_value")))) {
 		request.SocialMediaValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1872,25 +2447,25 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAupSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAupSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAupSettings{}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_aup_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_aup_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_aup_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_aup_scrolling")))) {
 		request.RequireAupScrolling = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_diff_aup_for_employees"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_diff_aup_for_employees"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_diff_aup_for_employees"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_diff_aup_for_employees")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_diff_aup_for_employees")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_diff_aup_for_employees")))) {
 		request.UseDiffAupForEmployees = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".skip_aup_for_employees"); !isEmptyValue(reflect.ValueOf(d.Get(key+".skip_aup_for_employees"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".skip_aup_for_employees"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".skip_aup_for_employees")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".skip_aup_for_employees")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".skip_aup_for_employees")))) {
 		request.SkipAupForEmployees = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_frequency_interval_days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_frequency_interval_days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_frequency_interval_days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_frequency_interval_days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_frequency_interval_days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_frequency_interval_days")))) {
 		request.DisplayFrequencyIntervalDays = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_scrolling")))) {
 		request.RequireScrolling = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".display_frequency"); !isEmptyValue(reflect.ValueOf(d.Get(key+".display_frequency"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".display_frequency"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".display_frequency")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".display_frequency")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".display_frequency")))) {
 		request.DisplayFrequency = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1901,7 +2476,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestChangePasswordSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestChangePasswordSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestChangePasswordSettings{}
-	if v, ok := d.GetOkExists(key + ".allow_change_passwd_at_first_login"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_change_passwd_at_first_login"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_change_passwd_at_first_login"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_change_passwd_at_first_login")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_change_passwd_at_first_login")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_change_passwd_at_first_login")))) {
 		request.AllowChangePasswdAtFirstLogin = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1912,10 +2487,10 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsGuestDeviceRegistrationSettings{}
-	if v, ok := d.GetOkExists(key + ".auto_register_guest_devices"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auto_register_guest_devices"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auto_register_guest_devices"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_register_guest_devices")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_register_guest_devices")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_register_guest_devices")))) {
 		request.AutoRegisterGuestDevices = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_guests_to_register_devices"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_guests_to_register_devices"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_guests_to_register_devices"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_guests_to_register_devices")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_guests_to_register_devices")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_guests_to_register_devices")))) {
 		request.AllowGuestsToRegisterDevices = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1926,13 +2501,13 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettings{}
-	if v, ok := d.GetOkExists(key + ".byod_welcome_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_welcome_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_welcome_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_welcome_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_welcome_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_welcome_settings")))) {
 		request.ByodWelcomeSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings(ctx, key+".byod_welcome_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_registration_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_registration_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_registration_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_registration_settings")))) {
 		request.ByodRegistrationSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings(ctx, key+".byod_registration_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".byod_registration_success_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".byod_registration_success_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".byod_registration_success_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".byod_registration_success_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".byod_registration_success_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".byod_registration_success_settings")))) {
 		request.ByodRegistrationSuccessSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx, key+".byod_registration_success_settings.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1943,25 +2518,25 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodWelcomeSettings{}
-	if v, ok := d.GetOkExists(key + ".enable_byo_d"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_byo_d"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_byo_d"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_byo_d")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_byo_d")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_byo_d")))) {
 		request.EnableByod = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_guest_access"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_guest_access"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_guest_access"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_guest_access")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_guest_access")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_guest_access")))) {
 		request.EnableGuestAccess = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_mdm"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_mdm"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_mdm"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_mdm")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_mdm")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_mdm")))) {
 		request.RequireMdm = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_aup"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_aup"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_aup"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_aup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_aup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_aup")))) {
 		request.IncludeAup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".aup_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".aup_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".aup_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aup_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aup_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aup_display")))) {
 		request.AupDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_aup_acceptance"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_aup_acceptance"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_aup_acceptance"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_aup_acceptance")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_aup_acceptance")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_aup_acceptance")))) {
 		request.RequireAupAcceptance = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_scrolling"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_scrolling"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_scrolling"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_scrolling")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_scrolling")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_scrolling")))) {
 		request.RequireScrolling = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1972,10 +2547,10 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSettings{}
-	if v, ok := d.GetOkExists(key + ".show_device_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".show_device_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".show_device_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".show_device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".show_device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".show_device_id")))) {
 		request.ShowDeviceID = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".end_point_identity_group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_point_identity_group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_point_identity_group_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_point_identity_group_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_point_identity_group_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_point_identity_group_id")))) {
 		request.EndPointIDentityGroupID = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1986,10 +2561,10 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsByodSettingsByodRegistrationSuccessSettings{}
-	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".success_redirect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".success_redirect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".success_redirect")))) {
 		request.SuccessRedirect = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".redirect_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".redirect_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".redirect_url")))) {
 		request.RedirectURL = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2000,7 +2575,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostAccessBannerSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostAccessBannerSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostAccessBannerSettings{}
-	if v, ok := d.GetOkExists(key + ".include_post_access_banner"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_post_access_banner"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_post_access_banner"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_post_access_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_post_access_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_post_access_banner")))) {
 		request.IncludePostAccessBanner = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2011,10 +2586,10 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAuthSuccessSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAuthSuccessSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsAuthSuccessSettings{}
-	if v, ok := d.GetOkExists(key + ".success_redirect"); !isEmptyValue(reflect.ValueOf(d.Get(key+".success_redirect"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".success_redirect"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".success_redirect")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".success_redirect")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".success_redirect")))) {
 		request.SuccessRedirect = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".redirect_url"); !isEmptyValue(reflect.ValueOf(d.Get(key+".redirect_url"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".redirect_url"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".redirect_url")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".redirect_url")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".redirect_url")))) {
 		request.RedirectURL = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2025,7 +2600,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostLoginBannerSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostLoginBannerSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsPostLoginBannerSettings{}
-	if v, ok := d.GetOkExists(key + ".include_post_access_banner"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_post_access_banner"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_post_access_banner"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_post_access_banner")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_post_access_banner")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_post_access_banner")))) {
 		request.IncludePostAccessBanner = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2036,28 +2611,28 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsSupportInfoSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsSupportInfoSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalSettingsSupportInfoSettings{}
-	if v, ok := d.GetOkExists(key + ".include_support_info_page"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_support_info_page"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_support_info_page"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_support_info_page")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_support_info_page")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_support_info_page")))) {
 		request.IncludeSupportInfoPage = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_mac_addr"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_mac_addr"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_mac_addr"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_mac_addr")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_mac_addr")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_mac_addr")))) {
 		request.IncludeMacAddr = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_ip_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_ip_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_ip_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_ip_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_ip_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_ip_address")))) {
 		request.IncludeIPAddress = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_browser_user_agent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_browser_user_agent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_browser_user_agent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_browser_user_agent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_browser_user_agent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_browser_user_agent")))) {
 		request.IncludeBrowserUserAgent = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_policy_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_policy_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_policy_server"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_policy_server")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_policy_server")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_policy_server")))) {
 		request.IncludePolicyServer = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".include_failure_code"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_failure_code"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_failure_code"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_failure_code")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_failure_code")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_failure_code")))) {
 		request.IncludeFailureCode = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".empty_field_display"); !isEmptyValue(reflect.ValueOf(d.Get(key+".empty_field_display"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".empty_field_display"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".empty_field_display")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".empty_field_display")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".empty_field_display")))) {
 		request.EmptyFieldDisplay = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_empty_field_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_empty_field_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_empty_field_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_empty_field_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_empty_field_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_empty_field_value")))) {
 		request.DefaultEmptyFieldValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2068,19 +2643,19 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizations {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".portal_theme"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_theme"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_theme"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_theme")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_theme")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_theme")))) {
 		request.PortalTheme = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTheme(ctx, key+".portal_theme.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_tweak_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_tweak_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_tweak_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_tweak_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_tweak_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_tweak_settings")))) {
 		request.PortalTweakSettings = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTweakSettings(ctx, key+".portal_tweak_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".language")))) {
 		request.Language = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsLanguage(ctx, key+".language.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".global_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".global_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".global_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".global_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".global_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".global_customizations")))) {
 		request.GlobalCustomizations = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizations(ctx, key+".global_customizations.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".page_customizations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_customizations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_customizations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_customizations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_customizations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_customizations")))) {
 		request.PageCustomizations = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations(ctx, key+".page_customizations.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2091,13 +2666,13 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTheme(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTheme {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTheme{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".theme_data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".theme_data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".theme_data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".theme_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".theme_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".theme_data")))) {
 		request.ThemeData = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2108,16 +2683,16 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTweakSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTweakSettings {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPortalTweakSettings{}
-	if v, ok := d.GetOkExists(key + ".banner_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_color")))) {
 		request.BannerColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_text_color")))) {
 		request.BannerTextColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_background_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_background_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_background_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_background_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_background_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_background_color")))) {
 		request.PageBackgroundColor = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".page_label_and_text_color"); !isEmptyValue(reflect.ValueOf(d.Get(key+".page_label_and_text_color"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".page_label_and_text_color"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".page_label_and_text_color")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".page_label_and_text_color")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".page_label_and_text_color")))) {
 		request.PageLabelAndTextColor = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2128,7 +2703,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsLanguage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsLanguage {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsLanguage{}
-	if v, ok := d.GetOkExists(key + ".view_language"); !isEmptyValue(reflect.ValueOf(d.Get(key+".view_language"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".view_language"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".view_language")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".view_language")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".view_language")))) {
 		request.ViewLanguage = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2139,25 +2714,25 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizations {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizations{}
-	if v, ok := d.GetOkExists(key + ".mobile_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mobile_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mobile_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mobile_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mobile_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mobile_logo_image")))) {
 		request.MobileLogoImage = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx, key+".mobile_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".desktop_logo_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".desktop_logo_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".desktop_logo_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".desktop_logo_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".desktop_logo_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".desktop_logo_image")))) {
 		request.DesktopLogoImage = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx, key+".desktop_logo_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_image")))) {
 		request.BannerImage = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage(ctx, key+".banner_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".background_image"); !isEmptyValue(reflect.ValueOf(d.Get(key+".background_image"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".background_image"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".background_image")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".background_image")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".background_image")))) {
 		request.BackgroundImage = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx, key+".background_image.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".banner_title"); !isEmptyValue(reflect.ValueOf(d.Get(key+".banner_title"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".banner_title"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".banner_title")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".banner_title")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".banner_title")))) {
 		request.BannerTitle = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".contact_text"); !isEmptyValue(reflect.ValueOf(d.Get(key+".contact_text"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".contact_text"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".contact_text")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".contact_text")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".contact_text")))) {
 		request.ContactText = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".footer_element"); !isEmptyValue(reflect.ValueOf(d.Get(key+".footer_element"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".footer_element"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".footer_element")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".footer_element")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".footer_element")))) {
 		request.FooterElement = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2168,7 +2743,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsMobileLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2179,7 +2754,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsDesktopLogoImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2190,7 +2765,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBannerImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2201,7 +2776,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsGlobalCustomizationsBackgroundImage{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2212,7 +2787,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizations{}
-	if v, ok := d.GetOkExists(key + ".data"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data")))) {
 		request.Data = expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx, key+".data", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -2223,6 +2798,7 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsDataArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData {
 	request := []isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -2245,10 +2821,10 @@ func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGue
 
 func expandRequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData {
 	request := isegosdk.RequestSponsoredGuestPortalUpdateSponsoredGuestPortalByIDSponsoredGuestPortalCustomizationsPageCustomizationsData{}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

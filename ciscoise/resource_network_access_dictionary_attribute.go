@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -39,7 +39,6 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,26 +46,21 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 						"allowed_values": &schema.Schema{
 							Description: `all of the allowed values for the dictionary attribute`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"is_default": &schema.Schema{
-										Description:  `true if this key value is the default between the allowed values of the dictionary attribute`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Description: `true if this key value is the default between the allowed values of the dictionary attribute`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"key": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"value": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -75,44 +69,105 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 						"data_type": &schema.Schema{
 							Description: `the data type for the dictionary attribute`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Description: `The description of the Dictionary attribute`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"dictionary_name": &schema.Schema{
 							Description: `the name of the dictionary which the dictionary attribute belongs to`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"direction_type": &schema.Schema{
 							Description: `the direction for the useage of the dictionary attribute`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Description: `Identifier for the dictionary attribute`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"internal_name": &schema.Schema{
 							Description: `the internal name of the dictionary attribute`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Description: `The dictionary attribute's name`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"allowed_values": &schema.Schema{
+							Description: `all of the allowed values for the dictionary attribute`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"is_default": &schema.Schema{
+										Description:  `true if this key value is the default between the allowed values of the dictionary attribute`,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"key": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"value": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"data_type": &schema.Schema{
+							Description: `the data type for the dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"description": &schema.Schema{
+							Description: `The description of the Dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"dictionary_name": &schema.Schema{
+							Description: `the name of the dictionary which the dictionary attribute belongs to`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"direction_type": &schema.Schema{
+							Description: `the direction for the useage of the dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"id": &schema.Schema{
+							Description: `Identifier for the dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"internal_name": &schema.Schema{
+							Description: `the internal name of the dictionary attribute`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"name": &schema.Schema{
+							Description: `The dictionary attribute's name`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 					},
 				},
@@ -126,8 +181,8 @@ func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *sche
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute(ctx, "item.0", d)
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute(ctx, "parameters.0", d)
 	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 
 	vDictionaryName, okDictionaryName := resourceItem["dictionary_name"]
@@ -141,7 +196,7 @@ func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *sche
 			resourceMap["dictionary_name"] = vvDictionaryName
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceNetworkAccessDictionaryAttributeRead(ctx, d, m)
 		}
 	} else {
 		response2, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
@@ -153,7 +208,7 @@ func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *sche
 				resourceMap["dictionary_name"] = vvDictionaryName
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceNetworkAccessDictionaryAttributeRead(ctx, d, m)
 			}
 		}
 	}
@@ -175,7 +230,7 @@ func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *sche
 	resourceMap["dictionary_name"] = vvDictionaryName
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceNetworkAccessDictionaryAttributeRead(ctx, d, m)
 }
 
 func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -199,9 +254,12 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 		vvDictionaryName := vDictionaryName
 		vvName := vName
 
-		response1, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
+		response1, restyResp1, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessDictionaryAttributesByDictionaryName", err,
 				"Failure at GetNetworkAccessDictionaryAttributesByDictionaryName, unexpected response", ""))
@@ -232,9 +290,12 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 		vvName := vName
 		vvDictionaryName := vDictionaryName
 
-		response2, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributeByName(vvName, vvDictionaryName)
+		response2, restyResp2, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributeByName(vvName, vvDictionaryName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessDictionaryAttributeByName", err,
 				"Failure at GetNetworkAccessDictionaryAttributeByName, unexpected response", ""))
@@ -295,9 +356,9 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 		vvName = vName
 		vvDictionaryName = vDictionaryName
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
-		request1 := expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName(ctx, "item.0", d)
+		request1 := expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName(ctx, "parameters.0", d)
 		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		response1, restyResp1, err := client.NetworkAccessDictionaryAttribute.UpdateNetworkAccessDictionaryAttributeByName(vvName, vvDictionaryName, request1)
 		if err != nil || response1 == nil {
@@ -389,28 +450,28 @@ func resourceNetworkAccessDictionaryAttributeDelete(ctx context.Context, d *sche
 }
 func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute {
 	request := isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute{}
-	if v, ok := d.GetOkExists(key + ".allowed_values"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_values"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_values"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_values")))) {
 		request.AllowedValues = expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValuesArray(ctx, key+".allowed_values", d)
 	}
-	if v, ok := d.GetOkExists(key + ".data_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data_type")))) {
 		request.DataType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".direction_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".direction_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".direction_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".direction_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".direction_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".direction_type")))) {
 		request.DirectionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".internal_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".internal_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".internal_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".internal_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".internal_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".internal_name")))) {
 		request.InternalName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -421,6 +482,7 @@ func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryA
 
 func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValuesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValues {
 	request := []isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValues{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -443,13 +505,13 @@ func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryA
 
 func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValues(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValues {
 	request := isegosdk.RequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttributeAllowedValues{}
-	if v, ok := d.GetOkExists(key + ".is_default"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_default"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_default"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_default")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_default")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_default")))) {
 		request.IsDefault = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -460,28 +522,28 @@ func expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryA
 
 func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName {
 	request := isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName{}
-	if v, ok := d.GetOkExists(key + ".allowed_values"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_values"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_values"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_values")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_values")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_values")))) {
 		request.AllowedValues = expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValuesArray(ctx, key+".allowed_values", d)
 	}
-	if v, ok := d.GetOkExists(key + ".data_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".data_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".data_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".data_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".data_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".data_type")))) {
 		request.DataType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".direction_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".direction_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".direction_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".direction_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".direction_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".direction_type")))) {
 		request.DirectionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".internal_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".internal_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".internal_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".internal_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".internal_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".internal_name")))) {
 		request.InternalName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -492,6 +554,7 @@ func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryA
 
 func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValuesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValues {
 	request := []isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValues{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -514,13 +577,13 @@ func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryA
 
 func expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValues(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValues {
 	request := isegosdk.RequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByNameAllowedValues{}
-	if v, ok := d.GetOkExists(key + ".is_default"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_default"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_default"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_default")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_default")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_default")))) {
 		request.IsDefault = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key")))) {
 		request.Key = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

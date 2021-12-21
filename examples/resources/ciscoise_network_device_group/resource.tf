@@ -1,7 +1,7 @@
 
 resource "ciscoise_network_device_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"

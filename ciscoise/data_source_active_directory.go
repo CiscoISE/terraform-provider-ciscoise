@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -766,9 +766,12 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Selected method 2: GetActiveDirectoryByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.ActiveDirectory.GetActiveDirectoryByName(vvName)
+		response2, restyResp2, err := client.ActiveDirectory.GetActiveDirectoryByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetActiveDirectoryByName", err,
 				"Failure at GetActiveDirectoryByName, unexpected response", ""))
@@ -792,9 +795,12 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Selected method 3: GetActiveDirectoryByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.ActiveDirectory.GetActiveDirectoryByID(vvID)
+		response3, restyResp3, err := client.ActiveDirectory.GetActiveDirectoryByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetActiveDirectoryByID", err,
 				"Failure at GetActiveDirectoryByID, unexpected response", ""))
@@ -895,7 +901,6 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroupsGroups(items 
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettings(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdvancedSettings) []map[string]interface{} {
@@ -949,7 +954,6 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettingsRewri
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributes(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryAdAttributes) []map[string]interface{} {
@@ -979,7 +983,6 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributesAttribute
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenActiveDirectoryGetActiveDirectoryByNameItemNameLink(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectoryLink) []map[string]interface{} {
@@ -1044,7 +1047,6 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroupsGroups(items *[]i
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettings(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdvancedSettings) []map[string]interface{} {
@@ -1098,7 +1100,6 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettingsRewriteRu
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributes(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryAdAttributes) []map[string]interface{} {
@@ -1128,7 +1129,6 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributesAttributes(it
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenActiveDirectoryGetActiveDirectoryByIDItemIDLink(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByIDERSActiveDirectoryLink) []map[string]interface{} {

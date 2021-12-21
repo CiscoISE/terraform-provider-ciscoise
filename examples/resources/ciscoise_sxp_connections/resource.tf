@@ -1,7 +1,7 @@
 
 resource "ciscoise_sxp_connections" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     enabled     = "false"

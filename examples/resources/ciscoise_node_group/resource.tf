@@ -1,18 +1,17 @@
 
 resource "ciscoise_node_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     mar_cache {
 
-      enabled              = "false"
       query_attempts       = 1
       query_timeout        = 1
       replication_attempts = 1
       replication_timeout  = 1
     }
-    node_group_name = "string"
+    name = "string"
   }
 }
 

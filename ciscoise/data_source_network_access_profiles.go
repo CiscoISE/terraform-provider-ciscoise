@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -15,7 +15,7 @@ func dataSourceNetworkAccessProfiles() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Profiles.
 
-- Network Access Returns list of profiles.
+- Network Access Returns list of authorization profiles.
  (Other CRUD APIs available throught ERS)
 `,
 

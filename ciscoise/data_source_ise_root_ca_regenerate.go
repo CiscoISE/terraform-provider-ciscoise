@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -18,9 +18,9 @@ func dataSourceIseRootCaRegenerate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-- This data source action will initiate regeneration of ISE root CA certificate chain. Response contains id which can be
-used to track the status.
-  Setting "removeExistingISEIntermediateCSR" to true will remove existing ISE Intermediate CSR
+- This data source action initiates regeneration of Cisco ISE root CA certificate chain. Response contains ID which can
+be used to track the status.
+  Setting "removeExistingISEIntermediateCSR" to true removes existing Cisco ISE Intermediate CSR
 `,
 
 		ReadContext: dataSourceIseRootCaRegenerateRead,
@@ -32,7 +32,7 @@ used to track the status.
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Description: `Id which can be used to track status of ISE root CA chain regeneration`,
+							Description: `ID which can be used to track status of Cisco ISE root CA chain regeneration`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -65,7 +65,7 @@ used to track the status.
 				},
 			},
 			"remove_existing_ise_intermediate_csr": &schema.Schema{
-				Description:  `Setting this attribute to true will remove existing ISE Intermediate CSR`,
+				Description:  `Setting this attribute to true removes existing Cisco ISE Intermediate CSR`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -89,6 +89,7 @@ func dataSourceIseRootCaRegenerateRead(ctx context.Context, d *schema.ResourceDa
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

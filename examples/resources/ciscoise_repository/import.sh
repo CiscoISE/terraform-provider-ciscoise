@@ -1,1 +1,1 @@
-terraform import ciscoise_repository.example "name:=string"
+terraform import ciscoise_repository.example "repository_name:=string"

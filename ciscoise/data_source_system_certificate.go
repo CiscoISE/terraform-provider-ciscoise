@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -17,17 +17,34 @@ func dataSourceSystemCertificate() *schema.Resource {
 
 - This data source supports Filtering, Sorting and Pagination.
 
-
 Filtering and Sorting supported on below mentioned attributes:
 
-[friendlyName, issuedTo, issuedBy, validFrom, expirationDate]
+
+friendlyName
+
+issuedTo
+
+issuedBy
+
+validFrom
+
 
 Supported Date Format: yyyy-MM-dd HH:mm:ss
 
 Supported Operators: EQ, NEQ, GT and LT
 
 
-- This data source displays details of a System Certificate of a particular node based on a given HostName and ID.
+expirationDate
+
+
+Supported Date Format: yyyy-MM-dd HH:mm:ss
+
+Supported Operators: EQ, NEQ, GT and LT
+
+
+
+
+- This data source provides details of a System Certificate of a particular node based on given HostName and ID.
 `,
 
 		ReadContext: dataSourceSystemCertificateRead,
@@ -41,6 +58,79 @@ Simple filtering
  should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
 "filterType=or"
  query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
+ 
+ 
+ 
+ 
+ 
+OPERATOR
+ 
+DESCRIPTION
+ 
+ 
+ 
+ 
+ 
+EQ
+ 
+Equals
+ 
+ 
+ 
+NEQ
+ 
+Not Equals
+ 
+ 
+ 
+GT
+ 
+Greater Than
+ 
+ 
+ 
+LT
+ 
+Less Then
+ 
+ 
+ 
+STARTSW
+ 
+Starts With
+ 
+ 
+ 
+NSTARTSW
+ 
+Not Starts With
+ 
+ 
+ 
+ENDSW
+ 
+Ends With
+ 
+ 
+ 
+NENDSW
+ 
+Not Ends With
+ 
+ 
+ 
+CONTAINS
+ 
+Contains
+ 
+ 
+ 
+NCONTAINS
+ 
+Not Contains
+ 
+ 
+ 
  `,
 				Type:     schema.TypeList,
 				Optional: true,
@@ -59,7 +149,7 @@ Simple filtering
 				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Description: `id path parameter. The id of the system certificate`,
+				Description: `id path parameter. ID of the system certificate`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -90,7 +180,7 @@ Simple filtering
 					Schema: map[string]*schema.Schema{
 
 						"expiration_date": &schema.Schema{
-							Description: `The time and date past which the certificate is no longer valid`,
+							Description: `Time and date past which the certificate is no longer valid`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -119,7 +209,7 @@ Simple filtering
 							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Description: `The length of key used for encrypting system certificate`,
+							Description: `Length of key used for encrypting system certificate`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
@@ -170,7 +260,7 @@ Simple filtering
 							Computed: true,
 						},
 						"valid_from": &schema.Schema{
-							Description: `The time and date on which the certificate was created, also known as the Not Before certificate attribute`,
+							Description: `Time and date on which the certificate was created, also known as the Not Before certificate attribute`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -183,90 +273,17 @@ Simple filtering
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"expiration_date": &schema.Schema{
-							Description: `The time and date past which the certificate is no longer valid`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"friendly_name": &schema.Schema{
-							Description: `Friendly name of system certificate`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"group_tag": &schema.Schema{
+						"href": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"id": &schema.Schema{
-							Description: `ID of system certificate`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"issued_by": &schema.Schema{
-							Description: `Common Name of the certificate issuer`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"issued_to": &schema.Schema{
-							Description: `Common Name of the certificate subject`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"key_size": &schema.Schema{
-							Description: `The length of key used for encrypting system certificate`,
-							Type:        schema.TypeInt,
-							Computed:    true,
-						},
-						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"href": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"rel": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"type": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-								},
-							},
-						},
-						"portals_using_the_tag": &schema.Schema{
+						"rel": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"self_signed": &schema.Schema{
+						"type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
-						},
-						"serial_number_decimal_format": &schema.Schema{
-							Description: `Used to uniquely identify the certificate within a CA's systems`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
-						"sha256_fingerprint": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"signature_algorithm": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"used_by": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"valid_from": &schema.Schema{
-							Description: `The time and date on which the certificate was created, also known as the Not Before certificate attribute`,
-							Type:        schema.TypeString,
-							Computed:    true,
 						},
 					},
 				},
@@ -294,7 +311,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 || !okID {
+	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method 1: GetSystemCertificates")
 		vvHostName := vHostName.(string)
 		queryParams1 := isegosdk.GetSystemCertificatesQueryParams{}
@@ -369,9 +386,12 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)
 
-		response2, _, err := client.Certificates.GetSystemCertificateByID(vvHostName, vvID)
+		response2, restyResp2, err := client.Certificates.GetSystemCertificateByID(vvHostName, vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSystemCertificateByID", err,
 				"Failure at GetSystemCertificateByID, unexpected response", ""))

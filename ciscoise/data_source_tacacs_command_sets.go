@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -322,9 +322,12 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 		log.Printf("[DEBUG] Selected method 2: GetTacacsCommandSetsByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.TacacsCommandSets.GetTacacsCommandSetsByName(vvName)
+		response2, restyResp2, err := client.TacacsCommandSets.GetTacacsCommandSetsByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsCommandSetsByName", err,
 				"Failure at GetTacacsCommandSetsByName, unexpected response", ""))
@@ -348,9 +351,12 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 		log.Printf("[DEBUG] Selected method 3: GetTacacsCommandSetsByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.TacacsCommandSets.GetTacacsCommandSetsByID(vvID)
+		response3, restyResp3, err := client.TacacsCommandSets.GetTacacsCommandSetsByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsCommandSetsByID", err,
 				"Failure at GetTacacsCommandSetsByID, unexpected response", ""))
@@ -446,7 +452,6 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameCommandsCommandLi
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenTacacsCommandSetsGetTacacsCommandSetsByNameItemNameLink(item *isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByNameTacacsCommandSetsLink) []map[string]interface{} {
@@ -506,7 +511,6 @@ func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDCommandsCommandList(i
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenTacacsCommandSetsGetTacacsCommandSetsByIDItemIDLink(item *isegosdk.ResponseTacacsCommandSetsGetTacacsCommandSetsByIDTacacsCommandSetsLink) []map[string]interface{} {

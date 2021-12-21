@@ -1,7 +1,7 @@
 
 resource "ciscoise_trusted_certificate" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     authenticate_before_crl_received       = "false"
     automatic_crl_update                   = "false"

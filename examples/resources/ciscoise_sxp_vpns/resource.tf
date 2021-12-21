@@ -1,8 +1,8 @@
 
 resource "ciscoise_sxp_vpns" "example" {
   provider = ciscoise
-  item {
-    id           = "string"
+  parameters {
+
     sxp_vpn_name = "string"
   }
 }

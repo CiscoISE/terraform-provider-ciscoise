@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -293,9 +293,12 @@ func dataSourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Selected method 2: GetSxpLocalBindingsByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SxpLocalBindings.GetSxpLocalBindingsByID(vvID)
+		response2, restyResp2, err := client.SxpLocalBindings.GetSxpLocalBindingsByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpLocalBindingsByID", err,
 				"Failure at GetSxpLocalBindingsByID, unexpected response", ""))
