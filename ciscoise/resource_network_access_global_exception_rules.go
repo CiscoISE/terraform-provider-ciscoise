@@ -596,7 +596,9 @@ func resourceNetworkAccessGlobalExceptionRulesCreate(ctx context.Context, d *sch
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNetworkAccessGlobalExceptionRulesCreateNetworkAccessPolicySetGlobalExceptionRule(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	var vvName string
@@ -810,7 +812,9 @@ func resourceNetworkAccessGlobalExceptionRulesUpdate(ctx context.Context, d *sch
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkAccessGlobalExceptionRulesUpdateNetworkAccessPolicySetGlobalExceptionRuleByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.NetworkAccessAuthorizationGlobalExceptionRules.UpdateNetworkAccessPolicySetGlobalExceptionRuleByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

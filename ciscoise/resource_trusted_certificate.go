@@ -430,7 +430,7 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 				"Failure when searching item from GetTrustedCertificates, unexpected response", ""))
 			return diags
 		}
-		vItem1 := flattenCertificatesGetTrustedCertificateByIDItem2(item1)
+		vItem1 := flattenCertificatesGetTrustedCertificateByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTrustedCertificates search response",
@@ -457,7 +457,7 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItem2 := flattenCertificatesGetTrustedCertificateByIDItem2(response2.Response)
+		vItem2 := flattenCertificatesGetTrustedCertificateByIDItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTrustedCertificateByID response",
@@ -509,7 +509,9 @@ func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceDat
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestTrustedCertificateUpdateTrustedCertificate(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.Certificates.UpdateTrustedCertificate(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

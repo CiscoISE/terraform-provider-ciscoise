@@ -151,7 +151,9 @@ func resourceNodeGroupCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNodeGroupCreateNodeGroup(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vNodeGroupName, okNodeGroupName := resourceItem["node_group_name"]
 	vvNodeGroupName := interfaceToString(vNodeGroupName)
@@ -297,7 +299,9 @@ func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvNodeGroupName)
 		request1 := expandRequestNodeGroupUpdateNodeGroup(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.NodeGroup.UpdateNodeGroup(vvNodeGroupName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

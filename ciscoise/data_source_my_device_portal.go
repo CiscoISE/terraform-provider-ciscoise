@@ -428,9 +428,11 @@ Only valid if includeAup = true`,
 													Computed:    true,
 												},
 												"social_configs": &schema.Schema{
-													// Replaced List to String
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 												"time_between_logins_during_rate_limit": &schema.Schema{
 													Description: `Time between login attempts when rate limiting`,

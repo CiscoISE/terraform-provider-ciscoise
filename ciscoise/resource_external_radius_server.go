@@ -235,7 +235,9 @@ func resourceExternalRadiusServerCreate(ctx context.Context, d *schema.ResourceD
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestExternalRadiusServerCreateExternalRadiusServer(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -396,7 +398,9 @@ func resourceExternalRadiusServerUpdate(ctx context.Context, d *schema.ResourceD
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestExternalRadiusServerUpdateExternalRadiusServerByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.ExternalRadiusServer.UpdateExternalRadiusServerByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

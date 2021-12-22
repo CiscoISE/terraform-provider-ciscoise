@@ -72,7 +72,7 @@ Optional:
 
 Read-Only:
 
-- **default_sgacls** (String)
+- **default_sgacls** (List of String)
 - **description** (String)
 - **generation_id** (String)
 - **id** (String)

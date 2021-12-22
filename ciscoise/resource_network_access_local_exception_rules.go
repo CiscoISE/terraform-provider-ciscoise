@@ -599,7 +599,9 @@ func resourceNetworkAccessLocalExceptionRulesCreate(ctx context.Context, d *sche
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExceptionRule(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vPolicyID, okPolicyID := resourceItem["policy_id"]
 	vvPolicyID := interfaceToString(vPolicyID)
@@ -823,7 +825,9 @@ func resourceNetworkAccessLocalExceptionRulesUpdate(ctx context.Context, d *sche
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExceptionRuleByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.NetworkAccessAuthorizationExceptionRules.UpdateNetworkAccessLocalExceptionRuleByID(vvPolicyID, vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

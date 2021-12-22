@@ -119,7 +119,9 @@ func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestEndpointGroupCreateEndpointGroup(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -280,7 +282,9 @@ func resourceEndpointGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestEndpointGroupUpdateEndpointGroupByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.EndpointIDentityGroup.UpdateEndpointGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

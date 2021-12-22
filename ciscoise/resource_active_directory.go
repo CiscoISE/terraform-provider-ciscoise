@@ -631,7 +631,9 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestActiveDirectoryCreateActiveDirectory(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)

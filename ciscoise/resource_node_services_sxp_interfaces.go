@@ -131,7 +131,9 @@ func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.Reso
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestNodeServicesSxpInterfacesSetSxpInterface(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.NodeServices.SetSxpInterface(vHostname, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

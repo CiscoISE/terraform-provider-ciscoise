@@ -183,7 +183,9 @@ func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *sche
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNetworkAccessDictionaryAttributeCreateNetworkAccessDictionaryAttribute(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vDictionaryName, okDictionaryName := resourceItem["dictionary_name"]
 	vvDictionaryName := interfaceToString(vDictionaryName)
@@ -359,7 +361,9 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestNetworkAccessDictionaryAttributeUpdateNetworkAccessDictionaryAttributeByName(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.NetworkAccessDictionaryAttribute.UpdateNetworkAccessDictionaryAttributeByName(vvName, vvDictionaryName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

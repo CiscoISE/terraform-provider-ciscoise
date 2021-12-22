@@ -280,7 +280,9 @@ func resourceDeviceAdministrationNetworkConditionsCreate(ctx context.Context, d 
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkCondition(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -454,7 +456,9 @@ func resourceDeviceAdministrationNetworkConditionsUpdate(ctx context.Context, d 
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.DeviceAdministrationNetworkConditions.UpdateDeviceAdminNetworkConditionByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

@@ -352,7 +352,9 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestRadiusServerSequenceCreateRadiusServerSequence(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vName, _ := resourceItem["name"]
@@ -529,7 +531,9 @@ func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.RadiusServerSequence.UpdateRadiusServerSequenceByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

@@ -259,7 +259,9 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestInternalUserCreateInternalUser(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -420,7 +422,9 @@ func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m i
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestInternalUserUpdateInternalUserByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.InternalUser.UpdateInternalUserByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -547,7 +551,7 @@ func expandRequestInternalUserCreateInternalUserInternalUser(ctx context.Context
 		request.EnablePassword = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
-		request.CustomAttributes = expandRequestInternalUserCreateInternalUserInternalUserCustomAttributes(ctx, key+".custom_attributes.0", d)
+		request.CustomAttributes = expandRequestInternalUserCreateInternalUserInternalUserCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password_idstore")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password_idstore")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password_idstore")))) {
 		request.PasswordIDStore = interfaceToString(v)
@@ -620,7 +624,7 @@ func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Con
 		request.ExpiryDate = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
-		request.CustomAttributes = expandRequestInternalUserUpdateInternalUserByIDInternalUserCustomAttributes(ctx, key+".custom_attributes.0", d)
+		request.CustomAttributes = expandRequestInternalUserUpdateInternalUserByIDInternalUserCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password_idstore")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password_idstore")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password_idstore")))) {
 		request.PasswordIDStore = interfaceToString(v)

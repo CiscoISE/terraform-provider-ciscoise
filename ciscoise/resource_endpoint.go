@@ -334,7 +334,9 @@ func resourceEndpointCreate(ctx context.Context, d *schema.ResourceData, m inter
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestEndpointCreateEndpoint(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -495,7 +497,9 @@ func resourceEndpointUpdate(ctx context.Context, d *schema.ResourceData, m inter
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestEndpointUpdateEndpointByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.Endpoint.UpdateEndpointByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -619,7 +623,7 @@ func expandRequestEndpointCreateEndpointERSEndPoint(ctx context.Context, key str
 		request.MdmAttributes = expandRequestEndpointCreateEndpointERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
-		request.CustomAttributes = expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx, key+".custom_attributes.0", d)
+		request.CustomAttributes = expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -677,7 +681,7 @@ func expandRequestEndpointCreateEndpointERSEndPointMdmAttributes(ctx context.Con
 func expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributes {
 	request := isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributes{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
-		request.CustomAttributes = expandRequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes(ctx, key+".custom_attributes.0", d)
+		request.CustomAttributes = expandRequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -688,6 +692,7 @@ func expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx context.
 func expandRequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes {
 	var request isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes
 	v := d.Get(fixKeyAccess(key))
+	log.Printf("[DEBUG] customAttributes => %s => %v", key, v)
 	request = v.(map[string]interface{})
 	return &request
 }
@@ -740,7 +745,7 @@ func expandRequestEndpointUpdateEndpointByIDERSEndPoint(ctx context.Context, key
 		request.MdmAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
-		request.CustomAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx, key+".custom_attributes.0", d)
+		request.CustomAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -798,7 +803,7 @@ func expandRequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes(ctx context
 func expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes {
 	request := isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
-		request.CustomAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributesCustomAttributes(ctx, key+".custom_attributes.0", d)
+		request.CustomAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributesCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

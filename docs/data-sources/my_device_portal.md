@@ -273,7 +273,7 @@ Read-Only:
 - **max_failed_attempts_before_rate_limit** (Number)
 - **require_aup_acceptance** (String)
 - **require_scrolling** (String)
-- **social_configs** (String)
+- **social_configs** (List of String)
 - **time_between_logins_during_rate_limit** (Number)
 
 

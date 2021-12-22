@@ -182,7 +182,9 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestTacacsServerSequenceCreateTacacsServerSequence(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -343,7 +345,9 @@ func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestTacacsServerSequenceUpdateTacacsServerSequenceByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.TacacsServerSequence.UpdateTacacsServerSequenceByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
