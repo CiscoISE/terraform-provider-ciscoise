@@ -12,12 +12,12 @@ provider "ciscoise" {
 
 resource "ciscoise_sxp_connections" "name" {
   provider = ciscoise
-  item {
+  parameters {
     sxp_peer = "Test2"
     # id          = "string"
-    description = "Test 2"
+    description = "Test2"
     enabled     = "false"
-    ip_address  = "11.30.1.1"
+    ip_address  = "11.30.10.1"
     sxp_mode    = "LISTENER"
     sxp_node    = "ise"
     sxp_version = "VERSION_4"

@@ -29,8 +29,8 @@ output "ciscoise_native_supplicant_profile_item" {
 
 resource "ciscoise_native_supplicant_profile" "example" {
   provider = ciscoise
-  item {
-    # id = "67a6ca50-edc9-4236-ada4-225559ed54d6"
+  parameters {
+    id          = "67a6ca50-edc9-4236-ada4-225559ed54d6"
     name        = "Cisco-ISE-Chrome-NSP"
     description = "Pre-configured Ncd For Chrome OS"
     wireless_profiles {

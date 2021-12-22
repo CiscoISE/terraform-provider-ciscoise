@@ -30,8 +30,8 @@ output "ciscoise_trusted_certificate_example_id" {
 
 resource "ciscoise_trusted_certificate" "iden_trust" {
   provider = ciscoise
-  item {
-    id                                 = "7865ac6a-64c6-4e65-865e-d1b093ee0b10"
+  parameters {
+    # id                                 = "7865ac6a-64c6-4e65-865e-d1b093ee0b10"
     name                               = "IdenTrust Commercial Root CA 1"
     authenticate_before_crl_received   = "false" #"off"
     automatic_crl_update               = "true"  #"on"

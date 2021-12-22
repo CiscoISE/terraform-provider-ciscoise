@@ -28,3 +28,19 @@ data "ciscoise_downloadable_acl" "single_response" {
 output "ciscoise__downloadable_acl_single_response" {
   value = data.ciscoise_downloadable_acl.single_response
 }
+
+
+resource "ciscoise_downloadable_acl" "example" {
+  provider = ciscoise
+  parameters {
+
+    dacl        = "permit ip any any"
+    dacl_type   = "IPV4"
+    description = "MyDACL"
+    name        = "MyDACL6"
+  }
+}
+
+output "ciscoise_downloadable_acl_example" {
+  value = ciscoise_downloadable_acl.example
+}

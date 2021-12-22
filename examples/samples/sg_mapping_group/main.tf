@@ -13,7 +13,7 @@ provider "ciscoise" {
 
 resource "ciscoise_sg_mapping_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     deploy_to   = "70836740-8bff-11e6-996c-525400b48521"
     deploy_type = "NDG"

@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_tacacs_server_sequence" "sample" {
   provider = ciscoise
-  item {
+  parameters {
 
     description       = "Test_TACACS_Server_1"
     local_accounting  = "false"
@@ -33,8 +33,11 @@ output "ciscoise_tacacs_server_sequence_sample" {
 
 data "ciscoise_tacacs_server_sequence" "example" {
   provider = ciscoise
-  page     = 1
-  size     = 1
+  depends_on = [
+    ciscoise_tacacs_server_sequence.sample
+  ]
+  page = 1
+  size = 1
 }
 
 output "ciscoise_tacacs_server_sequence_example" {
@@ -44,7 +47,10 @@ output "ciscoise_tacacs_server_sequence_example" {
 
 data "ciscoise_tacacs_server_sequence" "example_name" {
   provider = ciscoise
-  name     = data.ciscoise_tacacs_server_sequence.example.items[0].name
+  depends_on = [
+    ciscoise_tacacs_server_sequence.sample
+  ]
+  name = data.ciscoise_tacacs_server_sequence.example.items[0].name
 }
 
 output "ciscoise_tacacs_server_sequence_example_name" {
@@ -53,7 +59,10 @@ output "ciscoise_tacacs_server_sequence_example_name" {
 
 data "ciscoise_tacacs_server_sequence" "example_id" {
   provider = ciscoise
-  id       = data.ciscoise_tacacs_server_sequence.example.items[0].id
+  depends_on = [
+    ciscoise_tacacs_server_sequence.sample
+  ]
+  id = data.ciscoise_tacacs_server_sequence.example.items[0].id
 }
 
 output "ciscoise_tacacs_server_sequence_example_id" {

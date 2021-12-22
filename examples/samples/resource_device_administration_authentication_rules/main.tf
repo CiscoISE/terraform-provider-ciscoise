@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_device_administration_authentication_rules" "example" {
   provider = ciscoise
-  item {
+  parameters {
     if_auth_fail      = "REJECT"
     if_process_fail   = "DROP"
     if_user_not_found = "REJECT"

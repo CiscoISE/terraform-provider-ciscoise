@@ -13,7 +13,7 @@ provider "ciscoise" {
 
 resource "ciscoise_identity_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
     description = "NewIdGroup"
     name        = "NewGroup"
     parent      = "NAC Group:NAC:IdentityGroups:User Identity Groups"

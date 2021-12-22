@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_sgt" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     default_sgacls    = []
     description       = "BYOD Security Temp Group 1"
@@ -24,6 +24,6 @@ resource "ciscoise_sgt" "example" {
   }
 }
 
-# output "ciscoise_sgt_example" {
-#   value = ciscoise_sgt.example
-# }
+output "ciscoise_sgt_example" {
+  value = ciscoise_sgt.example
+}

@@ -13,7 +13,7 @@ provider "ciscoise" {
 
 resource "ciscoise_device_administration_time_date_conditions" "example" {
   provider = ciscoise
-  item {
+  parameters {
     condition_type = "TimeAndDateCondition"
     dates_range {
       end_date   = "2021-09-30"
