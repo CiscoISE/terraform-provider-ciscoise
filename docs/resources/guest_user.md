@@ -26,12 +26,8 @@ It manages create, read, update and delete operations on GuestUser.
 ```terraform
 resource "ciscoise_guest_user" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    custom_fields = {
-      key1 = "value1"
-      key2 = "value2"
-    }
     description = "string"
     guest_access_info {
 
@@ -79,21 +75,22 @@ output "ciscoise_guest_user_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
 - **custom_fields** (Map of String) Key value map
 - **description** (String)
-- **guest_access_info** (Block List) (see [below for nested schema](#nestedblock--item--guest_access_info))
-- **guest_info** (Block List) (see [below for nested schema](#nestedblock--item--guest_info))
+- **guest_access_info** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--guest_access_info))
+- **guest_info** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--guest_info))
 - **guest_type** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
@@ -104,12 +101,8 @@ Optional:
 - **status** (String)
 - **status_reason** (String)
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--guest_access_info"></a>
-### Nested Schema for `item.guest_access_info`
+<a id="nestedblock--parameters--guest_access_info"></a>
+### Nested Schema for `parameters.guest_access_info`
 
 Optional:
 
@@ -121,8 +114,8 @@ Optional:
 - **valid_days** (Number)
 
 
-<a id="nestedblock--item--guest_info"></a>
-### Nested Schema for `item.guest_info`
+<a id="nestedblock--parameters--guest_info"></a>
+### Nested Schema for `parameters.guest_info`
 
 Optional:
 
@@ -139,7 +132,59 @@ Optional:
 - **user_name** (String) If account needs be created with mobile number, please provide mobile number here
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **custom_fields** (Map of String)
+- **description** (String)
+- **guest_access_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--guest_access_info))
+- **guest_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--guest_info))
+- **guest_type** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **portal_id** (String)
+- **reason_for_visit** (String)
+- **sponsor_user_id** (String)
+- **sponsor_user_name** (String)
+- **status** (String)
+- **status_reason** (String)
+
+<a id="nestedobjatt--item--guest_access_info"></a>
+### Nested Schema for `item.guest_access_info`
+
+Read-Only:
+
+- **from_date** (String)
+- **group_tag** (String)
+- **location** (String)
+- **ssid** (String)
+- **to_date** (String)
+- **valid_days** (Number)
+
+
+<a id="nestedobjatt--item--guest_info"></a>
+### Nested Schema for `item.guest_info`
+
+Read-Only:
+
+- **company** (String)
+- **creation_time** (String)
+- **email_address** (String)
+- **enabled** (String)
+- **first_name** (String)
+- **last_name** (String)
+- **notification_language** (String)
+- **password** (String)
+- **phone_number** (String)
+- **sms_service_provider** (String)
+- **user_name** (String)
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

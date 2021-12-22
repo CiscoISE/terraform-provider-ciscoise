@@ -18,6 +18,7 @@ It performs create operation on Device Administration - Policy Set.
 ```terraform
 data "ciscoise_device_administration_policy_set_reset_hitcount" "example" {
   provider = ciscoise
+
 }
 ```
 

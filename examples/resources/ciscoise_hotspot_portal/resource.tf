@@ -1,7 +1,7 @@
 
 resource "ciscoise_hotspot_portal" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     customizations {
 

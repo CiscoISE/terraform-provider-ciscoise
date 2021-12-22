@@ -6,7 +6,7 @@ description: |-
   It performs create operation on Certificates.
   Import an X509 certificate as a trust certificate.
   NOTE:
-  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+  Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 ---
 
 # ciscoise_trusted_certificate_import (Data Source)
@@ -16,18 +16,19 @@ It performs create operation on Certificates.
 - Import an X509 certificate as a trust certificate.
 
 NOTE:
-Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 ## Example Usage
 
 ```terraform
 data "ciscoise_trusted_certificate_import" "example" {
-  provider                               = ciscoise
-  allow_basic_constraint_cafalse         = "false"
-  allow_out_of_date_cert                 = "false"
-  allow_sha1_certificates                = "false"
-  data                                   = "string"
-  description                            = "string"
+  provider                       = ciscoise
+  allow_basic_constraint_cafalse = "false"
+  allow_out_of_date_cert         = "false"
+  allow_sha1_certificates        = "false"
+  data                           = "string"
+  description                    = "string"
+
   name                                   = "string"
   trust_for_certificate_based_admin_auth = "false"
   trust_for_cisco_services_auth          = "false"
@@ -42,7 +43,7 @@ data "ciscoise_trusted_certificate_import" "example" {
 
 ### Optional
 
-- **allow_basic_constraint_cafalse** (String) Allow Certificates with Basic Constraints CA Field as False (required)
+- **allow_basic_constraint_cafalse** (String) Allow certificates with Basic Constraints CA Field as False (required)
 - **allow_out_of_date_cert** (String) Allow out of date certificates (required)
 - **allow_sha1_certificates** (String) Allow SHA1 based certificates (required)
 - **data** (String) Certificate content (required)
@@ -52,7 +53,7 @@ data "ciscoise_trusted_certificate_import" "example" {
 - **trust_for_certificate_based_admin_auth** (String) Trust for Certificate based Admin authentication
 - **trust_for_cisco_services_auth** (String) Trust for authentication of Cisco Services
 - **trust_for_client_auth** (String) Trust for client authentication and Syslog
-- **trust_for_ise_auth** (String) Trust for authentication within ISE
+- **trust_for_ise_auth** (String) Trust for authentication within Cisco ISE
 - **validate_certificate_extensions** (String) Validate trust certificate extension
 
 ### Read-Only

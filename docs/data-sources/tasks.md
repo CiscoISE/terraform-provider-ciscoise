@@ -54,7 +54,7 @@ output "ciscoise_tasks_example" {
 
 Read-Only:
 
-- **detail_status** (List of String)
+- **detail_status** (String)
 - **execution_status** (String)
 - **fail_count** (Number)
 - **id** (String)
@@ -69,7 +69,7 @@ Read-Only:
 
 Read-Only:
 
-- **detail_status** (List of String)
+- **detail_status** (String)
 - **execution_status** (String)
 - **fail_count** (Number)
 - **id** (String)

@@ -1,7 +1,7 @@
 
 resource "ciscoise_network_device" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     network_device_group_list = ["string"]
     network_device_iplist {

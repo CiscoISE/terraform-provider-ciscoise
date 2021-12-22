@@ -172,5 +172,4 @@ func flattenGuestUserMonitorBulkStatusGuestUserItemResourcesStatus(items *[]iseg
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

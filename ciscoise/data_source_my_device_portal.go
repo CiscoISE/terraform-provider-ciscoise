@@ -718,9 +718,12 @@ func dataSourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m
 		log.Printf("[DEBUG] Selected method 2: GetMyDevicePortalByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.MyDevicePortal.GetMyDevicePortalByID(vvID)
+		response2, restyResp2, err := client.MyDevicePortal.GetMyDevicePortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetMyDevicePortalByID", err,
 				"Failure at GetMyDevicePortalByID, unexpected response", ""))
@@ -841,16 +844,24 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettings(ite
 	respItem["aup_display"] = item.AupDisplay
 	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
 	respItem["require_scrolling"] = boolPtrToString(item.RequireScrolling)
-	if item.SocialConfigs != nil {
-		respItem["social_configs"] = responseInterfaceToSliceString(*item.SocialConfigs)
-	} else {
-		respItem["social_configs"] = []string{}
-	}
+	respItem["social_configs"] = flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettingsSocialConfigs(item.SocialConfigs)
 
 	return []map[string]interface{}{
 		respItem,
 	}
 
+}
+
+func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsLoginPageSettingsSocialConfigs(items *[]isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsLoginPageSettingsSocialConfigs) []interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []interface{}
+	for _, item := range *items {
+		respItem := item
+		respItems = append(respItems, responseInterfaceToString(respItem))
+	}
+	return respItems
 }
 
 func flattenMyDevicePortalGetMyDevicePortalByIDItemSettingsAupSettings(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalSettingsAupSettings) []map[string]interface{} {
@@ -1085,7 +1096,6 @@ func flattenMyDevicePortalGetMyDevicePortalByIDItemCustomizationsPageCustomizati
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenMyDevicePortalGetMyDevicePortalByIDItemLink(item *isegosdk.ResponseMyDevicePortalGetMyDevicePortalByIDMyDevicePortalLink) []map[string]interface{} {

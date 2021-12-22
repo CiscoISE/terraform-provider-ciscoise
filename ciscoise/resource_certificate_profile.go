@@ -2,8 +2,9 @@ package ciscoise
 
 import (
 	"context"
-	"log"
 	"reflect"
+
+	"log"
 
 	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
@@ -35,46 +36,28 @@ func resourceCertificateProfile() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"allowed_as_user_name": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"certificate_attribute_name": &schema.Schema{
-							Description: `Attribute name of the Certificate Profile - used only when CERTIFICATE is chosen in usernameFrom.
-Allowed values:
-- SUBJECT_COMMON_NAME
-- SUBJECT_ALTERNATIVE_NAME
-- SUBJECT_SERIAL_NUMBER
-- SUBJECT
-- SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
-- SUBJECT_ALTERNATIVE_NAME_EMAIL
-- SUBJECT_ALTERNATIVE_NAME_DNS.
-- Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"external_identity_store_name": &schema.Schema{
-							Description: `Referred IDStore name for the Certificate Profile or [not applicable] in case no identity store is chosen`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -99,6 +82,59 @@ Allowed values:
 							},
 						},
 						"match_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"username_from": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"allowed_as_user_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"certificate_attribute_name": &schema.Schema{
+							Description: `Attribute name of the Certificate Profile - used only when CERTIFICATE is chosen in usernameFrom.
+Allowed values:
+- SUBJECT_COMMON_NAME
+- SUBJECT_ALTERNATIVE_NAME
+- SUBJECT_SERIAL_NUMBER
+- SUBJECT
+- SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
+- SUBJECT_ALTERNATIVE_NAME_EMAIL
+- SUBJECT_ALTERNATIVE_NAME_DNS.
+- Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"external_identity_store_name": &schema.Schema{
+							Description: `Referred IDStore name for the Certificate Profile or [not applicable] in case no identity store is chosen`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"match_mode": &schema.Schema{
 							Description: `Match mode of the Certificate Profile.
 Allowed values:
 - NEVER
@@ -106,12 +142,10 @@ Allowed values:
 - BINARY_COMPARISON`,
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"username_from": &schema.Schema{
 							Description: `The attribute in the certificate where the user name should be taken from.
@@ -120,7 +154,6 @@ Allowed values:
 - UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)`,
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -134,9 +167,11 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestCertificateProfileCreateCertificateProfile(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestCertificateProfileCreateCertificateProfile(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -149,7 +184,7 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceCertificateProfileRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -159,7 +194,7 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceCertificateProfileRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.CertificateProfile.CreateCertificateProfile(request1)
@@ -181,7 +216,7 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceCertificateProfileRead(ctx, d, m)
 }
 
 func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -204,9 +239,12 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Selected method: GetCertificateProfileByName")
 		vvName := vName
 
-		response1, _, err := client.CertificateProfile.GetCertificateProfileByName(vvName)
+		response1, restyResp1, err := client.CertificateProfile.GetCertificateProfileByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetCertificateProfileByName", err,
 				"Failure at GetCertificateProfileByName, unexpected response", ""))
@@ -229,9 +267,12 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Selected method: GetCertificateProfileByID")
 		vvID := vID
 
-		response2, _, err := client.CertificateProfile.GetCertificateProfileByID(vvID)
+		response2, restyResp2, err := client.CertificateProfile.GetCertificateProfileByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetCertificateProfileByID", err,
 				"Failure at GetCertificateProfileByID, unexpected response", ""))
@@ -288,10 +329,12 @@ func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceDat
 			vvID = getResp.CertificateProfile.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestCertificateProfileUpdateCertificateProfileByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestCertificateProfileUpdateCertificateProfileByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.CertificateProfile.UpdateCertificateProfileByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -313,7 +356,7 @@ func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceDat
 
 func resourceCertificateProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Function does not perform delete on ISE
+	// NOTE: Unable to delete CertificateProfile on Cisco ISE
 	//       Returning empty diags to delete it on Terraform
 	return diags
 }
@@ -328,28 +371,28 @@ func expandRequestCertificateProfileCreateCertificateProfile(ctx context.Context
 
 func expandRequestCertificateProfileCreateCertificateProfileCertificateProfile(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificateProfileCreateCertificateProfileCertificateProfile {
 	request := isegosdk.RequestCertificateProfileCreateCertificateProfileCertificateProfile{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".external_identity_store_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".external_identity_store_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".external_identity_store_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".external_identity_store_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".external_identity_store_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".external_identity_store_name")))) {
 		request.ExternalIDentityStoreName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_attribute_name")))) {
 		request.CertificateAttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_as_user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_as_user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_as_user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_as_user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_as_user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_as_user_name")))) {
 		request.AllowedAsUserName = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".match_mode"); !isEmptyValue(reflect.ValueOf(d.Get(key+".match_mode"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".match_mode"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".match_mode")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".match_mode")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".match_mode")))) {
 		request.MatchMode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".username_from"); !isEmptyValue(reflect.ValueOf(d.Get(key+".username_from"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".username_from"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username_from")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username_from")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username_from")))) {
 		request.UsernameFrom = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -369,28 +412,28 @@ func expandRequestCertificateProfileUpdateCertificateProfileByID(ctx context.Con
 
 func expandRequestCertificateProfileUpdateCertificateProfileByIDCertificateProfile(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificateProfileUpdateCertificateProfileByIDCertificateProfile {
 	request := isegosdk.RequestCertificateProfileUpdateCertificateProfileByIDCertificateProfile{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".external_identity_store_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".external_identity_store_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".external_identity_store_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".external_identity_store_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".external_identity_store_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".external_identity_store_name")))) {
 		request.ExternalIDentityStoreName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_attribute_name")))) {
 		request.CertificateAttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_as_user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_as_user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_as_user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_as_user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_as_user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_as_user_name")))) {
 		request.AllowedAsUserName = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".match_mode"); !isEmptyValue(reflect.ValueOf(d.Get(key+".match_mode"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".match_mode"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".match_mode")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".match_mode")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".match_mode")))) {
 		request.MatchMode = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".username_from"); !isEmptyValue(reflect.ValueOf(d.Get(key+".username_from"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".username_from"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".username_from")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".username_from")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".username_from")))) {
 		request.UsernameFrom = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

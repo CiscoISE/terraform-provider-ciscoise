@@ -28,21 +28,20 @@ NOTE:
 The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
 
 NOTE:
-Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
-
+Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 `,
 
 		ReadContext: dataSourceBindSignedCertificateRead,
 		Schema: map[string]*schema.Schema{
 			"admin": &schema.Schema{
-				Description:  ` Use certificate to authenticate the ISE Admin Portal`,
+				Description:  ` Use certificate to authenticate the Cisco ISE Admin Portal`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
 			},
 			"allow_extended_validity": &schema.Schema{
-				Description:  `Allow import of certificates with validity greater than 398 days`,
+				Description:  `Allow import of certificates with validity greater than 398 days (required)`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -66,7 +65,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 				Optional:     true,
 			},
 			"data": &schema.Schema{
-				Description: `Signed Certificate in escaped format`,
+				Description: `Signed certificate data (required)`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -77,17 +76,17 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 				Optional:     true,
 			},
 			"host_name": &schema.Schema{
-				Description: `Name of Host whose CSR ID has been provided`,
+				Description: `Name of Host whose CSR ID has been provided (required)`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Description: `ID of the generated CSR`,
+				Description: `ID of the generated CSR (required)`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
 			"ims": &schema.Schema{
-				Description:  `Use certificate for the ISE Messaging Service`,
+				Description:  `Use certificate for the Cisco ISE Messaging Service`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -169,6 +168,7 @@ func dataSourceBindSignedCertificateRead(ctx context.Context, d *schema.Resource
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

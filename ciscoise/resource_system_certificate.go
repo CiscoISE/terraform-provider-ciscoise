@@ -20,13 +20,13 @@ func resourceSystemCertificate() *schema.Resource {
 - Update a System Certificate.
 
 NOTE:
-Renewing a certificate will cause an application server restart on the selected node.
+Renewing a certificate causes an application server restart on the selected node.
 
 NOTE:
-Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 
-- This resource deletes a System Certificate of a particular node based on a given HostName and ID.
+- This resource deletes a System Certificate of a particular node based on given HostName and ID.
 `,
 
 		CreateContext: resourceSystemCertificateCreate,
@@ -44,46 +44,14 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"admin": &schema.Schema{
-							Description:  `Use certificate to authenticate the ISE Admin Portal`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"allow_replacement_of_portal_group_tag": &schema.Schema{
-							Description:  `Allow Replacement of Portal Group Tag (required)`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"description": &schema.Schema{
-							Description: `Description of System Certificate`,
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"eap": &schema.Schema{
-							Description:  `Use certificate for EAP protocols that use SSL/TLS tunneling`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
 						"expiration_date": &schema.Schema{
-							Description: `The time and date past which the certificate is no longer valid`,
+							Description: `Time and date past which the certificate is no longer valid`,
 							Type:        schema.TypeString,
 							Computed:    true,
-						},
-						"expiration_ttl_period": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
-						},
-						"expiration_ttl_units": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
 						},
 						"friendly_name": &schema.Schema{
 							Description: `Friendly name of system certificate`,
@@ -100,15 +68,9 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 							Optional:    true,
 						},
 						"id": &schema.Schema{
-							Description: `ID of system certificate`,
+							Description: `id path parameter. ID of the System Certificate to be updated`,
 							Type:        schema.TypeString,
 							Computed:    true,
-						},
-						"ims": &schema.Schema{
-							Description:  `Use certificate for the ISE Messaging Service`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
 						},
 						"issued_by": &schema.Schema{
 							Description: `Common Name of the certificate issuer`,
@@ -121,7 +83,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Description: `The length of key used for encrypting system certificate`,
+							Description: `Length of key used for encrypting system certificate`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
@@ -146,49 +108,9 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 								},
 							},
 						},
-						"name": &schema.Schema{
-							Description: `Name of the certificate`,
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
-						"portal": &schema.Schema{
-							Description:  `Use for portal`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"portal_group_tag": &schema.Schema{
-							Description: `Set Group tag`,
-							Type:        schema.TypeString,
-							Optional:    true,
-						},
 						"portals_using_the_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
-						},
-						"pxgrid": &schema.Schema{
-							Description:  `Use certificate for the pxGrid Controller`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"radius": &schema.Schema{
-							Description:  `Use certificate for the RADSec server`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"renew_self_signed_certificate": &schema.Schema{
-							Description:  `Renew Self Signed Certificate`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-						},
-						"saml": &schema.Schema{
-							Description:  `Use certificate for SAML Signing`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
 						},
 						"self_signed": &schema.Schema{
 							Type:     schema.TypeString,
@@ -212,9 +134,112 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 							Computed: true,
 						},
 						"valid_from": &schema.Schema{
-							Description: `The time and date on which the certificate was created, also known as the Not Before certificate attribute`,
+							Description: `Time and date on which the certificate was created, also known as the Not Before certificate attribute`,
 							Type:        schema.TypeString,
 							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"admin": &schema.Schema{
+							Description:  `Use certificate to authenticate the Cisco ISE Admin Portal`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"allow_portal_tag_transfer_for_same_subject": &schema.Schema{
+							Description:  `Allow overwriting the portal tag from matching certificate of same subject`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"allow_replacement_of_portal_group_tag": &schema.Schema{
+							Description:  `Allow Replacement of Portal Group Tag (required)`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"allow_role_transfer_for_same_subject": &schema.Schema{
+							Description:  `Allow transfer of roles for certificate with matching subject `,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"description": &schema.Schema{
+							Description: `Description of System Certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"eap": &schema.Schema{
+							Description:  `Use certificate for EAP protocols that use SSL/TLS tunneling`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"expiration_ttl_period": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"expiration_ttl_units": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"ims": &schema.Schema{
+							Description:  `Use certificate for the Cisco ISE Messaging Service`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"host_name": &schema.Schema{
+							Description: `hostName path parameter. Name of Host whose certificate needs to be updated`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"name": &schema.Schema{
+							Description: `Name of the certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"portal": &schema.Schema{
+							Description:  `Use for portal`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"portal_group_tag": &schema.Schema{
+							Description: `Set Group tag`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"pxgrid": &schema.Schema{
+							Description:  `Use certificate for the pxGrid Controller`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"radius": &schema.Schema{
+							Description:  `Use certificate for the RADSec server`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"renew_self_signed_certificate": &schema.Schema{
+							Description:  `Renew Self-signed Certificate`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"saml": &schema.Schema{
+							Description:  `Use certificate for SAML Signing`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 					},
 				},
@@ -224,15 +249,15 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 }
 
 func resourceSystemCertificateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	resourceItem := *getResourceItem(d.Get("item"))
+	// var diags diag.Diagnostics
+	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// NOTE: Function does not perform create on ISE
+	// TODO: Add the path params to `item` schema
+	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	resourceMap["name"] = interfaceToString(resourceItem["name"])
-	resourceMap["host_name"] = interfaceToString(resourceItem["host_name"])
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceSystemCertificateRead(ctx, d, m)
 }
 
 func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -259,9 +284,12 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 		log.Printf("[DEBUG] Selected method: GetSystemCertificates")
 		queryParams1 := isegosdk.GetSystemCertificatesQueryParams{}
 
-		response1, _, err := client.Certificates.GetSystemCertificates(vvHostName, &queryParams1)
+		response1, restyResp1, err := client.Certificates.GetSystemCertificates(vvHostName, &queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSystemCertificates", err,
 				"Failure at GetSystemCertificates, unexpected response", ""))
@@ -290,9 +318,12 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetSystemCertificateByID")
 
-		response2, _, err := client.Certificates.GetSystemCertificateByID(vvHostName, vvID)
+		response2, restyResp2, err := client.Certificates.GetSystemCertificateByID(vvHostName, vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSystemCertificateByID", err,
 				"Failure at GetSystemCertificateByID, unexpected response", ""))
@@ -322,6 +353,7 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vHostName, okHostName := resourceMap["host_name"]
+
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{okHostName, okID}
@@ -339,22 +371,24 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 	if selectedMethod == 2 {
 		vvHostName = vHostName
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestSystemCertificateUpdateSystemCertificate(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		response1, restyResp1, err := client.Certificates.UpdateSystemCertificate(vvID, vvHostName, request1)
+		request1 := expandRequestSystemCertificateUpdateSystemCert(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
+		response1, restyResp1, err := client.Certificates.UpdateSystemCert(vvID, vvHostName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
-					"Failure when executing UpdateSystemCertificate", err, restyResp1.String(),
-					"Failure at UpdateSystemCertificate, unexpected response", ""))
+					"Failure when executing UpdateSystemCert", err, restyResp1.String(),
+					"Failure at UpdateSystemCert, unexpected response", ""))
 				return diags
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing UpdateSystemCertificate", err,
-				"Failure at UpdateSystemCertificate, unexpected response", ""))
+				"Failure when executing UpdateSystemCert", err,
+				"Failure at UpdateSystemCert, unexpected response", ""))
 			return diags
 		}
 	}
@@ -370,6 +404,7 @@ func resourceSystemCertificateDelete(ctx context.Context, d *schema.ResourceData
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vHostName, okHostName := resourceMap["host_name"]
+
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{okHostName, okID}
@@ -409,48 +444,54 @@ func resourceSystemCertificateDelete(ctx context.Context, d *schema.ResourceData
 
 	return diags
 }
-func expandRequestSystemCertificateUpdateSystemCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesUpdateSystemCertificate {
-	request := isegosdk.RequestCertificatesUpdateSystemCertificate{}
-	if v, ok := d.GetOkExists(key + ".admin"); !isEmptyValue(reflect.ValueOf(d.Get(key+".admin"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".admin"))) {
+func expandRequestSystemCertificateUpdateSystemCert(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesUpdateSystemCert {
+	request := isegosdk.RequestCertificatesUpdateSystemCert{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".admin")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".admin")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".admin")))) {
 		request.Admin = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allow_replacement_of_portal_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allow_replacement_of_portal_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allow_replacement_of_portal_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_portal_tag_transfer_for_same_subject")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_portal_tag_transfer_for_same_subject")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_portal_tag_transfer_for_same_subject")))) {
+		request.AllowPortalTagTransferForSameSubject = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_replacement_of_portal_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_replacement_of_portal_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_replacement_of_portal_group_tag")))) {
 		request.AllowReplacementOfPortalGroupTag = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_role_transfer_for_same_subject")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_role_transfer_for_same_subject")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_role_transfer_for_same_subject")))) {
+		request.AllowRoleTransferForSameSubject = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".eap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".eap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".eap"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".eap")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".eap")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".eap")))) {
 		request.Eap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".expiration_ttl_period"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiration_ttl_period"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiration_ttl_period"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".expiration_ttl_period")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".expiration_ttl_period")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".expiration_ttl_period")))) {
 		request.ExpirationTTLPeriod = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".expiration_ttl_units"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiration_ttl_units"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiration_ttl_units"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".expiration_ttl_units")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".expiration_ttl_units")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".expiration_ttl_units")))) {
 		request.ExpirationTTLUnits = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ims"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ims"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ims"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ims")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ims")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ims")))) {
 		request.Ims = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal")))) {
 		request.Portal = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_group_tag"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_group_tag"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_group_tag"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_group_tag")))) {
 		request.PortalGroupTag = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".pxgrid"); !isEmptyValue(reflect.ValueOf(d.Get(key+".pxgrid"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".pxgrid"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".pxgrid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".pxgrid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".pxgrid")))) {
 		request.Pxgrid = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".radius"); !isEmptyValue(reflect.ValueOf(d.Get(key+".radius"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".radius"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radius")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radius")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radius")))) {
 		request.Radius = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".renew_self_signed_certificate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".renew_self_signed_certificate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".renew_self_signed_certificate"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".renew_self_signed_certificate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".renew_self_signed_certificate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".renew_self_signed_certificate")))) {
 		request.RenewSelfSignedCertificate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".saml"); !isEmptyValue(reflect.ValueOf(d.Get(key+".saml"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".saml"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".saml")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".saml")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".saml")))) {
 		request.Saml = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on TACACSExternalServers.
 ```terraform
 resource "ciscoise_tacacs_external_servers" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     connection_port = 1
     description     = "string"
@@ -46,14 +46,15 @@ output "ciscoise_tacacs_external_servers_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -66,11 +67,23 @@ Optional:
 - **single_connect** (String) Define the use of single connection
 - **timeout** (Number) The server timeout
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **connection_port** (Number)
+- **description** (String)
+- **host_ip** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **shared_secret** (String)
+- **single_connect** (String)
+- **timeout** (Number)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

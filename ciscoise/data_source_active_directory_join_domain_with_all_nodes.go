@@ -71,6 +71,7 @@ func dataSourceActiveDirectoryJoinDomainWithAllNodesRead(ctx context.Context, d 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing JoinDomainWithAllNodes", err,
@@ -102,7 +103,6 @@ func expandRequestActiveDirectoryJoinDomainWithAllNodesJoinDomainWithAllNodes(ct
 func expandRequestActiveDirectoryJoinDomainWithAllNodesJoinDomainWithAllNodesOperationAdditionalData(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryJoinDomainWithAllNodesOperationAdditionalData {
 	request := isegosdk.RequestActiveDirectoryJoinDomainWithAllNodesOperationAdditionalData{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".additional_data")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".additional_data")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".additional_data")))) {
-		log.Printf("[DEBUG] Got something at %s", fixKeyAccess(key+".additional_data"))
 		request.AdditionalData = expandRequestActiveDirectoryJoinDomainWithAllNodesJoinDomainWithAllNodesOperationAdditionalDataAdditionalDataArray(ctx, key+".additional_data", d)
 	}
 	return &request
@@ -113,12 +113,10 @@ func expandRequestActiveDirectoryJoinDomainWithAllNodesJoinDomainWithAllNodesOpe
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
-		log.Printf("[DEBUG] o == nil %s", key)
 		return nil
 	}
 	objs := o.([]interface{})
 	if len(objs) == 0 {
-		log.Printf("[DEBUG] len(objs) == 0 %s", key)
 		return nil
 	}
 	for item_no, _ := range objs {

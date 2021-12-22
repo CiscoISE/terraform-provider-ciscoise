@@ -1,7 +1,7 @@
 
 resource "ciscoise_tacacs_server_sequence" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description       = "string"
     id                = "string"

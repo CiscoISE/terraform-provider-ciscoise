@@ -7,4 +7,5 @@ data "ciscoise_guest_type_email" "example" {
     name  = "string"
     value = "string"
   }
+
 }

@@ -23,3 +23,21 @@ func caseInsensitive() schema.SchemaDiffSuppressFunc {
 		return strings.EqualFold(old, new)
 	}
 }
+
+func diffSuppressBooleans() schema.SchemaDiffSuppressFunc {
+	return func(k, old, new string, d *schema.ResourceData) bool {
+		if old == "off" {
+			return old == new || "false" == new
+		}
+		if old == "false" {
+			return old == new || "off" == new
+		}
+		if old == "on" {
+			return old == new || "true" == new
+		}
+		if old == "true" {
+			return old == new || "on" == new
+		}
+		return true
+	}
+}

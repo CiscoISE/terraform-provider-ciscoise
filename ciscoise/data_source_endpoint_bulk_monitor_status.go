@@ -172,5 +172,4 @@ func flattenEndpointMonitorBulkStatusEndpointItemResourcesStatus(items *[]isegos
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

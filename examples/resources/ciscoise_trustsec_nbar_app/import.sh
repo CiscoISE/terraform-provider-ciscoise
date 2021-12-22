@@ -1,0 +1,1 @@
+terraform import ciscoise_trustsec_nbar_app.example "id:=string"

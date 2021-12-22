@@ -54,6 +54,7 @@ func dataSourceSgtBulkRequestRead(ctx context.Context, d *schema.ResourceData, m
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForSecurityGroup", err,

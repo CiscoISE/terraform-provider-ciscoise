@@ -1,6 +1,7 @@
 
 data "ciscoise_network_device_bulk_request" "example" {
-  provider            = ciscoise
+  provider = ciscoise
+
   operation_type      = "string"
   resource_media_type = "string"
 }

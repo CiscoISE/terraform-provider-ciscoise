@@ -38,48 +38,42 @@ func resourceEndpoint() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"custom_attributes": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"custom_attributes": &schema.Schema{
-										Type:     schema.TypeMap,
-										Optional: true,
-										Computed: true,
+										Description: `Key value map`,
+										Type:        schema.TypeMap,
+										Computed:    true,
 									},
 								},
 							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"group_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"identity_store": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"identity_store_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -105,85 +99,64 @@ func resourceEndpoint() *schema.Resource {
 						},
 						"mac": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"mdm_attributes": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"mdm_compliance_status": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"mdm_encrypted": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"mdm_enrolled": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"mdm_ime_i": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"mdm_jail_broken": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"mdm_manufacturer": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"mdm_model": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"mdm_os": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"mdm_phone_number": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"mdm_pinlock": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"mdm_reachable": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"mdm_serial": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"mdm_server_name": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -191,30 +164,161 @@ func resourceEndpoint() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"portal_user": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"profile_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+						"static_group_assignment": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"static_profile_assignment": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"custom_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"custom_attributes": &schema.Schema{
+										Description: `Key value map`,
+										Type:        schema.TypeMap,
+										Optional:    true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"group_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"identity_store": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"identity_store_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"mac": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"mdm_attributes": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"mdm_compliance_status": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"mdm_encrypted": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"mdm_enrolled": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"mdm_ime_i": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"mdm_jail_broken": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"mdm_manufacturer": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"mdm_model": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"mdm_os": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"mdm_phone_number": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"mdm_pinlock": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"mdm_reachable": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"mdm_serial": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"mdm_server_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"portal_user": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"profile_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"static_group_assignment": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"static_profile_assignment": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -228,9 +332,11 @@ func resourceEndpointCreate(ctx context.Context, d *schema.ResourceData, m inter
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestEndpointCreateEndpoint(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestEndpointCreateEndpoint(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -243,7 +349,7 @@ func resourceEndpointCreate(ctx context.Context, d *schema.ResourceData, m inter
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceEndpointRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -253,7 +359,7 @@ func resourceEndpointCreate(ctx context.Context, d *schema.ResourceData, m inter
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceEndpointRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.Endpoint.CreateEndpoint(request1)
@@ -275,7 +381,7 @@ func resourceEndpointCreate(ctx context.Context, d *schema.ResourceData, m inter
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceEndpointRead(ctx, d, m)
 }
 
 func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -298,9 +404,12 @@ func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interfa
 		log.Printf("[DEBUG] Selected method: GetEndpointByName")
 		vvName := vName
 
-		response1, _, err := client.Endpoint.GetEndpointByName(vvName)
+		response1, restyResp1, err := client.Endpoint.GetEndpointByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEndpointByName", err,
 				"Failure at GetEndpointByName, unexpected response", ""))
@@ -323,9 +432,12 @@ func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interfa
 		log.Printf("[DEBUG] Selected method: GetEndpointByID")
 		vvID := vID
 
-		response2, _, err := client.Endpoint.GetEndpointByID(vvID)
+		response2, restyResp2, err := client.Endpoint.GetEndpointByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEndpointByID", err,
 				"Failure at GetEndpointByID, unexpected response", ""))
@@ -382,10 +494,12 @@ func resourceEndpointUpdate(ctx context.Context, d *schema.ResourceData, m inter
 			vvID = getResp.ERSEndPoint.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestEndpointUpdateEndpointByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestEndpointUpdateEndpointByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.Endpoint.UpdateEndpointByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -475,41 +589,41 @@ func expandRequestEndpointCreateEndpoint(ctx context.Context, key string, d *sch
 
 func expandRequestEndpointCreateEndpointERSEndPoint(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCreateEndpointERSEndPoint {
 	request := isegosdk.RequestEndpointCreateEndpointERSEndPoint{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mac"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac")))) {
 		request.Mac = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".profile_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_id")))) {
 		request.ProfileID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".static_profile_assignment"); !isEmptyValue(reflect.ValueOf(d.Get(key+".static_profile_assignment"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".static_profile_assignment"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".static_profile_assignment")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".static_profile_assignment")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".static_profile_assignment")))) {
 		request.StaticProfileAssignment = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".group_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".group_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".group_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".group_id")))) {
 		request.GroupID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".static_group_assignment"); !isEmptyValue(reflect.ValueOf(d.Get(key+".static_group_assignment"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".static_group_assignment"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".static_group_assignment")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".static_group_assignment")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".static_group_assignment")))) {
 		request.StaticGroupAssignment = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_user"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_user"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_user"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_user")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_user")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_user")))) {
 		request.PortalUser = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".identity_store"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_store"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_store"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_store")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_store")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_store")))) {
 		request.IDentityStore = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".identity_store_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_store_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_store_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_store_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_store_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_store_id")))) {
 		request.IDentityStoreID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_attributes"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_attributes")))) {
 		request.MdmAttributes = expandRequestEndpointCreateEndpointERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		request.CustomAttributes = expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx, key+".custom_attributes.0", d)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
+		request.CustomAttributes = expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -519,43 +633,43 @@ func expandRequestEndpointCreateEndpointERSEndPoint(ctx context.Context, key str
 
 func expandRequestEndpointCreateEndpointERSEndPointMdmAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCreateEndpointERSEndPointMdmAttributes {
 	request := isegosdk.RequestEndpointCreateEndpointERSEndPointMdmAttributes{}
-	if v, ok := d.GetOkExists(key + ".mdm_server_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_server_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_server_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_server_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_server_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_server_name")))) {
 		request.MdmServerName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_reachable"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_reachable"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_reachable"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_reachable")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_reachable")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_reachable")))) {
 		request.MdmReachable = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_enrolled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_enrolled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_enrolled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_enrolled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_enrolled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_enrolled")))) {
 		request.MdmEnrolled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_compliance_status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_compliance_status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_compliance_status"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_compliance_status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_compliance_status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_compliance_status")))) {
 		request.MdmComplianceStatus = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_os"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_os"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_os"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_os")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_os")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_os")))) {
 		request.MdmOS = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_manufacturer"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_manufacturer"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_manufacturer"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_manufacturer")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_manufacturer")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_manufacturer")))) {
 		request.MdmManufacturer = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_model"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_model"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_model"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_model")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_model")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_model")))) {
 		request.MdmModel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_serial"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_serial"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_serial"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_serial")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_serial")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_serial")))) {
 		request.MdmSerial = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_encrypted"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_encrypted"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_encrypted"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_encrypted")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_encrypted")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_encrypted")))) {
 		request.MdmEncrypted = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_pinlock"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_pinlock"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_pinlock"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_pinlock")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_pinlock")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_pinlock")))) {
 		request.MdmPinlock = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_jail_broken"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_jail_broken"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_jail_broken"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_jail_broken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_jail_broken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_jail_broken")))) {
 		request.MdmJailBroken = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_ime_i"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_ime_i"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_ime_i"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_ime_i")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_ime_i")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_ime_i")))) {
 		request.MdmIMEI = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_phone_number"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_phone_number"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_phone_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_phone_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_phone_number")))) {
 		request.MdmPhoneNumber = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -566,13 +680,20 @@ func expandRequestEndpointCreateEndpointERSEndPointMdmAttributes(ctx context.Con
 
 func expandRequestEndpointCreateEndpointERSEndPointCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributes {
 	request := isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributes{}
-	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
+		request.CustomAttributes = expandRequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes {
+	var request isegosdk.RequestEndpointCreateEndpointERSEndPointCustomAttributesCustomAttributes
+	v := d.Get(fixKeyAccess(key))
+	log.Printf("[DEBUG] customAttributes => %s => %v", key, v)
+	request = v.(map[string]interface{})
 	return &request
 }
 
@@ -587,44 +708,44 @@ func expandRequestEndpointUpdateEndpointByID(ctx context.Context, key string, d 
 
 func expandRequestEndpointUpdateEndpointByIDERSEndPoint(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointUpdateEndpointByIDERSEndPoint {
 	request := isegosdk.RequestEndpointUpdateEndpointByIDERSEndPoint{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mac"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac")))) {
 		request.Mac = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".profile_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_id")))) {
 		request.ProfileID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".static_profile_assignment"); !isEmptyValue(reflect.ValueOf(d.Get(key+".static_profile_assignment"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".static_profile_assignment"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".static_profile_assignment")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".static_profile_assignment")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".static_profile_assignment")))) {
 		request.StaticProfileAssignment = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".group_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".group_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".group_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".group_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".group_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".group_id")))) {
 		request.GroupID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".static_group_assignment"); !isEmptyValue(reflect.ValueOf(d.Get(key+".static_group_assignment"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".static_group_assignment"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".static_group_assignment")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".static_group_assignment")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".static_group_assignment")))) {
 		request.StaticGroupAssignment = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".portal_user"); !isEmptyValue(reflect.ValueOf(d.Get(key+".portal_user"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".portal_user"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".portal_user")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".portal_user")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".portal_user")))) {
 		request.PortalUser = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".identity_store"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_store"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_store"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_store")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_store")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_store")))) {
 		request.IDentityStore = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".identity_store_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_store_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_store_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_store_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_store_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_store_id")))) {
 		request.IDentityStoreID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_attributes"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_attributes")))) {
 		request.MdmAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes(ctx, key+".mdm_attributes.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		request.CustomAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx, key+".custom_attributes.0", d)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
+		request.CustomAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -634,43 +755,43 @@ func expandRequestEndpointUpdateEndpointByIDERSEndPoint(ctx context.Context, key
 
 func expandRequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes {
 	request := isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes{}
-	if v, ok := d.GetOkExists(key + ".mdm_server_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_server_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_server_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_server_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_server_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_server_name")))) {
 		request.MdmServerName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_reachable"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_reachable"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_reachable"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_reachable")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_reachable")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_reachable")))) {
 		request.MdmReachable = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_enrolled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_enrolled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_enrolled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_enrolled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_enrolled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_enrolled")))) {
 		request.MdmEnrolled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_compliance_status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_compliance_status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_compliance_status"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_compliance_status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_compliance_status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_compliance_status")))) {
 		request.MdmComplianceStatus = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_os"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_os"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_os"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_os")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_os")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_os")))) {
 		request.MdmOS = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_manufacturer"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_manufacturer"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_manufacturer"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_manufacturer")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_manufacturer")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_manufacturer")))) {
 		request.MdmManufacturer = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_model"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_model"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_model"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_model")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_model")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_model")))) {
 		request.MdmModel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_serial"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_serial"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_serial"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_serial")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_serial")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_serial")))) {
 		request.MdmSerial = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_encrypted"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_encrypted"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_encrypted"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_encrypted")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_encrypted")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_encrypted")))) {
 		request.MdmEncrypted = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_pinlock"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_pinlock"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_pinlock"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_pinlock")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_pinlock")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_pinlock")))) {
 		request.MdmPinlock = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_jail_broken"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_jail_broken"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_jail_broken"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_jail_broken")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_jail_broken")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_jail_broken")))) {
 		request.MdmJailBroken = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_ime_i"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_ime_i"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_ime_i"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_ime_i")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_ime_i")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_ime_i")))) {
 		request.MdmIMEI = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mdm_phone_number"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mdm_phone_number"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mdm_phone_number"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mdm_phone_number")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mdm_phone_number")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mdm_phone_number")))) {
 		request.MdmPhoneNumber = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -681,12 +802,18 @@ func expandRequestEndpointUpdateEndpointByIDERSEndPointMdmAttributes(ctx context
 
 func expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes {
 	request := isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributes{}
-	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
+		request.CustomAttributes = expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributesCustomAttributes(ctx, key+".custom_attributes", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestEndpointUpdateEndpointByIDERSEndPointCustomAttributesCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributesCustomAttributes {
+	var request isegosdk.RequestEndpointUpdateEndpointByIDERSEndPointCustomAttributesCustomAttributes
+	v := d.Get(fixKeyAccess(key))
+	request = v.(map[string]interface{})
 	return &request
 }

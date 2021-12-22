@@ -27,9 +27,8 @@ func dataSourceBackupLastStatus() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"action": &schema.Schema{
-							Description: `Whether backup job or restore job`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"details": &schema.Schema{
 							Description: `Details of the job`,
@@ -47,9 +46,8 @@ func dataSourceBackupLastStatus() *schema.Resource {
 							Computed:    true,
 						},
 						"initiated_from": &schema.Schema{
-							Description: `Whether the job was triggered from CLI / ADMIN UI / OPEN API`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"just_complete": &schema.Schema{
 							Description: `Whether the job completed now. Possible values - Yes, No`,
@@ -87,14 +85,12 @@ func dataSourceBackupLastStatus() *schema.Resource {
 							Computed:    true,
 						},
 						"status": &schema.Schema{
-							Description: `status of the job - in_progress, complete`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"type": &schema.Schema{
-							Description: `Whether the job is for Operational or Configuration DB`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},

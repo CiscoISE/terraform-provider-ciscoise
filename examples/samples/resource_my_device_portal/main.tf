@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -12,15 +12,15 @@ provider "ciscoise" {
 
 resource "ciscoise_my_device_portal" "example" {
   provider = ciscoise
-  item {
-    name        = "Devices Portal"
+  parameters {
+    name        = "Devices Portal 1"
     description = "Test portal used by developers to register and manage their personal devices"
     portal_type = "MYDEVICE"
-    # settings {
-    #   login_page_settings {
-    #     social_configs = ["{\"socialMediaType\": \"\", \"socialMediaValue\": \"\"}"]
-    #   }
-    # }
+    settings {
+      login_page_settings {
+        social_configs = ["{\"socialMediaType\": \"\", \"socialMediaValue\": \"\"}"]
+      }
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_network_access_conditions" "example" {
   provider = ciscoise
-  item {
+  parameters {
     condition_type  = "LibraryConditionAttributes"
     is_negate       = "true"
     name            = "My New Condition"

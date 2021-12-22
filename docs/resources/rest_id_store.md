@@ -26,7 +26,7 @@ It manages create, read, update and delete operations on RESTIDStore.
 ```terraform
 resource "ciscoise_rest_id_store" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     ers_rest_idstore_attributes {
@@ -56,32 +56,29 @@ output "ciscoise_rest_id_store_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
 - **description** (String)
-- **ers_rest_idstore_attributes** (Block List) (see [below for nested schema](#nestedblock--item--ers_rest_idstore_attributes))
+- **ers_rest_idstore_attributes** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--ers_rest_idstore_attributes))
 - **id** (String) The ID of this resource.
 - **name** (String)
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--ers_rest_idstore_attributes"></a>
-### Nested Schema for `item.ers_rest_idstore_attributes`
+<a id="nestedblock--parameters--ers_rest_idstore_attributes"></a>
+### Nested Schema for `parameters.ers_rest_idstore_attributes`
 
 Optional:
 
-- **headers** (Block List) (see [below for nested schema](#nestedblock--item--ers_rest_idstore_attributes--headers))
+- **headers** (Block List) (see [below for nested schema](#nestedblock--parameters--ers_rest_idstore_attributes--headers))
 - **predefined** (String) The cloud provider connected to of the RestIDStore.
 Options are:
 - Azure,
@@ -90,8 +87,8 @@ Options are:
 - **root_url** (String) url of the root of the RestIDStore
 - **username_suffix** (String) Suffix of the username domain
 
-<a id="nestedblock--item--ers_rest_idstore_attributes--headers"></a>
-### Nested Schema for `item.ers_rest_idstore_attributes.headers`
+<a id="nestedblock--parameters--ers_rest_idstore_attributes--headers"></a>
+### Nested Schema for `parameters.ers_rest_idstore_attributes.headers`
 
 Optional:
 
@@ -100,7 +97,39 @@ Optional:
 
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **description** (String)
+- **ers_rest_idstore_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item--ers_rest_idstore_attributes))
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+
+<a id="nestedobjatt--item--ers_rest_idstore_attributes"></a>
+### Nested Schema for `item.ers_rest_idstore_attributes`
+
+Read-Only:
+
+- **headers** (List of Object) (see [below for nested schema](#nestedobjatt--item--ers_rest_idstore_attributes--headers))
+- **predefined** (String)
+- **root_url** (String)
+- **username_suffix** (String)
+
+<a id="nestedobjatt--item--ers_rest_idstore_attributes--headers"></a>
+### Nested Schema for `item.ers_rest_idstore_attributes.headers`
+
+Read-Only:
+
+- **key** (String)
+- **value** (String)
+
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

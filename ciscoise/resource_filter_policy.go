@@ -39,7 +39,6 @@ func resourceFilterPolicy() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,8 +46,38 @@ func resourceFilterPolicy() *schema.Resource {
 						"domains": &schema.Schema{
 							Description: `List of SXP Domains, separated with comma`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+						"sgt": &schema.Schema{
+							Description: `SGT name or ID. At least one of subnet or sgt or vn should be defined`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"subnet": &schema.Schema{
+							Description: `Subnet for filter policy (hostname is not supported).
+At least one of subnet or sgt or vn should be defined`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vn": &schema.Schema{
+							Description: `Virtual Network.
+At least one of subnet or sgt or vn should be defined`,
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"domains": &schema.Schema{
+							Description: `List of SXP Domains, separated with comma`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"id": &schema.Schema{
 							Description: `id path parameter.`,
@@ -59,7 +88,6 @@ func resourceFilterPolicy() *schema.Resource {
 							Description:      `SGT name or ID. At least one of subnet or sgt or vn should be defined`,
 							Type:             schema.TypeString,
 							Optional:         true,
-							Computed:         true,
 							DiffSuppressFunc: diffSuppressSgt(),
 						},
 						"subnet": &schema.Schema{
@@ -67,14 +95,12 @@ func resourceFilterPolicy() *schema.Resource {
 At least one of subnet or sgt or vn should be defined`,
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"vn": &schema.Schema{
 							Description: `Virtual Network.
 At least one of subnet or sgt or vn should be defined`,
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -88,9 +114,11 @@ func resourceFilterPolicyCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestFilterPolicyCreateFilterPolicy(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestFilterPolicyCreateFilterPolicy(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vSgt, _ := resourceItem["sgt"]
@@ -181,9 +209,12 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Selected method: GetFilterPolicy")
 		queryParams1 := isegosdk.GetFilterPolicyQueryParams{}
 
-		response1, _, err := client.FilterPolicy.GetFilterPolicy(&queryParams1)
+		response1, restyResp1, err := client.FilterPolicy.GetFilterPolicy(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetFilterPolicy", err,
 				"Failure at GetFilterPolicy, unexpected response", ""))
@@ -212,9 +243,12 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetFilterPolicyByID")
 
-		response2, _, err := client.FilterPolicy.GetFilterPolicyByID(vvID)
+		response2, restyResp2, err := client.FilterPolicy.GetFilterPolicyByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetFilterPolicyByID", err,
 				"Failure at GetFilterPolicyByID, unexpected response", ""))
@@ -273,10 +307,12 @@ func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m i
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestFilterPolicyUpdateFilterPolicyByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestFilterPolicyUpdateFilterPolicyByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.FilterPolicy.UpdateFilterPolicyByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -372,17 +408,17 @@ func expandRequestFilterPolicyCreateFilterPolicy(ctx context.Context, key string
 
 func expandRequestFilterPolicyCreateFilterPolicyERSFilterPolicy(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestFilterPolicyCreateFilterPolicyERSFilterPolicy {
 	request := isegosdk.RequestFilterPolicyCreateFilterPolicyERSFilterPolicy{}
-	if v, ok := d.GetOkExists(key + ".subnet"); !isEmptyValue(reflect.ValueOf(d.Get(key+".subnet"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".subnet"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subnet")))) {
 		request.Subnet = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".domains"); !isEmptyValue(reflect.ValueOf(d.Get(key+".domains"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".domains"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains")))) {
 		request.Domains = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sgt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sgt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sgt")))) {
 		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
 		request.Sgt = first
 	}
-	if v, ok := d.GetOkExists(key + ".vn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vn")))) {
 		request.Vn = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -402,17 +438,17 @@ func expandRequestFilterPolicyUpdateFilterPolicyByID(ctx context.Context, key st
 
 func expandRequestFilterPolicyUpdateFilterPolicyByIDERSFilterPolicy(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestFilterPolicyUpdateFilterPolicyByIDERSFilterPolicy {
 	request := isegosdk.RequestFilterPolicyUpdateFilterPolicyByIDERSFilterPolicy{}
-	if v, ok := d.GetOkExists(key + ".subnet"); !isEmptyValue(reflect.ValueOf(d.Get(key+".subnet"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".subnet"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".subnet")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".subnet")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".subnet")))) {
 		request.Subnet = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".domains"); !isEmptyValue(reflect.ValueOf(d.Get(key+".domains"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".domains"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domains")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domains")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domains")))) {
 		request.Domains = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sgt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sgt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sgt")))) {
 		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
 		request.Sgt = first
 	}
-	if v, ok := d.GetOkExists(key + ".vn"); !isEmptyValue(reflect.ValueOf(d.Get(key+".vn"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".vn"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".vn")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".vn")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".vn")))) {
 		request.Vn = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -483,6 +519,7 @@ func searchFilterPolicyGetFilterPolicy(m interface{}, items []isegosdk.ResponseF
 				if hasSameVn && hasSameSubnet && hasSameSgt {
 					foundID = item.ID
 					foundItem = getItem.ERSFilterPolicy
+					return foundItem, foundID, err
 				}
 			}
 		}

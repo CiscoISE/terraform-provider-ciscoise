@@ -376,9 +376,12 @@ func dataSourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 2: GetExternalRadiusServerByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.ExternalRadiusServer.GetExternalRadiusServerByName(vvName)
+		response2, restyResp2, err := client.ExternalRadiusServer.GetExternalRadiusServerByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExternalRadiusServerByName", err,
 				"Failure at GetExternalRadiusServerByName, unexpected response", ""))
@@ -402,9 +405,12 @@ func dataSourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 3: GetExternalRadiusServerByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.ExternalRadiusServer.GetExternalRadiusServerByID(vvID)
+		response3, restyResp3, err := client.ExternalRadiusServer.GetExternalRadiusServerByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetExternalRadiusServerByID", err,
 				"Failure at GetExternalRadiusServerByID, unexpected response", ""))

@@ -18,6 +18,7 @@ It performs create operation on TrustSec SXP.
 ```terraform
 data "ciscoise_pxgrid_bindings_info" "example" {
   provider = ciscoise
+
 }
 ```
 

@@ -18,7 +18,8 @@ func dataSourcePxgridAccessSecret() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Consumer.
 
-- 🚧 AccessSecret`,
+- 🚧 AccessSecret
+`,
 
 		ReadContext: dataSourcePxgridAccessSecretRead,
 		Schema: map[string]*schema.Schema{
@@ -49,6 +50,7 @@ func dataSourcePxgridAccessSecretRead(ctx context.Context, d *schema.ResourceDat
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing AccessSecret", err,

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -12,9 +12,10 @@ provider "ciscoise" {
 
 resource "ciscoise_anc_policy" "example" {
   provider = ciscoise
-  item {
+  parameters {
     name    = "policy1"
     actions = ["QUARANTINE"]
+    # actions = ["PORTBOUNCE"]
   }
 }
 

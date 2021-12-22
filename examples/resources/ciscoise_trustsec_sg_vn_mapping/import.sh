@@ -1,0 +1,1 @@
+terraform import ciscoise_trustsec_sg_vn_mapping.example "id:=string"

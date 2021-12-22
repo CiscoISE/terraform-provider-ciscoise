@@ -38,19 +38,16 @@ func resourceEndpointGroup() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -76,14 +73,37 @@ func resourceEndpointGroup() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+						"system_defined": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"system_defined": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -97,9 +117,11 @@ func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestEndpointGroupCreateEndpointGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestEndpointGroupCreateEndpointGroup(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -112,7 +134,7 @@ func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceEndpointGroupRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -122,7 +144,7 @@ func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceEndpointGroupRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.EndpointIDentityGroup.CreateEndpointGroup(request1)
@@ -144,7 +166,7 @@ func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceEndpointGroupRead(ctx, d, m)
 }
 
 func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -167,9 +189,12 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetEndpointGroupByName")
 		vvName := vName
 
-		response1, _, err := client.EndpointIDentityGroup.GetEndpointGroupByName(vvName)
+		response1, restyResp1, err := client.EndpointIDentityGroup.GetEndpointGroupByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEndpointGroupByName", err,
 				"Failure at GetEndpointGroupByName, unexpected response", ""))
@@ -192,9 +217,12 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetEndpointGroupByID")
 		vvID := vID
 
-		response2, _, err := client.EndpointIDentityGroup.GetEndpointGroupByID(vvID)
+		response2, restyResp2, err := client.EndpointIDentityGroup.GetEndpointGroupByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEndpointGroupByID", err,
 				"Failure at GetEndpointGroupByID, unexpected response", ""))
@@ -251,10 +279,12 @@ func resourceEndpointGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 			vvID = getResp.EndPointGroup.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestEndpointGroupUpdateEndpointGroupByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestEndpointGroupUpdateEndpointGroupByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.EndpointIDentityGroup.UpdateEndpointGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -344,13 +374,13 @@ func expandRequestEndpointGroupCreateEndpointGroup(ctx context.Context, key stri
 
 func expandRequestEndpointGroupCreateEndpointGroupEndPointGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointIDentityGroupCreateEndpointGroupEndPointGroup {
 	request := isegosdk.RequestEndpointIDentityGroupCreateEndpointGroupEndPointGroup{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".system_defined"); !isEmptyValue(reflect.ValueOf(d.Get(key+".system_defined"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".system_defined"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".system_defined")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".system_defined")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".system_defined")))) {
 		request.SystemDefined = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -370,16 +400,16 @@ func expandRequestEndpointGroupUpdateEndpointGroupByID(ctx context.Context, key 
 
 func expandRequestEndpointGroupUpdateEndpointGroupByIDEndPointGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointIDentityGroupUpdateEndpointGroupByIDEndPointGroup {
 	request := isegosdk.RequestEndpointIDentityGroupUpdateEndpointGroupByIDEndPointGroup{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".system_defined"); !isEmptyValue(reflect.ValueOf(d.Get(key+".system_defined"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".system_defined"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".system_defined")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".system_defined")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".system_defined")))) {
 		request.SystemDefined = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

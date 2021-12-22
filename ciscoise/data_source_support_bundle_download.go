@@ -18,7 +18,8 @@ func dataSourceSupportBundleDownload() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on SupportBundleDownload.
 
-- This data source action allows the client to upload a support bundle.`,
+- This data source action allows the client to upload a support bundle.
+`,
 
 		ReadContext: dataSourceSupportBundleDownloadRead,
 		Schema: map[string]*schema.Schema{
@@ -30,10 +31,6 @@ func dataSourceSupportBundleDownload() *schema.Resource {
 			"file_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-			},
-			"item": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
 			},
 		},
 	}
@@ -49,12 +46,13 @@ func dataSourceSupportBundleDownloadRead(ctx context.Context, d *schema.Resource
 		log.Printf("[DEBUG] Selected method 1: DownloadSupportBundle")
 		request1 := expandRequestSupportBundleDownloadDownloadSupportBundle(ctx, "", d)
 
-		response1, restyResp1, err := client.SupportBundleDownload.DownloadSupportBundle(request1)
+		response1, _, err := client.SupportBundleDownload.DownloadSupportBundle(request1)
+
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 
 		if err != nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
 			diags = append(diags, diagError(
 				"Failure when executing DownloadSupportBundle", err))
 			return diags

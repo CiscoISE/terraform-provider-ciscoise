@@ -172,5 +172,4 @@ func flattenSxpLocalBindingsMonitorBulkStatusSxpLocalBindingsItemResourcesStatus
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

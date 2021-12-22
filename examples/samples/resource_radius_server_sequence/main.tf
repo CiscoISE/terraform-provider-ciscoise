@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -21,7 +21,7 @@ output "ciscoise_external_radius_server_first" {
 
 resource "ciscoise_radius_server_sequence" "example" {
   provider = ciscoise
-  item {
+  parameters {
     radius_server_list      = ["externalRadiusServer1"]
     description             = "TEST Sequence for ERS1"
     name                    = "TESTSequence"

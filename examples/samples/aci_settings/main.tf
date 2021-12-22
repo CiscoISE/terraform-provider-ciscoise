@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -20,7 +20,7 @@ output "ciscoise_aci_settings_response" {
 
 resource "ciscoise_aci_settings" "example" {
   provider = ciscoise
-  item {
+  parameters {
     aci50                     = data.ciscoise_aci_settings.response.item[0].aci50
     aci51                     = data.ciscoise_aci_settings.response.item[0].aci51
     aciipaddress              = data.ciscoise_aci_settings.response.item[0].aciipaddress

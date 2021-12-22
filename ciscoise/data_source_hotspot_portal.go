@@ -685,9 +685,12 @@ func dataSourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Selected method 2: GetHotspotPortalByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.HotspotPortal.GetHotspotPortalByID(vvID)
+		response2, restyResp2, err := client.HotspotPortal.GetHotspotPortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetHotspotPortalByID", err,
 				"Failure at GetHotspotPortalByID, unexpected response", ""))
@@ -1030,7 +1033,6 @@ func flattenHotspotPortalGetHotspotPortalByIDItemCustomizationsPageCustomization
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenHotspotPortalGetHotspotPortalByIDItemLink(item *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortalLink) []map[string]interface{} {

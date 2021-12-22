@@ -1,7 +1,7 @@
 
 resource "ciscoise_guest_type" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     access_time {
 

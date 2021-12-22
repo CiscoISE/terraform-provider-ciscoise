@@ -317,9 +317,12 @@ func dataSourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 2: GetRadiusServerSequenceByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.RadiusServerSequence.GetRadiusServerSequenceByID(vvID)
+		response2, restyResp2, err := client.RadiusServerSequence.GetRadiusServerSequenceByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRadiusServerSequenceByID", err,
 				"Failure at GetRadiusServerSequenceByID, unexpected response", ""))
@@ -414,7 +417,6 @@ func flattenRadiusServerSequenceGetRadiusServerSequenceByIDItemOnRequestAttrMani
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenRadiusServerSequenceGetRadiusServerSequenceByIDItemBeforeAcceptAttrManipulatorsList(items *[]isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList) []map[string]interface{} {
@@ -432,7 +434,6 @@ func flattenRadiusServerSequenceGetRadiusServerSequenceByIDItemBeforeAcceptAttrM
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenRadiusServerSequenceGetRadiusServerSequenceByIDItemLink(item *isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequenceByIDRadiusServerSequenceLink) []map[string]interface{} {

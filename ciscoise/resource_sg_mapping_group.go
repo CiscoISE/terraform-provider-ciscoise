@@ -39,7 +39,6 @@ func resourceSgMappingGroup() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,7 +46,6 @@ func resourceSgMappingGroup() *schema.Resource {
 						"deploy_to": &schema.Schema{
 							Description: `Mandatory unless mappingGroup is set or unless deployType=ALL`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"deploy_type": &schema.Schema{
@@ -56,13 +54,7 @@ func resourceSgMappingGroup() *schema.Resource {
 - ND,
 - NDG`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
-						},
-						"id": &schema.Schema{
-							Description: `id path parameter.`,
-							Type:        schema.TypeString,
-							Optional:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -87,14 +79,48 @@ func resourceSgMappingGroup() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+						"sgt": &schema.Schema{
+							Description: `Mandatory unless mappingGroup is set`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"deploy_to": &schema.Schema{
+							Description: `Mandatory unless mappingGroup is set or unless deployType=ALL`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"deploy_type": &schema.Schema{
+							Description: `Allowed values:
+- ALL,
+- ND,
+- NDG`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Description: `id path parameter.`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"sgt": &schema.Schema{
 							Description:      `Mandatory unless mappingGroup is set`,
 							Type:             schema.TypeString,
 							Optional:         true,
-							Computed:         true,
 							DiffSuppressFunc: diffSuppressSgt(),
 						},
 					},
@@ -109,9 +135,11 @@ func resourceSgMappingGroupCreate(ctx context.Context, d *schema.ResourceData, m
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestSgMappingGroupCreateIPToSgtMappingGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestSgMappingGroupCreateIPToSgtMappingGroup(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -124,7 +152,7 @@ func resourceSgMappingGroupCreate(ctx context.Context, d *schema.ResourceData, m
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceSgMappingGroupRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetIPToSgtMappingGroupQueryParams{}
@@ -138,7 +166,7 @@ func resourceSgMappingGroupCreate(ctx context.Context, d *schema.ResourceData, m
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceSgMappingGroupRead(ctx, d, m)
 			}
 		}
 	}
@@ -161,7 +189,7 @@ func resourceSgMappingGroupCreate(ctx context.Context, d *schema.ResourceData, m
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceSgMappingGroupRead(ctx, d, m)
 }
 
 func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -171,7 +199,6 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -187,9 +214,12 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Selected method: GetIPToSgtMappingGroup")
 		queryParams1 := isegosdk.GetIPToSgtMappingGroupQueryParams{}
 
-		response1, _, err := client.IPToSgtMappingGroup.GetIPToSgtMappingGroup(&queryParams1)
+		response1, restyResp1, err := client.IPToSgtMappingGroup.GetIPToSgtMappingGroup(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetIPToSgtMappingGroup", err,
 				"Failure at GetIPToSgtMappingGroup, unexpected response", ""))
@@ -219,9 +249,12 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Selected method: GetIPToSgtMappingGroupByID")
 		vvID := vID
 
-		response2, _, err := client.IPToSgtMappingGroup.GetIPToSgtMappingGroupByID(vvID)
+		response2, restyResp2, err := client.IPToSgtMappingGroup.GetIPToSgtMappingGroupByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetIPToSgtMappingGroupByID", err,
 				"Failure at GetIPToSgtMappingGroupByID, unexpected response", ""))
@@ -250,7 +283,6 @@ func resourceSgMappingGroupUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -276,10 +308,12 @@ func resourceSgMappingGroupUpdate(ctx context.Context, d *schema.ResourceData, m
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestSgMappingGroupUpdateIPToSgtMappingGroupByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestSgMappingGroupUpdateIPToSgtMappingGroupByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.IPToSgtMappingGroup.UpdateIPToSgtMappingGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -306,7 +340,6 @@ func resourceSgMappingGroupDelete(ctx context.Context, d *schema.ResourceData, m
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -373,17 +406,17 @@ func expandRequestSgMappingGroupCreateIPToSgtMappingGroup(ctx context.Context, k
 
 func expandRequestSgMappingGroupCreateIPToSgtMappingGroupSgMappingGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIPToSgtMappingGroupCreateIPToSgtMappingGroupSgMappingGroup {
 	request := isegosdk.RequestIPToSgtMappingGroupCreateIPToSgtMappingGroupSgMappingGroup{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sgt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sgt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sgt")))) {
 		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
 		request.Sgt = first
 	}
-	if v, ok := d.GetOkExists(key + ".deploy_to"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_to"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_to"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".deploy_to")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".deploy_to")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".deploy_to")))) {
 		request.DeployTo = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".deploy_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".deploy_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".deploy_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".deploy_type")))) {
 		request.DeployType = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -403,17 +436,17 @@ func expandRequestSgMappingGroupUpdateIPToSgtMappingGroupByID(ctx context.Contex
 
 func expandRequestSgMappingGroupUpdateIPToSgtMappingGroupByIDSgMappingGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIPToSgtMappingGroupUpdateIPToSgtMappingGroupByIDSgMappingGroup {
 	request := isegosdk.RequestIPToSgtMappingGroupUpdateIPToSgtMappingGroupByIDSgMappingGroup{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sgt"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgt"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgt"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sgt")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sgt")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sgt")))) {
 		first, _ := replaceRegExStrings(interfaceToString(v), "", `\s*\(.*\)$`, "")
 		request.Sgt = first
 	}
-	if v, ok := d.GetOkExists(key + ".deploy_to"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_to"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_to"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".deploy_to")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".deploy_to")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".deploy_to")))) {
 		request.DeployTo = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".deploy_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".deploy_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".deploy_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".deploy_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".deploy_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".deploy_type")))) {
 		request.DeployType = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

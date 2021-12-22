@@ -117,8 +117,10 @@ string parameter. Each resource Data model description should specify if an attr
 
 						"custom_fields": &schema.Schema{
 							Description: `Key value map`,
-							Type:        schema.TypeMap,
-							Computed:    true,
+							// CHECK: The type of this param
+							// Replaced List to Map
+							Type:     schema.TypeMap,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -282,8 +284,10 @@ string parameter. Each resource Data model description should specify if an attr
 
 						"custom_fields": &schema.Schema{
 							Description: `Key value map`,
-							Type:        schema.TypeMap,
-							Computed:    true,
+							// CHECK: The type of this param
+							// Replaced List to Map
+							Type:     schema.TypeMap,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -579,9 +583,12 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method 2: GetGuestUserByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.GuestUser.GetGuestUserByName(vvName)
+		response2, restyResp2, err := client.GuestUser.GetGuestUserByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestUserByName", err,
 				"Failure at GetGuestUserByName, unexpected response", ""))
@@ -605,9 +612,12 @@ func dataSourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method 3: GetGuestUserByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.GuestUser.GetGuestUserByID(vvID)
+		response3, restyResp3, err := client.GuestUser.GetGuestUserByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestUserByID", err,
 				"Failure at GetGuestUserByID, unexpected response", ""))
@@ -678,7 +688,7 @@ func flattenGuestUserGetGuestUserByNameItemName(item *isegosdk.ResponseGuestUser
 	respItem["guest_info"] = flattenGuestUserGetGuestUserByNameItemNameGuestInfo(item.GuestInfo)
 	respItem["guest_access_info"] = flattenGuestUserGetGuestUserByNameItemNameGuestAccessInfo(item.GuestAccessInfo)
 	respItem["portal_id"] = item.PortalID
-	respItem["custom_fields"] = mapPtrToMap(item.CustomFields)
+	respItem["custom_fields"] = flattenGuestUserGetGuestUserByNameItemNameCustomFields(item.CustomFields)
 	respItem["link"] = flattenGuestUserGetGuestUserByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -726,6 +736,16 @@ func flattenGuestUserGetGuestUserByNameItemNameGuestAccessInfo(item *isegosdk.Re
 
 }
 
+func flattenGuestUserGetGuestUserByNameItemNameCustomFields(item *isegosdk.ResponseGuestUserGetGuestUserByNameGuestUserCustomFields) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return respItem
+
+}
+
 func flattenGuestUserGetGuestUserByNameItemNameLink(item *isegosdk.ResponseGuestUserGetGuestUserByNameGuestUserLink) []map[string]interface{} {
 	if item == nil {
 		return nil
@@ -758,7 +778,7 @@ func flattenGuestUserGetGuestUserByIDItemID(item *isegosdk.ResponseGuestUserGetG
 	respItem["guest_info"] = flattenGuestUserGetGuestUserByIDItemIDGuestInfo(item.GuestInfo)
 	respItem["guest_access_info"] = flattenGuestUserGetGuestUserByIDItemIDGuestAccessInfo(item.GuestAccessInfo)
 	respItem["portal_id"] = item.PortalID
-	respItem["custom_fields"] = mapPtrToMap(item.CustomFields)
+	respItem["custom_fields"] = flattenGuestUserGetGuestUserByIDItemIDCustomFields(item.CustomFields)
 	respItem["link"] = flattenGuestUserGetGuestUserByIDItemIDLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -803,6 +823,16 @@ func flattenGuestUserGetGuestUserByIDItemIDGuestAccessInfo(item *isegosdk.Respon
 	return []map[string]interface{}{
 		respItem,
 	}
+
+}
+
+func flattenGuestUserGetGuestUserByIDItemIDCustomFields(item *isegosdk.ResponseGuestUserGetGuestUserByIDGuestUserCustomFields) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return respItem
 
 }
 

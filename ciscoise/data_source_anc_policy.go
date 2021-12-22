@@ -340,9 +340,12 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method 2: GetAncPolicyByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.AncPolicy.GetAncPolicyByName(vvName)
+		response2, restyResp2, err := client.AncPolicy.GetAncPolicyByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAncPolicyByName", err,
 				"Failure at GetAncPolicyByName, unexpected response", ""))
@@ -366,9 +369,12 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method 3: GetAncPolicyByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.AncPolicy.GetAncPolicyByID(vvID)
+		response3, restyResp3, err := client.AncPolicy.GetAncPolicyByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAncPolicyByID", err,
 				"Failure at GetAncPolicyByID, unexpected response", ""))

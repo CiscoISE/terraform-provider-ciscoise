@@ -1,7 +1,7 @@
 
 resource "ciscoise_allowed_protocols" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     allow_chap                   = "false"
     allow_eap_fast               = "false"

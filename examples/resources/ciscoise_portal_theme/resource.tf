@@ -1,7 +1,7 @@
 
 resource "ciscoise_portal_theme" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"

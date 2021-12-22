@@ -161,5 +161,4 @@ func flattenDeviceAdministrationDictionaryAttributesListGetDeviceAdminDictionari
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

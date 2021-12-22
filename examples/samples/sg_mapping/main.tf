@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -13,7 +13,7 @@ provider "ciscoise" {
 
 resource "ciscoise_sg_mapping" "name" {
   provider = ciscoise
-  item {
+  parameters {
 
     deploy_to   = "70836740-8bff-11e6-996c-525400b48521"
     deploy_type = "NDG"
@@ -34,6 +34,9 @@ output "ciscoise_sg_mapping_name" {
 data "ciscoise_sg_mapping" "example" {
   provider = ciscoise
 
+  depends_on = [
+    ciscoise_sg_mapping.name
+  ]
 }
 
 output "ciscoise_sg_mapping_example" {
@@ -43,6 +46,9 @@ output "ciscoise_sg_mapping_example" {
 data "ciscoise_sg_mapping" "example1" {
   provider = ciscoise
   id       = data.ciscoise_sg_mapping.example.items[0].id
+  depends_on = [
+    ciscoise_sg_mapping.name
+  ]
 }
 
 output "ciscoise_sg_mapping_example1" {

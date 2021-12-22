@@ -158,8 +158,9 @@ string parameter. Each resource Data model description should specify if an attr
 						},
 						"modelled_content": &schema.Schema{
 							Description: `Modelled content of contract`,
-							Type:        schema.TypeString,
-							Computed:    true,
+							// Replaced List to String
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
@@ -305,9 +306,12 @@ func dataSourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interfac
 		log.Printf("[DEBUG] Selected method 2: GetSecurityGroupsACLByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SecurityGroupsACLs.GetSecurityGroupsACLByID(vvID)
+		response2, restyResp2, err := client.SecurityGroupsACLs.GetSecurityGroupsACLByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSecurityGroupsACLByID", err,
 				"Failure at GetSecurityGroupsACLByID, unexpected response", ""))
@@ -372,12 +376,22 @@ func flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItem(item *isegosdk.Respon
 	respItem["generation_id"] = item.GenerationID
 	respItem["aclcontent"] = item.ACLcontent
 	respItem["is_read_only"] = boolPtrToString(item.IsReadOnly)
-	respItem["modelled_content"] = responseInterfaceToString(item.ModelledContent)
+	respItem["modelled_content"] = flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItemModelledContent(item.ModelledContent)
 	respItem["ip_version"] = item.IPVersion
 	respItem["link"] = flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
 	}
+}
+
+func flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItemModelledContent(item *isegosdk.ResponseSecurityGroupsACLsGetSecurityGroupsACLByIDSgaclModelledContent) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return responseInterfaceToString(respItem)
+
 }
 
 func flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItemLink(item *isegosdk.ResponseSecurityGroupsACLsGetSecurityGroupsACLByIDSgaclLink) []map[string]interface{} {

@@ -39,11 +39,6 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"attribute_id": &schema.Schema{
-										Description: `Dictionary attribute id (Optional), used for additional verification`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
 									"attribute_name": &schema.Schema{
 										Description: `Dictionary attribute name`,
 										Type:        schema.TypeString,
@@ -101,7 +96,7 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 										Computed:    true,
 									},
 									"dates_range": &schema.Schema{
-										Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+										Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -119,7 +114,7 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 										},
 									},
 									"dates_range_exception": &schema.Schema{
-										Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+										Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -152,7 +147,7 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 										Computed:    true,
 									},
 									"hours_range": &schema.Schema{
-										Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+										Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -170,7 +165,7 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 										},
 									},
 									"hours_range_exception": &schema.Schema{
-										Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+										Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -327,11 +322,6 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"attribute_id": &schema.Schema{
-										Description: `Dictionary attribute id (Optional), used for additional verification`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
 									"attribute_name": &schema.Schema{
 										Description: `Dictionary attribute name`,
 										Type:        schema.TypeString,
@@ -389,7 +379,7 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 										Computed:    true,
 									},
 									"dates_range": &schema.Schema{
-										Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+										Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -407,7 +397,7 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 										},
 									},
 									"dates_range_exception": &schema.Schema{
-										Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+										Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -440,7 +430,7 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 										Computed:    true,
 									},
 									"hours_range": &schema.Schema{
-										Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+										Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -458,7 +448,7 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 										},
 									},
 									"hours_range_exception": &schema.Schema{
-										Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+										Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -651,9 +641,12 @@ func dataSourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.Resourc
 		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessPolicySetByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.NetworkAccessPolicySet.GetNetworkAccessPolicySetByID(vvID)
+		response2, restyResp2, err := client.NetworkAccessPolicySet.GetNetworkAccessPolicySetByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessPolicySetByID", err,
 				"Failure at GetNetworkAccessPolicySetByID, unexpected response", ""))
@@ -711,7 +704,6 @@ func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetsItemsCondition(item 
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
-	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
@@ -758,7 +750,6 @@ func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetsItemsConditionChildr
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetsItemsConditionChildrenLink(item *isegosdk.ResponseNetworkAccessPolicySetGetNetworkAccessPolicySetsResponseConditionChildrenLink) []map[string]interface{} {
@@ -880,7 +871,6 @@ func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetByIDItemCondition(ite
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
-	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
@@ -927,7 +917,6 @@ func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetByIDItemConditionChil
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetByIDItemConditionChildrenLink(item *isegosdk.ResponseNetworkAccessPolicySetGetNetworkAccessPolicySetByIDResponseConditionChildrenLink) []map[string]interface{} {

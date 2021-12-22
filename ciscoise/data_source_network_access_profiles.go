@@ -15,7 +15,7 @@ func dataSourceNetworkAccessProfiles() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Network Access - Profiles.
 
-- Network Access Returns list of profiles.
+- Network Access Returns list of authorization profiles.
  (Other CRUD APIs available throught ERS)
 `,
 
@@ -79,7 +79,7 @@ func dataSourceNetworkAccessProfilesRead(ctx context.Context, d *schema.Resource
 	return diags
 }
 
-func flattenNetworkAccessProfilesGetNetworkAccessProfilesItems(items *[]isegosdk.ResponseNetworkAccessProfilesGetNetworkAccessProfiles) []map[string]interface{} {
+func flattenNetworkAccessProfilesGetNetworkAccessProfilesItems(items *isegosdk.ResponseNetworkAccessProfilesGetNetworkAccessProfiles) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

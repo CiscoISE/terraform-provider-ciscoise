@@ -1,7 +1,7 @@
 
 resource "ciscoise_external_radius_server" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     accounting_port     = 1
     authentication_port = 1

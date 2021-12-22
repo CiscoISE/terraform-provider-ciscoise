@@ -24,7 +24,7 @@ Partial update is not supported
 ```terraform
 resource "ciscoise_id_store_sequence" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     break_on_store_fail                = "false"
     certificate_authentication_profile = "string"
@@ -51,14 +51,15 @@ output "ciscoise_id_store_sequence_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -66,16 +67,12 @@ Optional:
 - **certificate_authentication_profile** (String)
 - **description** (String)
 - **id** (String) The ID of this resource.
-- **id_seq_item** (Block List) (see [below for nested schema](#nestedblock--item--id_seq_item))
+- **id_seq_item** (Block List) (see [below for nested schema](#nestedblock--parameters--id_seq_item))
 - **name** (String)
 - **parent** (String)
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--id_seq_item"></a>
-### Nested Schema for `item.id_seq_item`
+<a id="nestedblock--parameters--id_seq_item"></a>
+### Nested Schema for `parameters.id_seq_item`
 
 Optional:
 
@@ -83,7 +80,31 @@ Optional:
 - **order** (Number)
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **break_on_store_fail** (String)
+- **certificate_authentication_profile** (String)
+- **description** (String)
+- **id** (String)
+- **id_seq_item** (List of Object) (see [below for nested schema](#nestedobjatt--item--id_seq_item))
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **parent** (String)
+
+<a id="nestedobjatt--item--id_seq_item"></a>
+### Nested Schema for `item.id_seq_item`
+
+Read-Only:
+
+- **idstore** (String)
+- **order** (Number)
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_device_administration_authentication_rules" "example" {
   provider = ciscoise
-  item {
+  parameters {
     if_auth_fail      = "REJECT"
     if_process_fail   = "DROP"
     if_user_not_found = "REJECT"

@@ -1392,9 +1392,12 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 2: GetSelfRegisteredPortalByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SelfRegisteredPortal.GetSelfRegisteredPortalByID(vvID)
+		response2, restyResp2, err := client.SelfRegisteredPortal.GetSelfRegisteredPortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSelfRegisteredPortalByID", err,
 				"Failure at GetSelfRegisteredPortalByID, unexpected response", ""))
@@ -1549,7 +1552,6 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsLoginPage
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPageSettings(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalSettingsSelfRegPageSettings) []map[string]interface{} {
@@ -1597,11 +1599,7 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemSettingsSelfRegPa
 	respItem["approve_deny_links_time_units"] = item.ApproveDenyLinksTimeUnits
 	respItem["require_approver_to_authenticate"] = boolPtrToString(item.RequireApproverToAuthenticate)
 	respItem["authenticate_sponsors_using_portal_list"] = boolPtrToString(item.AuthenticateSponsorsUsingPortalList)
-	if item.SponsorPortalList != nil {
-		respItem["sponsor_portal_list"] = responseInterfaceToSliceString(*item.SponsorPortalList)
-	} else {
-		respItem["sponsor_portal_list"] = []string{}
-	}
+	respItem["sponsor_portal_list"] = responseInterfaceToSliceString(item.SponsorPortalList)
 
 	return []map[string]interface{}{
 		respItem,
@@ -2105,7 +2103,6 @@ func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemCustomizationsPag
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItemLink(item *isegosdk.ResponseSelfRegisteredPortalGetSelfRegisteredPortalByIDSelfRegPortalLink) []map[string]interface{} {

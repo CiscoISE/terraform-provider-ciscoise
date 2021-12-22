@@ -1,6 +1,8 @@
 
 data "ciscoise_node_deployment" "example" {
-  provider = ciscoise
+  provider    = ciscoise
+  filter      = ["string"]
+  filter_type = "string"
 }
 
 output "ciscoise_node_deployment_example" {

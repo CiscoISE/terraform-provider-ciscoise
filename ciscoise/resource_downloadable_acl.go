@@ -39,7 +39,6 @@ func resourceDownloadableACL() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,7 +46,6 @@ func resourceDownloadableACL() *schema.Resource {
 						"dacl": &schema.Schema{
 							Description: `The DACL Content. Use the string \\n for a newline`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"dacl_type": &schema.Schema{
@@ -56,18 +54,15 @@ func resourceDownloadableACL() *schema.Resource {
 - IPV6,
 - IP_AGNOSTIC`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"description": &schema.Schema{
 							Description: `Use the string \\n for a newline`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -94,8 +89,43 @@ func resourceDownloadableACL() *schema.Resource {
 						"name": &schema.Schema{
 							Description: `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"dacl": &schema.Schema{
+							Description: `The DACL Content. Use the string \\n for a newline`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"dacl_type": &schema.Schema{
+							Description: `Allowed values:
+- IPV4,
+- IPV6,
+- IP_AGNOSTIC`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Description: `Use the string \\n for a newline`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Description: `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 					},
 				},
@@ -109,9 +139,11 @@ func resourceDownloadableACLCreate(ctx context.Context, d *schema.ResourceData, 
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestDownloadableACLCreateDownloadableACL(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestDownloadableACLCreateDownloadableACL(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -124,7 +156,7 @@ func resourceDownloadableACLCreate(ctx context.Context, d *schema.ResourceData, 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceDownloadableACLRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetDownloadableACLQueryParams{}
@@ -138,7 +170,7 @@ func resourceDownloadableACLCreate(ctx context.Context, d *schema.ResourceData, 
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceDownloadableACLRead(ctx, d, m)
 			}
 		}
 	}
@@ -161,7 +193,7 @@ func resourceDownloadableACLCreate(ctx context.Context, d *schema.ResourceData, 
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceDownloadableACLRead(ctx, d, m)
 }
 
 func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -183,13 +215,15 @@ func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 2 {
-
 		log.Printf("[DEBUG] Selected method: GetDownloadableACL")
 		queryParams1 := isegosdk.GetDownloadableACLQueryParams{}
 
-		response1, _, err := client.DownloadableACL.GetDownloadableACL(&queryParams1)
+		response1, restyResp1, err := client.DownloadableACL.GetDownloadableACL(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDownloadableACL", err,
 				"Failure at GetDownloadableACL, unexpected response", ""))
@@ -217,10 +251,14 @@ func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m 
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetDownloadableACLByID")
+		vvID := vID
 
-		response2, _, err := client.DownloadableACL.GetDownloadableACLByID(vvID)
+		response2, restyResp2, err := client.DownloadableACL.GetDownloadableACLByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDownloadableACLByID", err,
 				"Failure at GetDownloadableACLByID, unexpected response", ""))
@@ -279,10 +317,12 @@ func resourceDownloadableACLUpdate(ctx context.Context, d *schema.ResourceData, 
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestDownloadableACLUpdateDownloadableACLByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestDownloadableACLUpdateDownloadableACLByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.DownloadableACL.UpdateDownloadableACLByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -380,16 +420,16 @@ func expandRequestDownloadableACLCreateDownloadableACL(ctx context.Context, key 
 
 func expandRequestDownloadableACLCreateDownloadableACLDownloadableACL(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDownloadableACLCreateDownloadableACLDownloadableACL {
 	request := isegosdk.RequestDownloadableACLCreateDownloadableACLDownloadableACL{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dacl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dacl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dacl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dacl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dacl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dacl")))) {
 		request.Dacl = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dacl_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dacl_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dacl_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dacl_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dacl_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dacl_type")))) {
 		request.DaclType = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -409,19 +449,19 @@ func expandRequestDownloadableACLUpdateDownloadableACLByID(ctx context.Context, 
 
 func expandRequestDownloadableACLUpdateDownloadableACLByIDDownloadableACL(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDownloadableACLUpdateDownloadableACLByIDDownloadableACL {
 	request := isegosdk.RequestDownloadableACLUpdateDownloadableACLByIDDownloadableACL{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dacl"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dacl"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dacl"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dacl")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dacl")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dacl")))) {
 		request.Dacl = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dacl_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dacl_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dacl_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dacl_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dacl_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dacl_type")))) {
 		request.DaclType = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

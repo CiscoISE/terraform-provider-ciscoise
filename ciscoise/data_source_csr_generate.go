@@ -20,6 +20,7 @@ func dataSourceCsrGenerate() *schema.Resource {
 
 - Generate a certificate signing request for Multi-Use, Admin, EAP Authentication, RADIUS DTLS, PxGrid, SAML, Portal and
 IMS Services.
+
 `,
 
 		ReadContext: dataSourceCsrGenerateRead,
@@ -160,74 +161,32 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	vPage, okPage := d.GetOk("page")
-	vSize, okSize := d.GetOk("size")
-	vSort, okSort := d.GetOk("sort")
-	vSortBy, okSortBy := d.GetOk("sort_by")
-	vFilter, okFilter := d.GetOk("filter")
-	vFilterType, okFilterType := d.GetOk("filter_type")
 
-	method1 := []bool{okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
+	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetCsrs")
-		queryParams1 := isegosdk.GetCsrsQueryParams{}
+		log.Printf("[DEBUG] Selected method 1: GenerateCsr")
+		request1 := expandRequestCsrGenerateGenerateCsr(ctx, "", d)
 
-		if okPage {
-			queryParams1.Page = vPage.(int)
-		}
-		if okSize {
-			queryParams1.Size = vSize.(int)
-		}
-		if okSort {
-			queryParams1.Sort = vSort.(string)
-		}
-		if okSortBy {
-			queryParams1.SortBy = vSortBy.(string)
-		}
-		if okFilter {
-			queryParams1.Filter = interfaceToSliceString(vFilter)
-		}
-		if okFilterType {
-			queryParams1.FilterType = vFilterType.(string)
-		}
+		response1, restyResp1, err := client.Certificates.GenerateCsr(request1)
 
-		response1, restyResp1, err := client.Certificates.GetCsrs(&queryParams1)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetCsrs", err,
-				"Failure at GetCsrs, unexpected response", ""))
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	}
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GenerateCsr")
-		request2 := expandRequestCsrGenerateGenerateCsr(ctx, "", d)
-
-		response2, _, err := client.Certificates.GenerateCsr(request2)
-
-		if err != nil || response2 == nil {
-			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GenerateCsr", err,
 				"Failure at GenerateCsr, unexpected response", ""))
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
+		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems2 := flattenCertificatesGenerateCsrItems(response2.Response)
-		if err := d.Set("items", vItems2); err != nil {
+		vItems1 := flattenCertificatesGenerateCsrItems(response1.Response)
+		if err := d.Set("items", vItems1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GenerateCsr response",
 				err))

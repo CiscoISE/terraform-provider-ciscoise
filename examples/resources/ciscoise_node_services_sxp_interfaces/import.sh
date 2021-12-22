@@ -1,0 +1,1 @@
+terraform import ciscoise_node_services_sxp_interfaces.example "hostname:=string"

@@ -79,7 +79,7 @@ func dataSourceNetworkAccessIDentityStoresRead(ctx context.Context, d *schema.Re
 	return diags
 }
 
-func flattenNetworkAccessIDentityStoresGetNetworkAccessIDentityStoresItems(items *[]isegosdk.ResponseNetworkAccessIDentityStoresGetNetworkAccessIDentityStores) []map[string]interface{} {
+func flattenNetworkAccessIDentityStoresGetNetworkAccessIDentityStoresItems(items *isegosdk.ResponseNetworkAccessIDentityStoresGetNetworkAccessIDentityStores) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

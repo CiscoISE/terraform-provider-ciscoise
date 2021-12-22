@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on SXPLocalBindings.
 ```terraform
 resource "ciscoise_sxp_local_bindings" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     binding_name       = "string"
     description        = "string"
@@ -45,14 +45,15 @@ output "ciscoise_sxp_local_bindings_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -64,11 +65,22 @@ Optional:
 - **sxp_vpn** (String) List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined
 - **vns** (String) List of Virtual Networks, separated with comma. At least one of: sxpVpn or vns should be defined
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **binding_name** (String)
+- **description** (String)
+- **id** (String)
+- **ip_address_or_host** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **sgt** (String)
+- **sxp_vpn** (String)
+- **vns** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

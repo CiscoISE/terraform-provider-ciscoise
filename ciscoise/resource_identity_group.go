@@ -36,19 +36,16 @@ func resourceIDentityGroup() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -74,13 +71,36 @@ func resourceIDentityGroup() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"parent": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"parent": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -94,9 +114,11 @@ func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestIDentityGroupCreateIDentityGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestIDentityGroupCreateIDentityGroup(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -109,7 +131,7 @@ func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceIDentityGroupRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -119,7 +141,7 @@ func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceIDentityGroupRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.IDentityGroups.CreateIDentityGroup(request1)
@@ -141,7 +163,7 @@ func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceIDentityGroupRead(ctx, d, m)
 }
 
 func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -164,9 +186,12 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetIDentityGroupByName")
 		vvName := vName
 
-		response1, _, err := client.IDentityGroups.GetIDentityGroupByName(vvName)
+		response1, restyResp1, err := client.IDentityGroups.GetIDentityGroupByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetIDentityGroupByName", err,
 				"Failure at GetIDentityGroupByName, unexpected response", ""))
@@ -189,9 +214,12 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetIDentityGroupByID")
 		vvID := vID
 
-		response2, _, err := client.IDentityGroups.GetIDentityGroupByID(vvID)
+		response2, restyResp2, err := client.IDentityGroups.GetIDentityGroupByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetIDentityGroupByID", err,
 				"Failure at GetIDentityGroupByID, unexpected response", ""))
@@ -248,10 +276,12 @@ func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 			vvID = getResp.IDentityGroup.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestIDentityGroupUpdateIDentityGroupByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestIDentityGroupUpdateIDentityGroupByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.IDentityGroups.UpdateIDentityGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -273,7 +303,7 @@ func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceIDentityGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Function does not perform delete on ISE
+	// NOTE: Unable to delete IDentityGroup on Cisco ISE
 	//       Returning empty diags to delete it on Terraform
 	return diags
 }
@@ -288,13 +318,13 @@ func expandRequestIDentityGroupCreateIDentityGroup(ctx context.Context, key stri
 
 func expandRequestIDentityGroupCreateIDentityGroupIDentityGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIDentityGroupsCreateIDentityGroupIDentityGroup {
 	request := isegosdk.RequestIDentityGroupsCreateIDentityGroupIDentityGroup{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".parent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".parent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".parent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent")))) {
 		request.Parent = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -314,16 +344,16 @@ func expandRequestIDentityGroupUpdateIDentityGroupByID(ctx context.Context, key 
 
 func expandRequestIDentityGroupUpdateIDentityGroupByIDIDentityGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIDentityGroupsUpdateIDentityGroupByIDIDentityGroup {
 	request := isegosdk.RequestIDentityGroupsUpdateIDentityGroupByIDIDentityGroup{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".parent"); !isEmptyValue(reflect.ValueOf(d.Get(key+".parent"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".parent"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent")))) {
 		request.Parent = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

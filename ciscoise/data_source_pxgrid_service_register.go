@@ -18,7 +18,8 @@ func dataSourcePxgridServiceRegister() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Provider.
 
-- 🚧 ServiceRegister`,
+- 🚧 ServiceRegister
+`,
 
 		ReadContext: dataSourcePxgridServiceRegisterRead,
 		Schema: map[string]*schema.Schema{
@@ -49,6 +50,7 @@ func dataSourcePxgridServiceRegisterRead(ctx context.Context, d *schema.Resource
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing RegisterService", err,

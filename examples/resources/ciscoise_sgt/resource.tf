@@ -1,11 +1,10 @@
 
 resource "ciscoise_sgt" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    default_sgacls    = ["string"]
     description       = "string"
-    generation_id     = 1
+    generation_id     = "string"
     id                = "string"
     is_read_only      = "false"
     name              = "string"

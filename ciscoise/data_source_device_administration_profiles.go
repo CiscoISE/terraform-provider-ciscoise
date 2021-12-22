@@ -15,8 +15,8 @@ func dataSourceDeviceAdministrationProfiles() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Device Administration - Profiles.
 
-- Device Admin Returns list of profiles.
- (Other CRUD APIs available throught ERS)
+- Device Admin Returns list of shell profiles.
+ (Other CRUD APIs available through ERS)
 `,
 
 		ReadContext: dataSourceDeviceAdministrationProfilesRead,
@@ -79,7 +79,7 @@ func dataSourceDeviceAdministrationProfilesRead(ctx context.Context, d *schema.R
 	return diags
 }
 
-func flattenDeviceAdministrationProfilesGetDeviceAdminProfilesItems(items *[]isegosdk.ResponseDeviceAdministrationProfilesGetDeviceAdminProfiles) []map[string]interface{} {
+func flattenDeviceAdministrationProfilesGetDeviceAdminProfilesItems(items *isegosdk.ResponseDeviceAdministrationProfilesGetDeviceAdminProfiles) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

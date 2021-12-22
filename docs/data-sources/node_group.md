@@ -4,22 +4,20 @@ page_title: "ciscoise_node_group Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on Node Group.
-  Get details of all the node groups in the cluster. To detect node failure and to reset all URL-redirected sessions on
-  the failed node, two or more Policy Service nodes can be placed in the same node group. When a node that belongs to a
-  node group fails, another node in the same node group issues a Change of Authorization (CoA) for all URL-redirected
-  sessions on the failed node.Get details of a node group in the cluster.
+  This data source retrieves the details of all the node groups in the cluster.
+  Each node group retrieved consists of name, description and MAR cache details like query-attempts, query-timeout,
+  replication-attempts, replication-timeout.This data source retrieves the details of a node group in the cluster using a node group name.
 ---
 
 # ciscoise_node_group (Data Source)
 
 It performs read operation on Node Group.
 
-- Get details of all the node groups in the cluster. To detect node failure and to reset all URL-redirected sessions on
-the failed node, two or more Policy Service nodes can be placed in the same node group. When a node that belongs to a
-node group fails, another node in the same node group issues a Change of Authorization (CoA) for all URL-redirected
-sessions on the failed node.
+- This data source retrieves the details of all the node groups in the cluster.
+ Each node group retrieved consists of name, description and MAR cache details like query-attempts, query-timeout,
+replication-attempts, replication-timeout.
 
-- Get details of a node group in the cluster.
+- This data source retrieves the details of a node group in the cluster using a node group name.
 
 ## Example Usage
 
@@ -48,7 +46,7 @@ output "ciscoise_node_group_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **node_group_name** (String) node-group-name path parameter. ID of the existing node group.
+- **node_group_name** (String) nodeGroupName path parameter. Name of the existing node group.
 
 ### Read-Only
 
@@ -69,7 +67,6 @@ Read-Only:
 
 Read-Only:
 
-- **enabled** (String)
 - **query_attempts** (Number)
 - **query_timeout** (Number)
 - **replication_attempts** (Number)
@@ -91,7 +88,6 @@ Read-Only:
 
 Read-Only:
 
-- **enabled** (String)
 - **query_attempts** (Number)
 - **query_timeout** (Number)
 - **replication_attempts** (Number)

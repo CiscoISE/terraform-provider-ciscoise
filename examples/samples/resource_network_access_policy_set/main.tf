@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -19,15 +19,15 @@ output "ciscoise_network_access_conditions_for_policy_set_items" {
 
 resource "ciscoise_network_access_policy_set" "example" {
   provider = ciscoise
-  item {
+  parameters {
     condition {
       condition_type = "ConditionReference"
-      id             = "4c672ec3-946e-46da-bce5-9054168e2b6b"
+      id             = "898c705e-d80c-4c88-bc2a-f0900488e430"
       is_negate      = "false"
       name           = "My New Condition"
     }
     default      = "false"
-    description  = "New Policy Set test"
+    description  = "New Policy Set test 1"
     hit_counts   = 0
     is_proxy     = "false"
     name         = "New Policy Set 1"

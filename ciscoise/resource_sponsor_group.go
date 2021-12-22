@@ -39,66 +39,50 @@ func resourceSponsorGroup() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"auto_notification": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"create_permissions": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"can_create_random_accounts": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"can_import_multiple_accounts": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"can_set_future_start_date": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"can_specify_username_prefix": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"default_username_prefix": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"import_batch_size_limit": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
 										Computed: true,
 									},
 									"random_batch_size_limit": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
 										Computed: true,
 									},
 									"start_date_future_limit_days": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -106,12 +90,10 @@ func resourceSponsorGroup() *schema.Resource {
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"guest_types": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
@@ -119,20 +101,15 @@ func resourceSponsorGroup() *schema.Resource {
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"is_default_group": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"is_enabled": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -157,7 +134,6 @@ func resourceSponsorGroup() *schema.Resource {
 						},
 						"locations": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
@@ -165,12 +141,10 @@ func resourceSponsorGroup() *schema.Resource {
 						},
 						"manage_permission": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"member_groups": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
@@ -178,13 +152,176 @@ func resourceSponsorGroup() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"other_permissions": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"can_access_via_rest": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_approve_selfreg_guests": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_delete_guest_accounts": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_extend_guest_accounts": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_reinstate_suspended_accounts": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_reset_guest_passwords": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_send_sms_notifications": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_suspend_guest_accounts": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_update_guest_contact_info": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"can_view_guest_passwords": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"limit_approval_to_sponsors_guests": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"require_suspension_reason": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"auto_notification": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"create_permissions": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"can_create_random_accounts": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"can_import_multiple_accounts": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"can_set_future_start_date": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"can_specify_username_prefix": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"default_username_prefix": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"import_batch_size_limit": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+									"random_batch_size_limit": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+									"start_date_future_limit_days": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"guest_types": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"is_default_group": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"is_enabled": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"locations": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"manage_permission": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"member_groups": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"other_permissions": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
@@ -192,73 +329,61 @@ func resourceSponsorGroup() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_approve_selfreg_guests": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_delete_guest_accounts": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_extend_guest_accounts": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_reinstate_suspended_accounts": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_reset_guest_passwords": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_send_sms_notifications": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_suspend_guest_accounts": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_update_guest_contact_info": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"can_view_guest_passwords": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"limit_approval_to_sponsors_guests": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"require_suspension_reason": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -275,9 +400,11 @@ func resourceSponsorGroupCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestSponsorGroupCreateSponsorGroup(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestSponsorGroupCreateSponsorGroup(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -290,7 +417,7 @@ func resourceSponsorGroupCreate(ctx context.Context, d *schema.ResourceData, m i
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceSponsorGroupRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetSponsorGroupQueryParams{}
@@ -304,7 +431,7 @@ func resourceSponsorGroupCreate(ctx context.Context, d *schema.ResourceData, m i
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceSponsorGroupRead(ctx, d, m)
 			}
 		}
 	}
@@ -327,7 +454,7 @@ func resourceSponsorGroupCreate(ctx context.Context, d *schema.ResourceData, m i
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceSponsorGroupRead(ctx, d, m)
 }
 
 func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -337,7 +464,6 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -353,9 +479,12 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Selected method: GetSponsorGroup")
 		queryParams1 := isegosdk.GetSponsorGroupQueryParams{}
 
-		response1, _, err := client.SponsorGroup.GetSponsorGroup(&queryParams1)
+		response1, restyResp1, err := client.SponsorGroup.GetSponsorGroup(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsorGroup", err,
 				"Failure at GetSponsorGroup, unexpected response", ""))
@@ -385,9 +514,12 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Selected method: GetSponsorGroupByID")
 		vvID := vID
 
-		response2, _, err := client.SponsorGroup.GetSponsorGroupByID(vvID)
+		response2, restyResp2, err := client.SponsorGroup.GetSponsorGroupByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsorGroupByID", err,
 				"Failure at GetSponsorGroupByID, unexpected response", ""))
@@ -416,7 +548,6 @@ func resourceSponsorGroupUpdate(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -447,10 +578,12 @@ func resourceSponsorGroupUpdate(ctx context.Context, d *schema.ResourceData, m i
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestSponsorGroupUpdateSponsorGroupByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestSponsorGroupUpdateSponsorGroupByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.SponsorGroup.UpdateSponsorGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -477,7 +610,6 @@ func resourceSponsorGroupDelete(ctx context.Context, d *schema.ResourceData, m i
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -549,37 +681,37 @@ func expandRequestSponsorGroupCreateSponsorGroup(ctx context.Context, key string
 
 func expandRequestSponsorGroupCreateSponsorGroupSponsorGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorGroupCreateSponsorGroupSponsorGroup {
 	request := isegosdk.RequestSponsorGroupCreateSponsorGroupSponsorGroup{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_enabled")))) {
 		request.IsEnabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_default_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_default_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_default_group"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_default_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_default_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_default_group")))) {
 		request.IsDefaultGroup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".member_groups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".member_groups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".member_groups"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_groups")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_groups")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_groups")))) {
 		request.MemberGroups = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_types"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_types"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_types"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_types")))) {
 		request.GuestTypes = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".locations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".locations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".locations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".locations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".locations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".locations")))) {
 		request.Locations = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".auto_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auto_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auto_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_notification")))) {
 		request.AutoNotification = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".create_permissions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".create_permissions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".create_permissions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".create_permissions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".create_permissions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".create_permissions")))) {
 		request.CreatePermissions = expandRequestSponsorGroupCreateSponsorGroupSponsorGroupCreatePermissions(ctx, key+".create_permissions.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".manage_permission"); !isEmptyValue(reflect.ValueOf(d.Get(key+".manage_permission"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".manage_permission"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".manage_permission")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".manage_permission")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".manage_permission")))) {
 		request.ManagePermission = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".other_permissions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".other_permissions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".other_permissions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".other_permissions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".other_permissions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".other_permissions")))) {
 		request.OtherPermissions = expandRequestSponsorGroupCreateSponsorGroupSponsorGroupOtherPermissions(ctx, key+".other_permissions.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -590,28 +722,28 @@ func expandRequestSponsorGroupCreateSponsorGroupSponsorGroup(ctx context.Context
 
 func expandRequestSponsorGroupCreateSponsorGroupSponsorGroupCreatePermissions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorGroupCreateSponsorGroupSponsorGroupCreatePermissions {
 	request := isegosdk.RequestSponsorGroupCreateSponsorGroupSponsorGroupCreatePermissions{}
-	if v, ok := d.GetOkExists(key + ".can_import_multiple_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_import_multiple_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_import_multiple_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_import_multiple_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_import_multiple_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_import_multiple_accounts")))) {
 		request.CanImportMultipleAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".import_batch_size_limit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".import_batch_size_limit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".import_batch_size_limit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".import_batch_size_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".import_batch_size_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".import_batch_size_limit")))) {
 		request.ImportBatchSizeLimit = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_create_random_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_create_random_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_create_random_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_create_random_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_create_random_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_create_random_accounts")))) {
 		request.CanCreateRandomAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".random_batch_size_limit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".random_batch_size_limit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".random_batch_size_limit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".random_batch_size_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".random_batch_size_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".random_batch_size_limit")))) {
 		request.RandomBatchSizeLimit = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_username_prefix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_username_prefix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_username_prefix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_username_prefix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_username_prefix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_username_prefix")))) {
 		request.DefaultUsernamePrefix = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_specify_username_prefix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_specify_username_prefix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_specify_username_prefix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_specify_username_prefix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_specify_username_prefix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_specify_username_prefix")))) {
 		request.CanSpecifyUsernamePrefix = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_set_future_start_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_set_future_start_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_set_future_start_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_set_future_start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_set_future_start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_set_future_start_date")))) {
 		request.CanSetFutureStartDate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_date_future_limit_days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_date_future_limit_days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_date_future_limit_days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date_future_limit_days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date_future_limit_days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date_future_limit_days")))) {
 		request.StartDateFutureLimitDays = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -622,40 +754,40 @@ func expandRequestSponsorGroupCreateSponsorGroupSponsorGroupCreatePermissions(ct
 
 func expandRequestSponsorGroupCreateSponsorGroupSponsorGroupOtherPermissions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorGroupCreateSponsorGroupSponsorGroupOtherPermissions {
 	request := isegosdk.RequestSponsorGroupCreateSponsorGroupSponsorGroupOtherPermissions{}
-	if v, ok := d.GetOkExists(key + ".can_update_guest_contact_info"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_update_guest_contact_info"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_update_guest_contact_info"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_update_guest_contact_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_update_guest_contact_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_update_guest_contact_info")))) {
 		request.CanUpdateGuestContactInfo = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_view_guest_passwords"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_view_guest_passwords"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_view_guest_passwords"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_view_guest_passwords")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_view_guest_passwords")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_view_guest_passwords")))) {
 		request.CanViewGuestPasswords = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_send_sms_notifications"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_send_sms_notifications"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_send_sms_notifications"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_send_sms_notifications")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_send_sms_notifications")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_send_sms_notifications")))) {
 		request.CanSendSmsNotifications = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_reset_guest_passwords"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_reset_guest_passwords"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_reset_guest_passwords"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_reset_guest_passwords")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_reset_guest_passwords")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_reset_guest_passwords")))) {
 		request.CanResetGuestPasswords = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_extend_guest_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_extend_guest_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_extend_guest_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_extend_guest_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_extend_guest_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_extend_guest_accounts")))) {
 		request.CanExtendGuestAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_delete_guest_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_delete_guest_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_delete_guest_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_delete_guest_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_delete_guest_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_delete_guest_accounts")))) {
 		request.CanDeleteGuestAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_suspend_guest_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_suspend_guest_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_suspend_guest_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_suspend_guest_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_suspend_guest_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_suspend_guest_accounts")))) {
 		request.CanSuspendGuestAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_suspension_reason"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_suspension_reason"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_suspension_reason"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_suspension_reason")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_suspension_reason")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_suspension_reason")))) {
 		request.RequireSuspensionReason = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_reinstate_suspended_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_reinstate_suspended_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_reinstate_suspended_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_reinstate_suspended_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_reinstate_suspended_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_reinstate_suspended_accounts")))) {
 		request.CanReinstateSuspendedAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_approve_selfreg_guests"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_approve_selfreg_guests"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_approve_selfreg_guests"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_approve_selfreg_guests")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_approve_selfreg_guests")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_approve_selfreg_guests")))) {
 		request.CanApproveSelfregGuests = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".limit_approval_to_sponsors_guests"); !isEmptyValue(reflect.ValueOf(d.Get(key+".limit_approval_to_sponsors_guests"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".limit_approval_to_sponsors_guests"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".limit_approval_to_sponsors_guests")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".limit_approval_to_sponsors_guests")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".limit_approval_to_sponsors_guests")))) {
 		request.LimitApprovalToSponsorsGuests = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_access_via_rest"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_access_via_rest"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_access_via_rest"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_access_via_rest")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_access_via_rest")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_access_via_rest")))) {
 		request.CanAccessViaRest = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -675,40 +807,40 @@ func expandRequestSponsorGroupUpdateSponsorGroupByID(ctx context.Context, key st
 
 func expandRequestSponsorGroupUpdateSponsorGroupByIDSponsorGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorGroupUpdateSponsorGroupByIDSponsorGroup {
 	request := isegosdk.RequestSponsorGroupUpdateSponsorGroupByIDSponsorGroup{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_enabled")))) {
 		request.IsEnabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_default_group"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_default_group"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_default_group"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_default_group")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_default_group")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_default_group")))) {
 		request.IsDefaultGroup = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".member_groups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".member_groups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".member_groups"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".member_groups")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".member_groups")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".member_groups")))) {
 		request.MemberGroups = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".guest_types"); !isEmptyValue(reflect.ValueOf(d.Get(key+".guest_types"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".guest_types"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".guest_types")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".guest_types")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".guest_types")))) {
 		request.GuestTypes = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".locations"); !isEmptyValue(reflect.ValueOf(d.Get(key+".locations"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".locations"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".locations")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".locations")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".locations")))) {
 		request.Locations = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".auto_notification"); !isEmptyValue(reflect.ValueOf(d.Get(key+".auto_notification"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".auto_notification"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auto_notification")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auto_notification")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auto_notification")))) {
 		request.AutoNotification = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".create_permissions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".create_permissions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".create_permissions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".create_permissions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".create_permissions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".create_permissions")))) {
 		request.CreatePermissions = expandRequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupCreatePermissions(ctx, key+".create_permissions.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".manage_permission"); !isEmptyValue(reflect.ValueOf(d.Get(key+".manage_permission"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".manage_permission"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".manage_permission")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".manage_permission")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".manage_permission")))) {
 		request.ManagePermission = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".other_permissions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".other_permissions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".other_permissions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".other_permissions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".other_permissions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".other_permissions")))) {
 		request.OtherPermissions = expandRequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupOtherPermissions(ctx, key+".other_permissions.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -719,28 +851,28 @@ func expandRequestSponsorGroupUpdateSponsorGroupByIDSponsorGroup(ctx context.Con
 
 func expandRequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupCreatePermissions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupCreatePermissions {
 	request := isegosdk.RequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupCreatePermissions{}
-	if v, ok := d.GetOkExists(key + ".can_import_multiple_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_import_multiple_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_import_multiple_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_import_multiple_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_import_multiple_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_import_multiple_accounts")))) {
 		request.CanImportMultipleAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".import_batch_size_limit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".import_batch_size_limit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".import_batch_size_limit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".import_batch_size_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".import_batch_size_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".import_batch_size_limit")))) {
 		request.ImportBatchSizeLimit = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_create_random_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_create_random_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_create_random_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_create_random_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_create_random_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_create_random_accounts")))) {
 		request.CanCreateRandomAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".random_batch_size_limit"); !isEmptyValue(reflect.ValueOf(d.Get(key+".random_batch_size_limit"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".random_batch_size_limit"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".random_batch_size_limit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".random_batch_size_limit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".random_batch_size_limit")))) {
 		request.RandomBatchSizeLimit = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_username_prefix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_username_prefix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_username_prefix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_username_prefix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_username_prefix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_username_prefix")))) {
 		request.DefaultUsernamePrefix = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_specify_username_prefix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_specify_username_prefix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_specify_username_prefix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_specify_username_prefix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_specify_username_prefix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_specify_username_prefix")))) {
 		request.CanSpecifyUsernamePrefix = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_set_future_start_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_set_future_start_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_set_future_start_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_set_future_start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_set_future_start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_set_future_start_date")))) {
 		request.CanSetFutureStartDate = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_date_future_limit_days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_date_future_limit_days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_date_future_limit_days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date_future_limit_days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date_future_limit_days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date_future_limit_days")))) {
 		request.StartDateFutureLimitDays = interfaceToIntPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -751,40 +883,40 @@ func expandRequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupCreatePermission
 
 func expandRequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupOtherPermissions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupOtherPermissions {
 	request := isegosdk.RequestSponsorGroupUpdateSponsorGroupByIDSponsorGroupOtherPermissions{}
-	if v, ok := d.GetOkExists(key + ".can_update_guest_contact_info"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_update_guest_contact_info"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_update_guest_contact_info"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_update_guest_contact_info")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_update_guest_contact_info")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_update_guest_contact_info")))) {
 		request.CanUpdateGuestContactInfo = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_view_guest_passwords"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_view_guest_passwords"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_view_guest_passwords"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_view_guest_passwords")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_view_guest_passwords")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_view_guest_passwords")))) {
 		request.CanViewGuestPasswords = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_send_sms_notifications"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_send_sms_notifications"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_send_sms_notifications"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_send_sms_notifications")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_send_sms_notifications")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_send_sms_notifications")))) {
 		request.CanSendSmsNotifications = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_reset_guest_passwords"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_reset_guest_passwords"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_reset_guest_passwords"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_reset_guest_passwords")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_reset_guest_passwords")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_reset_guest_passwords")))) {
 		request.CanResetGuestPasswords = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_extend_guest_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_extend_guest_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_extend_guest_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_extend_guest_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_extend_guest_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_extend_guest_accounts")))) {
 		request.CanExtendGuestAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_delete_guest_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_delete_guest_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_delete_guest_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_delete_guest_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_delete_guest_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_delete_guest_accounts")))) {
 		request.CanDeleteGuestAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_suspend_guest_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_suspend_guest_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_suspend_guest_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_suspend_guest_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_suspend_guest_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_suspend_guest_accounts")))) {
 		request.CanSuspendGuestAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".require_suspension_reason"); !isEmptyValue(reflect.ValueOf(d.Get(key+".require_suspension_reason"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".require_suspension_reason"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".require_suspension_reason")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".require_suspension_reason")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".require_suspension_reason")))) {
 		request.RequireSuspensionReason = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_reinstate_suspended_accounts"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_reinstate_suspended_accounts"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_reinstate_suspended_accounts"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_reinstate_suspended_accounts")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_reinstate_suspended_accounts")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_reinstate_suspended_accounts")))) {
 		request.CanReinstateSuspendedAccounts = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_approve_selfreg_guests"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_approve_selfreg_guests"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_approve_selfreg_guests"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_approve_selfreg_guests")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_approve_selfreg_guests")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_approve_selfreg_guests")))) {
 		request.CanApproveSelfregGuests = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".limit_approval_to_sponsors_guests"); !isEmptyValue(reflect.ValueOf(d.Get(key+".limit_approval_to_sponsors_guests"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".limit_approval_to_sponsors_guests"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".limit_approval_to_sponsors_guests")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".limit_approval_to_sponsors_guests")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".limit_approval_to_sponsors_guests")))) {
 		request.LimitApprovalToSponsorsGuests = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".can_access_via_rest"); !isEmptyValue(reflect.ValueOf(d.Get(key+".can_access_via_rest"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".can_access_via_rest"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".can_access_via_rest")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".can_access_via_rest")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".can_access_via_rest")))) {
 		request.CanAccessViaRest = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

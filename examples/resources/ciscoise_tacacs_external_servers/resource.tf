@@ -1,7 +1,7 @@
 
 resource "ciscoise_tacacs_external_servers" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     connection_port = 1
     description     = "string"

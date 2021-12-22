@@ -92,7 +92,7 @@ func dataSourceGuestUserReinstateRead(ctx context.Context, d *schema.ResourceDat
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
+		log.Printf("[DEBUG] Retrieved response %s", response2.String())
 
 		if err := d.Set("item", response2.String()); err != nil {
 			diags = append(diags, diagError(

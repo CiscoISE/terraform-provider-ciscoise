@@ -16,7 +16,8 @@ func dataSourcePxGridNodeDelete() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs delete operation on pxGridNode.
 
-- This data source action deletes a pxGrid node by name.`,
+- This data source action deletes a pxGrid node by name.
+`,
 
 		ReadContext: dataSourcePxGridNodeDeleteRead,
 		Schema: map[string]*schema.Schema{
@@ -44,18 +45,18 @@ func dataSourcePxGridNodeDeleteRead(ctx context.Context, d *schema.ResourceData,
 		log.Printf("[DEBUG] Selected method 1: DeletePxGridNodeByName")
 		vvName := vName.(string)
 
-		response2, err := client.PxGridNode.DeletePxGridNodeByName(vvName)
+		response1, err := client.PxGridNode.DeletePxGridNodeByName(vvName)
 
-		if err != nil || response2 == nil {
+		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing DeletePxGridNodeByName", err,
 				"Failure at DeletePxGridNodeByName, unexpected response", ""))
 			return diags
 		}
 
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
+		log.Printf("[DEBUG] Retrieved response %s", response1.String())
 
-		if err := d.Set("item", response2.String()); err != nil {
+		if err := d.Set("item", response1.String()); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting DeletePxGridNodeByName response",
 				err))

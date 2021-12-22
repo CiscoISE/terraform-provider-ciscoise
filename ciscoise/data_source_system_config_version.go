@@ -110,5 +110,4 @@ func flattenVersionAndPatchGetIseVersionAndPatchItemResultValue(items *[]isegosd
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

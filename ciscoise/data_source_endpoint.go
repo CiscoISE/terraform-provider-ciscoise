@@ -134,7 +134,11 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"custom_attributes": &schema.Schema{
+										Description: `Key value map`,
+										// CHECK: The type of this param
+										// Replaced List to Map
 										Type:     schema.TypeMap,
 										Computed: true,
 									},
@@ -281,7 +285,11 @@ string parameter. Each resource Data model description should specify if an attr
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"custom_attributes": &schema.Schema{
+										Description: `Key value map`,
+										// CHECK: The type of this param
+										// Replaced List to Map
 										Type:     schema.TypeMap,
 										Computed: true,
 									},
@@ -557,9 +565,12 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 		log.Printf("[DEBUG] Selected method 2: GetEndpointByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.Endpoint.GetEndpointByName(vvName)
+		response2, restyResp2, err := client.Endpoint.GetEndpointByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEndpointByName", err,
 				"Failure at GetEndpointByName, unexpected response", ""))
@@ -583,9 +594,12 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 		log.Printf("[DEBUG] Selected method 3: GetEndpointByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.Endpoint.GetEndpointByID(vvID)
+		response3, restyResp3, err := client.Endpoint.GetEndpointByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEndpointByID", err,
 				"Failure at GetEndpointByID, unexpected response", ""))
@@ -693,11 +707,22 @@ func flattenEndpointGetEndpointByNameItemNameCustomAttributes(item *isegosdk.Res
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+	respItem["custom_attributes"] = flattenEndpointGetEndpointByNameItemNameCustomAttributesCustomAttributes(item.CustomAttributes)
 
 	return []map[string]interface{}{
 		respItem,
 	}
+
+}
+
+func flattenEndpointGetEndpointByNameItemNameCustomAttributesCustomAttributes(item *isegosdk.ResponseEndpointGetEndpointByNameERSEndPointCustomAttributesCustomAttributes) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return respItem
+
 }
 
 func flattenEndpointGetEndpointByNameItemNameLink(item *isegosdk.ResponseEndpointGetEndpointByNameERSEndPointLink) []map[string]interface{} {
@@ -769,11 +794,22 @@ func flattenEndpointGetEndpointByIDItemIDCustomAttributes(item *isegosdk.Respons
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["custom_attributes"] = mapPtrToMap(item.CustomAttributes)
+	respItem["custom_attributes"] = flattenEndpointGetEndpointByIDItemIDCustomAttributesCustomAttributes(item.CustomAttributes)
 
 	return []map[string]interface{}{
 		respItem,
 	}
+
+}
+
+func flattenEndpointGetEndpointByIDItemIDCustomAttributesCustomAttributes(item *isegosdk.ResponseEndpointGetEndpointByIDERSEndPointCustomAttributesCustomAttributes) interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := *item
+
+	return respItem
+
 }
 
 func flattenEndpointGetEndpointByIDItemIDLink(item *isegosdk.ResponseEndpointGetEndpointByIDERSEndPointLink) []map[string]interface{} {

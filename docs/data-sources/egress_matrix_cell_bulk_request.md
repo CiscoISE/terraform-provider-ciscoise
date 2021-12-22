@@ -17,7 +17,8 @@ It performs update operation on EgressMatrixCell.
 
 ```terraform
 data "ciscoise_egress_matrix_cell_bulk_request" "example" {
-  provider            = ciscoise
+  provider = ciscoise
+
   operation_type      = "string"
   resource_media_type = "string"
 }

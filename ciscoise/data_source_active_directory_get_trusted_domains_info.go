@@ -124,5 +124,4 @@ func flattenActiveDirectoryGetTrustedDomainsItemDomains(items *[]isegosdk.Respon
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

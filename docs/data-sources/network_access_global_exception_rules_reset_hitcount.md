@@ -18,6 +18,7 @@ It performs create operation on Network Access - Authorization Global Exception 
 ```terraform
 data "ciscoise_network_access_global_exception_rules_reset_hitcount" "example" {
   provider = ciscoise
+
 }
 ```
 

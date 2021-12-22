@@ -856,9 +856,12 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Selected method 2: GetNetworkDeviceByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.NetworkDevice.GetNetworkDeviceByName(vvName)
+		response2, restyResp2, err := client.NetworkDevice.GetNetworkDeviceByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceByName", err,
 				"Failure at GetNetworkDeviceByName, unexpected response", ""))
@@ -882,9 +885,12 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Selected method 3: GetNetworkDeviceByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.NetworkDevice.GetNetworkDeviceByID(vvID)
+		response3, restyResp3, err := client.NetworkDevice.GetNetworkDeviceByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceByID", err,
 				"Failure at GetNetworkDeviceByID, unexpected response", ""))
@@ -1096,7 +1102,6 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameNetworkDeviceIPList(items
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenNetworkDeviceGetNetworkDeviceByNameItemNameLink(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByNameNetworkDeviceLink) []map[string]interface{} {
@@ -1272,7 +1277,6 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDNetworkDeviceIPList(items *[]
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenNetworkDeviceGetNetworkDeviceByIDItemIDLink(item *isegosdk.ResponseNetworkDeviceGetNetworkDeviceByIDNetworkDeviceLink) []map[string]interface{} {

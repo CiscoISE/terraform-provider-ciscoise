@@ -18,7 +18,8 @@ It performs create operation on Consumer.
 ```terraform
 data "ciscoise_pxgrid_service_lookup" "example" {
   provider = ciscoise
-  name     = "string"
+
+  name = "string"
 }
 ```
 

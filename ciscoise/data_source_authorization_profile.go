@@ -718,9 +718,12 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 2: GetAuthorizationProfileByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.AuthorizationProfile.GetAuthorizationProfileByName(vvName)
+		response2, restyResp2, err := client.AuthorizationProfile.GetAuthorizationProfileByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAuthorizationProfileByName", err,
 				"Failure at GetAuthorizationProfileByName, unexpected response", ""))
@@ -744,9 +747,12 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 3: GetAuthorizationProfileByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.AuthorizationProfile.GetAuthorizationProfileByID(vvID)
+		response3, restyResp3, err := client.AuthorizationProfile.GetAuthorizationProfileByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAuthorizationProfileByID", err,
 				"Failure at GetAuthorizationProfileByID, unexpected response", ""))
@@ -851,7 +857,6 @@ func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAtt
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenAuthorizationProfileGetAuthorizationProfileByNameItemNameAdvancedAttributesLeftHandSideDictionaryAttribue(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByNameAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue) []map[string]interface{} {
@@ -997,7 +1002,6 @@ func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttribu
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenAuthorizationProfileGetAuthorizationProfileByIDItemIDAdvancedAttributesLeftHandSideDictionaryAttribue(item *isegosdk.ResponseAuthorizationProfileGetAuthorizationProfileByIDAuthorizationProfileAdvancedAttributesLeftHandSideDictionaryAttribue) []map[string]interface{} {

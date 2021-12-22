@@ -4,20 +4,20 @@ page_title: "ciscoise_pan_ha Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on PAN HA.
-  In a high availability configuration, the Primary Administration Node (PAN) is in the active state. The Secondary PAN
-  (backup PAN) is in the standby state, which means it receives all configuration updates from the Primary PAN, but is not
-  active in the ISE network. You can configure ISE to automatically the promote the secondary PAN when the primary PAN
-  becomes unavailable.
+  In a high availability configuration, the primary PAN is in active state. The secondary PAN (backup PAN) is in standby
+  state, which means that it receives all the configuration updates from the primary PAN, but is not active in the Cisco
+  ISE cluster. You can configure Cisco ISE to automatically promote the secondary PAN when the primary PAN becomes
+  unavailable.
 ---
 
 # ciscoise_pan_ha (Data Source)
 
 It performs read operation on PAN HA.
 
-- In a high availability configuration, the Primary Administration Node (PAN) is in the active state. The Secondary PAN
-(backup PAN) is in the standby state, which means it receives all configuration updates from the Primary PAN, but is not
-active in the ISE network. You can configure ISE to automatically the promote the secondary PAN when the primary PAN
-becomes unavailable.
+- In a high availability configuration, the primary PAN is in active state. The secondary PAN (backup PAN) is in standby
+state, which means that it receives all the configuration updates from the primary PAN, but is not active in the Cisco
+ISE cluster. You can configure Cisco ISE to automatically promote the secondary PAN when the primary PAN becomes
+unavailable.
 
 ## Example Usage
 
@@ -27,7 +27,7 @@ data "ciscoise_pan_ha" "example" {
 }
 
 output "ciscoise_pan_ha_example" {
-  value = data.ciscoise_pan_ha.example.items
+  value = data.ciscoise_pan_ha.example.item
 }
 ```
 
@@ -40,17 +40,32 @@ output "ciscoise_pan_ha_example" {
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 
-<a id="nestedatt--items"></a>
-### Nested Schema for `items`
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
 - **failed_attempts** (Number)
 - **is_enabled** (String)
 - **polling_interval** (Number)
-- **primary_health_check_node** (String)
-- **secondary_health_check_node** (String)
+- **primary_health_check_node** (List of Object) (see [below for nested schema](#nestedobjatt--item--primary_health_check_node))
+- **secondary_health_check_node** (List of Object) (see [below for nested schema](#nestedobjatt--item--secondary_health_check_node))
+
+<a id="nestedobjatt--item--primary_health_check_node"></a>
+### Nested Schema for `item.primary_health_check_node`
+
+Read-Only:
+
+- **hostname** (String)
+
+
+<a id="nestedobjatt--item--secondary_health_check_node"></a>
+### Nested Schema for `item.secondary_health_check_node`
+
+Read-Only:
+
+- **hostname** (String)
 
 

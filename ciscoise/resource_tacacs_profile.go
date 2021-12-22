@@ -39,19 +39,16 @@ func resourceTacacsProfile() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -77,39 +74,87 @@ func resourceTacacsProfile() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"session_attributes": &schema.Schema{
 							Description: `Holds list of session attributes. View type for GUI is Shell by default`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"session_attribute_list": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"name": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"type": &schema.Schema{
 													Description: `Allowed values: MANDATORY, OPTIONAL`,
 													Type:        schema.TypeString,
-													Optional:    true,
 													Computed:    true,
 												},
 												"value": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"session_attributes": &schema.Schema{
+							Description: `Holds list of session attributes. View type for GUI is Shell by default`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"session_attribute_list": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"type": &schema.Schema{
+													Description: `Allowed values: MANDATORY, OPTIONAL`,
+													Type:        schema.TypeString,
+													Optional:    true,
+												},
+												"value": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 											},
 										},
@@ -129,9 +174,11 @@ func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestTacacsProfileCreateTacacsProfile(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestTacacsProfileCreateTacacsProfile(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -144,7 +191,7 @@ func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceTacacsProfileRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -154,7 +201,7 @@ func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceTacacsProfileRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.TacacsProfile.CreateTacacsProfile(request1)
@@ -176,7 +223,7 @@ func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m 
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceTacacsProfileRead(ctx, d, m)
 }
 
 func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -199,9 +246,12 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetTacacsProfileByName")
 		vvName := vName
 
-		response1, _, err := client.TacacsProfile.GetTacacsProfileByName(vvName)
+		response1, restyResp1, err := client.TacacsProfile.GetTacacsProfileByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsProfileByName", err,
 				"Failure at GetTacacsProfileByName, unexpected response", ""))
@@ -224,9 +274,12 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetTacacsProfileByID")
 		vvID := vID
 
-		response2, _, err := client.TacacsProfile.GetTacacsProfileByID(vvID)
+		response2, restyResp2, err := client.TacacsProfile.GetTacacsProfileByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsProfileByID", err,
 				"Failure at GetTacacsProfileByID, unexpected response", ""))
@@ -283,10 +336,12 @@ func resourceTacacsProfileUpdate(ctx context.Context, d *schema.ResourceData, m 
 			vvID = getResp.TacacsProfile.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestTacacsProfileUpdateTacacsProfileByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestTacacsProfileUpdateTacacsProfileByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.TacacsProfile.UpdateTacacsProfileByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -376,13 +431,13 @@ func expandRequestTacacsProfileCreateTacacsProfile(ctx context.Context, key stri
 
 func expandRequestTacacsProfileCreateTacacsProfileTacacsProfile(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfile {
 	request := isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfile{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".session_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".session_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".session_attributes"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".session_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".session_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".session_attributes")))) {
 		request.SessionAttributes = expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes(ctx, key+".session_attributes.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -393,7 +448,7 @@ func expandRequestTacacsProfileCreateTacacsProfileTacacsProfile(ctx context.Cont
 
 func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes {
 	request := isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes{}
-	if v, ok := d.GetOkExists(key + ".session_attribute_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".session_attribute_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".session_attribute_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".session_attribute_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".session_attribute_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".session_attribute_list")))) {
 		request.SessionAttributeList = expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeListArray(ctx, key+".session_attribute_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -404,6 +459,7 @@ func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes
 
 func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeList {
 	request := []isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -426,13 +482,13 @@ func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributes
 
 func expandRequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeList {
 	request := isegosdk.RequestTacacsProfileCreateTacacsProfileTacacsProfileSessionAttributesSessionAttributeList{}
-	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -452,16 +508,16 @@ func expandRequestTacacsProfileUpdateTacacsProfileByID(ctx context.Context, key 
 
 func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfile(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfile {
 	request := isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfile{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".session_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".session_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".session_attributes"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".session_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".session_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".session_attributes")))) {
 		request.SessionAttributes = expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributes(ctx, key+".session_attributes.0", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -472,7 +528,7 @@ func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfile(ctx context.
 
 func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributes {
 	request := isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributes{}
-	if v, ok := d.GetOkExists(key + ".session_attribute_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".session_attribute_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".session_attribute_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".session_attribute_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".session_attribute_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".session_attribute_list")))) {
 		request.SessionAttributeList = expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeListArray(ctx, key+".session_attribute_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -483,6 +539,7 @@ func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttrib
 
 func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList {
 	request := []isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -505,13 +562,13 @@ func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttrib
 
 func expandRequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList {
 	request := isegosdk.RequestTacacsProfileUpdateTacacsProfileByIDTacacsProfileSessionAttributesSessionAttributeList{}
-	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -27,7 +27,7 @@ output "ciscoise_sgt_sgt_dest_id" {
 
 resource "ciscoise_egress_matrix_cell" "name" {
   provider = ciscoise
-  item {
+  parameters {
     default_rule       = "DENY_IP"
     matrix_cell_status = "DISABLED"
     description        = "Updated by import utility (3)."
