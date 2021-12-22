@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_allowed_protocols" "response" {
   provider = ciscoise
-  item {
+  parameters {
     name                         = "New Network Access 1"
     description                  = "New Allowed Protocol Service 01"
     process_host_lookup          = "false"

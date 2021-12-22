@@ -21,7 +21,7 @@ output "ciscoise_external_radius_server_first" {
 
 resource "ciscoise_radius_server_sequence" "example" {
   provider = ciscoise
-  item {
+  parameters {
     radius_server_list      = ["externalRadiusServer1"]
     description             = "TEST Sequence for ERS1"
     name                    = "TESTSequence"

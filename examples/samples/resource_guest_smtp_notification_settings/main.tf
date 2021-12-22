@@ -30,7 +30,7 @@ output "ciscoise_guest_smtp_notification_settings_example1" {
 
 resource "ciscoise_guest_smtp_notification_settings" "actual" {
   provider = ciscoise
-  item {
+  parameters {
     connection_timeout          = data.ciscoise_guest_smtp_notification_settings.example1.item[0].connection_timeout
     default_from_address        = data.ciscoise_guest_smtp_notification_settings.example1.item[0].default_from_address
     id                          = data.ciscoise_guest_smtp_notification_settings.example1.item[0].id

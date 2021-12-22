@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_network_access_conditions" "example" {
   provider = ciscoise
-  item {
+  parameters {
     condition_type  = "LibraryConditionAttributes"
     is_negate       = "true"
     name            = "My New Condition"

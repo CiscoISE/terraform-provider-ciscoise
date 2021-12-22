@@ -13,7 +13,7 @@ provider "ciscoise" {
 
 resource "ciscoise_tacacs_external_servers" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     connection_port = 49
     description     = "Test Tacacs External Servers"
@@ -32,8 +32,11 @@ output "ciscoise_tacacs_external_servers_example" {
 
 data "ciscoise_tacacs_external_servers" "examples" {
   provider = ciscoise
-  page     = 1
-  size     = 1
+  depends_on = [
+    ciscoise_tacacs_external_servers.example
+  ]
+  page = 1
+  size = 1
 }
 
 output "ciscoise_tacacs_external_servers_examples" {
@@ -42,7 +45,10 @@ output "ciscoise_tacacs_external_servers_examples" {
 
 data "ciscoise_tacacs_external_servers" "example1" {
   provider = ciscoise
-  name     = data.ciscoise_tacacs_external_servers.examples.items[0].name
+  depends_on = [
+    ciscoise_tacacs_external_servers.example
+  ]
+  name = data.ciscoise_tacacs_external_servers.examples.items[0].name
 }
 
 output "ciscoise_tacacs_external_servers_example1" {
@@ -51,7 +57,10 @@ output "ciscoise_tacacs_external_servers_example1" {
 
 data "ciscoise_tacacs_external_servers" "example2" {
   provider = ciscoise
-  id       = data.ciscoise_tacacs_external_servers.examples.items[0].id
+  depends_on = [
+    ciscoise_tacacs_external_servers.example
+  ]
+  id = data.ciscoise_tacacs_external_servers.examples.items[0].id
 }
 
 output "ciscoise_tacacs_external_servers_example2" {

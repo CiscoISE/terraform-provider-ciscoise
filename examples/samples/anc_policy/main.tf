@@ -12,9 +12,10 @@ provider "ciscoise" {
 
 resource "ciscoise_anc_policy" "example" {
   provider = ciscoise
-  item {
+  parameters {
     name    = "policy1"
     actions = ["QUARANTINE"]
+    # actions = ["PORTBOUNCE"]
   }
 }
 

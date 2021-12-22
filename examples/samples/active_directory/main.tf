@@ -10,18 +10,9 @@ terraform {
 provider "ciscoise" {
 }
 
-data "ciscoise_active_directory" "single_response" {
-  provider = ciscoise
-  name     = data.ciscoise_active_directory.response.items[0].id
-}
-
-output "ciscoise_active_directory_single_response" {
-  value = data.ciscoise_active_directory.single_response
-}
-
 resource "ciscoise_active_directory" "example" {
   provider = ciscoise
-  item {
+  parameters {
     name        = "cisco.com"
     description = "Cisco Active Directory"
     domain      = "cisco.com"
@@ -71,4 +62,17 @@ resource "ciscoise_active_directory" "example" {
 
 output "ciscoise_active_directory_example" {
   value = ciscoise_active_directory.example
+}
+
+data "ciscoise_active_directory" "single_response" {
+  provider = ciscoise
+  depends_on = [
+    ciscoise_active_directory.example
+  ]
+  # name     = ciscoise_active_directory.example.item[0].name
+  # id     = ciscoise_active_directory.example.item[0].id
+}
+
+output "ciscoise_active_directory_single_response" {
+  value = data.ciscoise_active_directory.single_response
 }

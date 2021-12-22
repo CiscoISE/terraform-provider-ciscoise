@@ -17,7 +17,7 @@ data "ciscoise_portal_global_setting" "example" {
 
 resource "ciscoise_portal_global_setting" "example" {
   provider = ciscoise
-  item {
+  parameters {
     id            = data.ciscoise_portal_global_setting.example.items[0].id
     customization = "HTMLANDJAVASCRIPT"
   }

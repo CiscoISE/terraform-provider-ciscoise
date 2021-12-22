@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_authorization_profile" "example" {
   provider = ciscoise
-  item {
+  parameters {
     access_type                 = "ACCESS_ACCEPT"
     authz_profile_type          = "SWITCH"
     dacl_name                   = "PERMIT_ALL_IPV4_TRAFFIC"

@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_device_administration_network_conditions" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     condition_type = "EndstationCondition"
     conditions {

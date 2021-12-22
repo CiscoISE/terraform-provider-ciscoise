@@ -20,7 +20,7 @@ output "ciscoise_guest_ssid_example" {
 }
 
 resource "ciscoise_guest_ssid" "item1" {
-  item {
+  parameters {
     name = "guest_ise"
   }
 }

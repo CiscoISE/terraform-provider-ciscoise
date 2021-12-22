@@ -20,7 +20,7 @@ output "ciscoise_sgt_sgt_src_id" {
 
 resource "ciscoise_filter_policy" "example" {
   provider = ciscoise
-  item {
+  parameters {
     domains = "default"
     sgt     = data.ciscoise_sgt.sgt_src.items[0].name
     subnet  = "121.11.8.0/22"

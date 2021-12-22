@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_network_access_dictionary" "Test_dict" {
   provider = ciscoise
-  item {
+  parameters {
     name                 = "Test_dict"
     description          = "test dictionary"
     version              = "1.0"
@@ -25,7 +25,7 @@ resource "ciscoise_network_access_dictionary_attribute" "example" {
   depends_on = [
     ciscoise_network_access_dictionary.Test_dict
   ]
-  item {
+  parameters {
     # allowed_values {
     #   is_default = "false"
     #   key        = "string"

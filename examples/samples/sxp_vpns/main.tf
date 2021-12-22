@@ -30,7 +30,7 @@ output "ciscoise_sxp_vpns_example1" {
 
 resource "ciscoise_sxp_vpns" "name" {
   provider = ciscoise
-  item {
+  parameters {
     sxp_vpn_name = "testing"
   }
 }

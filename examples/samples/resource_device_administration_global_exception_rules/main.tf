@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_device_administration_global_exception_rules" "example" {
   provider = ciscoise
-  item {
+  parameters {
     commands = ["DenyAllCommands"]
     profile  = "Default Shell Profile"
 
