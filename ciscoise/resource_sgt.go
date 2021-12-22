@@ -44,8 +44,11 @@ func resourceSgt() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"default_sgacls": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
@@ -158,7 +161,9 @@ func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSgtCreateSecurityGroup(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -335,7 +340,9 @@ func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSgtUpdateSecurityGroupByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.SecurityGroups.UpdateSecurityGroupByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

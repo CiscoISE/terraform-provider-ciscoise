@@ -108,9 +108,11 @@ string parameter. Each resource Data model description should specify if an attr
 					Schema: map[string]*schema.Schema{
 
 						"default_sgacls": &schema.Schema{
-							// Replaced List to String
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,

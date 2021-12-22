@@ -154,7 +154,9 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSxpLocalBindingsCreateSxpLocalBindings(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -307,7 +309,9 @@ func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData,
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSxpLocalBindingsUpdateSxpLocalBindingsByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.SxpLocalBindings.UpdateSxpLocalBindingsByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

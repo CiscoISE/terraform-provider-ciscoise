@@ -196,6 +196,22 @@ Read-Only:
 
 Read-Only:
 
+- **friendly_name** (String)
+- **group_tag** (String)
+- **host_name** (String)
+- **id** (String)
+- **key_size** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- **signature_algorithm** (String)
+- **subject** (String)
+- **time_stamp** (String)
+- **used_for** (String)
+
+<a id="nestedobjatt--items--link"></a>
+### Nested Schema for `items.link`
+
+Read-Only:
+
 - **href** (String)
 - **rel** (String)
 - **type** (String)

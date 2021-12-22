@@ -244,6 +244,44 @@ Read-Only:
 
 Read-Only:
 
+- **authenticate_before_crl_received** (String)
+- **automatic_crl_update** (String)
+- **automatic_crl_update_period** (String)
+- **automatic_crl_update_units** (String)
+- **crl_distribution_url** (String)
+- **crl_download_failure_retries** (String)
+- **crl_download_failure_retries_units** (String)
+- **description** (String)
+- **download_crl** (String)
+- **enable_ocsp_validation** (String)
+- **enable_server_identity_check** (String)
+- **expiration_date** (String)
+- **friendly_name** (String)
+- **id** (String)
+- **ignore_crl_expiration** (String)
+- **internal_ca** (String)
+- **issued_by** (String)
+- **issued_to** (String)
+- **key_size** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- **non_automatic_crl_update_period** (String)
+- **non_automatic_crl_update_units** (String)
+- **reject_if_no_status_from_ocs_p** (String)
+- **reject_if_unreachable_from_ocs_p** (String)
+- **selected_ocsp_service** (String)
+- **serial_number_decimal_format** (String)
+- **sha256_fingerprint** (String)
+- **signature_algorithm** (String)
+- **status** (String)
+- **subject** (String)
+- **trusted_for** (String)
+- **valid_from** (String)
+
+<a id="nestedobjatt--items--link"></a>
+### Nested Schema for `items.link`
+
+Read-Only:
+
 - **href** (String)
 - **rel** (String)
 - **type** (String)

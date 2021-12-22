@@ -143,7 +143,9 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestNodeDeploymentRegisterNode(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vHostname, okHostname := resourceItem["hostname"]
 	vvHostname := interfaceToString(vHostname)
@@ -291,7 +293,9 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvHostname)
 		request1 := expandRequestNodeDeploymentUpdateDeploymentNode(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.NodeDeployment.UpdateDeploymentNode(vvHostname, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

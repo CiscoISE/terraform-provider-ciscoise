@@ -249,17 +249,71 @@ Not Contains
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"href": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+						"friendly_name": &schema.Schema{
+							Description: `Friendly name of the certificate.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
-						"rel": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
+						"group_tag": &schema.Schema{
+							Description: `GroupTag of the certificate.`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
-						"type": &schema.Schema{
-							Type:     schema.TypeString,
+						"host_name": &schema.Schema{
+							Description: `Hostname or IP address of the Cisco ISE node.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"id": &schema.Schema{
+							Description: `ID of the certificate.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"key_size": &schema.Schema{
+							Description: `Size of the cryptographic key used.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"signature_algorithm": &schema.Schema{
+							Description: `Algorithm used for encrypting CSR`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"subject": &schema.Schema{
+							Description: `Subject of the certificate. Includes Common Name (CN), Organizational Unit (OU), etc.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"time_stamp": &schema.Schema{
+							Description: `Timestamp of the certificate generation.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"used_for": &schema.Schema{
+							Description: `Services for which the certificate is used for (for eg- MGMT, GENERIC).`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},

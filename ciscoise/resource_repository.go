@@ -133,7 +133,9 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestRepositoryCreateRepository(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
@@ -279,7 +281,9 @@ func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m int
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation %s", vvName)
 		request1 := expandRequestRepositoryUpdateRepository(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.Repository.UpdateRepository(vvName, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {

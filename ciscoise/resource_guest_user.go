@@ -363,7 +363,9 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestGuestUserCreateGuestUser(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -524,7 +526,9 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestGuestUserUpdateGuestUserByID(ctx, "parameters.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.GuestUser.UpdateGuestUserByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -648,7 +652,7 @@ func expandRequestGuestUserCreateGuestUserGuestUser(ctx context.Context, key str
 		request.PortalID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_fields")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_fields")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_fields")))) {
-		request.CustomFields = expandRequestGuestUserCreateGuestUserGuestUserCustomFields(ctx, key+".custom_fields.0", d)
+		request.CustomFields = expandRequestGuestUserCreateGuestUserGuestUserCustomFields(ctx, key+".custom_fields", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -778,7 +782,7 @@ func expandRequestGuestUserUpdateGuestUserByIDGuestUser(ctx context.Context, key
 		request.PortalID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_fields")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_fields")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_fields")))) {
-		request.CustomFields = expandRequestGuestUserUpdateGuestUserByIDGuestUserCustomFields(ctx, key+".custom_fields.0", d)
+		request.CustomFields = expandRequestGuestUserUpdateGuestUserByIDGuestUserCustomFields(ctx, key+".custom_fields", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

@@ -370,17 +370,178 @@ Not Contains
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"href": &schema.Schema{
+						"authenticate_before_crl_received": &schema.Schema{
+							Description: `Switch to enable or disable authentication before receiving CRL`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"automatic_crl_update": &schema.Schema{
+							Description: `Switch to enable or disable automatic CRL update`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"automatic_crl_update_period": &schema.Schema{
+							Description: `Automatic CRL update period`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"automatic_crl_update_units": &schema.Schema{
+							Description: `Unit of time of automatic CRL update`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"crl_distribution_url": &schema.Schema{
+							Description: `CRL Distribution URL`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"crl_download_failure_retries": &schema.Schema{
+							Description: `If CRL download fails, wait time before retry`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"crl_download_failure_retries_units": &schema.Schema{
+							Description: `Unit of time before retry if CRL download fails`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"description": &schema.Schema{
+							Description: `Description of trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"download_crl": &schema.Schema{
+							Description: `Switch to enable or disable download of CRL`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"enable_ocsp_validation": &schema.Schema{
+							Description: `Switch to enable or disable OCSP Validation`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"enable_server_identity_check": &schema.Schema{
+							Description: `Switch to enable or disable Server Identity Check`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"expiration_date": &schema.Schema{
+							Description: `The time and date past which the certificate is no longer valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"friendly_name": &schema.Schema{
+							Description: `Friendly name of trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"id": &schema.Schema{
+							Description: `ID of trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"ignore_crl_expiration": &schema.Schema{
+							Description: `Switch to enable or disable ignore CRL Expiration`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"internal_ca": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"rel": &schema.Schema{
+						"issued_by": &schema.Schema{
+							Description: `The entity that verified the information and signed the certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"issued_to": &schema.Schema{
+							Description: `Entity to which trust certificate is issued`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"key_size": &schema.Schema{
+							Description: `The length of key used for encrypting trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"non_automatic_crl_update_period": &schema.Schema{
+							Description: `Non automatic CRL update period`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"non_automatic_crl_update_units": &schema.Schema{
+							Description: `Unit of time of non automatic CRL update`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"reject_if_no_status_from_ocs_p": &schema.Schema{
+							Description: `Switch to reject certificate if there is no status from OCSP`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"reject_if_unreachable_from_ocs_p": &schema.Schema{
+							Description: `Switch to reject certificate if unreachable from OCSP`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"selected_ocsp_service": &schema.Schema{
+							Description: `Name of selected OCSP Service`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"serial_number_decimal_format": &schema.Schema{
+							Description: `Used to uniquely identify the certificate within a CA's systems`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"sha256_fingerprint": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"type": &schema.Schema{
+						"signature_algorithm": &schema.Schema{
+							Description: `Algorithm used for encrypting trust certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"subject": &schema.Schema{
+							Description: `The Subject or entity with which public key of trust certificate is associated`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"trusted_for": &schema.Schema{
+							Description: `Different services for which the certificated is trusted`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"valid_from": &schema.Schema{
+							Description: `The earliest time and date on which the certificate is valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -611,64 +772,6 @@ func flattenCertificatesGetTrustedCertificateByIDItem(item *isegosdk.ResponseCer
 }
 
 func flattenCertificatesGetTrustedCertificateByIDItemLink(item *isegosdk.ResponseCertificatesGetTrustedCertificateByIDResponseLink) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["href"] = item.Href
-	respItem["rel"] = item.Rel
-	respItem["type"] = item.Type
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
-}
-
-func flattenCertificatesGetTrustedCertificateByIDItem2(item *isegosdk.ResponseCertificatesGetTrustedCertificateByIDResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["authenticate_before_crl_received"] = item.AuthenticateBeforeCRLReceived
-	respItem["automatic_crl_update"] = item.AutomaticCRLUpdate
-	respItem["automatic_crl_update_period"] = interfaceToIntPtr(item.AutomaticCRLUpdatePeriod)
-	respItem["automatic_crl_update_units"] = item.AutomaticCRLUpdateUnits
-	respItem["crl_distribution_url"] = item.CrlDistributionURL
-	respItem["crl_download_failure_retries"] = interfaceToIntPtr(item.CrlDownloadFailureRetries)
-	respItem["crl_download_failure_retries_units"] = item.CrlDownloadFailureRetriesUnits
-	respItem["description"] = item.Description
-	respItem["download_crl"] = item.DownloadCRL
-	respItem["enable_ocsp_validation"] = item.EnableOCSpValidation
-	respItem["enable_server_identity_check"] = item.EnableServerIDentityCheck
-	respItem["expiration_date"] = item.ExpirationDate
-	respItem["friendly_name"] = item.FriendlyName
-	respItem["id"] = item.ID
-	respItem["ignore_crl_expiration"] = item.IgnoreCRLExpiration
-	respItem["internal_ca"] = boolPtrToString(item.InternalCa)
-	respItem["is_referred_in_policy"] = boolPtrToString(item.IsReferredInPolicy)
-	respItem["issued_by"] = item.IssuedBy
-	respItem["issued_to"] = item.IssuedTo
-	respItem["key_size"] = item.KeySize
-	respItem["link"] = flattenCertificatesGetTrustedCertificateByIDItem2Link(item.Link)
-	respItem["non_automatic_crl_update_period"] = interfaceToIntPtr(item.NonAutomaticCRLUpdatePeriod)
-	respItem["non_automatic_crl_update_units"] = item.NonAutomaticCRLUpdateUnits
-	respItem["reject_if_no_status_from_ocs_p"] = item.RejectIfNoStatusFromOCSP
-	respItem["reject_if_unreachable_from_ocs_p"] = item.RejectIfUnreachableFromOCSP
-	respItem["selected_ocsp_service"] = item.SelectedOCSpService
-	respItem["serial_number_decimal_format"] = item.SerialNumberDecimalFormat
-	respItem["sha256_fingerprint"] = item.Sha256Fingerprint
-	respItem["signature_algorithm"] = item.SignatureAlgorithm
-	respItem["status"] = item.Status
-	respItem["subject"] = item.Subject
-	respItem["trusted_for"] = item.TrustedFor
-	respItem["valid_from"] = item.ValidFrom
-	return []map[string]interface{}{
-		respItem,
-	}
-}
-
-func flattenCertificatesGetTrustedCertificateByIDItem2Link(item *isegosdk.ResponseCertificatesGetTrustedCertificateByIDResponseLink) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

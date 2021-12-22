@@ -101,7 +101,9 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	request1 := expandRequestSxpVpnsCreateSxpVpn(ctx, "parameters.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vName, _ := resourceItem["sxp_vpn_name"]
