@@ -4,14 +4,14 @@ page_title: "ciscoise_csr_export Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs read operation on Certificates.
-  The response of this API carries a CSR corresponding to the requested ID
+  Response of this API carries a CSR corresponding to the requested ID
 ---
 
 # ciscoise_csr_export (Data Source)
 
 It performs read operation on Certificates.
 
-- The response of this API carries a CSR corresponding to the requested ID
+- Response of this API carries a CSR corresponding to the requested ID
 
 ## Example Usage
 
@@ -30,7 +30,7 @@ data "ciscoise_csr_export" "example" {
 ### Required
 
 - **dirpath** (String) Directory absolute path in which to save the file.
-- **hostname** (String) hostname path parameter. The hostname to which the CSR belongs.
-- **id** (String) id path parameter. The ID of the CSR to be exported.
+- **hostname** (String) hostname path parameter. Hostname to which the CSR belongs.
+- **id** (String) id path parameter. ID of the CSR to be exported.
 
 

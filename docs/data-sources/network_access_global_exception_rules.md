@@ -86,7 +86,6 @@ Read-Only:
 
 Read-Only:
 
-- **attribute_id** (String)
 - **attribute_name** (String)
 - **attribute_value** (String)
 - **children** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--children))
@@ -213,7 +212,6 @@ Read-Only:
 
 Read-Only:
 
-- **attribute_id** (String)
 - **attribute_name** (String)
 - **attribute_value** (String)
 - **children** (List of Object) (see [below for nested schema](#nestedobjatt--items--rule--condition--children))

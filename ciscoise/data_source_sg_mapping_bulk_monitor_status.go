@@ -172,5 +172,4 @@ func flattenIPToSgtMappingMonitorBulkStatusIPToSgtMappingItemResourcesStatus(ite
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

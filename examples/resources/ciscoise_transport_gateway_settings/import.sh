@@ -1,0 +1,1 @@
+terraform import ciscoise_transport_gateway_settings.example "id:=string"

@@ -1,7 +1,7 @@
 
 resource "ciscoise_network_access_dictionary_attribute" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     allowed_values {
 

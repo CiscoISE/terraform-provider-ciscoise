@@ -17,7 +17,8 @@ It performs update operation on SecurityGroups.
 
 ```terraform
 data "ciscoise_sgt_bulk_request" "example" {
-  provider            = ciscoise
+  provider = ciscoise
+
   operation_type      = "string"
   resource_media_type = "string"
 }

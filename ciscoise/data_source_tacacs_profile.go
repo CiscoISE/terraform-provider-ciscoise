@@ -316,9 +316,12 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Selected method 2: GetTacacsProfileByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.TacacsProfile.GetTacacsProfileByName(vvName)
+		response2, restyResp2, err := client.TacacsProfile.GetTacacsProfileByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsProfileByName", err,
 				"Failure at GetTacacsProfileByName, unexpected response", ""))
@@ -342,9 +345,12 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 		log.Printf("[DEBUG] Selected method 3: GetTacacsProfileByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.TacacsProfile.GetTacacsProfileByID(vvID)
+		response3, restyResp3, err := client.TacacsProfile.GetTacacsProfileByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsProfileByID", err,
 				"Failure at GetTacacsProfileByID, unexpected response", ""))
@@ -439,7 +445,6 @@ func flattenTacacsProfileGetTacacsProfileByNameItemNameSessionAttributesSessionA
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenTacacsProfileGetTacacsProfileByNameItemNameLink(item *isegosdk.ResponseTacacsProfileGetTacacsProfileByNameTacacsProfileLink) []map[string]interface{} {
@@ -498,7 +503,6 @@ func flattenTacacsProfileGetTacacsProfileByIDItemIDSessionAttributesSessionAttri
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenTacacsProfileGetTacacsProfileByIDItemIDLink(item *isegosdk.ResponseTacacsProfileGetTacacsProfileByIDTacacsProfileLink) []map[string]interface{} {

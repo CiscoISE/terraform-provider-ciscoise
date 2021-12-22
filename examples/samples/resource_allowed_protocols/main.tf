@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_allowed_protocols" "response" {
   provider = ciscoise
-  item {
+  parameters {
     name                         = "New Network Access 1"
     description                  = "New Allowed Protocol Service 01"
     process_host_lookup          = "false"

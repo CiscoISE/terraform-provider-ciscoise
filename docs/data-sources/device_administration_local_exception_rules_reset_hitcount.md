@@ -19,6 +19,7 @@ It performs create operation on Device Administration - Authorization Exception 
 data "ciscoise_device_administration_local_exception_rules_reset_hitcount" "example" {
   provider  = ciscoise
   policy_id = "string"
+
 }
 ```
 

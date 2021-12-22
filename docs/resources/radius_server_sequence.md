@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on RADIUSServerSequence.
 ```terraform
 resource "ciscoise_radius_server_sequence" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     before_accept_attr_manipulators_list {
 
@@ -67,24 +67,25 @@ output "ciscoise_radius_server_sequence_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **before_accept_attr_manipulators_list** (Block List) The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true (see [below for nested schema](#nestedblock--item--before_accept_attr_manipulators_list))
+- **before_accept_attr_manipulators_list** (Block List) The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true (see [below for nested schema](#nestedblock--parameters--before_accept_attr_manipulators_list))
 - **continue_authorz_policy** (String)
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **local_accounting** (String)
 - **name** (String)
-- **on_request_attr_manipulator_list** (Block List) The onRequestAttrManipulators is required only if useAttrSetOnRequest is true (see [below for nested schema](#nestedblock--item--on_request_attr_manipulator_list))
+- **on_request_attr_manipulator_list** (Block List) The onRequestAttrManipulators is required only if useAttrSetOnRequest is true (see [below for nested schema](#nestedblock--parameters--on_request_attr_manipulator_list))
 - **prefix_separator** (String) The prefixSeparator is required only if stripPrefix is true. The maximum length is 1 character
 - **radius_server_list** (List of String)
 - **remote_accounting** (String)
@@ -94,43 +95,74 @@ Optional:
 - **use_attr_set_before_acc** (String)
 - **use_attr_set_on_request** (String)
 
+<a id="nestedblock--parameters--before_accept_attr_manipulators_list"></a>
+### Nested Schema for `parameters.before_accept_attr_manipulators_list`
+
+Optional:
+
+- **action** (String) Allowed Values:
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY
+- **attribute_name** (String)
+- **changed_val** (String) The changedVal is required only if the action equals to 'UPDATE'
+- **dictionary_name** (String)
+- **value** (String)
+
+
+<a id="nestedblock--parameters--on_request_attr_manipulator_list"></a>
+### Nested Schema for `parameters.on_request_attr_manipulator_list`
+
+Optional:
+
+- **action** (String) Allowed Values:
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY
+- **attribute_name** (String)
+- **changed_val** (String) The changedVal is required only if the action equals to 'UPDATE'
+- **dictionary_name** (String)
+- **value** (String)
+
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **before_accept_attr_manipulators_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--before_accept_attr_manipulators_list))
+- **continue_authorz_policy** (String)
+- **description** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **local_accounting** (String)
+- **name** (String)
+- **on_request_attr_manipulator_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--on_request_attr_manipulator_list))
+- **prefix_separator** (String)
+- **radius_server_list** (List of String)
+- **remote_accounting** (String)
+- **strip_prefix** (String)
+- **strip_suffix** (String)
+- **suffix_separator** (String)
+- **use_attr_set_before_acc** (String)
+- **use_attr_set_on_request** (String)
 
-<a id="nestedblock--item--before_accept_attr_manipulators_list"></a>
+<a id="nestedobjatt--item--before_accept_attr_manipulators_list"></a>
 ### Nested Schema for `item.before_accept_attr_manipulators_list`
 
-Optional:
+Read-Only:
 
-- **action** (String) Allowed Values:
-- ADD,
-- UPDATE,
-- REMOVE,
-- REMOVEANY
+- **action** (String)
 - **attribute_name** (String)
-- **changed_val** (String) The changedVal is required only if the action equals to 'UPDATE'
+- **changed_val** (String)
 - **dictionary_name** (String)
 - **value** (String)
 
 
-<a id="nestedblock--item--on_request_attr_manipulator_list"></a>
-### Nested Schema for `item.on_request_attr_manipulator_list`
-
-Optional:
-
-- **action** (String) Allowed Values:
-- ADD,
-- UPDATE,
-- REMOVE,
-- REMOVEANY
-- **attribute_name** (String)
-- **changed_val** (String) The changedVal is required only if the action equals to 'UPDATE'
-- **dictionary_name** (String)
-- **value** (String)
-
-
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
@@ -138,6 +170,18 @@ Read-Only:
 - **href** (String)
 - **rel** (String)
 - **type** (String)
+
+
+<a id="nestedobjatt--item--on_request_attr_manipulator_list"></a>
+### Nested Schema for `item.on_request_attr_manipulator_list`
+
+Read-Only:
+
+- **action** (String)
+- **attribute_name** (String)
+- **changed_val** (String)
+- **dictionary_name** (String)
+- **value** (String)
 
 ## Import
 

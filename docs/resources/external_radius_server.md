@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on ExternalRADIUSServer.
 ```terraform
 resource "ciscoise_external_radius_server" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     accounting_port     = 1
     authentication_port = 1
@@ -52,14 +52,15 @@ output "ciscoise_external_radius_server_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -84,11 +85,29 @@ Allowed Values:
 - **shared_secret** (String) Shared secret maximum length is 128 characters
 - **timeout** (Number) Valid Range 1 to 120
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **accounting_port** (Number)
+- **authentication_port** (Number)
+- **authenticator_key** (String)
+- **description** (String)
+- **enable_key_wrap** (String)
+- **encryption_key** (String)
+- **host_ip** (String)
+- **id** (String)
+- **key_input_format** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **proxy_timeout** (Number)
+- **retries** (Number)
+- **shared_secret** (String)
+- **timeout** (Number)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

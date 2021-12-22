@@ -1,7 +1,7 @@
 
 resource "ciscoise_radius_server_sequence" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     before_accept_attr_manipulators_list {
 

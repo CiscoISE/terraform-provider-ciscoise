@@ -3,7 +3,8 @@ data "ciscoise_support_bundle" "example" {
   provider    = ciscoise
   description = "string"
   host_name   = "string"
-  name        = "string"
+
+  name = "string"
   support_bundle_include_options {
 
     from_date           = "string"

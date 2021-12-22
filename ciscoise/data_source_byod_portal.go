@@ -691,9 +691,12 @@ func dataSourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Selected method 2: GetByodPortalByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.ByodPortal.GetByodPortalByID(vvID)
+		response2, restyResp2, err := client.ByodPortal.GetByodPortalByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetByodPortalByID", err,
 				"Failure at GetByodPortalByID, unexpected response", ""))
@@ -1038,7 +1041,6 @@ func flattenByodPortalGetByodPortalByIDItemCustomizationsPageCustomizationsData(
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenByodPortalGetByodPortalByIDItemLink(item *isegosdk.ResponseByodPortalGetByodPortalByIDByodPortalLink) []map[string]interface{} {

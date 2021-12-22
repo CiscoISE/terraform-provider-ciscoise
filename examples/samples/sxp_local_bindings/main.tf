@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -30,7 +30,7 @@ output "ciscoise_sxp_local_bindings_example1" {
 
 resource "ciscoise_sxp_local_bindings" "name" {
   provider = ciscoise
-  item {
+  parameters {
     binding_name       = data.ciscoise_sxp_local_bindings.example1.item[0].binding_name
     description        = data.ciscoise_sxp_local_bindings.example1.item[0].description
     id                 = data.ciscoise_sxp_local_bindings.example1.item[0].id

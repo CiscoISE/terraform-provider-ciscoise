@@ -39,7 +39,6 @@ func resourceEgressMatrixCell() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -50,22 +49,18 @@ func resourceEgressMatrixCell() *schema.Resource {
 - DENY_IP,
 - PERMIT_IP`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"destination_sgt_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -95,17 +90,14 @@ func resourceEgressMatrixCell() *schema.Resource {
 - ENABLED,
 - MONITOR`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"sgacls": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
@@ -113,8 +105,59 @@ func resourceEgressMatrixCell() *schema.Resource {
 						},
 						"source_sgt_id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"default_rule": &schema.Schema{
+							Description: `Allowed values:
+- NONE,
+- DENY_IP,
+- PERMIT_IP`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"destination_sgt_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"matrix_cell_status": &schema.Schema{
+							Description: `Allowed values:
+- DISABLED,
+- ENABLED,
+- MONITOR`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"sgacls": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"source_sgt_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -128,9 +171,11 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestEgressMatrixCellCreateEgressMatrixCell(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestEgressMatrixCellCreateEgressMatrixCell(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -143,7 +188,7 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceEgressMatrixCellRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetEgressMatrixCellQueryParams{}
@@ -157,7 +202,7 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceEgressMatrixCellRead(ctx, d, m)
 			}
 		}
 	}
@@ -180,7 +225,7 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceEgressMatrixCellRead(ctx, d, m)
 }
 
 func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -206,9 +251,12 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 		log.Printf("[DEBUG] Selected method: GetEgressMatrixCell")
 		queryParams1 := isegosdk.GetEgressMatrixCellQueryParams{}
 
-		response1, _, err := client.EgressMatrixCell.GetEgressMatrixCell(&queryParams1)
+		response1, restyResp1, err := client.EgressMatrixCell.GetEgressMatrixCell(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEgressMatrixCell", err,
 				"Failure at GetEgressMatrixCell, unexpected response", ""))
@@ -237,9 +285,12 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetEgressMatrixCellByID")
 
-		response2, _, err := client.EgressMatrixCell.GetEgressMatrixCellByID(vvID)
+		response2, restyResp2, err := client.EgressMatrixCell.GetEgressMatrixCellByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEgressMatrixCellByID", err,
 				"Failure at GetEgressMatrixCellByID, unexpected response", ""))
@@ -299,10 +350,12 @@ func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData,
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestEgressMatrixCellUpdateEgressMatrixCellByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestEgressMatrixCellUpdateEgressMatrixCellByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.EgressMatrixCell.UpdateEgressMatrixCellByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -401,25 +454,25 @@ func expandRequestEgressMatrixCellCreateEgressMatrixCell(ctx context.Context, ke
 
 func expandRequestEgressMatrixCellCreateEgressMatrixCellEgressMatrixCell(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEgressMatrixCellCreateEgressMatrixCellEgressMatrixCell {
 	request := isegosdk.RequestEgressMatrixCellCreateEgressMatrixCellEgressMatrixCell{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".source_sgt_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".source_sgt_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".source_sgt_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".source_sgt_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".source_sgt_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".source_sgt_id")))) {
 		request.SourceSgtID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".destination_sgt_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".destination_sgt_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".destination_sgt_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".destination_sgt_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".destination_sgt_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".destination_sgt_id")))) {
 		request.DestinationSgtID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".matrix_cell_status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".matrix_cell_status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".matrix_cell_status"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".matrix_cell_status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".matrix_cell_status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".matrix_cell_status")))) {
 		request.MatrixCellStatus = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_rule"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_rule"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_rule"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_rule")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_rule")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_rule")))) {
 		request.DefaultRule = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sgacls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgacls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgacls"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sgacls")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sgacls")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sgacls")))) {
 		request.Sgacls = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -439,28 +492,28 @@ func expandRequestEgressMatrixCellUpdateEgressMatrixCellByID(ctx context.Context
 
 func expandRequestEgressMatrixCellUpdateEgressMatrixCellByIDEgressMatrixCell(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEgressMatrixCellUpdateEgressMatrixCellByIDEgressMatrixCell {
 	request := isegosdk.RequestEgressMatrixCellUpdateEgressMatrixCellByIDEgressMatrixCell{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".source_sgt_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".source_sgt_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".source_sgt_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".source_sgt_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".source_sgt_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".source_sgt_id")))) {
 		request.SourceSgtID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".destination_sgt_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".destination_sgt_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".destination_sgt_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".destination_sgt_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".destination_sgt_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".destination_sgt_id")))) {
 		request.DestinationSgtID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".matrix_cell_status"); !isEmptyValue(reflect.ValueOf(d.Get(key+".matrix_cell_status"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".matrix_cell_status"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".matrix_cell_status")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".matrix_cell_status")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".matrix_cell_status")))) {
 		request.MatrixCellStatus = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_rule"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_rule"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_rule"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_rule")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_rule")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_rule")))) {
 		request.DefaultRule = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sgacls"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sgacls"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sgacls"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sgacls")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sgacls")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sgacls")))) {
 		request.Sgacls = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

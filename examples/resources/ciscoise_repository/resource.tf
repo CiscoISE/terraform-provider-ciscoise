@@ -1,15 +1,16 @@
 
 resource "ciscoise_repository" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    enable_pki  = "false"
-    name        = "string"
-    password    = "******"
-    path        = "string"
-    protocol    = "string"
-    server_name = "string"
-    user_name   = "string"
+    enable_pki      = "false"
+    name            = "string"
+    password        = "******"
+    path            = "string"
+    protocol        = "string"
+    repository_name = "string"
+    server_name     = "string"
+    user_name       = "string"
   }
 }
 

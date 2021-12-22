@@ -24,8 +24,18 @@ func dataSourceEndpointRegister() *schema.Resource {
 		ReadContext: dataSourceEndpointRegisterRead,
 		Schema: map[string]*schema.Schema{
 			"custom_attributes": &schema.Schema{
-				Type:     schema.TypeMap,
+				Type:     schema.TypeList,
 				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"custom_attributes": &schema.Schema{
+							Description: `Key value map`,
+							Type:        schema.TypeMap,
+							Optional:    true,
+						},
+					},
+				},
 			},
 			"description": &schema.Schema{
 				Type:     schema.TypeString,
@@ -163,6 +173,7 @@ func dataSourceEndpointRegisterRead(ctx context.Context, d *schema.ResourceData,
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing RegisterEndpoint", err,
@@ -282,8 +293,14 @@ func expandRequestEndpointRegisterRegisterEndpointERSEndPointMdmAttributes(ctx c
 func expandRequestEndpointRegisterRegisterEndpointERSEndPointCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointRegisterEndpointERSEndPointCustomAttributes {
 	request := isegosdk.RequestEndpointRegisterEndpointERSEndPointCustomAttributes{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
-		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+		request.CustomAttributes = expandRequestEndpointRegisterRegisterEndpointERSEndPointCustomAttributesCustomAttributes(ctx, key+".custom_attributes.0", d)
 	}
+	return &request
+}
+
+func expandRequestEndpointRegisterRegisterEndpointERSEndPointCustomAttributesCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestEndpointRegisterEndpointERSEndPointCustomAttributesCustomAttributes {
+	var request isegosdk.RequestEndpointRegisterEndpointERSEndPointCustomAttributesCustomAttributes
+	v := d.Get(fixKeyAccess(key))
+	request = v.(map[string]interface{})
 	return &request
 }

@@ -37,19 +37,16 @@ func resourceNativeSupplicantProfile() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -75,12 +72,10 @@ func resourceNativeSupplicantProfile() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"wireless_profiles": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -93,29 +88,81 @@ Allowed values:
 - DELETE
 (required for updating existing WirelessProfile)`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"allowed_protocol": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"certificate_template_id": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"previous_ssid": &schema.Schema{
 										Description: `Previous ssid for WifiProfile (required for updating existing WirelessProfile)`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 									"ssid": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"wireless_profiles": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"action_type": &schema.Schema{
+										Description: `Action type for WifiProfile.
+Allowed values:
+- ADD,
+- UPDATE,
+- DELETE
+(required for updating existing WirelessProfile)`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"allowed_protocol": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"certificate_template_id": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"previous_ssid": &schema.Schema{
+										Description: `Previous ssid for WifiProfile (required for updating existing WirelessProfile)`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"ssid": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
 									},
 								},
 							},
@@ -128,14 +175,15 @@ Allowed values:
 }
 
 func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	resourceItem := *getResourceItem(d.Get("item"))
+	// var diags diag.Diagnostics
+	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// NOTE: Function does not perform create on ISE
+	// TODO: Add the path params to `item` schema
+	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	resourceMap["name"] = interfaceToString(resourceItem["name"])
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceNativeSupplicantProfileRead(ctx, d, m)
 }
 
 func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -160,9 +208,12 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 		log.Printf("[DEBUG] Selected method: GetNativeSupplicantProfile")
 		queryParams1 := isegosdk.GetNativeSupplicantProfileQueryParams{}
 
-		response1, _, err := client.NativeSupplicantProfile.GetNativeSupplicantProfile(&queryParams1)
+		response1, restyResp1, err := client.NativeSupplicantProfile.GetNativeSupplicantProfile(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNativeSupplicantProfile", err,
 				"Failure at GetNativeSupplicantProfile, unexpected response", ""))
@@ -192,9 +243,12 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 		log.Printf("[DEBUG] Selected method: GetNativeSupplicantProfileByID")
 		vvID := vID
 
-		response2, _, err := client.NativeSupplicantProfile.GetNativeSupplicantProfileByID(vvID)
+		response2, restyResp2, err := client.NativeSupplicantProfile.GetNativeSupplicantProfileByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNativeSupplicantProfileByID", err,
 				"Failure at GetNativeSupplicantProfileByID, unexpected response", ""))
@@ -253,10 +307,12 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.NativeSupplicantProfile.UpdateNativeSupplicantProfileByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -354,16 +410,16 @@ func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByID(ctx c
 
 func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfile(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfile {
 	request := isegosdk.RequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfile{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if _, ok := d.GetOk(key + ".wireless_profiles"); ok {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".wireless_profiles")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".wireless_profiles")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".wireless_profiles")))) {
 		request.WirelessProfiles = expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfilesArray(ctx, key+".wireless_profiles", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -374,6 +430,7 @@ func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSp
 
 func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfilesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfiles {
 	request := []isegosdk.RequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfiles{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -396,19 +453,19 @@ func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSp
 
 func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfiles(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfiles {
 	request := isegosdk.RequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSpProfileWirelessProfiles{}
-	if v, ok := d.GetOkExists(key + ".ssid"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ssid"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ssid"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ssid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ssid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ssid")))) {
 		request.SSID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".allowed_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".allowed_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".allowed_protocol"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allowed_protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allowed_protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allowed_protocol")))) {
 		request.AllowedProtocol = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".certificate_template_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".certificate_template_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".certificate_template_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".certificate_template_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".certificate_template_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".certificate_template_id")))) {
 		request.CertificateTemplateID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".action_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".action_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".action_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".action_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".action_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".action_type")))) {
 		request.ActionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".previous_ssid"); !isEmptyValue(reflect.ValueOf(d.Get(key+".previous_ssid"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".previous_ssid"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".previous_ssid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".previous_ssid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".previous_ssid")))) {
 		request.PreviousSSID = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

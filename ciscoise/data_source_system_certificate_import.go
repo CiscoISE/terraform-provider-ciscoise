@@ -24,26 +24,32 @@ NOTE:
 The certificate may have a validity period longer than 398 days. It may be untrusted by many browsers.
 
 NOTE:
-Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 `,
 
 		ReadContext: dataSourceSystemCertificateImportRead,
 		Schema: map[string]*schema.Schema{
 			"admin": &schema.Schema{
-				Description:  `Use certificate to authenticate the ISE Admin Portal`,
+				Description:  `Use certificate to authenticate the Cisco ISE Admin Portal`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
 			},
 			"allow_extended_validity": &schema.Schema{
-				Description:  `Allow import of certificates with validity greater than 398 days`,
+				Description:  `Allow import of certificates with validity greater than 398 days (required)`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
 			},
 			"allow_out_of_date_cert": &schema.Schema{
 				Description:  `Allow out of date certificates (required)`,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
+			},
+			"allow_portal_tag_transfer_for_same_subject": &schema.Schema{
+				Description:  `Allow overwriting the portal tag from matching certificate of same subject`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -60,6 +66,12 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
 			},
+			"allow_role_transfer_for_same_subject": &schema.Schema{
+				Description:  `Allow transfer of roles for certificate with matching subject `,
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Optional:     true,
+			},
 			"allow_sha1_certificates": &schema.Schema{
 				Description:  `Allow SHA1 based certificates (required)`,
 				Type:         schema.TypeString,
@@ -67,7 +79,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 				Optional:     true,
 			},
 			"allow_wild_card_certificates": &schema.Schema{
-				Description:  `Allow Wildcard Certificates`,
+				Description:  `Allow Wildcard certificates`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -84,7 +96,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 				Optional:     true,
 			},
 			"ims": &schema.Schema{
-				Description:  `Use certificate for the ISE Messaging Service`,
+				Description:  `Use certificate for the Cisco ISE Messaging Service`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -159,7 +171,7 @@ Request Parameters accepting True and False as input can be replaced by 1 and 0 
 				Optional:     true,
 			},
 			"validate_certificate_extensions": &schema.Schema{
-				Description:  `Validate Certificate Extensions`,
+				Description:  `Validate certificate extensions`,
 				Type:         schema.TypeString,
 				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 				Optional:     true,
@@ -175,30 +187,31 @@ func dataSourceSystemCertificateImportRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ImportSystemCertificate")
-		request1 := expandRequestSystemCertificateImportImportSystemCertificate(ctx, "", d)
+		log.Printf("[DEBUG] Selected method 1: ImportSystemCert")
+		request1 := expandRequestSystemCertificateImportImportSystemCert(ctx, "", d)
 
-		response1, restyResp1, err := client.Certificates.ImportSystemCertificate(request1)
+		response1, restyResp1, err := client.Certificates.ImportSystemCert(request1)
 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing ImportSystemCertificate", err,
-				"Failure at ImportSystemCertificate, unexpected response", ""))
+				"Failure when executing ImportSystemCert", err,
+				"Failure at ImportSystemCert, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenCertificatesImportSystemCertificateItem(response1.Response)
+		vItem1 := flattenCertificatesImportSystemCertItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting ImportSystemCertificate response",
+				"Failure when setting ImportSystemCert response",
 				err))
 			return diags
 		}
@@ -209,8 +222,8 @@ func dataSourceSystemCertificateImportRead(ctx context.Context, d *schema.Resour
 	return diags
 }
 
-func expandRequestSystemCertificateImportImportSystemCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesImportSystemCertificate {
-	request := isegosdk.RequestCertificatesImportSystemCertificate{}
+func expandRequestSystemCertificateImportImportSystemCert(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesImportSystemCert {
+	request := isegosdk.RequestCertificatesImportSystemCert{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".admin")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".admin")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".admin")))) {
 		request.Admin = interfaceToBoolPtr(v)
 	}
@@ -220,11 +233,17 @@ func expandRequestSystemCertificateImportImportSystemCertificate(ctx context.Con
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_out_of_date_cert")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_out_of_date_cert")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_out_of_date_cert")))) {
 		request.AllowOutOfDateCert = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_portal_tag_transfer_for_same_subject")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_portal_tag_transfer_for_same_subject")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_portal_tag_transfer_for_same_subject")))) {
+		request.AllowPortalTagTransferForSameSubject = interfaceToBoolPtr(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_replacement_of_certificates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_replacement_of_certificates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_replacement_of_certificates")))) {
 		request.AllowReplacementOfCertificates = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_replacement_of_portal_group_tag")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_replacement_of_portal_group_tag")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_replacement_of_portal_group_tag")))) {
 		request.AllowReplacementOfPortalGroupTag = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_role_transfer_for_same_subject")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_role_transfer_for_same_subject")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_role_transfer_for_same_subject")))) {
+		request.AllowRoleTransferForSameSubject = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_sha1_certificates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_sha1_certificates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_sha1_certificates")))) {
 		request.AllowSHA1Certificates = interfaceToBoolPtr(v)
@@ -271,7 +290,7 @@ func expandRequestSystemCertificateImportImportSystemCertificate(ctx context.Con
 	return &request
 }
 
-func flattenCertificatesImportSystemCertificateItem(item *isegosdk.ResponseCertificatesImportSystemCertificateResponse) []map[string]interface{} {
+func flattenCertificatesImportSystemCertItem(item *isegosdk.ResponseCertificatesImportSystemCertResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

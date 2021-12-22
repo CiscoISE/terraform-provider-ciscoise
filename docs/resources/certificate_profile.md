@@ -20,7 +20,7 @@ It manages create, read and update operations on CertificateProfile.
 ```terraform
 resource "ciscoise_certificate_profile" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     allowed_as_user_name         = "false"
     certificate_attribute_name   = "string"
@@ -44,14 +44,15 @@ output "ciscoise_certificate_profile_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -80,11 +81,23 @@ Allowed values:
 - CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
 - UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **allowed_as_user_name** (String)
+- **certificate_attribute_name** (String)
+- **description** (String)
+- **external_identity_store_name** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **match_mode** (String)
+- **name** (String)
+- **username_from** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

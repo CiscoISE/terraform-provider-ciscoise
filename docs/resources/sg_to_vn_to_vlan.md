@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on SecurityGroupToVirtualN
 ```terraform
 resource "ciscoise_sg_to_vn_to_vlan" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"
@@ -58,14 +58,15 @@ output "ciscoise_sg_to_vn_to_vlan_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -73,14 +74,10 @@ Optional:
 - **id** (String) The ID of this resource.
 - **name** (String)
 - **sgt_id** (String)
-- **virtualnetworklist** (Block List) (see [below for nested schema](#nestedblock--item--virtualnetworklist))
+- **virtualnetworklist** (Block List) (see [below for nested schema](#nestedblock--parameters--virtualnetworklist))
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--virtualnetworklist"></a>
-### Nested Schema for `item.virtualnetworklist`
+<a id="nestedblock--parameters--virtualnetworklist"></a>
+### Nested Schema for `parameters.virtualnetworklist`
 
 Optional:
 
@@ -88,10 +85,10 @@ Optional:
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
-- **vlans** (Block List) (see [below for nested schema](#nestedblock--item--virtualnetworklist--vlans))
+- **vlans** (Block List) (see [below for nested schema](#nestedblock--parameters--virtualnetworklist--vlans))
 
-<a id="nestedblock--item--virtualnetworklist--vlans"></a>
-### Nested Schema for `item.virtualnetworklist.vlans`
+<a id="nestedblock--parameters--virtualnetworklist--vlans"></a>
+### Nested Schema for `parameters.virtualnetworklist.vlans`
 
 Optional:
 
@@ -104,7 +101,20 @@ Optional:
 
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **description** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **sgt_id** (String)
+- **virtualnetworklist** (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist))
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
@@ -112,6 +122,30 @@ Read-Only:
 - **href** (String)
 - **rel** (String)
 - **type** (String)
+
+
+<a id="nestedobjatt--item--virtualnetworklist"></a>
+### Nested Schema for `item.virtualnetworklist`
+
+Read-Only:
+
+- **default_virtual_network** (String)
+- **description** (String)
+- **id** (String)
+- **name** (String)
+- **vlans** (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist--vlans))
+
+<a id="nestedobjatt--item--virtualnetworklist--vlans"></a>
+### Nested Schema for `item.virtualnetworklist.vlans`
+
+Read-Only:
+
+- **data** (String)
+- **default_vlan** (String)
+- **description** (String)
+- **id** (String)
+- **max_value** (Number)
+- **name** (String)
 
 ## Import
 

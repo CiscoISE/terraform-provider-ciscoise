@@ -4,14 +4,86 @@ page_title: "ciscoise_device_administration_conditions Resource - terraform-prov
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on Device Administration - Conditions.
-  Device Admin Creates a library condition.Device Admin Update library condition using condition name.NDevice Admin Delete a library condition using condition Name.Device Admin Update library condition.Device Admin Delete a library condition.
+  Device Admin Creates a library condition:
+  Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
+  policy rules could be match.
+  Condition can be compose from single dictionary attribute name and value using model
+  LibraryConditionAttributes
+   , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
+  LibraryConditionAndBlock
+   or
+  LibraryConditionOrBlock
+  .
+  When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
+  inner condition models:
+  ConditionAttributes
+  ,
+  ConditionAndBlock
+  ,
+  ConditionOrBlock
+  , that represent dynamically built Conditions which are not stored in the conditions Library, or using
+  ConditionReference
+  , which includes an ID to existing stored condition in the library.
+  The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
+  the condition name.
+  When using one of the 3 inner condition models (
+  ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+  ), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
+  only as inner members of the root condition.
+  When using
+  ConditionReference
+   model in inner layers, the condition name is not required.
+  ConditionReference objects can also include a reference ID to a condition of type
+  TimeAndDate
+  .
+  Device Admin Update library condition using condition name.NDevice Admin Delete a library condition using condition Name.Device Admin Update library condition.Device Admin Delete a library condition.
 ---
 
 # ciscoise_device_administration_conditions (Resource)
 
 It manages create, read, update and delete operations on Device Administration - Conditions.
 
-- Device Admin Creates a library condition.
+- Device Admin Creates a library condition:
+
+ Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
+policy rules could be match.
+
+ Condition can be compose from single dictionary attribute name and value using model
+LibraryConditionAttributes
+ , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
+LibraryConditionAndBlock
+ or
+LibraryConditionOrBlock
+.
+
+ When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
+inner condition models:
+ConditionAttributes
+,
+ConditionAndBlock
+,
+ConditionOrBlock
+, that represent dynamically built Conditions which are not stored in the conditions Library, or using
+ConditionReference
+, which includes an ID to existing stored condition in the library.
+
+ The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
+the condition name.
+
+ When using one of the 3 inner condition models (
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
+only as inner members of the root condition.
+
+ When using
+ConditionReference
+ model in inner layers, the condition name is not required.
+
+ ConditionReference objects can also include a reference ID to a condition of type
+TimeAndDate
+.
+
+
 
 - Device Admin Update library condition using condition name.
 
@@ -26,15 +98,15 @@ It manages create, read, update and delete operations on Device Administration -
 ```terraform
 resource "ciscoise_device_administration_conditions" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    attribute_id    = "string"
     attribute_name  = "string"
     attribute_value = "string"
     children {
 
       condition_type = "string"
       is_negate      = "false"
+
     }
     condition_type = "string"
     dates_range {
@@ -60,8 +132,9 @@ resource "ciscoise_device_administration_conditions" "example" {
       end_time   = "string"
       start_time = "string"
     }
-    id                  = "string"
-    is_negate           = "false"
+    id        = "string"
+    is_negate = "false"
+
     name                = "string"
     operator            = "string"
     week_days           = ["string"]
@@ -80,29 +153,29 @@ output "ciscoise_device_administration_conditions_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **attribute_id** (String) Dictionary attribute id (Optional), used for additional verification
 - **attribute_name** (String) Dictionary attribute name
 - **attribute_value** (String) <ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>
-- **children** (Block List) In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition (see [below for nested schema](#nestedblock--item--children))
+- **children** (Block List) In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition (see [below for nested schema](#nestedblock--parameters--children))
 - **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
-- **dates_range** (Block List) <p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--item--dates_range))
-- **dates_range_exception** (Block List) <p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--item--dates_range_exception))
+- **dates_range** (Block List, Max: 1) <p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--parameters--dates_range))
+- **dates_range_exception** (Block List, Max: 1) <p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--parameters--dates_range_exception))
 - **description** (String) Condition description
 - **dictionary_name** (String) Dictionary name
 - **dictionary_value** (String) Dictionary value
-- **hours_range** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--hours_range))
-- **hours_range_exception** (Block List) <p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--item--hours_range_exception))
+- **hours_range** (Block List, Max: 1) <p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--parameters--hours_range))
+- **hours_range_exception** (Block List, Max: 1) <p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--parameters--hours_range_exception))
 - **id** (String) The ID of this resource.
 - **is_negate** (String) Indicates whereas this condition is in negate mode
 - **name** (String) Condition name
@@ -110,23 +183,86 @@ Optional:
 - **week_days** (List of String) <p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>
 - **week_days_exception** (List of String) <p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--children"></a>
-### Nested Schema for `item.children`
+<a id="nestedblock--parameters--children"></a>
+### Nested Schema for `parameters.children`
 
 Optional:
 
 - **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
 - **is_negate** (String) Indicates whereas this condition is in negate mode
 
+
+<a id="nestedblock--parameters--dates_range"></a>
+### Nested Schema for `parameters.dates_range`
+
+Optional:
+
+- **end_date** (String)
+- **start_date** (String)
+
+
+<a id="nestedblock--parameters--dates_range_exception"></a>
+### Nested Schema for `parameters.dates_range_exception`
+
+Optional:
+
+- **end_date** (String)
+- **start_date** (String)
+
+
+<a id="nestedblock--parameters--hours_range"></a>
+### Nested Schema for `parameters.hours_range`
+
+Optional:
+
+- **end_time** (String)
+- **start_time** (String)
+
+
+<a id="nestedblock--parameters--hours_range_exception"></a>
+### Nested Schema for `parameters.hours_range_exception`
+
+Optional:
+
+- **end_time** (String)
+- **start_time** (String)
+
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--children--link))
+- **attribute_name** (String)
+- **attribute_value** (String)
+- **children** (List of Object) (see [below for nested schema](#nestedobjatt--item--children))
+- **condition_type** (String)
+- **dates_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--dates_range))
+- **dates_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--dates_range_exception))
+- **description** (String)
+- **dictionary_name** (String)
+- **dictionary_value** (String)
+- **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--hours_range))
+- **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--hours_range_exception))
+- **id** (String)
+- **is_negate** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **operator** (String)
+- **week_days** (List of String)
+- **week_days_exception** (List of String)
 
-<a id="nestedatt--item--children--link"></a>
+<a id="nestedobjatt--item--children"></a>
+### Nested Schema for `item.children`
+
+Read-Only:
+
+- **condition_type** (String)
+- **is_negate** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--children--link))
+
+<a id="nestedobjatt--item--children--link"></a>
 ### Nested Schema for `item.children.link`
 
 Read-Only:
@@ -137,43 +273,43 @@ Read-Only:
 
 
 
-<a id="nestedblock--item--dates_range"></a>
+<a id="nestedobjatt--item--dates_range"></a>
 ### Nested Schema for `item.dates_range`
 
-Optional:
+Read-Only:
 
 - **end_date** (String)
 - **start_date** (String)
 
 
-<a id="nestedblock--item--dates_range_exception"></a>
+<a id="nestedobjatt--item--dates_range_exception"></a>
 ### Nested Schema for `item.dates_range_exception`
 
-Optional:
+Read-Only:
 
 - **end_date** (String)
 - **start_date** (String)
 
 
-<a id="nestedblock--item--hours_range"></a>
+<a id="nestedobjatt--item--hours_range"></a>
 ### Nested Schema for `item.hours_range`
 
-Optional:
+Read-Only:
 
 - **end_time** (String)
 - **start_time** (String)
 
 
-<a id="nestedblock--item--hours_range_exception"></a>
+<a id="nestedobjatt--item--hours_range_exception"></a>
 ### Nested Schema for `item.hours_range_exception`
 
-Optional:
+Read-Only:
 
 - **end_time** (String)
 - **start_time** (String)
 
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

@@ -271,9 +271,12 @@ func dataSourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceDa
 		log.Printf("[DEBUG] Selected method 2: GetPortalGlobalSettingByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.PortalGlobalSetting.GetPortalGlobalSettingByID(vvID)
+		response2, restyResp2, err := client.PortalGlobalSetting.GetPortalGlobalSettingByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPortalGlobalSettingByID", err,
 				"Failure at GetPortalGlobalSettingByID, unexpected response", ""))

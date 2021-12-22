@@ -1,26 +1,26 @@
 
 resource "ciscoise_device_administration_authentication_rules" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     id                   = "string"
-    identity_source_id   = "string"
     identity_source_name = "string"
     if_auth_fail         = "string"
     if_process_fail      = "string"
     if_user_not_found    = "string"
-    policy_id            = "string"
+
+    policy_id = "string"
     rule {
 
       condition {
 
-        attribute_id    = "string"
         attribute_name  = "string"
         attribute_value = "string"
         children {
 
           condition_type = "string"
           is_negate      = "false"
+
         }
         condition_type = "string"
         dates_range {
@@ -46,8 +46,9 @@ resource "ciscoise_device_administration_authentication_rules" "example" {
           end_time   = "string"
           start_time = "string"
         }
-        id                  = "string"
-        is_negate           = "false"
+        id        = "string"
+        is_negate = "false"
+
         name                = "string"
         operator            = "string"
         week_days           = ["string"]

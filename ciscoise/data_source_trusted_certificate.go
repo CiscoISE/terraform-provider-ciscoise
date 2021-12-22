@@ -17,22 +17,41 @@ func dataSourceTrustedCertificate() *schema.Resource {
 
 - This data source supports Filtering, Sorting and Pagination.
 
-
 Filtering and Sorting supported on below mentioned attributes:
 
 
-	* [friendlyName, subject, issuedTo, issuedBy, validFrom, expirationDate]
+friendlyName
+
+subject
+
+issuedTo
+
+issuedBy
+
+validFrom
+
 
 Supported Date Format: yyyy-MM-dd HH:mm:ss
 
 Supported Operators: EQ, NEQ, GT and LT
 
 
-	* [status]
+expirationDate
+
+
+Supported Date Format: yyyy-MM-dd HH:mm:ss
+
+Supported Operators: EQ, NEQ, GT and LT
+
+
+status
+
 
 Allowed values: enabled, disabled
 
 Supported Operators: EQ, NEQ
+
+
 
 
 - This data source can displays details of a Trust Certificate based on a given ID.
@@ -49,6 +68,79 @@ Simple filtering
  should be available through the filter query string parameter. The structure of a filter is a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the 
 "filterType=or"
  query string parameter. Each resource Data model description should specify if an attribute is a filtered field. 
+ 
+ 
+ 
+ 
+ 
+OPERATOR
+ 
+DESCRIPTION
+ 
+ 
+ 
+ 
+ 
+EQ
+ 
+Equals
+ 
+ 
+ 
+NEQ
+ 
+Not Equals
+ 
+ 
+ 
+GT
+ 
+Greater Than
+ 
+ 
+ 
+LT
+ 
+Less Then
+ 
+ 
+ 
+STARTSW
+ 
+Starts With
+ 
+ 
+ 
+NSTARTSW
+ 
+Not Starts With
+ 
+ 
+ 
+ENDSW
+ 
+Ends With
+ 
+ 
+ 
+NENDSW
+ 
+Not Ends With
+ 
+ 
+ 
+CONTAINS
+ 
+Contains
+ 
+ 
+ 
+NCONTAINS
+ 
+Not Contains
+ 
+ 
+ 
  `,
 				Type:     schema.TypeList,
 				Optional: true,
@@ -62,7 +154,7 @@ Simple filtering
 				Optional:    true,
 			},
 			"id": &schema.Schema{
-				Description: `id path parameter. The id of the trust certificate`,
+				Description: `id path parameter. ID of the trust certificate`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -93,12 +185,12 @@ Simple filtering
 					Schema: map[string]*schema.Schema{
 
 						"authenticate_before_crl_received": &schema.Schema{
-							Description: `Switch to enable/disable authentication before receiving CRL`,
+							Description: `Switch to enable or disable authentication before receiving CRL`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"automatic_crl_update": &schema.Schema{
-							Description: `Switch to enable/disable automatic CRL update`,
+							Description: `Switch to enable or disable automatic CRL update`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -133,17 +225,17 @@ Simple filtering
 							Computed:    true,
 						},
 						"download_crl": &schema.Schema{
-							Description: `Switch to enable/disable download of CRL`,
+							Description: `Switch to enable or disable download of CRL`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"enable_ocsp_validation": &schema.Schema{
-							Description: `Switch to enable/disable OCSP Validation`,
+							Description: `Switch to enable or disable OCSP Validation`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"enable_server_identity_check": &schema.Schema{
-							Description: `Switch to enable/disable Server Identity Check`,
+							Description: `Switch to enable or disable Server Identity Check`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -163,7 +255,7 @@ Simple filtering
 							Computed:    true,
 						},
 						"ignore_crl_expiration": &schema.Schema{
-							Description: `Switch to enable/disable ignore CRL Expiration`,
+							Description: `Switch to enable or disable ignore CRL Expiration`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -279,12 +371,12 @@ Simple filtering
 					Schema: map[string]*schema.Schema{
 
 						"authenticate_before_crl_received": &schema.Schema{
-							Description: `Switch to enable/disable authentication before receiving CRL`,
+							Description: `Switch to enable or disable authentication before receiving CRL`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"automatic_crl_update": &schema.Schema{
-							Description: `Switch to enable/disable automatic CRL update`,
+							Description: `Switch to enable or disable automatic CRL update`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -319,17 +411,17 @@ Simple filtering
 							Computed:    true,
 						},
 						"download_crl": &schema.Schema{
-							Description: `Switch to enable/disable download of CRL`,
+							Description: `Switch to enable or disable download of CRL`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"enable_ocsp_validation": &schema.Schema{
-							Description: `Switch to enable/disable OCSP Validation`,
+							Description: `Switch to enable or disable OCSP Validation`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"enable_server_identity_check": &schema.Schema{
-							Description: `Switch to enable/disable Server Identity Check`,
+							Description: `Switch to enable or disable Server Identity Check`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -349,15 +441,11 @@ Simple filtering
 							Computed:    true,
 						},
 						"ignore_crl_expiration": &schema.Schema{
-							Description: `Switch to enable/disable ignore CRL Expiration`,
+							Description: `Switch to enable or disable ignore CRL Expiration`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
 						"internal_ca": &schema.Schema{
-							Type:     schema.TypeString,
-							Computed: true,
-						},
-						"is_referred_in_policy": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -553,9 +641,12 @@ func dataSourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 2: GetTrustedCertificateByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.Certificates.GetTrustedCertificateByID(vvID)
+		response2, restyResp2, err := client.Certificates.GetTrustedCertificateByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTrustedCertificateByID", err,
 				"Failure at GetTrustedCertificateByID, unexpected response", ""))
@@ -601,7 +692,6 @@ func flattenCertificatesGetTrustedCertificatesItems(items *[]isegosdk.ResponseCe
 		respItem["id"] = item.ID
 		respItem["ignore_crl_expiration"] = item.IgnoreCRLExpiration
 		respItem["internal_ca"] = boolPtrToString(item.InternalCa)
-		respItem["is_referred_in_policy"] = boolPtrToString(item.IsReferredInPolicy)
 		respItem["issued_by"] = item.IssuedBy
 		respItem["issued_to"] = item.IssuedTo
 		respItem["key_size"] = item.KeySize
@@ -682,64 +772,6 @@ func flattenCertificatesGetTrustedCertificateByIDItem(item *isegosdk.ResponseCer
 }
 
 func flattenCertificatesGetTrustedCertificateByIDItemLink(item *isegosdk.ResponseCertificatesGetTrustedCertificateByIDResponseLink) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["href"] = item.Href
-	respItem["rel"] = item.Rel
-	respItem["type"] = item.Type
-
-	return []map[string]interface{}{
-		respItem,
-	}
-
-}
-
-func flattenCertificatesGetTrustedCertificateByIDItem2(item *isegosdk.ResponseCertificatesGetTrustedCertificateByIDResponse) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["authenticate_before_crl_received"] = item.AuthenticateBeforeCRLReceived
-	respItem["automatic_crl_update"] = item.AutomaticCRLUpdate
-	respItem["automatic_crl_update_period"] = interfaceToIntPtr(item.AutomaticCRLUpdatePeriod)
-	respItem["automatic_crl_update_units"] = item.AutomaticCRLUpdateUnits
-	respItem["crl_distribution_url"] = item.CrlDistributionURL
-	respItem["crl_download_failure_retries"] = interfaceToIntPtr(item.CrlDownloadFailureRetries)
-	respItem["crl_download_failure_retries_units"] = item.CrlDownloadFailureRetriesUnits
-	respItem["description"] = item.Description
-	respItem["download_crl"] = item.DownloadCRL
-	respItem["enable_ocsp_validation"] = item.EnableOCSpValidation
-	respItem["enable_server_identity_check"] = item.EnableServerIDentityCheck
-	respItem["expiration_date"] = item.ExpirationDate
-	respItem["friendly_name"] = item.FriendlyName
-	respItem["id"] = item.ID
-	respItem["ignore_crl_expiration"] = item.IgnoreCRLExpiration
-	respItem["internal_ca"] = boolPtrToString(item.InternalCa)
-	respItem["is_referred_in_policy"] = boolPtrToString(item.IsReferredInPolicy)
-	respItem["issued_by"] = item.IssuedBy
-	respItem["issued_to"] = item.IssuedTo
-	respItem["key_size"] = item.KeySize
-	respItem["link"] = flattenCertificatesGetTrustedCertificateByIDItem2Link(item.Link)
-	respItem["non_automatic_crl_update_period"] = interfaceToIntPtr(item.NonAutomaticCRLUpdatePeriod)
-	respItem["non_automatic_crl_update_units"] = item.NonAutomaticCRLUpdateUnits
-	respItem["reject_if_no_status_from_ocs_p"] = item.RejectIfNoStatusFromOCSP
-	respItem["reject_if_unreachable_from_ocs_p"] = item.RejectIfUnreachableFromOCSP
-	respItem["selected_ocsp_service"] = item.SelectedOCSpService
-	respItem["serial_number_decimal_format"] = item.SerialNumberDecimalFormat
-	respItem["sha256_fingerprint"] = item.Sha256Fingerprint
-	respItem["signature_algorithm"] = item.SignatureAlgorithm
-	respItem["status"] = item.Status
-	respItem["subject"] = item.Subject
-	respItem["trusted_for"] = item.TrustedFor
-	respItem["valid_from"] = item.ValidFrom
-	return []map[string]interface{}{
-		respItem,
-	}
-}
-
-func flattenCertificatesGetTrustedCertificateByIDItem2Link(item *isegosdk.ResponseCertificatesGetTrustedCertificateByIDResponseLink) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

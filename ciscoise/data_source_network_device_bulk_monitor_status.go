@@ -172,5 +172,4 @@ func flattenNetworkDeviceMonitorBulkStatusNetworkDeviceItemResourcesStatus(items
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

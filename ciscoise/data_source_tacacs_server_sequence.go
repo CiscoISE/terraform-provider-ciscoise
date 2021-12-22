@@ -320,9 +320,12 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 2: GetTacacsServerSequenceByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.TacacsServerSequence.GetTacacsServerSequenceByName(vvName)
+		response2, restyResp2, err := client.TacacsServerSequence.GetTacacsServerSequenceByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsServerSequenceByName", err,
 				"Failure at GetTacacsServerSequenceByName, unexpected response", ""))
@@ -346,9 +349,12 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 		log.Printf("[DEBUG] Selected method 3: GetTacacsServerSequenceByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.TacacsServerSequence.GetTacacsServerSequenceByID(vvID)
+		response3, restyResp3, err := client.TacacsServerSequence.GetTacacsServerSequenceByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetTacacsServerSequenceByID", err,
 				"Failure at GetTacacsServerSequenceByID, unexpected response", ""))

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -20,7 +20,7 @@ output "ciscoise_sgt_sgt_src_id" {
 
 resource "ciscoise_filter_policy" "example" {
   provider = ciscoise
-  item {
+  parameters {
     domains = "default"
     sgt     = data.ciscoise_sgt.sgt_src.items[0].name
     subnet  = "121.11.8.0/22"

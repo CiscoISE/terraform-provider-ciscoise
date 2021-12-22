@@ -1,7 +1,7 @@
 
 resource "ciscoise_rest_id_store" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     ers_rest_idstore_attributes {

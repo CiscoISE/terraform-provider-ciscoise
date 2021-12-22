@@ -268,9 +268,12 @@ func dataSourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method 2: GetSxpVpnByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SxpVpns.GetSxpVpnByID(vvID)
+		response2, restyResp2, err := client.SxpVpns.GetSxpVpnByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSxpVpnByID", err,
 				"Failure at GetSxpVpnByID, unexpected response", ""))

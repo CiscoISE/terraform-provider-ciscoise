@@ -35,8 +35,4 @@ data "ciscoise_support_bundle_download" "example" {
 - **file_name** (String)
 - **id** (String) The ID of this resource.
 
-### Read-Only
-
-- **item** (String)
-
 

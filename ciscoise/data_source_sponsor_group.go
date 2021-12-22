@@ -415,9 +415,12 @@ func dataSourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Selected method 2: GetSponsorGroupByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.SponsorGroup.GetSponsorGroupByID(vvID)
+		response2, restyResp2, err := client.SponsorGroup.GetSponsorGroupByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSponsorGroupByID", err,
 				"Failure at GetSponsorGroupByID, unexpected response", ""))

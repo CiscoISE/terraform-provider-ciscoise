@@ -37,7 +37,6 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -45,18 +44,15 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 						"connection_timeout": &schema.Schema{
 							Description: `Interval in seconds for all the SMTP client connections`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"default_from_address": &schema.Schema{
 							Description: `The default from email address to be used to send emails from`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -81,57 +77,113 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 							},
 						},
 						"notification_enabled": &schema.Schema{
-							Description:  `Indicates if the email notification service is to be enabled`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Description: `Indicates if the email notification service is to be enabled`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"password": &schema.Schema{
 							Description: `Password of Secure SMTP server`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Sensitive:   true,
 							Computed:    true,
 						},
 						"smtp_port": &schema.Schema{
 							Description: `Port at which SMTP Secure Server is listening`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"smtp_server": &schema.Schema{
 							Description: `The SMTP server ip address or fqdn such as outbound.mycompany.com`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+						"use_default_from_address": &schema.Schema{
+							Description: `If the default from address should be used rather than using a sponsor user email address`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"use_password_authentication": &schema.Schema{
+							Description: `If configured to true, SMTP server authentication will happen using username/password`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"use_tlsor_ssl_encryption": &schema.Schema{
+							Description: `If configured to true, SMTP server authentication will happen using TLS/SSL`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"user_name": &schema.Schema{
+							Description: `Username of Secure SMTP server`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"connection_timeout": &schema.Schema{
+							Description: `Interval in seconds for all the SMTP client connections`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"default_from_address": &schema.Schema{
+							Description: `The default from email address to be used to send emails from`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"notification_enabled": &schema.Schema{
+							Description:  `Indicates if the email notification service is to be enabled`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"password": &schema.Schema{
+							Description: `Password of Secure SMTP server`,
+							Type:        schema.TypeString,
+							Optional:    true,
+							Sensitive:   true,
+						},
+						"smtp_port": &schema.Schema{
+							Description: `Port at which SMTP Secure Server is listening`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"smtp_server": &schema.Schema{
+							Description: `The SMTP server ip address or fqdn such as outbound.mycompany.com`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"use_default_from_address": &schema.Schema{
 							Description:  `If the default from address should be used rather than using a sponsor user email address`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"use_password_authentication": &schema.Schema{
 							Description:  `If configured to true, SMTP server authentication will happen using username/password`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"use_tlsor_ssl_encryption": &schema.Schema{
 							Description:  `If configured to true, SMTP server authentication will happen using TLS/SSL`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"user_name": &schema.Schema{
 							Description: `Username of Secure SMTP server`,
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 					},
 				},
@@ -145,9 +197,11 @@ func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestGuestSmtpNotificationSettingsCreateGuestSmtpNotificationSettings(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestGuestSmtpNotificationSettingsCreateGuestSmtpNotificationSettings(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -157,7 +211,7 @@ func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.
 			resourceMap := make(map[string]string)
 			resourceMap["id"] = vvID
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceGuestSmtpNotificationSettingsRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetGuestSmtpNotificationSettingsQueryParams{}
@@ -170,7 +224,7 @@ func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceGuestSmtpNotificationSettingsRead(ctx, d, m)
 			}
 		}
 	}
@@ -192,7 +246,7 @@ func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceGuestSmtpNotificationSettingsRead(ctx, d, m)
 }
 
 func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -202,7 +256,6 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
@@ -216,9 +269,12 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 		log.Printf("[DEBUG] Selected method: GetGuestSmtpNotificationSettings")
 		queryParams1 := isegosdk.GetGuestSmtpNotificationSettingsQueryParams{}
 
-		response1, _, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettings(&queryParams1)
+		response1, restyResp1, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettings(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestSmtpNotificationSettings", err,
 				"Failure at GetGuestSmtpNotificationSettings, unexpected response", ""))
@@ -248,9 +304,12 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 		log.Printf("[DEBUG] Selected method: GetGuestSmtpNotificationSettingsByID")
 		vvID := vID
 
-		response2, _, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettingsByID(vvID)
+		response2, restyResp2, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettingsByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestSmtpNotificationSettingsByID", err,
 				"Failure at GetGuestSmtpNotificationSettingsByID, unexpected response", ""))
@@ -279,7 +338,6 @@ func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-
 	vID, okID := resourceMap["id"]
 
 	method1 := []bool{}
@@ -293,10 +351,12 @@ func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.
 	if selectedMethod == 2 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestGuestSmtpNotificationSettingsUpdateGuestSmtpNotificationSettingsByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestGuestSmtpNotificationSettingsUpdateGuestSmtpNotificationSettingsByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.GuestSmtpNotificationConfiguration.UpdateGuestSmtpNotificationSettingsByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -318,7 +378,7 @@ func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.
 
 func resourceGuestSmtpNotificationSettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Function does not perform delete on ISE
+	// NOTE: Unable to delete GuestSmtpNotificationSettings on Cisco ISE
 	//       Returning empty diags to delete it on Terraform
 	return diags
 }
@@ -333,34 +393,34 @@ func expandRequestGuestSmtpNotificationSettingsCreateGuestSmtpNotificationSettin
 
 func expandRequestGuestSmtpNotificationSettingsCreateGuestSmtpNotificationSettingsERSGuestSmtpNotificationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestSmtpNotificationConfigurationCreateGuestSmtpNotificationSettingsERSGuestSmtpNotificationSettings {
 	request := isegosdk.RequestGuestSmtpNotificationConfigurationCreateGuestSmtpNotificationSettingsERSGuestSmtpNotificationSettings{}
-	if v, ok := d.GetOkExists(key + ".smtp_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".smtp_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".smtp_server"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".smtp_server")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".smtp_server")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".smtp_server")))) {
 		request.SmtpServer = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".notification_enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".notification_enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".notification_enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".notification_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".notification_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".notification_enabled")))) {
 		request.NotificationEnabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_default_from_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_default_from_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_default_from_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_default_from_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_default_from_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_default_from_address")))) {
 		request.UseDefaultFromAddress = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_from_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_from_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_from_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_from_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_from_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_from_address")))) {
 		request.DefaultFromAddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".smtp_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".smtp_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".smtp_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".smtp_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".smtp_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".smtp_port")))) {
 		request.SmtpPort = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".connection_timeout"); !isEmptyValue(reflect.ValueOf(d.Get(key+".connection_timeout"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".connection_timeout"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connection_timeout")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connection_timeout")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connection_timeout")))) {
 		request.ConnectionTimeout = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_tlsor_ssl_encryption"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_tlsor_ssl_encryption"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_tlsor_ssl_encryption"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_tlsor_ssl_encryption")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_tlsor_ssl_encryption")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_tlsor_ssl_encryption")))) {
 		request.UseTLSorSSLEncryption = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_password_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_password_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_password_authentication"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_password_authentication")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_password_authentication")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_password_authentication")))) {
 		request.UsePasswordAuthentication = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".user_name")))) {
 		request.UserName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -380,37 +440,37 @@ func expandRequestGuestSmtpNotificationSettingsUpdateGuestSmtpNotificationSettin
 
 func expandRequestGuestSmtpNotificationSettingsUpdateGuestSmtpNotificationSettingsByIDERSGuestSmtpNotificationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestSmtpNotificationConfigurationUpdateGuestSmtpNotificationSettingsByIDERSGuestSmtpNotificationSettings {
 	request := isegosdk.RequestGuestSmtpNotificationConfigurationUpdateGuestSmtpNotificationSettingsByIDERSGuestSmtpNotificationSettings{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".smtp_server"); !isEmptyValue(reflect.ValueOf(d.Get(key+".smtp_server"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".smtp_server"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".smtp_server")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".smtp_server")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".smtp_server")))) {
 		request.SmtpServer = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".notification_enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".notification_enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".notification_enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".notification_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".notification_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".notification_enabled")))) {
 		request.NotificationEnabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_default_from_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_default_from_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_default_from_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_default_from_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_default_from_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_default_from_address")))) {
 		request.UseDefaultFromAddress = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".default_from_address"); !isEmptyValue(reflect.ValueOf(d.Get(key+".default_from_address"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".default_from_address"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_from_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_from_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_from_address")))) {
 		request.DefaultFromAddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".smtp_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".smtp_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".smtp_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".smtp_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".smtp_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".smtp_port")))) {
 		request.SmtpPort = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".connection_timeout"); !isEmptyValue(reflect.ValueOf(d.Get(key+".connection_timeout"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".connection_timeout"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connection_timeout")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connection_timeout")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connection_timeout")))) {
 		request.ConnectionTimeout = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_tlsor_ssl_encryption"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_tlsor_ssl_encryption"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_tlsor_ssl_encryption"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_tlsor_ssl_encryption")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_tlsor_ssl_encryption")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_tlsor_ssl_encryption")))) {
 		request.UseTLSorSSLEncryption = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_password_authentication"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_password_authentication"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_password_authentication"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_password_authentication")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_password_authentication")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_password_authentication")))) {
 		request.UsePasswordAuthentication = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".user_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".user_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".user_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".user_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".user_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".user_name")))) {
 		request.UserName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

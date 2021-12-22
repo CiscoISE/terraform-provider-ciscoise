@@ -18,6 +18,7 @@ It performs create operation on Device Administration - Authorization Global Exc
 ```terraform
 data "ciscoise_device_administration_global_exception_rules_reset_hitcount" "example" {
   provider = ciscoise
+
 }
 ```
 

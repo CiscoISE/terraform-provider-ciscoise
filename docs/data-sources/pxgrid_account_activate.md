@@ -11,7 +11,7 @@ description: |-
 
 It performs create operation on Consumer.
 
-🚧 AccountActivate
+- 🚧 AccountActivate
 
 ## Example Usage
 
@@ -19,6 +19,7 @@ It performs create operation on Consumer.
 data "ciscoise_pxgrid_account_activate" "example" {
   provider    = ciscoise
   description = "string"
+
 }
 ```
 

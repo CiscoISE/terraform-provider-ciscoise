@@ -286,9 +286,12 @@ func dataSourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m
 		log.Printf("[DEBUG] Selected method 2: GetIPToSgtMappingGroupByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.IPToSgtMappingGroup.GetIPToSgtMappingGroupByID(vvID)
+		response2, restyResp2, err := client.IPToSgtMappingGroup.GetIPToSgtMappingGroupByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetIPToSgtMappingGroupByID", err,
 				"Failure at GetIPToSgtMappingGroupByID, unexpected response", ""))

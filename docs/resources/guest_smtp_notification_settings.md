@@ -20,7 +20,7 @@ It manages create, read and update operations on GuestSMTPNotificationConfigurat
 ```terraform
 resource "ciscoise_guest_smtp_notification_settings" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     connection_timeout          = "string"
     default_from_address        = "string"
@@ -47,14 +47,15 @@ output "ciscoise_guest_smtp_notification_settings_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -70,11 +71,26 @@ Optional:
 - **use_tlsor_ssl_encryption** (String) If configured to true, SMTP server authentication will happen using TLS/SSL
 - **user_name** (String) Username of Secure SMTP server
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **connection_timeout** (String)
+- **default_from_address** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **notification_enabled** (String)
+- **password** (String)
+- **smtp_port** (String)
+- **smtp_server** (String)
+- **use_default_from_address** (String)
+- **use_password_authentication** (String)
+- **use_tlsor_ssl_encryption** (String)
+- **user_name** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

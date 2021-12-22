@@ -26,11 +26,6 @@ func dataSourceDeviceAdministrationConditionsForPolicySet() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"attribute_id": &schema.Schema{
-							Description: `Dictionary attribute id (Optional), used for additional verification`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
 						"attribute_name": &schema.Schema{
 							Description: `Dictionary attribute name`,
 							Type:        schema.TypeString,
@@ -88,7 +83,7 @@ func dataSourceDeviceAdministrationConditionsForPolicySet() *schema.Resource {
 							Computed:    true,
 						},
 						"dates_range": &schema.Schema{
-							Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+							Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 							Type:        schema.TypeList,
 							Computed:    true,
 							Elem: &schema.Resource{
@@ -106,7 +101,7 @@ func dataSourceDeviceAdministrationConditionsForPolicySet() *schema.Resource {
 							},
 						},
 						"dates_range_exception": &schema.Schema{
-							Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+							Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 							Type:        schema.TypeList,
 							Computed:    true,
 							Elem: &schema.Resource{
@@ -139,7 +134,7 @@ func dataSourceDeviceAdministrationConditionsForPolicySet() *schema.Resource {
 							Computed:    true,
 						},
 						"hours_range": &schema.Schema{
-							Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+							Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 							Type:        schema.TypeList,
 							Computed:    true,
 							Elem: &schema.Resource{
@@ -157,7 +152,7 @@ func dataSourceDeviceAdministrationConditionsForPolicySet() *schema.Resource {
 							},
 						},
 						"hours_range_exception": &schema.Schema{
-							Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+							Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 							Type:        schema.TypeList,
 							Computed:    true,
 							Elem: &schema.Resource{
@@ -288,7 +283,6 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForPolicySetsI
 		respItem["id"] = item.ID
 		respItem["name"] = item.Name
 		respItem["attribute_name"] = item.AttributeName
-		respItem["attribute_id"] = item.AttributeID
 		respItem["attribute_value"] = item.AttributeValue
 		respItem["dictionary_name"] = item.DictionaryName
 		respItem["dictionary_value"] = item.DictionaryValue
@@ -333,7 +327,6 @@ func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForPolicySetsI
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenDeviceAdministrationConditionsGetDeviceAdminConditionsForPolicySetsItemsChildrenLink(item *isegosdk.ResponseDeviceAdministrationConditionsGetDeviceAdminConditionsForPolicySetsResponseChildrenLink) []map[string]interface{} {

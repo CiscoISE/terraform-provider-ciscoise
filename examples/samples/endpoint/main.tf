@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 data "ciscoise_endpoint_group" "found" {
   provider = ciscoise
-  name     = "Sony-Device-1"
+  name     = "Sony-Device"
 }
 
 output "ciscoise_endpoint_group_found" {
@@ -22,7 +22,7 @@ output "ciscoise_endpoint_group_found" {
 resource "ciscoise_endpoint" "example" {
   provider   = ciscoise
   depends_on = [data.ciscoise_endpoint_group.found]
-  item {
+  parameters {
     name                      = "11:22:33:44:55:66"
     description               = "My Test Endpoint 1"
     mac                       = "11:22:33:44:55:66"

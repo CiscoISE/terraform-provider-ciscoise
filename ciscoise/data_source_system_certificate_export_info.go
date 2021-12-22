@@ -53,17 +53,18 @@ func dataSourceSystemCertificateExportInfoRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ExportSystemCertificate")
-		request1 := expandRequestSystemCertificateExportInfoExportSystemCertificate(ctx, "", d)
+		log.Printf("[DEBUG] Selected method 1: ExportSystemCert")
+		request1 := expandRequestSystemCertificateExportInfoExportSystemCert(ctx, "", d)
 
-		response1, restyResp1, err := client.Certificates.ExportSystemCertificate(request1)
+		response1, _, err := client.Certificates.ExportSystemCert(request1)
+
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 
 		if err != nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
 			diags = append(diags, diagError(
-				"Failure when executing ExportSystemCertificate", err))
+				"Failure when executing ExportSystemCert", err))
 			return diags
 		}
 
@@ -82,8 +83,8 @@ func dataSourceSystemCertificateExportInfoRead(ctx context.Context, d *schema.Re
 	return diags
 }
 
-func expandRequestSystemCertificateExportInfoExportSystemCertificate(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesExportSystemCertificate {
-	request := isegosdk.RequestCertificatesExportSystemCertificate{}
+func expandRequestSystemCertificateExportInfoExportSystemCert(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesExportSystemCert {
+	request := isegosdk.RequestCertificatesExportSystemCert{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".export")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".export")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".export")))) {
 		request.Export = interfaceToString(v)
 	}

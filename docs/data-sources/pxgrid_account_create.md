@@ -17,7 +17,8 @@ It performs create operation on Consumer.
 
 ```terraform
 data "ciscoise_pxgrid_account_create" "example" {
-  provider  = ciscoise
+  provider = ciscoise
+
   node_name = "string"
 }
 ```

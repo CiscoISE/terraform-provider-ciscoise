@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on EgressMatrixCell.
 ```terraform
 resource "ciscoise_egress_matrix_cell" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     default_rule       = "string"
     description        = "string"
@@ -46,14 +46,15 @@ output "ciscoise_egress_matrix_cell_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -72,11 +73,23 @@ Optional:
 - **sgacls** (List of String)
 - **source_sgt_id** (String)
 
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **default_rule** (String)
+- **description** (String)
+- **destination_sgt_id** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **matrix_cell_status** (String)
+- **name** (String)
+- **sgacls** (List of String)
+- **source_sgt_id** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

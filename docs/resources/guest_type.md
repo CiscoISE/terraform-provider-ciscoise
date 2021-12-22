@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on GuestType.
 ```terraform
 resource "ciscoise_guest_type" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     access_time {
 
@@ -76,37 +76,34 @@ output "ciscoise_guest_type_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **access_time** (Block List) (see [below for nested schema](#nestedblock--item--access_time))
+- **access_time** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--access_time))
 - **description** (String)
-- **expiration_notification** (Block List) Expiration Notification Settings (see [below for nested schema](#nestedblock--item--expiration_notification))
+- **expiration_notification** (Block List, Max: 1) Expiration Notification Settings (see [below for nested schema](#nestedblock--parameters--expiration_notification))
 - **id** (String) The ID of this resource.
 - **is_default_type** (String)
-- **login_options** (Block List) (see [below for nested schema](#nestedblock--item--login_options))
+- **login_options** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--login_options))
 - **name** (String)
 - **sponsor_groups** (List of String)
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--access_time"></a>
-### Nested Schema for `item.access_time`
+<a id="nestedblock--parameters--access_time"></a>
+### Nested Schema for `parameters.access_time`
 
 Optional:
 
 - **allow_access_on_specific_days_times** (String)
-- **day_time_limits** (Block List) List of Time Ranges for account access (see [below for nested schema](#nestedblock--item--access_time--day_time_limits))
+- **day_time_limits** (Block List) List of Time Ranges for account access (see [below for nested schema](#nestedblock--parameters--access_time--day_time_limits))
 - **default_duration** (Number)
 - **duration_time_unit** (String) Allowed values are:
 - DAYS,
@@ -115,8 +112,8 @@ Optional:
 - **from_first_login** (String) When Account Duration starts from first login or specified date
 - **max_account_duration** (Number) Maximum value of Account Duration
 
-<a id="nestedblock--item--access_time--day_time_limits"></a>
-### Nested Schema for `item.access_time.day_time_limits`
+<a id="nestedblock--parameters--access_time--day_time_limits"></a>
+### Nested Schema for `parameters.access_time.day_time_limits`
 
 Optional:
 
@@ -135,8 +132,8 @@ Allowed values are:
 
 
 
-<a id="nestedblock--item--expiration_notification"></a>
-### Nested Schema for `item.expiration_notification`
+<a id="nestedblock--parameters--expiration_notification"></a>
+### Nested Schema for `parameters.expiration_notification`
 
 Optional:
 
@@ -152,8 +149,8 @@ Optional:
 - **sms_text** (String)
 
 
-<a id="nestedblock--item--login_options"></a>
-### Nested Schema for `item.login_options`
+<a id="nestedblock--parameters--login_options"></a>
+### Nested Schema for `parameters.login_options`
 
 Optional:
 
@@ -168,7 +165,60 @@ Allowed values are:
 - **max_simultaneous_logins** (Number) Number of Simultaneous Logins
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **access_time** (List of Object) (see [below for nested schema](#nestedobjatt--item--access_time))
+- **description** (String)
+- **expiration_notification** (List of Object) (see [below for nested schema](#nestedobjatt--item--expiration_notification))
+- **id** (String)
+- **is_default_type** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **login_options** (List of Object) (see [below for nested schema](#nestedobjatt--item--login_options))
+- **name** (String)
+- **sponsor_groups** (List of String)
+
+<a id="nestedobjatt--item--access_time"></a>
+### Nested Schema for `item.access_time`
+
+Read-Only:
+
+- **allow_access_on_specific_days_times** (String)
+- **day_time_limits** (List of Object) (see [below for nested schema](#nestedobjatt--item--access_time--day_time_limits))
+- **default_duration** (Number)
+- **duration_time_unit** (String)
+- **from_first_login** (String)
+- **max_account_duration** (Number)
+
+<a id="nestedobjatt--item--access_time--day_time_limits"></a>
+### Nested Schema for `item.access_time.day_time_limits`
+
+Read-Only:
+
+- **days** (List of String)
+- **end_time** (String)
+- **start_time** (String)
+
+
+
+<a id="nestedobjatt--item--expiration_notification"></a>
+### Nested Schema for `item.expiration_notification`
+
+Read-Only:
+
+- **advance_notification_duration** (Number)
+- **advance_notification_units** (String)
+- **email_text** (String)
+- **enable_notification** (String)
+- **send_email_notification** (String)
+- **send_sms_notification** (String)
+- **sms_text** (String)
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
@@ -176,6 +226,19 @@ Read-Only:
 - **href** (String)
 - **rel** (String)
 - **type** (String)
+
+
+<a id="nestedobjatt--item--login_options"></a>
+### Nested Schema for `item.login_options`
+
+Read-Only:
+
+- **allow_guest_portal_bypass** (String)
+- **failure_action** (String)
+- **identity_group_id** (String)
+- **limit_simultaneous_logins** (String)
+- **max_registered_devices** (Number)
+- **max_simultaneous_logins** (Number)
 
 ## Import
 

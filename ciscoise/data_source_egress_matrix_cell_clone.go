@@ -132,5 +132,4 @@ func flattenEgressMatrixCellCloneMatrixCellItemResultValue(items *[]isegosdk.Res
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

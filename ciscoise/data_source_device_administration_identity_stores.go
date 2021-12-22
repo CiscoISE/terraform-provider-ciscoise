@@ -16,7 +16,7 @@ func dataSourceDeviceAdministrationIDentityStores() *schema.Resource {
 		Description: `It performs read operation on Device Administration - Identity Stores.
 
 - Device Admin Return list of identity stores for authentication.
- (Other CRUD APIs available throught ERS)
+ (Other CRUD APIs available through ERS)
 `,
 
 		ReadContext: dataSourceDeviceAdministrationIDentityStoresRead,
@@ -79,7 +79,7 @@ func dataSourceDeviceAdministrationIDentityStoresRead(ctx context.Context, d *sc
 	return diags
 }
 
-func flattenDeviceAdministrationIDentityStoresGetDeviceAdminIDentityStoresItems(items *[]isegosdk.ResponseDeviceAdministrationIDentityStoresGetDeviceAdminIDentityStores) []map[string]interface{} {
+func flattenDeviceAdministrationIDentityStoresGetDeviceAdminIDentityStoresItems(items *isegosdk.ResponseDeviceAdministrationIDentityStoresGetDeviceAdminIDentityStores) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

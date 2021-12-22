@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_sgt" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     default_sgacls    = []
     description       = "BYOD Security Temp Group 1"
@@ -24,6 +24,6 @@ resource "ciscoise_sgt" "example" {
   }
 }
 
-# output "ciscoise_sgt_example" {
-#   value = ciscoise_sgt.example
-# }
+output "ciscoise_sgt_example" {
+  value = ciscoise_sgt.example
+}

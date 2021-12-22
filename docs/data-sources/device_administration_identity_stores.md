@@ -5,7 +5,7 @@ subcategory: ""
 description: |-
   It performs read operation on Device Administration - Identity Stores.
   Device Admin Return list of identity stores for authentication.
-  (Other CRUD APIs available throught ERS)
+  (Other CRUD APIs available through ERS)
 ---
 
 # ciscoise_device_administration_identity_stores (Data Source)
@@ -13,7 +13,7 @@ description: |-
 It performs read operation on Device Administration - Identity Stores.
 
 - Device Admin Return list of identity stores for authentication.
- (Other CRUD APIs available throught ERS)
+ (Other CRUD APIs available through ERS)
 
 ## Example Usage
 

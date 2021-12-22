@@ -167,5 +167,4 @@ func flattenAncPolicyMonitorBulkStatusAncPolicyItemResourcesStatus(items *[]iseg
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

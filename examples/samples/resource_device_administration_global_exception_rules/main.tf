@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -12,7 +12,7 @@ provider "ciscoise" {
 
 resource "ciscoise_device_administration_global_exception_rules" "example" {
   provider = ciscoise
-  item {
+  parameters {
     commands = ["DenyAllCommands"]
     profile  = "Default Shell Profile"
 

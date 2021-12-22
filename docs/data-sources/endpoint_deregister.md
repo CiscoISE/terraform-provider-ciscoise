@@ -19,6 +19,7 @@ It performs update operation on endpoint.
 data "ciscoise_endpoint_deregister" "example" {
   provider = ciscoise
   id       = "string"
+
 }
 ```
 

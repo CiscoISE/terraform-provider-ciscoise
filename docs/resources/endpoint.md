@@ -22,13 +22,10 @@ It manages create, read, update and delete operations on endpoint.
 ```terraform
 resource "ciscoise_endpoint" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     custom_attributes {
-      custom_attributes = {
-        key1 = "value1"
-        key2 = "value2"
-      }
+
     }
     description       = "string"
     group_id          = "string"
@@ -71,45 +68,42 @@ output "ciscoise_endpoint_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **custom_attributes** (Block List) (see [below for nested schema](#nestedblock--item--custom_attributes))
+- **custom_attributes** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--custom_attributes))
 - **description** (String)
 - **group_id** (String)
 - **id** (String) The ID of this resource.
 - **identity_store** (String)
 - **identity_store_id** (String)
 - **mac** (String)
-- **mdm_attributes** (Block List) (see [below for nested schema](#nestedblock--item--mdm_attributes))
+- **mdm_attributes** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--mdm_attributes))
 - **name** (String)
 - **portal_user** (String)
 - **profile_id** (String)
 - **static_group_assignment** (String)
 - **static_profile_assignment** (String)
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--custom_attributes"></a>
-### Nested Schema for `item.custom_attributes`
+<a id="nestedblock--parameters--custom_attributes"></a>
+### Nested Schema for `parameters.custom_attributes`
 
 Optional:
 
-- **custom_attributes** (Map of String)
+- **custom_attributes** (Map of String) Key value map
 
 
-<a id="nestedblock--item--mdm_attributes"></a>
-### Nested Schema for `item.mdm_attributes`
+<a id="nestedblock--parameters--mdm_attributes"></a>
+### Nested Schema for `parameters.mdm_attributes`
 
 Optional:
 
@@ -128,7 +122,36 @@ Optional:
 - **mdm_server_name** (String)
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **custom_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item--custom_attributes))
+- **description** (String)
+- **group_id** (String)
+- **id** (String)
+- **identity_store** (String)
+- **identity_store_id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **mac** (String)
+- **mdm_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item--mdm_attributes))
+- **name** (String)
+- **portal_user** (String)
+- **profile_id** (String)
+- **static_group_assignment** (String)
+- **static_profile_assignment** (String)
+
+<a id="nestedobjatt--item--custom_attributes"></a>
+### Nested Schema for `item.custom_attributes`
+
+Read-Only:
+
+- **custom_attributes** (Map of String)
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
@@ -136,6 +159,26 @@ Read-Only:
 - **href** (String)
 - **rel** (String)
 - **type** (String)
+
+
+<a id="nestedobjatt--item--mdm_attributes"></a>
+### Nested Schema for `item.mdm_attributes`
+
+Read-Only:
+
+- **mdm_compliance_status** (String)
+- **mdm_encrypted** (String)
+- **mdm_enrolled** (String)
+- **mdm_ime_i** (String)
+- **mdm_jail_broken** (String)
+- **mdm_manufacturer** (String)
+- **mdm_model** (String)
+- **mdm_os** (String)
+- **mdm_phone_number** (String)
+- **mdm_pinlock** (String)
+- **mdm_reachable** (String)
+- **mdm_serial** (String)
+- **mdm_server_name** (String)
 
 ## Import
 

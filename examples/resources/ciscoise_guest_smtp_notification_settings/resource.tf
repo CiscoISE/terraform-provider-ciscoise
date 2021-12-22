@@ -1,7 +1,7 @@
 
 resource "ciscoise_guest_smtp_notification_settings" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     connection_timeout          = "string"
     default_from_address        = "string"

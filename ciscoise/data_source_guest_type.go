@@ -449,9 +449,12 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method 2: GetGuestTypeByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.GuestType.GetGuestTypeByID(vvID)
+		response2, restyResp2, err := client.GuestType.GetGuestTypeByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetGuestTypeByID", err,
 				"Failure at GetGuestTypeByID, unexpected response", ""))
@@ -555,7 +558,6 @@ func flattenGuestTypeGetGuestTypeByIDItemAccessTimeDayTimeLimits(items *[]isegos
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenGuestTypeGetGuestTypeByIDItemLoginOptions(item *isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestTypeLoginOptions) []map[string]interface{} {

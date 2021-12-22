@@ -4,24 +4,24 @@ page_title: "ciscoise_trusted_certificate Resource - terraform-provider-ciscoise
 subcategory: ""
 description: |-
   It manages read, update and delete operations on Certificates.
-  Update a trusted certificate present in ISE trust store.This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
+  Update a trusted certificate present in Cisco ISE trust store.This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
 ---
 
 # ciscoise_trusted_certificate (Resource)
 
 It manages read, update and delete operations on Certificates.
-  
-  - Update a trusted certificate present in ISE trust store.
-  
-  
-  - This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
+
+- Update a trusted certificate present in Cisco ISE trust store.
+
+
+- This resource deletes a Trust Certificate from Trusted Certificate Store based on a given ID.
 
 ## Example Usage
 
 ```terraform
 resource "ciscoise_trusted_certificate" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     authenticate_before_crl_received       = "false"
     automatic_crl_update                   = "false"
@@ -34,6 +34,7 @@ resource "ciscoise_trusted_certificate" "example" {
     download_crl                           = "false"
     enable_ocsp_validation                 = "false"
     enable_server_identity_check           = "false"
+    id                                     = "string"
     ignore_crl_expiration                  = "false"
     name                                   = "string"
     non_automatic_crl_update_period        = 1
@@ -60,74 +61,84 @@ output "ciscoise_trusted_certificate_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
-
-Required:
-
-- **name** (String) Friendly name of the certificate
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **authenticate_before_crl_received** (String) Switch to enable/disable CRL Verification if CRL is not Received
-  ERROR: Different types for param authenticateBeforeCRLReceived schema.TypeBool schema.TypeString
-- **automatic_crl_update** (String) Switch to enable/disable automatic CRL update
-  ERROR: Different types for param automaticCRLUpdate schema.TypeBool schema.TypeString
+- **authenticate_before_crl_received** (String) Switch to enable or disable CRL verification if CRL is not received
+- **automatic_crl_update** (String) Switch to enable or disable automatic CRL update
 - **automatic_crl_update_period** (Number) Automatic CRL update period
-  ERROR: Different types for param automaticCRLUpdatePeriod schema.TypeInt schema.TypeString
 - **automatic_crl_update_units** (String) Unit of time for automatic CRL update
 - **crl_distribution_url** (String) CRL Distribution URL
 - **crl_download_failure_retries** (Number) If CRL download fails, wait time before retry
-  ERROR: Different types for param crlDownloadFailureRetries schema.TypeInt schema.TypeString
 - **crl_download_failure_retries_units** (String) Unit of time before retry if CRL download fails
 - **description** (String) Description for trust certificate
-- **download_crl** (String) Switch to enable/disable download of CRL
-  ERROR: Different types for param downloadCRL schema.TypeBool schema.TypeString
-- **enable_ocsp_validation** (String) Switch to enable/disable OCSP Validation
-  ERROR: Different types for param enableOCSPValidation schema.TypeBool schema.TypeString
-- **enable_server_identity_check** (String) Switch to enable/disable verification if HTTPS or LDAP server certificate name fits the configured server URL
-  ERROR: Different types for param enableServerIdentityCheck schema.TypeBool schema.TypeString
-- **id** (String) ID of trust certificate
-- **ignore_crl_expiration** (String) Switch to enable/disable ignore CRL Expiration
-  ERROR: Different types for param ignoreCRLExpiration schema.TypeBool schema.TypeString
+- **download_crl** (String) Switch to enable or disable download of CRL
+- **enable_ocsp_validation** (String) Switch to enable or disable OCSP Validation
+- **enable_server_identity_check** (String) Switch to enable or disable verification if HTTPS or LDAP server certificate name fits the configured server URL
+- **id** (String) id path parameter. ID of the trust certificate
+- **ignore_crl_expiration** (String) Switch to enable or disable ignore CRL expiration
+- **name** (String) Friendly name of the certificate
 - **non_automatic_crl_update_period** (Number) Non automatic CRL update period
-  ERROR: Different types for param nonAutomaticCRLUpdatePeriod schema.TypeInt schema.TypeString
 - **non_automatic_crl_update_units** (String) Unit of time of non automatic CRL update
 - **reject_if_no_status_from_ocs_p** (String) Switch to reject certificate if there is no status from OCSP
-  ERROR: Different types for param rejectIfNoStatusFromOCSP schema.TypeBool schema.TypeString
 - **reject_if_unreachable_from_ocs_p** (String) Switch to reject certificate if unreachable from OCSP
-  ERROR: Different types for param rejectIfUnreachableFromOCSP schema.TypeBool schema.TypeString
 - **selected_ocsp_service** (String) Name of selected OCSP Service
 - **status** (String)
 - **trust_for_certificate_based_admin_auth** (String) Trust for Certificate based Admin authentication
 - **trust_for_cisco_services_auth** (String) Trust for authentication of Cisco Services
 - **trust_for_client_auth** (String) Trust for client authentication and Syslog
-- **trust_for_ise_auth** (String) Trust for authentication within ISE
+- **trust_for_ise_auth** (String) Trust for authentication within Cisco ISE
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
-- **expiration_date** (String) The time and date past which the certificate is no longer valid
-- **friendly_name** (String) Friendly name of trust certificate
+- **authenticate_before_crl_received** (String)
+- **automatic_crl_update** (String)
+- **automatic_crl_update_period** (String)
+- **automatic_crl_update_units** (String)
+- **crl_distribution_url** (String)
+- **crl_download_failure_retries** (String)
+- **crl_download_failure_retries_units** (String)
+- **description** (String)
+- **download_crl** (String)
+- **enable_ocsp_validation** (String)
+- **enable_server_identity_check** (String)
+- **expiration_date** (String)
+- **friendly_name** (String)
+- **id** (String)
+- **ignore_crl_expiration** (String)
 - **internal_ca** (String)
 - **is_referred_in_policy** (String)
-- **issued_by** (String) The entity that verified the information and signed the certificate
-- **issued_to** (String) Entity to which trust certificate is issued
-- **key_size** (String) The length of key used for encrypting trust certificate
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-- **serial_number_decimal_format** (String) Used to uniquely identify the certificate within a CA's systems
+- **issued_by** (String)
+- **issued_to** (String)
+- **key_size** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **non_automatic_crl_update_period** (String)
+- **non_automatic_crl_update_units** (String)
+- **reject_if_no_status_from_ocs_p** (String)
+- **reject_if_unreachable_from_ocs_p** (String)
+- **selected_ocsp_service** (String)
+- **serial_number_decimal_format** (String)
 - **sha256_fingerprint** (String)
-- **signature_algorithm** (String) Algorithm used for encrypting trust certificate
-- **subject** (String) The Subject or entity with which public key of trust certificate is associated
-- **trusted_for** (String) Different services for which the certificated is trusted
-- **valid_from** (String) The earliest time and date on which the certificate is valid
+- **signature_algorithm** (String)
+- **status** (String)
+- **subject** (String)
+- **trusted_for** (String)
+- **valid_from** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

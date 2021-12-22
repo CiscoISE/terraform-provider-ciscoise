@@ -15,39 +15,59 @@ func dataSourcePanHa() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on PAN HA.
 
-- In a high availability configuration, the Primary Administration Node (PAN) is in the active state. The Secondary PAN
-(backup PAN) is in the standby state, which means it receives all configuration updates from the Primary PAN, but is not
-active in the ISE network. You can configure ISE to automatically the promote the secondary PAN when the primary PAN
-becomes unavailable.
+- In a high availability configuration, the primary PAN is in active state. The secondary PAN (backup PAN) is in standby
+state, which means that it receives all the configuration updates from the primary PAN, but is not active in the Cisco
+ISE cluster. You can configure Cisco ISE to automatically promote the secondary PAN when the primary PAN becomes
+unavailable.
 `,
 
 		ReadContext: dataSourcePanHaRead,
 		Schema: map[string]*schema.Schema{
-			"items": &schema.Schema{
+			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"failed_attempts": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `Failover occurs if the primary PAN is down for the specified number of failure polls. Count (2 - 60).<br> The default value is 5. `,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"is_enabled": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
 						"polling_interval": &schema.Schema{
-							Type:     schema.TypeInt,
-							Computed: true,
+							Description: `Administration nodes are checked after each interval. Seconds (30 - 300) <br> The default value is 120. `,
+							Type:        schema.TypeInt,
+							Computed:    true,
 						},
 						"primary_health_check_node": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"hostname": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"secondary_health_check_node": &schema.Schema{
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"hostname": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -79,8 +99,8 @@ func dataSourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItems1 := flattenPanHaGetPanHaStatusItems(response1.Response)
-		if err := d.Set("items", vItems1); err != nil {
+		vItem1 := flattenPanHaGetPanHaStatusItem(response1.Response)
+		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPanHaStatus response",
 				err))
@@ -93,19 +113,43 @@ func dataSourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interfac
 	return diags
 }
 
-func flattenPanHaGetPanHaStatusItems(items *[]isegosdk.ResponsePanHaGetPanHaStatusResponse) []map[string]interface{} {
-	if items == nil {
+func flattenPanHaGetPanHaStatusItem(item *isegosdk.ResponsePanHaGetPanHaStatusResponse) []map[string]interface{} {
+	if item == nil {
 		return nil
 	}
-	var respItems []map[string]interface{}
-	for _, item := range *items {
-		respItem := make(map[string]interface{})
-		respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
-		respItem["primary_health_check_node"] = item.PrimaryHealthCheckNode
-		respItem["secondary_health_check_node"] = item.SecondaryHealthCheckNode
-		respItem["polling_interval"] = item.PollingInterval
-		respItem["failed_attempts"] = item.FailedAttempts
-		respItems = append(respItems, respItem)
+	respItem := make(map[string]interface{})
+	respItem["failed_attempts"] = item.FailedAttempts
+	respItem["is_enabled"] = boolPtrToString(item.IsEnabled)
+	respItem["polling_interval"] = item.PollingInterval
+	respItem["primary_health_check_node"] = flattenPanHaGetPanHaStatusItemPrimaryHealthCheckNode(item.PrimaryHealthCheckNode)
+	respItem["secondary_health_check_node"] = flattenPanHaGetPanHaStatusItemSecondaryHealthCheckNode(item.SecondaryHealthCheckNode)
+	return []map[string]interface{}{
+		respItem,
 	}
-	return respItems
+}
+
+func flattenPanHaGetPanHaStatusItemPrimaryHealthCheckNode(item *isegosdk.ResponsePanHaGetPanHaStatusResponsePrimaryHealthCheckNode) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["hostname"] = item.Hostname
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
+}
+
+func flattenPanHaGetPanHaStatusItemSecondaryHealthCheckNode(item *isegosdk.ResponsePanHaGetPanHaStatusResponseSecondaryHealthCheckNode) []map[string]interface{} {
+	if item == nil {
+		return nil
+	}
+	respItem := make(map[string]interface{})
+	respItem["hostname"] = item.Hostname
+
+	return []map[string]interface{}{
+		respItem,
+	}
+
 }

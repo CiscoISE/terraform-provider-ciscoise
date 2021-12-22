@@ -15,7 +15,7 @@ func dataSourceTrustedCertificateExport() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Certificates.
 
-- The response of this API carries a trusted certificate file mapped to the requested id
+- The response of this API carries a trusted certificate file mapped to the requested ID
 `,
 
 		ReadContext: dataSourceTrustedCertificateExportRead,
@@ -26,7 +26,7 @@ func dataSourceTrustedCertificateExport() *schema.Resource {
 				Required:    true,
 			},
 			"id": &schema.Schema{
-				Description: `id path parameter. The ID of the Trusted Certificate to be exported.`,
+				Description: `id path parameter. ID of the Trusted Certificate to be exported.`,
 				Type:        schema.TypeString,
 				Required:    true,
 			},
@@ -42,17 +42,14 @@ func dataSourceTrustedCertificateExportRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ExportTrustedCertificate")
+		log.Printf("[DEBUG] Selected method 1: ExportTrustedCert")
 		vvID := vID.(string)
 
-		response1, restyResp1, err := client.Certificates.ExportTrustedCertificate(vvID)
+		response1, _, err := client.Certificates.ExportTrustedCert(vvID)
 
 		if err != nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
 			diags = append(diags, diagError(
-				"Failure when executing ExportTrustedCertificate", err))
+				"Failure when executing ExportTrustedCert", err))
 			return diags
 		}
 

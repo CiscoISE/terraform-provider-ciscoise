@@ -20,7 +20,7 @@ It manages read, update and delete operations on NativeSupplicantProfile.
 ```terraform
 resource "ciscoise_native_supplicant_profile" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"
@@ -47,28 +47,25 @@ output "ciscoise_native_supplicant_profile_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
-- **wireless_profiles** (Block List) (see [below for nested schema](#nestedblock--item--wireless_profiles))
+- **wireless_profiles** (Block List) (see [below for nested schema](#nestedblock--parameters--wireless_profiles))
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--wireless_profiles"></a>
-### Nested Schema for `item.wireless_profiles`
+<a id="nestedblock--parameters--wireless_profiles"></a>
+### Nested Schema for `parameters.wireless_profiles`
 
 Optional:
 
@@ -84,7 +81,19 @@ Allowed values:
 - **ssid** (String)
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **description** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **wireless_profiles** (List of Object) (see [below for nested schema](#nestedobjatt--item--wireless_profiles))
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
@@ -92,6 +101,18 @@ Read-Only:
 - **href** (String)
 - **rel** (String)
 - **type** (String)
+
+
+<a id="nestedobjatt--item--wireless_profiles"></a>
+### Nested Schema for `item.wireless_profiles`
+
+Read-Only:
+
+- **action_type** (String)
+- **allowed_protocol** (String)
+- **certificate_template_id** (String)
+- **previous_ssid** (String)
+- **ssid** (String)
 
 ## Import
 

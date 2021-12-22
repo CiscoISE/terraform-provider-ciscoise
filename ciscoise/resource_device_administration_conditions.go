@@ -17,7 +17,47 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read, update and delete operations on Device Administration - Conditions.
 
-- Device Admin Creates a library condition.
+- Device Admin Creates a library condition:
+
+ Library Condition has hierarchical structure which define a set of condition for which authentication and authorization
+policy rules could be match.
+
+ Condition can be compose from single dictionary attribute name and value using model
+LibraryConditionAttributes
+ , or from combination of dictionary attributes with logical operation of AND/OR between them, using models:
+LibraryConditionAndBlock
+ or
+LibraryConditionOrBlock
+.
+
+ When using AND/OR blocks, the condition will include inner layers inside these blocks, these layers are built using the
+inner condition models:
+ConditionAttributes
+,
+ConditionAndBlock
+,
+ConditionOrBlock
+, that represent dynamically built Conditions which are not stored in the conditions Library, or using
+ConditionReference
+, which includes an ID to existing stored condition in the library.
+
+ The LibraryCondition models can only be used in the outer-most layer (root of the condition) and must always include
+the condition name.
+
+ When using one of the 3 inner condition models (
+ConditionAttributes, ConditionAndBlock, ConditionOrBlock
+), condition name cannot be included in the request, since these will not be stored in the conditions library, and used
+only as inner members of the root condition.
+
+ When using
+ConditionReference
+ model in inner layers, the condition name is not required.
+
+ ConditionReference objects can also include a reference ID to a condition of type
+TimeAndDate
+.
+
+
 
 - Device Admin Update library condition using condition name.
 
@@ -43,33 +83,23 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"attribute_id": &schema.Schema{
-							Description: `Dictionary attribute id (Optional), used for additional verification`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Computed:    true,
-						},
 						"attribute_name": &schema.Schema{
 							Description: `Dictionary attribute name`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"attribute_value": &schema.Schema{
 							Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"children": &schema.Schema{
 							Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -77,15 +107,12 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 									"condition_type": &schema.Schema{
 										Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 									"is_negate": &schema.Schema{
-										Description:  `Indicates whereas this condition is in negate mode`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Description: `Indicates whereas this condition is in negate mode`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
@@ -114,46 +141,39 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 						"condition_type": &schema.Schema{
 							Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"dates_range": &schema.Schema{
-							Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+							Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"end_date": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"start_date": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
 							},
 						},
 						"dates_range_exception": &schema.Schema{
-							Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+							Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"end_date": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"start_date": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -162,58 +182,49 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 						"description": &schema.Schema{
 							Description: `Condition description`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"dictionary_name": &schema.Schema{
 							Description: `Dictionary name`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"dictionary_value": &schema.Schema{
 							Description: `Dictionary value`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"hours_range": &schema.Schema{
-							Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+							Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"end_time": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"start_time": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
 							},
 						},
 						"hours_range_exception": &schema.Schema{
-							Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+							Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"end_time": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"start_time": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -221,15 +232,12 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"is_negate": &schema.Schema{
-							Description:  `Indicates whereas this condition is in negate mode`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Description: `Indicates whereas this condition is in negate mode`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -255,19 +263,16 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 						"name": &schema.Schema{
 							Description: `Condition name`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"operator": &schema.Schema{
 							Description: `Equality operator`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"week_days": &schema.Schema{
 							Description: `<p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
@@ -276,8 +281,180 @@ func resourceDeviceAdministrationConditions() *schema.Resource {
 						"week_days_exception": &schema.Schema{
 							Description: `<p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"attribute_name": &schema.Schema{
+							Description: `Dictionary attribute name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"attribute_value": &schema.Schema{
+							Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"children": &schema.Schema{
+							Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"condition_type": &schema.Schema{
+										Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"is_negate": &schema.Schema{
+										Description:  `Indicates whereas this condition is in negate mode`,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+								},
+							},
+						},
+						"condition_type": &schema.Schema{
+							Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"dates_range": &schema.Schema{
+							Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"start_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"dates_range_exception": &schema.Schema{
+							Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"start_date": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"description": &schema.Schema{
+							Description: `Condition description`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"dictionary_name": &schema.Schema{
+							Description: `Dictionary name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"dictionary_value": &schema.Schema{
+							Description: `Dictionary value`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"hours_range": &schema.Schema{
+							Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"start_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"hours_range_exception": &schema.Schema{
+							Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							MaxItems:    1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"end_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"start_time": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"is_negate": &schema.Schema{
+							Description:  `Indicates whereas this condition is in negate mode`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+
+						"name": &schema.Schema{
+							Description: `Condition name`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"operator": &schema.Schema{
+							Description: `Equality operator`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"week_days": &schema.Schema{
+							Description: `<p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"week_days_exception": &schema.Schema{
+							Description: `<p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>`,
+							Type:        schema.TypeList,
+							Optional:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -294,9 +471,11 @@ func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestDeviceAdministrationConditionsCreateDeviceAdminCondition(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestDeviceAdministrationConditionsCreateDeviceAdminCondition(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -309,7 +488,7 @@ func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceDeviceAdministrationConditionsRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -319,7 +498,7 @@ func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceDeviceAdministrationConditionsRead(ctx, d, m)
 		}
 	}
 	resp1, restyResp1, err := client.DeviceAdministrationConditions.CreateDeviceAdminCondition(request1)
@@ -343,7 +522,7 @@ func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceDeviceAdministrationConditionsRead(ctx, d, m)
 }
 
 func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -366,9 +545,12 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 		log.Printf("[DEBUG] Selected method: GetDeviceAdminConditionByName")
 		vvName := vName
 
-		response1, _, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionByName(vvName)
+		response1, restyResp1, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminConditionByName", err,
 				"Failure at GetDeviceAdminConditionByName, unexpected response", ""))
@@ -391,9 +573,12 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 		log.Printf("[DEBUG] Selected method: GetDeviceAdminConditionByID")
 		vvID := vID
 
-		response2, _, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionByID(vvID)
+		response2, restyResp2, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetDeviceAdminConditionByID", err,
 				"Failure at GetDeviceAdminConditionByID, unexpected response", ""))
@@ -450,10 +635,12 @@ func resourceDeviceAdministrationConditionsUpdate(ctx context.Context, d *schema
 			vvID = getResp.Response.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.DeviceAdministrationConditions.UpdateDeviceAdminConditionByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -534,59 +721,55 @@ func resourceDeviceAdministrationConditionsDelete(ctx context.Context, d *schema
 }
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminCondition(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminCondition {
 	request := isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminCondition{}
-	if v, ok := d.GetOkExists(key + ".condition_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".condition_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".condition_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_id"))) {
-		request.AttributeID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".attribute_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
 		request.AttributeValue = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
 		request.DictionaryValue = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".operator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".operator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".operator"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
 		request.Operator = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".children")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".children")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".children")))) {
 		request.Children = expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildrenArray(ctx, key+".children", d)
 	}
-	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dates_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dates_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dates_range")))) {
 		request.DatesRange = expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesRange(ctx, key+".dates_range.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".dates_range_exception"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range_exception"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range_exception"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dates_range_exception")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dates_range_exception")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dates_range_exception")))) {
 		request.DatesRangeException = expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesRangeException(ctx, key+".dates_range_exception.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".hours_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".hours_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".hours_range"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hours_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hours_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hours_range")))) {
 		request.HoursRange = expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursRange(ctx, key+".hours_range.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".hours_range_exception"); !isEmptyValue(reflect.ValueOf(d.Get(key+".hours_range_exception"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".hours_range_exception"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hours_range_exception")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hours_range_exception")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hours_range_exception")))) {
 		request.HoursRangeException = expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursRangeException(ctx, key+".hours_range_exception.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".week_days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".week_days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".week_days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".week_days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".week_days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".week_days")))) {
 		request.WeekDays = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".week_days_exception"); !isEmptyValue(reflect.ValueOf(d.Get(key+".week_days_exception"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".week_days_exception"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".week_days_exception")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".week_days_exception")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".week_days_exception")))) {
 		request.WeekDaysException = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -597,13 +780,13 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminCondition(ctx c
 
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionLink {
 	request := isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionLink{}
-	if v, ok := d.GetOkExists(key + ".href"); !isEmptyValue(reflect.ValueOf(d.Get(key+".href"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".href"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".rel"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rel"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rel"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
 		request.Rel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -614,6 +797,7 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionLink(c
 
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildren {
 	request := []isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildren{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -636,13 +820,12 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildr
 
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildren {
 	request := isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildren{}
-	if v, ok := d.GetOkExists(key + ".condition_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".condition_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".condition_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -651,13 +834,13 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildr
 
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildrenLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildrenLink {
 	request := isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildrenLink{}
-	if v, ok := d.GetOkExists(key + ".href"); !isEmptyValue(reflect.ValueOf(d.Get(key+".href"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".href"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".rel"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rel"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rel"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
 		request.Rel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -668,10 +851,10 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildr
 
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesRange(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesRange {
 	request := isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesRange{}
-	if v, ok := d.GetOkExists(key + ".end_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_date")))) {
 		request.EndDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date")))) {
 		request.StartDate = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -682,10 +865,10 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesR
 
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesRangeException(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesRangeException {
 	request := isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesRangeException{}
-	if v, ok := d.GetOkExists(key + ".end_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_date")))) {
 		request.EndDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date")))) {
 		request.StartDate = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -696,10 +879,10 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionDatesR
 
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursRange(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursRange {
 	request := isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursRange{}
-	if v, ok := d.GetOkExists(key + ".end_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
 		request.EndTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
 		request.StartTime = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -710,10 +893,10 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursR
 
 func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursRangeException(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursRangeException {
 	request := isegosdk.RequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursRangeException{}
-	if v, ok := d.GetOkExists(key + ".end_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
 		request.EndTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
 		request.StartTime = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -724,59 +907,55 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionHoursR
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByID {
 	request := isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByID{}
-	if v, ok := d.GetOkExists(key + ".condition_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".condition_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".condition_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_id"))) {
-		request.AttributeID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(key + ".attribute_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
 		request.AttributeValue = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
 		request.DictionaryValue = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".operator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".operator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".operator"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
 		request.Operator = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".children"); !isEmptyValue(reflect.ValueOf(d.Get(key+".children"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".children"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".children")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".children")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".children")))) {
 		request.Children = expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildrenArray(ctx, key+".children", d)
 	}
-	if v, ok := d.GetOkExists(key + ".dates_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dates_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dates_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dates_range")))) {
 		request.DatesRange = expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDatesRange(ctx, key+".dates_range.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".dates_range_exception"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dates_range_exception"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dates_range_exception"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dates_range_exception")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dates_range_exception")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dates_range_exception")))) {
 		request.DatesRangeException = expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDatesRangeException(ctx, key+".dates_range_exception.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".hours_range"); !isEmptyValue(reflect.ValueOf(d.Get(key+".hours_range"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".hours_range"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hours_range")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hours_range")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hours_range")))) {
 		request.HoursRange = expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHoursRange(ctx, key+".hours_range.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".hours_range_exception"); !isEmptyValue(reflect.ValueOf(d.Get(key+".hours_range_exception"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".hours_range_exception"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hours_range_exception")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hours_range_exception")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hours_range_exception")))) {
 		request.HoursRangeException = expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHoursRangeException(ctx, key+".hours_range_exception.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".week_days"); !isEmptyValue(reflect.ValueOf(d.Get(key+".week_days"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".week_days"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".week_days")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".week_days")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".week_days")))) {
 		request.WeekDays = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".week_days_exception"); !isEmptyValue(reflect.ValueOf(d.Get(key+".week_days_exception"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".week_days_exception"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".week_days_exception")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".week_days_exception")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".week_days_exception")))) {
 		request.WeekDaysException = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -787,13 +966,13 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByID(c
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDLink {
 	request := isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDLink{}
-	if v, ok := d.GetOkExists(key + ".href"); !isEmptyValue(reflect.ValueOf(d.Get(key+".href"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".href"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".rel"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rel"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rel"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
 		request.Rel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -804,6 +983,7 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDLi
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildren {
 	request := []isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildren{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -826,13 +1006,12 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDCh
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildren {
 	request := isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildren{}
-	if v, ok := d.GetOkExists(key + ".condition_type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".condition_type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".condition_type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".is_negate"); !isEmptyValue(reflect.ValueOf(d.Get(key+".is_negate"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".is_negate"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
-
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -841,13 +1020,13 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDCh
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildrenLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildrenLink {
 	request := isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildrenLink{}
-	if v, ok := d.GetOkExists(key + ".href"); !isEmptyValue(reflect.ValueOf(d.Get(key+".href"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".href"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".rel"); !isEmptyValue(reflect.ValueOf(d.Get(key+".rel"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".rel"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
 		request.Rel = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".type"); !isEmptyValue(reflect.ValueOf(d.Get(key+".type"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".type"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
 		request.Type = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -858,10 +1037,10 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDCh
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDatesRange(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDatesRange {
 	request := isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDatesRange{}
-	if v, ok := d.GetOkExists(key + ".end_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_date")))) {
 		request.EndDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date")))) {
 		request.StartDate = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -872,10 +1051,10 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDa
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDatesRangeException(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDatesRangeException {
 	request := isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDatesRangeException{}
-	if v, ok := d.GetOkExists(key + ".end_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_date")))) {
 		request.EndDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_date")))) {
 		request.StartDate = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -886,10 +1065,10 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDDa
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHoursRange(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHoursRange {
 	request := isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHoursRange{}
-	if v, ok := d.GetOkExists(key + ".end_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
 		request.EndTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
 		request.StartTime = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -900,10 +1079,10 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHo
 
 func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHoursRangeException(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHoursRangeException {
 	request := isegosdk.RequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDHoursRangeException{}
-	if v, ok := d.GetOkExists(key + ".end_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".end_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".end_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".end_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".end_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".end_time")))) {
 		request.EndTime = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".start_time"); !isEmptyValue(reflect.ValueOf(d.Get(key+".start_time"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".start_time"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".start_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".start_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".start_time")))) {
 		request.StartTime = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

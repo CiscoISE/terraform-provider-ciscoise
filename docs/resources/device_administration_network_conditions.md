@@ -22,20 +22,26 @@ It manages create, read, update and delete operations on Device Administration -
 ```terraform
 resource "ciscoise_device_administration_network_conditions" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     condition_type = "string"
     conditions {
 
       cli_dnis_list     = ["string"]
+      condition_type    = "string"
+      description       = "string"
       device_group_list = ["string"]
       device_list       = ["string"]
+      id                = "string"
       ip_addr_list      = ["string"]
-      mac_addr_list     = ["string"]
+
+      mac_addr_list = ["string"]
+      name          = "string"
     }
     description = "string"
     id          = "string"
-    name        = "string"
+
+    name = "string"
   }
 }
 
@@ -50,40 +56,81 @@ output "ciscoise_device_administration_network_conditions_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
 - **condition_type** (String) This field determines the content of the conditions field
-- **conditions** (Block List) (see [below for nested schema](#nestedblock--item--conditions))
+- **conditions** (Block List) (see [below for nested schema](#nestedblock--parameters--conditions))
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String) Network Condition name
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--conditions"></a>
-### Nested Schema for `item.conditions`
+<a id="nestedblock--parameters--conditions"></a>
+### Nested Schema for `parameters.conditions`
 
 Optional:
 
 - **cli_dnis_list** (List of String) <p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>
+- **condition_type** (String) This field determines the content of the conditions field
+- **description** (String)
 - **device_group_list** (List of String) <p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>
 - **device_list** (List of String) <p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>
+- **id** (String) The ID of this resource.
 - **ip_addr_list** (List of String) <p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>
 - **mac_addr_list** (List of String) <p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>
+- **name** (String) Network Condition name
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **condition_type** (String)
+- **conditions** (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions))
+- **description** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+
+<a id="nestedobjatt--item--conditions"></a>
+### Nested Schema for `item.conditions`
+
+Read-Only:
+
+- **cli_dnis_list** (List of String)
+- **condition_type** (String)
+- **description** (String)
+- **device_group_list** (List of String)
+- **device_list** (List of String)
+- **id** (String)
+- **ip_addr_list** (List of String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions--link))
+- **mac_addr_list** (List of String)
+- **name** (String)
+
+<a id="nestedobjatt--item--conditions--link"></a>
+### Nested Schema for `item.conditions.link`
+
+Read-Only:
+
+- **href** (String)
+- **rel** (String)
+- **type** (String)
+
+
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

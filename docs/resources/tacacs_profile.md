@@ -22,7 +22,7 @@ It manages create, read, update and delete operations on TACACSProfile.
 ```terraform
 resource "ciscoise_tacacs_profile" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"
@@ -50,35 +50,32 @@ output "ciscoise_tacacs_profile_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
 - **description** (String)
 - **id** (String) The ID of this resource.
 - **name** (String)
-- **session_attributes** (Block List) Holds list of session attributes. View type for GUI is Shell by default (see [below for nested schema](#nestedblock--item--session_attributes))
+- **session_attributes** (Block List, Max: 1) Holds list of session attributes. View type for GUI is Shell by default (see [below for nested schema](#nestedblock--parameters--session_attributes))
 
-Read-Only:
-
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
-
-<a id="nestedblock--item--session_attributes"></a>
-### Nested Schema for `item.session_attributes`
+<a id="nestedblock--parameters--session_attributes"></a>
+### Nested Schema for `parameters.session_attributes`
 
 Optional:
 
-- **session_attribute_list** (Block List) (see [below for nested schema](#nestedblock--item--session_attributes--session_attribute_list))
+- **session_attribute_list** (Block List) (see [below for nested schema](#nestedblock--parameters--session_attributes--session_attribute_list))
 
-<a id="nestedblock--item--session_attributes--session_attribute_list"></a>
-### Nested Schema for `item.session_attributes.session_attribute_list`
+<a id="nestedblock--parameters--session_attributes--session_attribute_list"></a>
+### Nested Schema for `parameters.session_attributes.session_attribute_list`
 
 Optional:
 
@@ -88,7 +85,19 @@ Optional:
 
 
 
-<a id="nestedatt--item--link"></a>
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **description** (String)
+- **id** (String)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- **name** (String)
+- **session_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item--session_attributes))
+
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
@@ -96,6 +105,23 @@ Read-Only:
 - **href** (String)
 - **rel** (String)
 - **type** (String)
+
+
+<a id="nestedobjatt--item--session_attributes"></a>
+### Nested Schema for `item.session_attributes`
+
+Read-Only:
+
+- **session_attribute_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--session_attributes--session_attribute_list))
+
+<a id="nestedobjatt--item--session_attributes--session_attribute_list"></a>
+### Nested Schema for `item.session_attributes.session_attribute_list`
+
+Read-Only:
+
+- **name** (String)
+- **type** (String)
+- **value** (String)
 
 ## Import
 

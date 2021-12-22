@@ -172,5 +172,4 @@ func flattenSecurityGroupsACLsMonitorBulkStatusSecurityGroupsACLItemResourcesSta
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

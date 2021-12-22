@@ -16,7 +16,7 @@ func dataSourceDeviceAdministrationCommandSet() *schema.Resource {
 		Description: `It performs read operation on Device Administration - Command Set.
 
 - Device Admin Return list of command sets.
- (Other CRUD APIs available throught ERS)
+ (Other CRUD APIs available through ERS)
 `,
 
 		ReadContext: dataSourceDeviceAdministrationCommandSetRead,
@@ -80,7 +80,7 @@ func dataSourceDeviceAdministrationCommandSetRead(ctx context.Context, d *schema
 	return diags
 }
 
-func flattenDeviceAdministrationCommandSetGetDeviceAdminCommandSetsItems(items *[]isegosdk.ResponseDeviceAdministrationCommandSetGetDeviceAdminCommandSets) []map[string]interface{} {
+func flattenDeviceAdministrationCommandSetGetDeviceAdminCommandSetsItems(items *isegosdk.ResponseDeviceAdministrationCommandSetGetDeviceAdminCommandSets) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

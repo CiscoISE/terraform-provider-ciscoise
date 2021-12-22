@@ -18,8 +18,8 @@ func dataSourceRenewCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
 
-- This data source action will initiate regeneration of certificates. Response contains id which can be used to track
-the status
+- This data source action initiates regeneration of certificates. Response contains ID which can be used to track the
+status
 `,
 
 		ReadContext: dataSourceRenewCertificateRead,
@@ -35,7 +35,7 @@ the status
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Description: `Id which can be used to track status of certificate regeneration`,
+							Description: `ID which can be used to track status of certificate regeneration`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -78,30 +78,31 @@ func dataSourceRenewCertificateRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RenewCertificates")
-		request1 := expandRequestRenewCertificateRenewCertificates(ctx, "", d)
+		log.Printf("[DEBUG] Selected method 1: RenewCerts")
+		request1 := expandRequestRenewCertificateRenewCerts(ctx, "", d)
 
-		response1, restyResp1, err := client.Certificates.RenewCertificates(request1)
+		response1, restyResp1, err := client.Certificates.RenewCerts(request1)
 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing RenewCertificates", err,
-				"Failure at RenewCertificates, unexpected response", ""))
+				"Failure when executing RenewCerts", err,
+				"Failure at RenewCerts, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenCertificatesRenewCertificatesItem(response1.Response)
+		vItem1 := flattenCertificatesRenewCertsItem(response1.Response)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting RenewCertificates response",
+				"Failure when setting RenewCerts response",
 				err))
 			return diags
 		}
@@ -112,28 +113,28 @@ func dataSourceRenewCertificateRead(ctx context.Context, d *schema.ResourceData,
 	return diags
 }
 
-func expandRequestRenewCertificateRenewCertificates(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesRenewCertificates {
-	request := isegosdk.RequestCertificatesRenewCertificates{}
+func expandRequestRenewCertificateRenewCerts(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificatesRenewCerts {
+	request := isegosdk.RequestCertificatesRenewCerts{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cert_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cert_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cert_type")))) {
 		request.CertType = interfaceToString(v)
 	}
 	return &request
 }
 
-func flattenCertificatesRenewCertificatesItem(item *isegosdk.ResponseCertificatesRenewCertificatesResponse) []map[string]interface{} {
+func flattenCertificatesRenewCertsItem(item *isegosdk.ResponseCertificatesRenewCertsResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["id"] = item.ID
-	respItem["link"] = flattenCertificatesRenewCertificatesItemLink(item.Link)
+	respItem["link"] = flattenCertificatesRenewCertsItemLink(item.Link)
 	respItem["message"] = item.Message
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenCertificatesRenewCertificatesItemLink(item *isegosdk.ResponseCertificatesRenewCertificatesResponseLink) []map[string]interface{} {
+func flattenCertificatesRenewCertsItemLink(item *isegosdk.ResponseCertificatesRenewCertsResponseLink) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}

@@ -270,9 +270,12 @@ func dataSourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method 2: GetAncEndpointByID")
 		vvID := vID.(string)
 
-		response2, _, err := client.AncEndpoint.GetAncEndpointByID(vvID)
+		response2, restyResp2, err := client.AncEndpoint.GetAncEndpointByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAncEndpointByID", err,
 				"Failure at GetAncEndpointByID, unexpected response", ""))

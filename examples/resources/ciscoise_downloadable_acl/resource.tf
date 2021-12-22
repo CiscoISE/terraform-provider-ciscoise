@@ -1,7 +1,7 @@
 
 resource "ciscoise_downloadable_acl" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     dacl        = "string"
     dacl_type   = "string"

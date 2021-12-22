@@ -102,6 +102,7 @@ func dataSourceBackupRestoreRead(ctx context.Context, d *schema.ResourceData, m 
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 		}
+
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())

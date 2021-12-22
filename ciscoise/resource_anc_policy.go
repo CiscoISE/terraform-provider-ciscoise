@@ -38,7 +38,6 @@ func resourceAncPolicy() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -49,7 +48,6 @@ func resourceAncPolicy() *schema.Resource {
 - SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
 - RE_AUTHENTICATE: Re-authenticates the session from the endpoint.`,
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
@@ -57,7 +55,6 @@ func resourceAncPolicy() *schema.Resource {
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -83,8 +80,35 @@ func resourceAncPolicy() *schema.Resource {
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"actions": &schema.Schema{
+							Description: `- QUARANTINE: Allows you to use Exception policies (authorization policies) to limit or deny an endpoint access to the network.
+- PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
+- SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
+- RE_AUTHENTICATE: Re-authenticates the session from the endpoint.`,
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -98,9 +122,11 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestAncPolicyCreateAncPolicy(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestAncPolicyCreateAncPolicy(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -113,7 +139,7 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceAncPolicyRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -123,7 +149,7 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceAncPolicyRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.AncPolicy.CreateAncPolicy(request1)
@@ -145,7 +171,7 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceAncPolicyRead(ctx, d, m)
 }
 
 func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -158,7 +184,6 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 	vName, okName := resourceMap["name"]
 	vID, okID := resourceMap["id"]
 
-	// Changed order of selection to give priority to id
 	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
@@ -169,9 +194,12 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method: GetAncPolicyByName")
 		vvName := vName
 
-		response1, _, err := client.AncPolicy.GetAncPolicyByName(vvName)
+		response1, restyResp1, err := client.AncPolicy.GetAncPolicyByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAncPolicyByName", err,
 				"Failure at GetAncPolicyByName, unexpected response", ""))
@@ -194,9 +222,12 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 		log.Printf("[DEBUG] Selected method: GetAncPolicyByID")
 		vvID := vID
 
-		response2, _, err := client.AncPolicy.GetAncPolicyByID(vvID)
+		response2, restyResp2, err := client.AncPolicy.GetAncPolicyByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetAncPolicyByID", err,
 				"Failure at GetAncPolicyByID, unexpected response", ""))
@@ -253,10 +284,12 @@ func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m inte
 			vvID = getResp.ErsAncPolicy.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestAncPolicyUpdateAncPolicyByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestAncPolicyUpdateAncPolicyByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.AncPolicy.UpdateAncPolicyByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -346,10 +379,10 @@ func expandRequestAncPolicyCreateAncPolicy(ctx context.Context, key string, d *s
 
 func expandRequestAncPolicyCreateAncPolicyErsAncPolicy(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAncPolicyCreateAncPolicyErsAncPolicy {
 	request := isegosdk.RequestAncPolicyCreateAncPolicyErsAncPolicy{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".actions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".actions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".actions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".actions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".actions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".actions")))) {
 		request.Actions = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -369,13 +402,13 @@ func expandRequestAncPolicyUpdateAncPolicyByID(ctx context.Context, key string, 
 
 func expandRequestAncPolicyUpdateAncPolicyByIDErsAncPolicy(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAncPolicyUpdateAncPolicyByIDErsAncPolicy {
 	request := isegosdk.RequestAncPolicyUpdateAncPolicyByIDErsAncPolicy{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".actions"); !isEmptyValue(reflect.ValueOf(d.Get(key+".actions"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".actions"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".actions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".actions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".actions")))) {
 		request.Actions = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

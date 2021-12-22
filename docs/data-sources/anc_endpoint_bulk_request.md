@@ -17,7 +17,8 @@ It performs update operation on ANCEndpoint.
 
 ```terraform
 data "ciscoise_anc_endpoint_bulk_request" "example" {
-  provider            = ciscoise
+  provider = ciscoise
+
   operation_type      = "string"
   resource_media_type = "string"
 }

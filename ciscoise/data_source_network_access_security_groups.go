@@ -79,7 +79,7 @@ func dataSourceNetworkAccessSecurityGroupsRead(ctx context.Context, d *schema.Re
 	return diags
 }
 
-func flattenNetworkAccessSecurityGroupsGetNetworkAccessSecurityGroupsItems(items *[]isegosdk.ResponseNetworkAccessSecurityGroupsGetNetworkAccessSecurityGroups) []map[string]interface{} {
+func flattenNetworkAccessSecurityGroupsGetNetworkAccessSecurityGroupsItems(items *isegosdk.ResponseNetworkAccessSecurityGroupsGetNetworkAccessSecurityGroups) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

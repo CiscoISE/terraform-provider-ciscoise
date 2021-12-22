@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -17,7 +17,7 @@ data "ciscoise_portal_global_setting" "example" {
 
 resource "ciscoise_portal_global_setting" "example" {
   provider = ciscoise
-  item {
+  parameters {
     id            = data.ciscoise_portal_global_setting.example.items[0].id
     customization = "HTMLANDJAVASCRIPT"
   }

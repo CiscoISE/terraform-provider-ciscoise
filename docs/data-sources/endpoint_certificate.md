@@ -51,10 +51,6 @@ data "ciscoise_endpoint_certificate" "example" {
 at least one upper case letter, at least one lower case letter, at least one digit,
 and can only contain [A-Z][a-z][0-9]_#
 
-### Read-Only
-
-- **item** (String)
-
 <a id="nestedblock--certificate_request"></a>
 ### Nested Schema for `certificate_request`
 

@@ -89,7 +89,7 @@ func dataSourceNetworkAccessServiceNameRead(ctx context.Context, d *schema.Resou
 	return diags
 }
 
-func flattenNetworkAccessServiceNamesGetNetworkAccessServiceNamesItems(items *[]isegosdk.ResponseNetworkAccessServiceNamesGetNetworkAccessServiceNames) []map[string]interface{} {
+func flattenNetworkAccessServiceNamesGetNetworkAccessServiceNamesItems(items *isegosdk.ResponseNetworkAccessServiceNamesGetNetworkAccessServiceNames) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}

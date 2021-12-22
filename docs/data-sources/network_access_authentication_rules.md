@@ -30,7 +30,6 @@ output "ciscoise_network_access_authentication_rules_example" {
 data "ciscoise_network_access_authentication_rules" "example" {
   provider  = ciscoise
   policy_id = "string"
-  id        = "string"
 }
 
 output "ciscoise_network_access_authentication_rules_example" {
@@ -56,7 +55,6 @@ output "ciscoise_network_access_authentication_rules_example" {
 
 Read-Only:
 
-- **identity_source_id** (String)
 - **identity_source_name** (String)
 - **if_auth_fail** (String)
 - **if_process_fail** (String)
@@ -92,7 +90,6 @@ Read-Only:
 
 Read-Only:
 
-- **attribute_id** (String)
 - **attribute_name** (String)
 - **attribute_value** (String)
 - **children** (List of Object) (see [below for nested schema](#nestedobjatt--item--rule--condition--children))
@@ -186,7 +183,6 @@ Read-Only:
 
 Read-Only:
 
-- **identity_source_id** (String)
 - **identity_source_name** (String)
 - **if_auth_fail** (String)
 - **if_process_fail** (String)
@@ -222,7 +218,6 @@ Read-Only:
 
 Read-Only:
 
-- **attribute_id** (String)
 - **attribute_name** (String)
 - **attribute_value** (String)
 - **children** (List of Object) (see [below for nested schema](#nestedobjatt--items--rule--condition--children))

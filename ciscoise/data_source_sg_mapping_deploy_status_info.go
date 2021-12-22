@@ -112,5 +112,4 @@ func flattenIPToSgtMappingGetDeployStatusIPToSgtMappingItemResultValue(items *[]
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

@@ -39,7 +39,6 @@ func resourceRadiusServerSequence() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -47,7 +46,6 @@ func resourceRadiusServerSequence() *schema.Resource {
 						"before_accept_attr_manipulators_list": &schema.Schema{
 							Description: `The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -59,28 +57,23 @@ func resourceRadiusServerSequence() *schema.Resource {
 - REMOVE,
 - REMOVEANY`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"attribute_name": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"changed_val": &schema.Schema{
 										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 									"dictionary_name": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"value": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -89,7 +82,6 @@ func resourceRadiusServerSequence() *schema.Resource {
 						"on_request_attr_manipulator_list": &schema.Schema{
 							Description: `The onRequestAttrManipulators is required only if useAttrSetOnRequest is true`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -101,28 +93,23 @@ func resourceRadiusServerSequence() *schema.Resource {
 - REMOVE,
 - REMOVEANY`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"attribute_name": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"changed_val": &schema.Schema{
 										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 									"dictionary_name": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"value": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -130,26 +117,21 @@ func resourceRadiusServerSequence() *schema.Resource {
 						},
 						"radius_server_list": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"continue_authorz_policy": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -174,57 +156,187 @@ func resourceRadiusServerSequence() *schema.Resource {
 							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"prefix_separator": &schema.Schema{
 							Description: `The prefixSeparator is required only if stripPrefix is true. The maximum length is 1 character`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
+						},
+						"remote_accounting": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"strip_prefix": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"strip_suffix": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"suffix_separator": &schema.Schema{
+							Description: `The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"use_attr_set_before_acc": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"use_attr_set_on_request": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"before_accept_attr_manipulators_list": &schema.Schema{
+							Description: `The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"action": &schema.Schema{
+										Description: `Allowed Values:
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"attribute_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"changed_val": &schema.Schema{
+										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"dictionary_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"value": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"on_request_attr_manipulator_list": &schema.Schema{
+							Description: `The onRequestAttrManipulators is required only if useAttrSetOnRequest is true`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"action": &schema.Schema{
+										Description: `Allowed Values:
+- ADD,
+- UPDATE,
+- REMOVE,
+- REMOVEANY`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"attribute_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"changed_val": &schema.Schema{
+										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"dictionary_name": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"value": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"radius_server_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"continue_authorz_policy": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"local_accounting": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"prefix_separator": &schema.Schema{
+							Description: `The prefixSeparator is required only if stripPrefix is true. The maximum length is 1 character`,
+							Type:        schema.TypeString,
+							Optional:    true,
 						},
 						"remote_accounting": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"strip_prefix": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"strip_suffix": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"suffix_separator": &schema.Schema{
 							Description: `The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character`,
 							Type:        schema.TypeString,
 							Optional:    true,
-							Computed:    true,
 						},
 						"use_attr_set_before_acc": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 						"use_attr_set_on_request": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -238,9 +350,11 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestRadiusServerSequenceCreateRadiusServerSequence(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestRadiusServerSequenceCreateRadiusServerSequence(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vName, _ := resourceItem["name"]
@@ -253,7 +367,7 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceRadiusServerSequenceRead(ctx, d, m)
 		}
 	} else {
 		queryParams2 := isegosdk.GetRadiusServerSequenceQueryParams{}
@@ -267,7 +381,7 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
-				return diags
+				return resourceRadiusServerSequenceRead(ctx, d, m)
 			}
 		}
 	}
@@ -290,7 +404,7 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceRadiusServerSequenceRead(ctx, d, m)
 }
 
 func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -315,9 +429,12 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method: GetRadiusServerSequence")
 		queryParams1 := isegosdk.GetRadiusServerSequenceQueryParams{}
 
-		response1, _, err := client.RadiusServerSequence.GetRadiusServerSequence(&queryParams1)
+		response1, restyResp1, err := client.RadiusServerSequence.GetRadiusServerSequence(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRadiusServerSequence", err,
 				"Failure at GetRadiusServerSequence, unexpected response", ""))
@@ -347,9 +464,12 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method: GetRadiusServerSequenceByID")
 		vvID := vID
 
-		response2, _, err := client.RadiusServerSequence.GetRadiusServerSequenceByID(vvID)
+		response2, restyResp2, err := client.RadiusServerSequence.GetRadiusServerSequenceByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetRadiusServerSequenceByID", err,
 				"Failure at GetRadiusServerSequenceByID, unexpected response", ""))
@@ -408,10 +528,12 @@ func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 	if selectedMethod == 1 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.RadiusServerSequence.UpdateRadiusServerSequenceByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -509,46 +631,46 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequence(ctx context.Con
 
 func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequence(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequence {
 	request := isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequence{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".strip_prefix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".strip_prefix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".strip_prefix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".strip_prefix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".strip_prefix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".strip_prefix")))) {
 		request.StripPrefix = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".strip_suffix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".strip_suffix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".strip_suffix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".strip_suffix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".strip_suffix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".strip_suffix")))) {
 		request.StripSuffix = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".prefix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_separator"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".prefix_separator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".prefix_separator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".prefix_separator")))) {
 		request.PrefixSeparator = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".suffix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_separator"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".suffix_separator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".suffix_separator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".suffix_separator")))) {
 		request.SuffixSeparator = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".remote_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".remote_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".remote_accounting"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_accounting")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_accounting")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_accounting")))) {
 		request.RemoteAccounting = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".local_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".local_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".local_accounting"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_accounting")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_accounting")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_accounting")))) {
 		request.LocalAccounting = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_attr_set_on_request"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_attr_set_on_request"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_attr_set_on_request"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_attr_set_on_request")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_attr_set_on_request")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_attr_set_on_request")))) {
 		request.UseAttrSetOnRequest = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_attr_set_before_acc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_attr_set_before_acc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_attr_set_before_acc"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_attr_set_before_acc")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_attr_set_before_acc")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_attr_set_before_acc")))) {
 		request.UseAttrSetBeforeAcc = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".continue_authorz_policy"); !isEmptyValue(reflect.ValueOf(d.Get(key+".continue_authorz_policy"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".continue_authorz_policy"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".continue_authorz_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".continue_authorz_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".continue_authorz_policy")))) {
 		request.ContinueAuthorzPolicy = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".radius_server_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".radius_server_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".radius_server_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radius_server_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radius_server_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radius_server_list")))) {
 		request.RadiusServerList = interfaceToSliceString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".on_request_attr_manipulator_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".on_request_attr_manipulator_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".on_request_attr_manipulator_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".on_request_attr_manipulator_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".on_request_attr_manipulator_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".on_request_attr_manipulator_list")))) {
 		request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key+".on_request_attr_manipulator_list", d)
 	}
-	if v, ok := d.GetOkExists(key + ".before_accept_attr_manipulators_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".before_accept_attr_manipulators_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".before_accept_attr_manipulators_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".before_accept_attr_manipulators_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".before_accept_attr_manipulators_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".before_accept_attr_manipulators_list")))) {
 		request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key+".before_accept_attr_manipulators_list", d)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -559,6 +681,7 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 
 func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorList {
 	request := []isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -581,19 +704,19 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 
 func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorList {
 	request := isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceOnRequestAttrManipulatorList{}
-	if v, ok := d.GetOkExists(key + ".action"); !isEmptyValue(reflect.ValueOf(d.Get(key+".action"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".action"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".action")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".action")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".action")))) {
 		request.Action = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".changed_val")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".changed_val")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".changed_val")))) {
 		request.ChangedVal = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -604,6 +727,7 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 
 func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsList {
 	request := []isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -626,19 +750,19 @@ func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequ
 
 func expandRequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsList {
 	request := isegosdk.RequestRadiusServerSequenceCreateRadiusServerSequenceRadiusServerSequenceBeforeAcceptAttrManipulatorsList{}
-	if v, ok := d.GetOkExists(key + ".action"); !isEmptyValue(reflect.ValueOf(d.Get(key+".action"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".action"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".action")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".action")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".action")))) {
 		request.Action = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".changed_val")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".changed_val")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".changed_val")))) {
 		request.ChangedVal = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -658,62 +782,62 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByID(ctx context
 
 func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequence(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequence {
 	request := isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequence{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".strip_prefix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".strip_prefix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".strip_prefix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".strip_prefix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".strip_prefix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".strip_prefix")))) {
 		request.StripPrefix = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".strip_suffix"); !isEmptyValue(reflect.ValueOf(d.Get(key+".strip_suffix"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".strip_suffix"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".strip_suffix")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".strip_suffix")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".strip_suffix")))) {
 		request.StripSuffix = interfaceToBoolPtr(v)
 	}
-	vStripPrefix, okStripPrefix := d.GetOk(key + ".strip_prefix")
+	vStripPrefix, okStripPrefix := d.GetOk(fixKeyAccess(key + ".strip_prefix"))
 	vvStripPrefix := interfaceToBoolPtr(vStripPrefix)
 	if okStripPrefix && vvStripPrefix != nil && *vvStripPrefix {
-		if v, ok := d.GetOkExists(key + ".prefix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".prefix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".prefix_separator"))) {
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".prefix_separator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".prefix_separator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".prefix_separator")))) {
 			request.PrefixSeparator = interfaceToString(v)
 		}
 	}
-	vStripSuffix, okStripSuffix := d.GetOk(key + ".strip_suffix")
+	vStripSuffix, okStripSuffix := d.GetOk(fixKeyAccess(key + ".strip_suffix"))
 	vvStripSuffix := interfaceToBoolPtr(vStripSuffix)
 	if okStripSuffix && vvStripSuffix != nil && *vvStripSuffix {
-		if v, ok := d.GetOkExists(key + ".suffix_separator"); !isEmptyValue(reflect.ValueOf(d.Get(key+".suffix_separator"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".suffix_separator"))) {
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".suffix_separator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".suffix_separator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".suffix_separator")))) {
 			request.SuffixSeparator = interfaceToString(v)
 		}
 	}
-	if v, ok := d.GetOkExists(key + ".remote_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".remote_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".remote_accounting"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".remote_accounting")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".remote_accounting")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".remote_accounting")))) {
 		request.RemoteAccounting = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".local_accounting"); !isEmptyValue(reflect.ValueOf(d.Get(key+".local_accounting"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".local_accounting"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".local_accounting")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".local_accounting")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".local_accounting")))) {
 		request.LocalAccounting = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_attr_set_on_request"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_attr_set_on_request"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_attr_set_on_request"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_attr_set_on_request")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_attr_set_on_request")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_attr_set_on_request")))) {
 		request.UseAttrSetOnRequest = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".use_attr_set_before_acc"); !isEmptyValue(reflect.ValueOf(d.Get(key+".use_attr_set_before_acc"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".use_attr_set_before_acc"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".use_attr_set_before_acc")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".use_attr_set_before_acc")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".use_attr_set_before_acc")))) {
 		request.UseAttrSetBeforeAcc = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".continue_authorz_policy"); !isEmptyValue(reflect.ValueOf(d.Get(key+".continue_authorz_policy"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".continue_authorz_policy"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".continue_authorz_policy")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".continue_authorz_policy")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".continue_authorz_policy")))) {
 		request.ContinueAuthorzPolicy = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".radius_server_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".radius_server_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".radius_server_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radius_server_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radius_server_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radius_server_list")))) {
 		request.RadiusServerList = interfaceToSliceString(v)
 	}
 
-	vUseAttrSetBeforeAcc, okUseAttrSetBeforeAcc := d.GetOk(key + ".use_attr_set_before_acc")
+	vUseAttrSetBeforeAcc, okUseAttrSetBeforeAcc := d.GetOk(fixKeyAccess(key + ".use_attr_set_before_acc"))
 	vvUseAttrSetBeforeAcc := interfaceToBoolPtr(vUseAttrSetBeforeAcc)
 	if okUseAttrSetBeforeAcc && vvUseAttrSetBeforeAcc != nil && *vvUseAttrSetBeforeAcc {
-		if v, ok := d.GetOkExists(key + ".on_request_attr_manipulator_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".on_request_attr_manipulator_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".on_request_attr_manipulator_list"))) {
-			request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, key+".on_request_attr_manipulator_list", d)
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".on_request_attr_manipulator_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".on_request_attr_manipulator_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".on_request_attr_manipulator_list")))) {
+			request.OnRequestAttrManipulatorList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx, fixKeyAccess(key+".on_request_attr_manipulator_list"), d)
 		}
-		if v, ok := d.GetOkExists(key + ".before_accept_attr_manipulators_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".before_accept_attr_manipulators_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".before_accept_attr_manipulators_list"))) {
-			request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, key+".before_accept_attr_manipulators_list", d)
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".before_accept_attr_manipulators_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".before_accept_attr_manipulators_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".before_accept_attr_manipulators_list")))) {
+			request.BeforeAcceptAttrManipulatorsList = expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx, fixKeyAccess(key+".before_accept_attr_manipulators_list"), d)
 		}
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -724,6 +848,7 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 
 func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorList {
 	request := []isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -746,22 +871,22 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 
 func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorList {
 	request := isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceOnRequestAttrManipulatorList{}
-	if v, ok := d.GetOkExists(key + ".action"); !isEmptyValue(reflect.ValueOf(d.Get(key+".action"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".action"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".action")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".action")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".action")))) {
 		request.Action = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	vAction, okAction := d.GetOk(key + ".action")
+	vAction, okAction := d.GetOk(fixKeyAccess(key + ".action"))
 	vvAction := interfaceToString(vAction)
 	if okAction && vvAction == "UPDATE" {
-		if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".changed_val")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".changed_val")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".changed_val")))) {
 			request.ChangedVal = interfaceToString(v)
 		}
 	}
@@ -773,6 +898,7 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 
 func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList {
 	request := []isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -795,22 +921,22 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 
 func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList {
 	request := isegosdk.RequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServerSequenceBeforeAcceptAttrManipulatorsList{}
-	if v, ok := d.GetOkExists(key + ".action"); !isEmptyValue(reflect.ValueOf(d.Get(key+".action"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".action"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".action")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".action")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".action")))) {
 		request.Action = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dictionary_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dictionary_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dictionary_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".attribute_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".attribute_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".attribute_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".value"); !isEmptyValue(reflect.ValueOf(d.Get(key+".value"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".value"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".value")))) {
 		request.Value = interfaceToString(v)
 	}
-	vAction, okAction := d.GetOk(key + ".action")
+	vAction, okAction := d.GetOk(fixKeyAccess(key + ".action"))
 	vvAction := interfaceToString(vAction)
 	if okAction && vvAction == "UPDATE" {
-		if v, ok := d.GetOkExists(key + ".changed_val"); !isEmptyValue(reflect.ValueOf(d.Get(key+".changed_val"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".changed_val"))) {
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".changed_val")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".changed_val")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".changed_val")))) {
 			request.ChangedVal = interfaceToString(v)
 		}
 	}

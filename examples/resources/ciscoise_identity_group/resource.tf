@@ -1,7 +1,7 @@
 
 resource "ciscoise_identity_group" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     description = "string"
     id          = "string"

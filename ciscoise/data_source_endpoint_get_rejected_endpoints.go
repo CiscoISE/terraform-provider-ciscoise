@@ -110,5 +110,4 @@ func flattenEndpointGetRejectedEndpointsItemResultValue(items *[]isegosdk.Respon
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

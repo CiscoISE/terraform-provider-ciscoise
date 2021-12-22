@@ -292,9 +292,12 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 2: GetCertificateProfileByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.CertificateProfile.GetCertificateProfileByName(vvName)
+		response2, restyResp2, err := client.CertificateProfile.GetCertificateProfileByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetCertificateProfileByName", err,
 				"Failure at GetCertificateProfileByName, unexpected response", ""))
@@ -318,9 +321,12 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 3: GetCertificateProfileByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.CertificateProfile.GetCertificateProfileByID(vvID)
+		response3, restyResp3, err := client.CertificateProfile.GetCertificateProfileByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetCertificateProfileByID", err,
 				"Failure at GetCertificateProfileByID, unexpected response", ""))

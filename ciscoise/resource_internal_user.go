@@ -42,92 +42,61 @@ func resourceInternalUser() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"custom_attributes": &schema.Schema{
 							Description: `Key value map`,
 							Type:        schema.TypeMap,
-							Optional:    true,
 							Computed:    true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"email": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"enable_password": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								vChangePassword, okChangePassword := d.GetOk("item.0.change_password")
-								vvChangePassword := interfaceToBoolPtr(vChangePassword)
-								hasDiff := old != new
-								if hasDiff {
-									// Do not suppress diff if it has change_password set
-									if okChangePassword && vvChangePassword != nil && *vvChangePassword {
-										log.Printf("[DEBUG] key %s does not require suppresion", k)
-										return false
-									}
-									return true
-								}
-								return true
-							},
 						},
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
 The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"expiry_date": &schema.Schema{
 							Description: `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"first_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"identity_groups": &schema.Schema{
 							Description: `CSV of identity group IDs`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"last_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -153,17 +122,110 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
+						},
+						"password": &schema.Schema{
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
+						},
+						"password_idstore": &schema.Schema{
+							Description: `The id store where the internal user's password is kept`,
+							Type:        schema.TypeString,
+							Sensitive:   true,
+							Computed:    true,
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"change_password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"custom_attributes": &schema.Schema{
+							Description: `Key value map`,
+							Type:        schema.TypeMap,
+							Optional:    true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"email": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"enable_password": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
+								vChangePassword, okChangePassword := d.GetOk("parameters.0.change_password")
+								vvChangePassword := interfaceToBoolPtr(vChangePassword)
+								hasDiff := old != new
+								if hasDiff {
+									// Do not suppress diff if it has change_password set
+									if okChangePassword && vvChangePassword != nil && *vvChangePassword {
+										log.Printf("[DEBUG] key %s does not require suppresion", k)
+										return false
+									}
+									return true
+								}
+								return true
+							},
+						},
+						"enabled": &schema.Schema{
+							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
+The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"expiry_date": &schema.Schema{
+							Description: `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"expiry_date_enabled": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"first_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"identity_groups": &schema.Schema{
+							Description: `CSV of identity group IDs`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"last_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 						"password": &schema.Schema{
 							Type:      schema.TypeString,
 							Optional:  true,
 							Sensitive: true,
-							Computed:  true,
 							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
 								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								vChangePassword, okChangePassword := d.GetOk("item.0.change_password")
+								vChangePassword, okChangePassword := d.GetOk("parameters.0.change_password")
 								vvChangePassword := interfaceToBoolPtr(vChangePassword)
 								hasDiff := old != new
 								if hasDiff {
@@ -182,7 +244,6 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 							Type:        schema.TypeString,
 							Optional:    true,
 							Sensitive:   true,
-							Computed:    true,
 						},
 					},
 				},
@@ -196,9 +257,11 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestInternalUserCreateInternalUser(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestInternalUserCreateInternalUser(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -211,7 +274,7 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceInternalUserRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -221,7 +284,7 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceInternalUserRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.InternalUser.CreateInternalUser(request1)
@@ -243,7 +306,7 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceInternalUserRead(ctx, d, m)
 }
 
 func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -266,9 +329,12 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Selected method: GetInternalUserByName")
 		vvName := vName
 
-		response1, _, err := client.InternalUser.GetInternalUserByName(vvName)
+		response1, restyResp1, err := client.InternalUser.GetInternalUserByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetInternalUserByName", err,
 				"Failure at GetInternalUserByName, unexpected response", ""))
@@ -291,9 +357,12 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Selected method: GetInternalUserByID")
 		vvID := vID
 
-		response2, _, err := client.InternalUser.GetInternalUserByID(vvID)
+		response2, restyResp2, err := client.InternalUser.GetInternalUserByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetInternalUserByID", err,
 				"Failure at GetInternalUserByID, unexpected response", ""))
@@ -350,10 +419,12 @@ func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m i
 			vvID = getResp.InternalUser.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestInternalUserUpdateInternalUserByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestInternalUserUpdateInternalUserByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.InternalUser.UpdateInternalUserByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -443,52 +514,58 @@ func expandRequestInternalUserCreateInternalUser(ctx context.Context, key string
 
 func expandRequestInternalUserCreateInternalUserInternalUser(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestInternalUserCreateInternalUserInternalUser {
 	request := isegosdk.RequestInternalUserCreateInternalUserInternalUser{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
 		request.Enabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".email"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".email")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".email")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".email")))) {
 		request.Email = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 		request.Password = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".first_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".first_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".first_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".first_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".first_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".first_name")))) {
 		request.FirstName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".last_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".last_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".last_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_name")))) {
 		request.LastName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".change_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".change_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".change_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".change_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".change_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".change_password")))) {
 		request.ChangePassword = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".identity_groups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_groups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_groups"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_groups")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_groups")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_groups")))) {
 		request.IDentityGroups = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".expiry_date_enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiry_date_enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiry_date_enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".expiry_date_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".expiry_date_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".expiry_date_enabled")))) {
 		request.ExpiryDateEnabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".expiry_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiry_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiry_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".expiry_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".expiry_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".expiry_date")))) {
 		request.ExpiryDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_password")))) {
 		request.EnablePassword = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
+		request.CustomAttributes = expandRequestInternalUserCreateInternalUserInternalUserCustomAttributes(ctx, key+".custom_attributes", d)
 	}
-	if v, ok := d.GetOkExists(key + ".password_idstore"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password_idstore"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password_idstore"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password_idstore")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password_idstore")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password_idstore")))) {
 		request.PasswordIDStore = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestInternalUserCreateInternalUserInternalUserCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestInternalUserCreateInternalUserInternalUserCustomAttributes {
+	var request isegosdk.RequestInternalUserCreateInternalUserInternalUserCustomAttributes
+	v := d.Get(fixKeyAccess(key))
+	request = v.(map[string]interface{})
 	return &request
 }
 
@@ -503,58 +580,64 @@ func expandRequestInternalUserUpdateInternalUserByID(ctx context.Context, key st
 
 func expandRequestInternalUserUpdateInternalUserByIDInternalUser(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUser {
 	request := isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUser{}
-	vChangePassword, okChangePassword := d.GetOk(key + ".change_password")
+	vChangePassword, okChangePassword := d.GetOk(fixKeyAccess(fixKeyAccess(key + ".change_password")))
 	vvChangePassword := interfaceToBoolPtr(vChangePassword)
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
 		request.Enabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".email"); !isEmptyValue(reflect.ValueOf(d.Get(key+".email"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".email"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".email")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".email")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".email")))) {
 		request.Email = interfaceToString(v)
 	}
 	if okChangePassword && vvChangePassword != nil && *vvChangePassword {
-		if v, ok := d.GetOkExists(key + ".password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password"))) {
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password")))) {
 			request.Password = interfaceToString(v)
 		}
-		if v, ok := d.GetOkExists(key + ".enable_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_password"))) {
+		if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_password")))) {
 			request.EnablePassword = interfaceToString(v)
 		}
 	}
-	if v, ok := d.GetOkExists(key + ".first_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".first_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".first_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".first_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".first_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".first_name")))) {
 		request.FirstName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".last_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".last_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".last_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_name")))) {
 		request.LastName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".change_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".change_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".change_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".change_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".change_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".change_password")))) {
 		request.ChangePassword = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".identity_groups"); !isEmptyValue(reflect.ValueOf(d.Get(key+".identity_groups"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".identity_groups"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_groups")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_groups")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_groups")))) {
 		request.IDentityGroups = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".expiry_date_enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiry_date_enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiry_date_enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".expiry_date_enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".expiry_date_enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".expiry_date_enabled")))) {
 		request.ExpiryDateEnabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".expiry_date"); !isEmptyValue(reflect.ValueOf(d.Get(key+".expiry_date"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".expiry_date"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".expiry_date")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".expiry_date")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".expiry_date")))) {
 		request.ExpiryDate = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".custom_attributes"); !isEmptyValue(reflect.ValueOf(d.Get(key+".custom_attributes"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".custom_attributes"))) {
-		customAttributes := v.(map[string]interface{})
-		request.CustomAttributes = &customAttributes
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".custom_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".custom_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".custom_attributes")))) {
+		request.CustomAttributes = expandRequestInternalUserUpdateInternalUserByIDInternalUserCustomAttributes(ctx, key+".custom_attributes", d)
 	}
-	if v, ok := d.GetOkExists(key + ".password_idstore"); !isEmptyValue(reflect.ValueOf(d.Get(key+".password_idstore"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".password_idstore"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".password_idstore")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".password_idstore")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".password_idstore")))) {
 		request.PasswordIDStore = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
+	return &request
+}
+
+func expandRequestInternalUserUpdateInternalUserByIDInternalUserCustomAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUserCustomAttributes {
+	var request isegosdk.RequestInternalUserUpdateInternalUserByIDInternalUserCustomAttributes
+	v := d.Get(fixKeyAccess(key))
+	request = v.(map[string]interface{})
 	return &request
 }

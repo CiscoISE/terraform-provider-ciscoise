@@ -268,9 +268,12 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 2: GetSessionServiceNodeByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.PsnNodeDetailsWithRadiusService.GetSessionServiceNodeByName(vvName)
+		response2, restyResp2, err := client.PsnNodeDetailsWithRadiusService.GetSessionServiceNodeByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSessionServiceNodeByName", err,
 				"Failure at GetSessionServiceNodeByName, unexpected response", ""))
@@ -294,9 +297,12 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 		log.Printf("[DEBUG] Selected method 3: GetSessionServiceNodeByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.PsnNodeDetailsWithRadiusService.GetSessionServiceNodeByID(vvID)
+		response3, restyResp3, err := client.PsnNodeDetailsWithRadiusService.GetSessionServiceNodeByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetSessionServiceNodeByID", err,
 				"Failure at GetSessionServiceNodeByID, unexpected response", ""))

@@ -20,6 +20,7 @@ Only one Deploy process can run at any given time
 ```terraform
 data "ciscoise_sg_mapping_deploy_all" "example" {
   provider = ciscoise
+
 }
 ```
 

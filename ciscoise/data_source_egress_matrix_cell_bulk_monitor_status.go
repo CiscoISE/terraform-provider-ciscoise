@@ -172,5 +172,4 @@ func flattenEgressMatrixCellMonitorBulkStatusEgressMatrixCellItemResourcesStatus
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

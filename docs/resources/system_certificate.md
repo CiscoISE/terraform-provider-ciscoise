@@ -6,10 +6,10 @@ description: |-
   It manages read, update and delete operations on Certificates.
   Update a System Certificate.
   NOTE:
-  Renewing a certificate will cause an application server restart on the selected node.
+  Renewing a certificate causes an application server restart on the selected node.
   NOTE:
-  Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
-  This resource deletes a System Certificate of a particular node based on a given HostName and ID.
+  Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+  This resource deletes a System Certificate of a particular node based on given HostName and ID.
 ---
 
 # ciscoise_system_certificate (Resource)
@@ -19,37 +19,39 @@ It manages read, update and delete operations on Certificates.
 - Update a System Certificate.
 
 NOTE:
-Renewing a certificate will cause an application server restart on the selected node.
+Renewing a certificate causes an application server restart on the selected node.
 
 NOTE:
-Request Parameters accepting True and False as input can be replaced by 1 and 0 respectively.
+Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
 
-- This resource deletes a System Certificate of a particular node based on a given HostName and ID.
+- This resource deletes a System Certificate of a particular node based on given HostName and ID.
 
 ## Example Usage
 
 ```terraform
 resource "ciscoise_system_certificate" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
-    admin                                 = "false"
-    allow_replacement_of_portal_group_tag = "false"
-    description                           = "string"
-    eap                                   = "false"
-    expiration_ttl_period                 = 1
-    expiration_ttl_units                  = "string"
-    host_name                             = "string"
-    id                                    = "string"
-    ims                                   = "false"
-    name                                  = "string"
-    portal                                = "false"
-    portal_group_tag                      = "string"
-    pxgrid                                = "false"
-    radius                                = "false"
-    renew_self_signed_certificate         = "false"
-    saml                                  = "false"
+    admin                                      = "false"
+    allow_portal_tag_transfer_for_same_subject = "false"
+    allow_replacement_of_portal_group_tag      = "false"
+    allow_role_transfer_for_same_subject       = "false"
+    description                                = "string"
+    eap                                        = "false"
+    expiration_ttl_period                      = 1
+    expiration_ttl_units                       = "string"
+    host_name                                  = "string"
+    id                                         = "string"
+    ims                                        = "false"
+    name                                       = "string"
+    portal                                     = "false"
+    portal_group_tag                           = "string"
+    pxgrid                                     = "false"
+    radius                                     = "false"
+    renew_self_signed_certificate              = "false"
+    saml                                       = "false"
   }
 }
 
@@ -64,52 +66,60 @@ output "ciscoise_system_certificate_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
-- **admin** (String) Use certificate to authenticate the ISE Admin Portal
+- **admin** (String) Use certificate to authenticate the Cisco ISE Admin Portal
+- **allow_portal_tag_transfer_for_same_subject** (String) Allow overwriting the portal tag from matching certificate of same subject
 - **allow_replacement_of_portal_group_tag** (String) Allow Replacement of Portal Group Tag (required)
+- **allow_role_transfer_for_same_subject** (String) Allow transfer of roles for certificate with matching subject
 - **description** (String) Description of System Certificate
 - **eap** (String) Use certificate for EAP protocols that use SSL/TLS tunneling
 - **expiration_ttl_period** (Number)
 - **expiration_ttl_units** (String)
 - **host_name** (String) hostName path parameter. Name of Host whose certificate needs to be updated
-- **ims** (String) Use certificate for the ISE Messaging Service
+- **ims** (String) Use certificate for the Cisco ISE Messaging Service
 - **name** (String) Name of the certificate
 - **portal** (String) Use for portal
 - **portal_group_tag** (String) Set Group tag
 - **pxgrid** (String) Use certificate for the pxGrid Controller
 - **radius** (String) Use certificate for the RADSec server
-- **renew_self_signed_certificate** (String) Renew Self Signed Certificate
+- **renew_self_signed_certificate** (String) Renew Self-signed Certificate
 - **saml** (String) Use certificate for SAML Signing
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
 
 Read-Only:
 
-- **expiration_date** (String) The time and date past which the certificate is no longer valid
-- **friendly_name** (String) Friendly name of system certificate
+- **expiration_date** (String)
+- **friendly_name** (String)
 - **group_tag** (String)
-- **id** (String) ID of system certificate
-- **issued_by** (String) Common Name of the certificate issuer
-- **issued_to** (String) Common Name of the certificate subject
-- **key_size** (Number) The length of key used for encrypting system certificate
-- **link** (List of Object) (see [below for nested schema](#nestedatt--item--link))
+- **host_name** (String)
+- **id** (String)
+- **issued_by** (String)
+- **issued_to** (String)
+- **key_size** (Number)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - **portals_using_the_tag** (String)
 - **self_signed** (String)
-- **serial_number_decimal_format** (String) Used to uniquely identify the certificate within a CA's systems
+- **serial_number_decimal_format** (String)
 - **sha256_fingerprint** (String)
 - **signature_algorithm** (String)
 - **used_by** (String)
-- **valid_from** (String) The time and date on which the certificate was created, also known as the Not Before certificate attribute
+- **valid_from** (String)
 
-<a id="nestedatt--item--link"></a>
+<a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:

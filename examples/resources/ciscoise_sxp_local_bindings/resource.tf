@@ -1,7 +1,7 @@
 
 resource "ciscoise_sxp_local_bindings" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     binding_name       = "string"
     description        = "string"

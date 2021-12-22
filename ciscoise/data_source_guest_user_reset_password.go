@@ -118,5 +118,4 @@ func flattenGuestUserResetGuestUserPasswordByIDItemResultValue(items *[]isegosdk
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

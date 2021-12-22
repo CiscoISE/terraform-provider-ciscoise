@@ -35,7 +35,6 @@ func resourcePortalGlobalSetting() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -45,12 +44,10 @@ func resourcePortalGlobalSetting() *schema.Resource {
 - HTML,
 - HTMLANDJAVASCRIPT`,
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -77,17 +74,39 @@ func resourcePortalGlobalSetting() *schema.Resource {
 					},
 				},
 			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"customization": &schema.Schema{
+							Description: `Allowed values:
+- HTML,
+- HTMLANDJAVASCRIPT`,
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
 
 func resourcePortalGlobalSettingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	var diags diag.Diagnostics
-	resourceItem := *getResourceItem(d.Get("item"))
+	// var diags diag.Diagnostics
+	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
+	// TODO: Add the path params to `item` schema
+	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourcePortalGlobalSettingRead(ctx, d, m)
 }
 
 func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -111,9 +130,12 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 		log.Printf("[DEBUG] Selected method: GetPortalGlobalSettings")
 		queryParams1 := isegosdk.GetPortalGlobalSettingsQueryParams{}
 
-		response1, _, err := client.PortalGlobalSetting.GetPortalGlobalSettings(&queryParams1)
+		response1, restyResp1, err := client.PortalGlobalSetting.GetPortalGlobalSettings(&queryParams1)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPortalGlobalSettings", err,
 				"Failure at GetPortalGlobalSettings, unexpected response", ""))
@@ -143,9 +165,12 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 		log.Printf("[DEBUG] Selected method: GetPortalGlobalSettingByID")
 		vvID := vID
 
-		response2, _, err := client.PortalGlobalSetting.GetPortalGlobalSettingByID(vvID)
+		response2, restyResp2, err := client.PortalGlobalSetting.GetPortalGlobalSettingByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPortalGlobalSettingByID", err,
 				"Failure at GetPortalGlobalSettingByID, unexpected response", ""))
@@ -188,10 +213,12 @@ func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceDa
 	if selectedMethod == 2 {
 		vvID = vID
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestPortalGlobalSettingUpdatePortalGlobalSettingByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestPortalGlobalSettingUpdatePortalGlobalSettingByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.PortalGlobalSetting.UpdatePortalGlobalSettingByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -213,7 +240,7 @@ func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceDa
 
 func resourcePortalGlobalSettingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
-	// NOTE: Function does not perform delete on ISE
+	// NOTE: Unable to delete PortalGlobalSetting on Cisco ISE
 	//       Returning empty diags to delete it on Terraform
 	return diags
 }
@@ -228,10 +255,10 @@ func expandRequestPortalGlobalSettingUpdatePortalGlobalSettingByID(ctx context.C
 
 func expandRequestPortalGlobalSettingUpdatePortalGlobalSettingByIDPortalCustomizationGlobalSetting(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestPortalGlobalSettingUpdatePortalGlobalSettingByIDPortalCustomizationGlobalSetting {
 	request := isegosdk.RequestPortalGlobalSettingUpdatePortalGlobalSettingByIDPortalCustomizationGlobalSetting{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".customization"); !isEmptyValue(reflect.ValueOf(d.Get(key+".customization"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".customization"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".customization")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".customization")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".customization")))) {
 		request.Customization = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

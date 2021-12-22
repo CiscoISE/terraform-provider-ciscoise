@@ -172,5 +172,4 @@ func flattenSxpVpnsMonitorBulkStatusSxpVpnsItemResourcesStatus(items *[]isegosdk
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

@@ -276,9 +276,12 @@ func dataSourcePxGridNodeRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Selected method 2: GetPxGridNodeByName")
 		vvName := vName.(string)
 
-		response2, _, err := client.PxGridNode.GetPxGridNodeByName(vvName)
+		response2, restyResp2, err := client.PxGridNode.GetPxGridNodeByName(vvName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPxGridNodeByName", err,
 				"Failure at GetPxGridNodeByName, unexpected response", ""))
@@ -302,9 +305,12 @@ func dataSourcePxGridNodeRead(ctx context.Context, d *schema.ResourceData, m int
 		log.Printf("[DEBUG] Selected method 3: GetPxGridNodeByID")
 		vvID := vID.(string)
 
-		response3, _, err := client.PxGridNode.GetPxGridNodeByID(vvID)
+		response3, restyResp3, err := client.PxGridNode.GetPxGridNodeByID(vvID)
 
 		if err != nil || response3 == nil {
+			if restyResp3 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp3.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetPxGridNodeByID", err,
 				"Failure at GetPxGridNodeByID, unexpected response", ""))

@@ -43,7 +43,6 @@ func resourceNetworkDevice() *schema.Resource {
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -51,7 +50,6 @@ func resourceNetworkDevice() *schema.Resource {
 						"network_device_group_list": &schema.Schema{
 							Description: `List of Network Device Group names for this node`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
@@ -60,7 +58,6 @@ func resourceNetworkDevice() *schema.Resource {
 						"network_device_iplist": &schema.Schema{
 							Description: `List of IP Subnets for this node`,
 							Type:        schema.TypeList,
-							Optional:    true,
 							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -68,17 +65,14 @@ func resourceNetworkDevice() *schema.Resource {
 									"get_ipaddress_exclude": &schema.Schema{
 										Description: `It can be either single IP address or IP range address`,
 										Type:        schema.TypeString,
-										Optional:    true,
 										Computed:    true,
 									},
 									"ipaddress": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"mask": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -86,38 +80,29 @@ func resourceNetworkDevice() *schema.Resource {
 						},
 						"authentication_settings": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"dtls_required": &schema.Schema{
-										Description:  `This value enforces use of dtls`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Description: `This value enforces use of dtls`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 									"enable_key_wrap": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"enable_multi_secret": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"enabled": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"key_encryption_key": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"key_input_format": &schema.Schema{
@@ -125,12 +110,10 @@ func resourceNetworkDevice() *schema.Resource {
 - ASCII,
 - HEXADECIMAL`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"message_authenticator_code_key": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"network_protocol": &schema.Schema{
@@ -138,17 +121,14 @@ func resourceNetworkDevice() *schema.Resource {
 - RADIUS,
 - TACACS_PLUS`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"radius_shared_secret": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"second_radius_shared_secret": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -156,23 +136,19 @@ func resourceNetworkDevice() *schema.Resource {
 						},
 						"coa_port": &schema.Schema{
 							Type:     schema.TypeInt,
-							Optional: true,
 							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"dtls_dns_name": &schema.Schema{
 							Description: `This value is used to verify the client identity contained in the X.509 RADIUS/DTLS client certificate`,
 							Type:        schema.TypeString,
-							Optional:    true,
 							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"link": &schema.Schema{
@@ -198,56 +174,44 @@ func resourceNetworkDevice() *schema.Resource {
 						},
 						"model_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"profile_name": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"snmpsettings": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"link_trap_query": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"mac_trap_query": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"originating_policy_services_node": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"polling_interval": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
 										Computed: true,
 									},
 									"ro_community": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"version": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -255,12 +219,10 @@ func resourceNetworkDevice() *schema.Resource {
 						},
 						"software_version": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
 							Computed: true,
 						},
 						"tacacs_settings": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -271,12 +233,10 @@ func resourceNetworkDevice() *schema.Resource {
 - ON_LEGACY,
 - ON_DRAFT_COMPLIANT`,
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 									"shared_secret": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
 										Computed: true,
 									},
 								},
@@ -284,26 +244,22 @@ func resourceNetworkDevice() *schema.Resource {
 						},
 						"trustsecsettings": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"device_authentication_settings": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"sga_device_id": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"sga_device_password": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 											},
@@ -311,31 +267,320 @@ func resourceNetworkDevice() *schema.Resource {
 									},
 									"device_configuration_deployment": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
 										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"enable_mode_password": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"exec_mode_password": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
 												},
 												"exec_mode_username": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
 													Computed: true,
+												},
+												"include_when_deploying_sgt_updates": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+									"push_id_support": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"sga_notification_and_updates": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"coa_source_host": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"downlaod_environment_data_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"downlaod_peer_authorization_policy_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"download_sga_cllists_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"other_sga_devices_to_trust_this_device": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"re_authentication_every_x_seconds": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"send_configuration_to_device": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+												"send_configuration_to_device_using": &schema.Schema{
+													Description: `Allowed values:
+- ENABLE_USING_COA,
+- ENABLE_USING_CLI,
+- DISABLE_ALL`,
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						"network_device_group_list": &schema.Schema{
+							Description: `List of Network Device Group names for this node`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"network_device_iplist": &schema.Schema{
+							Description: `List of IP Subnets for this node`,
+							Type:        schema.TypeList,
+							Optional:    true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"get_ipaddress_exclude": &schema.Schema{
+										Description: `It can be either single IP address or IP range address`,
+										Type:        schema.TypeString,
+										Optional:    true,
+									},
+									"ipaddress": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"mask": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"authentication_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"dtls_required": &schema.Schema{
+										Description:  `This value enforces use of dtls`,
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"enable_key_wrap": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"enable_multi_secret": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"enabled": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"key_encryption_key": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"key_input_format": &schema.Schema{
+										Description: `Allowed values:
+- ASCII,
+- HEXADECIMAL`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"message_authenticator_code_key": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"network_protocol": &schema.Schema{
+										Description: `Allowed values:
+- RADIUS,
+- TACACS_PLUS`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"radius_shared_secret": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"second_radius_shared_secret": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"coa_port": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"description": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"dtls_dns_name": &schema.Schema{
+							Description: `This value is used to verify the client identity contained in the X.509 RADIUS/DTLS client certificate`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
+						"id": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"model_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"profile_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"snmpsettings": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"link_trap_query": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"mac_trap_query": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:     true,
+									},
+									"originating_policy_services_node": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"polling_interval": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+									"ro_community": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"version": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"software_version": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"tacacs_settings": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"connect_mode_options": &schema.Schema{
+										Description: `Allowed values:
+- OFF,
+- ON_LEGACY,
+- ON_DRAFT_COMPLIANT`,
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"shared_secret": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"trustsecsettings": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							MaxItems: 1,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"device_authentication_settings": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"sga_device_id": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"sga_device_password": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+									"device_configuration_deployment": &schema.Schema{
+										Type:     schema.TypeList,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"enable_mode_password": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"exec_mode_password": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"exec_mode_username": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
 												},
 												"include_when_deploying_sgt_updates": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -344,51 +589,43 @@ func resourceNetworkDevice() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 										Optional:     true,
-										Computed:     true,
 									},
 									"sga_notification_and_updates": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										Computed: true,
+										MaxItems: 1,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"coa_source_host": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
 												},
 												"downlaod_environment_data_every_x_seconds": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"downlaod_peer_authorization_policy_every_x_seconds": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"download_sga_cllists_every_x_seconds": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"other_sga_devices_to_trust_this_device": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"re_authentication_every_x_seconds": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"send_configuration_to_device": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 													Optional:     true,
-													Computed:     true,
 												},
 												"send_configuration_to_device_using": &schema.Schema{
 													Description: `Allowed values:
@@ -397,7 +634,6 @@ func resourceNetworkDevice() *schema.Resource {
 - DISABLE_ALL`,
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
 												},
 											},
 										},
@@ -417,9 +653,11 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	var diags diag.Diagnostics
 
-	resourceItem := *getResourceItem(d.Get("item"))
-	request1 := expandRequestNetworkDeviceCreateNetworkDevice(ctx, "item.0", d)
-	log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	resourceItem := *getResourceItem(d.Get("parameters"))
+	request1 := expandRequestNetworkDeviceCreateNetworkDevice(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
@@ -432,7 +670,7 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceNetworkDeviceRead(ctx, d, m)
 		}
 	}
 	if okName && vvName != "" {
@@ -442,7 +680,7 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 			resourceMap["id"] = vvID
 			resourceMap["name"] = vvName
 			d.SetId(joinResourceID(resourceMap))
-			return diags
+			return resourceNetworkDeviceRead(ctx, d, m)
 		}
 	}
 	restyResp1, err := client.NetworkDevice.CreateNetworkDevice(request1)
@@ -464,7 +702,7 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 	resourceMap["id"] = vvID
 	resourceMap["name"] = vvName
 	d.SetId(joinResourceID(resourceMap))
-	return diags
+	return resourceNetworkDeviceRead(ctx, d, m)
 }
 
 func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -487,9 +725,12 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetNetworkDeviceByName")
 		vvName := vName
 
-		response1, _, err := client.NetworkDevice.GetNetworkDeviceByName(vvName)
+		response1, restyResp1, err := client.NetworkDevice.GetNetworkDeviceByName(vvName)
 
 		if err != nil || response1 == nil {
+			if restyResp1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceByName", err,
 				"Failure at GetNetworkDeviceByName, unexpected response", ""))
@@ -512,9 +753,12 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 		log.Printf("[DEBUG] Selected method: GetNetworkDeviceByID")
 		vvID := vID
 
-		response2, _, err := client.NetworkDevice.GetNetworkDeviceByID(vvID)
+		response2, restyResp2, err := client.NetworkDevice.GetNetworkDeviceByID(vvID)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkDeviceByID", err,
 				"Failure at GetNetworkDeviceByID, unexpected response", ""))
@@ -571,10 +815,12 @@ func resourceNetworkDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 			vvID = getResp.NetworkDevice.ID
 		}
 	}
-	if d.HasChange("item") {
+	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
-		request1 := expandRequestNetworkDeviceUpdateNetworkDeviceByID(ctx, "item.0", d)
-		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		request1 := expandRequestNetworkDeviceUpdateNetworkDeviceByID(ctx, "parameters.0", d)
+		if request1 != nil {
+			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+		}
 		response1, restyResp1, err := client.NetworkDevice.UpdateNetworkDeviceByID(vvID, request1)
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
@@ -653,7 +899,6 @@ func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m 
 
 	return diags
 }
-
 func expandRequestNetworkDeviceCreateNetworkDevice(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDevice {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDevice{}
 	request.NetworkDevice = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDevice(ctx, key, d)
@@ -665,43 +910,43 @@ func expandRequestNetworkDeviceCreateNetworkDevice(ctx context.Context, key stri
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDevice(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDevice {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDevice{}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".authentication_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authentication_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authentication_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authentication_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authentication_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authentication_settings")))) {
 		request.AuthenticationSettings = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceAuthenticationSettings(ctx, key+".authentication_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".snmpsettings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".snmpsettings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".snmpsettings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".snmpsettings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".snmpsettings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".snmpsettings")))) {
 		request.SNMPsettings = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceSNMPsettings(ctx, key+".snmpsettings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".trustsecsettings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trustsecsettings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trustsecsettings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".trustsecsettings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".trustsecsettings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".trustsecsettings")))) {
 		request.Trustsecsettings = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettings(ctx, key+".trustsecsettings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".tacacs_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".tacacs_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".tacacs_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tacacs_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tacacs_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tacacs_settings")))) {
 		request.TacacsSettings = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTacacsSettings(ctx, key+".tacacs_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".profile_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_name")))) {
 		request.ProfileName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".coa_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".coa_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".coa_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coa_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coa_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coa_port")))) {
 		request.CoaPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dtls_dns_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dtls_dns_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dtls_dns_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dtls_dns_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dtls_dns_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dtls_dns_name")))) {
 		request.DtlsDNSName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".model_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".model_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".model_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".model_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".model_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".model_name")))) {
 		request.ModelName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".software_version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".software_version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".software_version"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".software_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".software_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".software_version")))) {
 		request.SoftwareVersion = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".network_device_iplist"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_device_iplist"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_device_iplist"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".network_device_iplist")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".network_device_iplist")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".network_device_iplist")))) {
 		request.NetworkDeviceIPList = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPListArray(ctx, key+".network_device_iplist", d)
 	}
-	if v, ok := d.GetOkExists(key + ".network_device_group_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_device_group_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_device_group_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".network_device_group_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".network_device_group_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".network_device_group_list")))) {
 		request.NetworkDeviceGroupList = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -712,34 +957,34 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDevice(ctx context.Cont
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceAuthenticationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceAuthenticationSettings {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceAuthenticationSettings{}
-	if v, ok := d.GetOkExists(key + ".network_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_protocol"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".network_protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".network_protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".network_protocol")))) {
 		request.NetworkProtocol = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".second_radius_shared_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".second_radius_shared_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".second_radius_shared_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".second_radius_shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".second_radius_shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".second_radius_shared_secret")))) {
 		request.SecondRadiusSharedSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".radius_shared_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".radius_shared_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".radius_shared_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radius_shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radius_shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radius_shared_secret")))) {
 		request.RadiusSharedSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_key_wrap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_key_wrap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_key_wrap"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_key_wrap")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_key_wrap")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_key_wrap")))) {
 		request.EnableKeyWrap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
 		request.Enabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dtls_required"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dtls_required"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dtls_required"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dtls_required")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dtls_required")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dtls_required")))) {
 		request.DtlsRequired = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_multi_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_multi_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_multi_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_multi_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_multi_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_multi_secret")))) {
 		request.EnableMultiSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".key_encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_encryption_key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key_encryption_key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key_encryption_key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key_encryption_key")))) {
 		request.KeyEncryptionKey = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".message_authenticator_code_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".message_authenticator_code_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".message_authenticator_code_key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".message_authenticator_code_key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".message_authenticator_code_key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".message_authenticator_code_key")))) {
 		request.MessageAuthenticatorCodeKey = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".key_input_format"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_input_format"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_input_format"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key_input_format")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key_input_format")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key_input_format")))) {
 		request.KeyInputFormat = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -750,22 +995,22 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceAuthenticationSet
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceSNMPsettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceSNMPsettings {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceSNMPsettings{}
-	if v, ok := d.GetOkExists(key + ".version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".version"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
 		request.Version = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ro_community"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ro_community"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ro_community"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ro_community")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ro_community")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ro_community")))) {
 		request.RoCommunity = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".polling_interval"); !isEmptyValue(reflect.ValueOf(d.Get(key+".polling_interval"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".polling_interval"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".polling_interval")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".polling_interval")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".polling_interval")))) {
 		request.PollingInterval = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link_trap_query"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link_trap_query"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link_trap_query"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link_trap_query")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link_trap_query")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link_trap_query")))) {
 		request.LinkTrapQuery = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mac_trap_query"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac_trap_query"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac_trap_query"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_trap_query")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_trap_query")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_trap_query")))) {
 		request.MacTrapQuery = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".originating_policy_services_node"); !isEmptyValue(reflect.ValueOf(d.Get(key+".originating_policy_services_node"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".originating_policy_services_node"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".originating_policy_services_node")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".originating_policy_services_node")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".originating_policy_services_node")))) {
 		request.OriginatingPolicyServicesNode = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -776,16 +1021,16 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceSNMPsettings(ctx 
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettings {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettings{}
-	if v, ok := d.GetOkExists(key + ".device_authentication_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".device_authentication_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".device_authentication_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_authentication_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_authentication_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_authentication_settings")))) {
 		request.DeviceAuthenticationSettings = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings(ctx, key+".device_authentication_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".sga_notification_and_updates"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sga_notification_and_updates"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sga_notification_and_updates"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sga_notification_and_updates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sga_notification_and_updates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sga_notification_and_updates")))) {
 		request.SgaNotificationAndUpdates = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates(ctx, key+".sga_notification_and_updates.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".device_configuration_deployment"); !isEmptyValue(reflect.ValueOf(d.Get(key+".device_configuration_deployment"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".device_configuration_deployment"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_configuration_deployment")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_configuration_deployment")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_configuration_deployment")))) {
 		request.DeviceConfigurationDeployment = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment(ctx, key+".device_configuration_deployment.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".push_id_support"); !isEmptyValue(reflect.ValueOf(d.Get(key+".push_id_support"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".push_id_support"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".push_id_support")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".push_id_support")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".push_id_support")))) {
 		request.PushIDSupport = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -796,10 +1041,10 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettings(
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings{}
-	if v, ok := d.GetOkExists(key + ".sga_device_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sga_device_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sga_device_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sga_device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sga_device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sga_device_id")))) {
 		request.SgaDeviceID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sga_device_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sga_device_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sga_device_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sga_device_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sga_device_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sga_device_password")))) {
 		request.SgaDevicePassword = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -810,28 +1055,28 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsD
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates{}
-	if v, ok := d.GetOkExists(key + ".downlaod_environment_data_every_x_seconds"); !isEmptyValue(reflect.ValueOf(d.Get(key+".downlaod_environment_data_every_x_seconds"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".downlaod_environment_data_every_x_seconds"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".downlaod_environment_data_every_x_seconds")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".downlaod_environment_data_every_x_seconds")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".downlaod_environment_data_every_x_seconds")))) {
 		request.DownlaodEnvironmentDataEveryXSeconds = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".downlaod_peer_authorization_policy_every_x_seconds"); !isEmptyValue(reflect.ValueOf(d.Get(key+".downlaod_peer_authorization_policy_every_x_seconds"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".downlaod_peer_authorization_policy_every_x_seconds"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".downlaod_peer_authorization_policy_every_x_seconds")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".downlaod_peer_authorization_policy_every_x_seconds")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".downlaod_peer_authorization_policy_every_x_seconds")))) {
 		request.DownlaodPeerAuthorizationPolicyEveryXSeconds = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".re_authentication_every_x_seconds"); !isEmptyValue(reflect.ValueOf(d.Get(key+".re_authentication_every_x_seconds"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".re_authentication_every_x_seconds"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".re_authentication_every_x_seconds")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".re_authentication_every_x_seconds")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".re_authentication_every_x_seconds")))) {
 		request.ReAuthenticationEveryXSeconds = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".download_sga_cllists_every_x_seconds"); !isEmptyValue(reflect.ValueOf(d.Get(key+".download_sga_cllists_every_x_seconds"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".download_sga_cllists_every_x_seconds"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".download_sga_cllists_every_x_seconds")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".download_sga_cllists_every_x_seconds")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".download_sga_cllists_every_x_seconds")))) {
 		request.DownloadSgACLListsEveryXSeconds = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".other_sga_devices_to_trust_this_device"); !isEmptyValue(reflect.ValueOf(d.Get(key+".other_sga_devices_to_trust_this_device"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".other_sga_devices_to_trust_this_device"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".other_sga_devices_to_trust_this_device")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".other_sga_devices_to_trust_this_device")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".other_sga_devices_to_trust_this_device")))) {
 		request.OtherSgADevicesToTrustThisDevice = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".send_configuration_to_device"); !isEmptyValue(reflect.ValueOf(d.Get(key+".send_configuration_to_device"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".send_configuration_to_device"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".send_configuration_to_device")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".send_configuration_to_device")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".send_configuration_to_device")))) {
 		request.SendConfigurationToDevice = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".send_configuration_to_device_using"); !isEmptyValue(reflect.ValueOf(d.Get(key+".send_configuration_to_device_using"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".send_configuration_to_device_using"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".send_configuration_to_device_using")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".send_configuration_to_device_using")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".send_configuration_to_device_using")))) {
 		request.SendConfigurationToDeviceUsing = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".coa_source_host"); !isEmptyValue(reflect.ValueOf(d.Get(key+".coa_source_host"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".coa_source_host"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coa_source_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coa_source_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coa_source_host")))) {
 		request.CoaSourceHost = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -842,16 +1087,16 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsS
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment{}
-	if v, ok := d.GetOkExists(key + ".include_when_deploying_sgt_updates"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_when_deploying_sgt_updates"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_when_deploying_sgt_updates"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_when_deploying_sgt_updates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_when_deploying_sgt_updates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_when_deploying_sgt_updates")))) {
 		request.IncludeWhenDeployingSgtUpdates = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_mode_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_mode_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_mode_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_mode_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_mode_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_mode_password")))) {
 		request.EnableModePassword = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".exec_mode_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".exec_mode_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".exec_mode_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".exec_mode_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".exec_mode_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".exec_mode_password")))) {
 		request.ExecModePassword = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".exec_mode_username"); !isEmptyValue(reflect.ValueOf(d.Get(key+".exec_mode_username"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".exec_mode_username"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".exec_mode_username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".exec_mode_username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".exec_mode_username")))) {
 		request.ExecModeUsername = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -862,10 +1107,10 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsD
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTacacsSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTacacsSettings {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTacacsSettings{}
-	if v, ok := d.GetOkExists(key + ".shared_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".shared_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".shared_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".shared_secret")))) {
 		request.SharedSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".connect_mode_options"); !isEmptyValue(reflect.ValueOf(d.Get(key+".connect_mode_options"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".connect_mode_options"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connect_mode_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connect_mode_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connect_mode_options")))) {
 		request.ConnectModeOptions = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -876,6 +1121,7 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTacacsSettings(ct
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPList {
 	request := []isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -898,13 +1144,13 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPLi
 
 func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPList {
 	request := isegosdk.RequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPList{}
-	if v, ok := d.GetOkExists(key + ".ipaddress"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ipaddress"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ipaddress"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipaddress")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipaddress")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipaddress")))) {
 		request.IPaddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mask"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mask"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mask"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mask")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mask")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mask")))) {
 		request.Mask = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".get_ipaddress_exclude"); !isEmptyValue(reflect.ValueOf(d.Get(key+".get_ipaddress_exclude"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".get_ipaddress_exclude"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".get_ipaddress_exclude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".get_ipaddress_exclude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".get_ipaddress_exclude")))) {
 		request.GetIPaddressExclude = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -924,46 +1170,46 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByID(ctx context.Context, key 
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDevice(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDevice {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDevice{}
-	if v, ok := d.GetOkExists(key + ".id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".description"); !isEmptyValue(reflect.ValueOf(d.Get(key+".description"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".description"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".authentication_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".authentication_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".authentication_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".authentication_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".authentication_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".authentication_settings")))) {
 		request.AuthenticationSettings = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceAuthenticationSettings(ctx, key+".authentication_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".snmpsettings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".snmpsettings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".snmpsettings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".snmpsettings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".snmpsettings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".snmpsettings")))) {
 		request.SNMPsettings = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceSNMPsettings(ctx, key+".snmpsettings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".trustsecsettings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trustsecsettings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trustsecsettings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".trustsecsettings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".trustsecsettings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".trustsecsettings")))) {
 		request.Trustsecsettings = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettings(ctx, key+".trustsecsettings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".tacacs_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".tacacs_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".tacacs_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".tacacs_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".tacacs_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".tacacs_settings")))) {
 		request.TacacsSettings = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTacacsSettings(ctx, key+".tacacs_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".profile_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".profile_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".profile_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".profile_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".profile_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".profile_name")))) {
 		request.ProfileName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".coa_port"); !isEmptyValue(reflect.ValueOf(d.Get(key+".coa_port"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".coa_port"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coa_port")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coa_port")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coa_port")))) {
 		request.CoaPort = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dtls_dns_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dtls_dns_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dtls_dns_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dtls_dns_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dtls_dns_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dtls_dns_name")))) {
 		request.DtlsDNSName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".model_name"); !isEmptyValue(reflect.ValueOf(d.Get(key+".model_name"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".model_name"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".model_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".model_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".model_name")))) {
 		request.ModelName = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".software_version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".software_version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".software_version"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".software_version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".software_version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".software_version")))) {
 		request.SoftwareVersion = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".network_device_iplist"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_device_iplist"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_device_iplist"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".network_device_iplist")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".network_device_iplist")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".network_device_iplist")))) {
 		request.NetworkDeviceIPList = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPListArray(ctx, key+".network_device_iplist", d)
 	}
-	if v, ok := d.GetOkExists(key + ".network_device_group_list"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_device_group_list"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_device_group_list"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".network_device_group_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".network_device_group_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".network_device_group_list")))) {
 		request.NetworkDeviceGroupList = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -974,34 +1220,34 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDevice(ctx context.
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceAuthenticationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceAuthenticationSettings {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceAuthenticationSettings{}
-	if v, ok := d.GetOkExists(key + ".network_protocol"); !isEmptyValue(reflect.ValueOf(d.Get(key+".network_protocol"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".network_protocol"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".network_protocol")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".network_protocol")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".network_protocol")))) {
 		request.NetworkProtocol = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".second_radius_shared_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".second_radius_shared_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".second_radius_shared_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".second_radius_shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".second_radius_shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".second_radius_shared_secret")))) {
 		request.SecondRadiusSharedSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".radius_shared_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".radius_shared_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".radius_shared_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".radius_shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".radius_shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".radius_shared_secret")))) {
 		request.RadiusSharedSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_key_wrap"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_key_wrap"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_key_wrap"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_key_wrap")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_key_wrap")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_key_wrap")))) {
 		request.EnableKeyWrap = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enabled"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enabled"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enabled"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enabled")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enabled")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enabled")))) {
 		request.Enabled = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".dtls_required"); !isEmptyValue(reflect.ValueOf(d.Get(key+".dtls_required"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".dtls_required"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dtls_required")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dtls_required")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dtls_required")))) {
 		request.DtlsRequired = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_multi_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_multi_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_multi_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_multi_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_multi_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_multi_secret")))) {
 		request.EnableMultiSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".key_encryption_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_encryption_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_encryption_key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key_encryption_key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key_encryption_key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key_encryption_key")))) {
 		request.KeyEncryptionKey = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".message_authenticator_code_key"); !isEmptyValue(reflect.ValueOf(d.Get(key+".message_authenticator_code_key"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".message_authenticator_code_key"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".message_authenticator_code_key")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".message_authenticator_code_key")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".message_authenticator_code_key")))) {
 		request.MessageAuthenticatorCodeKey = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".key_input_format"); !isEmptyValue(reflect.ValueOf(d.Get(key+".key_input_format"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".key_input_format"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".key_input_format")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".key_input_format")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".key_input_format")))) {
 		request.KeyInputFormat = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1012,22 +1258,22 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceAuthenticatio
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceSNMPsettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceSNMPsettings {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceSNMPsettings{}
-	if v, ok := d.GetOkExists(key + ".version"); !isEmptyValue(reflect.ValueOf(d.Get(key+".version"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".version"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".version")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".version")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".version")))) {
 		request.Version = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".ro_community"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ro_community"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ro_community"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ro_community")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ro_community")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ro_community")))) {
 		request.RoCommunity = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".polling_interval"); !isEmptyValue(reflect.ValueOf(d.Get(key+".polling_interval"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".polling_interval"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".polling_interval")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".polling_interval")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".polling_interval")))) {
 		request.PollingInterval = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".link_trap_query"); !isEmptyValue(reflect.ValueOf(d.Get(key+".link_trap_query"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".link_trap_query"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link_trap_query")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link_trap_query")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link_trap_query")))) {
 		request.LinkTrapQuery = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mac_trap_query"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mac_trap_query"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mac_trap_query"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_trap_query")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_trap_query")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_trap_query")))) {
 		request.MacTrapQuery = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".originating_policy_services_node"); !isEmptyValue(reflect.ValueOf(d.Get(key+".originating_policy_services_node"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".originating_policy_services_node"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".originating_policy_services_node")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".originating_policy_services_node")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".originating_policy_services_node")))) {
 		request.OriginatingPolicyServicesNode = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1038,16 +1284,16 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceSNMPsettings(
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettings {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettings{}
-	if v, ok := d.GetOkExists(key + ".device_authentication_settings"); !isEmptyValue(reflect.ValueOf(d.Get(key+".device_authentication_settings"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".device_authentication_settings"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_authentication_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_authentication_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_authentication_settings")))) {
 		request.DeviceAuthenticationSettings = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings(ctx, key+".device_authentication_settings.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".sga_notification_and_updates"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sga_notification_and_updates"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sga_notification_and_updates"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sga_notification_and_updates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sga_notification_and_updates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sga_notification_and_updates")))) {
 		request.SgaNotificationAndUpdates = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates(ctx, key+".sga_notification_and_updates.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".device_configuration_deployment"); !isEmptyValue(reflect.ValueOf(d.Get(key+".device_configuration_deployment"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".device_configuration_deployment"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_configuration_deployment")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_configuration_deployment")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_configuration_deployment")))) {
 		request.DeviceConfigurationDeployment = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment(ctx, key+".device_configuration_deployment.0", d)
 	}
-	if v, ok := d.GetOkExists(key + ".push_id_support"); !isEmptyValue(reflect.ValueOf(d.Get(key+".push_id_support"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".push_id_support"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".push_id_support")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".push_id_support")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".push_id_support")))) {
 		request.PushIDSupport = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1058,10 +1304,10 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsetti
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceAuthenticationSettings{}
-	if v, ok := d.GetOkExists(key + ".sga_device_id"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sga_device_id"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sga_device_id"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sga_device_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sga_device_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sga_device_id")))) {
 		request.SgaDeviceID = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".sga_device_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".sga_device_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".sga_device_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sga_device_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sga_device_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sga_device_password")))) {
 		request.SgaDevicePassword = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1072,28 +1318,28 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsetti
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsSgaNotificationAndUpdates{}
-	if v, ok := d.GetOkExists(key + ".downlaod_environment_data_every_x_seconds"); !isEmptyValue(reflect.ValueOf(d.Get(key+".downlaod_environment_data_every_x_seconds"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".downlaod_environment_data_every_x_seconds"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".downlaod_environment_data_every_x_seconds")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".downlaod_environment_data_every_x_seconds")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".downlaod_environment_data_every_x_seconds")))) {
 		request.DownlaodEnvironmentDataEveryXSeconds = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".downlaod_peer_authorization_policy_every_x_seconds"); !isEmptyValue(reflect.ValueOf(d.Get(key+".downlaod_peer_authorization_policy_every_x_seconds"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".downlaod_peer_authorization_policy_every_x_seconds"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".downlaod_peer_authorization_policy_every_x_seconds")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".downlaod_peer_authorization_policy_every_x_seconds")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".downlaod_peer_authorization_policy_every_x_seconds")))) {
 		request.DownlaodPeerAuthorizationPolicyEveryXSeconds = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".re_authentication_every_x_seconds"); !isEmptyValue(reflect.ValueOf(d.Get(key+".re_authentication_every_x_seconds"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".re_authentication_every_x_seconds"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".re_authentication_every_x_seconds")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".re_authentication_every_x_seconds")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".re_authentication_every_x_seconds")))) {
 		request.ReAuthenticationEveryXSeconds = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".download_sga_cllists_every_x_seconds"); !isEmptyValue(reflect.ValueOf(d.Get(key+".download_sga_cllists_every_x_seconds"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".download_sga_cllists_every_x_seconds"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".download_sga_cllists_every_x_seconds")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".download_sga_cllists_every_x_seconds")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".download_sga_cllists_every_x_seconds")))) {
 		request.DownloadSgACLListsEveryXSeconds = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".other_sga_devices_to_trust_this_device"); !isEmptyValue(reflect.ValueOf(d.Get(key+".other_sga_devices_to_trust_this_device"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".other_sga_devices_to_trust_this_device"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".other_sga_devices_to_trust_this_device")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".other_sga_devices_to_trust_this_device")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".other_sga_devices_to_trust_this_device")))) {
 		request.OtherSgADevicesToTrustThisDevice = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".send_configuration_to_device"); !isEmptyValue(reflect.ValueOf(d.Get(key+".send_configuration_to_device"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".send_configuration_to_device"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".send_configuration_to_device")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".send_configuration_to_device")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".send_configuration_to_device")))) {
 		request.SendConfigurationToDevice = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".send_configuration_to_device_using"); !isEmptyValue(reflect.ValueOf(d.Get(key+".send_configuration_to_device_using"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".send_configuration_to_device_using"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".send_configuration_to_device_using")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".send_configuration_to_device_using")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".send_configuration_to_device_using")))) {
 		request.SendConfigurationToDeviceUsing = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".coa_source_host"); !isEmptyValue(reflect.ValueOf(d.Get(key+".coa_source_host"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".coa_source_host"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".coa_source_host")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".coa_source_host")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".coa_source_host")))) {
 		request.CoaSourceHost = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1104,16 +1350,16 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsetti
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment{}
-	if v, ok := d.GetOkExists(key + ".include_when_deploying_sgt_updates"); !isEmptyValue(reflect.ValueOf(d.Get(key+".include_when_deploying_sgt_updates"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".include_when_deploying_sgt_updates"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".include_when_deploying_sgt_updates")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".include_when_deploying_sgt_updates")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".include_when_deploying_sgt_updates")))) {
 		request.IncludeWhenDeployingSgtUpdates = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".enable_mode_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".enable_mode_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".enable_mode_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_mode_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_mode_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_mode_password")))) {
 		request.EnableModePassword = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".exec_mode_password"); !isEmptyValue(reflect.ValueOf(d.Get(key+".exec_mode_password"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".exec_mode_password"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".exec_mode_password")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".exec_mode_password")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".exec_mode_password")))) {
 		request.ExecModePassword = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".exec_mode_username"); !isEmptyValue(reflect.ValueOf(d.Get(key+".exec_mode_username"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".exec_mode_username"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".exec_mode_username")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".exec_mode_username")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".exec_mode_username")))) {
 		request.ExecModeUsername = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1124,10 +1370,10 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsetti
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTacacsSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTacacsSettings {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTacacsSettings{}
-	if v, ok := d.GetOkExists(key + ".shared_secret"); !isEmptyValue(reflect.ValueOf(d.Get(key+".shared_secret"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".shared_secret"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".shared_secret")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".shared_secret")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".shared_secret")))) {
 		request.SharedSecret = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".connect_mode_options"); !isEmptyValue(reflect.ValueOf(d.Get(key+".connect_mode_options"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".connect_mode_options"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".connect_mode_options")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".connect_mode_options")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".connect_mode_options")))) {
 		request.ConnectModeOptions = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
@@ -1138,6 +1384,7 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTacacsSetting
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPListArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList {
 	request := []isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList{}
+	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
 		return nil
@@ -1160,13 +1407,13 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDevice
 
 func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList {
 	request := isegosdk.RequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList{}
-	if v, ok := d.GetOkExists(key + ".ipaddress"); !isEmptyValue(reflect.ValueOf(d.Get(key+".ipaddress"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".ipaddress"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ipaddress")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ipaddress")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ipaddress")))) {
 		request.IPaddress = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(key + ".mask"); !isEmptyValue(reflect.ValueOf(d.Get(key+".mask"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".mask"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mask")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mask")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mask")))) {
 		request.Mask = interfaceToIntPtr(v)
 	}
-	if v, ok := d.GetOkExists(key + ".get_ipaddress_exclude"); !isEmptyValue(reflect.ValueOf(d.Get(key+".get_ipaddress_exclude"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".get_ipaddress_exclude"))) {
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".get_ipaddress_exclude")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".get_ipaddress_exclude")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".get_ipaddress_exclude")))) {
 		request.GetIPaddressExclude = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {

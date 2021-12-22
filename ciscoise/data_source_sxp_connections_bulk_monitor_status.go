@@ -172,5 +172,4 @@ func flattenSxpConnectionsMonitorBulkStatusSxpConnectionsItemResourcesStatus(ite
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

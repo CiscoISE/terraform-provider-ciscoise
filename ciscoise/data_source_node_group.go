@@ -15,18 +15,17 @@ func dataSourceNodeGroup() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Node Group.
 
-- Get details of all the node groups in the cluster. To detect node failure and to reset all URL-redirected sessions on
-the failed node, two or more Policy Service nodes can be placed in the same node group. When a node that belongs to a
-node group fails, another node in the same node group issues a Change of Authorization (CoA) for all URL-redirected
-sessions on the failed node.
+- This data source retrieves the details of all the node groups in the cluster.
+ Each node group retrieved consists of name, description and MAR cache details like query-attempts, query-timeout,
+replication-attempts, replication-timeout.
 
-- Get details of a node group in the cluster.
+- This data source retrieves the details of a node group in the cluster using a node group name.
 `,
 
 		ReadContext: dataSourceNodeGroupRead,
 		Schema: map[string]*schema.Schema{
 			"node_group_name": &schema.Schema{
-				Description: `node-group-name path parameter. ID of the existing node group.`,
+				Description: `nodeGroupName path parameter. Name of the existing node group.`,
 				Type:        schema.TypeString,
 				Optional:    true,
 			},
@@ -46,25 +45,25 @@ sessions on the failed node.
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"enabled": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
 									"query_attempts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The number of times Cisco ISE attempts to perform the cache entry query. (0 - 5). `,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"query_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The time, in seconds, after which the cache entry query times out. (1 - 10). `,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"replication_attempts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The number of times Cisco ISE attempts to perform MAR cache entry replication. (0 - 5). `,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"replication_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The time, in seconds, after which the cache entry replication times out. (1 - 10). `,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 								},
 							},
@@ -92,25 +91,25 @@ sessions on the failed node.
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"enabled": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
 									"query_attempts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The number of times Cisco ISE attempts to perform the cache entry query. (0 - 5). `,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"query_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The time, in seconds, after which the cache entry query times out. (1 - 10). `,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"replication_attempts": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The number of times Cisco ISE attempts to perform MAR cache entry replication. (0 - 5). `,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 									"replication_timeout": &schema.Schema{
-										Type:     schema.TypeInt,
-										Computed: true,
+										Description: `The time, in seconds, after which the cache entry replication times out. (1 - 10). `,
+										Type:        schema.TypeInt,
+										Computed:    true,
 									},
 								},
 							},
@@ -170,9 +169,12 @@ func dataSourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m inte
 		log.Printf("[DEBUG] Selected method 2: GetNodeGroup")
 		vvNodeGroupName := vNodeGroupName.(string)
 
-		response2, _, err := client.NodeGroup.GetNodeGroup(vvNodeGroupName)
+		response2, restyResp2, err := client.NodeGroup.GetNodeGroup(vvNodeGroupName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNodeGroup", err,
 				"Failure at GetNodeGroup, unexpected response", ""))
@@ -181,7 +183,7 @@ func dataSourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m inte
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItem2 := flattenNodeGroupGetNodeGroupItem(response2)
+		vItem2 := flattenNodeGroupGetNodeGroupItem(response2.Response)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodeGroup response",
@@ -202,9 +204,9 @@ func flattenNodeGroupGetNodeGroupsItems(items *[]isegosdk.ResponseNodeGroupGetNo
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["name"] = item.Name
 		respItem["description"] = item.Description
 		respItem["mar_cache"] = flattenNodeGroupGetNodeGroupsItemsMarCache(item.MarCache)
+		respItem["name"] = item.Name
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -215,11 +217,10 @@ func flattenNodeGroupGetNodeGroupsItemsMarCache(item *isegosdk.ResponseNodeGroup
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = boolPtrToString(item.Enabled)
-	respItem["replication_timeout"] = item.ReplicationTimeout
-	respItem["replication_attempts"] = item.ReplicationAttempts
-	respItem["query_timeout"] = item.QueryTimeout
 	respItem["query_attempts"] = item.QueryAttempts
+	respItem["query_timeout"] = item.QueryTimeout
+	respItem["replication_attempts"] = item.ReplicationAttempts
+	respItem["replication_timeout"] = item.ReplicationTimeout
 
 	return []map[string]interface{}{
 		respItem,
@@ -227,29 +228,28 @@ func flattenNodeGroupGetNodeGroupsItemsMarCache(item *isegosdk.ResponseNodeGroup
 
 }
 
-func flattenNodeGroupGetNodeGroupItem(item *isegosdk.ResponseNodeGroupGetNodeGroup) []map[string]interface{} {
+func flattenNodeGroupGetNodeGroupItem(item *isegosdk.ResponseNodeGroupGetNodeGroupResponse) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["name"] = item.Name
 	respItem["description"] = item.Description
 	respItem["mar_cache"] = flattenNodeGroupGetNodeGroupItemMarCache(item.MarCache)
+	respItem["name"] = item.Name
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenNodeGroupGetNodeGroupItemMarCache(item *isegosdk.ResponseNodeGroupGetNodeGroupMarCache) []map[string]interface{} {
+func flattenNodeGroupGetNodeGroupItemMarCache(item *isegosdk.ResponseNodeGroupGetNodeGroupResponseMarCache) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["enabled"] = boolPtrToString(item.Enabled)
-	respItem["replication_timeout"] = item.ReplicationTimeout
-	respItem["replication_attempts"] = item.ReplicationAttempts
-	respItem["query_timeout"] = item.QueryTimeout
 	respItem["query_attempts"] = item.QueryAttempts
+	respItem["query_timeout"] = item.QueryTimeout
+	respItem["replication_attempts"] = item.ReplicationAttempts
+	respItem["replication_timeout"] = item.ReplicationTimeout
 
 	return []map[string]interface{}{
 		respItem,

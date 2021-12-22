@@ -18,7 +18,7 @@ It manages read and update operations on ACISettings.
 ```terraform
 resource "ciscoise_aci_settings" "example" {
   provider = ciscoise
-  item {
+  parameters {
 
     aci50                     = "false"
     aci51                     = "false"
@@ -57,14 +57,15 @@ output "ciscoise_aci_settings_example" {
 ### Optional
 
 - **id** (String) The ID of this resource.
-- **item** (Block List) (see [below for nested schema](#nestedblock--item))
+- **parameters** (Block List) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
+- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
 - **last_updated** (String)
 
-<a id="nestedblock--item"></a>
-### Nested Schema for `item`
+<a id="nestedblock--parameters"></a>
+### Nested Schema for `parameters`
 
 Optional:
 
@@ -82,6 +83,36 @@ Optional:
 - **enable_elements_limit** (String)
 - **id** (String) Resource UUID value
 - **ip_address_host_name** (String) ACI Cluster IP Address / Host name
+- **l3_route_network** (String)
+- **max_num_iepg_from_aci** (Number)
+- **max_num_sgt_to_aci** (Number)
+- **specific_sxp_domain** (String)
+- **specifix_sxp_domain_list** (List of String)
+- **suffix_to_epg** (String)
+- **suffix_to_sgt** (String)
+- **tenant_name** (String)
+- **untagged_packet_iepg_name** (String)
+
+
+<a id="nestedatt--item"></a>
+### Nested Schema for `item`
+
+Read-Only:
+
+- **aci50** (String)
+- **aci51** (String)
+- **aciipaddress** (String)
+- **acipassword** (String)
+- **aciuser_name** (String)
+- **admin_name** (String)
+- **admin_password** (String)
+- **all_sxp_domain** (String)
+- **default_sgt_name** (String)
+- **enable_aci** (String)
+- **enable_data_plane** (String)
+- **enable_elements_limit** (String)
+- **id** (String)
+- **ip_address_host_name** (String)
 - **l3_route_network** (String)
 - **max_num_iepg_from_aci** (Number)
 - **max_num_sgt_to_aci** (Number)

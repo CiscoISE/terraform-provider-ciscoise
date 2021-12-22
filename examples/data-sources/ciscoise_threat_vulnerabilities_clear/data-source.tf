@@ -1,5 +1,6 @@
 
 data "ciscoise_threat_vulnerabilities_clear" "example" {
-  provider      = ciscoise
+  provider = ciscoise
+
   mac_addresses = "string"
 }

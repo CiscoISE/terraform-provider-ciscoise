@@ -161,5 +161,4 @@ func flattenNetworkAccessDictionaryAttributesListGetNetworkAccessDictionariesAut
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

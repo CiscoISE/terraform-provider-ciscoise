@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.0.2-beta"
+      version = "0.0.3-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -13,9 +13,9 @@ provider "ciscoise" {
 resource "ciscoise_endpoint_group" "examples" {
   provider = ciscoise
   count    = 2
-  item {
+  parameters {
     name        = "Sony-Device-${count.index}"
-    description = "Identity Group for Profile: Sony-Device-${count.index}"
+    description = "Identity Group for Profile: Sony-Device-0${count.index}"
   }
 }
 

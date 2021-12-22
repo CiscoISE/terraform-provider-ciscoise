@@ -177,14 +177,14 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 	vDictionaryName, okDictionaryName := d.GetOk("dictionary_name")
 	vName, okName := d.GetOk("name")
 
-	method1 := []bool{okName, okDictionaryName}
+	method1 := []bool{okDictionaryName}
 	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okDictionaryName}
+	method2 := []bool{okName, okDictionaryName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessDictionaryAttributesByDictionaryName")
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionaryAttributesByDictionaryName")
 		vvDictionaryName := vDictionaryName.(string)
 
 		response1, restyResp1, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
@@ -212,14 +212,17 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 		return diags
 
 	}
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionaryAttributeByName")
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessDictionaryAttributeByName")
 		vvName := vName.(string)
 		vvDictionaryName := vDictionaryName.(string)
 
-		response2, _, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributeByName(vvName, vvDictionaryName)
+		response2, restyResp2, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributeByName(vvName, vvDictionaryName)
 
 		if err != nil || response2 == nil {
+			if restyResp2 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetNetworkAccessDictionaryAttributeByName", err,
 				"Failure at GetNetworkAccessDictionaryAttributeByName, unexpected response", ""))
@@ -275,7 +278,6 @@ func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributes
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }
 
 func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameItem(item *isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameResponse) []map[string]interface{} {
@@ -309,5 +311,4 @@ func flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeB
 		respItems = append(respItems, respItem)
 	}
 	return respItems
-
 }

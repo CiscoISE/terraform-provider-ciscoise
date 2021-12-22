@@ -4,14 +4,14 @@ page_title: "ciscoise_csr_delete Data Source - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It performs delete operation on Certificates.
-  This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.
+  This data source action deletes a Certificate Signing Request of a particular node based on given HostName and ID.
 ---
 
 # ciscoise_csr_delete (Data Source)
 
 It performs delete operation on Certificates.
 
-- This data source action deletes a Certificate Signing Request of a particular node based on a given HostName and ID.
+- This data source action deletes a Certificate Signing Request of a particular node based on given HostName and ID.
 
 ## Example Usage
 
@@ -20,6 +20,7 @@ data "ciscoise_csr_delete" "example" {
   provider  = ciscoise
   host_name = "string"
   id        = "string"
+
 }
 ```
 
@@ -29,7 +30,7 @@ data "ciscoise_csr_delete" "example" {
 ### Required
 
 - **host_name** (String) hostName path parameter. Name of the host of which CSR's should be deleted
-- **id** (String) id path parameter. The ID of the Certificate Signing Request to be deleted
+- **id** (String) id path parameter. ID of the Certificate Signing Request to be deleted
 
 ### Read-Only
 
