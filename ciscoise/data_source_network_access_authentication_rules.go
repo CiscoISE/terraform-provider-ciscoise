@@ -639,13 +639,13 @@ func dataSourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *sche
 	vPolicyID, okPolicyID := d.GetOk("policy_id")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okPolicyID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okID}
+	method2 := []bool{okPolicyID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
+	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetNetworkAccessAuthenticationRules")
 		vvPolicyID := vPolicyID.(string)
 
@@ -674,7 +674,7 @@ func dataSourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *sche
 		return diags
 
 	}
-	if selectedMethod == 2 {
+	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetNetworkAccessAuthenticationRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)

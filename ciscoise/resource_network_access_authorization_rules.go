@@ -685,7 +685,7 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -706,9 +706,9 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -783,7 +783,7 @@ func resourceNetworkAccessAuthorizationRulesUpdate(ctx context.Context, d *schem
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -804,9 +804,9 @@ func resourceNetworkAccessAuthorizationRulesUpdate(ctx context.Context, d *schem
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -860,7 +860,7 @@ func resourceNetworkAccessAuthorizationRulesDelete(ctx context.Context, d *schem
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -881,9 +881,9 @@ func resourceNetworkAccessAuthorizationRulesDelete(ctx context.Context, d *schem
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})

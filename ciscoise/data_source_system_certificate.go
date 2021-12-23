@@ -378,13 +378,13 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 	vFilterType, okFilterType := d.GetOk("filter_type")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okHostName, okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okHostName, okID}
+	method2 := []bool{okHostName, okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
+	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetSystemCertificates")
 		vvHostName := vHostName.(string)
 		queryParams1 := isegosdk.GetSystemCertificatesQueryParams{}
@@ -454,7 +454,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 		return diags
 
 	}
-	if selectedMethod == 2 {
+	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetSystemCertificateByID")
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)

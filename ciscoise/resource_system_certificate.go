@@ -267,13 +267,13 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vHostName, okHostName := resourceMap["host_name"]
+	vHostName, _ := resourceMap["host_name"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
-	method1 := []bool{okHostName, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okHostName, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	vvHostName := vHostName
@@ -356,7 +356,7 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 
 	vID, okID := resourceMap["id"]
 
-	method1 := []bool{okHostName, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okHostName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
@@ -407,7 +407,7 @@ func resourceSystemCertificateDelete(ctx context.Context, d *schema.ResourceData
 
 	vID, okID := resourceMap["id"]
 
-	method1 := []bool{okHostName, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okHostName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
