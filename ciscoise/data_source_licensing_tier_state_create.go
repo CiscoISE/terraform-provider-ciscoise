@@ -87,7 +87,7 @@ func dataSourceLicensingTierStateCreateRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateTierStateInfo")
+		log.Printf("[DEBUG] Selected method: UpdateTierStateInfo")
 		request1 := expandRequestLicensingTierStateCreateUpdateTierStateInfo(ctx, "", d)
 
 		response1, restyResp1, err := client.Licensing.UpdateTierStateInfo(request1)

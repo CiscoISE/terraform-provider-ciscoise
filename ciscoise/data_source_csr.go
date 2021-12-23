@@ -342,7 +342,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetCsrs")
+		log.Printf("[DEBUG] Selected method: GetCsrs")
 		queryParams1 := isegosdk.GetCsrsQueryParams{}
 
 		if okPage {
@@ -411,7 +411,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetCsrByID")
+		log.Printf("[DEBUG] Selected method: GetCsrByID")
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)
 

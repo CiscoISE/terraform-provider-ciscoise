@@ -107,7 +107,7 @@ func dataSourceSgToVnToVLANBulkMonitorStatusRead(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusSecurityGroupsToVnToVLAN")
+		log.Printf("[DEBUG] Selected method: MonitorBulkStatusSecurityGroupsToVnToVLAN")
 		vvBulkid := vBulkid.(string)
 
 		response1, restyResp1, err := client.SecurityGroupToVirtualNetwork.MonitorBulkStatusSecurityGroupsToVnToVLAN(vvBulkid)

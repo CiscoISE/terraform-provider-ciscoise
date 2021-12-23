@@ -100,7 +100,7 @@ func dataSourceTrustsecVnVLANMappingBulkCreateRead(ctx context.Context, d *schem
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkCreateVnVLANMappings")
+		log.Printf("[DEBUG] Selected method: BulkCreateVnVLANMappings")
 		request1 := expandRequestTrustsecVnVLANMappingBulkCreateBulkCreateVnVLANMappings(ctx, "", d)
 
 		response1, restyResp1, err := client.VnVLANMapping.BulkCreateVnVLANMappings(request1)

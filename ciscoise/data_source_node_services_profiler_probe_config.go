@@ -249,7 +249,7 @@ func dataSourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schem
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetProfilerProbeConfig")
+		log.Printf("[DEBUG] Selected method: GetProfilerProbeConfig")
 		vvHostname := vHostname.(string)
 
 		response1, restyResp1, err := client.NodeServices.GetProfilerProbeConfig(vvHostname)

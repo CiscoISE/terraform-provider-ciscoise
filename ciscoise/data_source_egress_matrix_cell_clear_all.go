@@ -36,7 +36,7 @@ func dataSourceEgressMatrixCellClearAllRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ClearAllMatrixCells")
+		log.Printf("[DEBUG] Selected method: ClearAllMatrixCells")
 
 		response1, err := client.EgressMatrixCell.ClearAllMatrixCells()
 

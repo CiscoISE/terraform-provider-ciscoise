@@ -187,7 +187,7 @@ func dataSourceSystemCertificateImportRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ImportSystemCert")
+		log.Printf("[DEBUG] Selected method: ImportSystemCert")
 		request1 := expandRequestSystemCertificateImportImportSystemCert(ctx, "", d)
 
 		response1, restyResp1, err := client.Certificates.ImportSystemCert(request1)

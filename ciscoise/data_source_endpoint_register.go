@@ -165,7 +165,7 @@ func dataSourceEndpointRegisterRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RegisterEndpoint")
+		log.Printf("[DEBUG] Selected method: RegisterEndpoint")
 		request1 := expandRequestEndpointRegisterRegisterEndpoint(ctx, "", d)
 
 		response1, err := client.Endpoint.RegisterEndpoint(request1)

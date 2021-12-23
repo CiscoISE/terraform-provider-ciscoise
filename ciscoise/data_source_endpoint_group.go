@@ -268,7 +268,7 @@ func dataSourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEndpointGroups")
+		log.Printf("[DEBUG] Selected method: GetEndpointGroups")
 		queryParams1 := isegosdk.GetEndpointGroupsQueryParams{}
 
 		if okPage {
@@ -337,7 +337,7 @@ func dataSourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetEndpointGroupByName")
+		log.Printf("[DEBUG] Selected method: GetEndpointGroupByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.EndpointIDentityGroup.GetEndpointGroupByName(vvName)
@@ -366,7 +366,7 @@ func dataSourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetEndpointGroupByID")
+		log.Printf("[DEBUG] Selected method: GetEndpointGroupByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.EndpointIDentityGroup.GetEndpointGroupByID(vvID)

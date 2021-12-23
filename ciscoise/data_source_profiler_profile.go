@@ -212,7 +212,7 @@ func dataSourceProfilerProfileRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetProfilerProfiles")
+		log.Printf("[DEBUG] Selected method: GetProfilerProfiles")
 		queryParams1 := isegosdk.GetProfilerProfilesQueryParams{}
 
 		if okPage {
@@ -281,7 +281,7 @@ func dataSourceProfilerProfileRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetProfilerProfileByID")
+		log.Printf("[DEBUG] Selected method: GetProfilerProfileByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.ProfilerProfile.GetProfilerProfileByID(vvID)

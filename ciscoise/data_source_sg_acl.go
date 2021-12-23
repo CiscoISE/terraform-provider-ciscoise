@@ -234,7 +234,7 @@ func dataSourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSecurityGroupsACL")
+		log.Printf("[DEBUG] Selected method: GetSecurityGroupsACL")
 		queryParams1 := isegosdk.GetSecurityGroupsACLQueryParams{}
 
 		if okPage {
@@ -303,7 +303,7 @@ func dataSourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetSecurityGroupsACLByID")
+		log.Printf("[DEBUG] Selected method: GetSecurityGroupsACLByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SecurityGroupsACLs.GetSecurityGroupsACLByID(vvID)

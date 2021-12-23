@@ -46,7 +46,7 @@ func dataSourceSxpConnectionsBulkRequestRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkRequestForSxpConnections")
+		log.Printf("[DEBUG] Selected method: BulkRequestForSxpConnections")
 		request1 := expandRequestSxpConnectionsBulkRequestBulkRequestForSxpConnections(ctx, "", d)
 
 		response1, err := client.SxpConnections.BulkRequestForSxpConnections(request1)

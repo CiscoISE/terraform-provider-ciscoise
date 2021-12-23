@@ -62,7 +62,7 @@ func dataSourceActiveDirectoryJoinDomainWithAllNodesRead(ctx context.Context, d 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: JoinDomainWithAllNodes")
+		log.Printf("[DEBUG] Selected method: JoinDomainWithAllNodes")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryJoinDomainWithAllNodesJoinDomainWithAllNodes(ctx, "", d)
 

@@ -42,7 +42,7 @@ func dataSourcePxgridAccessSecretRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: AccessSecret")
+		log.Printf("[DEBUG] Selected method: AccessSecret")
 		request1 := expandRequestPxgridAccessSecretAccessSecret(ctx, "", d)
 
 		response1, err := client.Consumer.AccessSecret(request1)

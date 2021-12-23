@@ -49,7 +49,7 @@ func dataSourceDeviceAdministrationIDentityStoresRead(ctx context.Context, d *sc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminIDentityStores")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminIDentityStores")
 
 		response1, restyResp1, err := client.DeviceAdministrationIDentityStores.GetDeviceAdminIDentityStores()
 

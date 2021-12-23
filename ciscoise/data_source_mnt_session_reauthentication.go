@@ -53,7 +53,7 @@ func dataSourceMntSessionReauthenticationRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SessionReauthenticationByMac")
+		log.Printf("[DEBUG] Selected method: SessionReauthenticationByMac")
 		vvPSNNAME := vPSNNAME.(string)
 		vvENDPOINTMac := vENDPOINTMac.(string)
 		vvREAuthTYPE := vREAuthTYPE.(string)

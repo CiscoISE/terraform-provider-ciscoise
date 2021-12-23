@@ -36,7 +36,7 @@ func dataSourcePxgridEndpointsByOsTypeInfoRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEndpointsByOsType")
+		log.Printf("[DEBUG] Selected method: GetEndpointsByOsType")
 
 		response1, err := client.Mdm.GetEndpointsByOsType()
 

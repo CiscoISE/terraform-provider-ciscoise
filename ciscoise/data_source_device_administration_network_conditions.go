@@ -316,7 +316,7 @@ func dataSourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminNetworkConditions")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminNetworkConditions")
 
 		response1, restyResp1, err := client.DeviceAdministrationNetworkConditions.GetDeviceAdminNetworkConditions()
 
@@ -344,7 +344,7 @@ func dataSourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminNetworkConditionByID")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminNetworkConditionByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DeviceAdministrationNetworkConditions.GetDeviceAdminNetworkConditionByID(vvID)

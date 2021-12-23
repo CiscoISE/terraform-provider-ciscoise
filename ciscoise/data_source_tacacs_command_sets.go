@@ -262,7 +262,7 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTacacsCommandSets")
+		log.Printf("[DEBUG] Selected method: GetTacacsCommandSets")
 		queryParams1 := isegosdk.GetTacacsCommandSetsQueryParams{}
 
 		if okPage {
@@ -319,7 +319,7 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetTacacsCommandSetsByName")
+		log.Printf("[DEBUG] Selected method: GetTacacsCommandSetsByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.TacacsCommandSets.GetTacacsCommandSetsByName(vvName)
@@ -348,7 +348,7 @@ func dataSourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetTacacsCommandSetsByID")
+		log.Printf("[DEBUG] Selected method: GetTacacsCommandSetsByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.TacacsCommandSets.GetTacacsCommandSetsByID(vvID)

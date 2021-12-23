@@ -149,7 +149,7 @@ func dataSourceSmsProviderRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSmsProvider")
+		log.Printf("[DEBUG] Selected method: GetSmsProvider")
 		queryParams1 := isegosdk.GetSmsProviderQueryParams{}
 
 		if okPage {

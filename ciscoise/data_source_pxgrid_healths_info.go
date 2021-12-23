@@ -36,7 +36,7 @@ func dataSourcePxgridHealthsInfoRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetHealths")
+		log.Printf("[DEBUG] Selected method: GetHealths")
 
 		response1, err := client.SystemHealth.GetHealths()
 

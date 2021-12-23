@@ -59,7 +59,7 @@ func dataSourceNodeStandaloneToPrimaryRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: MakePrimary")
+		log.Printf("[DEBUG] Selected method: MakePrimary")
 
 		response1, restyResp1, err := client.NodeDeployment.MakePrimary()
 

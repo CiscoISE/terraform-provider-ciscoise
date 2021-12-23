@@ -216,7 +216,7 @@ func dataSourcePxGridNodeRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPxGridNode")
+		log.Printf("[DEBUG] Selected method: GetPxGridNode")
 		queryParams1 := isegosdk.GetPxGridNodeQueryParams{}
 
 		if okPage {
@@ -273,7 +273,7 @@ func dataSourcePxGridNodeRead(ctx context.Context, d *schema.ResourceData, m int
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetPxGridNodeByName")
+		log.Printf("[DEBUG] Selected method: GetPxGridNodeByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.PxGridNode.GetPxGridNodeByName(vvName)
@@ -302,7 +302,7 @@ func dataSourcePxGridNodeRead(ctx context.Context, d *schema.ResourceData, m int
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetPxGridNodeByID")
+		log.Printf("[DEBUG] Selected method: GetPxGridNodeByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.PxGridNode.GetPxGridNodeByID(vvID)

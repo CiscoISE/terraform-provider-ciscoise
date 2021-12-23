@@ -45,7 +45,7 @@ func dataSourceAciTestConnectivityRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: TestAciConnectivity")
+		log.Printf("[DEBUG] Selected method: TestAciConnectivity")
 
 		response1, restyResp1, err := client.AciSettings.TestAciConnectivity()
 

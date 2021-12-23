@@ -107,7 +107,7 @@ func dataSourceSxpLocalBindingsBulkMonitorStatusRead(ctx context.Context, d *sch
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusSxpLocalBindings")
+		log.Printf("[DEBUG] Selected method: MonitorBulkStatusSxpLocalBindings")
 		vvBulkid := vBulkid.(string)
 
 		response1, restyResp1, err := client.SxpLocalBindings.MonitorBulkStatusSxpLocalBindings(vvBulkid)

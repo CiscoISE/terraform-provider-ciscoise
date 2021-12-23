@@ -62,7 +62,7 @@ func dataSourceGuestUserChangeSponsorPasswordRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ChangeSponsorPassword")
+		log.Printf("[DEBUG] Selected method: ChangeSponsorPassword")
 		vvPortalID := vPortalID.(string)
 		request1 := expandRequestGuestUserChangeSponsorPasswordChangeSponsorPassword(ctx, "", d)
 

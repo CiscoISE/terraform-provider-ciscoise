@@ -44,7 +44,7 @@ func dataSourceMntSessionActiveCountRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetActiveCount")
+		log.Printf("[DEBUG] Selected method: GetActiveCount")
 
 		response1, restyResp1, err := client.Misc.GetActiveCount()
 

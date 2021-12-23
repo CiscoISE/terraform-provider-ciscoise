@@ -42,7 +42,7 @@ func dataSourcePxgridAccountActivateRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ActivateAccount")
+		log.Printf("[DEBUG] Selected method: ActivateAccount")
 		request1 := expandRequestPxgridAccountActivateActivateAccount(ctx, "", d)
 
 		response1, err := client.Consumer.ActivateAccount(request1)
