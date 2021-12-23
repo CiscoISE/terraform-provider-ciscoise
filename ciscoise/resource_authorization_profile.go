@@ -946,7 +946,7 @@ func expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationPro
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAuthorizationProfileCreateAuthorizationProfileAuthorizationProfileAdvancedAttributes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1175,7 +1175,7 @@ func expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizatio
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAuthorizationProfileUpdateAuthorizationProfileByIDAuthorizationProfileAdvancedAttributes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

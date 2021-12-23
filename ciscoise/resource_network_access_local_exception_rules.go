@@ -1080,7 +1080,7 @@ func expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExcept
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1329,7 +1329,7 @@ func expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExcept
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
