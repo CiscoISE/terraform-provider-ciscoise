@@ -2461,7 +2461,7 @@ func resourceSelfRegisteredPortalCreate(ctx context.Context, d *schema.ResourceD
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
-	vName, _ := resourceItem["id"]
+	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
 	if okID && vvID != "" {
 		getResponse2, _, err := client.SelfRegisteredPortal.GetSelfRegisteredPortalByID(vvID)
