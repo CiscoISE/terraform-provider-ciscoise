@@ -1423,7 +1423,7 @@ func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalSettingsLoginP
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalSettingsLoginPageSettingsSocialConfigs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1693,7 +1693,7 @@ func expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizations
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestMyDevicePortalCreateMyDevicePortalMyDevicePortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1855,7 +1855,7 @@ func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalSettingsLo
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalSettingsLoginPageSettingsSocialConfigs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -2125,7 +2125,7 @@ func expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizat
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestMyDevicePortalUpdateMyDevicePortalByIDMyDevicePortalCustomizationsPageCustomizationsData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

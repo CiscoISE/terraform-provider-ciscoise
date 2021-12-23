@@ -1130,7 +1130,7 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPLi
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceNetworkDeviceIPList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1393,7 +1393,7 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDevice
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceNetworkDeviceIPList(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

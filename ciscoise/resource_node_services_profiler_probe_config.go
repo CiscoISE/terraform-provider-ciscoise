@@ -678,7 +678,7 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigDhcpInter
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigDhcpInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -723,7 +723,7 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigDhcpSpanI
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigDhcpSpanInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -779,7 +779,7 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigHTTPInter
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigHTTPInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -827,7 +827,7 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNetflowIn
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNetflowInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -861,7 +861,7 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNmapArray
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNmap(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -891,7 +891,7 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigPxgridArr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigPxgrid(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -921,7 +921,7 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigRadiusArr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigRadius(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -988,7 +988,7 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigSNMPTrapI
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigSNMPTrapInterfaces(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

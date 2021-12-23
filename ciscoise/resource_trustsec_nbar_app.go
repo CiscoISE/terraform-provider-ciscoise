@@ -433,7 +433,7 @@ func expandRequestTrustsecNbarAppCreateNbarAppNetworkIDentitiesArray(ctx context
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTrustsecNbarAppCreateNbarAppNetworkIDentities(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -490,7 +490,7 @@ func expandRequestTrustsecNbarAppUpdateNbarAppByIDNetworkIDentitiesArray(ctx con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTrustsecNbarAppUpdateNbarAppByIDNetworkIDentities(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
