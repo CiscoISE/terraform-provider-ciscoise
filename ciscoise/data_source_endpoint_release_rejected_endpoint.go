@@ -42,7 +42,7 @@ func dataSourceEndpointReleaseRejectedEndpointRead(ctx context.Context, d *schem
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReleaseRejectedEndpoint")
+		log.Printf("[DEBUG] Selected method: ReleaseRejectedEndpoint")
 		vvID := vID.(string)
 
 		response1, err := client.Endpoint.ReleaseRejectedEndpoint(vvID)

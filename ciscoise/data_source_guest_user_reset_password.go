@@ -64,7 +64,7 @@ func dataSourceGuestUserResetPasswordRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ResetGuestUserPasswordByID")
+		log.Printf("[DEBUG] Selected method: ResetGuestUserPasswordByID")
 		vvID := vID.(string)
 
 		response1, restyResp1, err := client.GuestUser.ResetGuestUserPasswordByID(vvID)

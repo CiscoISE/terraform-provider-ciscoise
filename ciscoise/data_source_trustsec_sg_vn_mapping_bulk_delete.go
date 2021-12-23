@@ -55,7 +55,7 @@ func dataSourceTrustsecSgVnMappingBulkDeleteRead(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkDeleteSgVnMappings")
+		log.Printf("[DEBUG] Selected method: BulkDeleteSgVnMappings")
 		request1 := expandRequestTrustsecSgVnMappingBulkDeleteBulkDeleteSgVnMappings(ctx, "", d)
 
 		response1, restyResp1, err := client.SgVnMapping.BulkDeleteSgVnMappings(request1)

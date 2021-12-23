@@ -214,7 +214,7 @@ func dataSourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetIPToSgtMappingGroup")
+		log.Printf("[DEBUG] Selected method: GetIPToSgtMappingGroup")
 		queryParams1 := isegosdk.GetIPToSgtMappingGroupQueryParams{}
 
 		if okPage {
@@ -283,7 +283,7 @@ func dataSourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetIPToSgtMappingGroupByID")
+		log.Printf("[DEBUG] Selected method: GetIPToSgtMappingGroupByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.IPToSgtMappingGroup.GetIPToSgtMappingGroupByID(vvID)

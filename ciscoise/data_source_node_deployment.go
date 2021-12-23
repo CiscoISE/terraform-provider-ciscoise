@@ -212,7 +212,7 @@ func dataSourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeploymentNodes")
+		log.Printf("[DEBUG] Selected method: GetDeploymentNodes")
 		queryParams1 := isegosdk.GetDeploymentNodesQueryParams{}
 
 		if okFilter {
@@ -248,7 +248,7 @@ func dataSourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNodeDetails")
+		log.Printf("[DEBUG] Selected method: GetNodeDetails")
 		vvHostname := vHostname.(string)
 
 		response2, restyResp2, err := client.NodeDeployment.GetNodeDetails(vvHostname)

@@ -125,7 +125,7 @@ func dataSourceTrustedCertificateImportRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ImportTrustCert")
+		log.Printf("[DEBUG] Selected method: ImportTrustCert")
 		request1 := expandRequestTrustedCertificateImportImportTrustCert(ctx, "", d)
 
 		response1, restyResp1, err := client.Certificates.ImportTrustCert(request1)

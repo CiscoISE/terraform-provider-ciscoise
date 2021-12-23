@@ -619,7 +619,7 @@ func dataSourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetByodPortal")
+		log.Printf("[DEBUG] Selected method: GetByodPortal")
 		queryParams1 := isegosdk.GetByodPortalQueryParams{}
 
 		if okPage {
@@ -688,7 +688,7 @@ func dataSourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m int
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetByodPortalByID")
+		log.Printf("[DEBUG] Selected method: GetByodPortalByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.ByodPortal.GetByodPortalByID(vvID)

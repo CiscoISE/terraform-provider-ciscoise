@@ -35,7 +35,7 @@ func dataSourcePxgridFailuresRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetFailures")
+		log.Printf("[DEBUG] Selected method: GetFailures")
 
 		response1, err := client.RadiusFailure.GetFailures()
 

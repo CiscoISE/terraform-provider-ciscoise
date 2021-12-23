@@ -196,7 +196,7 @@ func dataSourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSxpVpns")
+		log.Printf("[DEBUG] Selected method: GetSxpVpns")
 		queryParams1 := isegosdk.GetSxpVpnsQueryParams{}
 
 		if okPage {
@@ -265,7 +265,7 @@ func dataSourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetSxpVpnByID")
+		log.Printf("[DEBUG] Selected method: GetSxpVpnByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SxpVpns.GetSxpVpnByID(vvID)

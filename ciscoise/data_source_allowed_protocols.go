@@ -1046,7 +1046,7 @@ func dataSourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllowedProtocols")
+		log.Printf("[DEBUG] Selected method: GetAllowedProtocols")
 		queryParams1 := isegosdk.GetAllowedProtocolsQueryParams{}
 
 		if okPage {
@@ -1103,7 +1103,7 @@ func dataSourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData,
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetAllowedProtocolByName")
+		log.Printf("[DEBUG] Selected method: GetAllowedProtocolByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.AllowedProtocols.GetAllowedProtocolByName(vvName)

@@ -98,7 +98,7 @@ func dataSourceDeviceAdministrationDictionaryAttributesAuthorizationRead(ctx con
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminDictionariesAuthorization")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminDictionariesAuthorization")
 
 		response1, restyResp1, err := client.DeviceAdministrationDictionaryAttributesList.GetDeviceAdminDictionariesAuthorization()
 

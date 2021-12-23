@@ -626,7 +626,7 @@ func dataSourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *sch
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessPolicySetGlobalExceptionRules")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessPolicySetGlobalExceptionRules")
 
 		response1, restyResp1, err := client.NetworkAccessAuthorizationGlobalExceptionRules.GetNetworkAccessPolicySetGlobalExceptionRules()
 
@@ -654,7 +654,7 @@ func dataSourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *sch
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessPolicySetGlobalExceptionRuleByID")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessPolicySetGlobalExceptionRuleByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.NetworkAccessAuthorizationGlobalExceptionRules.GetNetworkAccessPolicySetGlobalExceptionRuleByID(vvID)

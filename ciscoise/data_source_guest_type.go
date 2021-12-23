@@ -377,7 +377,7 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetGuestType")
+		log.Printf("[DEBUG] Selected method: GetGuestType")
 		queryParams1 := isegosdk.GetGuestTypeQueryParams{}
 
 		if okPage {
@@ -446,7 +446,7 @@ func dataSourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetGuestTypeByID")
+		log.Printf("[DEBUG] Selected method: GetGuestTypeByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.GuestType.GetGuestTypeByID(vvID)

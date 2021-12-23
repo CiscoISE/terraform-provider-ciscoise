@@ -128,7 +128,7 @@ func dataSourceAciBindingsRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAciBindings")
+		log.Printf("[DEBUG] Selected method: GetAciBindings")
 		queryParams1 := isegosdk.GetAciBindingsQueryParams{}
 
 		if okPage {
