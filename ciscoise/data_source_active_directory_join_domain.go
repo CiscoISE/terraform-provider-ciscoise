@@ -62,7 +62,7 @@ func dataSourceActiveDirectoryJoinDomainRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: JoinDomain")
+		log.Printf("[DEBUG] Selected method 1: JoinDomain")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryJoinDomainJoinDomain(ctx, "", d)
 

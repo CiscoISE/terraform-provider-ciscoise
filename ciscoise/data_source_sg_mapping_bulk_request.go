@@ -46,7 +46,7 @@ func dataSourceSgMappingBulkRequestRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkRequestForIPToSgtMapping")
+		log.Printf("[DEBUG] Selected method 1: BulkRequestForIPToSgtMapping")
 		request1 := expandRequestSgMappingBulkRequestBulkRequestForIPToSgtMapping(ctx, "", d)
 
 		response1, err := client.IPToSgtMapping.BulkRequestForIPToSgtMapping(request1)

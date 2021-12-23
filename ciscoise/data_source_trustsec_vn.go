@@ -222,7 +222,7 @@ func dataSourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetVirtualNetworks")
+		log.Printf("[DEBUG] Selected method 1: GetVirtualNetworks")
 		queryParams1 := isegosdk.GetVirtualNetworksQueryParams{}
 
 		if okPage {
@@ -270,7 +270,7 @@ func dataSourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m int
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetVirtualNetworkByID")
+		log.Printf("[DEBUG] Selected method 2: GetVirtualNetworkByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.VirtualNetwork.GetVirtualNetworkByID(vvID)

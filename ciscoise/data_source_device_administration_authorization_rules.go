@@ -632,7 +632,7 @@ func dataSourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminAuthorizationRules")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminAuthorizationRules")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRules(vvPolicyID)
@@ -661,7 +661,7 @@ func dataSourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminAuthorizationRuleByID")
+		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminAuthorizationRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)
 

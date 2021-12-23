@@ -45,7 +45,7 @@ func dataSourceNetworkAccessGlobalExceptionRulesResetHitcountRead(ctx context.Co
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ResetHitCountsNetworkAccessGlobalExceptions")
+		log.Printf("[DEBUG] Selected method 1: ResetHitCountsNetworkAccessGlobalExceptions")
 
 		response1, restyResp1, err := client.NetworkAccessAuthorizationGlobalExceptionRules.ResetHitCountsNetworkAccessGlobalExceptions()
 

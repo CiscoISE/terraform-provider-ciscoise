@@ -48,7 +48,7 @@ func dataSourceHotpatchRead(ctx context.Context, d *schema.ResourceData, m inter
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ListInstalledHotpatches")
+		log.Printf("[DEBUG] Selected method 1: ListInstalledHotpatches")
 
 		response1, restyResp1, err := client.Patching.ListInstalledHotpatches()
 

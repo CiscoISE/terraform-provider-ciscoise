@@ -78,7 +78,7 @@ func dataSourceRenewCertificateRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: RenewCerts")
+		log.Printf("[DEBUG] Selected method 1: RenewCerts")
 		request1 := expandRequestRenewCertificateRenewCerts(ctx, "", d)
 
 		response1, restyResp1, err := client.Certificates.RenewCerts(request1)

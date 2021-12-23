@@ -44,7 +44,7 @@ func dataSourceMntSessionPostureCountRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetPostureCount")
+		log.Printf("[DEBUG] Selected method 1: GetPostureCount")
 
 		response1, restyResp1, err := client.Misc.GetPostureCount()
 

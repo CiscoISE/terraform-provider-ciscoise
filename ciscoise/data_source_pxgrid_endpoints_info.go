@@ -36,7 +36,7 @@ func dataSourcePxgridEndpointsInfoRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetEndpoints")
+		log.Printf("[DEBUG] Selected method 1: GetEndpoints")
 
 		response1, err := client.Mdm.GetEndpoints()
 

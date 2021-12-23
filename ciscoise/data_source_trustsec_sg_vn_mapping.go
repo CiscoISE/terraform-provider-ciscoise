@@ -242,7 +242,7 @@ func dataSourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSgVnMappings")
+		log.Printf("[DEBUG] Selected method 1: GetSgVnMappings")
 		queryParams1 := isegosdk.GetSgVnMappingsQueryParams{}
 
 		if okPage {
@@ -290,7 +290,7 @@ func dataSourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetSgVnMappingByID")
+		log.Printf("[DEBUG] Selected method 2: GetSgVnMappingByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SgVnMapping.GetSgVnMappingByID(vvID)

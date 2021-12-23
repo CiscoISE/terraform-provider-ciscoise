@@ -45,7 +45,7 @@ func dataSourceDeviceAdministrationGlobalExceptionRulesResetHitcountRead(ctx con
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ResetHitCountsDeviceAdminGlobalExceptions")
+		log.Printf("[DEBUG] Selected method 1: ResetHitCountsDeviceAdminGlobalExceptions")
 
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.ResetHitCountsDeviceAdminGlobalExceptions()
 

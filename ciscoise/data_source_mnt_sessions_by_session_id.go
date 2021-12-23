@@ -41,7 +41,7 @@ func dataSourceMntSessionsBySessionIDRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSessionsBySessionID")
+		log.Printf("[DEBUG] Selected method 1: GetSessionsBySessionID")
 		vvSessionID := vSessionID.(string)
 
 		response1, err := client.Misc.GetSessionsBySessionID(vvSessionID)

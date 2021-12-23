@@ -43,7 +43,7 @@ func dataSourcePxGridNodeApproveRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ApprovePxGridNode")
+		log.Printf("[DEBUG] Selected method 1: ApprovePxGridNode")
 		vvName := vName.(string)
 
 		response1, err := client.PxGridNode.ApprovePxGridNode(vvName)

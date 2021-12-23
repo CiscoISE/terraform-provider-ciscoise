@@ -1320,7 +1320,7 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSelfRegisteredPortals")
+		log.Printf("[DEBUG] Selected method 1: GetSelfRegisteredPortals")
 		queryParams1 := isegosdk.GetSelfRegisteredPortalsQueryParams{}
 
 		if okPage {
@@ -1389,7 +1389,7 @@ func dataSourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceD
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetSelfRegisteredPortalByID")
+		log.Printf("[DEBUG] Selected method 2: GetSelfRegisteredPortalByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SelfRegisteredPortal.GetSelfRegisteredPortalByID(vvID)

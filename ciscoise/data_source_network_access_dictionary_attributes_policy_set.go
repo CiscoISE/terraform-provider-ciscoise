@@ -98,7 +98,7 @@ func dataSourceNetworkAccessDictionaryAttributesPolicySetRead(ctx context.Contex
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionariesPolicySet")
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionariesPolicySet")
 
 		response1, restyResp1, err := client.NetworkAccessDictionaryAttributesList.GetNetworkAccessDictionariesPolicySet()
 

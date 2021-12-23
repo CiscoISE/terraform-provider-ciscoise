@@ -42,7 +42,7 @@ func dataSourceGuestUserApproveRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ApproveGuestUserByID")
+		log.Printf("[DEBUG] Selected method 1: ApproveGuestUserByID")
 		vvID := vID.(string)
 
 		response1, err := client.GuestUser.ApproveGuestUserByID(vvID)

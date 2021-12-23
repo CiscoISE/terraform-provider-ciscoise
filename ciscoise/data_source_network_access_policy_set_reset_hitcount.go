@@ -45,7 +45,7 @@ func dataSourceNetworkAccessPolicySetResetHitcountRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ResetHitCountsNetworkAccessPolicySets")
+		log.Printf("[DEBUG] Selected method 1: ResetHitCountsNetworkAccessPolicySets")
 
 		response1, restyResp1, err := client.NetworkAccessPolicySet.ResetHitCountsNetworkAccessPolicySets()
 

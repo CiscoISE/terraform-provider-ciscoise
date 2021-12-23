@@ -262,7 +262,7 @@ func dataSourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetVnVLANMappings")
+		log.Printf("[DEBUG] Selected method 1: GetVnVLANMappings")
 		queryParams1 := isegosdk.GetVnVLANMappingsQueryParams{}
 
 		if okPage {
@@ -310,7 +310,7 @@ func dataSourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.Resource
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetVnVLANMappingByID")
+		log.Printf("[DEBUG] Selected method 2: GetVnVLANMappingByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.VnVLANMapping.GetVnVLANMappingByID(vvID)

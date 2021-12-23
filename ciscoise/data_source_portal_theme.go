@@ -209,7 +209,7 @@ func dataSourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetPortalThemes")
+		log.Printf("[DEBUG] Selected method 1: GetPortalThemes")
 		queryParams1 := isegosdk.GetPortalThemesQueryParams{}
 
 		if okPage {
@@ -278,7 +278,7 @@ func dataSourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m in
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetPortalThemeByID")
+		log.Printf("[DEBUG] Selected method 2: GetPortalThemeByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.PortalTheme.GetPortalThemeByID(vvID)

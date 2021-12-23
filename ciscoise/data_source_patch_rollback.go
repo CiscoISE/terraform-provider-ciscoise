@@ -58,7 +58,7 @@ func dataSourcePatchRollbackRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: RollbackPatch")
+		log.Printf("[DEBUG] Selected method 1: RollbackPatch")
 		request1 := expandRequestPatchRollbackRollbackPatch(ctx, "", d)
 
 		response1, restyResp1, err := client.Patching.RollbackPatch(request1)

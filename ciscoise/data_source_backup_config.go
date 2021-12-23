@@ -89,7 +89,7 @@ func dataSourceBackupConfigRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ConfigBackup")
+		log.Printf("[DEBUG] Selected method 1: ConfigBackup")
 		request1 := expandRequestBackupConfigConfigBackup(ctx, "", d)
 
 		response1, restyResp1, err := client.BackupAndRestore.ConfigBackup(request1)

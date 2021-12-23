@@ -63,7 +63,7 @@ func dataSourceLicensingRegistrationCreateRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: CreateRegistrationInfo")
+		log.Printf("[DEBUG] Selected method 1: CreateRegistrationInfo")
 		request1 := expandRequestLicensingRegistrationCreateCreateRegistrationInfo(ctx, "", d)
 
 		response1, err := client.Licensing.CreateRegistrationInfo(request1)

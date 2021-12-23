@@ -36,7 +36,7 @@ func dataSourceMntSessionDeleteAllRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: DeleteAllSessions")
+		log.Printf("[DEBUG] Selected method 1: DeleteAllSessions")
 
 		response1, err := client.Misc.DeleteAllSessions()
 

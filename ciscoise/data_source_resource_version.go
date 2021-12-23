@@ -75,7 +75,7 @@ func dataSourceResourceVersionRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetVersionInfo")
+		log.Printf("[DEBUG] Selected method 1: GetVersionInfo")
 		vvResource := vResource.(string)
 
 		response1, restyResp1, err := client.VersionInfo.GetVersionInfo(vvResource)

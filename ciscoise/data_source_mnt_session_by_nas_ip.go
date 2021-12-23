@@ -41,7 +41,7 @@ func dataSourceMntSessionByNasIPRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSessionsByNasIP")
+		log.Printf("[DEBUG] Selected method 1: GetSessionsByNasIP")
 		vvNasIPv4 := vNasIPv4.(string)
 
 		response1, err := client.Misc.GetSessionsByNasIP(vvNasIPv4)

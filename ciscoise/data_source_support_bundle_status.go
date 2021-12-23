@@ -164,7 +164,7 @@ func dataSourceSupportBundleStatusRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSupportBundleStatus")
+		log.Printf("[DEBUG] Selected method 1: GetSupportBundleStatus")
 		queryParams1 := isegosdk.GetSupportBundleStatusQueryParams{}
 
 		if okPage {
@@ -221,7 +221,7 @@ func dataSourceSupportBundleStatusRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetSupportBundleStatusByID")
+		log.Printf("[DEBUG] Selected method 2: GetSupportBundleStatusByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SupportBundleStatus.GetSupportBundleStatusByID(vvID)

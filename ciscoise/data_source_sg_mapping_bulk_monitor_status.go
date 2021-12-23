@@ -107,7 +107,7 @@ func dataSourceSgMappingBulkMonitorStatusRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: MonitorBulkStatusIPToSgtMapping")
+		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusIPToSgtMapping")
 		vvBulkid := vBulkid.(string)
 
 		response1, restyResp1, err := client.IPToSgtMapping.MonitorBulkStatusIPToSgtMapping(vvBulkid)

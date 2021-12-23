@@ -52,7 +52,7 @@ func dataSourceLicensingFeatureToTierMappingRead(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetFeatureToTierMapping")
+		log.Printf("[DEBUG] Selected method 1: GetFeatureToTierMapping")
 
 		response1, restyResp1, err := client.Licensing.GetFeatureToTierMapping()
 

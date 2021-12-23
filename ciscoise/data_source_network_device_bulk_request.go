@@ -46,7 +46,7 @@ func dataSourceNetworkDeviceBulkRequestRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkRequestForNetworkDevice")
+		log.Printf("[DEBUG] Selected method 1: BulkRequestForNetworkDevice")
 		request1 := expandRequestNetworkDeviceBulkRequestBulkRequestForNetworkDevice(ctx, "", d)
 
 		response1, err := client.NetworkDevice.BulkRequestForNetworkDevice(request1)

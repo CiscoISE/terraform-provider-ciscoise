@@ -36,7 +36,7 @@ func dataSourcePxgridSecurityGroupACLsInfoRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSecurityGroupACLs")
+		log.Printf("[DEBUG] Selected method 1: GetSecurityGroupACLs")
 
 		response1, err := client.TrustSecConfiguration.GetSecurityGroupACLs()
 

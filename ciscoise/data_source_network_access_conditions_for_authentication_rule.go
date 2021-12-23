@@ -239,7 +239,7 @@ func dataSourceNetworkAccessConditionsForAuthenticationRuleRead(ctx context.Cont
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetNetworkAccessConditionsForAuthenticationRules")
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessConditionsForAuthenticationRules")
 
 		response1, restyResp1, err := client.NetworkAccessConditions.GetNetworkAccessConditionsForAuthenticationRules()
 

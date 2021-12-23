@@ -43,7 +43,7 @@ func dataSourceThreatVulnerabilitiesClearRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ClearThreatsAndVulnerabilities")
+		log.Printf("[DEBUG] Selected method 1: ClearThreatsAndVulnerabilities")
 		request1 := expandRequestThreatVulnerabilitiesClearClearThreatsAndVulnerabilities(ctx, "", d)
 
 		response1, err := client.ClearThreatsAndVulnerabilities.ClearThreatsAndVulnerabilities(request1)

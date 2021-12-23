@@ -47,7 +47,7 @@ func dataSourceMntAccountStatusRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetAccountStatusByMac")
+		log.Printf("[DEBUG] Selected method 1: GetAccountStatusByMac")
 		vvMac := vMac.(string)
 		vvDuration := vDuration.(string)
 

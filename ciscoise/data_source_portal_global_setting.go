@@ -199,7 +199,7 @@ func dataSourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetPortalGlobalSettings")
+		log.Printf("[DEBUG] Selected method 1: GetPortalGlobalSettings")
 		queryParams1 := isegosdk.GetPortalGlobalSettingsQueryParams{}
 
 		if okPage {
@@ -268,7 +268,7 @@ func dataSourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetPortalGlobalSettingByID")
+		log.Printf("[DEBUG] Selected method 2: GetPortalGlobalSettingByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.PortalGlobalSetting.GetPortalGlobalSettingByID(vvID)

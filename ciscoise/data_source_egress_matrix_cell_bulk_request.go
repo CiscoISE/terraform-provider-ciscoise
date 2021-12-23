@@ -46,7 +46,7 @@ func dataSourceEgressMatrixCellBulkRequestRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkRequestForEgressMatrixCell")
+		log.Printf("[DEBUG] Selected method 1: BulkRequestForEgressMatrixCell")
 		request1 := expandRequestEgressMatrixCellBulkRequestBulkRequestForEgressMatrixCell(ctx, "", d)
 
 		response1, err := client.EgressMatrixCell.BulkRequestForEgressMatrixCell(request1)

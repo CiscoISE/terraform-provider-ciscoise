@@ -53,7 +53,7 @@ func dataSourceMntAuthenticationStatusRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetAuthenticationStatusByMac")
+		log.Printf("[DEBUG] Selected method 1: GetAuthenticationStatusByMac")
 		vvMAC := vMAC.(string)
 		vvSECONDS := vSECONDS.(string)
 		vvRECORDS := vRECORDS.(string)

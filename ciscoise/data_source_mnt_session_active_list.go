@@ -44,7 +44,7 @@ func dataSourceMntSessionActiveListRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetActiveList")
+		log.Printf("[DEBUG] Selected method 1: GetActiveList")
 
 		response1, restyResp1, err := client.Misc.GetActiveList()
 

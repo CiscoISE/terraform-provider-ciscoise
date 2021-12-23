@@ -57,7 +57,7 @@ func dataSourceNodeDeploymentSyncRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: SyncNode")
+		log.Printf("[DEBUG] Selected method 1: SyncNode")
 		vvHostname := vHostname.(string)
 
 		response1, restyResp1, err := client.NodeDeployment.SyncNode(vvHostname)

@@ -180,7 +180,7 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetCertificateTemplate")
+		log.Printf("[DEBUG] Selected method 1: GetCertificateTemplate")
 		queryParams1 := isegosdk.GetCertificateTemplateQueryParams{}
 
 		if okPage {
@@ -237,7 +237,7 @@ func dataSourceCertificateTemplateRead(ctx context.Context, d *schema.ResourceDa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetCertificateTemplateByName")
+		log.Printf("[DEBUG] Selected method 2: GetCertificateTemplateByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.CertificateTemplate.GetCertificateTemplateByName(vvName)

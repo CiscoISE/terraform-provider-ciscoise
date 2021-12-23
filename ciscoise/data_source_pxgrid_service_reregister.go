@@ -36,7 +36,7 @@ func dataSourcePxgridServiceReregisterRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ReregisterService")
+		log.Printf("[DEBUG] Selected method 1: ReregisterService")
 
 		response1, err := client.Provider.ReregisterService()
 

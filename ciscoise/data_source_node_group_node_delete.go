@@ -72,7 +72,7 @@ func dataSourceNodeGroupNodeDeleteRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: RemoveNode")
+		log.Printf("[DEBUG] Selected method 1: RemoveNode")
 		vvNodeGroupName := vNodeGroupName.(string)
 		request1 := expandRequestNodeGroupNodeDeleteRemoveNode(ctx, "", d)
 

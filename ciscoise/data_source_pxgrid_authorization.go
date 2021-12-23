@@ -36,7 +36,7 @@ func dataSourcePxgridAuthorizationRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: Authorization")
+		log.Printf("[DEBUG] Selected method 1: Authorization")
 
 		response1, err := client.Provider.Authorization()
 

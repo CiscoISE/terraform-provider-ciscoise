@@ -43,7 +43,7 @@ func dataSourceSupportBundleDownloadRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: DownloadSupportBundle")
+		log.Printf("[DEBUG] Selected method 1: DownloadSupportBundle")
 		request1 := expandRequestSupportBundleDownloadDownloadSupportBundle(ctx, "", d)
 
 		response1, _, err := client.SupportBundleDownload.DownloadSupportBundle(request1)

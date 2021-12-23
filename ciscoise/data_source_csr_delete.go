@@ -57,7 +57,7 @@ func dataSourceCsrDeleteRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: DeleteCsr")
+		log.Printf("[DEBUG] Selected method 1: DeleteCsr")
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)
 

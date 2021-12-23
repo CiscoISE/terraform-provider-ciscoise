@@ -232,7 +232,7 @@ func dataSourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSecurityGroups")
+		log.Printf("[DEBUG] Selected method 1: GetSecurityGroups")
 		queryParams1 := isegosdk.GetSecurityGroupsQueryParams{}
 
 		if okPage {
@@ -301,7 +301,7 @@ func dataSourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetSecurityGroupByID")
+		log.Printf("[DEBUG] Selected method 2: GetSecurityGroupByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SecurityGroups.GetSecurityGroupByID(vvID)

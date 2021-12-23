@@ -82,7 +82,7 @@ func dataSourceEndpointCertificateRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: CreateEndpointCertificate")
+		log.Printf("[DEBUG] Selected method 1: CreateEndpointCertificate")
 		request1 := expandRequestEndpointCertificateCreateEndpointCertificate(ctx, "", d)
 
 		response1, _, err := client.EndpointCertificate.CreateEndpointCertificate(request1)

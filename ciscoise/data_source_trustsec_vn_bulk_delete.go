@@ -55,7 +55,7 @@ func dataSourceTrustsecVnBulkDeleteRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkDeleteVirtualNetworks")
+		log.Printf("[DEBUG] Selected method 1: BulkDeleteVirtualNetworks")
 		request1 := expandRequestTrustsecVnBulkDeleteBulkDeleteVirtualNetworks(ctx, "", d)
 
 		response1, restyResp1, err := client.VirtualNetwork.BulkDeleteVirtualNetworks(request1)

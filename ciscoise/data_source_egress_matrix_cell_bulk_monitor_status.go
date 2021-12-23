@@ -107,7 +107,7 @@ func dataSourceEgressMatrixCellBulkMonitorStatusRead(ctx context.Context, d *sch
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: MonitorBulkStatusEgressMatrixCell")
+		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusEgressMatrixCell")
 		vvBulkid := vBulkid.(string)
 
 		response1, restyResp1, err := client.EgressMatrixCell.MonitorBulkStatusEgressMatrixCell(vvBulkid)

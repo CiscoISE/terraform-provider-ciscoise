@@ -239,7 +239,7 @@ func dataSourceNetworkAccessConditionsForPolicySetRead(ctx context.Context, d *s
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetNetworkAccessConditionsForPolicySets")
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessConditionsForPolicySets")
 
 		response1, restyResp1, err := client.NetworkAccessConditions.GetNetworkAccessConditionsForPolicySets()
 
