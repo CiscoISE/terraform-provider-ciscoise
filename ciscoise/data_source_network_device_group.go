@@ -269,7 +269,7 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkDeviceGroup")
+		log.Printf("[DEBUG] Selected method: GetNetworkDeviceGroup")
 		queryParams1 := isegosdk.GetNetworkDeviceGroupQueryParams{}
 
 		if okPage {
@@ -338,7 +338,7 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkDeviceGroupByName")
+		log.Printf("[DEBUG] Selected method: GetNetworkDeviceGroupByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
@@ -367,7 +367,7 @@ func dataSourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetNetworkDeviceGroupByID")
+		log.Printf("[DEBUG] Selected method: GetNetworkDeviceGroupByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByID(vvID)

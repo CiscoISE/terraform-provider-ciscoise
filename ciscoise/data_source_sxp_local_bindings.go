@@ -221,7 +221,7 @@ func dataSourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSxpLocalBindings")
+		log.Printf("[DEBUG] Selected method: GetSxpLocalBindings")
 		queryParams1 := isegosdk.GetSxpLocalBindingsQueryParams{}
 
 		if okPage {
@@ -290,7 +290,7 @@ func dataSourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData,
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetSxpLocalBindingsByID")
+		log.Printf("[DEBUG] Selected method: GetSxpLocalBindingsByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SxpLocalBindings.GetSxpLocalBindingsByID(vvID)

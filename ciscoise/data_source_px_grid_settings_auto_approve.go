@@ -50,7 +50,7 @@ func dataSourcePxGridSettingsAutoApproveRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: AutoapprovePxGridSettings")
+		log.Printf("[DEBUG] Selected method: AutoapprovePxGridSettings")
 		request1 := expandRequestPxGridSettingsAutoApproveAutoapprovePxGridSettings(ctx, "", d)
 
 		response1, err := client.PxGridSettings.AutoapprovePxGridSettings(request1)

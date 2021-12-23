@@ -52,7 +52,7 @@ func dataSourceMntVersionRead(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetMntVersion")
+		log.Printf("[DEBUG] Selected method: GetMntVersion")
 
 		response1, restyResp1, err := client.Misc.GetMntVersion()
 

@@ -46,7 +46,7 @@ func dataSourceSxpVpnsBulkRequestRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkRequestForSxpVpns")
+		log.Printf("[DEBUG] Selected method: BulkRequestForSxpVpns")
 		request1 := expandRequestSxpVpnsBulkRequestBulkRequestForSxpVpns(ctx, "", d)
 
 		response1, err := client.SxpVpns.BulkRequestForSxpVpns(request1)

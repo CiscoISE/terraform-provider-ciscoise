@@ -36,7 +36,7 @@ func dataSourcePxgridEgressMatricesInfoRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEgressMatrices")
+		log.Printf("[DEBUG] Selected method: GetEgressMatrices")
 
 		response1, err := client.TrustSecConfiguration.GetEgressMatrices()
 

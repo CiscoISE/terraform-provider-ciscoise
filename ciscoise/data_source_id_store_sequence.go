@@ -250,7 +250,7 @@ func dataSourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetIDentitySequence")
+		log.Printf("[DEBUG] Selected method: GetIDentitySequence")
 		queryParams1 := isegosdk.GetIDentitySequenceQueryParams{}
 
 		if okPage {
@@ -307,7 +307,7 @@ func dataSourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetIDentitySequenceByName")
+		log.Printf("[DEBUG] Selected method: GetIDentitySequenceByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.IDentitySequence.GetIDentitySequenceByName(vvName)
@@ -336,7 +336,7 @@ func dataSourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetIDentitySequenceByID")
+		log.Printf("[DEBUG] Selected method: GetIDentitySequenceByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.IDentitySequence.GetIDentitySequenceByID(vvID)

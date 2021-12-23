@@ -60,7 +60,7 @@ func dataSourceNodeSecondaryToPrimaryRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: PromoteNode")
+		log.Printf("[DEBUG] Selected method: PromoteNode")
 
 		response1, restyResp1, err := client.NodeDeployment.PromoteNode()
 

@@ -46,7 +46,7 @@ func dataSourceSgToVnToVLANBulkRequestRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkRequestForSecurityGroupsToVnToVLAN")
+		log.Printf("[DEBUG] Selected method: BulkRequestForSecurityGroupsToVnToVLAN")
 		request1 := expandRequestSgToVnToVLANBulkRequestBulkRequestForSecurityGroupsToVnToVLAN(ctx, "", d)
 
 		response1, err := client.SecurityGroupToVirtualNetwork.BulkRequestForSecurityGroupsToVnToVLAN(request1)

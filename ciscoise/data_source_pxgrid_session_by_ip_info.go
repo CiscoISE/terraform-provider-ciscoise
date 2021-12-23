@@ -36,7 +36,7 @@ func dataSourcePxgridSessionByIPInfoRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSessionByIPAddress")
+		log.Printf("[DEBUG] Selected method: GetSessionByIPAddress")
 
 		response1, err := client.SessionDirectory.GetSessionByIPAddress()
 

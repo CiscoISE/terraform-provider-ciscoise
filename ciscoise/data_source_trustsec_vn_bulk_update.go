@@ -78,7 +78,7 @@ func dataSourceTrustsecVnBulkUpdateRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkUpdateVirtualNetworks")
+		log.Printf("[DEBUG] Selected method: BulkUpdateVirtualNetworks")
 		request1 := expandRequestTrustsecVnBulkUpdateBulkUpdateVirtualNetworks(ctx, "", d)
 
 		response1, restyResp1, err := client.VirtualNetwork.BulkUpdateVirtualNetworks(request1)

@@ -632,7 +632,7 @@ func dataSourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminLocalExceptionRules")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminLocalExceptionRules")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationExceptionRules.GetDeviceAdminLocalExceptionRules(vvPolicyID)
@@ -661,7 +661,7 @@ func dataSourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminLocalExceptionRuleByID")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminLocalExceptionRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)
 

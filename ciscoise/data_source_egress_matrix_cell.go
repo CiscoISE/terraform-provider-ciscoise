@@ -239,7 +239,7 @@ func dataSourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEgressMatrixCell")
+		log.Printf("[DEBUG] Selected method: GetEgressMatrixCell")
 		queryParams1 := isegosdk.GetEgressMatrixCellQueryParams{}
 
 		if okPage {
@@ -308,7 +308,7 @@ func dataSourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData,
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetEgressMatrixCellByID")
+		log.Printf("[DEBUG] Selected method: GetEgressMatrixCellByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.EgressMatrixCell.GetEgressMatrixCellByID(vvID)

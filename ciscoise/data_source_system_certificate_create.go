@@ -143,7 +143,7 @@ func dataSourceSystemCertificateCreateRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateSystemCertificate")
+		log.Printf("[DEBUG] Selected method: CreateSystemCertificate")
 		request1 := expandRequestSystemCertificateCreateCreateSystemCertificate(ctx, "", d)
 
 		response1, err := client.SystemCertificate.CreateSystemCertificate(request1)

@@ -42,7 +42,7 @@ func dataSourceGuestUserDenyRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DenyGuestUserByID")
+		log.Printf("[DEBUG] Selected method: DenyGuestUserByID")
 		vvID := vID.(string)
 
 		response1, err := client.GuestUser.DenyGuestUserByID(vvID)

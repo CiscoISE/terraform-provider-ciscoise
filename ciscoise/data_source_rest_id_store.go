@@ -350,7 +350,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetRestIDStore")
+		log.Printf("[DEBUG] Selected method: GetRestIDStore")
 		queryParams1 := isegosdk.GetRestIDStoreQueryParams{}
 
 		if okPage {
@@ -419,7 +419,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetRestIDStoreByName")
+		log.Printf("[DEBUG] Selected method: GetRestIDStoreByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.RestidStore.GetRestIDStoreByName(vvName)
@@ -448,7 +448,7 @@ func dataSourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m in
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetRestIDStoreByID")
+		log.Printf("[DEBUG] Selected method: GetRestIDStoreByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.RestidStore.GetRestIDStoreByID(vvID)

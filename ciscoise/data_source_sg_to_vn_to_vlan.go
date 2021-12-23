@@ -255,7 +255,7 @@ func dataSourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSecurityGroupsToVnToVLAN")
+		log.Printf("[DEBUG] Selected method: GetSecurityGroupsToVnToVLAN")
 		queryParams1 := isegosdk.GetSecurityGroupsToVnToVLANQueryParams{}
 
 		if okPage {
@@ -318,7 +318,7 @@ func dataSourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m i
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetSecurityGroupsToVnToVLANByID")
+		log.Printf("[DEBUG] Selected method: GetSecurityGroupsToVnToVLANByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SecurityGroupToVirtualNetwork.GetSecurityGroupsToVnToVLANByID(vvID)

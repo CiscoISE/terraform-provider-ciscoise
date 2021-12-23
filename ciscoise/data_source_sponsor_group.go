@@ -343,7 +343,7 @@ func dataSourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSponsorGroup")
+		log.Printf("[DEBUG] Selected method: GetSponsorGroup")
 		queryParams1 := isegosdk.GetSponsorGroupQueryParams{}
 
 		if okPage {
@@ -412,7 +412,7 @@ func dataSourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m i
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetSponsorGroupByID")
+		log.Printf("[DEBUG] Selected method: GetSponsorGroupByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SponsorGroup.GetSponsorGroupByID(vvID)

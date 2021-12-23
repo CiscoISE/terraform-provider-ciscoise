@@ -784,7 +784,7 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkDevice")
+		log.Printf("[DEBUG] Selected method: GetNetworkDevice")
 		queryParams1 := isegosdk.GetNetworkDeviceQueryParams{}
 
 		if okPage {
@@ -853,7 +853,7 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkDeviceByName")
+		log.Printf("[DEBUG] Selected method: GetNetworkDeviceByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.NetworkDevice.GetNetworkDeviceByName(vvName)
@@ -882,7 +882,7 @@ func dataSourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetNetworkDeviceByID")
+		log.Printf("[DEBUG] Selected method: GetNetworkDeviceByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.NetworkDevice.GetNetworkDeviceByID(vvID)

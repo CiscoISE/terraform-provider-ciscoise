@@ -260,7 +260,7 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTacacsServerSequence")
+		log.Printf("[DEBUG] Selected method: GetTacacsServerSequence")
 		queryParams1 := isegosdk.GetTacacsServerSequenceQueryParams{}
 
 		if okPage {
@@ -317,7 +317,7 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetTacacsServerSequenceByName")
+		log.Printf("[DEBUG] Selected method: GetTacacsServerSequenceByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.TacacsServerSequence.GetTacacsServerSequenceByName(vvName)
@@ -346,7 +346,7 @@ func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceD
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetTacacsServerSequenceByID")
+		log.Printf("[DEBUG] Selected method: GetTacacsServerSequenceByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.TacacsServerSequence.GetTacacsServerSequenceByID(vvID)

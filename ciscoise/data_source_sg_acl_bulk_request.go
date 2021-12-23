@@ -46,7 +46,7 @@ func dataSourceSgACLBulkRequestRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkRequestForSecurityGroupsACL")
+		log.Printf("[DEBUG] Selected method: BulkRequestForSecurityGroupsACL")
 		request1 := expandRequestSgACLBulkRequestBulkRequestForSecurityGroupsACL(ctx, "", d)
 
 		response1, err := client.SecurityGroupsACLs.BulkRequestForSecurityGroupsACL(request1)

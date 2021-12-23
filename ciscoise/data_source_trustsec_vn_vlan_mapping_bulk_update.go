@@ -100,7 +100,7 @@ func dataSourceTrustsecVnVLANMappingBulkUpdateRead(ctx context.Context, d *schem
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkUpdateVnVLANMappings")
+		log.Printf("[DEBUG] Selected method: BulkUpdateVnVLANMappings")
 		request1 := expandRequestTrustsecVnVLANMappingBulkUpdateBulkUpdateVnVLANMappings(ctx, "", d)
 
 		response1, restyResp1, err := client.VnVLANMapping.BulkUpdateVnVLANMappings(request1)

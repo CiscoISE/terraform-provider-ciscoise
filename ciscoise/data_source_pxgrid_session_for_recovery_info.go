@@ -36,7 +36,7 @@ func dataSourcePxgridSessionForRecoveryInfoRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSessionsForRecovery")
+		log.Printf("[DEBUG] Selected method: GetSessionsForRecovery")
 
 		response1, err := client.SessionDirectory.GetSessionsForRecovery()
 
