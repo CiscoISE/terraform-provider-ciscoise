@@ -220,6 +220,27 @@ Read-Only:
 
 Read-Only:
 
+- **expiration_date** (String)
+- **friendly_name** (String)
+- **group_tag** (String)
+- **id** (String)
+- **issued_by** (String)
+- **issued_to** (String)
+- **key_size** (Number)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- **portals_using_the_tag** (String)
+- **self_signed** (String)
+- **serial_number_decimal_format** (String)
+- **sha256_fingerprint** (String)
+- **signature_algorithm** (String)
+- **used_by** (String)
+- **valid_from** (String)
+
+<a id="nestedobjatt--items--link"></a>
+### Nested Schema for `items.link`
+
+Read-Only:
+
 - **href** (String)
 - **rel** (String)
 - **type** (String)
