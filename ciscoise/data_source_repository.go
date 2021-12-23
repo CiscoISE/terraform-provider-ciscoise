@@ -122,9 +122,9 @@ func dataSourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m int
 	vRepositoryName, okRepositoryName := d.GetOk("repository_name")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okRepositoryName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
