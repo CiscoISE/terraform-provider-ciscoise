@@ -51,7 +51,7 @@ func dataSourceNetworkAccessAuthorizationRulesResetHitcountRead(ctx context.Cont
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ResetHitCountsNetworkAccessAuthorizationRules")
+		log.Printf("[DEBUG] Selected method 1: ResetHitCountsNetworkAccessAuthorizationRules")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.NetworkAccessAuthorizationRules.ResetHitCountsNetworkAccessAuthorizationRules(vvPolicyID)

@@ -36,7 +36,7 @@ func dataSourcePxgridPerformancesInfoRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetPerformances")
+		log.Printf("[DEBUG] Selected method 1: GetPerformances")
 
 		response1, err := client.SystemHealth.GetPerformances()
 

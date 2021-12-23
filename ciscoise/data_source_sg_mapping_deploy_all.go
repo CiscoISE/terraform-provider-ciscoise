@@ -37,7 +37,7 @@ func dataSourceSgMappingDeployAllRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: DeployAllIPToSgtMapping")
+		log.Printf("[DEBUG] Selected method 1: DeployAllIPToSgtMapping")
 
 		response1, err := client.IPToSgtMapping.DeployAllIPToSgtMapping()
 

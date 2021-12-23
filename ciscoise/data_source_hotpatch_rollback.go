@@ -62,7 +62,7 @@ func dataSourceHotpatchRollbackRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: RollbackHotpatch")
+		log.Printf("[DEBUG] Selected method 1: RollbackHotpatch")
 		request1 := expandRequestHotpatchRollbackRollbackHotpatch(ctx, "", d)
 
 		response1, restyResp1, err := client.Patching.RollbackHotpatch(request1)

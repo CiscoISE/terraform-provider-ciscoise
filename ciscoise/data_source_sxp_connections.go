@@ -224,7 +224,7 @@ func dataSourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSxpConnections")
+		log.Printf("[DEBUG] Selected method 1: GetSxpConnections")
 		queryParams1 := isegosdk.GetSxpConnectionsQueryParams{}
 
 		if okPage {
@@ -293,7 +293,7 @@ func dataSourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetSxpConnectionsByID")
+		log.Printf("[DEBUG] Selected method 2: GetSxpConnectionsByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SxpConnections.GetSxpConnectionsByID(vvID)

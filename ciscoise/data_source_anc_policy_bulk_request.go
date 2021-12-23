@@ -46,7 +46,7 @@ func dataSourceAncPolicyBulkRequestRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkRequestForAncPolicy")
+		log.Printf("[DEBUG] Selected method 1: BulkRequestForAncPolicy")
 		request1 := expandRequestAncPolicyBulkRequestBulkRequestForAncPolicy(ctx, "", d)
 
 		response1, err := client.AncPolicy.BulkRequestForAncPolicy(request1)

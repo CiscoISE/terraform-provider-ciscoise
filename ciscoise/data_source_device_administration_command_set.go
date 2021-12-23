@@ -50,7 +50,7 @@ func dataSourceDeviceAdministrationCommandSetRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminCommandSets")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminCommandSets")
 
 		response1, restyResp1, err := client.DeviceAdministrationCommandSet.GetDeviceAdminCommandSets()
 

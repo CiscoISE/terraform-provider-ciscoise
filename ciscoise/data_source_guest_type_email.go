@@ -62,7 +62,7 @@ func dataSourceGuestTypeEmailRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: UpdateGuestTypeEmail")
+		log.Printf("[DEBUG] Selected method 1: UpdateGuestTypeEmail")
 		vvID := vID.(string)
 		request1 := expandRequestGuestTypeEmailUpdateGuestTypeEmail(ctx, "", d)
 

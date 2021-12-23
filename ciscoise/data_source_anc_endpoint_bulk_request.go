@@ -46,7 +46,7 @@ func dataSourceAncEndpointBulkRequestRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkRequestForAncEndpoint")
+		log.Printf("[DEBUG] Selected method 1: BulkRequestForAncEndpoint")
 		request1 := expandRequestAncEndpointBulkRequestBulkRequestForAncEndpoint(ctx, "", d)
 
 		response1, err := client.AncEndpoint.BulkRequestForAncEndpoint(request1)

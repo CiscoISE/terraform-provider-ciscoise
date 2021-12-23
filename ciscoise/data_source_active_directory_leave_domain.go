@@ -62,7 +62,7 @@ func dataSourceActiveDirectoryLeaveDomainRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: LeaveDomain")
+		log.Printf("[DEBUG] Selected method 1: LeaveDomain")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryLeaveDomainLeaveDomain(ctx, "", d)
 

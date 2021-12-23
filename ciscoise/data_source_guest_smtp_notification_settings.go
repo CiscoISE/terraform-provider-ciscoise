@@ -243,7 +243,7 @@ func dataSourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetGuestSmtpNotificationSettings")
+		log.Printf("[DEBUG] Selected method 1: GetGuestSmtpNotificationSettings")
 		queryParams1 := isegosdk.GetGuestSmtpNotificationSettingsQueryParams{}
 
 		if okPage {
@@ -312,7 +312,7 @@ func dataSourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetGuestSmtpNotificationSettingsByID")
+		log.Printf("[DEBUG] Selected method 2: GetGuestSmtpNotificationSettingsByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettingsByID(vvID)

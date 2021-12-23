@@ -42,7 +42,7 @@ func dataSourceEgressMatrixCellSetAllStatusRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: SetAllCellsStatus")
+		log.Printf("[DEBUG] Selected method 1: SetAllCellsStatus")
 		vvStatus := vStatus.(string)
 
 		response1, err := client.EgressMatrixCell.SetAllCellsStatus(vvStatus)

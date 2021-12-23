@@ -107,7 +107,7 @@ func dataSourceGuestUserBulkMonitorStatusRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: MonitorBulkStatusGuestUser")
+		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusGuestUser")
 		vvBulkid := vBulkid.(string)
 
 		response1, restyResp1, err := client.GuestUser.MonitorBulkStatusGuestUser(vvBulkid)

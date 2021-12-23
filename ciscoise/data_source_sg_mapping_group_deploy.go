@@ -43,7 +43,7 @@ func dataSourceSgMappingGroupDeployRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: DeployIPToSgtMappingGroupByID")
+		log.Printf("[DEBUG] Selected method 1: DeployIPToSgtMappingGroupByID")
 		vvID := vID.(string)
 
 		response1, err := client.IPToSgtMappingGroup.DeployIPToSgtMappingGroupByID(vvID)

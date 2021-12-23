@@ -78,7 +78,7 @@ func dataSourceTrustsecVnBulkCreateRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkCreateVirtualNetworks")
+		log.Printf("[DEBUG] Selected method 1: BulkCreateVirtualNetworks")
 		request1 := expandRequestTrustsecVnBulkCreateBulkCreateVirtualNetworks(ctx, "", d)
 
 		response1, restyResp1, err := client.VirtualNetwork.BulkCreateVirtualNetworks(request1)

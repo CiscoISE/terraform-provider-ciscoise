@@ -51,7 +51,7 @@ func dataSourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetTransportGateway")
+		log.Printf("[DEBUG] Selected method 1: GetTransportGateway")
 
 		response1, restyResp1, err := client.Telemetry.GetTransportGateway()
 

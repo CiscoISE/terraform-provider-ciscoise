@@ -35,7 +35,7 @@ func dataSourceMntFailureReasonsRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetFailureReasons")
+		log.Printf("[DEBUG] Selected method 1: GetFailureReasons")
 
 		response1, err := client.Misc.GetFailureReasons()
 

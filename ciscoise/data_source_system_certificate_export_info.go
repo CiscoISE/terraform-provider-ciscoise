@@ -53,7 +53,7 @@ func dataSourceSystemCertificateExportInfoRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ExportSystemCert")
+		log.Printf("[DEBUG] Selected method 1: ExportSystemCert")
 		request1 := expandRequestSystemCertificateExportInfoExportSystemCert(ctx, "", d)
 
 		response1, _, err := client.Certificates.ExportSystemCert(request1)

@@ -41,7 +41,7 @@ func dataSourceMntSessionByUsernameRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSessionsByUsername")
+		log.Printf("[DEBUG] Selected method 1: GetSessionsByUsername")
 		vvUsername := vUsername.(string)
 
 		response1, err := client.Misc.GetSessionsByUsername(vvUsername)

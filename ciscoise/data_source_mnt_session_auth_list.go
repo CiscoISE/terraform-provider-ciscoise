@@ -44,7 +44,7 @@ func dataSourceMntSessionAuthListRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSessionAuthList")
+		log.Printf("[DEBUG] Selected method 1: GetSessionAuthList")
 
 		response1, restyResp1, err := client.Misc.GetSessionAuthList()
 

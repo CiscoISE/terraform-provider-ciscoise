@@ -88,7 +88,7 @@ func dataSourceActiveDirectoryIsUserMemberOfGroupRead(ctx context.Context, d *sc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: IsUserMemberOfGroups")
+		log.Printf("[DEBUG] Selected method 1: IsUserMemberOfGroups")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroups(ctx, "", d)
 

@@ -610,7 +610,7 @@ func dataSourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminPolicySets")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminPolicySets")
 
 		response1, restyResp1, err := client.DeviceAdministrationPolicySet.GetDeviceAdminPolicySets()
 
@@ -638,7 +638,7 @@ func dataSourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminPolicySetByID")
+		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminPolicySetByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DeviceAdministrationPolicySet.GetDeviceAdminPolicySetByID(vvID)

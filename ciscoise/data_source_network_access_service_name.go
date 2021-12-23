@@ -59,7 +59,7 @@ func dataSourceNetworkAccessServiceNameRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetNetworkAccessServiceNames")
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessServiceNames")
 
 		response1, restyResp1, err := client.NetworkAccessServiceNames.GetNetworkAccessServiceNames()
 

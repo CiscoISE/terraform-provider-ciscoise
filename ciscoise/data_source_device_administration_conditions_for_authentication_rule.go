@@ -239,7 +239,7 @@ func dataSourceDeviceAdministrationConditionsForAuthenticationRuleRead(ctx conte
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminConditionsForAuthenticationRules")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminConditionsForAuthenticationRules")
 
 		response1, restyResp1, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionsForAuthenticationRules()
 

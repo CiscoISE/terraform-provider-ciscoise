@@ -46,7 +46,7 @@ func dataSourceSxpLocalBindingsBulkRequestRead(ctx context.Context, d *schema.Re
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkRequestForSxpLocalBindings")
+		log.Printf("[DEBUG] Selected method 1: BulkRequestForSxpLocalBindings")
 		request1 := expandRequestSxpLocalBindingsBulkRequestBulkRequestForSxpLocalBindings(ctx, "", d)
 
 		response1, err := client.SxpLocalBindings.BulkRequestForSxpLocalBindings(request1)

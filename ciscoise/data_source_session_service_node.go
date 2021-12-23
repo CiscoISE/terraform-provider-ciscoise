@@ -208,7 +208,7 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSessionServiceNode")
+		log.Printf("[DEBUG] Selected method 1: GetSessionServiceNode")
 		queryParams1 := isegosdk.GetSessionServiceNodeQueryParams{}
 
 		if okPage {
@@ -265,7 +265,7 @@ func dataSourceSessionServiceNodeRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetSessionServiceNodeByName")
+		log.Printf("[DEBUG] Selected method 2: GetSessionServiceNodeByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.PsnNodeDetailsWithRadiusService.GetSessionServiceNodeByName(vvName)

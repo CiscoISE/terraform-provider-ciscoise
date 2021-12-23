@@ -42,7 +42,7 @@ func dataSourceTrustedCertificateExportRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ExportTrustedCert")
+		log.Printf("[DEBUG] Selected method 1: ExportTrustedCert")
 		vvID := vID.(string)
 
 		response1, _, err := client.Certificates.ExportTrustedCert(vvID)

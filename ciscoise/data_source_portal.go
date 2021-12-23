@@ -212,7 +212,7 @@ func dataSourcePortalRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetPortals")
+		log.Printf("[DEBUG] Selected method 1: GetPortals")
 		queryParams1 := isegosdk.GetPortalsQueryParams{}
 
 		if okPage {
@@ -281,7 +281,7 @@ func dataSourcePortalRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetPortalByID")
+		log.Printf("[DEBUG] Selected method 2: GetPortalByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Portal.GetPortalByID(vvID)

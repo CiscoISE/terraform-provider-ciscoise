@@ -46,7 +46,7 @@ func dataSourceSgtBulkRequestRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkRequestForSecurityGroup")
+		log.Printf("[DEBUG] Selected method 1: BulkRequestForSecurityGroup")
 		request1 := expandRequestSgtBulkRequestBulkRequestForSecurityGroup(ctx, "", d)
 
 		response1, err := client.SecurityGroups.BulkRequestForSecurityGroup(request1)

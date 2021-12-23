@@ -36,7 +36,7 @@ func dataSourcePxgridServiceUnregisterRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: UnregisterService")
+		log.Printf("[DEBUG] Selected method 1: UnregisterService")
 
 		response1, err := client.Provider.UnregisterService()
 

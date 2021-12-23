@@ -49,7 +49,7 @@ func dataSourceDeviceAdministrationProfilesRead(ctx context.Context, d *schema.R
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminProfiles")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminProfiles")
 
 		response1, restyResp1, err := client.DeviceAdministrationProfiles.GetDeviceAdminProfiles()
 

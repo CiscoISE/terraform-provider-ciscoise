@@ -51,7 +51,7 @@ func dataSourceNetworkAccessLocalExceptionRulesResetHitcountsRead(ctx context.Co
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ResetHitCountsNetworkAccessLocalExceptions")
+		log.Printf("[DEBUG] Selected method 1: ResetHitCountsNetworkAccessLocalExceptions")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.NetworkAccessAuthorizationExceptionRules.ResetHitCountsNetworkAccessLocalExceptions(vvPolicyID)

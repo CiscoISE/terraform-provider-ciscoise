@@ -41,7 +41,7 @@ func dataSourceMntSessionByIPRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSessionsByEndpointIP")
+		log.Printf("[DEBUG] Selected method 1: GetSessionsByEndpointIP")
 		vvEndpointIPv4 := vEndpointIPv4.(string)
 
 		response1, err := client.Misc.GetSessionsByEndpointIP(vvEndpointIPv4)

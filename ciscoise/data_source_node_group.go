@@ -138,7 +138,7 @@ func dataSourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetNodeGroups")
+		log.Printf("[DEBUG] Selected method 1: GetNodeGroups")
 
 		response1, restyResp1, err := client.NodeGroup.GetNodeGroups()
 
@@ -166,7 +166,7 @@ func dataSourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetNodeGroup")
+		log.Printf("[DEBUG] Selected method 2: GetNodeGroup")
 		vvNodeGroupName := vNodeGroupName.(string)
 
 		response2, restyResp2, err := client.NodeGroup.GetNodeGroup(vvNodeGroupName)

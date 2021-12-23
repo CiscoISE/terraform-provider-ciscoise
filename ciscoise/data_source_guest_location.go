@@ -204,7 +204,7 @@ func dataSourceGuestLocationRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetGuestLocation")
+		log.Printf("[DEBUG] Selected method 1: GetGuestLocation")
 		queryParams1 := isegosdk.GetGuestLocationQueryParams{}
 
 		if okPage {
@@ -273,7 +273,7 @@ func dataSourceGuestLocationRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetGuestLocationByID")
+		log.Printf("[DEBUG] Selected method 2: GetGuestLocationByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.GuestLocation.GetGuestLocationByID(vvID)

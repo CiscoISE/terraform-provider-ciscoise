@@ -70,7 +70,7 @@ func dataSourcePanHaUpdateRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: UpdatePanHa")
+		log.Printf("[DEBUG] Selected method 1: UpdatePanHa")
 		request1 := expandRequestPanHaUpdateUpdatePanHa(ctx, "", d)
 
 		response1, restyResp1, err := client.PanHa.UpdatePanHa(request1)

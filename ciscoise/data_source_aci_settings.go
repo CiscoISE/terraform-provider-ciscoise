@@ -146,7 +146,7 @@ func dataSourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetAciSettings")
+		log.Printf("[DEBUG] Selected method 1: GetAciSettings")
 
 		response1, restyResp1, err := client.AciSettings.GetAciSettings()
 

@@ -658,7 +658,7 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetAuthorizationProfiles")
+		log.Printf("[DEBUG] Selected method 1: GetAuthorizationProfiles")
 		queryParams1 := isegosdk.GetAuthorizationProfilesQueryParams{}
 
 		if okPage {
@@ -715,7 +715,7 @@ func dataSourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceD
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetAuthorizationProfileByName")
+		log.Printf("[DEBUG] Selected method 2: GetAuthorizationProfileByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.AuthorizationProfile.GetAuthorizationProfileByName(vvName)

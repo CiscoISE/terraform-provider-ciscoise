@@ -60,7 +60,7 @@ func dataSourceLicensingRegistrationRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetRegistrationInfo")
+		log.Printf("[DEBUG] Selected method 1: GetRegistrationInfo")
 
 		response1, restyResp1, err := client.Licensing.GetRegistrationInfo()
 

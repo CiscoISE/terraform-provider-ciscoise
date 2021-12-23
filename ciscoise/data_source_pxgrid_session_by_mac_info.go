@@ -36,7 +36,7 @@ func dataSourcePxgridSessionByMacInfoRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSessionByMacAddress")
+		log.Printf("[DEBUG] Selected method 1: GetSessionByMacAddress")
 
 		response1, err := client.SessionDirectory.GetSessionByMacAddress()
 

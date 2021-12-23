@@ -88,7 +88,7 @@ func dataSourceTrustsecSgVnMappingBulkUpdateRead(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BulkUpdateSgVnMappings")
+		log.Printf("[DEBUG] Selected method 1: BulkUpdateSgVnMappings")
 		request1 := expandRequestTrustsecSgVnMappingBulkUpdateBulkUpdateSgVnMappings(ctx, "", d)
 
 		response1, restyResp1, err := client.SgVnMapping.BulkUpdateSgVnMappings(request1)

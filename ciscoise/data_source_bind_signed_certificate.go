@@ -160,7 +160,7 @@ func dataSourceBindSignedCertificateRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: BindCsr")
+		log.Printf("[DEBUG] Selected method 1: BindCsr")
 		request1 := expandRequestBindSignedCertificateBindCsr(ctx, "", d)
 
 		response1, restyResp1, err := client.Certificates.BindCsr(request1)

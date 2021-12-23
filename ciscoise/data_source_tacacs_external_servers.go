@@ -242,7 +242,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetTacacsExternalServers")
+		log.Printf("[DEBUG] Selected method 1: GetTacacsExternalServers")
 		queryParams1 := isegosdk.GetTacacsExternalServersQueryParams{}
 
 		if okPage {
@@ -299,7 +299,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetTacacsExternalServersByName")
+		log.Printf("[DEBUG] Selected method 2: GetTacacsExternalServersByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.TacacsExternalServers.GetTacacsExternalServersByName(vvName)

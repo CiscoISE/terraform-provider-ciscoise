@@ -198,7 +198,7 @@ func dataSourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetAncEndpoint")
+		log.Printf("[DEBUG] Selected method 1: GetAncEndpoint")
 		queryParams1 := isegosdk.GetAncEndpointQueryParams{}
 
 		if okPage {
@@ -267,7 +267,7 @@ func dataSourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m in
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetAncEndpointByID")
+		log.Printf("[DEBUG] Selected method 2: GetAncEndpointByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.AncEndpoint.GetAncEndpointByID(vvID)

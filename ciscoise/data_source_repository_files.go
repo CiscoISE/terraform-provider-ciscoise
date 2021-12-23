@@ -57,7 +57,7 @@ func dataSourceRepositoryFilesRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetRepositoryFiles")
+		log.Printf("[DEBUG] Selected method 1: GetRepositoryFiles")
 		vvRepositoryName := vRepositoryName.(string)
 
 		response1, restyResp1, err := client.Repository.GetRepositoryFiles(vvRepositoryName)

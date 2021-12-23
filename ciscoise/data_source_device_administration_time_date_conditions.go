@@ -460,7 +460,7 @@ func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminTimeConditions")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminTimeConditions")
 
 		response1, restyResp1, err := client.DeviceAdministrationTimeDateConditions.GetDeviceAdminTimeConditions()
 
@@ -488,7 +488,7 @@ func dataSourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminTimeConditionByID")
+		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminTimeConditionByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DeviceAdministrationTimeDateConditions.GetDeviceAdminTimeConditionByID(vvID)

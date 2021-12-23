@@ -81,7 +81,7 @@ func dataSourceIseRootCaRegenerateRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: RegenerateIseRootCa")
+		log.Printf("[DEBUG] Selected method 1: RegenerateIseRootCa")
 		request1 := expandRequestIseRootCaRegenerateRegenerateIseRootCa(ctx, "", d)
 
 		response1, restyResp1, err := client.Certificates.RegenerateIseRootCa(request1)

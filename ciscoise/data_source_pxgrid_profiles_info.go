@@ -36,7 +36,7 @@ func dataSourcePxgridProfilesInfoRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetProfiles")
+		log.Printf("[DEBUG] Selected method 1: GetProfiles")
 
 		response1, err := client.Profiler.GetProfiles()
 

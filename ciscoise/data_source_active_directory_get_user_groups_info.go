@@ -88,7 +88,7 @@ func dataSourceActiveDirectoryGetUserGroupsInfoRead(ctx context.Context, d *sche
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetUserGroups")
+		log.Printf("[DEBUG] Selected method 1: GetUserGroups")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryGetUserGroupsInfoGetUserGroups(ctx, "", d)
 

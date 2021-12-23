@@ -655,7 +655,7 @@ func dataSourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSponsorPortal")
+		log.Printf("[DEBUG] Selected method 1: GetSponsorPortal")
 		queryParams1 := isegosdk.GetSponsorPortalQueryParams{}
 
 		if okPage {
@@ -724,7 +724,7 @@ func dataSourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetSponsorPortalByID")
+		log.Printf("[DEBUG] Selected method 2: GetSponsorPortalByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SponsorPortal.GetSponsorPortalByID(vvID)

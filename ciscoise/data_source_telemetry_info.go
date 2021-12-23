@@ -189,7 +189,7 @@ func dataSourceTelemetryInfoRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetTelemetryInformation")
+		log.Printf("[DEBUG] Selected method 1: GetTelemetryInformation")
 		queryParams1 := isegosdk.GetTelemetryInformationQueryParams{}
 
 		if okPage {
@@ -252,7 +252,7 @@ func dataSourceTelemetryInfoRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetTelemetryInfoByID")
+		log.Printf("[DEBUG] Selected method 2: GetTelemetryInfoByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.TelemetryInformation.GetTelemetryInfoByID(vvID)

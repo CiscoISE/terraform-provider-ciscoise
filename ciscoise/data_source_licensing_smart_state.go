@@ -48,7 +48,7 @@ func dataSourceLicensingSmartStateRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSmartState")
+		log.Printf("[DEBUG] Selected method 1: GetSmartState")
 
 		response1, restyResp1, err := client.Licensing.GetSmartState()
 

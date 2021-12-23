@@ -164,7 +164,7 @@ func dataSourceCsrGenerateRead(ctx context.Context, d *schema.ResourceData, m in
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GenerateCsr")
+		log.Printf("[DEBUG] Selected method 1: GenerateCsr")
 		request1 := expandRequestCsrGenerateGenerateCsr(ctx, "", d)
 
 		response1, restyResp1, err := client.Certificates.GenerateCsr(request1)

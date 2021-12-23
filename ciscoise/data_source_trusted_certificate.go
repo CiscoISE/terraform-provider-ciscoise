@@ -569,7 +569,7 @@ func dataSourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetTrustedCertificates")
+		log.Printf("[DEBUG] Selected method 1: GetTrustedCertificates")
 		queryParams1 := isegosdk.GetTrustedCertificatesQueryParams{}
 
 		if okPage {
@@ -638,7 +638,7 @@ func dataSourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetTrustedCertificateByID")
+		log.Printf("[DEBUG] Selected method 2: GetTrustedCertificateByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.Certificates.GetTrustedCertificateByID(vvID)

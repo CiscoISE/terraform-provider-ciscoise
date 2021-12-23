@@ -62,7 +62,7 @@ func dataSourceActiveDirectoryLeaveDomainWithAllNodesRead(ctx context.Context, d
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: LeaveDomainWithAllNodes")
+		log.Printf("[DEBUG] Selected method 1: LeaveDomainWithAllNodes")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryLeaveDomainWithAllNodesLeaveDomainWithAllNodes(ctx, "", d)
 

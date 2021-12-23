@@ -155,7 +155,7 @@ func dataSourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDownloadableACL")
+		log.Printf("[DEBUG] Selected method 1: GetDownloadableACL")
 		queryParams1 := isegosdk.GetDownloadableACLQueryParams{}
 
 		if okPage {
@@ -212,7 +212,7 @@ func dataSourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetDownloadableACLByID")
+		log.Printf("[DEBUG] Selected method 2: GetDownloadableACLByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DownloadableACL.GetDownloadableACLByID(vvID)

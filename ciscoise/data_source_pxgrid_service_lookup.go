@@ -42,7 +42,7 @@ func dataSourcePxgridServiceLookupRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: LookupService")
+		log.Printf("[DEBUG] Selected method 1: LookupService")
 		request1 := expandRequestPxgridServiceLookupLookupService(ctx, "", d)
 
 		response1, err := client.Consumer.LookupService(request1)

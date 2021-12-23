@@ -239,7 +239,7 @@ func dataSourceDeviceAdministrationConditionsForPolicySetRead(ctx context.Contex
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminConditionsForPolicySets")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminConditionsForPolicySets")
 
 		response1, restyResp1, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionsForPolicySets()
 

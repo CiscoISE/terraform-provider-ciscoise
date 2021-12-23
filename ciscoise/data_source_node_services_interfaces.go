@@ -50,7 +50,7 @@ func dataSourceNodeServicesInterfacesRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetInterfaces")
+		log.Printf("[DEBUG] Selected method 1: GetInterfaces")
 		vvHostname := vHostname.(string)
 
 		response1, restyResp1, err := client.NodeServices.GetInterfaces(vvHostname)

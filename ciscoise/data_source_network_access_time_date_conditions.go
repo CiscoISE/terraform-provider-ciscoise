@@ -460,7 +460,7 @@ func dataSourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schem
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetNetworkAccessTimeConditions")
+		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessTimeConditions")
 
 		response1, restyResp1, err := client.NetworkAccessTimeDateConditions.GetNetworkAccessTimeConditions()
 
@@ -488,7 +488,7 @@ func dataSourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schem
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetNetworkAccessTimeConditionByID")
+		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessTimeConditionByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.NetworkAccessTimeDateConditions.GetNetworkAccessTimeConditionByID(vvID)

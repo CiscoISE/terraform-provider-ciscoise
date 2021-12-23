@@ -385,7 +385,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetSystemCertificates")
+		log.Printf("[DEBUG] Selected method 1: GetSystemCertificates")
 		vvHostName := vHostName.(string)
 		queryParams1 := isegosdk.GetSystemCertificatesQueryParams{}
 
@@ -455,7 +455,7 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetSystemCertificateByID")
+		log.Printf("[DEBUG] Selected method 2: GetSystemCertificateByID")
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)
 

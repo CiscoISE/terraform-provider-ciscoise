@@ -61,7 +61,7 @@ func dataSourcePatchRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ListInstalledPatches")
+		log.Printf("[DEBUG] Selected method 1: ListInstalledPatches")
 
 		response1, restyResp1, err := client.Patching.ListInstalledPatches()
 

@@ -51,7 +51,7 @@ func dataSourceDeviceAdministrationLocalExceptionRulesResetHitcountRead(ctx cont
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: ResetHitCountsDeviceAdminLocalExceptions")
+		log.Printf("[DEBUG] Selected method 1: ResetHitCountsDeviceAdminLocalExceptions")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationExceptionRules.ResetHitCountsDeviceAdminLocalExceptions(vvPolicyID)

@@ -62,7 +62,7 @@ func dataSourceGuestTypeSmsRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: UpdateGuestTypeSms")
+		log.Printf("[DEBUG] Selected method 1: UpdateGuestTypeSms")
 		vvID := vID.(string)
 		request1 := expandRequestGuestTypeSmsUpdateGuestTypeSms(ctx, "", d)
 

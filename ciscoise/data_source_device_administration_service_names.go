@@ -59,7 +59,7 @@ func dataSourceDeviceAdministrationServiceNamesRead(ctx context.Context, d *sche
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetDeviceAdminServiceNames")
+		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminServiceNames")
 
 		response1, restyResp1, err := client.DeviceAdministrationServiceNames.GetDeviceAdminServiceNames()
 
