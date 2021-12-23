@@ -55,7 +55,7 @@ func dataSourceTrustsecVnVLANMappingBulkDeleteRead(ctx context.Context, d *schem
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkDeleteVnVLANMappings")
+		log.Printf("[DEBUG] Selected method: BulkDeleteVnVLANMappings")
 		request1 := expandRequestTrustsecVnVLANMappingBulkDeleteBulkDeleteVnVLANMappings(ctx, "", d)
 
 		response1, restyResp1, err := client.VnVLANMapping.BulkDeleteVnVLANMappings(request1)

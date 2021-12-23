@@ -176,7 +176,7 @@ func dataSourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNativeSupplicantProfile")
+		log.Printf("[DEBUG] Selected method: GetNativeSupplicantProfile")
 		queryParams1 := isegosdk.GetNativeSupplicantProfileQueryParams{}
 
 		if okPage {
@@ -233,7 +233,7 @@ func dataSourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resour
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNativeSupplicantProfileByID")
+		log.Printf("[DEBUG] Selected method: GetNativeSupplicantProfileByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.NativeSupplicantProfile.GetNativeSupplicantProfileByID(vvID)

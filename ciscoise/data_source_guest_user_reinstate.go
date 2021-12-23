@@ -55,7 +55,7 @@ func dataSourceGuestUserReinstateRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ReinstateGuestUserByName")
+		log.Printf("[DEBUG] Selected method: ReinstateGuestUserByName")
 		vvName := vName.(string)
 
 		response1, err := client.GuestUser.ReinstateGuestUserByName(vvName)
@@ -80,7 +80,7 @@ func dataSourceGuestUserReinstateRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: ReinstateGuestUserByID")
+		log.Printf("[DEBUG] Selected method: ReinstateGuestUserByID")
 		vvID := vID.(string)
 
 		response2, err := client.GuestUser.ReinstateGuestUserByID(vvID)

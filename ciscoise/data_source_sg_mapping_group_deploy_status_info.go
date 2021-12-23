@@ -59,7 +59,7 @@ func dataSourceSgMappingGroupDeployStatusInfoRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeployStatusIPToSgtMappingGroup")
+		log.Printf("[DEBUG] Selected method: GetDeployStatusIPToSgtMappingGroup")
 
 		response1, restyResp1, err := client.IPToSgtMappingGroup.GetDeployStatusIPToSgtMappingGroup()
 

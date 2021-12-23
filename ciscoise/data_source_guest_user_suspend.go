@@ -75,7 +75,7 @@ func dataSourceGuestUserSuspendRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SuspendGuestUserByName")
+		log.Printf("[DEBUG] Selected method: SuspendGuestUserByName")
 		vvName := vName.(string)
 
 		response1, err := client.GuestUser.SuspendGuestUserByName(vvName)
@@ -100,7 +100,7 @@ func dataSourceGuestUserSuspendRead(ctx context.Context, d *schema.ResourceData,
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: SuspendGuestUserByID")
+		log.Printf("[DEBUG] Selected method: SuspendGuestUserByID")
 		vvID := vID.(string)
 		request2 := expandRequestGuestUserSuspendSuspendGuestUserByID(ctx, "", d)
 

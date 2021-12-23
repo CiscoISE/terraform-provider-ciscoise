@@ -92,7 +92,7 @@ func dataSourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetProxyConnection")
+		log.Printf("[DEBUG] Selected method: GetProxyConnection")
 
 		response1, restyResp1, err := client.Proxy.GetProxyConnection()
 

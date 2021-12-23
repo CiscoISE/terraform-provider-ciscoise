@@ -56,7 +56,7 @@ func dataSourceAncEndpointApplyRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ApplyAncEndpoint")
+		log.Printf("[DEBUG] Selected method: ApplyAncEndpoint")
 		request1 := expandRequestAncEndpointApplyApplyAncEndpoint(ctx, "", d)
 
 		response1, err := client.AncEndpoint.ApplyAncEndpoint(request1)

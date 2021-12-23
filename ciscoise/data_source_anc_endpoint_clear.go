@@ -56,7 +56,7 @@ func dataSourceAncEndpointClearRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ClearAncEndpoint")
+		log.Printf("[DEBUG] Selected method: ClearAncEndpoint")
 		request1 := expandRequestAncEndpointClearClearAncEndpoint(ctx, "", d)
 
 		response1, err := client.AncEndpoint.ClearAncEndpoint(request1)

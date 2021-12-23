@@ -62,7 +62,7 @@ func dataSourceHotpatchInstallRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: InstallHotpatch")
+		log.Printf("[DEBUG] Selected method: InstallHotpatch")
 		request1 := expandRequestHotpatchInstallInstallHotpatch(ctx, "", d)
 
 		response1, restyResp1, err := client.Patching.InstallHotpatch(request1)

@@ -242,7 +242,7 @@ func dataSourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNbarApps")
+		log.Printf("[DEBUG] Selected method: GetNbarApps")
 		queryParams1 := isegosdk.GetNbarAppsQueryParams{}
 
 		if okPage {
@@ -290,7 +290,7 @@ func dataSourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNbarAppByID")
+		log.Printf("[DEBUG] Selected method: GetNbarAppByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.NbarApp.GetNbarAppByID(vvID)

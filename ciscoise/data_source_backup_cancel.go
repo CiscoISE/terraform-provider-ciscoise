@@ -107,7 +107,7 @@ func dataSourceBackupCancelRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CancelBackup")
+		log.Printf("[DEBUG] Selected method: CancelBackup")
 
 		response1, restyResp1, err := client.BackupAndRestore.CancelBackup()
 

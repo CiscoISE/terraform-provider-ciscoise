@@ -88,7 +88,7 @@ func dataSourceActiveDirectoryGetGroupsByDomainInfoRead(ctx context.Context, d *
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetGroupsByDomain")
+		log.Printf("[DEBUG] Selected method: GetGroupsByDomain")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryGetGroupsByDomainInfoGetGroupsByDomain(ctx, "", d)
 

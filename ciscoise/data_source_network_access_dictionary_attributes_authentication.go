@@ -98,7 +98,7 @@ func dataSourceNetworkAccessDictionaryAttributesAuthenticationRead(ctx context.C
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionariesAuthentication")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionariesAuthentication")
 
 		response1, restyResp1, err := client.NetworkAccessDictionaryAttributesList.GetNetworkAccessDictionariesAuthentication()
 

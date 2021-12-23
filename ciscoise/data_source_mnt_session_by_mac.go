@@ -41,7 +41,7 @@ func dataSourceMntSessionByMacRead(ctx context.Context, d *schema.ResourceData, 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSessionsByMac")
+		log.Printf("[DEBUG] Selected method: GetSessionsByMac")
 		vvMac := vMac.(string)
 
 		response1, err := client.Misc.GetSessionsByMac(vvMac)

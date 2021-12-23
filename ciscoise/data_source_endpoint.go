@@ -493,7 +493,7 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEndpoints")
+		log.Printf("[DEBUG] Selected method: GetEndpoints")
 		queryParams1 := isegosdk.GetEndpointsQueryParams{}
 
 		if okPage {
@@ -562,7 +562,7 @@ func dataSourceEndpointRead(ctx context.Context, d *schema.ResourceData, m inter
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetEndpointByName")
+		log.Printf("[DEBUG] Selected method: GetEndpointByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.Endpoint.GetEndpointByName(vvName)

@@ -42,7 +42,7 @@ func dataSourcePxgridServiceRegisterRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RegisterService")
+		log.Printf("[DEBUG] Selected method: RegisterService")
 		request1 := expandRequestPxgridServiceRegisterRegisterService(ctx, "", d)
 
 		response1, err := client.Provider.RegisterService(request1)

@@ -244,7 +244,7 @@ func dataSourceAdminUserRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAdminUsers")
+		log.Printf("[DEBUG] Selected method: GetAdminUsers")
 		queryParams1 := isegosdk.GetAdminUsersQueryParams{}
 
 		if okPage {
@@ -313,7 +313,7 @@ func dataSourceAdminUserRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetAdminUserByID")
+		log.Printf("[DEBUG] Selected method: GetAdminUserByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.AdminUser.GetAdminUserByID(vvID)

@@ -154,7 +154,7 @@ func dataSourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resour
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionaries")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionaries")
 
 		response1, restyResp1, err := client.NetworkAccessDictionary.GetNetworkAccessDictionaries()
 
@@ -182,7 +182,7 @@ func dataSourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resour
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessDictionaryByName")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionaryByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.NetworkAccessDictionary.GetNetworkAccessDictionaryByName(vvName)

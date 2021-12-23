@@ -678,7 +678,7 @@ func dataSourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminConditions")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminConditions")
 
 		response1, restyResp1, err := client.DeviceAdministrationConditions.GetDeviceAdminConditions()
 
@@ -706,7 +706,7 @@ func dataSourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminConditionByName")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminConditionByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.DeviceAdministrationConditions.GetDeviceAdminConditionByName(vvName)

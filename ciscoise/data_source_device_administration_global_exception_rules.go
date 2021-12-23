@@ -626,7 +626,7 @@ func dataSourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context,
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminPolicySetGlobalExceptionRules")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminPolicySetGlobalExceptionRules")
 
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.GetDeviceAdminPolicySetGlobalExceptionRules()
 
@@ -654,7 +654,7 @@ func dataSourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context,
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminPolicySetGlobalExceptionByRuleID")
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminPolicySetGlobalExceptionByRuleID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.GetDeviceAdminPolicySetGlobalExceptionByRuleID(vvID)
