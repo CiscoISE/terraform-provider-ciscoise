@@ -15,14 +15,9 @@ output "ciscoise_system_certificate_example" {
 }
 
 data "ciscoise_system_certificate" "example" {
-  provider    = ciscoise
-  filter      = ["string"]
-  filter_type = "string"
-  host_name   = "string"
-  page        = 1
-  size        = 1
-  sort        = "string"
-  sort_by     = "string"
+  provider  = ciscoise
+  host_name = "string"
+  id        = "string"
 }
 
 output "ciscoise_system_certificate_example" {

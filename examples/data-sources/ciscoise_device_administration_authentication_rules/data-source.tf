@@ -11,6 +11,7 @@ output "ciscoise_device_administration_authentication_rules_example" {
 data "ciscoise_device_administration_authentication_rules" "example" {
   provider  = ciscoise
   policy_id = "string"
+  id        = "string"
 }
 
 output "ciscoise_device_administration_authentication_rules_example" {
