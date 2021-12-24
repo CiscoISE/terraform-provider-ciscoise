@@ -56,6 +56,13 @@ func dataSourceSxpLocalBindingsBulkRequestRead(ctx context.Context, d *schema.Re
 		}
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing BulkRequestForSxpLocalBindings", err, response1.String(),
+					"Failure at BulkRequestForSxpLocalBindings, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForSxpLocalBindings", err,
 				"Failure at BulkRequestForSxpLocalBindings, unexpected response", ""))

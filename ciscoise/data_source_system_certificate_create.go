@@ -153,6 +153,13 @@ func dataSourceSystemCertificateCreateRead(ctx context.Context, d *schema.Resour
 		}
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing CreateSystemCertificate", err, response1.String(),
+					"Failure at CreateSystemCertificate, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateSystemCertificate", err,
 				"Failure at CreateSystemCertificate, unexpected response", ""))

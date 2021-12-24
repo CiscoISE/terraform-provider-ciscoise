@@ -41,6 +41,13 @@ func dataSourceEgressMatrixCellClearAllRead(ctx context.Context, d *schema.Resou
 		response1, err := client.EgressMatrixCell.ClearAllMatrixCells()
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing ClearAllMatrixCells", err, response1.String(),
+					"Failure at ClearAllMatrixCells, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ClearAllMatrixCells", err,
 				"Failure at ClearAllMatrixCells, unexpected response", ""))
