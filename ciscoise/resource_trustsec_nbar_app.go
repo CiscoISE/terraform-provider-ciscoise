@@ -208,9 +208,7 @@ func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNbarApps", err,
-				"Failure at GetNbarApps, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -219,9 +217,7 @@ func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m 
 		items1 := getAllItemsNbarAppGetNbarApps(m, response1, nil)
 		item1, err := searchNbarAppGetNbarApps(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNbarApps response", err,
-				"Failure when searching item from GetNbarApps, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNbarAppGetNbarAppByIDItem(item1)
@@ -243,9 +239,7 @@ func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNbarAppByID", err,
-				"Failure at GetNbarAppByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

@@ -335,9 +335,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetInternalUserByName", err,
-				"Failure at GetInternalUserByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -363,9 +361,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetInternalUserByID", err,
-				"Failure at GetInternalUserByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

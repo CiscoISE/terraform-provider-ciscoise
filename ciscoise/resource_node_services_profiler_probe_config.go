@@ -530,9 +530,7 @@ func resourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schema.
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetProfilerProbeConfig", err,
-				"Failure at GetProfilerProbeConfig, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

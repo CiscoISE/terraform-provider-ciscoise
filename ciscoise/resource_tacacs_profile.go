@@ -252,9 +252,7 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTacacsProfileByName", err,
-				"Failure at GetTacacsProfileByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -280,9 +278,7 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTacacsProfileByID", err,
-				"Failure at GetTacacsProfileByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

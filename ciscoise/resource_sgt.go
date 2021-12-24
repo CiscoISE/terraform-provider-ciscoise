@@ -244,9 +244,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSecurityGroups", err,
-				"Failure at GetSecurityGroups, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -255,9 +253,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 		items1 := getAllItemsSecurityGroupsGetSecurityGroups(m, response1, &queryParams1)
 		item1, err := searchSecurityGroupsGetSecurityGroups(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSecurityGroups response", err,
-				"Failure when searching item from GetSecurityGroups, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSecurityGroupsGetSecurityGroupByIDItem(item1)
@@ -279,9 +275,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSecurityGroupByID", err,
-				"Failure at GetSecurityGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

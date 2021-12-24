@@ -213,9 +213,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeploymentNodes", err,
-				"Failure at GetDeploymentNodes, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -224,9 +222,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 		items1 := getAllItemsNodeDeploymentGetDeploymentNodes(m, response1)
 		item1, err := searchNodeDeploymentGetDeploymentNodes(m, items1, vHostname, "")
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetDeploymentNodes response", err,
-				"Failure when searching item from GetDeploymentNodes, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNodeDeploymentGetNodeDetailsItem(item1)
@@ -248,9 +244,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNodeDetails", err,
-				"Failure at GetNodeDetails, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

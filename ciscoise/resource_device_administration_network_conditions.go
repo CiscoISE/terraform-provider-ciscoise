@@ -362,9 +362,7 @@ func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *s
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminNetworkConditions", err,
-				"Failure at GetDeviceAdminNetworkConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -373,9 +371,7 @@ func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *s
 		items1 := getAllItemsDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions(m, response1)
 		item1, err := searchDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetDeviceAdminNetworkConditions response", err,
-				"Failure when searching item from GetDeviceAdminNetworkConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItem(item1)
@@ -397,9 +393,7 @@ func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *s
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminNetworkConditionByID", err,
-				"Failure at GetDeviceAdminNetworkConditionByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

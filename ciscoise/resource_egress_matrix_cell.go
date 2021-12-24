@@ -257,9 +257,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEgressMatrixCell", err,
-				"Failure at GetEgressMatrixCell, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -268,9 +266,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 		items1 := getAllItemsEgressMatrixCellGetEgressMatrixCell(m, response1, &queryParams1)
 		item1, err := searchEgressMatrixCellGetEgressMatrixCell(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetEgressMatrixCell response", err,
-				"Failure when searching item from GetEgressMatrixCell, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenEgressMatrixCellGetEgressMatrixCellByIDItem(item1)
@@ -291,9 +287,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEgressMatrixCellByID", err,
-				"Failure at GetEgressMatrixCellByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

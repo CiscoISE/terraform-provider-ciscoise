@@ -189,9 +189,7 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestSSID", err,
-				"Failure at GetGuestSSID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -200,9 +198,7 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 		items1 := getAllItemsGuestSSIDGetGuestSSID(m, response1, &queryParams1)
 		item1, err := searchGuestSSIDGetGuestSSID(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetGuestSSID response", err,
-				"Failure when searching item from GetGuestSSID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenGuestSSIDGetGuestSSIDByIDItem(item1)
@@ -224,9 +220,7 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestSSIDByID", err,
-				"Failure at GetGuestSSIDByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

@@ -220,9 +220,7 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessDictionaries", err,
-				"Failure at GetNetworkAccessDictionaries, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -231,9 +229,7 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 		items1 := getAllItemsNetworkAccessDictionaryGetNetworkAccessDictionaries(m, response1)
 		item1, err := searchNetworkAccessDictionaryGetNetworkAccessDictionaries(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessDictionaries response", err,
-				"Failure when searching item from GetNetworkAccessDictionaries, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessDictionaryGetNetworkAccessDictionaryByNameItem(item1)
@@ -255,9 +251,7 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessDictionaryByName", err,
-				"Failure at GetNetworkAccessDictionaryByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

@@ -666,9 +666,7 @@ func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAuthorizationProfileByName", err,
-				"Failure at GetAuthorizationProfileByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -694,9 +692,7 @@ func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAuthorizationProfileByID", err,
-				"Failure at GetAuthorizationProfileByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

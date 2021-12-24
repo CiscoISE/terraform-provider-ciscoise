@@ -259,9 +259,7 @@ func resourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTacacsCommandSetsByName", err,
-				"Failure at GetTacacsCommandSetsByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -287,9 +285,7 @@ func resourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTacacsCommandSetsByID", err,
-				"Failure at GetTacacsCommandSetsByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

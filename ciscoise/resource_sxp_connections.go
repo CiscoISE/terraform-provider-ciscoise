@@ -236,9 +236,7 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSxpConnections", err,
-				"Failure at GetSxpConnections, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -247,9 +245,7 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 		items1 := getAllItemsSxpConnectionsGetSxpConnections(m, response1, &queryParams1)
 		item1, err := searchSxpConnectionsGetSxpConnections(m, items1, "", vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSxpConnections response", err,
-				"Failure when searching item from GetSxpConnections, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSxpConnectionsGetSxpConnectionsByIDItem(item1)
@@ -271,9 +267,7 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSxpConnectionsByID", err,
-				"Failure at GetSxpConnectionsByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

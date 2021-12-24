@@ -485,9 +485,7 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsorGroup", err,
-				"Failure at GetSponsorGroup, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -496,9 +494,7 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 		items1 := getAllItemsSponsorGroupGetSponsorGroup(m, response1, &queryParams1)
 		item1, err := searchSponsorGroupGetSponsorGroup(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSponsorGroup response", err,
-				"Failure when searching item from GetSponsorGroup, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSponsorGroupGetSponsorGroupByIDItem(item1)
@@ -520,9 +516,7 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsorGroupByID", err,
-				"Failure at GetSponsorGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

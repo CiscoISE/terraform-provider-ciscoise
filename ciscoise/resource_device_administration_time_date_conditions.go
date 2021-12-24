@@ -510,9 +510,7 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminTimeConditions", err,
-				"Failure at GetDeviceAdminTimeConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -521,9 +519,7 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 		items1 := getAllItemsDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditions(m, response1)
 		item1, err := searchDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditions(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetDeviceAdminTimeConditions response", err,
-				"Failure when searching item from GetDeviceAdminTimeConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenDeviceAdministrationTimeDateConditionsGetDeviceAdminTimeConditionByIDItem(item1)
@@ -544,9 +540,7 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminTimeConditionByID", err,
-				"Failure at GetDeviceAdminTimeConditionByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

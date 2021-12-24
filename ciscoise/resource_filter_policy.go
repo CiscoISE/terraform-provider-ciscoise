@@ -215,9 +215,7 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetFilterPolicy", err,
-				"Failure at GetFilterPolicy, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -226,9 +224,7 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 		items1 := getAllItemsFilterPolicyGetFilterPolicy(m, response1, &queryParams1)
 		item1, _, err := searchFilterPolicyGetFilterPolicy(m, items1, vvSgt, vvSubnet, vvVn, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetFilterPolicy response", err,
-				"Failure when searching item from GetFilterPolicy, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenFilterPolicyGetFilterPolicyByIDItem(item1)
@@ -249,9 +245,7 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetFilterPolicyByID", err,
-				"Failure at GetFilterPolicyByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

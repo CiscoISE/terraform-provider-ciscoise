@@ -543,9 +543,7 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestType", err,
-				"Failure at GetGuestType, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -554,9 +552,7 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 		items1 := getAllItemsGuestTypeGetGuestType(m, response1, &queryParams1)
 		item1, err := searchGuestTypeGetGuestType(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetGuestType response", err,
-				"Failure when searching item from GetGuestType, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenGuestTypeGetGuestTypeByIDItem(item1)
@@ -578,9 +574,7 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestTypeByID", err,
-				"Failure at GetGuestTypeByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

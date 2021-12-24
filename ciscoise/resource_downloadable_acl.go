@@ -224,9 +224,7 @@ func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDownloadableACL", err,
-				"Failure at GetDownloadableACL, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -235,9 +233,7 @@ func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m 
 		items1 := getAllItemsDownloadableACLGetDownloadableACL(m, response1, &queryParams1)
 		item1, err := searchDownloadableACLGetDownloadableACL(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetDownloadableACL response", err,
-				"Failure when searching item from GetDownloadableACL, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenDownloadableACLGetDownloadableACLByIDItem(item1)
@@ -259,9 +255,7 @@ func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDownloadableACLByID", err,
-				"Failure at GetDownloadableACLByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

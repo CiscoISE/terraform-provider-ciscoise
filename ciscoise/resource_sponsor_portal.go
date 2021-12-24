@@ -1120,9 +1120,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsorPortal", err,
-				"Failure at GetSponsorPortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1131,9 +1129,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 		items1 := getAllItemsSponsorPortalGetSponsorPortal(m, response1, &queryParams1)
 		item1, err := searchSponsorPortalGetSponsorPortal(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSponsorPortal response", err,
-				"Failure when searching item from GetSponsorPortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSponsorPortalGetSponsorPortalByIDItem(item1)
@@ -1155,9 +1151,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsorPortalByID", err,
-				"Failure at GetSponsorPortalByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

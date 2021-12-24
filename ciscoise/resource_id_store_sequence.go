@@ -247,9 +247,7 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIDentitySequenceByName", err,
-				"Failure at GetIDentitySequenceByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -275,9 +273,7 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIDentitySequenceByID", err,
-				"Failure at GetIDentitySequenceByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
