@@ -568,6 +568,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceDeviceAdministrationPolicySetCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationPolicySet Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -630,6 +631,7 @@ func resourceDeviceAdministrationPolicySetCreate(ctx context.Context, d *schema.
 }
 
 func resourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationPolicySet Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -705,6 +707,7 @@ func resourceDeviceAdministrationPolicySetRead(ctx context.Context, d *schema.Re
 }
 
 func resourceDeviceAdministrationPolicySetUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationPolicySet Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -765,6 +768,7 @@ func resourceDeviceAdministrationPolicySetUpdate(ctx context.Context, d *schema.
 }
 
 func resourceDeviceAdministrationPolicySetDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationPolicySet Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

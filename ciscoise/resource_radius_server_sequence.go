@@ -346,6 +346,7 @@ func resourceRadiusServerSequence() *schema.Resource {
 }
 
 func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RadiusServerSequence Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -408,6 +409,7 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RadiusServerSequence Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -486,6 +488,7 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RadiusServerSequence Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -548,6 +551,7 @@ func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceRadiusServerSequenceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RadiusServerSequence Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

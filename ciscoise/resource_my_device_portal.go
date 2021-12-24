@@ -1013,6 +1013,7 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 }
 
 func resourceMyDevicePortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning MyDevicePortal Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1075,6 +1076,7 @@ func resourceMyDevicePortalCreate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning MyDevicePortal Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1154,6 +1156,7 @@ func resourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceMyDevicePortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning MyDevicePortal Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1217,6 +1220,7 @@ func resourceMyDevicePortalUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceMyDevicePortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning MyDevicePortal Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

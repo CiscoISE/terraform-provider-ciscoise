@@ -137,6 +137,7 @@ standalone node.
 }
 
 func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeDeployment Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -188,6 +189,7 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeDeployment Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -264,6 +266,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeDeployment Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -310,6 +313,7 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceNodeDeploymentDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeDeployment Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

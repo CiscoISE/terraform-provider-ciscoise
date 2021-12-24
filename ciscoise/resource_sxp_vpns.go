@@ -95,6 +95,7 @@ func resourceSxpVpns() *schema.Resource {
 }
 
 func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpVpns Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -157,6 +158,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpVpns Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -235,10 +237,12 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 }
 
 func resourceSxpVpnsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpVpns Update for id=[%s]", d.Id())
 	return resourceSxpVpnsRead(ctx, d, m)
 }
 
 func resourceSxpVpnsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpVpns Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

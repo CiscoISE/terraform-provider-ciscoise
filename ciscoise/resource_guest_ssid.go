@@ -99,6 +99,7 @@ func resourceGuestSSID() *schema.Resource {
 }
 
 func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestSSID Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -161,6 +162,7 @@ func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestSSID Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -240,6 +242,7 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceGuestSSIDUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestSSID Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -303,6 +306,7 @@ func resourceGuestSSIDUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGuestSSIDDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestSSID Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

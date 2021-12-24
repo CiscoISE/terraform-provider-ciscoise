@@ -175,6 +175,7 @@ Allowed values:
 }
 
 func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -187,6 +188,7 @@ func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -265,6 +267,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 }
 
 func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -327,6 +330,7 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNativeSupplicantProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

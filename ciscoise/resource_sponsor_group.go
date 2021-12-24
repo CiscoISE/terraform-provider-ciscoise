@@ -396,6 +396,7 @@ func resourceSponsorGroup() *schema.Resource {
 }
 
 func resourceSponsorGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorGroup Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -458,6 +459,7 @@ func resourceSponsorGroupCreate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorGroup Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -536,6 +538,7 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceSponsorGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorGroup Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -598,6 +601,7 @@ func resourceSponsorGroupUpdate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSponsorGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorGroup Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

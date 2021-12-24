@@ -110,6 +110,7 @@ At least one of subnet or sgt or vn should be defined`,
 }
 
 func resourceFilterPolicyCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning FilterPolicy Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -185,6 +186,7 @@ func resourceFilterPolicyCreate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning FilterPolicy Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -265,6 +267,7 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning FilterPolicy Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -327,6 +330,7 @@ func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceFilterPolicyDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning FilterPolicy Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

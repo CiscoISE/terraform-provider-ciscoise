@@ -67,6 +67,7 @@ func resourceNodeServicesSxpInterfaces() *schema.Resource {
 }
 
 func resourceNodeServicesSxpInterfacesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -78,6 +79,7 @@ func resourceNodeServicesSxpInterfacesCreate(ctx context.Context, d *schema.Reso
 }
 
 func resourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -117,6 +119,7 @@ func resourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.Resour
 }
 
 func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -152,6 +155,7 @@ func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.Reso
 }
 
 func resourceNodeServicesSxpInterfacesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces Delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
 	// NOTE: Unable to delete NodeServicesSxpInterfaces on Cisco ISE
 	//       Returning empty diags to delete it on Terraform

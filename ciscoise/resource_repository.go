@@ -127,6 +127,7 @@ func resourceRepository() *schema.Resource {
 }
 
 func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Repository Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -178,6 +179,7 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Repository Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -253,6 +255,7 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 }
 
 func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Repository Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -298,6 +301,7 @@ func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceRepositoryDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Repository Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

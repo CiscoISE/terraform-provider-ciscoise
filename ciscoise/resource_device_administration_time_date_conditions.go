@@ -423,6 +423,7 @@ func resourceDeviceAdministrationTimeDateConditions() *schema.Resource {
 }
 
 func resourceDeviceAdministrationTimeDateConditionsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationTimeDateConditions Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -485,6 +486,7 @@ func resourceDeviceAdministrationTimeDateConditionsCreate(ctx context.Context, d
 }
 
 func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationTimeDateConditions Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -560,6 +562,7 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 }
 
 func resourceDeviceAdministrationTimeDateConditionsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationTimeDateConditions Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -620,6 +623,7 @@ func resourceDeviceAdministrationTimeDateConditionsUpdate(ctx context.Context, d
 }
 
 func resourceDeviceAdministrationTimeDateConditionsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationTimeDateConditions Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

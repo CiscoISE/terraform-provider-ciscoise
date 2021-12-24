@@ -590,6 +590,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceDeviceAdministrationGlobalExceptionRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationGlobalExceptionRules Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -664,6 +665,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesCreate(ctx context.Context,
 }
 
 func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationGlobalExceptionRules Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -753,6 +755,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 }
 
 func resourceDeviceAdministrationGlobalExceptionRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationGlobalExceptionRules Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -828,6 +831,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesUpdate(ctx context.Context,
 }
 
 func resourceDeviceAdministrationGlobalExceptionRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationGlobalExceptionRules Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
