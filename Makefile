@@ -3,7 +3,7 @@ HOSTNAME=hashicorp.com
 NAMESPACE=edu
 NAME=ciscoise
 BINARY=terraform-provider-${NAME}
-VERSION=0.1.0-rc
+VERSION=0.1.0-rc.1
 OS_ARCH=darwin_arm64
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 default: install
