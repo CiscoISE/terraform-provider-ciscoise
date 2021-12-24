@@ -1103,9 +1103,7 @@ func resourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m i
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetMyDevicePortal", err,
-				"Failure at GetMyDevicePortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1114,9 +1112,7 @@ func resourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m i
 		items1 := getAllItemsMyDevicePortalGetMyDevicePortal(m, response1, &queryParams1)
 		item1, err := searchMyDevicePortalGetMyDevicePortal(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetMyDevicePortal response", err,
-				"Failure when searching item from GetMyDevicePortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenMyDevicePortalGetMyDevicePortalByIDItem(item1)
@@ -1138,9 +1134,7 @@ func resourceMyDevicePortalRead(ctx context.Context, d *schema.ResourceData, m i
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetMyDevicePortalByID", err,
-				"Failure at GetMyDevicePortalByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

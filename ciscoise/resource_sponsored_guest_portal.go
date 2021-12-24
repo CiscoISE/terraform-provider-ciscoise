@@ -1500,9 +1500,7 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsoredGuestPortals", err,
-				"Failure at GetSponsoredGuestPortals, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1511,9 +1509,7 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 		items1 := getAllItemsSponsoredGuestPortalGetSponsoredGuestPortals(m, response1, &queryParams1)
 		item1, err := searchSponsoredGuestPortalGetSponsoredGuestPortals(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSponsoredGuestPortals response", err,
-				"Failure when searching item from GetSponsoredGuestPortals, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSponsoredGuestPortalGetSponsoredGuestPortalByIDItem(item1)
@@ -1535,9 +1531,7 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsoredGuestPortalByID", err,
-				"Failure at GetSponsoredGuestPortalByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

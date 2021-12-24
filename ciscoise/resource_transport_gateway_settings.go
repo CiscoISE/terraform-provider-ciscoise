@@ -103,9 +103,7 @@ func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resourc
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTransportGateway", err,
-				"Failure at GetTransportGateway, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

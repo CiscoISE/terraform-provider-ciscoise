@@ -194,9 +194,7 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkDeviceGroupByName", err,
-				"Failure at GetNetworkDeviceGroupByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -222,9 +220,7 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkDeviceGroupByID", err,
-				"Failure at GetNetworkDeviceGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

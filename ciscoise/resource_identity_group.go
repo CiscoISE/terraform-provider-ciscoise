@@ -192,9 +192,7 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIDentityGroupByName", err,
-				"Failure at GetIDentityGroupByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -220,9 +218,7 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIDentityGroupByID", err,
-				"Failure at GetIDentityGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

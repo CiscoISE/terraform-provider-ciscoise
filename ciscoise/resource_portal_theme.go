@@ -205,9 +205,7 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPortalThemes", err,
-				"Failure at GetPortalThemes, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -216,9 +214,7 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 		items1 := getAllItemsPortalThemeGetPortalThemes(m, response1, &queryParams1)
 		item1, err := searchPortalThemeGetPortalThemes(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetPortalThemes response", err,
-				"Failure when searching item from GetPortalThemes, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenPortalThemeGetPortalThemeByIDItem(item1)
@@ -240,9 +236,7 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPortalThemeByID", err,
-				"Failure at GetPortalThemeByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

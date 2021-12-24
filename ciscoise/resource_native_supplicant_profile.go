@@ -214,9 +214,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNativeSupplicantProfile", err,
-				"Failure at GetNativeSupplicantProfile, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -225,9 +223,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 		items1 := getAllItemsNativeSupplicantProfileGetNativeSupplicantProfile(m, response1, &queryParams1)
 		item1, err := searchNativeSupplicantProfileGetNativeSupplicantProfile(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNativeSupplicantProfile response", err,
-				"Failure when searching item from GetNativeSupplicantProfile, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNativeSupplicantProfileGetNativeSupplicantProfileByIDItem(item1)
@@ -249,9 +245,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNativeSupplicantProfileByID", err,
-				"Failure at GetNativeSupplicantProfileByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

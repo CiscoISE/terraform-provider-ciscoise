@@ -195,9 +195,7 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEndpointGroupByName", err,
-				"Failure at GetEndpointGroupByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -223,9 +221,7 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEndpointGroupByID", err,
-				"Failure at GetEndpointGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

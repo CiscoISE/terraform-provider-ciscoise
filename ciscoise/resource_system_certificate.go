@@ -290,9 +290,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSystemCertificates", err,
-				"Failure at GetSystemCertificates, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -301,9 +299,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 		items1 := getAllItemsCertificatesGetSystemCertificates(m, response1, vvHostName, &queryParams1)
 		item1, err := searchCertificatesGetSystemCertificates(m, items1, vvName, vvID, vvHostName)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSystemCertificates response", err,
-				"Failure when searching item from GetSystemCertificates, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenCertificatesGetSystemCertificateByIDItem(item1)
@@ -324,9 +320,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSystemCertificateByID", err,
-				"Failure at GetSystemCertificateByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

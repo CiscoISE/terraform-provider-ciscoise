@@ -732,9 +732,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessAuthenticationRules", err,
-				"Failure at GetNetworkAccessAuthenticationRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -743,9 +741,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 		items1 := getAllItemsNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRules(m, response1, vvPolicyID)
 		item1, err := searchNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRules(m, items1, vvName, vvID, vvPolicyID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessAuthenticationRules response", err,
-				"Failure when searching item from GetNetworkAccessAuthenticationRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(item1)
@@ -765,9 +761,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessAuthenticationRuleByID", err,
-				"Failure at GetNetworkAccessAuthenticationRuleByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

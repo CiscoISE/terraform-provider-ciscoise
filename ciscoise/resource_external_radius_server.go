@@ -311,9 +311,7 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExternalRadiusServerByName", err,
-				"Failure at GetExternalRadiusServerByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -339,9 +337,7 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetExternalRadiusServerByID", err,
-				"Failure at GetExternalRadiusServerByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

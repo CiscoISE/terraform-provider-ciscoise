@@ -275,9 +275,7 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestSmtpNotificationSettings", err,
-				"Failure at GetGuestSmtpNotificationSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -286,9 +284,7 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 		items1 := getAllItemsGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m, response1, &queryParams1)
 		item1, err := searchGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m, items1, "", vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetGuestSmtpNotificationSettings response", err,
-				"Failure when searching item from GetGuestSmtpNotificationSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsByIDItem(item1)
@@ -310,9 +306,7 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestSmtpNotificationSettingsByID", err,
-				"Failure at GetGuestSmtpNotificationSettingsByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

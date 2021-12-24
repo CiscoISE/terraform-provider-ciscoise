@@ -551,9 +551,7 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminConditionByName", err,
-				"Failure at GetDeviceAdminConditionByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -579,9 +577,7 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminConditionByID", err,
-				"Failure at GetDeviceAdminConditionByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

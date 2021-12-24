@@ -200,9 +200,7 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAncPolicyByName", err,
-				"Failure at GetAncPolicyByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -228,9 +226,7 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAncPolicyByID", err,
-				"Failure at GetAncPolicyByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

@@ -245,9 +245,7 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSecurityGroupsACL", err,
-				"Failure at GetSecurityGroupsACL, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -256,9 +254,7 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 		items1 := getAllItemsSecurityGroupsACLsGetSecurityGroupsACL(m, response1, &queryParams1)
 		item1, err := searchSecurityGroupsACLsGetSecurityGroupsACL(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSecurityGroupsACL response", err,
-				"Failure when searching item from GetSecurityGroupsACL, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSecurityGroupsACLsGetSecurityGroupsACLByIDItem(item1)
@@ -280,9 +276,7 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSecurityGroupsACLByID", err,
-				"Failure at GetSecurityGroupsACLByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

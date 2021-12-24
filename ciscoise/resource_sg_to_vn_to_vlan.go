@@ -321,9 +321,7 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSecurityGroupsToVnToVLAN", err,
-				"Failure at GetSecurityGroupsToVnToVLAN, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -332,9 +330,7 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 		items1 := getAllItemsSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m, response1, &queryParams1)
 		item1, err := searchSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSecurityGroupsToVnToVLAN response", err,
-				"Failure when searching item from GetSecurityGroupsToVnToVLAN, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDItem(item1)
@@ -356,9 +352,7 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSecurityGroupsToVnToVLANByID", err,
-				"Failure at GetSecurityGroupsToVnToVLANByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

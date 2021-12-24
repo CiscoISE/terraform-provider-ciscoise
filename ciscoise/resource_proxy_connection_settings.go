@@ -164,9 +164,7 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetProxyConnection", err,
-				"Failure at GetProxyConnection, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

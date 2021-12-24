@@ -704,9 +704,7 @@ func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schem
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessPolicySetGlobalExceptionRules", err,
-				"Failure at GetNetworkAccessPolicySetGlobalExceptionRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -715,9 +713,7 @@ func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schem
 		items1 := getAllItemsNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRules(m, response1)
 		item1, err := searchNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRules(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessPolicySetGlobalExceptionRules response", err,
-				"Failure when searching item from GetNetworkAccessPolicySetGlobalExceptionRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessAuthorizationGlobalExceptionRulesGetNetworkAccessPolicySetGlobalExceptionRuleByIDItem(item1)
@@ -738,9 +734,7 @@ func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schem
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessPolicySetGlobalExceptionRuleByID", err,
-				"Failure at GetNetworkAccessPolicySetGlobalExceptionRuleByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

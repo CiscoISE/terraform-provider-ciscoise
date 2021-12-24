@@ -136,9 +136,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPortalGlobalSettings", err,
-				"Failure at GetPortalGlobalSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -147,9 +145,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 		items1 := getAllItemsPortalGlobalSettingGetPortalGlobalSettings(m, response1, &queryParams1)
 		item1, err := searchPortalGlobalSettingGetPortalGlobalSettings(m, items1, "", vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetPortalGlobalSettings response", err,
-				"Failure when searching item from GetPortalGlobalSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenPortalGlobalSettingGetPortalGlobalSettingByIDItem(item1)
@@ -171,9 +167,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPortalGlobalSettingByID", err,
-				"Failure at GetPortalGlobalSettingByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

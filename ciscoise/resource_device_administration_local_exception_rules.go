@@ -723,9 +723,7 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminLocalExceptionRules", err,
-				"Failure at GetDeviceAdminLocalExceptionRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -734,9 +732,7 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 		items1 := getAllItemsDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRules(m, response1, vvPolicyID)
 		item1, err := searchDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRules(m, items1, vvName, vvID, vvPolicyID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetDeviceAdminLocalExceptionRules response", err,
-				"Failure when searching item from GetDeviceAdminLocalExceptionRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenDeviceAdministrationAuthorizationExceptionRulesGetDeviceAdminLocalExceptionRuleByIDItem(item1)
@@ -756,9 +752,7 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminLocalExceptionRuleByID", err,
-				"Failure at GetDeviceAdminLocalExceptionRuleByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

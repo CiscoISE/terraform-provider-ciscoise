@@ -361,9 +361,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessNetworkConditions", err,
-				"Failure at GetNetworkAccessNetworkConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -372,9 +370,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 		items1 := getAllItemsNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, response1)
 		item1, err := searchNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessNetworkConditions response", err,
-				"Failure when searching item from GetNetworkAccessNetworkConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItem(item1)
@@ -395,9 +391,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessNetworkConditionByID", err,
-				"Failure at GetNetworkAccessNetworkConditionByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

@@ -220,9 +220,7 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNodeGroups", err,
-				"Failure at GetNodeGroups, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -231,9 +229,7 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 		items1 := getAllItemsNodeGroupGetNodeGroups(m, response1)
 		item1, err := searchNodeGroupGetNodeGroups(m, items1, vvNodeGroupName, "")
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNodeGroups response", err,
-				"Failure when searching item from GetNodeGroups, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNodeGroupGetNodeGroupItem(item1)
@@ -255,9 +251,7 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNodeGroup", err,
-				"Failure at GetNodeGroup, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

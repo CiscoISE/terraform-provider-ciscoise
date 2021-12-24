@@ -184,9 +184,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVirtualNetworks", err,
-				"Failure at GetVirtualNetworks, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -195,9 +193,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 		items1 := getAllItemsVirtualNetworkGetVirtualNetworks(m, response1, nil)
 		item1, err := searchVirtualNetworkGetVirtualNetworks(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetVirtualNetworks response", err,
-				"Failure when searching item from GetVirtualNetworks, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenVirtualNetworkGetVirtualNetworkByIDItem(item1)
@@ -217,9 +213,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVirtualNetworkByID", err,
-				"Failure at GetVirtualNetworkByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

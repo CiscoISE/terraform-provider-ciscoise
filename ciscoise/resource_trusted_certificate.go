@@ -414,9 +414,7 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTrustedCertificates", err,
-				"Failure at GetTrustedCertificates, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -425,9 +423,7 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 		items1 := getAllItemsCertificatesGetTrustedCertificates(m, response1, &queryParams1)
 		item1, err := searchCertificatesGetTrustedCertificates(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetTrustedCertificates response", err,
-				"Failure when searching item from GetTrustedCertificates, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenCertificatesGetTrustedCertificateByIDItem(item1)
@@ -449,9 +445,7 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTrustedCertificateByID", err,
-				"Failure at GetTrustedCertificateByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

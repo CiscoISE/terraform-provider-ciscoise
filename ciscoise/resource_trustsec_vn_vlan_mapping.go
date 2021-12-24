@@ -240,9 +240,7 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVnVLANMappings", err,
-				"Failure at GetVnVLANMappings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -251,9 +249,7 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 		items1 := getAllItemsVnVLANMappingGetVnVLANMappings(m, response1, nil)
 		item1, err := searchVnVLANMappingGetVnVLANMappings(m, items1, vvName, vvVnID, vvVnName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetVnVLANMappings response", err,
-				"Failure when searching item from GetVnVLANMappings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenVnVLANMappingGetVnVLANMappingByIDItem(item1)
@@ -275,9 +271,7 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVnVLANMappingByID", err,
-				"Failure at GetVnVLANMappingByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

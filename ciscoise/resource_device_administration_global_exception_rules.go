@@ -704,9 +704,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminPolicySetGlobalExceptionRules", err,
-				"Failure at GetDeviceAdminPolicySetGlobalExceptionRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -715,9 +713,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 		items1 := getAllItemsDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRules(m, response1)
 		item1, err := searchDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionRules(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetDeviceAdminPolicySetGlobalExceptionRules response", err,
-				"Failure when searching item from GetDeviceAdminPolicySetGlobalExceptionRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenDeviceAdministrationAuthorizationGlobalExceptionRulesGetDeviceAdminPolicySetGlobalExceptionByRuleIDItem(item1)
@@ -737,9 +733,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminPolicySetGlobalExceptionByRuleID", err,
-				"Failure at GetDeviceAdminPolicySetGlobalExceptionByRuleID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 

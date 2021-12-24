@@ -1101,9 +1101,7 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAllowedProtocolByName", err,
-				"Failure at GetAllowedProtocolByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1129,9 +1127,7 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAllowedProtocolByID", err,
-				"Failure at GetAllowedProtocolByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
