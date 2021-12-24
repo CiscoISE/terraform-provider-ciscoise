@@ -46,7 +46,7 @@ func dataSourceGuestUserBulkRequestRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkRequestForGuestUser")
+		log.Printf("[DEBUG] Selected method: BulkRequestForGuestUser")
 		request1 := expandRequestGuestUserBulkRequestBulkRequestForGuestUser(ctx, "", d)
 
 		response1, err := client.GuestUser.BulkRequestForGuestUser(request1)

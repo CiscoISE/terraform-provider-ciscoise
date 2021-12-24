@@ -273,17 +273,90 @@ Not Contains
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"href": &schema.Schema{
+						"expiration_date": &schema.Schema{
+							Description: `Time and date past which the certificate is no longer valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"friendly_name": &schema.Schema{
+							Description: `Friendly name of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"group_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"rel": &schema.Schema{
+						"id": &schema.Schema{
+							Description: `ID of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"issued_by": &schema.Schema{
+							Description: `Common Name of the certificate issuer`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"issued_to": &schema.Schema{
+							Description: `Common Name of the certificate subject`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"key_size": &schema.Schema{
+							Description: `Length of key used for encrypting system certificate`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"portals_using_the_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"type": &schema.Schema{
+						"self_signed": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"serial_number_decimal_format": &schema.Schema{
+							Description: `Used to uniquely identify the certificate within a CA's systems`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"sha256_fingerprint": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"signature_algorithm": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"used_by": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"valid_from": &schema.Schema{
+							Description: `Time and date on which the certificate was created, also known as the Not Before certificate attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -305,14 +378,14 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 	vFilterType, okFilterType := d.GetOk("filter_type")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okHostName, okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okHostName, okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okHostName, okPage, okSize, okSort, okSortBy, okFilter, okFilterType}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSystemCertificates")
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method: GetSystemCertificates")
 		vvHostName := vHostName.(string)
 		queryParams1 := isegosdk.GetSystemCertificatesQueryParams{}
 
@@ -381,8 +454,8 @@ func dataSourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData
 		return diags
 
 	}
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetSystemCertificateByID")
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetSystemCertificateByID")
 		vvHostName := vHostName.(string)
 		vvID := vID.(string)
 

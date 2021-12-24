@@ -248,15 +248,15 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTacacsProfile")
+		log.Printf("[DEBUG] Selected method: GetTacacsProfile")
 		queryParams1 := isegosdk.GetTacacsProfileQueryParams{}
 
 		if okPage {
@@ -313,7 +313,7 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetTacacsProfileByName")
+		log.Printf("[DEBUG] Selected method: GetTacacsProfileByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.TacacsProfile.GetTacacsProfileByName(vvName)
@@ -342,7 +342,7 @@ func dataSourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m 
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetTacacsProfileByID")
+		log.Printf("[DEBUG] Selected method: GetTacacsProfileByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.TacacsProfile.GetTacacsProfileByID(vvID)

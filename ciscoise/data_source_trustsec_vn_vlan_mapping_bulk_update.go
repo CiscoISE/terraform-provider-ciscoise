@@ -100,7 +100,7 @@ func dataSourceTrustsecVnVLANMappingBulkUpdateRead(ctx context.Context, d *schem
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkUpdateVnVLANMappings")
+		log.Printf("[DEBUG] Selected method: BulkUpdateVnVLANMappings")
 		request1 := expandRequestTrustsecVnVLANMappingBulkUpdateBulkUpdateVnVLANMappings(ctx, "", d)
 
 		response1, restyResp1, err := client.VnVLANMapping.BulkUpdateVnVLANMappings(request1)
@@ -154,7 +154,7 @@ func expandRequestTrustsecVnVLANMappingBulkUpdateBulkUpdateVnVLANMappingsItemArr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTrustsecVnVLANMappingBulkUpdateBulkUpdateVnVLANMappingsItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

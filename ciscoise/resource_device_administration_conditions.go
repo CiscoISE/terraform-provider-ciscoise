@@ -806,7 +806,7 @@ func expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceAdministrationConditionsCreateDeviceAdminConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -992,7 +992,7 @@ func expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDCh
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceAdministrationConditionsUpdateDeviceAdminConditionByIDChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

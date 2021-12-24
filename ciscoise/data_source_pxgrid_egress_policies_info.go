@@ -36,7 +36,7 @@ func dataSourcePxgridEgressPoliciesInfoRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetEgressPolicies")
+		log.Printf("[DEBUG] Selected method: GetEgressPolicies")
 
 		response1, err := client.TrustSecConfiguration.GetEgressPolicies()
 

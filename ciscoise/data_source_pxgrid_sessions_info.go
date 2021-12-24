@@ -36,7 +36,7 @@ func dataSourcePxgridSessionsInfoRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSessions")
+		log.Printf("[DEBUG] Selected method: GetSessions")
 
 		response1, err := client.SessionDirectory.GetSessions()
 

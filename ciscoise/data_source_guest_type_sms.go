@@ -62,7 +62,7 @@ func dataSourceGuestTypeSmsRead(ctx context.Context, d *schema.ResourceData, m i
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateGuestTypeSms")
+		log.Printf("[DEBUG] Selected method: UpdateGuestTypeSms")
 		vvID := vID.(string)
 		request1 := expandRequestGuestTypeSmsUpdateGuestTypeSms(ctx, "", d)
 
@@ -119,7 +119,7 @@ func expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditiona
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestGuestTypeSmsUpdateGuestTypeSmsOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

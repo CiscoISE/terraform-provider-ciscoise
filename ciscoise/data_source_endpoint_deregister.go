@@ -42,7 +42,7 @@ func dataSourceEndpointDeregisterRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: DeregisterEndpoint")
+		log.Printf("[DEBUG] Selected method: DeregisterEndpoint")
 		vvID := vID.(string)
 
 		response1, err := client.Endpoint.DeregisterEndpoint(vvID)

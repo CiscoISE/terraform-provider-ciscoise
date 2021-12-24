@@ -50,7 +50,7 @@ func dataSourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSxpInterface")
+		log.Printf("[DEBUG] Selected method: GetSxpInterface")
 		vvHostname := vHostname.(string)
 
 		response1, restyResp1, err := client.NodeServices.GetSxpInterface(vvHostname)

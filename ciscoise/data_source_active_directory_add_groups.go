@@ -314,7 +314,7 @@ func dataSourceActiveDirectoryAddGroupsRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: LoadGroupsFromDomain")
+		log.Printf("[DEBUG] Selected method: LoadGroupsFromDomain")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomain(ctx, "", d)
 
@@ -403,7 +403,7 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -520,7 +520,7 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -562,7 +562,7 @@ func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

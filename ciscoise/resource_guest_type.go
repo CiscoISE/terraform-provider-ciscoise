@@ -802,7 +802,7 @@ func expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimitsArray(
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestGuestTypeCreateGuestTypeGuestTypeAccessTimeDayTimeLimits(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -964,7 +964,7 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimitsAr
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeAccessTimeDayTimeLimits(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

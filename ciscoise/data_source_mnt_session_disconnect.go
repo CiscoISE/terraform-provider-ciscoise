@@ -65,7 +65,7 @@ func dataSourceMntSessionDisconnectRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: SessionDisconnect")
+		log.Printf("[DEBUG] Selected method: SessionDisconnect")
 		vvENDPOINTIP := vENDPOINTIP.(string)
 		vvPSNNAME := vPSNNAME.(string)
 		vvMAC := vMAC.(string)

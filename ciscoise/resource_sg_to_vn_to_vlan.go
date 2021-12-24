@@ -549,7 +549,7 @@ func expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVi
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklist(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -595,7 +595,7 @@ func expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVi
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSgToVnToVLANCreateSecurityGroupsToVnToVLANSgtVnVLANContainerVirtualnetworklistVLANs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -676,7 +676,7 @@ func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContain
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklist(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -722,7 +722,7 @@ func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContain
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContainerVirtualnetworklistVLANs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

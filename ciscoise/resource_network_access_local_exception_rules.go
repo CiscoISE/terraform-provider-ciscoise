@@ -679,7 +679,7 @@ func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -700,9 +700,9 @@ func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -777,7 +777,7 @@ func resourceNetworkAccessLocalExceptionRulesUpdate(ctx context.Context, d *sche
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -798,9 +798,9 @@ func resourceNetworkAccessLocalExceptionRulesUpdate(ctx context.Context, d *sche
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -854,7 +854,7 @@ func resourceNetworkAccessLocalExceptionRulesDelete(ctx context.Context, d *sche
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -875,9 +875,9 @@ func resourceNetworkAccessLocalExceptionRulesDelete(ctx context.Context, d *sche
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -1080,7 +1080,7 @@ func expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExcept
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNetworkAccessLocalExceptionRulesCreateNetworkAccessLocalExceptionRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1329,7 +1329,7 @@ func expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExcept
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestNetworkAccessLocalExceptionRulesUpdateNetworkAccessLocalExceptionRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

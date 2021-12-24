@@ -122,13 +122,13 @@ func dataSourceTasksRead(ctx context.Context, d *schema.ResourceData, m interfac
 	vTaskID, okTaskID := d.GetOk("task_id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okTaskID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAllTaskStatus")
+		log.Printf("[DEBUG] Selected method: GetAllTaskStatus")
 
 		response1, restyResp1, err := client.Tasks.GetAllTaskStatus()
 
@@ -156,7 +156,7 @@ func dataSourceTasksRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetTaskStatus")
+		log.Printf("[DEBUG] Selected method: GetTaskStatus")
 		vvTaskID := vTaskID.(string)
 
 		response2, restyResp2, err := client.Tasks.GetTaskStatus(vvTaskID)

@@ -49,7 +49,7 @@ func dataSourceNetworkAccessProfilesRead(ctx context.Context, d *schema.Resource
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessProfiles")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessProfiles")
 
 		response1, restyResp1, err := client.NetworkAccessProfiles.GetNetworkAccessProfiles()
 

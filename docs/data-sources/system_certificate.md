@@ -72,14 +72,9 @@ output "ciscoise_system_certificate_example" {
 }
 
 data "ciscoise_system_certificate" "example" {
-  provider    = ciscoise
-  filter      = ["string"]
-  filter_type = "string"
-  host_name   = "string"
-  page        = 1
-  size        = 1
-  sort        = "string"
-  sort_by     = "string"
+  provider  = ciscoise
+  host_name = "string"
+  id        = "string"
 }
 
 output "ciscoise_system_certificate_example" {
@@ -217,6 +212,27 @@ Read-Only:
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
+
+Read-Only:
+
+- **expiration_date** (String)
+- **friendly_name** (String)
+- **group_tag** (String)
+- **id** (String)
+- **issued_by** (String)
+- **issued_to** (String)
+- **key_size** (Number)
+- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- **portals_using_the_tag** (String)
+- **self_signed** (String)
+- **serial_number_decimal_format** (String)
+- **sha256_fingerprint** (String)
+- **signature_algorithm** (String)
+- **used_by** (String)
+- **valid_from** (String)
+
+<a id="nestedobjatt--items--link"></a>
+### Nested Schema for `items.link`
 
 Read-Only:
 

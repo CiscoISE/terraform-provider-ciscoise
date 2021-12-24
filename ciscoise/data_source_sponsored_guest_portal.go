@@ -828,13 +828,13 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSponsoredGuestPortals")
+		log.Printf("[DEBUG] Selected method: GetSponsoredGuestPortals")
 		queryParams1 := isegosdk.GetSponsoredGuestPortalsQueryParams{}
 
 		if okPage {
@@ -903,7 +903,7 @@ func dataSourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceD
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetSponsoredGuestPortalByID")
+		log.Printf("[DEBUG] Selected method: GetSponsoredGuestPortalByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.SponsoredGuestPortal.GetSponsoredGuestPortalByID(vvID)

@@ -88,7 +88,7 @@ func dataSourceTrustsecSgVnMappingBulkCreateRead(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkCreateSgVnMappings")
+		log.Printf("[DEBUG] Selected method: BulkCreateSgVnMappings")
 		request1 := expandRequestTrustsecSgVnMappingBulkCreateBulkCreateSgVnMappings(ctx, "", d)
 
 		response1, restyResp1, err := client.SgVnMapping.BulkCreateSgVnMappings(request1)
@@ -142,7 +142,7 @@ func expandRequestTrustsecSgVnMappingBulkCreateBulkCreateSgVnMappingsItemArray(c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTrustsecSgVnMappingBulkCreateBulkCreateSgVnMappingsItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

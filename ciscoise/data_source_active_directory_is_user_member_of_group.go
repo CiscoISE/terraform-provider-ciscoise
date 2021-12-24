@@ -88,7 +88,7 @@ func dataSourceActiveDirectoryIsUserMemberOfGroupRead(ctx context.Context, d *sc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: IsUserMemberOfGroups")
+		log.Printf("[DEBUG] Selected method: IsUserMemberOfGroups")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroups(ctx, "", d)
 
@@ -149,7 +149,7 @@ func expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperatio
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestActiveDirectoryIsUserMemberOfGroupIsUserMemberOfGroupsOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

@@ -260,15 +260,15 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize, okSortasc, okSortdsc, okFilter, okFilterType}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetAncPolicy")
+		log.Printf("[DEBUG] Selected method: GetAncPolicy")
 		queryParams1 := isegosdk.GetAncPolicyQueryParams{}
 
 		if okPage {
@@ -337,7 +337,7 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetAncPolicyByName")
+		log.Printf("[DEBUG] Selected method: GetAncPolicyByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.AncPolicy.GetAncPolicyByName(vvName)
@@ -366,7 +366,7 @@ func dataSourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetAncPolicyByID")
+		log.Printf("[DEBUG] Selected method: GetAncPolicyByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.AncPolicy.GetAncPolicyByID(vvID)

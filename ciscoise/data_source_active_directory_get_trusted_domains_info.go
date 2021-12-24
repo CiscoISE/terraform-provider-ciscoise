@@ -69,7 +69,7 @@ func dataSourceActiveDirectoryGetTrustedDomainsInfoRead(ctx context.Context, d *
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTrustedDomains")
+		log.Printf("[DEBUG] Selected method: GetTrustedDomains")
 		vvID := vID.(string)
 
 		response1, restyResp1, err := client.ActiveDirectory.GetTrustedDomains(vvID)

@@ -107,7 +107,7 @@ func dataSourceNetworkDeviceBulkMonitorStatusRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusNetworkDevice")
+		log.Printf("[DEBUG] Selected method: MonitorBulkStatusNetworkDevice")
 		vvBulkid := vBulkid.(string)
 
 		response1, restyResp1, err := client.NetworkDevice.MonitorBulkStatusNetworkDevice(vvBulkid)

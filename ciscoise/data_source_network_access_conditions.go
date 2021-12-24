@@ -670,15 +670,15 @@ func dataSourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resour
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessConditions")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessConditions")
 
 		response1, restyResp1, err := client.NetworkAccessConditions.GetNetworkAccessConditions()
 
@@ -706,7 +706,7 @@ func dataSourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resour
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessConditionByName")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessConditionByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.NetworkAccessConditions.GetNetworkAccessConditionByName(vvName)
@@ -735,7 +735,7 @@ func dataSourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resour
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetNetworkAccessConditionByID")
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessConditionByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.NetworkAccessConditions.GetNetworkAccessConditionByID(vvID)

@@ -67,7 +67,7 @@ func dataSourceLicensingTierStateRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTierStateInfo")
+		log.Printf("[DEBUG] Selected method: GetTierStateInfo")
 
 		response1, restyResp1, err := client.Licensing.GetTierStateInfo()
 

@@ -107,7 +107,7 @@ func dataSourceSgACLBulkMonitorStatusRead(ctx context.Context, d *schema.Resourc
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusSecurityGroupsACL")
+		log.Printf("[DEBUG] Selected method: MonitorBulkStatusSecurityGroupsACL")
 		vvBulkid := vBulkid.(string)
 
 		response1, restyResp1, err := client.SecurityGroupsACLs.MonitorBulkStatusSecurityGroupsACL(vvBulkid)

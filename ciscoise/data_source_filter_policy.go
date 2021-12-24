@@ -123,13 +123,13 @@ func dataSourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m i
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetFilterPolicy")
+		log.Printf("[DEBUG] Selected method: GetFilterPolicy")
 		queryParams1 := isegosdk.GetFilterPolicyQueryParams{}
 
 		if okPage {
@@ -186,7 +186,7 @@ func dataSourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m i
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetFilterPolicyByID")
+		log.Printf("[DEBUG] Selected method: GetFilterPolicyByID")
 		vvID := vID.(string)
 
 		response2, restyResp2, err := client.FilterPolicy.GetFilterPolicyByID(vvID)
