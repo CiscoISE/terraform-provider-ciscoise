@@ -19,15 +19,15 @@ Use the navigation to the left to read about the available resources and data so
 provider "ciscoise" {
   #  Cisco Identity Services Engine user name
   username = "admin"
-  # it can be set using the environment variable ISE_BASE_URL
+  # it can be set using the environment variable ISE_USERNAME
 
   #  Cisco Identity Services Engine password
   password = "admin123"
-  # it can be set using the environment variable ISE_USERNAME
+  # it can be set using the environment variable ISE_PASSWORD
 
   #  Cisco Identity Services Engine base URL, FQDN or IP
   base_url = "https://172.168.196.2"
-  # it can be set using the environment variable ISE_PASSWORD
+  # it can be set using the environment variable ISE_BASE_URL
 
   # Boolean to enable debugging
   debug = "false"
