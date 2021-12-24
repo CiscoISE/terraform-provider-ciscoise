@@ -139,6 +139,7 @@ pxGrid Cloud
 }
 
 func resourceProxyConnectionSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ProxyConnectionSettings Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -150,6 +151,7 @@ func resourceProxyConnectionSettingsCreate(ctx context.Context, d *schema.Resour
 }
 
 func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ProxyConnectionSettings Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -164,9 +166,7 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetProxyConnection", err,
-				"Failure at GetProxyConnection, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -186,6 +186,7 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 }
 
 func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ProxyConnectionSettings Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -218,6 +219,7 @@ func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.Resour
 }
 
 func resourceProxyConnectionSettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ProxyConnectionSettings Delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
 	// NOTE: Unable to delete ProxyConnectionSettings on Cisco ISE
 	//       Returning empty diags to delete it on Terraform

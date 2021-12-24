@@ -274,6 +274,7 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 }
 
 func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessNetworkCondition Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -336,6 +337,7 @@ func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.
 }
 
 func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessNetworkCondition Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -361,9 +363,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessNetworkConditions", err,
-				"Failure at GetNetworkAccessNetworkConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -372,9 +372,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 		items1 := getAllItemsNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, response1)
 		item1, err := searchNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessNetworkConditions response", err,
-				"Failure when searching item from GetNetworkAccessNetworkConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDItem(item1)
@@ -395,9 +393,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessNetworkConditionByID", err,
-				"Failure at GetNetworkAccessNetworkConditionByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -417,6 +413,7 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 }
 
 func resourceNetworkAccessNetworkConditionUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessNetworkCondition Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -477,6 +474,7 @@ func resourceNetworkAccessNetworkConditionUpdate(ctx context.Context, d *schema.
 }
 
 func resourceNetworkAccessNetworkConditionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessNetworkCondition Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

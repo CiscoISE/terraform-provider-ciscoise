@@ -155,6 +155,7 @@ func resourceSgt() *schema.Resource {
 }
 
 func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Sgt Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -217,6 +218,7 @@ func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{
 }
 
 func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Sgt Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -244,9 +246,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSecurityGroups", err,
-				"Failure at GetSecurityGroups, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -255,9 +255,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 		items1 := getAllItemsSecurityGroupsGetSecurityGroups(m, response1, &queryParams1)
 		item1, err := searchSecurityGroupsGetSecurityGroups(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSecurityGroups response", err,
-				"Failure when searching item from GetSecurityGroups, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSecurityGroupsGetSecurityGroupByIDItem(item1)
@@ -279,9 +277,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSecurityGroupByID", err,
-				"Failure at GetSecurityGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -301,6 +297,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 }
 
 func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Sgt Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -363,6 +360,7 @@ func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 }
 
 func resourceSgtDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Sgt Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

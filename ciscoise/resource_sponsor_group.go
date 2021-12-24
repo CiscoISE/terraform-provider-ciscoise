@@ -396,6 +396,7 @@ func resourceSponsorGroup() *schema.Resource {
 }
 
 func resourceSponsorGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorGroup Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -458,6 +459,7 @@ func resourceSponsorGroupCreate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorGroup Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -485,9 +487,7 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsorGroup", err,
-				"Failure at GetSponsorGroup, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -496,9 +496,7 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 		items1 := getAllItemsSponsorGroupGetSponsorGroup(m, response1, &queryParams1)
 		item1, err := searchSponsorGroupGetSponsorGroup(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSponsorGroup response", err,
-				"Failure when searching item from GetSponsorGroup, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSponsorGroupGetSponsorGroupByIDItem(item1)
@@ -520,9 +518,7 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsorGroupByID", err,
-				"Failure at GetSponsorGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -542,6 +538,7 @@ func resourceSponsorGroupRead(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceSponsorGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorGroup Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -604,6 +601,7 @@ func resourceSponsorGroupUpdate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSponsorGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorGroup Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

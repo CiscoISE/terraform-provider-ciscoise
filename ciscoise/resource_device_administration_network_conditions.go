@@ -274,6 +274,7 @@ func resourceDeviceAdministrationNetworkConditions() *schema.Resource {
 }
 
 func resourceDeviceAdministrationNetworkConditionsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationNetworkConditions Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -337,6 +338,7 @@ func resourceDeviceAdministrationNetworkConditionsCreate(ctx context.Context, d 
 }
 
 func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationNetworkConditions Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -362,9 +364,7 @@ func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *s
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminNetworkConditions", err,
-				"Failure at GetDeviceAdminNetworkConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -373,9 +373,7 @@ func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *s
 		items1 := getAllItemsDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions(m, response1)
 		item1, err := searchDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditions(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetDeviceAdminNetworkConditions response", err,
-				"Failure when searching item from GetDeviceAdminNetworkConditions, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenDeviceAdministrationNetworkConditionsGetDeviceAdminNetworkConditionByIDItem(item1)
@@ -397,9 +395,7 @@ func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *s
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminNetworkConditionByID", err,
-				"Failure at GetDeviceAdminNetworkConditionByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -419,6 +415,7 @@ func resourceDeviceAdministrationNetworkConditionsRead(ctx context.Context, d *s
 }
 
 func resourceDeviceAdministrationNetworkConditionsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationNetworkConditions Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -479,6 +476,7 @@ func resourceDeviceAdministrationNetworkConditionsUpdate(ctx context.Context, d 
 }
 
 func resourceDeviceAdministrationNetworkConditionsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationNetworkConditions Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

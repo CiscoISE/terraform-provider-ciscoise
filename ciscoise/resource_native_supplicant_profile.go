@@ -175,6 +175,7 @@ Allowed values:
 }
 
 func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -187,6 +188,7 @@ func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -214,9 +216,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNativeSupplicantProfile", err,
-				"Failure at GetNativeSupplicantProfile, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -225,9 +225,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 		items1 := getAllItemsNativeSupplicantProfileGetNativeSupplicantProfile(m, response1, &queryParams1)
 		item1, err := searchNativeSupplicantProfileGetNativeSupplicantProfile(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNativeSupplicantProfile response", err,
-				"Failure when searching item from GetNativeSupplicantProfile, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNativeSupplicantProfileGetNativeSupplicantProfileByIDItem(item1)
@@ -249,9 +247,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNativeSupplicantProfileByID", err,
-				"Failure at GetNativeSupplicantProfileByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -271,6 +267,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 }
 
 func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -333,6 +330,7 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNativeSupplicantProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

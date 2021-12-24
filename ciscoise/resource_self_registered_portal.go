@@ -2449,6 +2449,7 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 }
 
 func resourceSelfRegisteredPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SelfRegisteredPortal Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -2511,6 +2512,7 @@ func resourceSelfRegisteredPortalCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SelfRegisteredPortal Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -2538,9 +2540,7 @@ func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSelfRegisteredPortals", err,
-				"Failure at GetSelfRegisteredPortals, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -2549,9 +2549,7 @@ func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceDat
 		items1 := getAllItemsSelfRegisteredPortalGetSelfRegisteredPortals(m, response1, &queryParams1)
 		item1, err := searchSelfRegisteredPortalGetSelfRegisteredPortals(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSelfRegisteredPortals response", err,
-				"Failure when searching item from GetSelfRegisteredPortals, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSelfRegisteredPortalGetSelfRegisteredPortalByIDItem(item1)
@@ -2573,9 +2571,7 @@ func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSelfRegisteredPortalByID", err,
-				"Failure at GetSelfRegisteredPortalByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -2595,6 +2591,7 @@ func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceSelfRegisteredPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SelfRegisteredPortal Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -2657,6 +2654,7 @@ func resourceSelfRegisteredPortalUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceSelfRegisteredPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SelfRegisteredPortal Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

@@ -113,6 +113,7 @@ func resourceEndpointGroup() *schema.Resource {
 }
 
 func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning EndpointGroup Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -170,6 +171,7 @@ func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning EndpointGroup Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -195,9 +197,7 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEndpointGroupByName", err,
-				"Failure at GetEndpointGroupByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -223,9 +223,7 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEndpointGroupByID", err,
-				"Failure at GetEndpointGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -245,6 +243,7 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceEndpointGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning EndpointGroup Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -305,6 +304,7 @@ func resourceEndpointGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceEndpointGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning EndpointGroup Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

@@ -1019,6 +1019,7 @@ Valid range is 0-3`,
 }
 
 func resourceAllowedProtocolsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AllowedProtocols Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1076,6 +1077,7 @@ func resourceAllowedProtocolsCreate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AllowedProtocols Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1101,9 +1103,7 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAllowedProtocolByName", err,
-				"Failure at GetAllowedProtocolByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1129,9 +1129,7 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAllowedProtocolByID", err,
-				"Failure at GetAllowedProtocolByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1151,6 +1149,7 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceAllowedProtocolsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AllowedProtocols Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1211,6 +1210,7 @@ func resourceAllowedProtocolsUpdate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceAllowedProtocolsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AllowedProtocols Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

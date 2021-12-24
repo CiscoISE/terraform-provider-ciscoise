@@ -568,6 +568,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceNetworkAccessPolicySetCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -630,6 +631,7 @@ func resourceNetworkAccessPolicySetCreate(ctx context.Context, d *schema.Resourc
 }
 
 func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -655,9 +657,7 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessPolicySets", err,
-				"Failure at GetNetworkAccessPolicySets, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -666,9 +666,7 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 		items1 := getAllItemsNetworkAccessPolicySetGetNetworkAccessPolicySets(m, response1)
 		item1, err := searchNetworkAccessPolicySetGetNetworkAccessPolicySets(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessPolicySets response", err,
-				"Failure when searching item from GetNetworkAccessPolicySets, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessPolicySetGetNetworkAccessPolicySetByIDItem(item1)
@@ -689,9 +687,7 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessPolicySetByID", err,
-				"Failure at GetNetworkAccessPolicySetByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -711,6 +707,7 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceNetworkAccessPolicySetUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -771,6 +768,7 @@ func resourceNetworkAccessPolicySetUpdate(ctx context.Context, d *schema.Resourc
 }
 
 func resourceNetworkAccessPolicySetDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

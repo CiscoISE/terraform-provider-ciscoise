@@ -165,6 +165,7 @@ Partial update is not supported
 }
 
 func resourceIDStoreSequenceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning IDStoreSequence Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -222,6 +223,7 @@ func resourceIDStoreSequenceCreate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning IDStoreSequence Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -247,9 +249,7 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIDentitySequenceByName", err,
-				"Failure at GetIDentitySequenceByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -275,9 +275,7 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIDentitySequenceByID", err,
-				"Failure at GetIDentitySequenceByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -297,6 +295,7 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceIDStoreSequenceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning IDStoreSequence Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -357,6 +356,7 @@ func resourceIDStoreSequenceUpdate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceIDStoreSequenceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning IDStoreSequence Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

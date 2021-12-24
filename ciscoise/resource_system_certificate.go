@@ -249,6 +249,7 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 }
 
 func resourceSystemCertificateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SystemCertificate Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -261,6 +262,7 @@ func resourceSystemCertificateCreate(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SystemCertificate Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -290,9 +292,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSystemCertificates", err,
-				"Failure at GetSystemCertificates, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -301,9 +301,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 		items1 := getAllItemsCertificatesGetSystemCertificates(m, response1, vvHostName, &queryParams1)
 		item1, err := searchCertificatesGetSystemCertificates(m, items1, vvName, vvID, vvHostName)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSystemCertificates response", err,
-				"Failure when searching item from GetSystemCertificates, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenCertificatesGetSystemCertificateByIDItem(item1)
@@ -324,9 +322,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSystemCertificateByID", err,
-				"Failure at GetSystemCertificateByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -346,6 +342,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SystemCertificate Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -397,6 +394,7 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceSystemCertificateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SystemCertificate Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

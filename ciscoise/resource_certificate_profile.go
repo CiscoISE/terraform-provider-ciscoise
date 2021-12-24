@@ -163,6 +163,7 @@ Allowed values:
 }
 
 func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning CertificateProfile Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -220,6 +221,7 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning CertificateProfile Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -245,9 +247,7 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetCertificateProfileByName", err,
-				"Failure at GetCertificateProfileByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -273,9 +273,7 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetCertificateProfileByID", err,
-				"Failure at GetCertificateProfileByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -295,6 +293,7 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning CertificateProfile Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -355,6 +354,7 @@ func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceCertificateProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning CertificateProfile Delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
 	// NOTE: Unable to delete CertificateProfile on Cisco ISE
 	//       Returning empty diags to delete it on Terraform

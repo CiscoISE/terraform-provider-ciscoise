@@ -120,6 +120,7 @@ func resourceTrustsecSgVnMapping() *schema.Resource {
 }
 
 func resourceTrustsecSgVnMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -193,6 +194,7 @@ func resourceTrustsecSgVnMappingCreate(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -225,9 +227,7 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSgVnMappings", err,
-				"Failure at GetSgVnMappings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -236,9 +236,7 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 		items1 := getAllItemsSgVnMappingGetSgVnMappings(m, response1, nil)
 		item1, err := searchSgVnMappingGetSgVnMappings(m, items1, vvSgName, vvSgtID, vvVnID, vvVnName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSgVnMappings response", err,
-				"Failure when searching item from GetSgVnMappings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSgVnMappingGetSgVnMappingByIDItem(item1)
@@ -260,9 +258,7 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSgVnMappingByID", err,
-				"Failure at GetSgVnMappingByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -282,6 +278,7 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceTrustsecSgVnMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -352,6 +349,7 @@ func resourceTrustsecSgVnMappingUpdate(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourceTrustsecSgVnMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

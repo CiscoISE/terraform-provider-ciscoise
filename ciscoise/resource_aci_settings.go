@@ -274,6 +274,7 @@ func resourceAciSettings() *schema.Resource {
 }
 
 func resourceAciSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AciSettings Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -285,6 +286,7 @@ func resourceAciSettingsCreate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AciSettings Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -299,9 +301,7 @@ func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAciSettings", err,
-				"Failure at GetAciSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -321,6 +321,7 @@ func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceAciSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AciSettings Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -355,6 +356,7 @@ func resourceAciSettingsUpdate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceAciSettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AciSettings Delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
 	// NOTE: Unable to delete AciSettings on Cisco ISE
 	//       Returning empty diags to delete it on Terraform

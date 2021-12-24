@@ -100,6 +100,7 @@ func resourceTrustsecVn() *schema.Resource {
 }
 
 func resourceTrustsecVnCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecVn Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -158,6 +159,7 @@ func resourceTrustsecVnCreate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecVn Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -184,9 +186,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVirtualNetworks", err,
-				"Failure at GetVirtualNetworks, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -195,9 +195,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 		items1 := getAllItemsVirtualNetworkGetVirtualNetworks(m, response1, nil)
 		item1, err := searchVirtualNetworkGetVirtualNetworks(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetVirtualNetworks response", err,
-				"Failure when searching item from GetVirtualNetworks, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenVirtualNetworkGetVirtualNetworkByIDItem(item1)
@@ -217,9 +215,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetVirtualNetworkByID", err,
-				"Failure at GetVirtualNetworkByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -239,6 +235,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 }
 
 func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecVn Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -300,6 +297,7 @@ func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceTrustsecVnDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecVn Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

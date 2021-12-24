@@ -95,6 +95,7 @@ func resourceSxpVpns() *schema.Resource {
 }
 
 func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpVpns Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -157,6 +158,7 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpVpns Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -184,9 +186,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSxpVpns", err,
-				"Failure at GetSxpVpns, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -195,9 +195,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 		items1 := getAllItemsSxpVpnsGetSxpVpns(m, response1, &queryParams1)
 		item1, err := searchSxpVpnsGetSxpVpns(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSxpVpns response", err,
-				"Failure when searching item from GetSxpVpns, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSxpVpnsGetSxpVpnByIDItem(item1)
@@ -219,9 +217,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSxpVpnByID", err,
-				"Failure at GetSxpVpnByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -241,10 +237,12 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 }
 
 func resourceSxpVpnsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpVpns Update for id=[%s]", d.Id())
 	return resourceSxpVpnsRead(ctx, d, m)
 }
 
 func resourceSxpVpnsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpVpns Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

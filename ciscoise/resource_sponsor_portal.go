@@ -1031,6 +1031,7 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 }
 
 func resourceSponsorPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorPortal Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1093,6 +1094,7 @@ func resourceSponsorPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorPortal Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1120,9 +1122,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsorPortal", err,
-				"Failure at GetSponsorPortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1131,9 +1131,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 		items1 := getAllItemsSponsorPortalGetSponsorPortal(m, response1, &queryParams1)
 		item1, err := searchSponsorPortalGetSponsorPortal(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSponsorPortal response", err,
-				"Failure when searching item from GetSponsorPortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSponsorPortalGetSponsorPortalByIDItem(item1)
@@ -1155,9 +1153,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSponsorPortalByID", err,
-				"Failure at GetSponsorPortalByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1177,6 +1173,7 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceSponsorPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorPortal Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1239,6 +1236,7 @@ func resourceSponsorPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceSponsorPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SponsorPortal Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

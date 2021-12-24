@@ -253,6 +253,7 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 }
 
 func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning InternalUser Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -310,6 +311,7 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning InternalUser Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -335,9 +337,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetInternalUserByName", err,
-				"Failure at GetInternalUserByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -363,9 +363,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetInternalUserByID", err,
-				"Failure at GetInternalUserByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -385,6 +383,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning InternalUser Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -445,6 +444,7 @@ func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceInternalUserDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning InternalUser Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

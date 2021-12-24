@@ -148,6 +148,7 @@ func resourceSxpLocalBindings() *schema.Resource {
 }
 
 func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpLocalBindings Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -205,6 +206,7 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpLocalBindings Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -230,9 +232,7 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSxpLocalBindings", err,
-				"Failure at GetSxpLocalBindings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -241,9 +241,7 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 		items1 := getAllItemsSxpLocalBindingsGetSxpLocalBindings(m, response1, &queryParams1)
 		item1, err := searchSxpLocalBindingsGetSxpLocalBindings(m, items1, "", vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetSxpLocalBindings response", err,
-				"Failure when searching item from GetSxpLocalBindings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenSxpLocalBindingsGetSxpLocalBindingsByIDItem(item1)
@@ -265,9 +263,7 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetSxpLocalBindingsByID", err,
-				"Failure at GetSxpLocalBindingsByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -287,6 +283,7 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpLocalBindings Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -332,6 +329,7 @@ func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceSxpLocalBindingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpLocalBindings Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

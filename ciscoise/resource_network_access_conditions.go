@@ -467,6 +467,7 @@ TimeAndDate
 }
 
 func resourceNetworkAccessConditionsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessConditions Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -526,6 +527,7 @@ func resourceNetworkAccessConditionsCreate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNetworkAccessConditionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessConditions Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -551,9 +553,7 @@ func resourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resource
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessConditionByName", err,
-				"Failure at GetNetworkAccessConditionByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -579,9 +579,7 @@ func resourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resource
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessConditionByID", err,
-				"Failure at GetNetworkAccessConditionByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -601,6 +599,7 @@ func resourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resource
 }
 
 func resourceNetworkAccessConditionsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessConditions Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -661,6 +660,7 @@ func resourceNetworkAccessConditionsUpdate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNetworkAccessConditionsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessConditions Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

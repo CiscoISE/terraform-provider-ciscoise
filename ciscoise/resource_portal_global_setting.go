@@ -99,6 +99,7 @@ func resourcePortalGlobalSetting() *schema.Resource {
 }
 
 func resourcePortalGlobalSettingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning PortalGlobalSetting Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -110,6 +111,7 @@ func resourcePortalGlobalSettingCreate(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning PortalGlobalSetting Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -136,9 +138,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPortalGlobalSettings", err,
-				"Failure at GetPortalGlobalSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -147,9 +147,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 		items1 := getAllItemsPortalGlobalSettingGetPortalGlobalSettings(m, response1, &queryParams1)
 		item1, err := searchPortalGlobalSettingGetPortalGlobalSettings(m, items1, "", vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetPortalGlobalSettings response", err,
-				"Failure when searching item from GetPortalGlobalSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenPortalGlobalSettingGetPortalGlobalSettingByIDItem(item1)
@@ -171,9 +169,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetPortalGlobalSettingByID", err,
-				"Failure at GetPortalGlobalSettingByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -193,6 +189,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 }
 
 func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning PortalGlobalSetting Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -239,6 +236,7 @@ func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourcePortalGlobalSettingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning PortalGlobalSetting Delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
 	// NOTE: Unable to delete PortalGlobalSetting on Cisco ISE
 	//       Returning empty diags to delete it on Terraform
