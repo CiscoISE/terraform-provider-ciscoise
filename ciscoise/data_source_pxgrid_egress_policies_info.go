@@ -41,6 +41,13 @@ func dataSourcePxgridEgressPoliciesInfoRead(ctx context.Context, d *schema.Resou
 		response1, err := client.TrustSecConfiguration.GetEgressPolicies()
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing GetEgressPolicies", err, response1.String(),
+					"Failure at GetEgressPolicies, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEgressPolicies", err,
 				"Failure at GetEgressPolicies, unexpected response", ""))

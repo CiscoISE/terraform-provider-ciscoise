@@ -73,6 +73,13 @@ func dataSourceActiveDirectoryJoinDomainRead(ctx context.Context, d *schema.Reso
 		}
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing JoinDomain", err, response1.String(),
+					"Failure at JoinDomain, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing JoinDomain", err,
 				"Failure at JoinDomain, unexpected response", ""))

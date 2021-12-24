@@ -123,6 +123,13 @@ func dataSourceSupportBundleRead(ctx context.Context, d *schema.ResourceData, m 
 		}
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing CreateSupportBundle", err, response1.String(),
+					"Failure at CreateSupportBundle, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing CreateSupportBundle", err,
 				"Failure at CreateSupportBundle, unexpected response", ""))

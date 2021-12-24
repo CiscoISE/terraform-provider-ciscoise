@@ -56,6 +56,13 @@ func dataSourceSgtBulkRequestRead(ctx context.Context, d *schema.ResourceData, m
 		}
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing BulkRequestForSecurityGroup", err, response1.String(),
+					"Failure at BulkRequestForSecurityGroup, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing BulkRequestForSecurityGroup", err,
 				"Failure at BulkRequestForSecurityGroup, unexpected response", ""))
