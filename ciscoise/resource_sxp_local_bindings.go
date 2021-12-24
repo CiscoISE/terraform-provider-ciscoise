@@ -148,6 +148,7 @@ func resourceSxpLocalBindings() *schema.Resource {
 }
 
 func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpLocalBindings Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -205,6 +206,7 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpLocalBindings Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -281,6 +283,7 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpLocalBindings Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -326,6 +329,7 @@ func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceSxpLocalBindingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SxpLocalBindings Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

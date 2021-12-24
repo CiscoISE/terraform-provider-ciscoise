@@ -229,6 +229,7 @@ Allowed Values:
 }
 
 func resourceExternalRadiusServerCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ExternalRadiusServer Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -286,6 +287,7 @@ func resourceExternalRadiusServerCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ExternalRadiusServer Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -357,6 +359,7 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceExternalRadiusServerUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ExternalRadiusServer Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -417,6 +420,7 @@ func resourceExternalRadiusServerUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceExternalRadiusServerDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ExternalRadiusServer Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

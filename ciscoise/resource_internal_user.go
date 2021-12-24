@@ -253,6 +253,7 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 }
 
 func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning InternalUser Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -310,6 +311,7 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning InternalUser Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -381,6 +383,7 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning InternalUser Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -441,6 +444,7 @@ func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceInternalUserDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning InternalUser Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

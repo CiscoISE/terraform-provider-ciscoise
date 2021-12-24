@@ -232,6 +232,7 @@ func resourceSgToVnToVLAN() *schema.Resource {
 }
 
 func resourceSgToVnToVLANCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgToVnToVLAN Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -294,6 +295,7 @@ func resourceSgToVnToVLANCreate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgToVnToVLAN Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -372,6 +374,7 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceSgToVnToVLANUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgToVnToVLAN Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -434,6 +437,7 @@ func resourceSgToVnToVLANUpdate(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSgToVnToVLANDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgToVnToVLAN Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

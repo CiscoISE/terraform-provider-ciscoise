@@ -170,6 +170,7 @@ func resourceTacacsProfile() *schema.Resource {
 }
 
 func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsProfile Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -227,6 +228,7 @@ func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsProfile Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -298,6 +300,7 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceTacacsProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsProfile Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -358,6 +361,7 @@ func resourceTacacsProfileUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceTacacsProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsProfile Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

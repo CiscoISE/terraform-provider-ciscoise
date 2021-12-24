@@ -121,6 +121,7 @@ func resourceTrustsecNbarApp() *schema.Resource {
 }
 
 func resourceTrustsecNbarAppCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecNbarApp Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -180,6 +181,7 @@ func resourceTrustsecNbarAppCreate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecNbarApp Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -259,6 +261,7 @@ func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceTrustsecNbarAppUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecNbarApp Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -325,6 +328,7 @@ func resourceTrustsecNbarAppUpdate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceTrustsecNbarAppDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecNbarApp Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

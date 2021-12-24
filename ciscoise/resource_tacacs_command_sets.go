@@ -177,6 +177,7 @@ func resourceTacacsCommandSets() *schema.Resource {
 }
 
 func resourceTacacsCommandSetsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsCommandSets Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -234,6 +235,7 @@ func resourceTacacsCommandSetsCreate(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsCommandSets Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -305,6 +307,7 @@ func resourceTacacsCommandSetsRead(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceTacacsCommandSetsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsCommandSets Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -365,6 +368,7 @@ func resourceTacacsCommandSetsUpdate(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceTacacsCommandSetsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsCommandSets Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

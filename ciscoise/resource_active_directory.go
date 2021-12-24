@@ -625,6 +625,7 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 }
 
 func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ActiveDirectory Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -682,6 +683,7 @@ func resourceActiveDirectoryCreate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ActiveDirectory Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -753,10 +755,12 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceActiveDirectoryUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ActiveDirectory Update for id=[%s]", d.Id())
 	return resourceActiveDirectoryRead(ctx, d, m)
 }
 
 func resourceActiveDirectoryDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ActiveDirectory Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

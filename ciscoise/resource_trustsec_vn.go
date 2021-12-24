@@ -100,6 +100,7 @@ func resourceTrustsecVn() *schema.Resource {
 }
 
 func resourceTrustsecVnCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecVn Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -158,6 +159,7 @@ func resourceTrustsecVnCreate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecVn Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -233,6 +235,7 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 }
 
 func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecVn Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -294,6 +297,7 @@ func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceTrustsecVnDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustsecVn Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

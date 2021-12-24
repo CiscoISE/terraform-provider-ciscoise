@@ -118,6 +118,7 @@ func resourceAncPolicy() *schema.Resource {
 }
 
 func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AncPolicy Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -175,6 +176,7 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AncPolicy Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -246,6 +248,7 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AncPolicy Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -306,6 +309,7 @@ func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceAncPolicyDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AncPolicy Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

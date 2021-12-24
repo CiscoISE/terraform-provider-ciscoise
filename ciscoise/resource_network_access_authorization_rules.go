@@ -599,6 +599,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceNetworkAccessAuthorizationRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessAuthorizationRules Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -679,6 +680,7 @@ func resourceNetworkAccessAuthorizationRulesCreate(ctx context.Context, d *schem
 }
 
 func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessAuthorizationRules Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -771,6 +773,7 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 }
 
 func resourceNetworkAccessAuthorizationRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessAuthorizationRules Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -848,6 +851,7 @@ func resourceNetworkAccessAuthorizationRulesUpdate(ctx context.Context, d *schem
 }
 
 func resourceNetworkAccessAuthorizationRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessAuthorizationRules Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

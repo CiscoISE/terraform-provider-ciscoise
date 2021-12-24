@@ -375,6 +375,7 @@ func resourceTrustedCertificate() *schema.Resource {
 }
 
 func resourceTrustedCertificateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustedCertificate Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -387,6 +388,7 @@ func resourceTrustedCertificateCreate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustedCertificate Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -465,6 +467,7 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustedCertificate Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -526,6 +529,7 @@ func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceTrustedCertificateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TrustedCertificate Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
