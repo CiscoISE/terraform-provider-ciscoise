@@ -167,6 +167,7 @@ func resourceEgressMatrixCell() *schema.Resource {
 }
 
 func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning EgressMatrixCell Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -229,6 +230,7 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning EgressMatrixCell Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -257,9 +259,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEgressMatrixCell", err,
-				"Failure at GetEgressMatrixCell, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -268,9 +268,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 		items1 := getAllItemsEgressMatrixCellGetEgressMatrixCell(m, response1, &queryParams1)
 		item1, err := searchEgressMatrixCellGetEgressMatrixCell(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetEgressMatrixCell response", err,
-				"Failure when searching item from GetEgressMatrixCell, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenEgressMatrixCellGetEgressMatrixCellByIDItem(item1)
@@ -291,9 +289,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEgressMatrixCellByID", err,
-				"Failure at GetEgressMatrixCellByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -313,6 +309,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning EgressMatrixCell Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -376,6 +373,7 @@ func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceEgressMatrixCellDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning EgressMatrixCell Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

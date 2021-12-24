@@ -177,6 +177,7 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 }
 
 func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessDictionaryAttribute Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -236,6 +237,7 @@ func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *sche
 }
 
 func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessDictionaryAttribute Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -262,9 +264,7 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessDictionaryAttributesByDictionaryName", err,
-				"Failure at GetNetworkAccessDictionaryAttributesByDictionaryName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -273,9 +273,7 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 		items1 := getAllItemsNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryName(m, response1, vvDictionaryName)
 		item1, err := searchNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryName(m, items1, vvName, vvDictionaryName)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessDictionaryAttributesByDictionaryName response", err,
-				"Failure when searching item from GetNetworkAccessDictionaryAttributesByDictionaryName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameItem(item1)
@@ -298,9 +296,7 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessDictionaryAttributeByName", err,
-				"Failure at GetNetworkAccessDictionaryAttributeByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -320,6 +316,7 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 }
 
 func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessDictionaryAttribute Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -384,6 +381,7 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 }
 
 func resourceNetworkAccessDictionaryAttributeDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessDictionaryAttribute Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

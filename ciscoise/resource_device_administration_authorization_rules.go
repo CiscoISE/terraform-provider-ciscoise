@@ -599,6 +599,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceDeviceAdministrationAuthorizationRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthorizationRules Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -677,6 +678,7 @@ func resourceDeviceAdministrationAuthorizationRulesCreate(ctx context.Context, d
 }
 
 func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthorizationRules Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -719,9 +721,7 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminAuthorizationRules", err,
-				"Failure at GetDeviceAdminAuthorizationRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -730,9 +730,7 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 		items1 := getAllItemsDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m, response1, vvPolicyID)
 		item1, err := searchDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m, items1, vvName, vvID, vvPolicyID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetDeviceAdminAuthorizationRules response", err,
-				"Failure when searching item from GetDeviceAdminAuthorizationRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRuleByIDItem(item1)
@@ -755,9 +753,7 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminAuthorizationRuleByID", err,
-				"Failure at GetDeviceAdminAuthorizationRuleByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -777,6 +773,7 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 }
 
 func resourceDeviceAdministrationAuthorizationRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthorizationRules Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -854,6 +851,7 @@ func resourceDeviceAdministrationAuthorizationRulesUpdate(ctx context.Context, d
 }
 
 func resourceDeviceAdministrationAuthorizationRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthorizationRules Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

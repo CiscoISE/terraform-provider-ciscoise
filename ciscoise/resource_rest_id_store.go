@@ -200,6 +200,7 @@ Options are:
 }
 
 func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RestIDStore Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -257,6 +258,7 @@ func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RestIDStore Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -282,9 +284,7 @@ func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetRestIDStoreByName", err,
-				"Failure at GetRestIDStoreByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -310,9 +310,7 @@ func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m inte
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetRestIDStoreByID", err,
-				"Failure at GetRestIDStoreByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -332,6 +330,7 @@ func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceRestIDStoreUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RestIDStore Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -392,6 +391,7 @@ func resourceRestIDStoreUpdate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceRestIDStoreDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RestIDStore Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

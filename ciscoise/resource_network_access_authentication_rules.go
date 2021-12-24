@@ -614,6 +614,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceNetworkAccessAuthenticationRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessAuthenticationRules Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -693,6 +694,7 @@ func resourceNetworkAccessAuthenticationRulesCreate(ctx context.Context, d *sche
 }
 
 func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessAuthenticationRules Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -732,9 +734,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessAuthenticationRules", err,
-				"Failure at GetNetworkAccessAuthenticationRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -743,9 +743,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 		items1 := getAllItemsNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRules(m, response1, vvPolicyID)
 		item1, err := searchNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRules(m, items1, vvName, vvID, vvPolicyID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessAuthenticationRules response", err,
-				"Failure when searching item from GetNetworkAccessAuthenticationRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(item1)
@@ -765,9 +763,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessAuthenticationRuleByID", err,
-				"Failure at GetNetworkAccessAuthenticationRuleByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -787,6 +783,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 }
 
 func resourceNetworkAccessAuthenticationRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessAuthenticationRules Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -862,6 +859,7 @@ func resourceNetworkAccessAuthenticationRulesUpdate(ctx context.Context, d *sche
 }
 
 func resourceNetworkAccessAuthenticationRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessAuthenticationRules Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

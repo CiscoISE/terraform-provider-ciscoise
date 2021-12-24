@@ -118,6 +118,7 @@ func resourceAncPolicy() *schema.Resource {
 }
 
 func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AncPolicy Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -175,6 +176,7 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AncPolicy Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -200,9 +202,7 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAncPolicyByName", err,
-				"Failure at GetAncPolicyByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -228,9 +228,7 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAncPolicyByID", err,
-				"Failure at GetAncPolicyByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -250,6 +248,7 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AncPolicy Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -310,6 +309,7 @@ func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceAncPolicyDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AncPolicy Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

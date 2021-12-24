@@ -176,6 +176,7 @@ The order of the names in the string is the order of servers that will be used d
 }
 
 func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsServerSequence Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -233,6 +234,7 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsServerSequence Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -258,9 +260,7 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTacacsServerSequenceByName", err,
-				"Failure at GetTacacsServerSequenceByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -286,9 +286,7 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTacacsServerSequenceByID", err,
-				"Failure at GetTacacsServerSequenceByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -308,6 +306,7 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsServerSequence Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -368,6 +367,7 @@ func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceTacacsServerSequenceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsServerSequence Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

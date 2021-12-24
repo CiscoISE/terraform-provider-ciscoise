@@ -943,6 +943,7 @@ Allowed values:
 }
 
 func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning HotspotPortal Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1005,6 +1006,7 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning HotspotPortal Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1033,9 +1035,7 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetHotspotPortal", err,
-				"Failure at GetHotspotPortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1044,9 +1044,7 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 		items1 := getAllItemsHotspotPortalGetHotspotPortal(m, response1, &queryParams1)
 		item1, err := searchHotspotPortalGetHotspotPortal(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetHotspotPortal response", err,
-				"Failure when searching item from GetHotspotPortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenHotspotPortalGetHotspotPortalByIDItem(item1)
@@ -1068,9 +1066,7 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetHotspotPortalByID", err,
-				"Failure at GetHotspotPortalByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1090,6 +1086,7 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning HotspotPortal Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1151,6 +1148,7 @@ func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceHotspotPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning HotspotPortal Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

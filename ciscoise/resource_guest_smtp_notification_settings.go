@@ -193,6 +193,7 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 }
 
 func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -250,6 +251,7 @@ func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.
 }
 
 func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -275,9 +277,7 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestSmtpNotificationSettings", err,
-				"Failure at GetGuestSmtpNotificationSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -286,9 +286,7 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 		items1 := getAllItemsGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m, response1, &queryParams1)
 		item1, err := searchGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m, items1, "", vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetGuestSmtpNotificationSettings response", err,
-				"Failure when searching item from GetGuestSmtpNotificationSettings, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsByIDItem(item1)
@@ -310,9 +308,7 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestSmtpNotificationSettingsByID", err,
-				"Failure at GetGuestSmtpNotificationSettingsByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -332,6 +328,7 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 }
 
 func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -377,6 +374,7 @@ func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.
 }
 
 func resourceGuestSmtpNotificationSettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings Delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
 	// NOTE: Unable to delete GuestSmtpNotificationSettings on Cisco ISE
 	//       Returning empty diags to delete it on Terraform

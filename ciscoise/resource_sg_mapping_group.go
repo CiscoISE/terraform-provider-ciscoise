@@ -131,6 +131,7 @@ func resourceSgMappingGroup() *schema.Resource {
 }
 
 func resourceSgMappingGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgMappingGroup Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -193,6 +194,7 @@ func resourceSgMappingGroupCreate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgMappingGroup Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -220,9 +222,7 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIPToSgtMappingGroup", err,
-				"Failure at GetIPToSgtMappingGroup, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -231,9 +231,7 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 		items1 := getAllItemsIPToSgtMappingGroupGetIPToSgtMappingGroup(m, response1, &queryParams1)
 		item1, err := searchIPToSgtMappingGroupGetIPToSgtMappingGroup(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetIPToSgtMappingGroup response", err,
-				"Failure when searching item from GetIPToSgtMappingGroup, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenIPToSgtMappingGroupGetIPToSgtMappingGroupByIDItem(item1)
@@ -255,9 +253,7 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIPToSgtMappingGroupByID", err,
-				"Failure at GetIPToSgtMappingGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -277,6 +273,7 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSgMappingGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgMappingGroup Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -334,6 +331,7 @@ func resourceSgMappingGroupUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceSgMappingGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgMappingGroup Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

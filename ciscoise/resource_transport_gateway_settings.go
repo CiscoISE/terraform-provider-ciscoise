@@ -77,6 +77,7 @@ in case of air-gapped network.
 }
 
 func resourceTransportGatewaySettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TransportGatewaySettings Create")
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
@@ -89,6 +90,7 @@ func resourceTransportGatewaySettingsCreate(ctx context.Context, d *schema.Resou
 }
 
 func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TransportGatewaySettings Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -103,9 +105,7 @@ func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resourc
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTransportGateway", err,
-				"Failure at GetTransportGateway, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -125,6 +125,7 @@ func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resourc
 }
 
 func resourceTransportGatewaySettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TransportGatewaySettings Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -157,6 +158,7 @@ func resourceTransportGatewaySettingsUpdate(ctx context.Context, d *schema.Resou
 }
 
 func resourceTransportGatewaySettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TransportGatewaySettings Delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
 	// NOTE: Unable to delete TransportGatewaySettings on Cisco ISE
 	//       Returning empty diags to delete it on Terraform

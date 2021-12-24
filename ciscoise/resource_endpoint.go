@@ -328,6 +328,7 @@ func resourceEndpoint() *schema.Resource {
 }
 
 func resourceEndpointCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Endpoint Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -385,6 +386,7 @@ func resourceEndpointCreate(ctx context.Context, d *schema.ResourceData, m inter
 }
 
 func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Endpoint Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -410,9 +412,7 @@ func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interfa
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEndpointByName", err,
-				"Failure at GetEndpointByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -438,9 +438,7 @@ func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interfa
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetEndpointByID", err,
-				"Failure at GetEndpointByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -460,6 +458,7 @@ func resourceEndpointRead(ctx context.Context, d *schema.ResourceData, m interfa
 }
 
 func resourceEndpointUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Endpoint Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -520,6 +519,7 @@ func resourceEndpointUpdate(ctx context.Context, d *schema.ResourceData, m inter
 }
 
 func resourceEndpointDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning Endpoint Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

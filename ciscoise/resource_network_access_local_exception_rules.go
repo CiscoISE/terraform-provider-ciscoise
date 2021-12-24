@@ -593,6 +593,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceNetworkAccessLocalExceptionRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -673,6 +674,7 @@ func resourceNetworkAccessLocalExceptionRulesCreate(ctx context.Context, d *sche
 }
 
 func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -715,9 +717,7 @@ func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessLocalExceptionRules", err,
-				"Failure at GetNetworkAccessLocalExceptionRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -726,9 +726,7 @@ func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema
 		items1 := getAllItemsNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRules(m, response1, vvPolicyID)
 		item1, err := searchNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRules(m, items1, vvName, vvID, vvPolicyID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetNetworkAccessLocalExceptionRules response", err,
-				"Failure when searching item from GetNetworkAccessLocalExceptionRules, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenNetworkAccessAuthorizationExceptionRulesGetNetworkAccessLocalExceptionRuleByIDItem(item1)
@@ -749,9 +747,7 @@ func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetNetworkAccessLocalExceptionRuleByID", err,
-				"Failure at GetNetworkAccessLocalExceptionRuleByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -771,6 +767,7 @@ func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema
 }
 
 func resourceNetworkAccessLocalExceptionRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -848,6 +845,7 @@ func resourceNetworkAccessLocalExceptionRulesUpdate(ctx context.Context, d *sche
 }
 
 func resourceNetworkAccessLocalExceptionRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

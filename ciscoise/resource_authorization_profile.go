@@ -584,6 +584,7 @@ For all other 'WebRedirectionType' values the field must be ignored`,
 }
 
 func resourceAuthorizationProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AuthorizationProfile Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -641,6 +642,7 @@ func resourceAuthorizationProfileCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AuthorizationProfile Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -666,9 +668,7 @@ func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAuthorizationProfileByName", err,
-				"Failure at GetAuthorizationProfileByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -694,9 +694,7 @@ func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetAuthorizationProfileByID", err,
-				"Failure at GetAuthorizationProfileByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -716,6 +714,7 @@ func resourceAuthorizationProfileRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceAuthorizationProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AuthorizationProfile Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -776,6 +775,7 @@ func resourceAuthorizationProfileUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceAuthorizationProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning AuthorizationProfile Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

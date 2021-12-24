@@ -155,6 +155,7 @@ func resourceTacacsExternalServers() *schema.Resource {
 }
 
 func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsExternalServers Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -212,6 +213,7 @@ func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.Resource
 }
 
 func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsExternalServers Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -237,9 +239,7 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTacacsExternalServersByName", err,
-				"Failure at GetTacacsExternalServersByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -265,9 +265,7 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetTacacsExternalServersByID", err,
-				"Failure at GetTacacsExternalServersByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -287,6 +285,7 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsExternalServers Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -347,6 +346,7 @@ func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.Resource
 }
 
 func resourceTacacsExternalServersDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning TacacsExternalServers Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

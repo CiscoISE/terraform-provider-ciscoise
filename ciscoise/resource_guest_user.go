@@ -357,6 +357,7 @@ func resourceGuestUser() *schema.Resource {
 }
 
 func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestUser Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -414,6 +415,7 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestUser Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -439,9 +441,7 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestUserByName", err,
-				"Failure at GetGuestUserByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -467,9 +467,7 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetGuestUserByID", err,
-				"Failure at GetGuestUserByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -489,6 +487,7 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestUser Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -549,6 +548,7 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGuestUserDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning GuestUser Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

@@ -1,3 +1,9 @@
+## 0.1.0-rc.1 (December 24, 2021)
+
+IMPROVEMENTS:
+* ciscoise/resource_*: Change Read not found behaviour to setId("")
+* ciscoise/resource_*: Add log to indicate resource context execution
+
 ## 0.1.0-rc (December 23, 2021)
 
 BUG FIXES:

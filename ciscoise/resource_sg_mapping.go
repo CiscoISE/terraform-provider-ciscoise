@@ -164,6 +164,7 @@ func resourceSgMapping() *schema.Resource {
 }
 
 func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgMapping Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -226,6 +227,7 @@ func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgMapping Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -253,9 +255,7 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIPToSgtMapping", err,
-				"Failure at GetIPToSgtMapping, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -264,9 +264,7 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 		items1 := getAllItemsIPToSgtMappingGetIPToSgtMapping(m, response1, &queryParams1)
 		item1, err := searchIPToSgtMappingGetIPToSgtMapping(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetIPToSgtMapping response", err,
-				"Failure when searching item from GetIPToSgtMapping, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenIPToSgtMappingGetIPToSgtMappingByIDItem(item1)
@@ -288,9 +286,7 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIPToSgtMappingByID", err,
-				"Failure at GetIPToSgtMappingByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -310,6 +306,7 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgMapping Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -371,6 +368,7 @@ func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceSgMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning SgMapping Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

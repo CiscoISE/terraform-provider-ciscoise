@@ -110,6 +110,7 @@ func resourceIDentityGroup() *schema.Resource {
 }
 
 func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning IDentityGroup Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -167,6 +168,7 @@ func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning IDentityGroup Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -192,9 +194,7 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIDentityGroupByName", err,
-				"Failure at GetIDentityGroupByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -220,9 +220,7 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetIDentityGroupByID", err,
-				"Failure at GetIDentityGroupByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -242,6 +240,7 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning IDentityGroup Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -302,6 +301,7 @@ func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceIDentityGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning IDentityGroup Delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
 	// NOTE: Unable to delete IDentityGroup on Cisco ISE
 	//       Returning empty diags to delete it on Terraform

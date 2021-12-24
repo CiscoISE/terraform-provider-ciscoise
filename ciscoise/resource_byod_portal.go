@@ -957,6 +957,7 @@ Allowed values:
 }
 
 func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ByodPortal Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1019,6 +1020,7 @@ func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ByodPortal Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1046,9 +1048,7 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetByodPortal", err,
-				"Failure at GetByodPortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1057,9 +1057,7 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 		items1 := getAllItemsByodPortalGetByodPortal(m, response1, &queryParams1)
 		item1, err := searchByodPortalGetByodPortal(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetByodPortal response", err,
-				"Failure when searching item from GetByodPortal, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenByodPortalGetByodPortalByIDItem(item1)
@@ -1081,9 +1079,7 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetByodPortalByID", err,
-				"Failure at GetByodPortalByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -1103,6 +1099,7 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 }
 
 func resourceByodPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ByodPortal Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1165,6 +1162,7 @@ func resourceByodPortalUpdate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceByodPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning ByodPortal Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

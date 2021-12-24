@@ -467,6 +467,7 @@ TimeAndDate
 }
 
 func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -526,6 +527,7 @@ func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema
 }
 
 func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -551,9 +553,7 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminConditionByName", err,
-				"Failure at GetDeviceAdminConditionByName, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -579,9 +579,7 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetDeviceAdminConditionByID", err,
-				"Failure at GetDeviceAdminConditionByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -601,6 +599,7 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 }
 
 func resourceDeviceAdministrationConditionsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -661,6 +660,7 @@ func resourceDeviceAdministrationConditionsUpdate(ctx context.Context, d *schema
 }
 
 func resourceDeviceAdministrationConditionsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

@@ -346,6 +346,7 @@ func resourceRadiusServerSequence() *schema.Resource {
 }
 
 func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RadiusServerSequence Create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -408,6 +409,7 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RadiusServerSequence Read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -435,9 +437,7 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetRadiusServerSequence", err,
-				"Failure at GetRadiusServerSequence, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -446,9 +446,7 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 		items1 := getAllItemsRadiusServerSequenceGetRadiusServerSequence(m, response1, &queryParams1)
 		item1, err := searchRadiusServerSequenceGetRadiusServerSequence(m, items1, vvName, vvID)
 		if err != nil || item1 == nil {
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when searching item from GetRadiusServerSequence response", err,
-				"Failure when searching item from GetRadiusServerSequence, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 		vItem1 := flattenRadiusServerSequenceGetRadiusServerSequenceByIDItem(item1)
@@ -470,9 +468,7 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 			if restyResp2 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 			}
-			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing GetRadiusServerSequenceByID", err,
-				"Failure at GetRadiusServerSequenceByID, unexpected response", ""))
+			d.SetId("")
 			return diags
 		}
 
@@ -492,6 +488,7 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RadiusServerSequence Update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -554,6 +551,7 @@ func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceRadiusServerSequenceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning RadiusServerSequence Delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
