@@ -68,7 +68,7 @@ func dataSourceGuestUserEmailRead(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateGuestUserEmail")
+		log.Printf("[DEBUG] Selected method: UpdateGuestUserEmail")
 		vvID := vID.(string)
 		vvPortalID := vPortalID.(string)
 		request1 := expandRequestGuestUserEmailUpdateGuestUserEmail(ctx, "", d)
@@ -126,7 +126,7 @@ func expandRequestGuestUserEmailUpdateGuestUserEmailOperationAdditionalDataAddit
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestGuestUserEmailUpdateGuestUserEmailOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

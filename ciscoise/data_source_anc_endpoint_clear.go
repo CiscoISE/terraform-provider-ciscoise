@@ -56,7 +56,7 @@ func dataSourceAncEndpointClearRead(ctx context.Context, d *schema.ResourceData,
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ClearAncEndpoint")
+		log.Printf("[DEBUG] Selected method: ClearAncEndpoint")
 		request1 := expandRequestAncEndpointClearClearAncEndpoint(ctx, "", d)
 
 		response1, err := client.AncEndpoint.ClearAncEndpoint(request1)
@@ -112,7 +112,7 @@ func expandRequestAncEndpointClearClearAncEndpointOperationAdditionalDataAdditio
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestAncEndpointClearClearAncEndpointOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

@@ -687,7 +687,7 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -708,9 +708,9 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -784,7 +784,7 @@ func resourceDeviceAdministrationLocalExceptionRulesUpdate(ctx context.Context, 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -805,9 +805,9 @@ func resourceDeviceAdministrationLocalExceptionRulesUpdate(ctx context.Context, 
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -861,7 +861,7 @@ func resourceDeviceAdministrationLocalExceptionRulesDelete(ctx context.Context, 
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vPolicyID, okPolicyID := resourceMap["policy_id"]
+	vPolicyID, _ := resourceMap["policy_id"]
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
 
@@ -882,9 +882,9 @@ func resourceDeviceAdministrationLocalExceptionRulesDelete(ctx context.Context, 
 	vvID := vID
 	vvPolicyID := vPolicyID
 	vvName := vName
-	method1 := []bool{okPolicyID, okID}
+	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID, okName}
+	method2 := []bool{okName}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -1087,7 +1087,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalE
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceAdministrationLocalExceptionRulesCreateDeviceAdminLocalExceptionRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
@@ -1336,7 +1336,7 @@ func expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalE
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestDeviceAdministrationLocalExceptionRulesUpdateDeviceAdminLocalExceptionRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

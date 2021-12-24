@@ -2,7 +2,7 @@ terraform {
   # Section defining the providers to be searched and installed (if needed)
   required_providers {
     ciscoise = {
-      version = "0.0.3-beta"
+      version = "0.1.0-rc"
       # This `source` is the local built version of the provider. 
       # It will change once the provider is publish to registry.terraform.io (to "CiscoISE/ciscoise")
       source = "hashicorp.com/edu/ciscoise"

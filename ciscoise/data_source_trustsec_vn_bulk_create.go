@@ -78,7 +78,7 @@ func dataSourceTrustsecVnBulkCreateRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkCreateVirtualNetworks")
+		log.Printf("[DEBUG] Selected method: BulkCreateVirtualNetworks")
 		request1 := expandRequestTrustsecVnBulkCreateBulkCreateVirtualNetworks(ctx, "", d)
 
 		response1, restyResp1, err := client.VirtualNetwork.BulkCreateVirtualNetworks(request1)
@@ -132,7 +132,7 @@ func expandRequestTrustsecVnBulkCreateBulkCreateVirtualNetworksItemArray(ctx con
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTrustsecVnBulkCreateBulkCreateVirtualNetworksItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

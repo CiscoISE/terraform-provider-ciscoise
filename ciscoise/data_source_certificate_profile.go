@@ -224,15 +224,15 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetCertificateProfile")
+		log.Printf("[DEBUG] Selected method: GetCertificateProfile")
 		queryParams1 := isegosdk.GetCertificateProfileQueryParams{}
 
 		if okPage {
@@ -289,7 +289,7 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetCertificateProfileByName")
+		log.Printf("[DEBUG] Selected method: GetCertificateProfileByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.CertificateProfile.GetCertificateProfileByName(vvName)
@@ -318,7 +318,7 @@ func dataSourceCertificateProfileRead(ctx context.Context, d *schema.ResourceDat
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetCertificateProfileByID")
+		log.Printf("[DEBUG] Selected method: GetCertificateProfileByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.CertificateProfile.GetCertificateProfileByID(vvID)

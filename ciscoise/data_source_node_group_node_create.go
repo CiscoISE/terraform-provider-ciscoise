@@ -73,7 +73,7 @@ func dataSourceNodeGroupNodeCreateRead(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: AddNode")
+		log.Printf("[DEBUG] Selected method: AddNode")
 		vvNodeGroupName := vNodeGroupName.(string)
 		request1 := expandRequestNodeGroupNodeCreateAddNode(ctx, "", d)
 

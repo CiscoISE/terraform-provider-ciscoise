@@ -88,7 +88,7 @@ func dataSourceTrustsecSgVnMappingBulkUpdateRead(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: BulkUpdateSgVnMappings")
+		log.Printf("[DEBUG] Selected method: BulkUpdateSgVnMappings")
 		request1 := expandRequestTrustsecSgVnMappingBulkUpdateBulkUpdateSgVnMappings(ctx, "", d)
 
 		response1, restyResp1, err := client.SgVnMapping.BulkUpdateSgVnMappings(request1)
@@ -142,7 +142,7 @@ func expandRequestTrustsecSgVnMappingBulkUpdateBulkUpdateSgVnMappingsItemArray(c
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestTrustsecSgVnMappingBulkUpdateBulkUpdateSgVnMappingsItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

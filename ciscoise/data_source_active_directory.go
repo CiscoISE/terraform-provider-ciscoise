@@ -698,15 +698,15 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetActiveDirectory")
+		log.Printf("[DEBUG] Selected method: GetActiveDirectory")
 		queryParams1 := isegosdk.GetActiveDirectoryQueryParams{}
 
 		if okPage {
@@ -763,7 +763,7 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetActiveDirectoryByName")
+		log.Printf("[DEBUG] Selected method: GetActiveDirectoryByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.ActiveDirectory.GetActiveDirectoryByName(vvName)
@@ -792,7 +792,7 @@ func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, 
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetActiveDirectoryByID")
+		log.Printf("[DEBUG] Selected method: GetActiveDirectoryByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.ActiveDirectory.GetActiveDirectoryByID(vvID)

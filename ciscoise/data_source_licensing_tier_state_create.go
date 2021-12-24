@@ -87,7 +87,7 @@ func dataSourceLicensingTierStateCreateRead(ctx context.Context, d *schema.Resou
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: UpdateTierStateInfo")
+		log.Printf("[DEBUG] Selected method: UpdateTierStateInfo")
 		request1 := expandRequestLicensingTierStateCreateUpdateTierStateInfo(ctx, "", d)
 
 		response1, restyResp1, err := client.Licensing.UpdateTierStateInfo(request1)
@@ -141,7 +141,7 @@ func expandRequestLicensingTierStateCreateUpdateTierStateInfoItemArray(ctx conte
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestLicensingTierStateCreateUpdateTierStateInfoItem(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

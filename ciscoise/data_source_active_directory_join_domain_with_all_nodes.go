@@ -62,7 +62,7 @@ func dataSourceActiveDirectoryJoinDomainWithAllNodesRead(ctx context.Context, d 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: JoinDomainWithAllNodes")
+		log.Printf("[DEBUG] Selected method: JoinDomainWithAllNodes")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryJoinDomainWithAllNodesJoinDomainWithAllNodes(ctx, "", d)
 
@@ -119,7 +119,7 @@ func expandRequestActiveDirectoryJoinDomainWithAllNodesJoinDomainWithAllNodesOpe
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestActiveDirectoryJoinDomainWithAllNodesJoinDomainWithAllNodesOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

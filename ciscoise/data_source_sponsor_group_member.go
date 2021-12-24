@@ -149,7 +149,7 @@ func dataSourceSponsorGroupMemberRead(ctx context.Context, d *schema.ResourceDat
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetSponsorGroupMember")
+		log.Printf("[DEBUG] Selected method: GetSponsorGroupMember")
 		queryParams1 := isegosdk.GetSponsorGroupMemberQueryParams{}
 
 		if okPage {

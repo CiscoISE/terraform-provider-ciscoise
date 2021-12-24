@@ -62,7 +62,7 @@ func dataSourceGuestUserChangeSponsorPasswordRead(ctx context.Context, d *schema
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: ChangeSponsorPassword")
+		log.Printf("[DEBUG] Selected method: ChangeSponsorPassword")
 		vvPortalID := vPortalID.(string)
 		request1 := expandRequestGuestUserChangeSponsorPasswordChangeSponsorPassword(ctx, "", d)
 
@@ -119,7 +119,7 @@ func expandRequestGuestUserChangeSponsorPasswordChangeSponsorPasswordOperationAd
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestGuestUserChangeSponsorPasswordChangeSponsorPasswordOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

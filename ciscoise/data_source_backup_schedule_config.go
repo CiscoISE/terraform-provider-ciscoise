@@ -122,7 +122,7 @@ func dataSourceBackupScheduleConfigRead(ctx context.Context, d *schema.ResourceD
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateScheduledConfigBackup")
+		log.Printf("[DEBUG] Selected method: CreateScheduledConfigBackup")
 		request1 := expandRequestBackupScheduleConfigCreateScheduledConfigBackup(ctx, "", d)
 
 		response1, restyResp1, err := client.BackupAndRestore.CreateScheduledConfigBackup(request1)

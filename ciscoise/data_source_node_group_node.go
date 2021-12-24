@@ -50,7 +50,7 @@ func dataSourceNodeGroupNodeRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNodes")
+		log.Printf("[DEBUG] Selected method: GetNodes")
 		vvNodeGroupName := vNodeGroupName.(string)
 
 		response1, restyResp1, err := client.NodeGroup.GetNodes(vvNodeGroupName)

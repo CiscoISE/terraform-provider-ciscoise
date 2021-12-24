@@ -1,3 +1,33 @@
+## 0.1.0-rc (December 23, 2021)
+
+BUG FIXES:
+* data_source/system_certificate: Fix read only schema below `items` parameter.
+* resource/self_registered_portal: Fix resource Id value for create operation.
+* data_source/device_administration_authentication_rules: Fix method selection logic.
+* data_source/device_administration_authorization_rules: Fix method selection logic.
+* data_source/device_administration_local_exception_rules: Fix method selection logic.
+* data_source/network_access_authentication_rules: Fix method selection logic.
+* data_source/network_access_authorization_rules: Fix method selection logic.
+* data_source/network_access_dictionary_attribute: Fix method selection logic.
+* data_source/network_access_local_exception_rules: Fix method selection logic.
+* data_source/system_certificate: Fix method selection logic.
+* resource/device_administration_authentication_rules: Fix method selection logic.
+* resource/device_administration_authorization_rules: Fix method selection logic.
+* resource/device_administration_local_exception_rules: Fix method selection logic.
+* resource/network_access_authentication_rules: Fix method selection logic.
+* resource/network_access_authorization_rules: Fix method selection logic.
+* resource/network_access_local_exception_rules: Fix method selection logic.
+* resource/system_certificate: Fix method selection logic.
+
+IMPROVEMENTS:
+* ciscoise/resource_*: Remove number from some logs to avoid confusion.
+* ciscoise/resource_*: Updated logs to use %v instead of %q.
+* ciscoise/resource_*: Removed _ param in `for range` code.
+* ciscoise/data_source_*: Remove number from some logs to avoid confusion.
+* ciscoise/data_source_*: Updated logs to use %v instead of %q.
+* ciscoise/data_source_*: Removed _ param in `for range` code.
+* Update examples and documentation
+
 ## 0.0.3-beta (December 22, 2021)
 
 BREAKING CHANGES:

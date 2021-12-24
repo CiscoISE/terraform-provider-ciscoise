@@ -625,14 +625,14 @@ func dataSourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, 
 	vPolicyID, okPolicyID := d.GetOk("policy_id")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okPolicyID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okPolicyID, okID}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okPolicyID}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetDeviceAdminLocalExceptionRules")
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminLocalExceptionRules")
 		vvPolicyID := vPolicyID.(string)
 
 		response1, restyResp1, err := client.DeviceAdministrationAuthorizationExceptionRules.GetDeviceAdminLocalExceptionRules(vvPolicyID)
@@ -660,8 +660,8 @@ func dataSourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, 
 		return diags
 
 	}
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetDeviceAdminLocalExceptionRuleByID")
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetDeviceAdminLocalExceptionRuleByID")
 		vvPolicyID := vPolicyID.(string)
 		vvID := vID.(string)
 

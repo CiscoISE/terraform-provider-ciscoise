@@ -234,15 +234,15 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 	vID, okID := d.GetOk("id")
 
 	method1 := []bool{okPage, okSize}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 	method3 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 3 %q", method3)
+	log.Printf("[DEBUG] Selecting method. Method 3 %v", method3)
 
 	selectedMethod := pickMethod([][]bool{method1, method2, method3})
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetTacacsExternalServers")
+		log.Printf("[DEBUG] Selected method: GetTacacsExternalServers")
 		queryParams1 := isegosdk.GetTacacsExternalServersQueryParams{}
 
 		if okPage {
@@ -299,7 +299,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 
 	}
 	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetTacacsExternalServersByName")
+		log.Printf("[DEBUG] Selected method: GetTacacsExternalServersByName")
 		vvName := vName.(string)
 
 		response2, restyResp2, err := client.TacacsExternalServers.GetTacacsExternalServersByName(vvName)
@@ -328,7 +328,7 @@ func dataSourceTacacsExternalServersRead(ctx context.Context, d *schema.Resource
 
 	}
 	if selectedMethod == 3 {
-		log.Printf("[DEBUG] Selected method 3: GetTacacsExternalServersByID")
+		log.Printf("[DEBUG] Selected method: GetTacacsExternalServersByID")
 		vvID := vID.(string)
 
 		response3, restyResp3, err := client.TacacsExternalServers.GetTacacsExternalServersByID(vvID)

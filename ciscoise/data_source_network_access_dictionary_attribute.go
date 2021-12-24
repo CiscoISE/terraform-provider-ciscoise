@@ -177,14 +177,14 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 	vDictionaryName, okDictionaryName := d.GetOk("dictionary_name")
 	vName, okName := d.GetOk("name")
 
-	method1 := []bool{okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 1 %q", method1)
-	method2 := []bool{okName, okDictionaryName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %q", method2)
+	method1 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okDictionaryName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetNetworkAccessDictionaryAttributesByDictionaryName")
+	if selectedMethod == 2 {
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionaryAttributesByDictionaryName")
 		vvDictionaryName := vDictionaryName.(string)
 
 		response1, restyResp1, err := client.NetworkAccessDictionaryAttribute.GetNetworkAccessDictionaryAttributesByDictionaryName(vvDictionaryName)
@@ -212,8 +212,8 @@ func dataSourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *sche
 		return diags
 
 	}
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method 2: GetNetworkAccessDictionaryAttributeByName")
+	if selectedMethod == 1 {
+		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionaryAttributeByName")
 		vvName := vName.(string)
 		vvDictionaryName := vDictionaryName.(string)
 

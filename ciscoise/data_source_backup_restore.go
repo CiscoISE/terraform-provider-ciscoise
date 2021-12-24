@@ -94,7 +94,7 @@ func dataSourceBackupRestoreRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: RestoreConfigBackup")
+		log.Printf("[DEBUG] Selected method: RestoreConfigBackup")
 		request1 := expandRequestBackupRestoreRestoreConfigBackup(ctx, "", d)
 
 		response1, restyResp1, err := client.BackupAndRestore.RestoreConfigBackup(request1)

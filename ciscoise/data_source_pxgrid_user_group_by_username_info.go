@@ -36,7 +36,7 @@ func dataSourcePxgridUserGroupByUsernameInfoRead(ctx context.Context, d *schema.
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetUserGroupByUserName")
+		log.Printf("[DEBUG] Selected method: GetUserGroupByUserName")
 
 		response1, err := client.SessionDirectory.GetUserGroupByUserName()
 

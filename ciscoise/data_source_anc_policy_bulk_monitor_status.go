@@ -103,7 +103,7 @@ func dataSourceAncPolicyBulkMonitorStatusRead(ctx context.Context, d *schema.Res
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: MonitorBulkStatusAncPolicy")
+		log.Printf("[DEBUG] Selected method: MonitorBulkStatusAncPolicy")
 		vvBulkid := vBulkid.(string)
 
 		response1, restyResp1, err := client.AncPolicy.MonitorBulkStatusAncPolicy(vvBulkid)

@@ -62,7 +62,7 @@ func dataSourceActiveDirectoryJoinDomainRead(ctx context.Context, d *schema.Reso
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: JoinDomain")
+		log.Printf("[DEBUG] Selected method: JoinDomain")
 		vvID := vID.(string)
 		request1 := expandRequestActiveDirectoryJoinDomainJoinDomain(ctx, "", d)
 
@@ -119,7 +119,7 @@ func expandRequestActiveDirectoryJoinDomainJoinDomainOperationAdditionalDataAddi
 	if len(objs) == 0 {
 		return nil
 	}
-	for item_no, _ := range objs {
+	for item_no := range objs {
 		i := expandRequestActiveDirectoryJoinDomainJoinDomainOperationAdditionalDataAdditionalData(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)

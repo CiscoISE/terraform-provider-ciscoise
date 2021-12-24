@@ -113,7 +113,7 @@ func dataSourceSupportBundleRead(ctx context.Context, d *schema.ResourceData, m 
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: CreateSupportBundle")
+		log.Printf("[DEBUG] Selected method: CreateSupportBundle")
 		request1 := expandRequestSupportBundleCreateSupportBundle(ctx, "", d)
 
 		response1, err := client.SupportBundleTriggerConfiguration.CreateSupportBundle(request1)

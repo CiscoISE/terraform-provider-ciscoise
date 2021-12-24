@@ -83,7 +83,7 @@ func dataSourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method 1: GetPanHaStatus")
+		log.Printf("[DEBUG] Selected method: GetPanHaStatus")
 
 		response1, restyResp1, err := client.PanHa.GetPanHaStatus()
 
