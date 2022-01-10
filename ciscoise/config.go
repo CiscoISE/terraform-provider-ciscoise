@@ -23,11 +23,16 @@ type Config struct {
 
 // NewClient returns a new Cisco Identity Services Engine client.
 func (c *Config) NewClient() (*isegosdk.Client, error) {
-	return isegosdk.NewClientWithOptions(c.BaseURL,
+	client, err := isegosdk.NewClientWithOptions(c.BaseURL,
 		c.Username, c.Password,
 		c.Debug, c.SSLVerify,
 		c.UseAPIGateway, c.UseCSRFToken,
 	)
+	if err != nil {
+		return client, err
+	}
+	client.RestyClient().SetLogger(createLogger())
+	return client, err
 }
 
 func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
