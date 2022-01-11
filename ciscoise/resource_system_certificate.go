@@ -201,6 +201,11 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 							Type:        schema.TypeString,
 							Optional:    true,
 						},
+						"id": &schema.Schema{
+							Description: `id path parameter. ID of the System Certificate to be updated`,
+							Type:        schema.TypeString,
+							Optional:    true,
+						},
 						"name": &schema.Schema{
 							Description: `Name of the certificate`,
 							Type:        schema.TypeString,
@@ -253,9 +258,8 @@ func resourceSystemCertificateCreate(ctx context.Context, d *schema.ResourceData
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
+	resourceMap["host_name"] = interfaceToString(resourceItem["host_name"])
 	resourceMap["name"] = interfaceToString(resourceItem["name"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceSystemCertificateRead(ctx, d, m)

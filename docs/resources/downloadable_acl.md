@@ -92,4 +92,5 @@ Import is supported using the following syntax:
 
 ```shell
 terraform import ciscoise_downloadable_acl.example "id:=string"
+terraform import ciscoise_downloadable_acl.example "name:=string"
 ```

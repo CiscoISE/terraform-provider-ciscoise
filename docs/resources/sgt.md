@@ -97,4 +97,5 @@ Import is supported using the following syntax:
 
 ```shell
 terraform import ciscoise_sgt.example "id:=string"
+terraform import ciscoise_sgt.example "name:=string"
 ```

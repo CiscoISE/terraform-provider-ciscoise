@@ -34,9 +34,11 @@ func dataSourceTasks() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"detail_status": &schema.Schema{
-							// Replaced List to String
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"execution_status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -76,9 +78,11 @@ func dataSourceTasks() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"detail_status": &schema.Schema{
-							// Replaced List to String
-							Type:     schema.TypeString,
+							Type:     schema.TypeList,
 							Computed: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"execution_status": &schema.Schema{
 							Type:     schema.TypeString,

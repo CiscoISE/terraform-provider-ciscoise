@@ -150,11 +150,14 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 
 	vHostname, okHostname := resourceItem["hostname"]
 	vvHostname := interfaceToString(vHostname)
+	vFQDN, _ := resourceItem["fqdn"]
+	vvFQDN := interfaceToString(vFQDN)
 	if okHostname && vvHostname != "" {
 		getResponse2, _, err := client.NodeDeployment.GetNodeDetails(vvHostname)
 		if err == nil && getResponse2 != nil {
 			resourceMap := make(map[string]string)
 			resourceMap["hostname"] = vvHostname
+			resourceMap["fqdn"] = vvFQDN
 			d.SetId(joinResourceID(resourceMap))
 			return resourceNodeDeploymentRead(ctx, d, m)
 		}
@@ -162,10 +165,11 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 		response2, _, err := client.NodeDeployment.GetDeploymentNodes(nil)
 		if response2 != nil && err == nil {
 			items2 := getAllItemsNodeDeploymentGetDeploymentNodes(m, response2)
-			item2, err := searchNodeDeploymentGetDeploymentNodes(m, items2, vvHostname, "")
+			item2, err := searchNodeDeploymentGetDeploymentNodes(m, items2, vvHostname, vvFQDN, "")
 			if err == nil && item2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["hostname"] = vvHostname
+				resourceMap["fqdn"] = vvFQDN
 				d.SetId(joinResourceID(resourceMap))
 				return resourceNodeDeploymentRead(ctx, d, m)
 			}
@@ -184,6 +188,7 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["hostname"] = vvHostname
+	resourceMap["fqdn"] = vvFQDN
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNodeDeploymentRead(ctx, d, m)
 }
@@ -198,6 +203,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 	resourceMap := separateResourceID(resourceID)
 
 	vHostname, okHostname := resourceMap["hostname"]
+	vFQDN, _ := resourceMap["fqdn"]
 
 	method1 := []bool{}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
@@ -222,7 +228,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
 		items1 := getAllItemsNodeDeploymentGetDeploymentNodes(m, response1)
-		item1, err := searchNodeDeploymentGetDeploymentNodes(m, items1, vHostname, "")
+		item1, err := searchNodeDeploymentGetDeploymentNodes(m, items1, vHostname, vFQDN, "")
 		if err != nil || item1 == nil {
 			d.SetId("")
 			return diags
@@ -275,6 +281,7 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 	resourceMap := separateResourceID(resourceID)
 
 	vHostname, okHostname := resourceMap["hostname"]
+	vFQDN, _ := resourceMap["fqdn"]
 
 	method1 := []bool{}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
@@ -283,7 +290,21 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvHostname string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
+	if selectedMethod == 1 {
+		getResp1, _, err := client.NodeDeployment.GetDeploymentNodes(nil)
+		if err == nil && getResp1 != nil {
+			items1 := getAllItemsNodeDeploymentGetDeploymentNodes(m, getResp1)
+			item1, err := searchNodeDeploymentGetDeploymentNodes(m, items1, vHostname, vFQDN, "")
+			if err == nil && item1 != nil {
+				if vHostname != item1.Hostname {
+					vvHostname = item1.Hostname
+				} else {
+					vvHostname = vHostname
+				}
+			}
+		}
+	}
 	if selectedMethod == 2 {
 		vvHostname = vHostname
 	}
@@ -322,6 +343,7 @@ func resourceNodeDeploymentDelete(ctx context.Context, d *schema.ResourceData, m
 	resourceMap := separateResourceID(resourceID)
 
 	vHostname, okHostname := resourceMap["hostname"]
+	vFQDN, _ := resourceMap["fqdn"]
 
 	method1 := []bool{}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
@@ -339,7 +361,7 @@ func resourceNodeDeploymentDelete(ctx context.Context, d *schema.ResourceData, m
 			return diags
 		}
 		items1 := getAllItemsNodeDeploymentGetDeploymentNodes(m, getResp1)
-		item1, err := searchNodeDeploymentGetDeploymentNodes(m, items1, vHostname, "")
+		item1, err := searchNodeDeploymentGetDeploymentNodes(m, items1, vHostname, vFQDN, "")
 		if err != nil || item1 == nil {
 			// Assume that element it is already gone
 			return diags
@@ -427,11 +449,24 @@ func getAllItemsNodeDeploymentGetDeploymentNodes(m interface{}, response *isegos
 	return respItems
 }
 
-func searchNodeDeploymentGetDeploymentNodes(m interface{}, items []isegosdk.ResponseNodeDeploymentGetDeploymentNodesResponse, name string, id string) (*isegosdk.ResponseNodeDeploymentGetNodeDetailsResponse, error) {
+func searchNodeDeploymentGetDeploymentNodes(m interface{}, items []isegosdk.ResponseNodeDeploymentGetDeploymentNodesResponse, name string, fqdn string, id string) (*isegosdk.ResponseNodeDeploymentGetNodeDetailsResponse, error) {
 	client := m.(*isegosdk.Client)
 	var err error
 	var foundItem *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponse
 	for _, item := range items {
+		if fqdn != "" && item.Fqdn == fqdn {
+			// Call get by _ method and set value to foundItem and return
+			var getItem *isegosdk.ResponseNodeDeploymentGetNodeDetails
+			getItem, _, err = client.NodeDeployment.GetNodeDetails(item.Hostname)
+			if err != nil {
+				return foundItem, err
+			}
+			if getItem == nil {
+				return foundItem, fmt.Errorf("Empty response from %s", "GetNodeDetails")
+			}
+			foundItem = getItem.Response
+			return foundItem, err
+		}
 		if name != "" && item.Hostname == name {
 			// Call get by _ method and set value to foundItem and return
 			var getItem *isegosdk.ResponseNodeDeploymentGetNodeDetails

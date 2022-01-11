@@ -314,7 +314,7 @@ func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
 	if selectedMethod == 2 {
 		queryParams1 := isegosdk.GetSecurityGroupsQueryParams{}
 

@@ -41,6 +41,13 @@ func dataSourcePxgridEndpointsInfoRead(ctx context.Context, d *schema.ResourceDa
 		response1, err := client.Mdm.GetEndpoints()
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing GetEndpoints", err, response1.String(),
+					"Failure at GetEndpoints, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing GetEndpoints", err,
 				"Failure at GetEndpoints, unexpected response", ""))

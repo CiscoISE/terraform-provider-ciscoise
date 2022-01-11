@@ -41,6 +41,13 @@ func dataSourcePxgridServiceReregisterRead(ctx context.Context, d *schema.Resour
 		response1, err := client.Provider.ReregisterService()
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing ReregisterService", err, response1.String(),
+					"Failure at ReregisterService, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing ReregisterService", err,
 				"Failure at ReregisterService, unexpected response", ""))

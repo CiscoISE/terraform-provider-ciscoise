@@ -71,8 +71,6 @@ func resourceNodeServicesSxpInterfacesCreate(ctx context.Context, d *schema.Reso
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
 	resourceMap["hostname"] = interfaceToString(resourceItem["hostname"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNodeServicesSxpInterfacesRead(ctx, d, m)
@@ -127,10 +125,9 @@ func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.Reso
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vHostname, _ := resourceMap["hostname"]
-	var vvName string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+
 	if d.HasChange("parameters") {
-		log.Printf("[DEBUG] Name used for update operation %s", vvName)
+		log.Printf("[DEBUG] Name used for update operation %s", vHostname)
 		request1 := expandRequestNodeServicesSxpInterfacesSetSxpInterface(ctx, "parameters.0", d)
 		if request1 != nil {
 			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))

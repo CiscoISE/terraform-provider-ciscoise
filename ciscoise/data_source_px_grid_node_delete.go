@@ -48,6 +48,13 @@ func dataSourcePxGridNodeDeleteRead(ctx context.Context, d *schema.ResourceData,
 		response1, err := client.PxGridNode.DeletePxGridNodeByName(vvName)
 
 		if err != nil || response1 == nil {
+			if response1 != nil {
+				log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing DeletePxGridNodeByName", err, response1.String(),
+					"Failure at DeletePxGridNodeByName, unexpected response", ""))
+				return diags
+			}
 			diags = append(diags, diagErrorWithAlt(
 				"Failure when executing DeletePxGridNodeByName", err,
 				"Failure at DeletePxGridNodeByName, unexpected response", ""))

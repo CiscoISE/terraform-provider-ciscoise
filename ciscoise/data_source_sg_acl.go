@@ -158,9 +158,8 @@ string parameter. Each resource Data model description should specify if an attr
 						},
 						"modelled_content": &schema.Schema{
 							Description: `Modelled content of contract`,
-							// Replaced List to String
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
