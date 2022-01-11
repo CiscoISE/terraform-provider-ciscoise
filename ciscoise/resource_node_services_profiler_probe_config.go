@@ -512,10 +512,7 @@ func resourceNodeServicesProfilerProbeConfigCreate(ctx context.Context, d *schem
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
-	resourceMap["id"] = interfaceToString(resourceItem["id"])
-	resourceMap["name"] = interfaceToString(resourceItem["name"])
+	resourceMap["hostname"] = interfaceToString(resourceItem["hostname"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNodeServicesProfilerProbeConfigRead(ctx, d, m)
 }
