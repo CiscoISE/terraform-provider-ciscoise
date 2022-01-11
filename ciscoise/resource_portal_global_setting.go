@@ -89,7 +89,7 @@ func resourcePortalGlobalSetting() *schema.Resource {
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
+							Required: true,
 						},
 					},
 				},
@@ -103,8 +103,6 @@ func resourcePortalGlobalSettingCreate(ctx context.Context, d *schema.ResourceDa
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourcePortalGlobalSettingRead(ctx, d, m)
@@ -206,7 +204,19 @@ func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
+	if selectedMethod == 1 {
+		queryParams1 := isegosdk.GetPortalGlobalSettingsQueryParams{}
+		response1, _, err := client.PortalGlobalSetting.GetPortalGlobalSettings(&queryParams1)
+
+		if err == nil && response1 != nil {
+			items1 := getAllItemsPortalGlobalSettingGetPortalGlobalSettings(m, response1, &queryParams1)
+			item1, err := searchPortalGlobalSettingGetPortalGlobalSettings(m, items1, "", vvID)
+			if err == nil && item1 != nil {
+				vvID = item1.ID
+			}
+		}
+	}
 	if selectedMethod == 2 {
 		vvID = vID
 	}
