@@ -188,6 +188,7 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 	}
 	resourceMap := make(map[string]string)
 	resourceMap["hostname"] = vvHostname
+	resourceMap["fqdn"] = vvFQDN
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNodeDeploymentRead(ctx, d, m)
 }
