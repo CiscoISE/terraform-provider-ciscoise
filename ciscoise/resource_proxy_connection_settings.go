@@ -143,9 +143,8 @@ func resourceProxyConnectionSettingsCreate(ctx context.Context, d *schema.Resour
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
 	resourceMap["fqdn"] = interfaceToString(resourceItem["fqdn"])
+	resourceMap["user_name"] = interfaceToString(resourceItem["user_name"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceProxyConnectionSettingsRead(ctx, d, m)
 }
@@ -190,8 +189,6 @@ func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.Resour
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-
-	// NOTE: Consider adding getAllItems and search function to get missing params
 
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation")
