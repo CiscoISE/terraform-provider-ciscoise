@@ -301,7 +301,7 @@ func resourceTrustsecNbarAppUpdate(ctx context.Context, d *schema.ResourceData, 
 			vvID = (*item1)[0].ID
 		}
 	}
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestTrustsecNbarAppUpdateNbarAppByID(ctx, "parameters.0", d)

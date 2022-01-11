@@ -219,7 +219,7 @@ func resourceAciSettings() *schema.Resource {
 						"id": &schema.Schema{
 							Description: `Resource UUID value`,
 							Type:        schema.TypeString,
-							Optional:    true,
+							Required:    true,
 						},
 						"ip_address_host_name": &schema.Schema{
 							Description: `ACI Cluster IP Address / Host name`,
@@ -278,8 +278,6 @@ func resourceAciSettingsCreate(ctx context.Context, d *schema.ResourceData, m in
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceAciSettingsRead(ctx, d, m)

@@ -1,8 +1,61 @@
+## 0.1.0-rc.2 (January 11, 2021)
+
+IMPROVEMENTS:
+* ciscoise/config: Change resty Logger to be Tf compatible.
+* ciscoise/resource_aci_settings: Change behaviour of "id" from Optional to Required.
+* ciscoise/resource_system_certificate:  Add "id" to optional parameters.
+* ciscoise/resource_system_certificate:  Add "host_name" to Tf id.
+* ciscoise/resource_portal_global_setting: Change behaviour of "id" from Optional to Required.
+* ciscoise/resource_transport_gateway_settings:  Change "url" to be the Tf id.
+* ciscoise/resource_node_deployment: Add "fqdn" to Tf id.
+* ciscoise/resource_proxy_connection_settings:  Add "user_name" to Tf id.
+* ciscoise/resource_repository: Fix update func selection method.
+* ciscoise/resource_node_group: Fix update func selection method.
+* ciscoise/resource_node_services_profiler_probe_config:  Change "hostname" to be the Tf id.
+* resource/ciscoise_byod_portal: Update documented import id format.
+* resource/ciscoise_device_administration_network_conditions: documented import id format.Update 
+* resource/ciscoise_device_administration_policy_set: documented import id format.Update 
+* resource/ciscoise_device_administration_time_date_conditions: documented import id format.Update 
+* resource/ciscoise_downloadable_acl: Update documented import id format.
+* resource/ciscoise_egress_matrix_cell: Update documented import id format.
+* resource/ciscoise_filter_policy: Update documented import id format.
+* resource/ciscoise_guest_ssid: Update documented import id format.
+* resource/ciscoise_guest_type: Update documented import id format.
+* resource/ciscoise_hotspot_portal: Update documented import id format.
+* resource/ciscoise_node_deployment: Update documented import id format.
+* resource/ciscoise_proxy_connection_settings: Update documented import id format.
+* resource/ciscoise_repository: Update documented import id format.
+* resource/ciscoise_self_registered_portal: Update documented import id format.
+* resource/ciscoise_sg_acl: Update documented import id format.
+* resource/ciscoise_sg_mapping: Update documented import id format.
+* resource/ciscoise_sg_mapping_group: Update documented import id format.
+* resource/ciscoise_sg_to_vn_to_vlan: Update documented import id format.
+* resource/ciscoise_sgt: Update documented import id format.
+* resource/ciscoise_sponsor_group: Update documented import id format.
+* resource/ciscoise_sponsor_portal: Update documented import id format.
+* resource/ciscoise_sponsored_guest_portal: Update documented import id format.
+* resource/ciscoise_sxp_vpns: Update documented import id format.
+* resource/ciscoise_system_certificate: Update documented import id format.
+* resource/ciscoise_transport_gateway_settings: Update documented import id format.
+* resource/ciscoise_trusted_certificate: Update documented import id format.
+* resource/ciscoise_trustsec_nbar_app: Update documented import id format.
+* resource/ciscoise_trustsec_sg_vn_mapping: Update documented import id format.
+* resource/ciscoise_trustsec_vn: Update documented import id format.
+* resource/ciscoise_trustsec_vn_vlan_mapping: Update documented import id format.
+* Update examples and documentation.
+
+BUG FIXES:
+* ciscoise/data_source_deployment: Fix schemas (resolves expected string got []interface{}).
+ciscoise/* data_source_node_services_profiler_probe_config: Fix schemas (resolves expected string got []interface{}).
+* ciscoise/data_source_sg_acl: Fix schemas (resolves expected string got []interface{}).
+* ciscoise/data_source_tasks: Fix schemas (resolves expected string got []interface{}).
+* ciscoise/resource_node_services_profiler_probe_config: Fix schemas (resolves expected string got []interface{}).
+
 ## 0.1.0-rc.1 (December 24, 2021)
 
 IMPROVEMENTS:
-* ciscoise/resource_*: Change Read not found behaviour to setId("")
-* ciscoise/resource_*: Add log to indicate resource context execution
+* ciscoise/resource_*: Change Read not found behaviour to setId("").
+* ciscoise/resource_*: Add log to indicate resource context execution.
 
 ## 0.1.0-rc (December 23, 2021)
 

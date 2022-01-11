@@ -67,6 +67,10 @@ output "ciscoise_aci_settings_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
+Required:
+
+- **id** (String) Resource UUID value
+
 Optional:
 
 - **aci50** (String) Enable 5.0 ACI Version
@@ -81,7 +85,6 @@ Optional:
 - **enable_aci** (String) Enable ACI Integration
 - **enable_data_plane** (String)
 - **enable_elements_limit** (String)
-- **id** (String) Resource UUID value
 - **ip_address_host_name** (String) ACI Cluster IP Address / Host name
 - **l3_route_network** (String)
 - **max_num_iepg_from_aci** (Number)

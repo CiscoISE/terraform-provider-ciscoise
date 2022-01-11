@@ -1,1 +1,1 @@
-terraform import ciscoise_node_deployment.example "hostname:=string"
+terraform import ciscoise_node_deployment.example "hostname:=string\fqdn:=string"

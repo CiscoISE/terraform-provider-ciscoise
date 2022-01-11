@@ -197,18 +197,27 @@ null
 						},
 						"nmap": &schema.Schema{
 							Description: `The NMAP probe scans endpoints for open ports and OS.`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"pxgrid": &schema.Schema{
 							Description: `The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"radius": &schema.Schema{
 							Description: `The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.`,
-							Type:        schema.TypeString,
+							Type:        schema.TypeList,
 							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"snmp_query": &schema.Schema{
 							Description: `The SNMP query probe collects details from network devices such as interface, CDP, LLDP, and ARP.`,
@@ -503,10 +512,7 @@ func resourceNodeServicesProfilerProbeConfigCreate(ctx context.Context, d *schem
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
-	resourceMap["id"] = interfaceToString(resourceItem["id"])
-	resourceMap["name"] = interfaceToString(resourceItem["name"])
+	resourceMap["hostname"] = interfaceToString(resourceItem["hostname"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNodeServicesProfilerProbeConfigRead(ctx, d, m)
 }

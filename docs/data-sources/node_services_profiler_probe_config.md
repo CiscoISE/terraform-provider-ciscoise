@@ -52,9 +52,9 @@ Read-Only:
 - **dns** (List of Object) (see [below for nested schema](#nestedobjatt--item--dns))
 - **http** (List of Object) (see [below for nested schema](#nestedobjatt--item--http))
 - **netflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--netflow))
-- **nmap** (String)
-- **pxgrid** (String)
-- **radius** (String)
+- **nmap** (List of String)
+- **pxgrid** (List of String)
+- **radius** (List of String)
 - **snmp_query** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_query))
 - **snmp_trap** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_trap))
 
