@@ -788,7 +788,7 @@ func resourceNetworkAccessGlobalExceptionRulesUpdate(ctx context.Context, d *sch
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
 	if selectedMethod == 2 {
 		getResp1, _, err := client.NetworkAccessAuthorizationGlobalExceptionRules.GetNetworkAccessPolicySetGlobalExceptionRules()
 		if err == nil && getResp1 != nil {
