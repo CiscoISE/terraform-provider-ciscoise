@@ -2,10 +2,11 @@ package ciscoise
 
 import (
 	"log"
+	"os"
 )
 
 func createLogger() *logger {
-	l := &logger{l: log.Default()}
+	l := &logger{l: log.New(os.Stderr, "", log.LstdFlags)}
 	return l
 }
 
