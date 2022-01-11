@@ -87,6 +87,7 @@ Optional:
 - **expiration_ttl_period** (Number)
 - **expiration_ttl_units** (String)
 - **host_name** (String) hostName path parameter. Name of Host whose certificate needs to be updated
+- **id** (String) id path parameter. ID of the System Certificate to be updated
 - **ims** (String) Use certificate for the Cisco ISE Messaging Service
 - **name** (String) Name of the certificate
 - **portal** (String) Use for portal
@@ -134,4 +135,5 @@ Import is supported using the following syntax:
 
 ```shell
 terraform import ciscoise_system_certificate.example "host_name:=string\id:=string"
+terraform import ciscoise_system_certificate.example "host_name:=string\name:=string"
 ```
