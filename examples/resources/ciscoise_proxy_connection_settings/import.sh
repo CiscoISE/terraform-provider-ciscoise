@@ -1,1 +1,1 @@
-terraform import ciscoise_proxy_connection_settings.example "id:=string"
+terraform import ciscoise_proxy_connection_settings.example "fqdn:=string\user_name:=string"
