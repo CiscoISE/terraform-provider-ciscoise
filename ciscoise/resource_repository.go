@@ -271,7 +271,21 @@ func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvName string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
+	if selectedMethod == 1 {
+		getResp1, _, err := client.Repository.GetRepositories()
+		if err == nil && getResp1 != nil {
+			items1 := getAllItemsRepositoryGetRepositories(m, getResp1)
+			item1, err := searchRepositoryGetRepositories(m, items1, vName, "")
+			if err == nil && item1 != nil {
+				if vName != item1.Name {
+					vvName = item1.Name
+				} else {
+					vvName = vName
+				}
+			}
+		}
+	}
 	if selectedMethod == 2 {
 		vvName = vName
 	}
