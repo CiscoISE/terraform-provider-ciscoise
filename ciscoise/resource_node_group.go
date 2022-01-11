@@ -289,7 +289,21 @@ func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvNodeGroupName string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
+	if selectedMethod == 1 {
+		getResp1, _, err := client.NodeGroup.GetNodeGroups()
+		if err == nil && getResp1 != nil {
+			items1 := getAllItemsNodeGroupGetNodeGroups(m, getResp1)
+			item1, err := searchNodeGroupGetNodeGroups(m, items1, vvNodeGroupName, "")
+			if err == nil && item1 != nil {
+				if vNodeGroupName != item1.Name {
+					vvNodeGroupName = item1.Name
+				} else {
+					vvNodeGroupName = vNodeGroupName
+				}
+			}
+		}
+	}
 	if selectedMethod == 2 {
 		vvNodeGroupName = vNodeGroupName
 	}
