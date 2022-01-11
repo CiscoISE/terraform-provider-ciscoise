@@ -29,7 +29,7 @@ terraform {
   required_providers {
     ciscoise = {
       source = "CiscoISE/ciscoise"
-      version = "0.0.2-beta"
+      version = "0.1.0-rc.2"
     }
   }
 }
@@ -67,7 +67,7 @@ terraform {
   required_providers {
     ciscoise = {
       source = "hashicorp.com/edu/ciscoise"
-      version = "0.0.2-beta"
+      version = "0.1.0-rc.2"
     }
   }
 }
