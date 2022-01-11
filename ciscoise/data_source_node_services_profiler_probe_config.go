@@ -161,21 +161,27 @@ func dataSourceNodeServicesProfilerProbeConfig() *schema.Resource {
 						},
 						"nmap": &schema.Schema{
 							Description: `The NMAP probe scans endpoints for open ports and OS.`,
-							// Replaced List to String
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"pxgrid": &schema.Schema{
 							Description: `The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.`,
-							// Replaced List to String
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"radius": &schema.Schema{
 							Description: `The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.`,
-							// Replaced List to String
-							Type:     schema.TypeString,
-							Computed: true,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"snmp_query": &schema.Schema{
 							Description: `The SNMP query probe collects details from network devices such as interface, CDP, LLDP, and ARP.`,

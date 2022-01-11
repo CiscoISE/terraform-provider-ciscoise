@@ -78,9 +78,8 @@ func dataSourceDeployment() *schema.Resource {
 															},
 															"value": &schema.Schema{
 																Description: `It varies type`,
-																// Replaced List to String
-																Type:     schema.TypeString,
-																Computed: true,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -147,17 +146,14 @@ func dataSourceDeployment() *schema.Resource {
 																				Schema: map[string]*schema.Schema{
 
 																					"http_count": &schema.Schema{
-																						// Replaced List to String
 																						Type:     schema.TypeString,
 																						Computed: true,
 																					},
 																					"latency_count": &schema.Schema{
-																						// Replaced List to String
 																						Type:     schema.TypeString,
 																						Computed: true,
 																					},
 																					"latency_sum": &schema.Schema{
-																						// Replaced List to String
 																						Type:     schema.TypeString,
 																						Computed: true,
 																					},
@@ -205,7 +201,6 @@ func dataSourceDeployment() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"node": &schema.Schema{
-													// Replaced List to String
 													Type:     schema.TypeString,
 													Computed: true,
 												},
@@ -244,9 +239,11 @@ func dataSourceDeployment() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"node_and_scope": &schema.Schema{
-													// Replaced List to String
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -280,9 +277,11 @@ func dataSourceDeployment() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"node_and_scope": &schema.Schema{
-													// Replaced List to String
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -313,9 +312,11 @@ func dataSourceDeployment() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"node_and_scope": &schema.Schema{
-													// Replaced List to String
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},
@@ -379,9 +380,8 @@ func dataSourceDeployment() *schema.Resource {
 												},
 												"value": &schema.Schema{
 													Description: `It varies type`,
-													// Replaced List to String
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:        schema.TypeString,
+													Computed:    true,
 												},
 											},
 										},
@@ -423,7 +423,6 @@ func dataSourceDeployment() *schema.Resource {
 																Computed: true,
 															},
 															"profiles": &schema.Schema{
-																// Replaced List to String
 																Type:     schema.TypeString,
 																Computed: true,
 															},
