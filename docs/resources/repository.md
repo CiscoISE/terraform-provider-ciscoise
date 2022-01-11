@@ -85,5 +85,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_repository.example "repository_name:=string"
+terraform import ciscoise_repository.example "name:=string"
 ```

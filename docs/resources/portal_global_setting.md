@@ -46,12 +46,15 @@ output "ciscoise_portal_global_setting_example" {
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
+Required:
+
+- **id** (String) The ID of this resource.
+
 Optional:
 
 - **customization** (String) Allowed values:
 - HTML,
 - HTMLANDJAVASCRIPT
-- **id** (String) The ID of this resource.
 
 
 <a id="nestedatt--item"></a>
