@@ -252,7 +252,7 @@ func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m int
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	vvID := vID
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetSgVnMappings")
 		queryParams1 := isegosdk.GetVirtualNetworksQueryParams{}

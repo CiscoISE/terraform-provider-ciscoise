@@ -179,8 +179,6 @@ func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.Resour
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	resourceMap["name"] = interfaceToString(resourceItem["name"])
 	d.SetId(joinResourceID(resourceMap))
@@ -284,7 +282,7 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
 	if selectedMethod == 2 {
 		queryParams1 := isegosdk.GetNativeSupplicantProfileQueryParams{}
 

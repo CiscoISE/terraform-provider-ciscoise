@@ -297,7 +297,7 @@ func resourceTrustsecSgVnMappingUpdate(ctx context.Context, d *schema.ResourceDa
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvID string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
 	if selectedMethod == 1 {
 		vvID = vID
 		vvSgName := vSgName

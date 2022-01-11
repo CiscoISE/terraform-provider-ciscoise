@@ -334,7 +334,7 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 	selectedMethod := pickMethod([][]bool{method1, method2})
 	var vvDictionaryName string
 	var vvName string
-	// NOTE: Consider adding getAllItems and search function to get missing params
+	// NOTE: Added getAllItems and search function to get missing params
 	if selectedMethod == 2 {
 		vvDictionaryName = vDictionaryName
 
