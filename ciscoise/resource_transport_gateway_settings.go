@@ -81,10 +81,7 @@ func resourceTransportGatewaySettingsCreate(ctx context.Context, d *schema.Resou
 	// var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
-	// TODO: Add the path params to `item` schema
-	//       & return it individually
-	resourceMap["id"] = interfaceToString(resourceItem["id"])
-	resourceMap["name"] = interfaceToString(resourceItem["name"])
+	resourceMap["url"] = interfaceToString(resourceItem["url"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceTransportGatewaySettingsRead(ctx, d, m)
 }
@@ -129,9 +126,6 @@ func resourceTransportGatewaySettingsUpdate(ctx context.Context, d *schema.Resou
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-
-	// NOTE: Consider adding getAllItems and search function to get missing params
-
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] Name used for update operation")
 		request1 := expandRequestTransportGatewaySettingsUpdateTransportGateway(ctx, "parameters.0", d)
