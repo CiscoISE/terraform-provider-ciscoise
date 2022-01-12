@@ -145,7 +145,7 @@ longer carried out among the nodes.
 }
 
 func resourceNodeGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeGroup Create")
+	log.Printf("[DEBUG] Beginning NodeGroup create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -197,7 +197,7 @@ func resourceNodeGroupCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeGroup Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeGroup read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -273,7 +273,7 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeGroup Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeGroup update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -333,7 +333,7 @@ func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceNodeGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeGroup Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeGroup delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

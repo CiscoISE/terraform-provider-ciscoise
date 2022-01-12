@@ -274,8 +274,8 @@ func resourceAciSettings() *schema.Resource {
 }
 
 func resourceAciSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning AciSettings Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning AciSettings create")
+	log.Printf("[DEBUG] Missing AciSettings create on Cisco ISE. It will only be create it on Terraform")
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
@@ -284,7 +284,7 @@ func resourceAciSettingsCreate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning AciSettings Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning AciSettings read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -319,7 +319,7 @@ func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceAciSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning AciSettings Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning AciSettings update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -354,10 +354,9 @@ func resourceAciSettingsUpdate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceAciSettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning AciSettings Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning AciSettings delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete AciSettings on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing AciSettings delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestAciSettingsUpdateAciSettingsByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestAciSettingsUpdateAciSettingsByID {

@@ -467,7 +467,7 @@ TimeAndDate
 }
 
 func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions Create")
+	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -527,7 +527,7 @@ func resourceDeviceAdministrationConditionsCreate(ctx context.Context, d *schema
 }
 
 func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -599,7 +599,7 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 }
 
 func resourceDeviceAdministrationConditionsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -660,7 +660,7 @@ func resourceDeviceAdministrationConditionsUpdate(ctx context.Context, d *schema
 }
 
 func resourceDeviceAdministrationConditionsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationConditions delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

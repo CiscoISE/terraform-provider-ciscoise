@@ -957,7 +957,7 @@ Allowed values:
 }
 
 func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning ByodPortal Create")
+	log.Printf("[DEBUG] Beginning ByodPortal create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1020,7 +1020,7 @@ func resourceByodPortalCreate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning ByodPortal Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning ByodPortal read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1099,7 +1099,7 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 }
 
 func resourceByodPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning ByodPortal Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning ByodPortal update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1162,7 +1162,7 @@ func resourceByodPortalUpdate(ctx context.Context, d *schema.ResourceData, m int
 }
 
 func resourceByodPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning ByodPortal Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning ByodPortal delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

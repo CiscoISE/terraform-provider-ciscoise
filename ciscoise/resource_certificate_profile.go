@@ -163,7 +163,7 @@ Allowed values:
 }
 
 func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning CertificateProfile Create")
+	log.Printf("[DEBUG] Beginning CertificateProfile create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -221,7 +221,7 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning CertificateProfile Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning CertificateProfile read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -293,7 +293,7 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning CertificateProfile Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning CertificateProfile update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -354,10 +354,9 @@ func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceCertificateProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning CertificateProfile Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning CertificateProfile delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete CertificateProfile on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing CertificateProfile delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestCertificateProfileCreateCertificateProfile(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestCertificateProfileCreateCertificateProfile {

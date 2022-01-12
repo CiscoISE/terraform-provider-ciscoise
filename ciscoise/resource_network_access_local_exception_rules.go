@@ -593,7 +593,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceNetworkAccessLocalExceptionRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules Create")
+	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -674,7 +674,7 @@ func resourceNetworkAccessLocalExceptionRulesCreate(ctx context.Context, d *sche
 }
 
 func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -767,7 +767,7 @@ func resourceNetworkAccessLocalExceptionRulesRead(ctx context.Context, d *schema
 }
 
 func resourceNetworkAccessLocalExceptionRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -845,7 +845,7 @@ func resourceNetworkAccessLocalExceptionRulesUpdate(ctx context.Context, d *sche
 }
 
 func resourceNetworkAccessLocalExceptionRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessLocalExceptionRules delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

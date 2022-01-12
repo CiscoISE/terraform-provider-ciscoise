@@ -115,7 +115,7 @@ func resourcePortalTheme() *schema.Resource {
 }
 
 func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning PortalTheme Create")
+	log.Printf("[DEBUG] Beginning PortalTheme create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -178,7 +178,7 @@ func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning PortalTheme Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning PortalTheme read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -258,7 +258,7 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourcePortalThemeUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning PortalTheme Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning PortalTheme update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -322,7 +322,7 @@ func resourcePortalThemeUpdate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourcePortalThemeDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning PortalTheme Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning PortalTheme delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

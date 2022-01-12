@@ -144,7 +144,7 @@ func resourceTrustsecVnVLANMapping() *schema.Resource {
 }
 
 func resourceTrustsecVnVLANMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping Create")
+	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -213,7 +213,7 @@ func resourceTrustsecVnVLANMappingCreate(ctx context.Context, d *schema.Resource
 }
 
 func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -293,7 +293,7 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourceTrustsecVnVLANMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -358,7 +358,7 @@ func resourceTrustsecVnVLANMappingUpdate(ctx context.Context, d *schema.Resource
 }
 
 func resourceTrustsecVnVLANMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

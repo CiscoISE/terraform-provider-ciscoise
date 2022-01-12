@@ -423,7 +423,7 @@ func resourceNetworkAccessTimeDateConditions() *schema.Resource {
 }
 
 func resourceNetworkAccessTimeDateConditionsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessTimeDateConditions Create")
+	log.Printf("[DEBUG] Beginning NetworkAccessTimeDateConditions create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -486,7 +486,7 @@ func resourceNetworkAccessTimeDateConditionsCreate(ctx context.Context, d *schem
 }
 
 func resourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessTimeDateConditions Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessTimeDateConditions read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -562,7 +562,7 @@ func resourceNetworkAccessTimeDateConditionsRead(ctx context.Context, d *schema.
 }
 
 func resourceNetworkAccessTimeDateConditionsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessTimeDateConditions Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessTimeDateConditions update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -623,7 +623,7 @@ func resourceNetworkAccessTimeDateConditionsUpdate(ctx context.Context, d *schem
 }
 
 func resourceNetworkAccessTimeDateConditionsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessTimeDateConditions Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessTimeDateConditions delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
