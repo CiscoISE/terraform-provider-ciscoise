@@ -120,7 +120,7 @@ func resourceTrustsecSgVnMapping() *schema.Resource {
 }
 
 func resourceTrustsecSgVnMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping Create")
+	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -194,7 +194,7 @@ func resourceTrustsecSgVnMappingCreate(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -278,7 +278,7 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceTrustsecSgVnMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -349,7 +349,7 @@ func resourceTrustsecSgVnMappingUpdate(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourceTrustsecSgVnMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

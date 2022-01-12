@@ -139,8 +139,8 @@ pxGrid Cloud
 }
 
 func resourceProxyConnectionSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning ProxyConnectionSettings Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning ProxyConnectionSettings create")
+	log.Printf("[DEBUG] Missing ProxyConnectionSettings create on Cisco ISE. It will only be create it on Terraform")
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
 	resourceMap["fqdn"] = interfaceToString(resourceItem["fqdn"])
@@ -150,7 +150,7 @@ func resourceProxyConnectionSettingsCreate(ctx context.Context, d *schema.Resour
 }
 
 func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning ProxyConnectionSettings Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning ProxyConnectionSettings read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -185,7 +185,7 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 }
 
 func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning ProxyConnectionSettings Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning ProxyConnectionSettings update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -216,10 +216,9 @@ func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.Resour
 }
 
 func resourceProxyConnectionSettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning ProxyConnectionSettings Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning ProxyConnectionSettings delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete ProxyConnectionSettings on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing ProxyConnectionSettings delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestProxyConnectionSettingsUpdateProxyConnection(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestProxyUpdateProxyConnection {

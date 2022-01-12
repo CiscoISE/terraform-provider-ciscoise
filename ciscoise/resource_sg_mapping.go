@@ -164,7 +164,7 @@ func resourceSgMapping() *schema.Resource {
 }
 
 func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SgMapping Create")
+	log.Printf("[DEBUG] Beginning SgMapping create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -227,7 +227,7 @@ func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SgMapping Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SgMapping read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -306,7 +306,7 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SgMapping Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SgMapping update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -368,7 +368,7 @@ func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceSgMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SgMapping Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SgMapping delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

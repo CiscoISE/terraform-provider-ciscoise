@@ -77,8 +77,8 @@ in case of air-gapped network.
 }
 
 func resourceTransportGatewaySettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TransportGatewaySettings Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning TransportGatewaySettings create")
+	log.Printf("[DEBUG] Missing TransportGatewaySettings create on Cisco ISE. It will only be create it on Terraform")
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
 	resourceMap["url"] = interfaceToString(resourceItem["url"])
@@ -87,7 +87,7 @@ func resourceTransportGatewaySettingsCreate(ctx context.Context, d *schema.Resou
 }
 
 func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TransportGatewaySettings Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TransportGatewaySettings read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -122,7 +122,7 @@ func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resourc
 }
 
 func resourceTransportGatewaySettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TransportGatewaySettings Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TransportGatewaySettings update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -152,10 +152,9 @@ func resourceTransportGatewaySettingsUpdate(ctx context.Context, d *schema.Resou
 }
 
 func resourceTransportGatewaySettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TransportGatewaySettings Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TransportGatewaySettings delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete TransportGatewaySettings on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing TransportGatewaySettings delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestTransportGatewaySettingsUpdateTransportGateway(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestTelemetryUpdateTransportGateway {

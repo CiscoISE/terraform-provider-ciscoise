@@ -175,8 +175,8 @@ Allowed values:
 }
 
 func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile create")
+	log.Printf("[DEBUG] Missing NativeSupplicantProfile create on Cisco ISE. It will only be create it on Terraform")
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
@@ -186,7 +186,7 @@ func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -265,7 +265,7 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 }
 
 func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -328,7 +328,7 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNativeSupplicantProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NativeSupplicantProfile Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NativeSupplicantProfile delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

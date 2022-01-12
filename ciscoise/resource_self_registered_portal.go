@@ -2449,7 +2449,7 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 }
 
 func resourceSelfRegisteredPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SelfRegisteredPortal Create")
+	log.Printf("[DEBUG] Beginning SelfRegisteredPortal create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -2512,7 +2512,7 @@ func resourceSelfRegisteredPortalCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SelfRegisteredPortal Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SelfRegisteredPortal read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -2591,7 +2591,7 @@ func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceSelfRegisteredPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SelfRegisteredPortal Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SelfRegisteredPortal update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -2654,7 +2654,7 @@ func resourceSelfRegisteredPortalUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceSelfRegisteredPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SelfRegisteredPortal Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SelfRegisteredPortal delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

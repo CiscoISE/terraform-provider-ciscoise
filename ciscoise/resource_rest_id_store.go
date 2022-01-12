@@ -200,7 +200,7 @@ Options are:
 }
 
 func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning RestIDStore Create")
+	log.Printf("[DEBUG] Beginning RestIDStore create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -258,7 +258,7 @@ func resourceRestIDStoreCreate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning RestIDStore Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning RestIDStore read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -330,7 +330,7 @@ func resourceRestIDStoreRead(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceRestIDStoreUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning RestIDStore Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning RestIDStore update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -391,7 +391,7 @@ func resourceRestIDStoreUpdate(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceRestIDStoreDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning RestIDStore Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning RestIDStore delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

@@ -110,7 +110,7 @@ func resourceIDentityGroup() *schema.Resource {
 }
 
 func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning IDentityGroup Create")
+	log.Printf("[DEBUG] Beginning IDentityGroup create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -168,7 +168,7 @@ func resourceIDentityGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning IDentityGroup Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning IDentityGroup read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -240,7 +240,7 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning IDentityGroup Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning IDentityGroup update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -301,10 +301,9 @@ func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceIDentityGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning IDentityGroup Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning IDentityGroup delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete IDentityGroup on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing IDentityGroup delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestIDentityGroupCreateIDentityGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIDentityGroupsCreateIDentityGroup {

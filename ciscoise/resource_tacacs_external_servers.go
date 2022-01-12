@@ -155,7 +155,7 @@ func resourceTacacsExternalServers() *schema.Resource {
 }
 
 func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TacacsExternalServers Create")
+	log.Printf("[DEBUG] Beginning TacacsExternalServers create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -213,7 +213,7 @@ func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.Resource
 }
 
 func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TacacsExternalServers Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TacacsExternalServers read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -285,7 +285,7 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TacacsExternalServers Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TacacsExternalServers update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -346,7 +346,7 @@ func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.Resource
 }
 
 func resourceTacacsExternalServersDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TacacsExternalServers Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TacacsExternalServers delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

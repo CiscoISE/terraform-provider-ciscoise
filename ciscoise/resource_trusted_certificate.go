@@ -375,8 +375,8 @@ func resourceTrustedCertificate() *schema.Resource {
 }
 
 func resourceTrustedCertificateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustedCertificate Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning TrustedCertificate create")
+	log.Printf("[DEBUG] Missing TrustedCertificate create on Cisco ISE. It will only be create it on Terraform")
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
@@ -386,7 +386,7 @@ func resourceTrustedCertificateCreate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustedCertificate Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustedCertificate read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -465,7 +465,7 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustedCertificate Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustedCertificate update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -527,7 +527,7 @@ func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceTrustedCertificateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TrustedCertificate Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TrustedCertificate delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

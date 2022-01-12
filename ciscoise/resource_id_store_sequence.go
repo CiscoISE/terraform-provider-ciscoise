@@ -165,7 +165,7 @@ Partial update is not supported
 }
 
 func resourceIDStoreSequenceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning IDStoreSequence Create")
+	log.Printf("[DEBUG] Beginning IDStoreSequence create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -223,7 +223,7 @@ func resourceIDStoreSequenceCreate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning IDStoreSequence Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning IDStoreSequence read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -295,7 +295,7 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceIDStoreSequenceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning IDStoreSequence Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning IDStoreSequence update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -356,7 +356,7 @@ func resourceIDStoreSequenceUpdate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceIDStoreSequenceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning IDStoreSequence Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning IDStoreSequence delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

@@ -137,7 +137,7 @@ standalone node.
 }
 
 func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeDeployment Create")
+	log.Printf("[DEBUG] Beginning NodeDeployment create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -194,7 +194,7 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeDeployment Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeDeployment read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -272,7 +272,7 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeDeployment Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeDeployment update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -334,7 +334,7 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceNodeDeploymentDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeDeployment Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeDeployment delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

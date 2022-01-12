@@ -154,7 +154,7 @@ func resourceSxpConnections() *schema.Resource {
 }
 
 func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SxpConnections Create")
+	log.Printf("[DEBUG] Beginning SxpConnections create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -212,7 +212,7 @@ func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SxpConnections Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SxpConnections read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -289,7 +289,7 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 }
 
 func resourceSxpConnectionsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SxpConnections Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SxpConnections update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -336,7 +336,7 @@ func resourceSxpConnectionsUpdate(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceSxpConnectionsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SxpConnections Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SxpConnections delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

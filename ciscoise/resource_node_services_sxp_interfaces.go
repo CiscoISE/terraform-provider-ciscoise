@@ -67,8 +67,8 @@ func resourceNodeServicesSxpInterfaces() *schema.Resource {
 }
 
 func resourceNodeServicesSxpInterfacesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces create")
+	log.Printf("[DEBUG] Missing NodeServicesSxpInterfaces create on Cisco ISE. It will only be create it on Terraform")
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
 	resourceMap["hostname"] = interfaceToString(resourceItem["hostname"])
@@ -77,7 +77,7 @@ func resourceNodeServicesSxpInterfacesCreate(ctx context.Context, d *schema.Reso
 }
 
 func resourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -117,7 +117,7 @@ func resourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.Resour
 }
 
 func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -152,10 +152,9 @@ func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.Reso
 }
 
 func resourceNodeServicesSxpInterfacesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete NodeServicesSxpInterfaces on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing NodeServicesSxpInterfaces delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestNodeServicesSxpInterfacesSetSxpInterface(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetSxpInterface {

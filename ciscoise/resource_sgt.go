@@ -155,7 +155,7 @@ func resourceSgt() *schema.Resource {
 }
 
 func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning Sgt Create")
+	log.Printf("[DEBUG] Beginning Sgt create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -218,7 +218,7 @@ func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{
 }
 
 func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning Sgt Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning Sgt read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -297,7 +297,7 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 }
 
 func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning Sgt Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning Sgt update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -360,7 +360,7 @@ func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 }
 
 func resourceSgtDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning Sgt Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning Sgt delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
