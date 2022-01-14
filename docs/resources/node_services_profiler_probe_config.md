@@ -5,9 +5,7 @@ subcategory: ""
 description: |-
   It manages read and update operations on Node Services.
   This resource updates the profiler probe configuration of a PSN.
-  Set probe value as
-  null
-  to disable probe.
+  Set probe value as false to disable probe.
   Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
   {
   "activeDirectory": { "daysBeforeRescan": 1 },
@@ -16,16 +14,11 @@ description: |-
   "dns": { "timeout": 2 },
   "http": { "interfaces": "[{"interface":"GigabitEthernet 0"}]" },
   "netflow": { "interfaces": "[{"interface":"GigabitEthernet 0"}]", "port": 0 },
-  "nmap":
-  null
-  ,
-  "pxgrid":
-  null
-  ,
-  "radius": [],
+  "nmap": false,
+  "pxgrid": false,
+  "radius": "true",
   "snmpQuery": { "eventTimeout": 30, "retries": 2, "timeout": 1000 },
-  "snmpTrap":
-  null
+  "snmpTrap": null
   }
 ---
 
@@ -34,9 +27,7 @@ description: |-
 It manages read and update operations on Node Services.
 
 - This resource updates the profiler probe configuration of a PSN.
-Set probe value as
-null
- to disable probe.
+Set probe value as false to disable probe.
 Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 {
   "activeDirectory": { "daysBeforeRescan": 1 },
@@ -45,17 +36,11 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
   "dns": { "timeout": 2 },
   "http": { "interfaces": "[{"interface":"GigabitEthernet 0"}]" },
   "netflow": { "interfaces": "[{"interface":"GigabitEthernet 0"}]", "port": 0 },
-  "nmap":
-null
-,
-  "pxgrid":
-null
-,
-  "radius": [],
+  "nmap": false,
+  "pxgrid": false,
+  "radius": "true",
   "snmpQuery": { "eventTimeout": 30, "retries": 2, "timeout": 1000 },
-  "snmpTrap":
-null
-
+  "snmpTrap": null
 }
 
 ## Example Usage
@@ -64,9 +49,51 @@ null
 resource "ciscoise_node_services_profiler_probe_config" "example" {
   provider = ciscoise
   parameters {
-
-    days_before_rescan = 1
-    hostname           = "string"
+    hostname = "ise"
+    active_directory {
+      days_before_rescan = 2
+    }
+    http {
+      interfaces {
+        interface = "GigabitEthernet 0"
+      }
+    }
+    dhcp {
+      interfaces {
+        interface = "GigabitEthernet 0"
+      }
+      port = 67
+    }
+    pxgrid = "false"
+    radius = "true"
+    nmap   = "false"
+    dns {
+      timeout = 2
+    }
+    netflow {
+      interfaces {
+        interface = "GigabitEthernet 0"
+      }
+      port = 9996
+    }
+    dhcp_span {
+      interfaces {
+        interface = "GigabitEthernet 0"
+      }
+    }
+    snmp_query {
+      retries       = 2
+      timeout       = 1000
+      event_timeout = 30
+    }
+    snmp_trap {
+      interfaces {
+        interface = "GigabitEthernet 0"
+      }
+      link_trap_query = "true"
+      mac_trap_query  = "true"
+      port            = 162
+    }
   }
 }
 
@@ -103,9 +130,18 @@ Optional:
 - **dns** (Block List) The DNS probe performs a DNS lookup for the FQDN. (see [below for nested schema](#nestedblock--parameters--dns))
 - **http** (Block List) The HTTP probe receives and parses HTTP packets. (see [below for nested schema](#nestedblock--parameters--http))
 - **netflow** (Block List) The NetFlow probe collects the NetFlow packets that are sent to it from routers. (see [below for nested schema](#nestedblock--parameters--netflow))
-- **nmap** (List of String) The NMAP probe scans endpoints for open ports and OS.
-- **pxgrid** (List of String) The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.
-- **radius** (List of String) The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.
+- **nmap** (String) The NMAP probe scans endpoints for open ports and OS.
+							If set to true, it will activate the NMAP probe.
+							If set to false, it will deactivate the NMAP probe.
+							Finally, if set to empty string or no-set (default), it will maintain the NMAP probe state.
+- **pxgrid** (String) The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.
+							If set to true, it will activate the pxGrid probe.
+							If set to false, it will deactivate the pxGrid probe.
+							Finally, if set to empty string or no-set (default), it will maintain the pxGrid probe state.
+- **radius** (String) The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.
+							If set to true, it will activate the RADIUS probe.
+							If set to false, it will deactivate the RADIUS probe.
+							Finally, if set to empty string or no-set (default), it will maintain the RADIUS probe state.
 - **snmp_query** (Block List) The SNMP query probe collects details from network devices such as interface, CDP, LLDP, and ARP. (see [below for nested schema](#nestedblock--parameters--snmp_query))
 - **snmp_trap** (Block List) The SNMP trap probe receives linkup, linkdown, and MAC notification traps from network devices. (see [below for nested schema](#nestedblock--parameters--snmp_trap))
 
