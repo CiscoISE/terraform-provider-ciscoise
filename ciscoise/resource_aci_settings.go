@@ -276,8 +276,33 @@ func resourceAciSettings() *schema.Resource {
 func resourceAciSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AciSettings create")
 	log.Printf("[DEBUG] Missing AciSettings create on Cisco ISE. It will only be create it on Terraform")
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
+	vvID := interfaceToString(resourceItem["id"])
+	log.Printf("[DEBUG] ID used for update operation %s", vvID)
+	request1 := expandRequestAciSettingsUpdateAciSettingsByID(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+	response1, restyResp1, err := client.AciSettings.UpdateAciSettingsByID(vvID, request1)
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing UpdateAciSettingsByID", err, restyResp1.String(),
+				"Failure at UpdateAciSettingsByID, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing UpdateAciSettingsByID", err,
+			"Failure at UpdateAciSettingsByID, unexpected response", ""))
+		return diags
+	}
+
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceAciSettingsRead(ctx, d, m)
