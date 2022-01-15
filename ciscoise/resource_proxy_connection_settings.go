@@ -141,8 +141,31 @@ pxGrid Cloud
 func resourceProxyConnectionSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ProxyConnectionSettings create")
 	log.Printf("[DEBUG] Missing ProxyConnectionSettings create on Cisco ISE. It will only be create it on Terraform")
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
+	log.Printf("[DEBUG] Name used for update operation")
+	request1 := expandRequestProxyConnectionSettingsUpdateProxyConnection(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+	response1, restyResp1, err := client.Proxy.UpdateProxyConnection(request1)
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing UpdateProxyConnection", err, restyResp1.String(),
+				"Failure at UpdateProxyConnection, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing UpdateProxyConnection", err,
+			"Failure at UpdateProxyConnection, unexpected response", ""))
+		return diags
+	}
 	resourceMap["fqdn"] = interfaceToString(resourceItem["fqdn"])
 	resourceMap["user_name"] = interfaceToString(resourceItem["user_name"])
 	d.SetId(joinResourceID(resourceMap))

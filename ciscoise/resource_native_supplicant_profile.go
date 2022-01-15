@@ -177,8 +177,32 @@ Allowed values:
 func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NativeSupplicantProfile create")
 	log.Printf("[DEBUG] Missing NativeSupplicantProfile create on Cisco ISE. It will only be create it on Terraform")
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
+	vvID := interfaceToString(resourceItem["id"])
+	log.Printf("[DEBUG] ID used for update operation %s", vvID)
+	request1 := expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByID(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+	response1, restyResp1, err := client.NativeSupplicantProfile.UpdateNativeSupplicantProfileByID(vvID, request1)
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing UpdateNativeSupplicantProfileByID", err, restyResp1.String(),
+				"Failure at UpdateNativeSupplicantProfileByID, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing UpdateNativeSupplicantProfileByID", err,
+			"Failure at UpdateNativeSupplicantProfileByID, unexpected response", ""))
+		return diags
+	}
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	resourceMap["name"] = interfaceToString(resourceItem["name"])
 	d.SetId(joinResourceID(resourceMap))
