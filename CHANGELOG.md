@@ -1,3 +1,21 @@
+## 0.1.0-rc.3 (January 17, 2021)
+
+BUG FIXES:
+* ciscoise/logger: Fix resty Logger to be Tf compatible and always visible.
+* ciscoise/resource_node_services_profiler_probe_config: Change parameters (nmap, pxgrid, radius) type from TypeList to TypeString["", "true", "false".
+
+IMPROVEMENTS:
+* ciscoise/resource_node_services_profiler_probe_config: Update examples, samples and documentation
+* ciscoise/resource_aci_settings:  Add 'update' call to CreateContext that are 'empty'.
+* ciscoise/resource_native_supplicant_profile:  Add 'update' call to CreateContext that are 'empty'.
+* ciscoise/resource_node_services_profiler_probe_config:  Add 'update' call to CreateContext that are 'empty'.
+* ciscoise/resource_node_services_sxp_interfaces:  Add 'update' call to CreateContext that are 'empty'.
+* ciscoise/resource_portal_global_setting:  Add 'update' call to CreateContext that are 'empty'.
+* ciscoise/resource_proxy_connection_settings:  Add 'update' call to CreateContext that are 'empty'.
+* ciscoise/resource_system_certificate:  Add 'update' call to CreateContext that are 'empty'.
+* ciscoise/resource_transport_gateway_settings:  Add 'update' call to CreateContext that are 'empty'.
+* ciscoise/resource_trusted_certificate:  Add 'update' call to CreateContext that are 'empty'.
+
 ## 0.1.0-rc.2 (January 11, 2021)
 
 IMPROVEMENTS:
