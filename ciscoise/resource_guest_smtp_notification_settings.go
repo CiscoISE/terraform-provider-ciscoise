@@ -193,7 +193,7 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 }
 
 func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings Create")
+	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -251,7 +251,7 @@ func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.
 }
 
 func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -328,7 +328,7 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 }
 
 func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -374,10 +374,9 @@ func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.
 }
 
 func resourceGuestSmtpNotificationSettingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete GuestSmtpNotificationSettings on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing GuestSmtpNotificationSettings delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestGuestSmtpNotificationSettingsCreateGuestSmtpNotificationSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestGuestSmtpNotificationConfigurationCreateGuestSmtpNotificationSettings {

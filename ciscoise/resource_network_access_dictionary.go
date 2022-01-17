@@ -132,7 +132,7 @@ func resourceNetworkAccessDictionary() *schema.Resource {
 }
 
 func resourceNetworkAccessDictionaryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessDictionary Create")
+	log.Printf("[DEBUG] Beginning NetworkAccessDictionary create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -195,7 +195,7 @@ func resourceNetworkAccessDictionaryCreate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessDictionary Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessDictionary read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -273,7 +273,7 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 }
 
 func resourceNetworkAccessDictionaryUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessDictionary Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessDictionary update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -334,7 +334,7 @@ func resourceNetworkAccessDictionaryUpdate(ctx context.Context, d *schema.Resour
 }
 
 func resourceNetworkAccessDictionaryDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessDictionary Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessDictionary delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

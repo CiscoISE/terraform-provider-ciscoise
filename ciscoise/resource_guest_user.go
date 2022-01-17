@@ -357,7 +357,7 @@ func resourceGuestUser() *schema.Resource {
 }
 
 func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestUser Create")
+	log.Printf("[DEBUG] Beginning GuestUser create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -415,7 +415,7 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestUser Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestUser read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -487,7 +487,7 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestUser Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestUser update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -548,7 +548,7 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGuestUserDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestUser Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestUser delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

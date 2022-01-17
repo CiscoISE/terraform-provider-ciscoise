@@ -176,7 +176,7 @@ The order of the names in the string is the order of servers that will be used d
 }
 
 func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TacacsServerSequence Create")
+	log.Printf("[DEBUG] Beginning TacacsServerSequence create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -234,7 +234,7 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TacacsServerSequence Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TacacsServerSequence read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -306,7 +306,7 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TacacsServerSequence Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TacacsServerSequence update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -367,7 +367,7 @@ func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceTacacsServerSequenceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning TacacsServerSequence Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning TacacsServerSequence delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

@@ -568,7 +568,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceNetworkAccessPolicySetCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet Create")
+	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -631,7 +631,7 @@ func resourceNetworkAccessPolicySetCreate(ctx context.Context, d *schema.Resourc
 }
 
 func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -707,7 +707,7 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceNetworkAccessPolicySetUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -768,7 +768,7 @@ func resourceNetworkAccessPolicySetUpdate(ctx context.Context, d *schema.Resourc
 }
 
 func resourceNetworkAccessPolicySetDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

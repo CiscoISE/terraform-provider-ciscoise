@@ -99,17 +99,41 @@ func resourcePortalGlobalSetting() *schema.Resource {
 }
 
 func resourcePortalGlobalSettingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning PortalGlobalSetting Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning PortalGlobalSetting create")
+	log.Printf("[DEBUG] Missing PortalGlobalSetting create on Cisco ISE. It will only be create it on Terraform")
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
+	vvID := interfaceToString(resourceItem["id"])
+	log.Printf("[DEBUG] ID used for update operation %s", vvID)
+	request1 := expandRequestPortalGlobalSettingUpdatePortalGlobalSettingByID(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+	response1, restyResp1, err := client.PortalGlobalSetting.UpdatePortalGlobalSettingByID(vvID, request1)
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing UpdatePortalGlobalSettingByID", err, restyResp1.String(),
+				"Failure at UpdatePortalGlobalSettingByID, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing UpdatePortalGlobalSettingByID", err,
+			"Failure at UpdatePortalGlobalSettingByID, unexpected response", ""))
+		return diags
+	}
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourcePortalGlobalSettingRead(ctx, d, m)
 }
 
 func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning PortalGlobalSetting Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning PortalGlobalSetting read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -187,7 +211,7 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 }
 
 func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning PortalGlobalSetting Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning PortalGlobalSetting update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -246,10 +270,9 @@ func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourcePortalGlobalSettingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning PortalGlobalSetting Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning PortalGlobalSetting delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete PortalGlobalSetting on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing PortalGlobalSetting delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestPortalGlobalSettingUpdatePortalGlobalSettingByID(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestPortalGlobalSettingUpdatePortalGlobalSettingByID {

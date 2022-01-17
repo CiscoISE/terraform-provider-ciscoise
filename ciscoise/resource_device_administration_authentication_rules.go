@@ -613,7 +613,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceDeviceAdministrationAuthenticationRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthenticationRules Create")
+	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthenticationRules create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -693,7 +693,7 @@ func resourceDeviceAdministrationAuthenticationRulesCreate(ctx context.Context, 
 }
 
 func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthenticationRules Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthenticationRules read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -785,7 +785,7 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 }
 
 func resourceDeviceAdministrationAuthenticationRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthenticationRules Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthenticationRules update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -862,7 +862,7 @@ func resourceDeviceAdministrationAuthenticationRulesUpdate(ctx context.Context, 
 }
 
 func resourceDeviceAdministrationAuthenticationRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthenticationRules Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthenticationRules delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

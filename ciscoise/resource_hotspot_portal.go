@@ -943,7 +943,7 @@ Allowed values:
 }
 
 func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning HotspotPortal Create")
+	log.Printf("[DEBUG] Beginning HotspotPortal create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1006,7 +1006,7 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning HotspotPortal Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning HotspotPortal read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1086,7 +1086,7 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning HotspotPortal Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning HotspotPortal update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1148,7 +1148,7 @@ func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceHotspotPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning HotspotPortal Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning HotspotPortal delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

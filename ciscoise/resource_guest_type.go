@@ -454,7 +454,7 @@ Allowed values are:
 }
 
 func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestType Create")
+	log.Printf("[DEBUG] Beginning GuestType create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -517,7 +517,7 @@ func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestType Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestType read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -596,7 +596,7 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 }
 
 func resourceGuestTypeUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestType Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestType update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -658,7 +658,7 @@ func resourceGuestTypeUpdate(ctx context.Context, d *schema.ResourceData, m inte
 }
 
 func resourceGuestTypeDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning GuestType Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning GuestType delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

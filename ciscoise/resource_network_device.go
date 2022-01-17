@@ -649,7 +649,7 @@ func resourceNetworkDevice() *schema.Resource {
 }
 
 func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkDevice Create")
+	log.Printf("[DEBUG] Beginning NetworkDevice create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -707,7 +707,7 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkDevice Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkDevice read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -779,7 +779,7 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceNetworkDeviceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkDevice Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkDevice update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -840,7 +840,7 @@ func resourceNetworkDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkDevice Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkDevice delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

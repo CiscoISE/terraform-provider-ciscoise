@@ -1411,7 +1411,7 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
 }
 
 func resourceSponsoredGuestPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SponsoredGuestPortal Create")
+	log.Printf("[DEBUG] Beginning SponsoredGuestPortal create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1474,7 +1474,7 @@ func resourceSponsoredGuestPortalCreate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SponsoredGuestPortal Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SponsoredGuestPortal read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1553,7 +1553,7 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 }
 
 func resourceSponsoredGuestPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SponsoredGuestPortal Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SponsoredGuestPortal update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -1617,7 +1617,7 @@ func resourceSponsoredGuestPortalUpdate(ctx context.Context, d *schema.ResourceD
 }
 
 func resourceSponsoredGuestPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SponsoredGuestPortal Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SponsoredGuestPortal delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

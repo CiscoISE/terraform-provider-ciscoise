@@ -167,7 +167,7 @@ func resourceEgressMatrixCell() *schema.Resource {
 }
 
 func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning EgressMatrixCell Create")
+	log.Printf("[DEBUG] Beginning EgressMatrixCell create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -230,7 +230,7 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning EgressMatrixCell Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning EgressMatrixCell read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -309,7 +309,7 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 }
 
 func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning EgressMatrixCell Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning EgressMatrixCell update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -373,7 +373,7 @@ func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData,
 }
 
 func resourceEgressMatrixCellDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning EgressMatrixCell Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning EgressMatrixCell delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
