@@ -15,21 +15,13 @@ type logger struct {
 }
 
 func (l *logger) Errorf(format string, v ...interface{}) {
-	l.output("[ERROR] [RESTY] "+format, v...)
+	log.Printf("[ERROR] [RESTY] "+format, v...)
 }
 
 func (l *logger) Warnf(format string, v ...interface{}) {
-	l.output("[WARN] [RESTY] "+format, v...)
+	log.Printf("[WARN] [RESTY] "+format, v...)
 }
 
 func (l *logger) Debugf(format string, v ...interface{}) {
-	l.output("[DEBUG] [RESTY] "+format, v...)
-}
-
-func (l *logger) output(format string, v ...interface{}) {
-	if len(v) == 0 {
-		l.l.Print(format)
-		return
-	}
-	l.l.Printf(format, v...)
+	log.Printf("[DEBUG] [RESTY] "+format, v...)
 }
