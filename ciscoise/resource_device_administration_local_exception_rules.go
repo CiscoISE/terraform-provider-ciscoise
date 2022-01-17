@@ -601,7 +601,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceDeviceAdministrationLocalExceptionRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationLocalExceptionRules Create")
+	log.Printf("[DEBUG] Beginning DeviceAdministrationLocalExceptionRules create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -682,7 +682,7 @@ func resourceDeviceAdministrationLocalExceptionRulesCreate(ctx context.Context, 
 }
 
 func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationLocalExceptionRules Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationLocalExceptionRules read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -774,7 +774,7 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 }
 
 func resourceDeviceAdministrationLocalExceptionRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationLocalExceptionRules Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationLocalExceptionRules update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -852,7 +852,7 @@ func resourceDeviceAdministrationLocalExceptionRulesUpdate(ctx context.Context, 
 }
 
 func resourceDeviceAdministrationLocalExceptionRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DeviceAdministrationLocalExceptionRules Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DeviceAdministrationLocalExceptionRules delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

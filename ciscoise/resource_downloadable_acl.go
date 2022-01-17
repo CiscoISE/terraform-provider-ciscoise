@@ -135,7 +135,7 @@ func resourceDownloadableACL() *schema.Resource {
 }
 
 func resourceDownloadableACLCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DownloadableACL Create")
+	log.Printf("[DEBUG] Beginning DownloadableACL create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -198,7 +198,7 @@ func resourceDownloadableACLCreate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DownloadableACL Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DownloadableACL read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -277,7 +277,7 @@ func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceDownloadableACLUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DownloadableACL Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DownloadableACL update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -340,7 +340,7 @@ func resourceDownloadableACLUpdate(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceDownloadableACLDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning DownloadableACL Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning DownloadableACL delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

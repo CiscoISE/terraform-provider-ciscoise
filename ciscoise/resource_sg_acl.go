@@ -156,7 +156,7 @@ func resourceSgACL() *schema.Resource {
 }
 
 func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SgACL Create")
+	log.Printf("[DEBUG] Beginning SgACL create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -219,7 +219,7 @@ func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interfac
 }
 
 func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SgACL Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SgACL read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -298,7 +298,7 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 }
 
 func resourceSgACLUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SgACL Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SgACL update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -362,7 +362,7 @@ func resourceSgACLUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 }
 
 func resourceSgACLDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SgACL Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SgACL delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

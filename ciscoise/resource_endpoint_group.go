@@ -113,7 +113,7 @@ func resourceEndpointGroup() *schema.Resource {
 }
 
 func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning EndpointGroup Create")
+	log.Printf("[DEBUG] Beginning EndpointGroup create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -171,7 +171,7 @@ func resourceEndpointGroupCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning EndpointGroup Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning EndpointGroup read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -243,7 +243,7 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func resourceEndpointGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning EndpointGroup Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning EndpointGroup update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -304,7 +304,7 @@ func resourceEndpointGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceEndpointGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning EndpointGroup Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning EndpointGroup delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

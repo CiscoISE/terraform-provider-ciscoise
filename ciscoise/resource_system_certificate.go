@@ -254,10 +254,35 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 }
 
 func resourceSystemCertificateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SystemCertificate Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning SystemCertificate create")
+	log.Printf("[DEBUG] Missing SystemCertificate create on Cisco ISE. It will only be create it on Terraform")
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
+	vvID := interfaceToString(resourceItem["id"])
+	vvHostName := interfaceToString(resourceItem["host_name"])
+	log.Printf("[DEBUG] ID used for update operation %s", vvID)
+	request1 := expandRequestSystemCertificateUpdateSystemCert(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+	response1, restyResp1, err := client.Certificates.UpdateSystemCert(vvID, vvHostName, request1)
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing UpdateSystemCert", err, restyResp1.String(),
+				"Failure at UpdateSystemCert, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing UpdateSystemCert", err,
+			"Failure at UpdateSystemCert, unexpected response", ""))
+		return diags
+	}
 	resourceMap["id"] = interfaceToString(resourceItem["id"])
 	resourceMap["host_name"] = interfaceToString(resourceItem["host_name"])
 	resourceMap["name"] = interfaceToString(resourceItem["name"])
@@ -266,7 +291,7 @@ func resourceSystemCertificateCreate(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SystemCertificate Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SystemCertificate read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -346,7 +371,7 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 }
 
 func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SystemCertificate Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SystemCertificate update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -398,7 +423,7 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 }
 
 func resourceSystemCertificateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning SystemCertificate Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning SystemCertificate delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

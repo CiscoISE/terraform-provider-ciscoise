@@ -590,7 +590,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceNetworkAccessGlobalExceptionRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessGlobalExceptionRules Create")
+	log.Printf("[DEBUG] Beginning NetworkAccessGlobalExceptionRules create")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -665,7 +665,7 @@ func resourceNetworkAccessGlobalExceptionRulesCreate(ctx context.Context, d *sch
 }
 
 func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessGlobalExceptionRules Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessGlobalExceptionRules read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -756,7 +756,7 @@ func resourceNetworkAccessGlobalExceptionRulesRead(ctx context.Context, d *schem
 }
 
 func resourceNetworkAccessGlobalExceptionRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessGlobalExceptionRules Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessGlobalExceptionRules update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -832,7 +832,7 @@ func resourceNetworkAccessGlobalExceptionRulesUpdate(ctx context.Context, d *sch
 }
 
 func resourceNetworkAccessGlobalExceptionRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NetworkAccessGlobalExceptionRules Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NetworkAccessGlobalExceptionRules delete for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics

@@ -18,9 +18,7 @@ func resourceNodeServicesProfilerProbeConfig() *schema.Resource {
 		Description: `It manages read and update operations on Node Services.
 
 - This resource updates the profiler probe configuration of a PSN.
-Set probe value as
-null
- to disable probe.
+Set probe value as false to disable probe.
 Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 {
   "activeDirectory": { "daysBeforeRescan": 1 },
@@ -29,17 +27,11 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
   "dns": { "timeout": 2 },
   "http": { "interfaces": "[{"interface":"GigabitEthernet 0"}]" },
   "netflow": { "interfaces": "[{"interface":"GigabitEthernet 0"}]", "port": 0 },
-  "nmap":
-null
-,
-  "pxgrid":
-null
-,
-  "radius": [],
+  "nmap": false,
+  "pxgrid": false,
+  "radius": "true",
   "snmpQuery": { "eventTimeout": 30, "retries": 2, "timeout": 1000 },
-  "snmpTrap":
-null
-
+  "snmpTrap": null
 }
 
 `,
@@ -418,28 +410,34 @@ null
 							},
 						},
 						"nmap": &schema.Schema{
-							Description: `The NMAP probe scans endpoints for open ports and OS.`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Description: `The NMAP probe scans endpoints for open ports and OS.
+							If set to true, it will activate the NMAP probe.
+							If set to false, it will deactivate the NMAP probe.
+							Finally, if set to empty string or no-set (default), it will maintain the NMAP probe state.
+							`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"pxgrid": &schema.Schema{
-							Description: `The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Description: `The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.
+							If set to true, it will activate the pxGrid probe.
+							If set to false, it will deactivate the pxGrid probe.
+							Finally, if set to empty string or no-set (default), it will maintain the pxGrid probe state.
+							`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"radius": &schema.Schema{
-							Description: `The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
+							Description: `The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.
+							If set to true, it will activate the RADIUS probe.
+							If set to false, it will deactivate the RADIUS probe.
+							Finally, if set to empty string or no-set (default), it will maintain the RADIUS probe state.
+							`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
 						},
 						"snmp_query": &schema.Schema{
 							Description: `The SNMP query probe collects details from network devices such as interface, CDP, LLDP, and ARP.`,
@@ -508,17 +506,42 @@ null
 }
 
 func resourceNodeServicesProfilerProbeConfigCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig Create")
-	// var diags diag.Diagnostics
+	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig create")
+	log.Printf("[DEBUG] Missing NodeServicesProfilerProbeConfig create on Cisco ISE. It will only be create it on Terraform")
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
 	resourceItem := *getResourceItem(d.Get("parameters"))
 	resourceMap := make(map[string]string)
+	vHostname := interfaceToString(resourceItem["hostname"])
+	vvHostname := vHostname
+	log.Printf("[DEBUG] Name used for update operation %s", vHostname)
+	request1 := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfig(ctx, "parameters.0", d)
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+	}
+	response1, restyResp1, err := client.NodeServices.SetProfilerProbeConfig(vvHostname, request1)
+	if err != nil || response1 == nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] resty response for update operation => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing SetProfilerProbeConfig", err, restyResp1.String(),
+				"Failure at SetProfilerProbeConfig, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing SetProfilerProbeConfig", err,
+			"Failure at SetProfilerProbeConfig, unexpected response", ""))
+		return diags
+	}
 	resourceMap["hostname"] = interfaceToString(resourceItem["hostname"])
 	d.SetId(joinResourceID(resourceMap))
 	return resourceNodeServicesProfilerProbeConfigRead(ctx, d, m)
 }
 
 func resourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig Read for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig read for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -558,7 +581,7 @@ func resourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schema.
 }
 
 func resourceNodeServicesProfilerProbeConfigUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig Update for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig update for id=[%s]", d.Id())
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
@@ -594,10 +617,9 @@ func resourceNodeServicesProfilerProbeConfigUpdate(ctx context.Context, d *schem
 }
 
 func resourceNodeServicesProfilerProbeConfigDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig Delete for id=[%s]", d.Id())
+	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
-	// NOTE: Unable to delete NodeServicesProfilerProbeConfig on Cisco ISE
-	//       Returning empty diags to delete it on Terraform
+	log.Printf("[DEBUG] Missing NodeServicesProfilerProbeConfig delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfig(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetProfilerProbeConfig {
@@ -865,27 +887,10 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNmapArray
 	if o == nil {
 		return nil
 	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
+	if v := interfaceToBoolPtr(o); v != nil && *v {
+		return &request
 	}
-	for item_no := range objs {
-		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNmap(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigNmap(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetProfilerProbeConfigNmap {
-	var request isegosdk.RequestNodeServicesSetProfilerProbeConfigNmap
-	keyValue := d.Get(fixKeyAccess(key))
-	request = requestStringToInterface(interfaceToString(keyValue))
-	return &request
+	return nil
 }
 
 func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigPxgridArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNodeServicesSetProfilerProbeConfigPxgrid {
@@ -895,20 +900,10 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigPxgridArr
 	if o == nil {
 		return nil
 	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
+	if v := interfaceToBoolPtr(o); v != nil && *v {
+		return &request
 	}
-	for item_no := range objs {
-		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigPxgrid(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
+	return nil
 }
 
 func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigPxgrid(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetProfilerProbeConfigPxgrid {
@@ -925,27 +920,10 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigRadiusArr
 	if o == nil {
 		return nil
 	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
+	if v := interfaceToBoolPtr(o); v != nil && *v {
+		return &request
 	}
-	for item_no := range objs {
-		i := expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigRadius(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigRadius(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetProfilerProbeConfigRadius {
-	var request isegosdk.RequestNodeServicesSetProfilerProbeConfigRadius
-	keyValue := d.Get(fixKeyAccess(key))
-	request = requestStringToInterface(interfaceToString(keyValue))
-	return &request
+	return nil
 }
 
 func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigSNMPQuery(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeServicesSetProfilerProbeConfigSNMPQuery {

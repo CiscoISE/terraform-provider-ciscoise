@@ -1,3 +1,14 @@
+terraform {
+  required_providers {
+    ciscoise = {
+      version = "0.1.0-rc.3"
+      source  = "hashicorp.com/edu/ciscoise"
+    }
+  }
+}
+
+provider "ciscoise" {
+}
 
 resource "ciscoise_node_services_profiler_probe_config" "example" {
   provider = ciscoise
@@ -50,6 +61,6 @@ resource "ciscoise_node_services_profiler_probe_config" "example" {
   }
 }
 
-output "ciscoise_node_services_profiler_probe_config_example" {
-  value = ciscoise_node_services_profiler_probe_config.example
-}
+# output "ciscoise_node_services_profiler_probe_config_example" {
+#   value = ciscoise_node_services_profiler_probe_config.example
+# }
