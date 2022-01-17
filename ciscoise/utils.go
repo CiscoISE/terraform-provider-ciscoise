@@ -50,9 +50,7 @@ func isEmptyValue(v reflect.Value) bool {
 	}
 
 	switch v.Kind() {
-	case reflect.Array, reflect.Slice:
-		return false
-	case reflect.Map:
+	case reflect.Array, reflect.Map, reflect.Slice:
 		return v.Len() == 0
 	case reflect.Struct:
 		return v.IsZero()
