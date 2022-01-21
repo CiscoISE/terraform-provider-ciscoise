@@ -59,6 +59,43 @@ the isEnable value is "false" in the request body.
 					},
 				},
 			},
+			"is_enabled": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+				Required:     true,
+			},
+			"failed_attempts": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"polling_interval": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"primary_health_check_node": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"hostname": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
+			},
+			"secondary_health_check_node": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"hostname": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
