@@ -1,3 +1,9 @@
+## 0.1.0-rc.4 (January 21, 2021)
+
+BUG FIXES:
+* ciscoise/data_source_pan_ha_update: Fix issue 18. Add missing Tf schema.
+* ciscoise/data_source_pan_ha_update: Update documentation.
+
 ## 0.1.0-rc.3 (January 17, 2021)
 
 BUG FIXES:
