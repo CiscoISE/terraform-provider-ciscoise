@@ -110,7 +110,9 @@ $ make testacc
 
 ## Documentation
 
-In the docs directory you can find the documentation.
+In the docs directory you can find the documentation source code.
+
+You can find the documentation online at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/CiscoISE/ciscoise/latest/docs).
 
 # Contributing
 
