@@ -27,4 +27,8 @@ provider "ciscoise" {
   # Boolean to enable or disable the usage of the X-CSRF-Token header
   use_csrf_token = "false"
   # it can be set using the environment variable ISE_USE_CSRF_TOKEN
+
+  # Timeout (in seconds) for the RESTful HTTP requests
+  single_request_timeout = 60
+  # it can be set using the environment variable ISE_SINGLE_REQUEST_TIMEOUT
 }
