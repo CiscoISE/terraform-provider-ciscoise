@@ -1,16 +1,16 @@
-## 0.1.0 (January 28, 2021)
+## 0.1.0 (February 02, 2021)
 
 BUG FIXES:
 * ciscoise/resource*: Change "parameters" behavior from `Optional` to `Required`.
 * ciscoise/config*: Add single_request_timeout as a provider configuration argument.
 
-## 0.1.0-rc.4 (January 21, 2021)
+## 0.1.0-rc.4 (January 21, 2022)
 
 BUG FIXES:
 * ciscoise/data_source_pan_ha_update: Fix issue 18. Add missing Tf schema.
 * ciscoise/data_source_pan_ha_update: Update documentation.
 
-## 0.1.0-rc.3 (January 17, 2021)
+## 0.1.0-rc.3 (January 17, 2022)
 
 BUG FIXES:
 * ciscoise/logger: Fix resty Logger to be Tf compatible and always visible.
@@ -28,7 +28,7 @@ IMPROVEMENTS:
 * ciscoise/resource_transport_gateway_settings:  Add 'update' call to CreateContext that are 'empty'.
 * ciscoise/resource_trusted_certificate:  Add 'update' call to CreateContext that are 'empty'.
 
-## 0.1.0-rc.2 (January 11, 2021)
+## 0.1.0-rc.2 (January 11, 2022)
 
 IMPROVEMENTS:
 * ciscoise/config: Change resty Logger to be Tf compatible.
