@@ -63,6 +63,13 @@ func Provider() *schema.Provider {
 				ValidateFunc: validateStringHasValueFunc([]string{"true", "false"}),
 				Description:  "Flag to enable or disable the usage of the X-CSRF-Token header. If not set, it uses the ISE_USE_CSRF_TOKEN environment varible; defaults to `false`.",
 			},
+			"single_request_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				Optional:     true,
+				DefaultFunc:  schema.EnvDefaultFunc("ISE_SINGLE_REQUEST_TIMEOUT", 60),
+				ValidateFunc: validateIntegerGeqThan(0),
+				Description:  "Timeout (in seconds) for the RESTful HTTP requests. If not set, it uses the ISE_SINGLE_REQUEST_TIMEOUT environment varible; defaults to 60.",
+			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ciscoise_system_certificate":                           resourceSystemCertificate(),

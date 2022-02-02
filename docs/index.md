@@ -44,6 +44,10 @@ provider "ciscoise" {
   # Boolean to enable or disable the usage of the X-CSRF-Token header
   use_csrf_token = "false"
   # it can be set using the environment variable ISE_USE_CSRF_TOKEN
+
+  # Timeout (in seconds) for the RESTful HTTP requests
+  single_request_timeout = 60
+  # it can be set using the environment variable ISE_SINGLE_REQUEST_TIMEOUT
 }
 ```
 
@@ -55,6 +59,7 @@ provider "ciscoise" {
 - **base_url** (String) Identity Services Engine base URL, FQDN or IP. If not set, it uses the ISE_BASE_URL environment variable.
 - **debug** (String) Flag for Identity Services Engine to enable debugging. If not set, it uses the ISE_DEBUG environment variable; defaults to `false`.
 - **password** (String, Sensitive) Identity Services Engine password to authenticate. If not set, it uses the ISE_PASSWORD environment variable.
+- **single_request_timeout** (Number) Timeout (in seconds) for the RESTful HTTP requests. If not set, it uses the ISE_SINGLE_REQUEST_TIMEOUT environment varible; defaults to 60.
 - **ssl_verify** (String, Sensitive) Flag to enable or disable SSL certificate verification. If not set, it uses the ISE_SSL_VERIFY environment variable; defaults to `true`.
 - **use_api_gateway** (String) Flag to enable or disable the usage of the ISE's API Gateway. If not set, it uses the ISE_USE_API_GATEWAY environment variable; defaults to `false`.
 - **use_csrf_token** (String) Flag to enable or disable the usage of the X-CSRF-Token header. If not set, it uses the ISE_USE_CSRF_TOKEN environment varible; defaults to `false`.

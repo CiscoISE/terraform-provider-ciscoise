@@ -29,7 +29,7 @@ terraform {
   required_providers {
     ciscoise = {
       source = "CiscoISE/ciscoise"
-      version = "0.1.0-rc.4"
+      version = "0.1.0"
     }
   }
 }
@@ -67,7 +67,7 @@ terraform {
   required_providers {
     ciscoise = {
       source = "hashicorp.com/edu/ciscoise"
-      version = "0.1.0-rc.4"
+      version = "0.1.0"
     }
   }
 }
@@ -110,7 +110,9 @@ $ make testacc
 
 ## Documentation
 
-In the docs directory you can find the documentation.
+In the docs directory you can find the documentation source code.
+
+You can find the documentation online at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/CiscoISE/ciscoise/latest/docs).
 
 # Contributing
 
