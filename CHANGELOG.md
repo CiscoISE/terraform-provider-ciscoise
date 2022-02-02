@@ -1,7 +1,8 @@
 ## 0.1.0 (January 28, 2021)
 
 BUG FIXES:
-* Change "parameters" behavior from `Optional` to `Required`.
+* ciscoise/resource*: Change "parameters" behavior from `Optional` to `Required`.
+* ciscoise/config*: Add single_request_timeout as a provider configuration argument.
 
 ## 0.1.0-rc.4 (January 21, 2021)
 
