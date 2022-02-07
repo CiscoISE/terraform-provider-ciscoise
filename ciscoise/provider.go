@@ -148,6 +148,7 @@ func Provider() *schema.Provider {
 			"ciscoise_node_services_profiler_probe_config":          resourceNodeServicesProfilerProbeConfig(),
 			"ciscoise_proxy_connection_settings":                    resourceProxyConnectionSettings(),
 			"ciscoise_transport_gateway_settings":                   resourceTransportGatewaySettings(),
+			"ciscoise_node_group_node":                              resourceNodeGroupNode(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"ciscoise_mnt_account_status":                                          dataSourceMntAccountStatus(),
@@ -436,9 +437,7 @@ func Provider() *schema.Provider {
 			"ciscoise_proxy_connection_settings":                                   dataSourceProxyConnectionSettings(),
 			"ciscoise_transport_gateway_settings":                                  dataSourceTransportGatewaySettings(),
 			"ciscoise_selfsigned_certificate_generate":                             dataSourceSelfsignedCertificateGenerate(),
-			"ciscoise_node_group_node_create":                                      dataSourceNodeGroupNodeCreate(),
 			"ciscoise_node_group_node":                                             dataSourceNodeGroupNode(),
-			"ciscoise_node_group_node_delete":                                      dataSourceNodeGroupNodeDelete(),
 			"ciscoise_node_standalone_to_primary":                                  dataSourceNodeStandaloneToPrimary(),
 			"ciscoise_node_secondary_to_primary":                                   dataSourceNodeSecondaryToPrimary(),
 			"ciscoise_node_deployment_sync":                                        dataSourceNodeDeploymentSync(),
