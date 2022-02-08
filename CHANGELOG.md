@@ -1,4 +1,117 @@
-## 0.1.0 (February 02, 2021)
+## 0.2.0 (February 08, 2022)
+
+NOTES:
+* Data Sources of type 'action' have been removed. Removed data Sources of type 'action' have been classified as unsafe by the team.
+* Next 0.3.0 version will transform some of them to resources.
+
+BREAKING CHANGES:
+
+* Data Source of type 'action' `ciscoise_backup_config` has been removed
+* Data Source of type 'action' `ciscoise_backup_cancel` has been removed
+* Data Source of type 'action' `ciscoise_backup_restore` has been removed
+* Data Source of type 'action' `ciscoise_backup_schedule_config_update` has been removed
+* Data Source of type 'action' `ciscoise_backup_schedule_config` has been removed
+* Data Source of type 'action' `ciscoise_csr_generate` has been removed
+* Data Source of type 'action' `ciscoise_csr_delete` has been removed
+* Data Source of type 'action' `ciscoise_csr_generate_intermediate_ca` has been removed
+* Data Source of type 'action' `ciscoise_ise_root_ca_regenerate` has been removed
+* Data Source of type 'action' `ciscoise_renew_certificate` has been removed
+* Data Source of type 'action' `ciscoise_bind_signed_certificate` has been removed
+* Data Source of type 'action' `ciscoise_selfsigned_certificate_generate` has been removed
+* Data Source of type 'action' `ciscoise_system_certificate_import` has been removed
+* Data Source of type 'action' `ciscoise_trusted_certificate_import` has been removed
+* Data Source of type 'action' `ciscoise_node_group_node_create` has been removed
+* Data Source of type 'action' `ciscoise_node_group_node_delete` has been removed
+* Data Source of type 'action' `ciscoise_pan_ha_update` has been removed
+* Data Source of type 'action' `ciscoise_node_standalone_to_primary` has been removed
+* Data Source of type 'action' `ciscoise_node_secondary_to_primary` has been removed
+* Data Source of type 'action' `ciscoise_node_primary_to_standalone` has been removed
+* Data Source of type 'action' `ciscoise_node_deployment_sync` has been removed
+* Data Source of type 'action' `ciscoise_hotpatch_install` has been removed
+* Data Source of type 'action' `ciscoise_hotpatch_rollback` has been removed
+* Data Source of type 'action' `ciscoise_licensing_registration_create` has been removed
+* Data Source of type 'action' `ciscoise_licensing_smart_state_create` has been removed
+* Data Source of type 'action' `ciscoise_licensing_tier_state_create` has been removed
+* Data Source of type 'action' `ciscoise_patch_install` has been removed
+* Data Source of type 'action' `ciscoise_patch_rollback` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_sg_vn_mapping_bulk_create` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_sg_vn_mapping_bulk_delete` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_sg_vn_mapping_bulk_update` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_vn_bulk_create` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_vn_bulk_delete` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_vn_bulk_update` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_vn_vlan_mapping_bulk_create` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_vn_vlan_mapping_bulk_delete` has been removed
+* Data Source of type 'action' `ciscoise_trustsec_vn_vlan_mapping_bulk_update` has been removed
+* Data Source of type 'action' `ciscoise_pxgrid_access_secret` has been removed
+* Data Source of type 'action' `ciscoise_pxgrid_account_activate` has been removed
+* Data Source of type 'action' `ciscoise_pxgrid_account_create` has been removed
+* Data Source of type 'action' `ciscoise_pxgrid_authorization` has been removed
+* Data Source of type 'action' `ciscoise_pxgrid_service_lookup` has been removed
+* Data Source of type 'action' `ciscoise_pxgrid_service_register` has been removed
+* Data Source of type 'action' `ciscoise_pxgrid_service_reregister` has been removed
+* Data Source of type 'action' `ciscoise_pxgrid_service_unregister` has been removed
+* Data Source of type 'action' `ciscoise_device_administration_authentication_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_device_administration_authorization_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_device_administration_local_exception_rules_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_device_administration_global_exception_rules_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_device_administration_policy_set_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_active_directory_add_groups` has been removed
+* Data Source of type 'action' `ciscoise_active_directory_join_domain` has been removed
+* Data Source of type 'action' `ciscoise_active_directory_join_domain_with_all_nodes` has been removed
+* Data Source of type 'action' `ciscoise_active_directory_leave_domain` has been removed
+* Data Source of type 'action' `ciscoise_active_directory_leave_domain_with_all_nodes` has been removed
+* Data Source of type 'action' `ciscoise_anc_endpoint_apply` has been removed
+* Data Source of type 'action' `ciscoise_anc_endpoint_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_anc_endpoint_clear` has been removed
+* Data Source of type 'action' `ciscoise_anc_policy_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_egress_matrix_cell_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_egress_matrix_cell_clear_all` has been removed
+* Data Source of type 'action' `ciscoise_egress_matrix_cell_clone` has been removed
+* Data Source of type 'action' `ciscoise_egress_matrix_cell_set_all_status` has been removed
+* Data Source of type 'action' `ciscoise_px_grid_node_delete` has been removed
+* Data Source of type 'action' `ciscoise_px_grid_node_approve` has been removed
+* Data Source of type 'action' `ciscoise_endpoint_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_endpoint_deregister` has been removed
+* Data Source of type 'action' `ciscoise_endpoint_certificate` has been removed
+* Data Source of type 'action' `ciscoise_endpoint_release_rejected_endpoint` has been removed
+* Data Source of type 'action' `ciscoise_endpoint_register` has been removed
+* Data Source of type 'action' `ciscoise_guest_type_email` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_guest_type_sms` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_approve` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_change_sponsor_password` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_deny` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_email` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_reinstate` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_reset_password` has been removed
+* Data Source of type 'action' `ciscoise_network_device_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_sms` has been removed
+* Data Source of type 'action' `ciscoise_guest_user_suspend` has been removed
+* Data Source of type 'action' `ciscoise_px_grid_settings_auto_approve` has been removed
+* Data Source of type 'action' `ciscoise_sg_acl_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_sg_mapping_deploy` has been removed
+* Data Source of type 'action' `ciscoise_sg_mapping_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_sg_mapping_deploy_all` has been removed
+* Data Source of type 'action' `ciscoise_sg_mapping_group_deploy` has been removed
+* Data Source of type 'action' `ciscoise_sg_mapping_group_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_sg_mapping_group_deploy_all` has been removed
+* Data Source of type 'action' `ciscoise_sgt_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_sg_to_vn_to_vlan_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_support_bundle` has been removed
+* Data Source of type 'action' `ciscoise_sxp_connections_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_sxp_local_bindings_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_sxp_vpns_bulk_request` has been removed
+* Data Source of type 'action' `ciscoise_system_certificate_create` has been removed
+* Data Source of type 'action' `ciscoise_threat_vulnerabilities_clear` has been removed
+* Data Source of type 'action' `ciscoise_network_access_authentication_rules_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_network_access_authorization_rules_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_network_access_local_exception_rules_reset_hitcounts` has been removed
+* Data Source of type 'action' `ciscoise_network_access_global_exception_rules_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_network_access_policy_set_reset_hitcount` has been removed
+* Data Source of type 'action' `ciscoise_mnt_session_delete_all` has been removed
+
+## 0.1.0 (February 02, 2022)
 
 BUG FIXES:
 * ciscoise/resource*: Change "parameters" behavior from `Optional` to `Required`.
