@@ -22,6 +22,17 @@ resource "ciscoise_active_directory" "example" {
         sid  = "S-1-5-32-548"
         type = "GLOBAL"
       }
+      # Allows to add groups
+      # groups {
+      #   name = "cisco.com/administrators"
+      #   sid  = "S-1-5-32-549"
+      #   type = "GLOBAL"
+      # }
+      # groups {
+      #   name = "cisco.com/users"
+      #   sid  = "S-1-5-32-550"
+      #   type = "GLOBAL"
+      # }
     }
     advanced_settings {
       aging_time = 5
