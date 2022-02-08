@@ -87,6 +87,7 @@ func Provider() *schema.Provider {
 			"ciscoise_aci_settings":                                 resourceAciSettings(),
 			"ciscoise_active_directory":                             resourceActiveDirectory(),
 			"ciscoise_allowed_protocols":                            resourceAllowedProtocols(),
+			"ciscoise_anc_endpoint":                                 resourceAncEndpoint(),
 			"ciscoise_anc_policy":                                   resourceAncPolicy(),
 			"ciscoise_authorization_profile":                        resourceAuthorizationProfile(),
 			"ciscoise_byod_portal":                                  resourceByodPortal(),
