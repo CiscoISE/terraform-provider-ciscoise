@@ -758,7 +758,74 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceActiveDirectoryUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ActiveDirectory update for id=[%s]", d.Id())
-	log.Printf("[DEBUG] Missing ActiveDirectory update on Cisco ISE. It will only be update it on Terraform")
+	client := m.(*isegosdk.Client)
+
+	var diags diag.Diagnostics
+
+	if d.HasChange("parameters") {
+		if _, ok := d.GetOk("parameters.0"); ok {
+			if _, ok := d.GetOk("parameters.0.adgroups"); ok {
+				if d.HasChange("parameters.0.adgroups") {
+					resourceID := d.Id()
+					resourceMap := separateResourceID(resourceID)
+					vName, okName := resourceMap["name"]
+					vID, okID := resourceMap["id"]
+					method1 := []bool{okID}
+					log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+					method2 := []bool{okName}
+					log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+					selectedMethod := pickMethod([][]bool{method1, method2})
+					var vvID string
+					if selectedMethod == 1 {
+						getResp, _, err := client.ActiveDirectory.GetActiveDirectoryByID(vID)
+						if err == nil && getResp != nil {
+							vvID = vID
+						}
+					}
+					if selectedMethod == 2 {
+						getResp, _, err := client.ActiveDirectory.GetActiveDirectoryByName(vName)
+						if err == nil && getResp != nil {
+							if getResp.ERSActiveDirectory != nil {
+								vvID = getResp.ERSActiveDirectory.ID
+							}
+						}
+					}
+
+					if vvID != "" {
+						log.Printf("[DEBUG] Selected method: LoadGroupsFromDomain")
+						request1 := expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomain(ctx, "parameters.0", d)
+
+						if request1 != nil {
+							log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
+						}
+						if request1 != nil && request1.ERSActiveDirectory != nil {
+							request1.ERSActiveDirectory.ID = vvID
+						}
+						response1, err := client.ActiveDirectory.LoadGroupsFromDomain(vvID, request1)
+
+						if err != nil || response1 == nil {
+							if response1 != nil {
+								log.Printf("[DEBUG] Retrieved error response %s", response1.String())
+								diags = append(diags, diagErrorWithAltAndResponse(
+									"Failure when executing LoadGroupsFromDomain", err, response1.String(),
+									"Failure at LoadGroupsFromDomain, unexpected response", ""))
+								return diags
+							}
+							diags = append(diags, diagErrorWithAlt(
+								"Failure when executing LoadGroupsFromDomain", err,
+								"Failure at LoadGroupsFromDomain, unexpected response", ""))
+							return diags
+						}
+
+						log.Printf("[DEBUG] Retrieved response %s", response1.String())
+					}
+				}
+			}
+		}
+	} else {
+		log.Printf("[DEBUG] Missing ActiveDirectory update on Cisco ISE. It will only be update it on Terraform. Resource only performs update if it has changes in adgroups.")
+	}
 	return resourceActiveDirectoryRead(ctx, d, m)
 }
 
@@ -947,7 +1014,10 @@ func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdvanced
 		request.AuthProtectionType = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failed_auth_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failed_auth_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failed_auth_threshold")))) {
-		request.FailedAuthThreshold = interfaceToIntPtr(v)
+		failedAuthThreshold := interfaceToIntPtr(v)
+		if failedAuthThreshold != nil && *failedAuthThreshold > 0 {
+			request.FailedAuthThreshold = failedAuthThreshold
+		}
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_not_in_ad_behaviour")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_not_in_ad_behaviour")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_not_in_ad_behaviour")))) {
 		request.IDentityNotInAdBehaviour = interfaceToString(v)
@@ -1093,6 +1163,251 @@ func expandRequestActiveDirectoryCreateActiveDirectoryERSActiveDirectoryAdAttrib
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomain(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomain {
+	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomain{}
+	request.ERSActiveDirectory = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory(ctx, key, d)
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectory(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectory {
+	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectory{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".domain")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".domain")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".domain")))) {
+		request.Domain = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_domain_white_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_domain_white_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_domain_white_list")))) {
+		request.EnableDomainWhiteList = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".adgroups")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".adgroups")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".adgroups")))) {
+		request.Adgroups = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroups(ctx, key+".adgroups.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".advanced_settings")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".advanced_settings")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".advanced_settings")))) {
+		request.AdvancedSettings = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettings(ctx, key+".advanced_settings.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ad_attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ad_attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ad_attributes")))) {
+		request.AdAttributes = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributes(ctx, key+".ad_attributes.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ad_scopes_names")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ad_scopes_names")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ad_scopes_names")))) {
+		request.AdScopesNames = interfaceToString(v)
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroups(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroups {
+	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroups{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".groups")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".groups")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".groups")))) {
+		request.Groups = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroupsArray(ctx, key+".groups", d)
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroupsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups {
+	request := []isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups {
+	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdgroupsGroups{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sid")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sid")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sid")))) {
+		request.Sid = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+		request.Type = interfaceToString(v)
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettings(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettings {
+	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettings{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_pass_change")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_pass_change")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_pass_change")))) {
+		request.EnablePassChange = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_machine_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_machine_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_machine_auth")))) {
+		request.EnableMachineAuth = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_machine_access")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_machine_access")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_machine_access")))) {
+		request.EnableMachineAccess = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".aging_time")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".aging_time")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".aging_time")))) {
+		request.AgingTime = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_dialin_permission_check")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_dialin_permission_check")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_dialin_permission_check")))) {
+		request.EnableDialinPermissionCheck = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_callback_for_dialin_client")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_callback_for_dialin_client")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_callback_for_dialin_client")))) {
+		request.EnableCallbackForDialinClient = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".plaintext_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".plaintext_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".plaintext_auth")))) {
+		request.PlaintextAuth = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_failed_auth_protection")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_failed_auth_protection")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_failed_auth_protection")))) {
+		request.EnableFailedAuthProtection = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".auth_protection_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".auth_protection_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".auth_protection_type")))) {
+		request.AuthProtectionType = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".failed_auth_threshold")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".failed_auth_threshold")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".failed_auth_threshold")))) {
+		failedAuthThreshold := interfaceToIntPtr(v)
+		if failedAuthThreshold != nil && *failedAuthThreshold > 0 {
+			request.FailedAuthThreshold = failedAuthThreshold
+		}
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".identity_not_in_ad_behaviour")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".identity_not_in_ad_behaviour")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".identity_not_in_ad_behaviour")))) {
+		request.IDentityNotInAdBehaviour = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".unreachable_domains_behaviour")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".unreachable_domains_behaviour")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".unreachable_domains_behaviour")))) {
+		request.UnreachableDomainsBehaviour = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".enable_rewrites")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".enable_rewrites")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".enable_rewrites")))) {
+		request.EnableRewrites = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rewrite_rules")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rewrite_rules")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rewrite_rules")))) {
+		request.RewriteRules = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRulesArray(ctx, key+".rewrite_rules", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".first_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".first_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".first_name")))) {
+		request.FirstName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".department")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".department")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".department")))) {
+		request.Department = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".last_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".last_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".last_name")))) {
+		request.LastName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".organizational_unit")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".organizational_unit")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".organizational_unit")))) {
+		request.OrganizationalUnit = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".job_title")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".job_title")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".job_title")))) {
+		request.JobTitle = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".locality")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".locality")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".locality")))) {
+		request.Locality = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".email")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".email")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".email")))) {
+		request.Email = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".state_or_province")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".state_or_province")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".state_or_province")))) {
+		request.StateOrProvince = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".telephone")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".telephone")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".telephone")))) {
+		request.Telephone = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".country")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".country")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".country")))) {
+		request.Country = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".street_address")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".street_address")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".street_address")))) {
+		request.StreetAddress = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".schema")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".schema")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".schema")))) {
+		request.Schema = interfaceToString(v)
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRulesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules {
+	request := []isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules {
+	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdvancedSettingsRewriteRules{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".row_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".row_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".row_id")))) {
+		request.RowID = interfaceToIntPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rewrite_match")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rewrite_match")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rewrite_match")))) {
+		request.RewriteMatch = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rewrite_result")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rewrite_result")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rewrite_result")))) {
+		request.RewriteResult = interfaceToString(v)
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributes {
+	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributes{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attributes")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attributes")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attributes")))) {
+		request.Attributes = expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributesArray(ctx, key+".attributes", d)
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributesArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes {
+	request := []isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	return &request
+}
+
+func expandRequestActiveDirectoryAddGroupsLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes {
+	request := isegosdk.RequestActiveDirectoryLoadGroupsFromDomainERSActiveDirectoryAdAttributesAttributes{}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
+		request.Type = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".internal_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".internal_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".internal_name")))) {
+		request.InternalName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".default_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".default_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".default_value")))) {
+		request.DefaultValue = interfaceToString(v)
 	}
 	return &request
 }
