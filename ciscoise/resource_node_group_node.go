@@ -30,6 +30,10 @@ delete the node, but failover is no longer carried out if the node is not part a
 		ReadContext:   resourceNodeGroupNodeRead,
 		UpdateContext: resourceNodeGroupNodeCreate,
 		DeleteContext: resourceNodeGroupNodeDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
