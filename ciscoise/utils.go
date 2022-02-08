@@ -13,6 +13,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
+func compareMacAddress(old_mac_address, new_mac_address string) bool {
+	rexp := `([-.:])`
+	oldClear, newClear := replaceRegExStrings(old_mac_address, new_mac_address, rexp, "")
+	return oldClear == newClear
+}
+
 func fixKeyAccess(key string) string {
 	return strings.Trim(key, ".")
 }
