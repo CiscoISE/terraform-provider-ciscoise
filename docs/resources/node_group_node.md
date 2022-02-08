@@ -27,8 +27,8 @@ delete the node, but failover is no longer carried out if the node is not part a
 resource "ciscoise_node_group_node" "example" {
   provider = ciscoise
   parameters {
-    node_group_name = "isegroup"
-    hostname        = "ise"
+    node_group_name = "string"
+    hostname        = "string"
   }
 }
 
@@ -82,5 +82,5 @@ Read-Only:
 Import is supported using the following syntax:
 
 ```shell
-terraform import ciscoise_node_group_node.example "hostname:=string\\node_group_name:=string"
+terraform import ciscoise_node_group_node.example "hostname:=string\node_group_name:=string"
 ```
