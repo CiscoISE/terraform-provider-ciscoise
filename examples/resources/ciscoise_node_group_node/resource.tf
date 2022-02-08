@@ -1,8 +1,8 @@
 resource "ciscoise_node_group_node" "example" {
   provider = ciscoise
   parameters {
-    node_group_name = "isegroup"
-    hostname        = "ise"
+    node_group_name = "string"
+    hostname        = "string"
   }
 }
 
