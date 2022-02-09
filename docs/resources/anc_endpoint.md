@@ -4,16 +4,16 @@ page_title: "ciscoise_anc_endpoint Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read and delete operations on ANCEndpoint.
-  This data source action allows the client to apply the required configuration.This data source action allows the client to clear the required configuration.
+  This resource action allows the client to apply the required configuration.This resource action allows the client to clear the required configuration.
 ---
 
 # ciscoise_anc_endpoint (Resource)
 
 It manages create, read and delete operations on ANCEndpoint.
 
-- This data source action allows the client to apply the required configuration.
+- This resource action allows the client to apply the required configuration.
 
-- This data source action allows the client to clear the required configuration.
+- This resource action allows the client to clear the required configuration.
 
 ## Example Usage
 

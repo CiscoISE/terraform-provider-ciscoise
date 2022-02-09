@@ -16,9 +16,9 @@ func resourceAncEndpoint() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create, read and delete operations on ANCEndpoint.
 
-- This data source action allows the client to apply the required configuration.
+- This resource action allows the client to apply the required configuration.
 
-- This data source action allows the client to clear the required configuration.
+- This resource action allows the client to clear the required configuration.
 `,
 
 		CreateContext: resourceAncEndpointCreate,

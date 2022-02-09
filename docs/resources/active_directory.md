@@ -4,7 +4,7 @@ page_title: "ciscoise_active_directory Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update* and delete operations on ActiveDirectory.
-  This resource deletes an AD join point from Cisco ISE.This resource creates an AD join point in Cisco ISE.*This data source action loads domain groups configuration from Active Directory into Cisco ISE.
+  This resource deletes an AD join point from Cisco ISE.This resource creates an AD join point in Cisco ISE.*This resource action loads domain groups configuration from Active Directory into Cisco ISE.
 ---
 
 # ciscoise_active_directory (Resource)
@@ -15,7 +15,7 @@ It manages create, read, update* and delete operations on ActiveDirectory.
 
 - This resource creates an AD join point in Cisco ISE.
 
-- *This data source action loads domain groups configuration from Active Directory into Cisco ISE.
+- *This resource action loads domain groups configuration from Active Directory into Cisco ISE.
 
 ## Example Usage
 

@@ -21,7 +21,7 @@ func resourceActiveDirectory() *schema.Resource {
 
 - This resource creates an AD join point in Cisco ISE.
 
-- *This data source action loads domain groups configuration from Active Directory into Cisco ISE.
+- *This resource action loads domain groups configuration from Active Directory into Cisco ISE.
 `,
 
 		CreateContext: resourceActiveDirectoryCreate,
