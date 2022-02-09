@@ -1,0 +1,1 @@
+terraform import ciscoise_pan_ha.example "primary_health_check_node_hostname:=string\secondary_health_check_node_hostname:=string"

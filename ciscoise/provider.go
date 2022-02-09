@@ -112,6 +112,7 @@ func Provider() *schema.Provider {
 			"ciscoise_network_device":                               resourceNetworkDevice(),
 			"ciscoise_network_device_group":                         resourceNetworkDeviceGroup(),
 			"ciscoise_native_supplicant_profile":                    resourceNativeSupplicantProfile(),
+			"ciscoise_pan_ha":                                       resourcePanHa(),
 			"ciscoise_portal_global_setting":                        resourcePortalGlobalSetting(),
 			"ciscoise_portal_theme":                                 resourcePortalTheme(),
 			"ciscoise_radius_server_sequence":                       resourceRadiusServerSequence(),
