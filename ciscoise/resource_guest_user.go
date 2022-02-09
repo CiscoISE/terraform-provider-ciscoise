@@ -25,6 +25,12 @@ func resourceGuestUser() *schema.Resource {
 - This resource deletes a guest user by ID.
 
 - This resource creates a guest user.
+
+- This resource allows the client to change the sponsor password.
+
+- This resource allows the client to update a guest user email by ID.
+
+- This resource allows the client to update a guest user sms by ID.
 `,
 
 		CreateContext: resourceGuestUserCreate,
@@ -213,6 +219,24 @@ func resourceGuestUser() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"change_email_address": &schema.Schema{
+							Description:  `Flag to allow call to change update a guest user email by ID.`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"change_sms": &schema.Schema{
+							Description:  `Flag to allow call to change update a guest user sms by ID.`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
+						"change_password": &schema.Schema{
+							Description:  `Flag to allow call to change the sponsor password.`,
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
 						"custom_fields": &schema.Schema{
 							Description: `Key value map`,
 							Type:        schema.TypeMap,
@@ -543,6 +567,91 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure when executing UpdateGuestUserByID", err,
 				"Failure at UpdateGuestUserByID, unexpected response", ""))
 			return diags
+		}
+		if _, ok := d.GetOk("parameters"); ok {
+			if _, ok := d.GetOk("parameters.0"); ok {
+				if _, ok := d.GetOk("parameters.0.guest_info"); ok {
+					if d.HasChange("parameters.0.guest_info") {
+						if _, ok := d.GetOk("parameters.0.guest_info.0"); ok {
+							if vPortalID, okPortalID := d.GetOk("parameters.0.portal_id"); okPortalID {
+								vvPortalID := vPortalID.(string)
+
+								change_email_address_bool := false
+								change_sms_bool := false
+								change_password_bool := false
+								if change_email_address, ok_change_email_address := d.GetOk("parameters.0.change_email_address"); ok_change_email_address {
+									if vchange_email_address_bool := interfaceToBoolPtr(change_email_address); vchange_email_address_bool != nil {
+										change_email_address_bool = *vchange_email_address_bool
+									}
+								}
+								if change_sms, ok_change_sms := d.GetOk("parameters.0.change_sms"); ok_change_sms {
+									if vchange_sms_bool := interfaceToBoolPtr(change_sms); vchange_sms_bool != nil {
+										change_sms_bool = *vchange_sms_bool
+									}
+								}
+								if change_password, ok_change_password := d.GetOk("parameters.0.change_password"); ok_change_password {
+									if vchange_password_bool := interfaceToBoolPtr(change_password); vchange_password_bool != nil {
+										change_password_bool = *vchange_password_bool
+									}
+								}
+								if change_email_address_bool && d.HasChange("parameters.0.guest_info.0.password") {
+									additional_data := []isegosdk.RequestGuestUserChangeSponsorPasswordOperationAdditionalDataAdditionalData{}
+									old_password, new_password := d.GetChange("parameters.0.guest_info.0.password")
+									old_password_additional_data := isegosdk.RequestGuestUserChangeSponsorPasswordOperationAdditionalDataAdditionalData{
+										Name:  "currentPassword",
+										Value: old_password.(string),
+									}
+									new_password_additional_data := isegosdk.RequestGuestUserChangeSponsorPasswordOperationAdditionalDataAdditionalData{
+										Name:  "newPassword",
+										Value: new_password.(string),
+									}
+									additional_data = append(additional_data, old_password_additional_data)
+									additional_data = append(additional_data, new_password_additional_data)
+									operational_data := isegosdk.RequestGuestUserChangeSponsorPasswordOperationAdditionalData{AdditionalData: &additional_data}
+									request2 := &isegosdk.RequestGuestUserChangeSponsorPassword{}
+									request2.OperationAdditionalData = &operational_data
+									response2, err := client.GuestUser.ChangeSponsorPassword(vvPortalID, request2)
+									if err != nil || response2 == nil {
+										log.Printf("[ERROR] response for ChangeSponsorPassword operation => %v", response2.String())
+									}
+								}
+								if change_password_bool && d.HasChange("parameters.0.guest_info.0.email_address") {
+									additional_data := []isegosdk.RequestGuestUserUpdateGuestUserEmailOperationAdditionalDataAdditionalData{}
+									sender_email := d.Get("parameters.0.guest_info.0.email_address")
+									sender_email_additional_data := isegosdk.RequestGuestUserUpdateGuestUserEmailOperationAdditionalDataAdditionalData{
+										Name:  "senderEmail",
+										Value: sender_email.(string),
+									}
+									additional_data = append(additional_data, sender_email_additional_data)
+									operational_data := isegosdk.RequestGuestUserUpdateGuestUserEmailOperationAdditionalData{AdditionalData: &additional_data}
+									request3 := &isegosdk.RequestGuestUserUpdateGuestUserEmail{}
+									request3.OperationAdditionalData = &operational_data
+									response3, err := client.GuestUser.UpdateGuestUserEmail(vvID, vvPortalID, request3)
+									if err != nil || response3 == nil {
+										log.Printf("[ERROR] response for ChangeSponsorPassword operation => %v", response3.String())
+									}
+								}
+								if change_sms_bool && d.HasChange("parameters.0.guest_info.0.phone_number") {
+									// additional_data := []isegosdk.RequestGuestUserUpdateGuestUserSmsOperationAdditionalDataAdditionalData{}
+									// phone_number := d.Get("parameters.0.guest_info.0.phone_number")
+									// phone_number_additional_data := isegosdk.RequestGuestUserUpdateGuestUserSmsOperationAdditionalDataAdditionalData{
+									// 	Name:  "phoneNumber",
+									// 	Value: phone_number.(string),
+									// }
+									// additional_data = append(additional_data, phone_number_additional_data)
+									// operational_data := isegosdk.RequestGuestUserUpdateGuestUserSmsOperationAdditionalData{AdditionalData: &additional_data}
+									// request4 := &isegosdk.RequestGuestUserUpdateGuestUserSms{}
+									// request4.OperationAdditionalData = &operational_data
+									response4, err := client.GuestUser.UpdateGuestUserSms(vvID, vvPortalID)
+									if err != nil || response4 == nil {
+										log.Printf("[ERROR] response for ChangeSponsorPassword operation => %v", response4.String())
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
