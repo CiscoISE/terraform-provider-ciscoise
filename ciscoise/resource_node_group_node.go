@@ -17,7 +17,7 @@ func resourceNodeGroupNode() *schema.Resource {
 	return &schema.Resource{
 		Description: `It manages create and delete operation on Node Group.
 
-- This data source action adds a node to the node group in the cluster. When a node that belongs to a node group fails,
+- This resource action adds a node to the node group in the cluster. When a node that belongs to a node group fails,
 another node in the same node group issues a Change of Authorization (CoA) for all the URL-redirected sessions on the
 failed node.
 
