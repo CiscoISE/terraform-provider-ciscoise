@@ -1,0 +1,1 @@
+terraform import ciscoise_licensing_registration.example "connection_type:=string\registration_type:=string\ssm_on_prem_server:=string\tier:=string"

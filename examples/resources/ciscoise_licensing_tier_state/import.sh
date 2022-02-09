@@ -1,0 +1,1 @@
+terraform import ciscoise_licensing_tier_state.example "name:=string"
