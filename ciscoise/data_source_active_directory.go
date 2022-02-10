@@ -854,26 +854,6 @@ func flattenActiveDirectoryGetActiveDirectoryItemsLink(item *isegosdk.ResponseAc
 
 }
 
-func flattenActiveDirectoryGetActiveDirectoryByNameItemNameForParams(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectory) []map[string]interface{} {
-	if item == nil {
-		return nil
-	}
-	respItem := make(map[string]interface{})
-	respItem["id"] = item.ID
-	respItem["name"] = item.Name
-	respItem["description"] = item.Description
-	respItem["domain"] = item.Domain
-	respItem["enable_domain_allowed_list"] = boolPtrToString(item.EnableDomainAllowedList)
-	respItem["enable_domain_white_list"] = boolPtrToString(item.EnableDomainWhiteList)
-	respItem["adgroups"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroups(item.Adgroups)
-	respItem["advanced_settings"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettings(item.AdvancedSettings)
-	respItem["ad_attributes"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributes(item.AdAttributes)
-	respItem["ad_scopes_names"] = item.AdScopesNames
-	return []map[string]interface{}{
-		respItem,
-	}
-}
-
 func flattenActiveDirectoryGetActiveDirectoryByNameItemName(item *isegosdk.ResponseActiveDirectoryGetActiveDirectoryByNameERSActiveDirectory) []map[string]interface{} {
 	if item == nil {
 		return nil

@@ -204,6 +204,12 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetProxyConnection response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -236,7 +242,7 @@ func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateProxyConnection, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceProxyConnectionSettingsRead(ctx, d, m)

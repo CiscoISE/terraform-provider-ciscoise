@@ -161,6 +161,12 @@ func resourceLicensingRegistrationRead(ctx context.Context, d *schema.ResourceDa
 			err))
 		return diags
 	}
+	if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting GetRegistrationInfo response to parameters",
+			err))
+		return diags
+	}
 	return diags
 }
 
@@ -187,7 +193,7 @@ func resourceLicensingRegistrationUpdate(ctx context.Context, d *schema.Resource
 				"Failure when executing CreateRegistrationInfo", err))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 	return resourceLicensingRegistrationRead(ctx, d, m)
 }

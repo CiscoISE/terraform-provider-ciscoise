@@ -1144,7 +1144,13 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSponsorPortal response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetSponsorPortalByID")
@@ -1166,6 +1172,12 @@ func resourceSponsorPortalRead(ctx context.Context, d *schema.ResourceData, m in
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSponsorPortalByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSponsorPortalByID response to parameters",
 				err))
 			return diags
 		}
@@ -1233,7 +1245,7 @@ func resourceSponsorPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at UpdateSponsorPortalByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSponsorPortalRead(ctx, d, m)

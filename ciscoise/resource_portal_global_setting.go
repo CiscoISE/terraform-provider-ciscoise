@@ -182,7 +182,13 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPortalGlobalSettings response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetPortalGlobalSettingByID")
@@ -204,6 +210,12 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPortalGlobalSettingByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPortalGlobalSettingByID response to parameters",
 				err))
 			return diags
 		}
@@ -267,7 +279,7 @@ func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceDa
 				"Failure at UpdatePortalGlobalSettingByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourcePortalGlobalSettingRead(ctx, d, m)

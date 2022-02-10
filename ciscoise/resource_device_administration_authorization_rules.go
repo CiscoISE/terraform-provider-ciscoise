@@ -743,6 +743,13 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminAuthorizationRules response to parameters",
+				err))
+			return diags
+		}
+		return diags
 
 	}
 	if selectedMethod == 1 {
@@ -766,6 +773,12 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminAuthorizationRuleByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminAuthorizationRuleByID response to parameters",
 				err))
 			return diags
 		}
@@ -848,7 +861,7 @@ func resourceDeviceAdministrationAuthorizationRulesUpdate(ctx context.Context, d
 				"Failure at UpdateDeviceAdminAuthorizationRuleByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDeviceAdministrationAuthorizationRulesRead(ctx, d, m)

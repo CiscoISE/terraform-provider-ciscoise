@@ -276,6 +276,12 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsServerSequenceByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -299,6 +305,12 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsServerSequenceByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsServerSequenceByID response to parameters",
 				err))
 			return diags
 		}
@@ -364,7 +376,7 @@ func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 				"Failure at UpdateTacacsServerSequenceByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTacacsServerSequenceRead(ctx, d, m)

@@ -269,7 +269,13 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroupsACL response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetSecurityGroupsACLByID")
@@ -291,6 +297,12 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSecurityGroupsACLByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroupsACLByID response to parameters",
 				err))
 			return diags
 		}
@@ -359,7 +371,7 @@ func resourceSgACLUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 				"Failure at UpdateSecurityGroupsACLByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSgACLRead(ctx, d, m)

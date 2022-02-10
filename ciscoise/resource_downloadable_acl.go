@@ -248,7 +248,13 @@ func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDownloadableACL response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetDownloadableACLByID")
@@ -270,6 +276,12 @@ func resourceDownloadableACLRead(ctx context.Context, d *schema.ResourceData, m 
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDownloadableACLByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDownloadableACLByID response to parameters",
 				err))
 			return diags
 		}
@@ -337,7 +349,7 @@ func resourceDownloadableACLUpdate(ctx context.Context, d *schema.ResourceData, 
 				"Failure at UpdateDownloadableACLByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDownloadableACLRead(ctx, d, m)

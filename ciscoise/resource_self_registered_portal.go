@@ -2562,7 +2562,13 @@ func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSelfRegisteredPortals response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetSelfRegisteredPortalByID")
@@ -2584,6 +2590,12 @@ func resourceSelfRegisteredPortalRead(ctx context.Context, d *schema.ResourceDat
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSelfRegisteredPortalByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSelfRegisteredPortalByID response to parameters",
 				err))
 			return diags
 		}
@@ -2651,7 +2663,7 @@ func resourceSelfRegisteredPortalUpdate(ctx context.Context, d *schema.ResourceD
 				"Failure at UpdateSelfRegisteredPortalByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSelfRegisteredPortalRead(ctx, d, m)

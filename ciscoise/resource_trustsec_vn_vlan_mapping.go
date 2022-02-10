@@ -264,7 +264,13 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetVnVLANMappings response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetVnVLANMappingByID")
@@ -289,8 +295,13 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetVnVLANMappingByID response to parameters",
+				err))
+			return diags
+		}
 		return diags
-
 	}
 	return diags
 }
@@ -355,7 +366,7 @@ func resourceTrustsecVnVLANMappingUpdate(ctx context.Context, d *schema.Resource
 				"Failure at UpdateVnVLANMappingByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTrustsecVnVLANMappingRead(ctx, d, m)

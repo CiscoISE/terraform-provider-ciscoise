@@ -212,6 +212,12 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkDeviceGroupByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -235,6 +241,12 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkDeviceGroupByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkDeviceGroupByID response to parameters",
 				err))
 			return diags
 		}
@@ -300,7 +312,7 @@ func resourceNetworkDeviceGroupUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure at UpdateNetworkDeviceGroupByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkDeviceGroupRead(ctx, d, m)

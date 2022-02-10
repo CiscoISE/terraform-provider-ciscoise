@@ -13,6 +13,18 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
+func remove_parameters(respItems []map[string]interface{}, parameters ...string) []map[string]interface{} {
+	for i := range respItems {
+		for j := range parameters {
+			_, ok := respItems[i][parameters[j]]
+			if ok {
+				delete(respItems[i], parameters[j])
+			}
+		}
+	}
+	return respItems
+}
+
 func compareMacAddress(old_mac_address, new_mac_address string) bool {
 	rexp := `([-.:])`
 	oldClear, newClear := replaceRegExStrings(old_mac_address, new_mac_address, rexp, "")

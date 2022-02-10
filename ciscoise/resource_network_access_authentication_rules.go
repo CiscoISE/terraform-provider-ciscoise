@@ -756,6 +756,13 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessAuthenticationRules response to parameters",
+				err))
+			return diags
+		}
+		return diags
 
 	}
 	if selectedMethod == 1 {
@@ -776,6 +783,12 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthenticationRuleByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessAuthenticationRuleByID response to parameters",
 				err))
 			return diags
 		}
@@ -856,7 +869,7 @@ func resourceNetworkAccessAuthenticationRulesUpdate(ctx context.Context, d *sche
 				"Failure at UpdateNetworkAccessAuthenticationRuleByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessAuthenticationRulesRead(ctx, d, m)

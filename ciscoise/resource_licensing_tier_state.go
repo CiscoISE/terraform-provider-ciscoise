@@ -163,6 +163,12 @@ func resourceLicensingTierStateRead(ctx context.Context, d *schema.ResourceData,
 			err))
 		return diags
 	}
+	if err := d.Set("parameters", remove_parameters(vItem1, "compliance", "consumption_counter", "days_out_of_compliance", "last_authorization")); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting GetTierStateInfo response to parameters",
+			err))
+		return diags
+	}
 	return diags
 }
 
@@ -189,7 +195,7 @@ func resourceLicensingTierStateUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure when executing UpdateTierStateInfo", err))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 	return resourceLicensingTierStateRead(ctx, d, m)
 }
