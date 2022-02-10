@@ -244,7 +244,13 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNodeGroups response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetNodeGroup")
@@ -266,6 +272,12 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodeGroup response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2)); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNodeGroup response to parameters",
 				err))
 			return diags
 		}
@@ -330,7 +342,7 @@ func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at UpdateNodeGroup, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNodeGroupRead(ctx, d, m)

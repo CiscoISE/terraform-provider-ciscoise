@@ -534,7 +534,13 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminTimeConditions response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetDeviceAdminTimeConditionByID")
@@ -555,6 +561,12 @@ func resourceDeviceAdministrationTimeDateConditionsRead(ctx context.Context, d *
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminTimeConditionByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminTimeConditionByID response to parameters",
 				err))
 			return diags
 		}
@@ -620,7 +632,7 @@ func resourceDeviceAdministrationTimeDateConditionsUpdate(ctx context.Context, d
 				"Failure at UpdateDeviceAdminTimeConditionByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDeviceAdministrationTimeDateConditionsRead(ctx, d, m)

@@ -260,7 +260,13 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNativeSupplicantProfile response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetNativeSupplicantProfileByID")
@@ -282,6 +288,12 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNativeSupplicantProfileByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNativeSupplicantProfileByID response to parameters",
 				err))
 			return diags
 		}
@@ -349,7 +361,7 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateNativeSupplicantProfileByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNativeSupplicantProfileRead(ctx, d, m)

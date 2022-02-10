@@ -139,6 +139,12 @@ func resourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.Resour
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSxpInterface response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -175,7 +181,7 @@ func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.Reso
 				"Failure at SetSxpInterface, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNodeServicesSxpInterfacesRead(ctx, d, m)

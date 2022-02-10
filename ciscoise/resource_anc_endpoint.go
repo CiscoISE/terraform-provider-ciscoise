@@ -266,7 +266,13 @@ func resourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m inte
 		vItem1 := flattenAncEndpointGetAncEndpointByIDItem(item1)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAncEndpoint response",
+				"Failure when setting GetAncEndpoint response to item",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAncEndpoint response to parameters",
 				err))
 			return diags
 		}
@@ -290,7 +296,13 @@ func resourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m inte
 		vItem2 := flattenAncEndpointGetAncEndpointByIDItem(response2.ErsAncEndpoint)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAncEndpointByID response",
+				"Failure when setting GetAncEndpointByID response to item",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAncEndpointByID response to parameters",
 				err))
 			return diags
 		}
@@ -302,7 +314,7 @@ func resourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m inte
 func resourceAncEndpointUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncEndpoint update for id=[%s]", d.Id())
 	log.Printf("[DEBUG] Missing AncEndpoint update on Cisco ISE. It will only be update it on Terraform")
-	// d.Set("last_updated", getUnixTimeString())
+	// _ = d.Set("last_updated", getUnixTimeString())
 	return resourceAncEndpointRead(ctx, d, m)
 }
 

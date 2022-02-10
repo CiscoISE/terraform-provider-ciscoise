@@ -345,7 +345,13 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroupsToVnToVLAN response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetSecurityGroupsToVnToVLANByID")
@@ -367,6 +373,12 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSecurityGroupsToVnToVLANByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroupsToVnToVLANByID response to parameters",
 				err))
 			return diags
 		}
@@ -434,7 +446,7 @@ func resourceSgToVnToVLANUpdate(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at UpdateSecurityGroupsToVnToVLANByID, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSgToVnToVLANRead(ctx, d, m)

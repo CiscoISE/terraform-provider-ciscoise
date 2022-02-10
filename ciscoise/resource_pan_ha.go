@@ -226,6 +226,12 @@ func resourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interface{
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPanHaStatus response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -259,7 +265,7 @@ func resourcePanHaUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourcePanHaRead(ctx, d, m)

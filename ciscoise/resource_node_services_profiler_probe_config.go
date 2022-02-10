@@ -577,6 +577,12 @@ func resourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schema.
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetProfilerProbeConfig response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -614,7 +620,7 @@ func resourceNodeServicesProfilerProbeConfigUpdate(ctx context.Context, d *schem
 				"Failure at SetProfilerProbeConfig, unexpected response", ""))
 			return diags
 		}
-		d.Set("last_updated", getUnixTimeString())
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNodeServicesProfilerProbeConfigRead(ctx, d, m)
