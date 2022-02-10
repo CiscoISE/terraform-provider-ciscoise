@@ -628,7 +628,7 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 									request3.OperationAdditionalData = &operational_data
 									response3, err := client.GuestUser.UpdateGuestUserEmail(vvID, vvPortalID, request3)
 									if err != nil || response3 == nil {
-										log.Printf("[ERROR] response for ChangeSponsorPassword operation => %v", response3.String())
+										log.Printf("[ERROR] response for UpdateGuestUserEmail operation => %v", response3.String())
 									}
 								}
 								if change_sms_bool && d.HasChange("parameters.0.guest_info.0.phone_number") {
@@ -644,7 +644,7 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 									// request4.OperationAdditionalData = &operational_data
 									response4, err := client.GuestUser.UpdateGuestUserSms(vvID, vvPortalID)
 									if err != nil || response4 == nil {
-										log.Printf("[ERROR] response for ChangeSponsorPassword operation => %v", response4.String())
+										log.Printf("[ERROR] response for UpdateGuestUserSms operation => %v", response4.String())
 									}
 								}
 							}
