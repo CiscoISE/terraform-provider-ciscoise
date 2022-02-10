@@ -30,13 +30,13 @@ resource "ciscoise_aci_settings" "example" {
     admin_password            = data.ciscoise_aci_settings.response.item[0].admin_password
     all_sxp_domain            = data.ciscoise_aci_settings.response.item[0].all_sxp_domain
     default_sgt_name          = data.ciscoise_aci_settings.response.item[0].default_sgt_name
-    enable_aci                = data.ciscoise_aci_settings.response.item[0].enable_aci
+    enable_aci                = "true"
     enable_data_plane         = data.ciscoise_aci_settings.response.item[0].enable_data_plane
     enable_elements_limit     = data.ciscoise_aci_settings.response.item[0].enable_elements_limit
     id                        = data.ciscoise_aci_settings.response.item[0].id
     ip_address_host_name      = data.ciscoise_aci_settings.response.item[0].ip_address_host_name
     l3_route_network          = data.ciscoise_aci_settings.response.item[0].l3_route_network
-    max_num_iepg_from_aci     = 500
+    max_num_iepg_from_aci     = 1000
     max_num_sgt_to_aci        = data.ciscoise_aci_settings.response.item[0].max_num_sgt_to_aci
     specific_sxp_domain       = data.ciscoise_aci_settings.response.item[0].specific_sxp_domain
     specifix_sxp_domain_list  = data.ciscoise_aci_settings.response.item[0].specifix_sxp_domain_list
