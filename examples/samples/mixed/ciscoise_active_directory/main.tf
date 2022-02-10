@@ -14,7 +14,7 @@ resource "ciscoise_active_directory" "example" {
   provider = ciscoise
   parameters {
     name        = "cisco.com"
-    description = "Cisco Active Directory"
+    description = "Cisco Active Directory Test"
     domain      = "cisco.com"
     adgroups {
       groups {
@@ -39,7 +39,7 @@ resource "ciscoise_active_directory" "example" {
       country    = "cr"
       # auth_protection_type = ""
       department                        = "department"
-      email                             = "mail"
+      email                             = "dvargas@cisco.com"
       enable_callback_for_dialin_client = "false"
       enable_pass_change                = "true"
       enable_machine_auth               = "true"
