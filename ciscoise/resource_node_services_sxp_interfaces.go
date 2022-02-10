@@ -174,6 +174,7 @@ func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.Reso
 				"Failure at SetSxpInterface, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNodeServicesSxpInterfacesRead(ctx, d, m)

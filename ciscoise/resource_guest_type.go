@@ -654,6 +654,7 @@ func resourceGuestTypeUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at UpdateGuestTypeByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceGuestTypeRead(ctx, d, m)

@@ -348,6 +348,7 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateNativeSupplicantProfileByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNativeSupplicantProfileRead(ctx, d, m)

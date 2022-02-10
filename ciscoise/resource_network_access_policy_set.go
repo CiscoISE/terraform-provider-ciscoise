@@ -764,6 +764,7 @@ func resourceNetworkAccessPolicySetUpdate(ctx context.Context, d *schema.Resourc
 				"Failure at UpdateNetworkAccessPolicySetByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessPolicySetRead(ctx, d, m)

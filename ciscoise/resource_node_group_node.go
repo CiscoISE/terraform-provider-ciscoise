@@ -35,6 +35,10 @@ delete the node, but failover is no longer carried out if the node is not part a
 		},
 
 		Schema: map[string]*schema.Schema{
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,

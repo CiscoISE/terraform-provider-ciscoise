@@ -1613,6 +1613,7 @@ func resourceSponsoredGuestPortalUpdate(ctx context.Context, d *schema.ResourceD
 				"Failure at UpdateSponsoredGuestPortalByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSponsoredGuestPortalRead(ctx, d, m)

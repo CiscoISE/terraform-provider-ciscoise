@@ -613,6 +613,7 @@ func resourceNodeServicesProfilerProbeConfigUpdate(ctx context.Context, d *schem
 				"Failure at SetProfilerProbeConfig, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNodeServicesProfilerProbeConfigRead(ctx, d, m)

@@ -370,6 +370,7 @@ func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.
 				"Failure at UpdateGuestSmtpNotificationSettingsByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceGuestSmtpNotificationSettingsRead(ctx, d, m)

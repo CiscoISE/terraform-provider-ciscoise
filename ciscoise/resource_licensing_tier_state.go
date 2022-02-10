@@ -188,6 +188,7 @@ func resourceLicensingTierStateUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure when executing UpdateTierStateInfo", err))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 	return resourceLicensingTierStateRead(ctx, d, m)
 }

@@ -841,6 +841,7 @@ func resourceNetworkAccessLocalExceptionRulesUpdate(ctx context.Context, d *sche
 				"Failure at UpdateNetworkAccessLocalExceptionRuleByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessLocalExceptionRulesRead(ctx, d, m)

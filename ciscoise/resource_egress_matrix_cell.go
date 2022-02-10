@@ -369,6 +369,7 @@ func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData,
 				"Failure at UpdateEgressMatrixCellByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceEgressMatrixCellRead(ctx, d, m)

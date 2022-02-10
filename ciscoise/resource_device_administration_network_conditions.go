@@ -472,6 +472,7 @@ func resourceDeviceAdministrationNetworkConditionsUpdate(ctx context.Context, d 
 				"Failure at UpdateDeviceAdminNetworkConditionByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDeviceAdministrationNetworkConditionsRead(ctx, d, m)

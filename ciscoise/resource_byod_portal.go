@@ -1158,6 +1158,7 @@ func resourceByodPortalUpdate(ctx context.Context, d *schema.ResourceData, m int
 				"Failure at UpdateByodPortalByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceByodPortalRead(ctx, d, m)

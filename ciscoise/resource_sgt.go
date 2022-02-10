@@ -356,6 +356,7 @@ func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 				"Failure at UpdateSecurityGroupByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSgtRead(ctx, d, m)

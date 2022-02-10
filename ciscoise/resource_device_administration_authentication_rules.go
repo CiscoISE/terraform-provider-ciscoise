@@ -858,6 +858,7 @@ func resourceDeviceAdministrationAuthenticationRulesUpdate(ctx context.Context, 
 				"Failure at UpdateDeviceAdminAuthenticationRuleByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDeviceAdministrationAuthenticationRulesRead(ctx, d, m)

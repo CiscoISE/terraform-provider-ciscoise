@@ -329,6 +329,7 @@ func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at UpdateNodeGroup, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNodeGroupRead(ctx, d, m)

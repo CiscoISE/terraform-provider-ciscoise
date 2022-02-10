@@ -293,6 +293,7 @@ func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m int
 				"Failure at UpdateVirtualNetworkByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTrustsecVnRead(ctx, d, m)

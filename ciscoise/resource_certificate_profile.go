@@ -350,6 +350,7 @@ func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure at UpdateCertificateProfileByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceCertificateProfileRead(ctx, d, m)

@@ -375,6 +375,7 @@ func resourceAciSettingsUpdate(ctx context.Context, d *schema.ResourceData, m in
 				"Failure at UpdateAciSettingsByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceAciSettingsRead(ctx, d, m)

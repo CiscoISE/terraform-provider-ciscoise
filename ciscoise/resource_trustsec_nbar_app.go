@@ -324,6 +324,7 @@ func resourceTrustsecNbarAppUpdate(ctx context.Context, d *schema.ResourceData, 
 				"Failure at UpdateNbarAppByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTrustsecNbarAppRead(ctx, d, m)

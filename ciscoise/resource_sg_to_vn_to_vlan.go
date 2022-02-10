@@ -433,6 +433,7 @@ func resourceSgToVnToVLANUpdate(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at UpdateSecurityGroupsToVnToVLANByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSgToVnToVLANRead(ctx, d, m)

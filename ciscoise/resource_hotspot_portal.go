@@ -1144,6 +1144,7 @@ func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at UpdateHotspotPortalByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceHotspotPortalRead(ctx, d, m)

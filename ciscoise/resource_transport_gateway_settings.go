@@ -171,6 +171,7 @@ func resourceTransportGatewaySettingsUpdate(ctx context.Context, d *schema.Resou
 				"Failure at UpdateTransportGateway, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTransportGatewaySettingsRead(ctx, d, m)

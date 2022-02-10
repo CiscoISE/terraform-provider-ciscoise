@@ -342,6 +342,7 @@ func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.Resource
 				"Failure at UpdateTacacsExternalServersByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTacacsExternalServersRead(ctx, d, m)

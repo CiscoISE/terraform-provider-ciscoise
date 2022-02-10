@@ -848,6 +848,7 @@ func resourceDeviceAdministrationLocalExceptionRulesUpdate(ctx context.Context, 
 				"Failure at UpdateDeviceAdminLocalExceptionRuleByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDeviceAdministrationLocalExceptionRulesRead(ctx, d, m)

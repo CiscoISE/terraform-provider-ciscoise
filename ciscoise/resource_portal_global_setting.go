@@ -266,6 +266,7 @@ func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceDa
 				"Failure at UpdatePortalGlobalSettingByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourcePortalGlobalSettingRead(ctx, d, m)

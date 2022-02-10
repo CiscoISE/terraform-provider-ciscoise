@@ -855,6 +855,7 @@ func resourceNetworkAccessAuthenticationRulesUpdate(ctx context.Context, d *sche
 				"Failure at UpdateNetworkAccessAuthenticationRuleByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessAuthenticationRulesRead(ctx, d, m)

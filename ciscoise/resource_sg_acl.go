@@ -358,6 +358,7 @@ func resourceSgACLUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 				"Failure at UpdateSecurityGroupsACLByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSgACLRead(ctx, d, m)

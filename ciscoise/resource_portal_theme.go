@@ -318,6 +318,7 @@ func resourcePortalThemeUpdate(ctx context.Context, d *schema.ResourceData, m in
 				"Failure at UpdatePortalThemeByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourcePortalThemeRead(ctx, d, m)

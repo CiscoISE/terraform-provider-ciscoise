@@ -847,6 +847,7 @@ func resourceNetworkAccessAuthorizationRulesUpdate(ctx context.Context, d *schem
 				"Failure at UpdateNetworkAccessAuthorizationRuleByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessAuthorizationRulesRead(ctx, d, m)

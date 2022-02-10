@@ -440,6 +440,7 @@ func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at UpdateInternalUserByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceInternalUserRead(ctx, d, m)

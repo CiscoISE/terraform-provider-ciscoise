@@ -332,6 +332,7 @@ func resourceSxpConnectionsUpdate(ctx context.Context, d *schema.ResourceData, m
 				"Failure at UpdateSxpConnectionsByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSxpConnectionsRead(ctx, d, m)

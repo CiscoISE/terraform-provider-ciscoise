@@ -330,6 +330,7 @@ func resourceNetworkAccessDictionaryUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateNetworkAccessDictionaryByName, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessDictionaryRead(ctx, d, m)
