@@ -1,3 +1,21 @@
+## 0.3.0-beta (Unreleased)
+
+IMPROVEMENTS:
+* Update ciscoisesdk from v1.1.2 to 1.1.3
+* Update terraform-plugin-sdk/v2 from v2.7.1 to v2.10.1
+* ciscoise/resource_guest_user: Add `ChangeSponsorPassword`, `UpdateGuestUserEmail` and `UpdateGuestUserSms`.
+* ciscoise/resource_active_directory: Add `AddGroupsLoadGroupsFromDomain` to update context
+* ciscoise/resource_guest_user: Update examples, samples and documentation
+* ciscoise/resource_active_directory: Update examples, samples and documentation
+
+FEATURES:
+* **New Resource:** `ciscoise_pan_ha`
+* **New Resource:** `ciscoise_licensing_registration`
+* **New Resource:** `ciscoise_licensing_tier_state`
+* **New Resource:** `ciscoise_px_grid_node`
+* **New Resource:** `ciscoise_anc_endpoint`
+* **New Resource:** `ciscoise_node_group_node`
+
 ## 0.2.0 (February 08, 2022)
 
 NOTES:
