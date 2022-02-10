@@ -612,6 +612,11 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
 						},
+						"enable_domain_allowed_list": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:     true,
+						},
 						"id": &schema.Schema{
 							Description: `Resource UUID value`,
 							Type:        schema.TypeString,
@@ -723,7 +728,14 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 		vItemName1 := flattenActiveDirectoryGetActiveDirectoryByNameItemName(response1.ERSActiveDirectory)
 		if err := d.Set("item", vItemName1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetActiveDirectoryByName response",
+				"Failure when setting GetActiveDirectoryByName response to item",
+				err))
+			return diags
+		}
+		vItemName2 := flattenActiveDirectoryGetActiveDirectoryByNameItemNameForParams(response1.ERSActiveDirectory)
+		if err := d.Set("parameters", vItemName2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetActiveDirectoryByName response to parameters",
 				err))
 			return diags
 		}

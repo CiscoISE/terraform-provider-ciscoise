@@ -336,7 +336,13 @@ func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m inte
 		vItem1 := flattenAciSettingsGetAciSettingsItem(response1.AciSettings)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAciSettings response",
+				"Failure when setting GetAciSettings response to item",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAciSettings response to parameters",
 				err))
 			return diags
 		}
