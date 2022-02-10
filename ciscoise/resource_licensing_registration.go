@@ -147,9 +147,7 @@ func resourceLicensingRegistrationRead(ctx context.Context, d *schema.ResourceDa
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
-		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing GetRegistrationInfo", err,
-			"Failure at GetRegistrationInfo, unexpected response", ""))
+		d.SetId("")
 		return diags
 	}
 
@@ -188,6 +186,7 @@ func resourceLicensingRegistrationUpdate(ctx context.Context, d *schema.Resource
 				"Failure when executing CreateRegistrationInfo", err))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 	return resourceLicensingRegistrationRead(ctx, d, m)
 }

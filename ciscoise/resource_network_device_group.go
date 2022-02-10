@@ -299,6 +299,7 @@ func resourceNetworkDeviceGroupUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure at UpdateNetworkDeviceGroupByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkDeviceGroupRead(ctx, d, m)

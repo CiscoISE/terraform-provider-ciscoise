@@ -311,6 +311,7 @@ func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m int
 				"Failure at UpdateRepository, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceRepositoryRead(ctx, d, m)

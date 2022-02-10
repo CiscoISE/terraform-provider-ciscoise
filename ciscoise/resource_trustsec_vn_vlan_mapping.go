@@ -354,6 +354,7 @@ func resourceTrustsecVnVLANMappingUpdate(ctx context.Context, d *schema.Resource
 				"Failure at UpdateVnVLANMappingByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTrustsecVnVLANMappingRead(ctx, d, m)

@@ -325,6 +325,7 @@ func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData,
 				"Failure at UpdateSxpLocalBindingsByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSxpLocalBindingsRead(ctx, d, m)

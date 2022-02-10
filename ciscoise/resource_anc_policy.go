@@ -305,6 +305,7 @@ func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at UpdateAncPolicyByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceAncPolicyRead(ctx, d, m)

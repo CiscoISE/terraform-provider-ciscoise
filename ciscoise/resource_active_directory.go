@@ -821,6 +821,7 @@ func resourceActiveDirectoryUpdate(ctx context.Context, d *schema.ResourceData, 
 						}
 
 						log.Printf("[DEBUG] Retrieved response %s", response1.String())
+						d.Set("last_updated", getUnixTimeString())
 					}
 				}
 			}

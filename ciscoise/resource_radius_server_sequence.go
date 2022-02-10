@@ -547,6 +547,7 @@ func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 				"Failure at UpdateRadiusServerSequenceByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceRadiusServerSequenceRead(ctx, d, m)

@@ -470,6 +470,7 @@ func resourceNetworkAccessNetworkConditionUpdate(ctx context.Context, d *schema.
 				"Failure at UpdateNetworkAccessNetworkConditionByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessNetworkConditionRead(ctx, d, m)

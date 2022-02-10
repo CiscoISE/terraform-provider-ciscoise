@@ -419,6 +419,7 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 				"Failure at UpdateSystemCert, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSystemCertificateRead(ctx, d, m)

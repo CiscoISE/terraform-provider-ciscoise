@@ -357,6 +357,7 @@ func resourceTacacsProfileUpdate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at UpdateTacacsProfileByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTacacsProfileRead(ctx, d, m)

@@ -30,6 +30,10 @@ func resourceAncEndpoint() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"last_updated": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
 				Required: true,
@@ -297,6 +301,7 @@ func resourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m inte
 func resourceAncEndpointUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncEndpoint update for id=[%s]", d.Id())
 	log.Printf("[DEBUG] Missing AncEndpoint update on Cisco ISE. It will only be update it on Terraform")
+	// d.Set("last_updated", getUnixTimeString())
 	return resourceAncEndpointRead(ctx, d, m)
 }
 

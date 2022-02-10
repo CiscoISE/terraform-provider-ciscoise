@@ -597,6 +597,7 @@ func resourceSponsorGroupUpdate(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at UpdateSponsorGroupByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSponsorGroupRead(ctx, d, m)

@@ -771,6 +771,7 @@ func resourceAuthorizationProfileUpdate(ctx context.Context, d *schema.ResourceD
 				"Failure at UpdateAuthorizationProfileByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceAuthorizationProfileRead(ctx, d, m)

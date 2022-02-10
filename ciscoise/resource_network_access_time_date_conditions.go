@@ -619,6 +619,7 @@ func resourceNetworkAccessTimeDateConditionsUpdate(ctx context.Context, d *schem
 				"Failure at UpdateNetworkAccessTimeConditionByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessTimeDateConditionsRead(ctx, d, m)

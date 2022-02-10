@@ -653,6 +653,7 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				}
 			}
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceGuestUserRead(ctx, d, m)

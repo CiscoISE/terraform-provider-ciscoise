@@ -235,6 +235,7 @@ func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateProxyConnection, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceProxyConnectionSettingsRead(ctx, d, m)

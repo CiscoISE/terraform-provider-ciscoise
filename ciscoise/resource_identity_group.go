@@ -297,6 +297,7 @@ func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at UpdateIDentityGroupByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceIDentityGroupRead(ctx, d, m)

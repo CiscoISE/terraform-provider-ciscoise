@@ -326,6 +326,7 @@ func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at UpdateFilterPolicyByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceFilterPolicyRead(ctx, d, m)

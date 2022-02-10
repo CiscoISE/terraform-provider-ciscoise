@@ -828,6 +828,7 @@ func resourceNetworkAccessGlobalExceptionRulesUpdate(ctx context.Context, d *sch
 				"Failure at UpdateNetworkAccessPolicySetGlobalExceptionRuleByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessGlobalExceptionRulesRead(ctx, d, m)

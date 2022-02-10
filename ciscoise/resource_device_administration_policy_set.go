@@ -764,6 +764,7 @@ func resourceDeviceAdministrationPolicySetUpdate(ctx context.Context, d *schema.
 				"Failure at UpdateDeviceAdminPolicySetByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDeviceAdministrationPolicySetRead(ctx, d, m)

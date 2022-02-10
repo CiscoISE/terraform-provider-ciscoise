@@ -258,6 +258,7 @@ func resourcePanHaUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourcePanHaRead(ctx, d, m)

@@ -1232,6 +1232,7 @@ func resourceSponsorPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at UpdateSponsorPortalByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSponsorPortalRead(ctx, d, m)

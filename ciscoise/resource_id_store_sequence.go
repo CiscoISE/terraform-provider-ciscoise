@@ -352,6 +352,7 @@ func resourceIDStoreSequenceUpdate(ctx context.Context, d *schema.ResourceData, 
 				"Failure at UpdateIDentitySequenceByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceIDStoreSequenceRead(ctx, d, m)

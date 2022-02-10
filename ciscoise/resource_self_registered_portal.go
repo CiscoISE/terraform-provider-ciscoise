@@ -2650,6 +2650,7 @@ func resourceSelfRegisteredPortalUpdate(ctx context.Context, d *schema.ResourceD
 				"Failure at UpdateSelfRegisteredPortalByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSelfRegisteredPortalRead(ctx, d, m)

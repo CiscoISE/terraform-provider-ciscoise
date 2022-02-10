@@ -345,6 +345,7 @@ func resourceTrustsecSgVnMappingUpdate(ctx context.Context, d *schema.ResourceDa
 				"Failure at UpdateSgVnMappingByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTrustsecSgVnMappingRead(ctx, d, m)

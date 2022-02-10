@@ -363,6 +363,7 @@ func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 				"Failure at UpdateTacacsServerSequenceByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTacacsServerSequenceRead(ctx, d, m)

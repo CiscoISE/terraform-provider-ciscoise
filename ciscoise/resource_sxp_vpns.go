@@ -241,6 +241,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 func resourceSxpVpnsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpVpns update for id=[%s]", d.Id())
 	log.Printf("[DEBUG] Missing SxpVpns update on Cisco ISE. It will only be update it on Terraform")
+	// d.Set("last_updated", getUnixTimeString())
 	return resourceSxpVpnsRead(ctx, d, m)
 }
 

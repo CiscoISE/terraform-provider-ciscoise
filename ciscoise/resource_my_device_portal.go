@@ -1216,6 +1216,7 @@ func resourceMyDevicePortalUpdate(ctx context.Context, d *schema.ResourceData, m
 				"Failure at UpdateMyDevicePortalByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceMyDevicePortalRead(ctx, d, m)

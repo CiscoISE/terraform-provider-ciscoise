@@ -546,6 +546,7 @@ func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure at UpdateTrustedCertificate, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTrustedCertificateRead(ctx, d, m)

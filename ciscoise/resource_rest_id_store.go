@@ -387,6 +387,7 @@ func resourceRestIDStoreUpdate(ctx context.Context, d *schema.ResourceData, m in
 				"Failure at UpdateRestIDStoreByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceRestIDStoreRead(ctx, d, m)

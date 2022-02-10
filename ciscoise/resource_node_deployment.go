@@ -330,6 +330,7 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 				"Failure at UpdateDeploymentNode, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNodeDeploymentRead(ctx, d, m)

@@ -336,6 +336,7 @@ func resourceDownloadableACLUpdate(ctx context.Context, d *schema.ResourceData, 
 				"Failure at UpdateDownloadableACLByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDownloadableACLRead(ctx, d, m)

@@ -364,6 +364,7 @@ func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at UpdateIPToSgtMappingByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSgMappingRead(ctx, d, m)

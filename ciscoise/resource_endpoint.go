@@ -515,6 +515,7 @@ func resourceEndpointUpdate(ctx context.Context, d *schema.ResourceData, m inter
 				"Failure at UpdateEndpointByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceEndpointRead(ctx, d, m)

@@ -300,6 +300,7 @@ func resourceEndpointGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at UpdateEndpointGroupByID, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceEndpointGroupRead(ctx, d, m)

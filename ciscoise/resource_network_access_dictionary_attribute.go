@@ -377,6 +377,7 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 				"Failure at UpdateNetworkAccessDictionaryAttributeByName, unexpected response", ""))
 			return diags
 		}
+		d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessDictionaryAttributeRead(ctx, d, m)
