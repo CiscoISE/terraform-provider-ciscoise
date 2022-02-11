@@ -28,7 +28,7 @@ func remove_parameters(respItems []map[string]interface{}, parameters ...string)
 func compareMacAddress(old_mac_address, new_mac_address string) bool {
 	rexp := `([-.:])`
 	oldClear, newClear := replaceRegExStrings(old_mac_address, new_mac_address, rexp, "")
-	return oldClear == newClear
+	return strings.ToLower(oldClear) == strings.ToLower(newClear)
 }
 
 func fixKeyAccess(key string) string {
@@ -115,9 +115,11 @@ func separateResourceID(ID string) map[string]string {
 @param values
 */
 func listNicely(values []string) string {
-	pvalues := fmt.Sprintf("%q", values)
-	pvalues = pvalues[1 : len(pvalues)-1]
-	return strings.Join(strings.Split(pvalues, " "), ", ")
+	pvalues := []string{}
+	for i := range values {
+		pvalues = append(pvalues, fmt.Sprintf("\"%s\"", values[i]))
+	}
+	return strings.Join(pvalues, ", ")
 }
 
 func pickMethodAux(method []bool) float64 {
