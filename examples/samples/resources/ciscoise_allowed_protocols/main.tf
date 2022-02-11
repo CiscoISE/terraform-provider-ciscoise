@@ -13,8 +13,8 @@ provider "ciscoise" {
 resource "ciscoise_allowed_protocols" "response" {
   provider = ciscoise
   parameters {
-    name                         = "New Network Access 1"
-    description                  = "New Allowed Protocol Service 01"
+    name                         = var.name
+    description                  = var.description
     process_host_lookup          = "false"
     allow_pap_ascii              = "false"
     allow_chap                   = "false"
@@ -65,6 +65,10 @@ resource "ciscoise_allowed_protocols" "response" {
   }
 }
 
-output "ciscoise_allowed_protocols_response" {
-  value = ciscoise_allowed_protocols.response
+data "ciscoise_allowed_protocols" "example" {
+  depends_on = [
+    ciscoise_allowed_protocols.response
+  ]
+  provider = ciscoise
+  name     = var.name
 }
