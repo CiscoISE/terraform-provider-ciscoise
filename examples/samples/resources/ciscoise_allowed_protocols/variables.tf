@@ -9,3 +9,9 @@ variable "description" {
   type        = string
   default     = "New Allowed Protocol Service 01"
 }
+
+variable "allow_eap_tls" {
+  description = "Flag allow_eap_tls"
+  type        = string
+  default     = "true"
+}
