@@ -2,7 +2,7 @@ package ciscoise
 
 import (
 	"fmt"
-	"reflect"
+	"os"
 	"strings"
 
 	"testing"
@@ -13,6 +13,9 @@ import (
 )
 
 func TestTerraformCiscoISEAllowedProtocolsExample(t *testing.T) {
+	if v := os.Getenv("TF_ACC"); v != "1" {
+		t.Skip("TF_ACC not enabled")
+	}
 	t.Parallel()
 
 	number := random.RandomInt([]int{1, 2, 3, 4})
@@ -45,7 +48,7 @@ func TestTerraformCiscoISEAllowedProtocolsExample(t *testing.T) {
 	// website::tag::3:: Run `terraform output` to get the values of output variables
 	itemDescription := terraform.Output(t, terraformOptions, "ciscoise_allowed_protocols_response_item_description")
 	ID := terraform.Output(t, terraformOptions, "ciscoise_allowed_protocols_response_id")
-	item := terraform.Output(t, terraformOptions, "ciscoise_allowed_protocols_response_item")
+	item := terraform.OutputListOfObjects(t, terraformOptions, "ciscoise_allowed_protocols_response_item")
 
 	/* Alternatives to Test UpdateContext
 
@@ -104,7 +107,7 @@ func TestTerraformCiscoISEAllowedProtocolsExample(t *testing.T) {
 	assert := assert.New(t)
 	assert.Contains(ID, fmt.Sprintf("name:=%s", name), "[ERR 1]")
 	assert.Contains(ID, "id:=", "[ERR 2]")
-	assert.False(isEmptyValue(reflect.ValueOf(item)), "[ERR 3]")
+	assert.NotEmpty(item, "[ERR 3]")
 	assert.Equal(description, itemDescription, "[ERR 4]")
 	assert.Equal(descriptionUpdate, itemDescriptionUpdate, "[ERR 5]")
 }
