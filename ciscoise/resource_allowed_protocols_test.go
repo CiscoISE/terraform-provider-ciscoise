@@ -27,15 +27,17 @@ func TestTerraformCiscoISEAllowedProtocolsExample(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../examples/samples/resources/ciscoise_allowed_protocols",
 		Vars: map[string]interface{}{
-			"name":        name,
-			"description": description,
+			"name":          name,
+			"description":   description,
+			"allow_eap_tls": "false",
 		},
 	}
 	terraformOptionsUpdate := &terraform.Options{
 		TerraformDir: "../examples/samples/resources/ciscoise_allowed_protocols",
 		Vars: map[string]interface{}{
-			"name":        name,
-			"description": descriptionUpdate,
+			"name":          name,
+			"description":   descriptionUpdate,
+			"allow_eap_tls": "true",
 		},
 	}
 
@@ -98,9 +100,16 @@ func TestTerraformCiscoISEAllowedProtocolsExample(t *testing.T) {
 
 	// website::tag::3:: Run `terraform output` to get the values of output variables
 	var itemDescriptionUpdate string
+	var itemEapTlsInterface map[string]interface{}
 	response := terraform.OutputListOfObjects(t, terraformOptionsUpdate, "ciscoise_allowed_protocols_response_item_datasource")
 	if len(response) > 0 {
 		itemDescriptionUpdate = response[0]["description"].(string)
+		eap_tls_interface, _ := response[0]["eap_tls"]
+		// t.Logf("eap_tls_interface ??? %#v", eap_tls_interface)
+		v, ok := eap_tls_interface.([]map[string]interface{})
+		if ok && len(v) > 0 {
+			itemEapTlsInterface = v[0]
+		}
 	}
 
 	// website::tag::4:: Assert
@@ -110,4 +119,6 @@ func TestTerraformCiscoISEAllowedProtocolsExample(t *testing.T) {
 	assert.NotEmpty(item, "[ERR 3]")
 	assert.Equal(description, itemDescription, "[ERR 4]")
 	assert.Equal(descriptionUpdate, itemDescriptionUpdate, "[ERR 5]")
+	assert.NotEmpty(itemEapTlsInterface, "[ERR 6]")
+	assert.Equal(itemEapTlsInterface["allow_eap_tls_auth_of_expired_certs"], "false", "[ERR 7]")
 }
