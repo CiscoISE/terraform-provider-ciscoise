@@ -2,6 +2,39 @@ package ciscoise
 
 import "testing"
 
+func TestDiffsDiffSupressHotpatchName(t *testing.T) {
+	cases := map[string]struct {
+		Old, New           string
+		ExpectDiffSuppress bool
+	}{
+		"same hotpatch name": {
+			Old:                "ise-apply-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			New:                "ise-apply-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			ExpectDiffSuppress: true,
+		},
+		"contains hotpatch name 1 ": {
+			Old:                "ise-apply-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			New:                "CSCvz53724_3.2.x_patchall",
+			ExpectDiffSuppress: true,
+		},
+		"contains hotpatch name 2": {
+			Old:                "CSCvz53724_3.2.x_patchall",
+			New:                "ise-rollback-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			ExpectDiffSuppress: true,
+		},
+		"does not contain": {
+			Old:                "ise-apply-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			New:                "ise-rollback-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			ExpectDiffSuppress: false,
+		},
+	}
+	for tn, tc := range cases {
+		if diffSupressHotpatchName()("key", tc.Old, tc.New, nil) != tc.ExpectDiffSuppress {
+			t.Errorf("bad: %s, '%s' => '%s' expect DiffSuppress to return %t", tn, tc.Old, tc.New, tc.ExpectDiffSuppress)
+		}
+	}
+}
+
 func TestDiffsDiffSupressMacAddress(t *testing.T) {
 	cases := map[string]struct {
 		Old, New           string

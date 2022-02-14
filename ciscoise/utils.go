@@ -13,6 +13,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
+func compareHotpatchName(old, new string) bool {
+	return strings.Contains(old, new) || strings.Contains(new, old)
+}
+
 func remove_parameters(respItems []map[string]interface{}, parameters ...string) []map[string]interface{} {
 	for i := range respItems {
 		for j := range parameters {

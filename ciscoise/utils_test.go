@@ -5,6 +5,39 @@ import (
 	"testing"
 )
 
+func TestUtilsCompareHotpatchName(t *testing.T) {
+	cases := map[string]struct {
+		Old, New     string
+		ExpectResult bool
+	}{
+		"same hotpatch name": {
+			Old:          "ise-apply-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			New:          "ise-apply-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			ExpectResult: true,
+		},
+		"contains hotpatch name 1 ": {
+			Old:          "ise-apply-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			New:          "CSCvz53724_3.2.x_patchall",
+			ExpectResult: true,
+		},
+		"contains hotpatch name 2": {
+			Old:          "CSCvz53724_3.2.x_patchall",
+			New:          "ise-rollback-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			ExpectResult: true,
+		},
+		"does not contain": {
+			Old:          "ise-apply-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			New:          "ise-rollback-CSCvz53724_3.2.x_patchall-SPA.tar.gz",
+			ExpectResult: false,
+		},
+	}
+	for tn, tc := range cases {
+		if compareHotpatchName(tc.Old, tc.New) != tc.ExpectResult {
+			t.Errorf("bad: %s, '%s' => '%s' expect compareHotpatchName to return %t", tn, tc.Old, tc.New, tc.ExpectResult)
+		}
+	}
+}
+
 func TestUtilsCompareMacAddress(t *testing.T) {
 	cases := map[string]struct {
 		Old, New     string
