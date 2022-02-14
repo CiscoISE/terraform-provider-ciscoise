@@ -17,6 +17,8 @@ FEATURES:
 * **New Resource:** `ciscoise_px_grid_node`
 * **New Resource:** `ciscoise_anc_endpoint`
 * **New Resource:** `ciscoise_node_group_node`
+* **New Resource:** `ciscoise_hotpatch`
+* **New Resource:** `ciscoise_patch`
 
 ## 0.2.0 (February 08, 2022)
 
