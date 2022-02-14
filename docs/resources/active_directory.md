@@ -118,6 +118,7 @@ Optional:
 - **advanced_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--advanced_settings))
 - **description** (String) No character restriction
 - **domain** (String) The AD domain. Alphanumeric, hyphen (-) and dot (.) characters are allowed
+- **enable_domain_allowed_list** (String)
 - **enable_domain_white_list** (String)
 - **id** (String) Resource UUID value
 - **name** (String) Resource Name. Maximum 32 characters allowed. Allowed characters are alphanumeric and .-_/\\ characters
