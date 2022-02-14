@@ -261,7 +261,13 @@ func resourceNodeGroupNodeDelete(ctx context.Context, d *schema.ResourceData, m 
 func expandRequestNodeGroupNodeDeleteRemoveNode(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNodeGroupRemoveNode {
 	request := isegosdk.RequestNodeGroupRemoveNode{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".hostname")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".hostname")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".hostname")))) {
-		request.Hostname = interfaceToString(v)
+		if d.HasChange(fixKeyAccess(key + ".hostname")) {
+			if old, new := d.GetChange(fixKeyAccess(key + ".hostname")); !reflect.DeepEqual(old, new) {
+				request.Hostname = interfaceToString(old)
+			}
+		} else {
+			request.Hostname = interfaceToString(v)
+		}
 	}
 	return &request
 }
