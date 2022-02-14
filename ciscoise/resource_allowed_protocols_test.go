@@ -104,6 +104,7 @@ func TestTerraformCiscoISEAllowedProtocolsExample(t *testing.T) {
 	response := terraform.OutputListOfObjects(t, terraformOptionsUpdate, "ciscoise_allowed_protocols_response_item_datasource")
 	if len(response) > 0 {
 		itemDescriptionUpdate = response[0]["description"].(string)
+		// Using https://www.terraform.io/language/expressions/dynamic-blocks to add condition to block
 		eap_tls_interface, _ := response[0]["eap_tls"]
 		// t.Logf("eap_tls_interface ??? %#v", eap_tls_interface)
 		v, ok := eap_tls_interface.([]map[string]interface{})
