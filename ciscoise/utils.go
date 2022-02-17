@@ -14,7 +14,7 @@ import (
 )
 
 func compareHotpatchName(old, new string) bool {
-	return strings.Contains(old, new) || strings.Contains(new, old)
+	return len(old) > 0 && len(new) > 0 && (strings.Contains(old, new) || strings.Contains(new, old))
 }
 
 func remove_parameters(respItems []map[string]interface{}, parameters ...string) []map[string]interface{} {
