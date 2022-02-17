@@ -63,7 +63,6 @@ a certain period of time.
 						"patch_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Required: true,
-							ForceNew: true,
 						},
 					},
 				},
@@ -105,6 +104,7 @@ func resourcePatchCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	if okPatchName {
 		vvPatchName = vPatchName.(string)
 	}
+	log.Printf("[DEBUG] Patch create params %d %s", vPatchNumber, vvPatchName)
 
 	getResponse1, _, err := client.Patching.ListInstalledPatches()
 	if err == nil && getResponse1 != nil {
@@ -116,6 +116,12 @@ func resourcePatchCreate(ctx context.Context, d *schema.ResourceData, m interfac
 			d.SetId(joinResourceID(resourceMap))
 			return resourcePatchRead(ctx, d, m)
 		}
+		if err != nil {
+			log.Printf("[DEBUG] ListInstalledPatches searchPatch Error: %s", err.Error())
+		}
+	}
+	if err != nil {
+		log.Printf("[DEBUG] ListInstalledPatches Error: %s", err.Error())
 	}
 
 	request1 := expandRequestPatchInstallInstallPatch(ctx, "parameters.0", d)
@@ -205,12 +211,6 @@ func resourcePatchRead(ctx context.Context, d *schema.ResourceData, m interface{
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
 			"Failure when setting ListInstalledPatches response to item",
-			err))
-		return diags
-	}
-	if err := d.Set("parameters", remove_parameters(vItem1, "install_date")); err != nil {
-		diags = append(diags, diagError(
-			"Failure when setting ListInstalledPatches response to parameters",
 			err))
 		return diags
 	}
