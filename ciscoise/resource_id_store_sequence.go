@@ -35,8 +35,9 @@ Partial update is not supported
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -264,6 +265,12 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIDentitySequenceByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -287,6 +294,12 @@ func resourceIDStoreSequenceRead(ctx context.Context, d *schema.ResourceData, m 
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetIDentitySequenceByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIDentitySequenceByID response to parameters",
 				err))
 			return diags
 		}
@@ -352,6 +365,7 @@ func resourceIDStoreSequenceUpdate(ctx context.Context, d *schema.ResourceData, 
 				"Failure at UpdateIDentitySequenceByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceIDStoreSequenceRead(ctx, d, m)

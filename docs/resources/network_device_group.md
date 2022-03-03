@@ -50,7 +50,7 @@ output "ciscoise_network_device_group_example" {
 ### Read-Only
 
 - **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`

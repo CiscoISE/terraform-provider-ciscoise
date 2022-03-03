@@ -50,8 +50,9 @@ pxGrid Cloud
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -203,6 +204,12 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetProxyConnection response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -235,6 +242,7 @@ func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateProxyConnection, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceProxyConnectionSettingsRead(ctx, d, m)

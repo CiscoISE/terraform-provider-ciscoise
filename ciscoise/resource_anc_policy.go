@@ -33,8 +33,9 @@ func resourceAncPolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -217,6 +218,12 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAncPolicyByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -240,6 +247,12 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAncPolicyByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAncPolicyByID response to parameters",
 				err))
 			return diags
 		}
@@ -305,6 +318,7 @@ func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at UpdateAncPolicyByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceAncPolicyRead(ctx, d, m)

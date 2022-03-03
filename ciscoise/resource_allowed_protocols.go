@@ -33,8 +33,9 @@ func resourceAllowedProtocols() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -1114,7 +1115,13 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 		vItemName1 := flattenAllowedProtocolsGetAllowedProtocolByNameItemName(response1.AllowedProtocols)
 		if err := d.Set("item", vItemName1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAllowedProtocolByName response",
+				"Failure when setting GetAllowedProtocolByName response to item",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAllowedProtocolByName response to parameters",
 				err))
 			return diags
 		}
@@ -1141,6 +1148,12 @@ func resourceAllowedProtocolsRead(ctx context.Context, d *schema.ResourceData, m
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAllowedProtocolByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAllowedProtocolByName response to parameters",
 				err))
 			return diags
 		}
@@ -1206,6 +1219,7 @@ func resourceAllowedProtocolsUpdate(ctx context.Context, d *schema.ResourceData,
 				"Failure at UpdateAllowedProtocolByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceAllowedProtocolsRead(ctx, d, m)

@@ -34,8 +34,9 @@ func resourceTrustsecVn() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
@@ -207,7 +208,13 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetVirtualNetworks response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetVirtualNetworkByID")
@@ -227,6 +234,12 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetVirtualNetworkByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetVirtualNetworkByID response to parameters",
 				err))
 			return diags
 		}
@@ -293,6 +306,7 @@ func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m int
 				"Failure at UpdateVirtualNetworkByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTrustsecVnRead(ctx, d, m)

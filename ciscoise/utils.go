@@ -13,6 +13,28 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
+func compareHotpatchName(old, new string) bool {
+	return len(old) > 0 && len(new) > 0 && (strings.Contains(old, new) || strings.Contains(new, old))
+}
+
+func remove_parameters(respItems []map[string]interface{}, parameters ...string) []map[string]interface{} {
+	for i := range respItems {
+		for j := range parameters {
+			_, ok := respItems[i][parameters[j]]
+			if ok {
+				delete(respItems[i], parameters[j])
+			}
+		}
+	}
+	return respItems
+}
+
+func compareMacAddress(old_mac_address, new_mac_address string) bool {
+	rexp := `([-.:])`
+	oldClear, newClear := replaceRegExStrings(old_mac_address, new_mac_address, rexp, "")
+	return strings.ToLower(oldClear) == strings.ToLower(newClear)
+}
+
 func fixKeyAccess(key string) string {
 	return strings.Trim(key, ".")
 }
@@ -97,9 +119,11 @@ func separateResourceID(ID string) map[string]string {
 @param values
 */
 func listNicely(values []string) string {
-	pvalues := fmt.Sprintf("%q", values)
-	pvalues = pvalues[1 : len(pvalues)-1]
-	return strings.Join(strings.Split(pvalues, " "), ", ")
+	pvalues := []string{}
+	for i := range values {
+		pvalues = append(pvalues, fmt.Sprintf("\"%s\"", values[i]))
+	}
+	return strings.Join(pvalues, ", ")
 }
 
 func pickMethodAux(method []bool) float64 {

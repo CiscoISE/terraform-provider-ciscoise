@@ -48,8 +48,9 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -746,7 +747,13 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminLocalExceptionRules response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetDeviceAdminLocalExceptionRuleByID")
@@ -766,6 +773,12 @@ func resourceDeviceAdministrationLocalExceptionRulesRead(ctx context.Context, d 
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminLocalExceptionRuleByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminLocalExceptionRuleByID response to parameters",
 				err))
 			return diags
 		}
@@ -848,6 +861,7 @@ func resourceDeviceAdministrationLocalExceptionRulesUpdate(ctx context.Context, 
 				"Failure at UpdateDeviceAdminLocalExceptionRuleByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDeviceAdministrationLocalExceptionRulesRead(ctx, d, m)

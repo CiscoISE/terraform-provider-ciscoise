@@ -29,8 +29,9 @@ func resourceAciSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -335,7 +336,13 @@ func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m inte
 		vItem1 := flattenAciSettingsGetAciSettingsItem(response1.AciSettings)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAciSettings response",
+				"Failure when setting GetAciSettings response to item",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAciSettings response to parameters",
 				err))
 			return diags
 		}
@@ -375,6 +382,7 @@ func resourceAciSettingsUpdate(ctx context.Context, d *schema.ResourceData, m in
 				"Failure at UpdateAciSettingsByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceAciSettingsRead(ctx, d, m)

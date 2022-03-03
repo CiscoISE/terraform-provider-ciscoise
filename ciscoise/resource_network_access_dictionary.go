@@ -34,8 +34,9 @@ func resourceNetworkAccessDictionary() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -243,7 +244,13 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessDictionaries response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetNetworkAccessDictionaryByName")
@@ -265,6 +272,12 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessDictionaryByName response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessDictionaryByName response to parameters",
 				err))
 			return diags
 		}
@@ -330,6 +343,7 @@ func resourceNetworkAccessDictionaryUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateNetworkAccessDictionaryByName, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessDictionaryRead(ctx, d, m)

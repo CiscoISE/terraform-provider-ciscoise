@@ -33,8 +33,9 @@ func resourceTacacsExternalServers() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -254,6 +255,12 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsExternalServersByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -277,6 +284,12 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsExternalServersByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsExternalServersByID response to parameters",
 				err))
 			return diags
 		}
@@ -342,6 +355,7 @@ func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.Resource
 				"Failure at UpdateTacacsExternalServersByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTacacsExternalServersRead(ctx, d, m)

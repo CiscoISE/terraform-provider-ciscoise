@@ -34,8 +34,9 @@ func resourceRadiusServerSequence() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -458,7 +459,13 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetRadiusServerSequence response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetRadiusServerSequenceByID")
@@ -480,6 +487,12 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetRadiusServerSequenceByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetRadiusServerSequenceByID response to parameters",
 				err))
 			return diags
 		}
@@ -547,6 +560,7 @@ func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 				"Failure at UpdateRadiusServerSequenceByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceRadiusServerSequenceRead(ctx, d, m)

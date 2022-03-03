@@ -34,8 +34,9 @@ func resourceFilterPolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -238,7 +239,13 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetFilterPolicy response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetFilterPolicyByID")
@@ -262,8 +269,13 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetFilterPolicyByID response to parameters",
+				err))
+			return diags
+		}
 		return diags
-
 	}
 	return diags
 }
@@ -326,6 +338,7 @@ func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m i
 				"Failure at UpdateFilterPolicyByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceFilterPolicyRead(ctx, d, m)
