@@ -31,8 +31,9 @@ func resourceIDentityGroup() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -209,6 +210,12 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIDentityGroupByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -232,6 +239,12 @@ func resourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m in
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetIDentityGroupByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIDentityGroupByID response to parameters",
 				err))
 			return diags
 		}
@@ -297,6 +310,7 @@ func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 				"Failure at UpdateIDentityGroupByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceIDentityGroupRead(ctx, d, m)

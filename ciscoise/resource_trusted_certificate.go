@@ -33,8 +33,9 @@ func resourceTrustedCertificate() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -458,7 +459,13 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTrustedCertificates response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetTrustedCertificateByID")
@@ -480,6 +487,12 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTrustedCertificateByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTrustedCertificateByID response to parameters",
 				err))
 			return diags
 		}
@@ -546,6 +559,7 @@ func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure at UpdateTrustedCertificate, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTrustedCertificateRead(ctx, d, m)

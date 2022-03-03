@@ -1,0 +1,1 @@
+terraform import ciscoise_hotpatch.example "repository_name:=string\hotpatch_name:=string"

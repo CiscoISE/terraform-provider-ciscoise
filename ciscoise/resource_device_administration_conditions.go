@@ -78,8 +78,9 @@ TimeAndDate
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -568,6 +569,12 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminConditionByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -591,6 +598,12 @@ func resourceDeviceAdministrationConditionsRead(ctx context.Context, d *schema.R
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminConditionByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminConditionByID response to parameters",
 				err))
 			return diags
 		}
@@ -656,6 +669,7 @@ func resourceDeviceAdministrationConditionsUpdate(ctx context.Context, d *schema
 				"Failure at UpdateDeviceAdminConditionByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceDeviceAdministrationConditionsRead(ctx, d, m)

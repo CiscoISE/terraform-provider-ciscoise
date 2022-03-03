@@ -30,8 +30,9 @@ in case of air-gapped network.
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -140,6 +141,12 @@ func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resourc
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTransportGateway response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -171,6 +178,7 @@ func resourceTransportGatewaySettingsUpdate(ctx context.Context, d *schema.Resou
 				"Failure at UpdateTransportGateway, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceTransportGatewaySettingsRead(ctx, d, m)

@@ -34,8 +34,9 @@ func resourceSgMapping() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -276,7 +277,13 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPToSgtMapping response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetIPToSgtMappingByID")
@@ -298,6 +305,12 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetIPToSgtMappingByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPToSgtMappingByID response to parameters",
 				err))
 			return diags
 		}
@@ -364,6 +377,7 @@ func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at UpdateIPToSgtMappingByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSgMappingRead(ctx, d, m)

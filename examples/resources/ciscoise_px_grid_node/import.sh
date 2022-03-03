@@ -1,0 +1,1 @@
+terraform import ciscoise_px_grid_node.example "name:=string"

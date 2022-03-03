@@ -78,8 +78,9 @@ TimeAndDate
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -568,6 +569,12 @@ func resourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessConditionByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -591,6 +598,12 @@ func resourceNetworkAccessConditionsRead(ctx context.Context, d *schema.Resource
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessConditionByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessConditionByID response to parameters",
 				err))
 			return diags
 		}
@@ -656,6 +669,7 @@ func resourceNetworkAccessConditionsUpdate(ctx context.Context, d *schema.Resour
 				"Failure at UpdateNetworkAccessConditionByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNetworkAccessConditionsRead(ctx, d, m)

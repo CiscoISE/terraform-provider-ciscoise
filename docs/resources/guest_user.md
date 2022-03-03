@@ -4,7 +4,7 @@ page_title: "ciscoise_guest_user Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on GuestUser.
-  This resource allows the client to update a guest user by name.This resource deletes a guest user.This resource allows the client to update a guest user by ID.This resource deletes a guest user by ID.This resource creates a guest user.
+  This resource allows the client to update a guest user by name.This resource deletes a guest user.This resource allows the client to update a guest user by ID.This resource deletes a guest user by ID.This resource creates a guest user.This resource allows the client to update a guest user email by ID.
 ---
 
 # ciscoise_guest_user (Resource)
@@ -20,6 +20,8 @@ It manages create, read, update and delete operations on GuestUser.
 - This resource deletes a guest user by ID.
 
 - This resource creates a guest user.
+
+- This resource allows the client to update a guest user email by ID.
 
 ## Example Usage
 
@@ -83,7 +85,7 @@ output "ciscoise_guest_user_example" {
 ### Read-Only
 
 - **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`

@@ -31,8 +31,9 @@ func resourceCertificateProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -262,6 +263,12 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetCertificateProfileByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -285,6 +292,12 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetCertificateProfileByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetCertificateProfileByID response to parameters",
 				err))
 			return diags
 		}
@@ -350,6 +363,7 @@ func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceDat
 				"Failure at UpdateCertificateProfileByID, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceCertificateProfileRead(ctx, d, m)

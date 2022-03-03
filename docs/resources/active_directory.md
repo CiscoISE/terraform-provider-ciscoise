@@ -3,17 +3,19 @@
 page_title: "ciscoise_active_directory Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
-  It manages create, read and delete operations on ActiveDirectory.
-  This resource deletes an AD join point from Cisco ISE.This resource creates an AD join point in Cisco ISE.
+  It manages create, read, update* and delete operations on ActiveDirectory.
+  This resource deletes an AD join point from Cisco ISE.This resource creates an AD join point in Cisco ISE.*This resource action loads domain groups configuration from Active Directory into Cisco ISE.
 ---
 
 # ciscoise_active_directory (Resource)
 
-It manages create, read and delete operations on ActiveDirectory.
+It manages create, read, update* and delete operations on ActiveDirectory.
 
 - This resource deletes an AD join point from Cisco ISE.
 
 - This resource creates an AD join point in Cisco ISE.
+
+- *This resource action loads domain groups configuration from Active Directory into Cisco ISE.
 
 ## Example Usage
 
@@ -103,7 +105,7 @@ output "ciscoise_active_directory_example" {
 ### Read-Only
 
 - **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String)
+- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
@@ -116,6 +118,7 @@ Optional:
 - **advanced_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--advanced_settings))
 - **description** (String) No character restriction
 - **domain** (String) The AD domain. Alphanumeric, hyphen (-) and dot (.) characters are allowed
+- **enable_domain_allowed_list** (String)
 - **enable_domain_white_list** (String)
 - **id** (String) Resource UUID value
 - **name** (String) Resource Name. Maximum 32 characters allowed. Allowed characters are alphanumeric and .-_/\\ characters

@@ -39,8 +39,9 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -342,7 +343,13 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSystemCertificates response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetSystemCertificateByID")
@@ -363,6 +370,12 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSystemCertificateByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSystemCertificateByID response to parameters",
 				err))
 			return diags
 		}
@@ -419,6 +432,7 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 				"Failure at UpdateSystemCert, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceSystemCertificateRead(ctx, d, m)

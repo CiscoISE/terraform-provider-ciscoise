@@ -39,8 +39,9 @@ standalone node.
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -242,7 +243,13 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
-
+		if err := d.Set("parameters", remove_parameters(vItem1, "ip_address", "node_status")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeploymentNodes response to parameters",
+				err))
+			return diags
+		}
+		return diags
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetNodeDetails")
@@ -264,6 +271,12 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNodeDetails response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItem2, "ip_address", "node_status")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNodeDetails response to parameters",
 				err))
 			return diags
 		}
@@ -330,6 +343,7 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 				"Failure at UpdateDeploymentNode, unexpected response", ""))
 			return diags
 		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceNodeDeploymentRead(ctx, d, m)

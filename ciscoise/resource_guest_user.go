@@ -25,6 +25,8 @@ func resourceGuestUser() *schema.Resource {
 - This resource deletes a guest user by ID.
 
 - This resource creates a guest user.
+
+- This resource allows the client to update a guest user email by ID.
 `,
 
 		CreateContext: resourceGuestUserCreate,
@@ -37,8 +39,9 @@ func resourceGuestUser() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
+				Description: `Unix timestamp records the last time that the resource was updated.`,
+				Type:        schema.TypeString,
+				Computed:    true,
 			},
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -212,7 +215,6 @@ func resourceGuestUser() *schema.Resource {
 				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-
 						"custom_fields": &schema.Schema{
 							Description: `Key value map`,
 							Type:        schema.TypeMap,
@@ -456,6 +458,12 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestUserByName response to parameters",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -479,6 +487,12 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGuestUserByID response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestUserByID response to parameters",
 				err))
 			return diags
 		}
@@ -544,6 +558,36 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 				"Failure at UpdateGuestUserByID, unexpected response", ""))
 			return diags
 		}
+		if _, ok := d.GetOk("parameters"); ok {
+			if _, ok := d.GetOk("parameters.0"); ok {
+				if _, ok := d.GetOk("parameters.0.guest_info"); ok {
+					if d.HasChange("parameters.0.guest_info") {
+						if _, ok := d.GetOk("parameters.0.guest_info.0"); ok {
+							if vPortalID, okPortalID := d.GetOk("parameters.0.portal_id"); okPortalID {
+								vvPortalID := vPortalID.(string)
+								if d.HasChange("parameters.0.guest_info.0.email_address") {
+									additional_data := []isegosdk.RequestGuestUserUpdateGuestUserEmailOperationAdditionalDataAdditionalData{}
+									sender_email := d.Get("parameters.0.guest_info.0.email_address")
+									sender_email_additional_data := isegosdk.RequestGuestUserUpdateGuestUserEmailOperationAdditionalDataAdditionalData{
+										Name:  "senderEmail",
+										Value: sender_email.(string),
+									}
+									additional_data = append(additional_data, sender_email_additional_data)
+									operational_data := isegosdk.RequestGuestUserUpdateGuestUserEmailOperationAdditionalData{AdditionalData: &additional_data}
+									request3 := &isegosdk.RequestGuestUserUpdateGuestUserEmail{}
+									request3.OperationAdditionalData = &operational_data
+									response3, err := client.GuestUser.UpdateGuestUserEmail(vvID, vvPortalID, request3)
+									if err != nil || response3 == nil {
+										log.Printf("[ERROR] response for UpdateGuestUserEmail operation => %v", response3.String())
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		_ = d.Set("last_updated", getUnixTimeString())
 	}
 
 	return resourceGuestUserRead(ctx, d, m)
