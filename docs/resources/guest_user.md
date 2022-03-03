@@ -4,7 +4,7 @@ page_title: "ciscoise_guest_user Resource - terraform-provider-ciscoise"
 subcategory: ""
 description: |-
   It manages create, read, update and delete operations on GuestUser.
-  This resource allows the client to update a guest user by name.This resource deletes a guest user.This resource allows the client to update a guest user by ID.This resource deletes a guest user by ID.This resource creates a guest user.This resource allows the client to change the sponsor password.This resource allows the client to update a guest user email by ID.This resource allows the client to update a guest user sms by ID.
+  This resource allows the client to update a guest user by name.This resource deletes a guest user.This resource allows the client to update a guest user by ID.This resource deletes a guest user by ID.This resource creates a guest user.This resource allows the client to update a guest user email by ID.
 ---
 
 # ciscoise_guest_user (Resource)
@@ -21,11 +21,7 @@ It manages create, read, update and delete operations on GuestUser.
 
 - This resource creates a guest user.
 
-- This resource allows the client to change the sponsor password.
-
 - This resource allows the client to update a guest user email by ID.
-
-- This resource allows the client to update a guest user sms by ID.
 
 ## Example Usage
 
@@ -96,9 +92,6 @@ output "ciscoise_guest_user_example" {
 
 Optional:
 
-- **change_email_address** (String) Flag to allow call to change update a guest user email by ID.
-- **change_password** (String) Flag to allow call to change the sponsor password.
-- **change_sms** (String) Flag to allow call to change update a guest user sms by ID.
 - **custom_fields** (Map of String) Key value map
 - **description** (String)
 - **guest_access_info** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--guest_access_info))
