@@ -1,4 +1,4 @@
-## 0.3.0-beta (March 03, 2022)
+## 0.3.0-beta (March 17, 2022)
 
 IMPROVEMENTS:
 
