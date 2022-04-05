@@ -72,6 +72,7 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"ciscoise_backup_restore":                               resourceBackupRestore(),
 			"ciscoise_system_certificate":                           resourceSystemCertificate(),
 			"ciscoise_trusted_certificate":                          resourceTrustedCertificate(),
 			"ciscoise_node_group":                                   resourceNodeGroup(),
