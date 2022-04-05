@@ -142,6 +142,7 @@ func resourceBackupRestoreCreate(ctx context.Context, d *schema.ResourceData, m 
 			err))
 		return diags
 	}
+	_ = d.Set("last_updated", getUnixTimeString())
 
 	d.SetId(getUnixTimeString())
 	return resourceBackupRestoreRead(ctx, d, m)
