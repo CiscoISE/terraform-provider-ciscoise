@@ -72,6 +72,13 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"ciscoise_node_deployment_sync":                         resourceNodeDeploymentSync(),
+			"ciscoise_selfsigned_certificate_generate":              resourceSelfsignedCertificateGenerate(),
+			"ciscoise_renew_certificate":                            resourceRenewCertificate(),
+			"ciscoise_ise_root_ca_regenerate":                       resourceIseRootCaRegenerate(),
+			"ciscoise_bind_signed_certificate":                      resourceBindSignedCertificate(),
+			"ciscoise_backup_schedule_config_update":                resourceBackupScheduleConfigUpdate(),
+			"ciscoise_backup_schedule_config":                       resourceBackupScheduleConfig(),
 			"ciscoise_backup_restore":                               resourceBackupRestore(),
 			"ciscoise_system_certificate":                           resourceSystemCertificate(),
 			"ciscoise_trusted_certificate":                          resourceTrustedCertificate(),
