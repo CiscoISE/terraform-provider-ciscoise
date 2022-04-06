@@ -72,6 +72,7 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"ciscoise_pxgrid_access_secret":                         resourcePxgridAccessSecret(),
 			"ciscoise_node_deployment_sync":                         resourceNodeDeploymentSync(),
 			"ciscoise_selfsigned_certificate_generate":              resourceSelfsignedCertificateGenerate(),
 			"ciscoise_renew_certificate":                            resourceRenewCertificate(),
