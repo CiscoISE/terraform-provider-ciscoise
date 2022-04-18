@@ -58,7 +58,7 @@ func resourceEgressMatrixCellSetAllStatusCreate(ctx context.Context, d *schema.R
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	vStatus := d.Get("status")
+	vStatus := d.Get("parameters.0.status")
 	vvStatus := vStatus.(string)
 	response1, err := client.EgressMatrixCell.SetAllCellsStatus(vvStatus)
 	if err != nil || response1 == nil {
