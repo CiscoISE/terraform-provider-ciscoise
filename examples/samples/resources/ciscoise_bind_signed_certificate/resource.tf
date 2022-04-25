@@ -1,4 +1,13 @@
 
+terraform {
+  required_providers {
+    ciscoise = {
+      version = "0.3.0-beta"
+      source  = "hashicorp.com/edu/ciscoise"
+    }
+  }
+}
+
 resource "ciscoise_bind_signed_certificate" "example" {
   provider                              = ciscoise
   lifecycle {
@@ -12,7 +21,7 @@ resource "ciscoise_bind_signed_certificate" "example" {
     allow_replacement_of_portal_group_tag = "false"
     data                                  = "string"
     eap                                   = "false"
-    host_name                             = "string"
+    //host_name                             = "string"
     id                                    = "string"
     ims                                   = "false"
 

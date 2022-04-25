@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    ciscoise = {
+      version = "0.3.0-beta"
+      source  = "hashicorp.com/edu/ciscoise"
+    }
+  }
+}
 
 resource "ciscoise_backup_schedule_config" "example" {
   provider              = ciscoise
