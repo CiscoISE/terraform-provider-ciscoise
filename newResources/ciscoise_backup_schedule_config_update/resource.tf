@@ -1,6 +1,10 @@
 
 resource "ciscoise_backup_schedule_config_update" "example" {
   provider              = ciscoise
+   lifecycle {
+    create_before_destroy = true
+  }
+  parameters{
   backup_description    = "string"
   backup_encryption_key = "string"
   backup_name           = "string"
@@ -12,4 +16,5 @@ resource "ciscoise_backup_schedule_config_update" "example" {
   status                = "string"
   time                  = "string"
   week_day              = "string"
+  }
 }

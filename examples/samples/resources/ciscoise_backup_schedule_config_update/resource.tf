@@ -1,5 +1,13 @@
 
-resource "ciscoise_backup_schedule_config" "example" {
+terraform {
+  required_providers {
+    ciscoise = {
+      version = "0.3.0-beta"
+      source  = "hashicorp.com/edu/ciscoise"
+    }
+  }
+}
+resource "ciscoise_backup_schedule_config_update" "example" {
   provider              = ciscoise
    lifecycle {
     create_before_destroy = true
