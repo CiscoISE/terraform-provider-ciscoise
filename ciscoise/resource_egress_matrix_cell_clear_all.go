@@ -49,6 +49,7 @@ func resourceEgressMatrixCellClearAllCreate(ctx context.Context, d *schema.Resou
 	log.Printf("[DEBUG] Beginning ClearAllMatrixCells create")
 	log.Printf("[DEBUG] Missing ClearAllMatrixCells create on Cisco ISE. It will only be create it on Terraform")
 	client := m.(*isegosdk.Client)
+	d.Set("parameters", nil)
 
 	var diags diag.Diagnostics
 
