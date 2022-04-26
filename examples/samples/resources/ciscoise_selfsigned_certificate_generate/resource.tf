@@ -1,4 +1,13 @@
 
+terraform {
+  required_providers {
+    ciscoise = {
+      version = "0.3.0-beta"
+      source  = "hashicorp.com/edu/ciscoise"
+    }
+  }
+}
+
 resource "ciscoise_selfsigned_certificate_generate" "example" {
   provider                                   = ciscoise
   lifecycle {
