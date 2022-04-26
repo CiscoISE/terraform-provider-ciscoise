@@ -63,7 +63,7 @@ func resourceSgToVnToVLANBulkRequestCreate(ctx context.Context, d *schema.Resour
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	request1 := expandRequestSgToVnToVLANBulkRequestBulkRequestForSecurityGroupsToVnToVLAN(ctx, "parameters", d)
+	request1 := expandRequestSgToVnToVLANBulkRequestBulkRequestForSecurityGroupsToVnToVLAN(ctx, "parameters.0", d)
 	response1, err := client.SecurityGroupToVirtualNetwork.BulkRequestForSecurityGroupsToVnToVLAN(request1)
 	if err != nil || response1 == nil {
 		if response1 != nil {

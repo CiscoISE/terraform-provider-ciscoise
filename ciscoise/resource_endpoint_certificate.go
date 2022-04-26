@@ -109,7 +109,7 @@ func resourceEndpointCertificateCreate(ctx context.Context, d *schema.ResourceDa
 
 	var diags diag.Diagnostics
 	log.Printf("[DEBUG] Selected method: CreateEndpointCertificate")
-	request1 := expandRequestEndpointCertificateCreateEndpointCertificate(ctx, "parameters", d)
+	request1 := expandRequestEndpointCertificateCreateEndpointCertificate(ctx, "parameters.0", d)
 
 	response1, _, err := client.EndpointCertificate.CreateEndpointCertificate(request1)
 

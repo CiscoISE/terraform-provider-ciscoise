@@ -63,7 +63,7 @@ func resourceSgACLBulkRequestCreate(ctx context.Context, d *schema.ResourceData,
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	request1 := expandRequestSgACLBulkRequestBulkRequestForSecurityGroupsACL(ctx, "parameters", d)
+	request1 := expandRequestSgACLBulkRequestBulkRequestForSecurityGroupsACL(ctx, "parameters.0", d)
 
 	response1, err := client.SecurityGroupsACLs.BulkRequestForSecurityGroupsACL(request1)
 	if err != nil || response1 == nil {
