@@ -207,7 +207,7 @@ func resourceEndpointRegisterCreate(ctx context.Context, d *schema.ResourceData,
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	request1 := expandRequestEndpointRegisterRegisterEndpoint(ctx, "parameters", d)
+	request1 := expandRequestEndpointRegisterRegisterEndpoint(ctx, "parameters.0", d)
 
 	response1, err := client.Endpoint.RegisterEndpoint(request1)
 

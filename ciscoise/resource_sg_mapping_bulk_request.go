@@ -63,7 +63,7 @@ func resourceSgMappingBulkRequestCreate(ctx context.Context, d *schema.ResourceD
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	request1 := expandRequestSgMappingBulkRequestBulkRequestForIPToSgtMapping(ctx, "parameters", d)
+	request1 := expandRequestSgMappingBulkRequestBulkRequestForIPToSgtMapping(ctx, "parameters.0", d)
 
 	response1, err := client.IPToSgtMapping.BulkRequestForIPToSgtMapping(request1)
 	if err != nil || response1 == nil {

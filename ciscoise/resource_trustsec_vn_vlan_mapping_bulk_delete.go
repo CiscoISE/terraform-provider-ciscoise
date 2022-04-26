@@ -71,7 +71,7 @@ func resourceTrustsecVnVLANMappingBulkDeleteCreate(ctx context.Context, d *schem
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	request1 := expandRequestTrustsecVnVLANMappingBulkDeleteBulkDeleteVnVLANMappings(ctx, "parameters", d)
+	request1 := expandRequestTrustsecVnVLANMappingBulkDeleteBulkDeleteVnVLANMappings(ctx, "parameters.0", d)
 	response1, restyResp1, err := client.VnVLANMapping.BulkDeleteVnVLANMappings(request1)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {

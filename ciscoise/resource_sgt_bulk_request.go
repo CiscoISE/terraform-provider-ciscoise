@@ -63,7 +63,7 @@ func resourceSgtBulkRequestCreate(ctx context.Context, d *schema.ResourceData, m
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	request1 := expandRequestSgtBulkRequestBulkRequestForSecurityGroup(ctx, "parameters", d)
+	request1 := expandRequestSgtBulkRequestBulkRequestForSecurityGroup(ctx, "parameters.0", d)
 	response1, err := client.SecurityGroups.BulkRequestForSecurityGroup(request1)
 	if err != nil || response1 == nil {
 		if response1 != nil {

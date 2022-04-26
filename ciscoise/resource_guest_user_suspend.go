@@ -131,7 +131,7 @@ func resourceGuestUserSuspendCreate(ctx context.Context, d *schema.ResourceData,
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: SuspendGuestUserByID")
 		vvID := vID.(string)
-		request2 := expandRequestGuestUserSuspendSuspendGuestUserByID(ctx, "parameters", d)
+		request2 := expandRequestGuestUserSuspendSuspendGuestUserByID(ctx, "parameters.0", d)
 
 		response2, err := client.GuestUser.SuspendGuestUserByID(vvID, request2)
 

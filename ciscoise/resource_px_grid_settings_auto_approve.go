@@ -67,7 +67,7 @@ func resourcePxGridSettingsAutoApproveCreate(ctx context.Context, d *schema.Reso
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	request1 := expandRequestPxGridSettingsAutoApproveAutoapprovePxGridSettings(ctx, "parameters", d)
+	request1 := expandRequestPxGridSettingsAutoApproveAutoapprovePxGridSettings(ctx, "parameters.0", d)
 	response1, err := client.PxGridSettings.AutoapprovePxGridSettings(request1)
 	if err != nil || response1 == nil {
 		if response1 != nil {

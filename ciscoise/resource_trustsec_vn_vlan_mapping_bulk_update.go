@@ -123,7 +123,7 @@ func resourceTrustsecVnVLANMappingBulkUpdateCreate(ctx context.Context, d *schem
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-	request1 := expandRequestTrustsecVnVLANMappingBulkUpdateBulkUpdateVnVLANMappings(ctx, "parameters", d)
+	request1 := expandRequestTrustsecVnVLANMappingBulkUpdateBulkUpdateVnVLANMappings(ctx, "parameters.0", d)
 	response1, restyResp1, err := client.VnVLANMapping.BulkUpdateVnVLANMappings(request1)
 
 	if err != nil || response1 == nil {
