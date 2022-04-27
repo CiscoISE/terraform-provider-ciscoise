@@ -50,7 +50,7 @@ func resourceSgMappingDeployAllCreate(ctx context.Context, d *schema.ResourceDat
 	log.Printf("[DEBUG] Beginning DeployAllIPToSgtMapping create")
 	log.Printf("[DEBUG] Missing DeployAllIPToSgtMapping create on Cisco ISE. It will only be create it on Terraform")
 	client := m.(*isegosdk.Client)
-
+	d.Set("parameters", nil)
 	var diags diag.Diagnostics
 	response1, err := client.IPToSgtMapping.DeployAllIPToSgtMapping()
 	if err != nil || response1 == nil {
