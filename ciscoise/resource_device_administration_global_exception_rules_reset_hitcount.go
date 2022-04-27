@@ -39,6 +39,16 @@ func resourceDeviceAdministrationGlobalExceptionRulesResetHitcount() *schema.Res
 					},
 				},
 			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Required: true,
+				MaxItems: 1,
+				MinItems: 1,
+				ForceNew: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{},
+				},
+			},
 		},
 	}
 }
@@ -49,6 +59,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesResetHitcountCreate(ctx con
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
+	d.Set("parameters", nil)
 	response1, restyResp1, err := client.DeviceAdministrationAuthorizationGlobalExceptionRules.ResetHitCountsDeviceAdminGlobalExceptions()
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
