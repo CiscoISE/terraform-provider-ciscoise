@@ -58,7 +58,7 @@ func resourceDeviceAdministrationPolicySetResetHitcountCreate(ctx context.Contex
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-
+	d.Set("parameters", nil)
 	response1, restyResp1, err := client.DeviceAdministrationPolicySet.ResetHitCountsDeviceAdminPolicySets()
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
