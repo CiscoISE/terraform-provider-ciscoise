@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    ciscoise = {
+      version = "0.3.0-beta"
+      source  = "hashicorp.com/edu/ciscoise"
+    }
+  }
+}
 
 resource "ciscoise_anc_policy_bulk_request" "example" {
   provider = ciscoise
