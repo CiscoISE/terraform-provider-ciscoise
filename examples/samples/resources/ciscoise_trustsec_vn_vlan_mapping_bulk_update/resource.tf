@@ -14,14 +14,12 @@ resource "ciscoise_trustsec_vn_vlan_mapping_bulk_update" "example" {
   }
   parameters{
     payload {
-      id              = "string"
-      is_data         = "false"
+      id              = "92e287ae-3dbc-4d52-ae96-9f43f7025723"
+      is_data         = "true"
       is_default_vlan = "false"
-      last_update     = "string"
-      max_value       = 1
-      name            = "string"
-      vn_id           = "string"
-      vn_name         = "string"
+      max_value       = 12
+      name            = "vlan1_3"
+      vn_name         = "vn1"
     }
   }
 }
