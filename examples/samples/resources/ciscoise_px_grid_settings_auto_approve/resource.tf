@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    ciscoise = {
+      version = "0.3.0-beta"
+      source  = "hashicorp.com/edu/ciscoise"
+    }
+  }
+}
 
 resource "ciscoise_px_grid_settings_auto_approve" "example" {
   provider                         = ciscoise
