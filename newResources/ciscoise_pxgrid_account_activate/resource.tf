@@ -1,6 +1,11 @@
 
 resource "ciscoise_pxgrid_account_activate" "example" {
   provider    = ciscoise
-  description = "string"
+  lifecycle {
+    create_before_destroy = true
+  }
 
+  parameters{
+    description = "string"
+  }
 }
