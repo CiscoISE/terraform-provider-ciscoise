@@ -51,6 +51,7 @@ func resourcePxgridServiceReregisterCreate(ctx context.Context, d *schema.Resour
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
+	d.Set("parameters", nil)
 
 	response1, err := client.Provider.ReregisterService()
 	if err != nil || response1 == nil {
