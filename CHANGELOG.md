@@ -1,3 +1,84 @@
+## 0.4.0-beta (April 28, 2022)
+
+FEATURES:
+
+* **New Resource:** `ciscoise_backup_restore`
+* **New Resource:** `ciscoise_backup_schedule_config_update`
+* **New Resource:** `ciscoise_backup_schedule_config`
+* **New Resource:** `ciscoise_ise_root_ca_regenerate`
+* **New Resource:** `ciscoise_renew_certificate`
+* **New Resource:** `ciscoise_bind_signed_certificate`
+* **New Resource:** `ciscoise_selfsigned_certificate_generate`
+* **New Resource:** `ciscoise_node_standalone_to_primary`
+* **New Resource:** `ciscoise_node_secondary_to_primary`
+* **New Resource:** `ciscoise_node_primary_to_standalone`
+* **New Resource:** `ciscoise_node_deployment_sync`
+* **New Resource:** `ciscoise_trustsec_sg_vn_mapping_bulk_create`
+* **New Resource:** `ciscoise_trustsec_sg_vn_mapping_bulk_delete`
+* **New Resource:** `ciscoise_trustsec_sg_vn_mapping_bulk_update`
+* **New Resource:** `ciscoise_trustsec_vn_bulk_create`
+* **New Resource:** `ciscoise_trustsec_vn_bulk_delete`
+* **New Resource:** `ciscoise_trustsec_vn_bulk_update`
+* **New Resource:** `ciscoise_trustsec_vn_vlan_mapping_bulk_delete`
+* **New Resource:** `ciscoise_trustsec_vn_vlan_mapping_bulk_update`
+* **New Resource:** `ciscoise_pxgrid_access_secret`
+* **New Resource:** `ciscoise_pxgrid_account_activate`
+* **New Resource:** `ciscoise_pxgrid_account_create`
+* **New Resource:** `ciscoise_pxgrid_authorization`
+* **New Resource:** `ciscoise_pxgrid_service_lookup`
+* **New Resource:** `ciscoise_pxgrid_service_register`
+* **New Resource:** `ciscoise_pxgrid_service_reregister`
+* **New Resource:** `ciscoise_pxgrid_service_unregister`
+* **New Resource:** `ciscoise_device_administration_authentication_reset_hitcount`
+* **New Resource:** `ciscoise_device_administration_authorization_reset_hitcount`
+* **New Resource:** `ciscoise_device_administration_local_exception_rules_reset_hitcount`
+* **New Resource:** `ciscoise_device_administration_global_exception_rules_reset_hitcount`
+* **New Resource:** `ciscoise_device_administration_policy_set_reset_hitcount`
+* **New Resource:** `ciscoise_active_directory_join_domain`
+* **New Resource:** `ciscoise_active_directory_join_domain_with_all_nodes`
+* **New Resource:** `ciscoise_active_directory_leave_domain`
+* **New Resource:** `ciscoise_active_directory_leave_domain_with_all_nodes`
+* **New Resource:** `ciscoise_anc_endpoint_bulk_request`
+* **New Resource:** `ciscoise_anc_policy_bulk_request`
+* **New Resource:** `ciscoise_egress_matrix_cell_bulk_request`
+* **New Resource:** `ciscoise_egress_matrix_cell_clear_all`
+* **New Resource:** `ciscoise_egress_matrix_cell_clone`
+* **New Resource:** `ciscoise_egress_matrix_cell_set_all_status`
+* **New Resource:** `ciscoise_endpoint_deregister`
+* **New Resource:** `ciscoise_endpoint_bulk_request`
+* **New Resource:** `ciscoise_endpoint_register`
+* **New Resource:** `ciscoise_endpoint_certificate`
+* **New Resource:** `ciscoise_guest_user_approve`
+* **New Resource:** `ciscoise_guest_user_bulk_request`
+* **New Resource:** `ciscoise_guest_user_deny`
+* **New Resource:** `ciscoise_guest_user_reinstate`
+* **New Resource:** `ciscoise_guest_user_reinstate`
+* **New Resource:** `ciscoise_guest_user_reset_password`
+* **New Resource:** `ciscoise_guest_user_suspend`
+* **New Resource:** `ciscoise_guest_user_suspend`
+* **New Resource:** `ciscoise_network_device_bulk_request`
+* **New Resource:** `ciscoise_px_grid_settings_auto_approve`
+* **New Resource:** `ciscoise_sg_acl_bulk_request`
+* **New Resource:** `ciscoise_sg_mapping_deploy`
+* **New Resource:** `ciscoise_sg_mapping_bulk_request`
+* **New Resource:** `ciscoise_sg_mapping_deploy_all`
+* **New Resource:** `ciscoise_sg_mapping_group_deploy`
+* **New Resource:** `ciscoise_sg_mapping_group_bulk_request`
+* **New Resource:** `ciscoise_sg_mapping_group_deploy_all`
+* **New Resource:** `ciscoise_sgt_bulk_request`
+* **New Resource:** `ciscoise_sg_to_vn_to_vlan_bulk_request`
+* **New Resource:** `ciscoise_sxp_connections_bulk_request`
+* **New Resource:** `ciscoise_sxp_local_bindings_bulk_request`
+* **New Resource:** `ciscoise_sxp_vpns_bulk_request`
+* **New Resource:** `ciscoise_threat_vulnerabilities_clear`
+* **New Resource:** `ciscoise_network_access_authentication_rules_reset_hitcount`
+* **New Resource:** `ciscoise_network_access_authorization_rules_reset_hitcount`
+* **New Resource:** `ciscoise_network_access_local_exception_rules_reset_hitcounts`
+* **New Resource:** `ciscoise_network_access_global_exception_rules_reset_hitcount`
+* **New Resource:** `ciscoise_network_access_policy_set_reset_hitcount`
+* **New Resource:** `ciscoise_mnt_session_delete_all`
+
+
 ## 0.3.0-beta (March 17, 2022)
 
 IMPROVEMENTS:
