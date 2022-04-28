@@ -1,15 +1,3 @@
-terraform {
-  required_providers {
-    ciscoise = {
-      version = "0.3.0-beta"
-      source  = "hashicorp.com/edu/ciscoise"
-    }
-  }
-}
-
-provider "ciscoise" {
-}
-
 resource "ciscoise_network_access_authentication_rules_reset_hitcount" "example" {
   provider  = ciscoise
   lifecycle {
