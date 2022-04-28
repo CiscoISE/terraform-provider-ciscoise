@@ -72,6 +72,13 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"ciscoise_node_standalone_to_primary":                                  resourceNodeStandaloneToPrimary(),
+			"ciscoise_node_secondary_to_primary":                                   resourceNodeSecondaryToPrimary(),
+			"ciscoise_node_primary_to_standalone":                                  resourceNodePrimaryToStandalone(),
+			"ciscoise_pxgrid_authorization":                                        resourcePxgridAuthorization(),
+			"ciscoise_pxgrid_service_unregister":                                   resourcePxgridServiceUnregister(),
+			"ciscoise_sg_mapping_group_deploy_all":                                 resourceSgMappingGroupDeployAll(),
+			"ciscoise_mnt_session_delete_all":                                      resourceMntSessionDeleteAll(),
 			"ciscoise_network_access_policy_set_reset_hitcount":                    resourceNetworkAccessPolicySetResetHitcount(),
 			"ciscoise_network_access_global_exception_rules_reset_hitcount":        resourceNetworkAccessGlobalExceptionRulesResetHitcount(),
 			"ciscoise_network_access_local_exception_rules_reset_hitcounts":        resourceNetworkAccessLocalExceptionRulesResetHitcounts(),
