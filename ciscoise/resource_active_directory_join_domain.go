@@ -16,7 +16,7 @@ import (
 func resourceActiveDirectoryJoinDomain() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
-- This data source action joins a Cisco ISE node to an Active Directory domain.
+- This resource joins a Cisco ISE node to an Active Directory domain.
 `,
 
 		CreateContext: resourceActiveDirectoryJoinDomainCreate,

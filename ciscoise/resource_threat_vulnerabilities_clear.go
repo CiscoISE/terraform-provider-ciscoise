@@ -15,7 +15,7 @@ import (
 func resourceThreatVulnerabilitiesClear() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ClearThreatsAndVulnerabilities.
-- This data source action allows the client to delete the ThreatContext and Threat events that are associated with the
+- This resource allows the client to delete the ThreatContext and Threat events that are associated with the
 given MAC Address.
 `,
 

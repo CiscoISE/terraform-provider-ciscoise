@@ -14,7 +14,7 @@ import (
 func resourceNodePrimaryToStandalone() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Node Deployment.
-- This data source action changes the primary PAN in a single node cluster on which the API is invoked, to a standalone
+- This resource changes the primary PAN in a single node cluster on which the API is invoked, to a standalone
 node.
 `,
 

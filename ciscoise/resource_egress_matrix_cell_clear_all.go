@@ -14,7 +14,7 @@ import (
 func resourceEgressMatrixCellClearAll() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on EgressMatrixCell.
-- This data source action allows the client to clear all the egress matrix cells.
+- This resource allows the client to clear all the egress matrix cells.
 `,
 
 		CreateContext: resourceEgressMatrixCellClearAllCreate,

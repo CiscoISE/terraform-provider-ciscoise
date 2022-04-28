@@ -15,7 +15,7 @@ import (
 func resourceRenewCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Certificates.
-		- This data source action initiates regeneration of certificates. Response contains ID which can be used to track the
+		- This resource initiates regeneration of certificates. Response contains ID which can be used to track the
 		status
 		`,
 

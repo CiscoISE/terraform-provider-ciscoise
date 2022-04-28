@@ -14,7 +14,7 @@ import (
 func resourceGuestUserDeny() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on GuestUser.
-- This data source action allows the client to deny a guest user by ID.
+- This resource allows the client to deny a guest user by ID.
 `,
 
 		CreateContext: resourceGuestUserDenyCreate,

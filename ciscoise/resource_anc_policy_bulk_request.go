@@ -15,7 +15,7 @@ import (
 func resourceAncPolicyBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on AncPolicy.
-- This data source action allows the client to submit the bulk request.
+- This resource allows the client to submit the bulk request.
 `,
 
 		CreateContext: resourceAncPolicyBulkRequestCreate,

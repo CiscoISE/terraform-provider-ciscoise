@@ -15,7 +15,7 @@ import (
 func resourceSgACLBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on SecurityGroupsACLs.
-- This data source action allows the client to submit the bulk request.
+- This resource allows the client to submit the bulk request.
 `,
 
 		CreateContext: resourceSgACLBulkRequestCreate,
