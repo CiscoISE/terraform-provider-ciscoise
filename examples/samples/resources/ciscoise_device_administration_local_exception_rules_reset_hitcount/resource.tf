@@ -8,12 +8,12 @@ terraform {
 }
 
 resource "ciscoise_device_administration_local_exception_rules_reset_hitcount" "example" {
-  provider  = ciscoise
+  provider = ciscoise
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
-     policy_id = "cb32c3bc-c720-40c3-83e4-8897f9dd6943"
+  parameters {
+    policy_id = "cb32c3bc-c720-40c3-83e4-8897f9dd6943"
   }
 
 }

@@ -9,10 +9,10 @@ terraform {
 
 resource "ciscoise_trustsec_vn_vlan_mapping_bulk_update" "example" {
   provider = ciscoise
-   lifecycle {
+  lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     payload {
       id              = "92e287ae-3dbc-4d52-ae96-9f43f7025723"
       is_data         = "false"

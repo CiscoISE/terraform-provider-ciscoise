@@ -9,11 +9,11 @@ terraform {
 }
 
 resource "ciscoise_selfsigned_certificate_generate" "example" {
-  provider                                   = ciscoise
+  provider = ciscoise
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     admin                                      = "false"
     allow_extended_validity                    = "false"
     allow_portal_tag_transfer_for_same_subject = "false"

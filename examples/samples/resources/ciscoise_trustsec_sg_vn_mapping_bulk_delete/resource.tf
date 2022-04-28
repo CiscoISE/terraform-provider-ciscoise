@@ -9,10 +9,10 @@ terraform {
 
 resource "ciscoise_trustsec_sg_vn_mapping_bulk_delete" "example" {
   provider = ciscoise
-   lifecycle {
+  lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     payload = ["string"]
   }
 }

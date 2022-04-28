@@ -8,11 +8,11 @@ terraform {
 }
 
 resource "ciscoise_pxgrid_account_activate" "example" {
-  provider    = ciscoise
+  provider = ciscoise
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     description = "string"
   }
 }

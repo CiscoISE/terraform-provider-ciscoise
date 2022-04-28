@@ -13,7 +13,7 @@ resource "ciscoise_pxgrid_service_reregister" "example" {
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
 
   }
 }

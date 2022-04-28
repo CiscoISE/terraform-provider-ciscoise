@@ -12,7 +12,7 @@ resource "ciscoise_pxgrid_access_secret" "example" {
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     peer_node_name = "string"
   }
 }
