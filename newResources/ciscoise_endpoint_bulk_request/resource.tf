@@ -1,15 +1,3 @@
-terraform {
-  required_providers {
-    ciscoise = {
-      version = "0.3.0-beta"
-      source  = "hashicorp.com/edu/ciscoise"
-    }
-  }
-}
-
-provider "ciscoise" {
-}
-
 resource "ciscoise_endpoint_bulk_request" "example" {
   provider = ciscoise
   lifecycle {
