@@ -15,7 +15,7 @@ import (
 func resourcePxGridSettingsAutoApprove() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on PxGridSettings.
-- This data source action allows the client to auto approve the pxGrid settings.
+- This resource allows the client to auto approve the pxGrid settings.
 `,
 
 		CreateContext: resourcePxGridSettingsAutoApproveCreate,

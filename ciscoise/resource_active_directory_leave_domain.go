@@ -16,7 +16,7 @@ import (
 func resourceActiveDirectoryLeaveDomain() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on ActiveDirectory.
-- This data source action makes a Cisco ISE node to leave an Active Directory domain.
+- This resource makes a Cisco ISE node to leave an Active Directory domain.
 `,
 
 		CreateContext: resourceActiveDirectoryLeaveDomainCreate,

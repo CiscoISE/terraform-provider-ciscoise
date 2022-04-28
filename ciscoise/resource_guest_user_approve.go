@@ -14,7 +14,7 @@ import (
 func resourceGuestUserApprove() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on GuestUser.
-- This data source action allows the client to approve a guest user by ID.
+- This resource allows the client to approve a guest user by ID.
 `,
 
 		CreateContext: resourceGuestUserApproveCreate,

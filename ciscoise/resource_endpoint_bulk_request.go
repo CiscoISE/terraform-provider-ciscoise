@@ -15,7 +15,7 @@ import (
 func resourceEndpointBulkRequest() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on endpoint.
-- This data source action allows the client to submit the bulk request.
+- This resource allows the client to submit the bulk request.
 `,
 
 		CreateContext: resourceEndpointBulkRequestCreate,

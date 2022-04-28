@@ -18,7 +18,7 @@ func resourceBindSignedCertificate() *schema.Resource {
 - Bind CA Signed Certificate.
 
 NOTE:
-This data source action requires an existing Certificate Signing Request, and the root certificate must already be
+This resource requires an existing Certificate Signing Request, and the root certificate must already be
 trusted.
 
 NOTE:

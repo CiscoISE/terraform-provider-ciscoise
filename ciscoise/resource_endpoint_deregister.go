@@ -14,7 +14,7 @@ import (
 func resourceEndpointDeregister() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on endpoint.
-		- This data source action allows the client to de-register an endpoint.
+		- This resource allows the client to de-register an endpoint.
 		`,
 
 		CreateContext: resourceEndpointDeregisterCreate,

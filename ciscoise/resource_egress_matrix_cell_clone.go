@@ -14,7 +14,7 @@ import (
 func resourceEgressMatrixCellClone() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs update operation on EgressMatrixCell.
-- This data source action allows the client to clone an egress matrix cell.
+- This resource allows the client to clone an egress matrix cell.
 `,
 
 		CreateContext: resourceEgressMatrixCellCloneCreate,
