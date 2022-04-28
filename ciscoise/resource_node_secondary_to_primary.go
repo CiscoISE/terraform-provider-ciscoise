@@ -2,6 +2,7 @@ package ciscoise
 
 import (
 	"context"
+
 	"log"
 
 	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
@@ -10,23 +11,17 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceNodeStandaloneToPrimary() *schema.Resource {
+func resourceNodeSecondaryToPrimary() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs create operation on Node Deployment.
-- This resource promotes the standalone node on which the API is invoked to the primary Policy Administration
-node (PAN).
+- Execute this API in the secondary PAN in the cluster to promote the node to primary PAN.  Ensure that the API Gateway
+setting is enabled in the secondary PAN.
+ Approximate execution time 300 seconds.
 `,
 
-		CreateContext: resourceNodeStandaloneToPrimaryCreate,
-		ReadContext:   resourceNodeStandaloneToPrimaryRead,
-		DeleteContext: resourceNodeStandaloneToPrimaryDelete,
-		Importer: &schema.ResourceImporter{
-			StateContext: schema.ImportStatePassthroughContext,
-		},
-		Timeouts: &schema.ResourceTimeout{
-			Create: schema.DefaultTimeout(HOTPATCH_INSTALL_TIMEOUT_SLEEP),
-			Delete: schema.DefaultTimeout(HOTPATCH_ROLLBACK_TIMEOUT_SLEEP),
-		},
+		CreateContext: resourceNodeSecondaryToPrimaryCreate,
+		ReadContext:   resourceNodeSecondaryToPrimaryRead,
+		DeleteContext: resourceNodeSecondaryToPrimaryDelete,
 
 		Schema: map[string]*schema.Schema{
 			"last_updated": &schema.Schema{
@@ -34,17 +29,18 @@ node (PAN).
 				Type:        schema.TypeString,
 				Computed:    true,
 			},
-
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
 						"success": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
+
 									"message": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
@@ -64,6 +60,7 @@ node (PAN).
 				Required: true,
 				MaxItems: 1,
 				MinItems: 1,
+				ForceNew: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{},
 				},
@@ -72,69 +69,63 @@ node (PAN).
 	}
 }
 
-func resourceNodeStandaloneToPrimaryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func resourceNodeSecondaryToPrimaryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning PromoteNode create")
+	log.Printf("[DEBUG] Missing PromoteNode create on Cisco ISE. It will only be create it on Terraform")
 	client := m.(*isegosdk.Client)
 
 	var diags diag.Diagnostics
-
-	log.Printf("[DEBUG] Selected method: MakePrimary")
-
-	response1, restyResp1, err := client.NodeDeployment.MakePrimary()
+	response1, restyResp1, err := client.NodeDeployment.PromoteNode()
 
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 		}
 		diags = append(diags, diagErrorWithAlt(
-			"Failure when executing MakePrimary", err,
-			"Failure at MakePrimary, unexpected response", ""))
+			"Failure when executing PromoteNode", err,
+			"Failure at PromoteNode, unexpected response", ""))
 		return diags
 	}
 
-	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-	vItem1 := flattenNodeDeploymentMakePrimaryItem(response1)
+	vItem1 := flattenNodeDeploymentPromoteNodeItem(response1)
 	if err := d.Set("item", vItem1); err != nil {
 		diags = append(diags, diagError(
-			"Failure when setting MakePrimary response",
+			"Failure when setting PromoteNode response",
 			err))
 		return diags
 	}
 
-	d.Set("last_updated", getUnixTimeString())
+	_ = d.Set("last_updated", getUnixTimeString())
+
 	d.SetId(getUnixTimeString())
-	return diags
+	return resourceNodeSecondaryToPrimaryRead(ctx, d, m)
 }
 
-func resourceNodeStandaloneToPrimaryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	//client := m.(*dnacentersdkgo.Client)
+func resourceNodeSecondaryToPrimaryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	return diags
 }
 
-func resourceNodeStandaloneToPrimaryUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	return resourceNodeStandaloneToPrimaryRead(ctx, d, m)
-}
-
-func resourceNodeStandaloneToPrimaryDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	//client := m.(*dnacentersdkgo.Client)
+func resourceNodeSecondaryToPrimaryDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	log.Printf("[DEBUG] Beginning NodeSecondaryToPrimary delete for id=[%s]", d.Id())
 	var diags diag.Diagnostics
+	log.Printf("[DEBUG] Missing NodeSecondaryToPrimary delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
 
-func flattenNodeDeploymentMakePrimaryItem(item *isegosdk.ResponseNodeDeploymentMakePrimary) []map[string]interface{} {
+func flattenNodeDeploymentPromoteNodeItem(item *isegosdk.ResponseNodeDeploymentPromoteNode) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["success"] = flattenNodeDeploymentMakePrimaryItemSuccess(item.Success)
+	respItem["success"] = flattenNodeDeploymentPromoteNodeItemSuccess(item.Success)
 	respItem["version"] = item.Version
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenNodeDeploymentMakePrimaryItemSuccess(item *isegosdk.ResponseNodeDeploymentMakePrimarySuccess) []map[string]interface{} {
+func flattenNodeDeploymentPromoteNodeItemSuccess(item *isegosdk.ResponseNodeDeploymentPromoteNodeSuccess) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
