@@ -4,7 +4,7 @@ resource "ciscoise_sxp_local_bindings_bulk_request" "example" {
     create_before_destroy = true
   }
   parameters {
-    operation_type      = "test"
-    resource_media_type = "test"
+    operation_type      = "string"
+    resource_media_type = "string"
   }
 }

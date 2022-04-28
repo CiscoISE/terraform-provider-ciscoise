@@ -4,8 +4,8 @@ resource "ciscoise_guest_user_suspend" "example" {
     create_before_destroy = true
   }
   parameters {
-    id       = "1"
-    #name     = "1"
+    id       = "string"
+    name     = "string"
     additional_data {
 
       name  = "string"

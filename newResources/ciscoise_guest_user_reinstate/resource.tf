@@ -4,7 +4,7 @@ resource "ciscoise_guest_user_reinstate" "example" {
     create_before_destroy = true
   }
   parameters {
-    id       = "321"
-    name     = "123"
+    id       = "string"
+    name     = "string"
   }
 }

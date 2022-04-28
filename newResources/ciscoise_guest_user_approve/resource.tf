@@ -4,6 +4,6 @@ resource "ciscoise_guest_user_approve" "example" {
     create_before_destroy = true
   }
   parameters {
-    id       = "1234"
+    id       = "string"
   }
 }
