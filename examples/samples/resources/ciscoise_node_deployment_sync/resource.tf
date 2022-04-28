@@ -13,7 +13,7 @@ resource "ciscoise_node_deployment_sync" "example" {
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     hostname = "nad"
   }
 

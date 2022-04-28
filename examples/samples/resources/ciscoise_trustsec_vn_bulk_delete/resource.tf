@@ -13,7 +13,7 @@ resource "ciscoise_trustsec_vn_bulk_delete" "example" {
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     payload = ["string"]
   }
 }

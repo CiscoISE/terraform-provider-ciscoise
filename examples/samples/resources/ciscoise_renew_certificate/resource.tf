@@ -9,11 +9,11 @@ terraform {
   }
 }
 resource "ciscoise_renew_certificate" "example" {
-  provider  = ciscoise
+  provider = ciscoise
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     cert_type = "string"
-  } 
+  }
 }

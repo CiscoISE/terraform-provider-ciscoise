@@ -13,14 +13,14 @@ resource "ciscoise_active_directory_leave_domain" "example" {
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
-    id       = "string"
+  parameters {
+    id = "string"
     additional_data {
 
       name  = "string"
       value = "string"
     }
   }
-  
+
 
 }

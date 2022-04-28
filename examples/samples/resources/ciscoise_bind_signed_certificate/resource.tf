@@ -9,11 +9,11 @@ terraform {
 }
 
 resource "ciscoise_bind_signed_certificate" "example" {
-  provider                              = ciscoise
+  provider = ciscoise
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     admin                                 = "false"
     allow_extended_validity               = "false"
     allow_out_of_date_cert                = "false"
@@ -22,8 +22,8 @@ resource "ciscoise_bind_signed_certificate" "example" {
     data                                  = "string"
     eap                                   = "false"
     //host_name                             = "string"
-    id                                    = "string"
-    ims                                   = "false"
+    id  = "string"
+    ims = "false"
 
     name                            = "string"
     portal                          = "false"

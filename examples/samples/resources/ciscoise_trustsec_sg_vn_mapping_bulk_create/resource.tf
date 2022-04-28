@@ -12,7 +12,7 @@ resource "ciscoise_trustsec_sg_vn_mapping_bulk_create" "example" {
   lifecycle {
     create_before_destroy = true
   }
-  parameters{
+  parameters {
     payload {
 
       id          = "string"
