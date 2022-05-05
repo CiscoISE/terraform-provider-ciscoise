@@ -72,7 +72,6 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"ciscoise_system_certificate_import":                                   resourceSystemCertificateImport(),
 			"ciscoise_node_standalone_to_primary":                                  resourceNodeStandaloneToPrimary(),
 			"ciscoise_node_secondary_to_primary":                                   resourceNodeSecondaryToPrimary(),
 			"ciscoise_node_primary_to_standalone":                                  resourceNodePrimaryToStandalone(),
