@@ -1,3 +1,9 @@
+## 0.5.0-beta (May 06, 2022)
+FEATURES:
+
+* **New Resource:** `ciscoise_system_certificate_import`
+* **New Resource:** `ciscoise_trusted_certificate_import`
+
 ## 0.4.0-beta (April 28, 2022)
 
 FEATURES:
