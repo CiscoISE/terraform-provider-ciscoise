@@ -1,20 +1,30 @@
-
-resource "ciscoise_backup_schedule_config" "example" {
+resource "ciscoise_system_certificate_import" "response" {
   provider = ciscoise
   lifecycle {
     create_before_destroy = true
   }
   parameters {
-    backup_description    = "string"
-    backup_encryption_key = "string"
-    backup_name           = "string"
-    end_date              = "string"
-    frequency             = "string"
-    month_day             = "string"
-    repository_name       = "string"
-    start_date            = "string"
-    status                = "string"
-    time                  = "string"
-    week_day              = "string"
+    admin                                      = "false"
+    allow_extended_validity                    = "false"
+    allow_out_of_date_cert                     = "false"
+    allow_portal_tag_transfer_for_same_subject = "false"
+    allow_replacement_of_certificates          = "false"
+    allow_replacement_of_portal_group_tag      = "false"
+    allow_role_transfer_for_same_subject       = "false"
+    allow_sha1_certificates                    = "false"
+    allow_wild_card_certificates               = "false"
+    data                                       = "string"
+    eap                                        = "false"
+    ims                                        = "false"
+
+    name                            = "string"
+    password                        = "******"
+    portal                          = "false"
+    portal_group_tag                = "string"
+    private_key_data                = "string"
+    pxgrid                          = "false"
+    radius                          = "false"
+    saml                            = "false"
+    validate_certificate_extensions = "false"
   }
 }
