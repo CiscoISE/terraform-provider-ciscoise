@@ -19,10 +19,23 @@ func compareHotpatchName(old, new string) bool {
 
 func remove_parameters(respItems []map[string]interface{}, parameters ...string) []map[string]interface{} {
 	for i := range respItems {
-		for j := range parameters {
-			_, ok := respItems[i][parameters[j]]
-			if ok {
-				delete(respItems[i], parameters[j])
+		for j, element := range respItems[i] {
+			for _, parameter := range parameters {
+				if strings.Contains(reflect.TypeOf(respItems[i][j]).String(), "[]map[") {
+					paramMap := element.([]map[string]interface{})
+					respItems[i][j] = remove_parameters(paramMap, parameter)
+				} else if strings.Contains(reflect.TypeOf(respItems[i][j]).String(), "map[") {
+					var paramMap []map[string]interface{}
+					paramMap = append(paramMap, element.(map[string]interface{}))
+					respItems[i][j] = remove_parameters(paramMap, parameter)
+				} else {
+					for k := range parameters {
+						_, ok := respItems[i][parameters[k]]
+						if ok {
+							delete(respItems[i], parameters[k])
+						}
+					}
+				}
 			}
 		}
 	}
