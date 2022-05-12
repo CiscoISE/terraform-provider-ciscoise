@@ -21,10 +21,10 @@ func remove_parameters(respItems []map[string]interface{}, parameters ...string)
 	for i := range respItems {
 		for j, element := range respItems[i] {
 			for _, parameter := range parameters {
-				if strings.Contains(reflect.TypeOf(element).String(), "[]map[") {
+				if element != nil && strings.Contains(reflect.TypeOf(element).String(), "[]map[") {
 					paramMap := element.([]map[string]interface{})
 					respItems[i][j] = remove_parameters(paramMap, parameter)
-				} else if strings.Contains(reflect.TypeOf(element).String(), "map[") {
+				} else if element != nil && strings.Contains(reflect.TypeOf(element).String(), "map[") {
 					var paramMap []map[string]interface{}
 					paramMap = append(paramMap, element.(map[string]interface{}))
 					respItems[i][j] = remove_parameters(paramMap, parameter)
