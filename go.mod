@@ -3,7 +3,7 @@ module terraform-provider-ciscoise
 go 1.17
 
 require (
-	github.com/CiscoISE/ciscoise-go-sdk v1.1.3
+	github.com/CiscoISE/ciscoise-go-sdk v1.1.4
 	github.com/hashicorp/terraform-plugin-docs v0.5.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.10.1
 )
