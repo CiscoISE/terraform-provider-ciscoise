@@ -1,3 +1,9 @@
+## 0.6.0-beta (May 12, 2022)
+
+IMPROVEMENTS:
+* provider: Update ciscoisesdk from v1.1.3 to 1.1.4
+* Fix func `remove_parameters` from `utils`
+
 ## 0.5.0-beta (May 06, 2022)
 FEATURES:
 
