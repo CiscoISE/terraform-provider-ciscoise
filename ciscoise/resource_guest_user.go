@@ -458,12 +458,6 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetGuestUserByName response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -487,12 +481,6 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetGuestUserByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetGuestUserByID response to parameters",
 				err))
 			return diags
 		}

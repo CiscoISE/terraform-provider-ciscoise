@@ -255,12 +255,6 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTacacsExternalServersByName response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -284,12 +278,6 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsExternalServersByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTacacsExternalServersByID response to parameters",
 				err))
 			return diags
 		}

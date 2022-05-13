@@ -353,12 +353,6 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetInternalUserByName response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -382,12 +376,6 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetInternalUserByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetInternalUserByID response to parameters",
 				err))
 			return diags
 		}

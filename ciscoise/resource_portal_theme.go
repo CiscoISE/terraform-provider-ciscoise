@@ -229,13 +229,7 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetPortalThemes response to parameters",
-				err))
-			return diags
-		}
-		return diags
+
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetPortalThemeByID")
@@ -257,12 +251,6 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetPortalThemeByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetPortalThemeByID response to parameters",
 				err))
 			return diags
 		}

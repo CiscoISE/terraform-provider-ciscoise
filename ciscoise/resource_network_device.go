@@ -749,12 +749,6 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetNetworkDeviceByName response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -778,12 +772,6 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkDeviceByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetNetworkDeviceByID response to parameters",
 				err))
 			return diags
 		}

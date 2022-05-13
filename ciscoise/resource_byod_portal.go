@@ -1070,12 +1070,6 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetByodPortal response to parameters",
-				err))
-			return diags
-		}
 
 	}
 	if selectedMethod == 1 {
@@ -1098,12 +1092,6 @@ func resourceByodPortalRead(ctx context.Context, d *schema.ResourceData, m inter
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetByodPortalByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetByodPortalByID response to parameters",
 				err))
 			return diags
 		}

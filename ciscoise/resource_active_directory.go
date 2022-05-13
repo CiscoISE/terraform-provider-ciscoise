@@ -732,12 +732,6 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetActiveDirectoryByName response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -761,12 +755,6 @@ func resourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m 
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetActiveDirectoryByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetActiveDirectoryByName response to parameters",
 				err))
 			return diags
 		}

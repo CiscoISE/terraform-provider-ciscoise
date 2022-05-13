@@ -1524,13 +1524,7 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetSponsoredGuestPortals response to parameters",
-				err))
-			return diags
-		}
-		return diags
+
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetSponsoredGuestPortalByID")
@@ -1552,12 +1546,6 @@ func resourceSponsoredGuestPortalRead(ctx context.Context, d *schema.ResourceDat
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSponsoredGuestPortalByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetSponsoredGuestPortalByID response to parameters",
 				err))
 			return diags
 		}
