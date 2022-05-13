@@ -270,12 +270,6 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTacacsProfileByName response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -299,12 +293,6 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetTacacsProfileByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTacacsProfileByID response to parameters",
 				err))
 			return diags
 		}

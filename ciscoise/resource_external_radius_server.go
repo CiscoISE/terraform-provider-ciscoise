@@ -329,12 +329,6 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetExternalRadiusServerByID response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -358,12 +352,6 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetExternalRadiusServerByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetExternalRadiusServerByID response to parameters",
 				err))
 			return diags
 		}
