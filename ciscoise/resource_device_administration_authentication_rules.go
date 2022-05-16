@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"log"
 
@@ -930,10 +931,15 @@ func resourceDeviceAdministrationAuthenticationRulesDelete(ctx context.Context, 
 	response1, restyResp1, err := client.DeviceAdministrationAuthenticationRules.DeleteDeviceAdminAuthenticationRuleByID(vvPolicyID, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
-			diags = append(diags, diagErrorWithAltAndResponse(
-				"Failure when executing DeleteDeviceAdminAuthenticationRuleByID", err, restyResp1.String(),
-				"Failure at DeleteDeviceAdminAuthenticationRuleByID, unexpected response", ""))
+			if strings.Contains(restyResp1.String(), "400") &&
+				strings.Contains(restyResp1.String(), "Failed to handle API - Network Access Authentication Rule : Attempted to delete default Rule") {
+				log.Printf("[INFO] Failure when executing DeleteDeviceAdminAuthenticationRuleByID\n%v\n%v", err, restyResp1.String())
+			} else {
+				log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing DeleteDeviceAdminAuthenticationRuleByID", err, restyResp1.String(),
+					"Failure at DeleteDeviceAdminAuthenticationRuleByID, unexpected response", ""))
+			}
 			return diags
 		}
 		diags = append(diags, diagErrorWithAlt(
