@@ -1,4 +1,5 @@
 ## 0.6.1-beta (May 18, 2022)
+
 IMPROVEMENTS:
 * Removed the `remove_parameters` function call from resources
 * The error 400 is now skipped when it defaults at the time of deleting `ciscoise_device_administration_authentication_rules`
