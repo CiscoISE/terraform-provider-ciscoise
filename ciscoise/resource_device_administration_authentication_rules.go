@@ -933,7 +933,8 @@ func resourceDeviceAdministrationAuthenticationRulesDelete(ctx context.Context, 
 		if restyResp1 != nil {
 			if strings.Contains(restyResp1.String(), "400") &&
 				strings.Contains(restyResp1.String(), "Failed to handle API - Network Access Authentication Rule : Attempted to delete default Rule") {
-				log.Printf("[INFO] Failure when executing DeleteDeviceAdminAuthenticationRuleByID\n%v\n%v", err, restyResp1.String())
+				log.Printf("\033[33m")
+				log.Printf("\n[WARNING] Failure when executing DeleteDeviceAdminAuthenticationRuleByID\n%v\n%v\n%s", err, restyResp1.String(), "\033[0m")
 			} else {
 				log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
 				diags = append(diags, diagErrorWithAltAndResponse(
