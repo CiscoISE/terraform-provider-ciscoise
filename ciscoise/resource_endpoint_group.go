@@ -213,12 +213,6 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetEndpointGroupByName response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -242,12 +236,6 @@ func resourceEndpointGroupRead(ctx context.Context, d *schema.ResourceData, m in
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetEndpointGroupByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetEndpointGroupByID response to parameters",
 				err))
 			return diags
 		}

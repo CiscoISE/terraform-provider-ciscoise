@@ -218,12 +218,6 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItemName1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetAncPolicyByName response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -247,12 +241,6 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 		if err := d.Set("item", vItemID2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetAncPolicyByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItemID2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetAncPolicyByID response to parameters",
 				err))
 			return diags
 		}

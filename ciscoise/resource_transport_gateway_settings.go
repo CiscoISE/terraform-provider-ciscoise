@@ -141,12 +141,6 @@ func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resourc
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTransportGateway response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}

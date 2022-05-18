@@ -204,12 +204,6 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetProxyConnection response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}

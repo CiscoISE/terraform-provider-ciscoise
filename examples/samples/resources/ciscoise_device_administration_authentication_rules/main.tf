@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.6.0-beta"
+      version = "0.6.1-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -10,29 +10,41 @@ terraform {
 provider "ciscoise" {
 }
 
+resource "ciscoise_device_administration_policy_set" "example" {
+  provider = ciscoise
+  parameters {
+    rank        = 0
+    state       = "enabled"
+    name        = "ASA Firewalls"
+    description = "ASA Firewalls"
+    condition {
+      condition_type  = "ConditionAttributes"
+      is_negate       = "false"
+      dictionary_name = "DEVICE"
+      attribute_name  = "Device Type"
+      operator        = "startsWith"
+      attribute_value = "All Device Types"
+    }
+    service_name = "Default Device Admin"
+  }
+}
+
+output "ciscoise_device_administration_policy_set_example" {
+  value = ciscoise_device_administration_policy_set.example
+}
+
 resource "ciscoise_device_administration_authentication_rules" "example" {
   provider = ciscoise
   parameters {
-    if_auth_fail      = "REJECT"
-    if_process_fail   = "DROP"
-    if_user_not_found = "REJECT"
-    policy_id         = "cb32c3bc-c720-40c3-83e4-8897f9dd6943"
+    policy_id            = ciscoise_device_administration_policy_set.example.item[0].id
+    identity_source_name = "Internal Users"
+    if_auth_fail         = "REJECT"
+    if_process_fail      = "DROP"
+    if_user_not_found    = "REJECT"
     rule {
-      condition {
-        attribute_name  = "EapAuthentication"
-        attribute_value = "EAP-MSCHAPv2"
-        condition_type  = "ConditionReference"
-        dictionary_name = "Network Access"
-        id              = "c456a490-0429-4fd4-91d7-efd1eb1f855a"
-        is_negate       = "false"
-        name            = "EAP-MSCHAPv2"
-        operator        = "equals"
-      }
-      default    = "false"
-      hit_counts = 0
-      name       = "Test1"
-      rank       = 0
-      state      = "disabled"
+      name    = "Default"
+      state   = "enabled"
+      default = "true"
     }
   }
 }
