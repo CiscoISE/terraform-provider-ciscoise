@@ -208,13 +208,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetSxpVpns response to parameters",
-				err))
-			return diags
-		}
-		return diags
+
 	}
 	if selectedMethod == 2 {
 		log.Printf("[DEBUG] Selected method: GetSxpVpnByID")
@@ -239,12 +233,6 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetSxpVpnByID response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}
@@ -254,7 +242,7 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 func resourceSxpVpnsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpVpns update for id=[%s]", d.Id())
 	log.Printf("[DEBUG] Missing SxpVpns update on Cisco ISE. It will only be update it on Terraform")
-	// _ = d.Set("last_updated", getUnixTimeString())
+	// d.Set("last_updated", getUnixTimeString())
 	return resourceSxpVpnsRead(ctx, d, m)
 }
 

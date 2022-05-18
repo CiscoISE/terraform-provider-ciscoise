@@ -728,13 +728,7 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetDeviceAdminPolicySetGlobalExceptionRules response to parameters",
-				err))
-			return diags
-		}
-		return diags
+
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetDeviceAdminPolicySetGlobalExceptionByRuleID")
@@ -754,12 +748,6 @@ func resourceDeviceAdministrationGlobalExceptionRulesRead(ctx context.Context, d
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminPolicySetGlobalExceptionByRuleID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetDeviceAdminPolicySetGlobalExceptionByRuleID response to parameters",
 				err))
 			return diags
 		}

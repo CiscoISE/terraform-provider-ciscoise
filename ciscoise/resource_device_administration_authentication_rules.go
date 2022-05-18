@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"log"
 
@@ -758,13 +759,7 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetDeviceAdminAuthenticationRules response to parameters",
-				err))
-			return diags
-		}
-		return diags
+
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetDeviceAdminAuthenticationRuleByID")
@@ -784,12 +779,6 @@ func resourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, d 
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminAuthenticationRuleByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetDeviceAdminAuthenticationRuleByID response to parameters",
 				err))
 			return diags
 		}
@@ -942,10 +931,16 @@ func resourceDeviceAdministrationAuthenticationRulesDelete(ctx context.Context, 
 	response1, restyResp1, err := client.DeviceAdministrationAuthenticationRules.DeleteDeviceAdminAuthenticationRuleByID(vvPolicyID, vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
-			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
-			diags = append(diags, diagErrorWithAltAndResponse(
-				"Failure when executing DeleteDeviceAdminAuthenticationRuleByID", err, restyResp1.String(),
-				"Failure at DeleteDeviceAdminAuthenticationRuleByID, unexpected response", ""))
+			if strings.Contains(restyResp1.String(), "400") &&
+				strings.Contains(restyResp1.String(), "Failed to handle API - Network Access Authentication Rule : Attempted to delete default Rule") {
+				log.Printf("\033[33m")
+				log.Printf("\n[WARNING] Failure when executing DeleteDeviceAdminAuthenticationRuleByID\n%v\n%v\n%s", err, restyResp1.String(), "\033[0m")
+			} else {
+				log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
+				diags = append(diags, diagErrorWithAltAndResponse(
+					"Failure when executing DeleteDeviceAdminAuthenticationRuleByID", err, restyResp1.String(),
+					"Failure at DeleteDeviceAdminAuthenticationRuleByID, unexpected response", ""))
+			}
 			return diags
 		}
 		diags = append(diags, diagErrorWithAlt(

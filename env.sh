@@ -1,0 +1,6 @@
+set -x ISE_BASE_URL 'https://198.18.133.27'
+set -x ISE_USERNAME 'admin'
+set -x ISE_PASSWORD '950038'
+set -x ISE_SSL_VERIFY 'false'
+set -x ISE_DEBUG 'true'
+set -x TF_LOG 'DEBUG'

@@ -577,12 +577,6 @@ func resourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schema.
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1)); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetProfilerProbeConfig response to parameters",
-				err))
-			return diags
-		}
 		return diags
 
 	}

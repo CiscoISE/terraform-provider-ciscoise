@@ -239,13 +239,7 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetFilterPolicy response to parameters",
-				err))
-			return diags
-		}
-		return diags
+
 	}
 	if selectedMethod == 1 {
 		log.Printf("[DEBUG] Selected method: GetFilterPolicyByID")
@@ -269,13 +263,8 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
-		if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetFilterPolicyByID response to parameters",
-				err))
-			return diags
-		}
 		return diags
+
 	}
 	return diags
 }
