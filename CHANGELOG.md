@@ -1,3 +1,7 @@
+## 0.6.2-beta (Jun 07, 2022)
+
+BUG FIXES:
+* Fixed ISE version 3.1.1 to 3.1_Patch_1 which is the correct version name.
 ## 0.6.1-beta (May 18, 2022)
 
 IMPROVEMENTS:

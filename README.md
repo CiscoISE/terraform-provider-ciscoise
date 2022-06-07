@@ -12,7 +12,7 @@ terraform-provider-ciscoise is a Terraform Provider for [Cisco Identity Services
 
 The terraform-provider-ciscoise provides a Terraform provider for managing and automating your Cisco Identity Services Engine environment. It consists of a set of resources and data-sources for performing tasks related to Identity Services Engine.
 
-This collection has been tested and supports Cisco Identity Services Engine 3.1.1.
+This collection has been tested and supports Cisco Identity Services Engine 3.1_Patch_1.
 
 ## Using the provider
 
