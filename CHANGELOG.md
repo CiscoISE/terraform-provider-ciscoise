@@ -1,3 +1,8 @@
+## 0.6.3-beta (Jun 07, 2022)
+
+BUG FIXES:
+* `go.mod` and `go.sum` files updated.
+
 ## 0.6.2-beta (Jun 07, 2022)
 
 BUG FIXES:
