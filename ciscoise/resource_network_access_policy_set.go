@@ -306,7 +306,23 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
 										Optional: true,
-										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+
+												"href": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"rel": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"type": &schema.Schema{
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -339,9 +355,25 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							Optional:     true,
 						},
 						"link": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type: schema.TypeList,
+							Optional:   true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type: schema.TypeString,
+										Optional:   true,
+									},
+									"rel": &schema.Schema{
+										Type: schema.TypeString,
+										Optional:   true,
+									},
+									"type": &schema.Schema{
+										Type: schema.TypeString,
+										Optional:   true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
 							Description: `Given name for the policy set, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
