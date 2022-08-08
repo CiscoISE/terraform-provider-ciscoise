@@ -1,3 +1,11 @@
+## 0.6.4-beta (Jun 07, 2022)
+
+BUG FIXES:
+
+*  `data_source_network_access_policy_set.go` fixed.
+*  `resource_network_access_policy_set.go` fixed.
+*  `go.mod` updated.
+*  `go.sum` updated.
 ## 0.6.3-beta (Jun 07, 2022)
 
 BUG FIXES:
