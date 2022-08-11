@@ -1,3 +1,12 @@
+## 0.6.5-beta (Jun 07, 2022)
+
+FEATURES:
+* New util file funcs for personas resources `personas_utils`
+* **New Resource** `resource_personas_check_standalone`
+* **New Resource** `resource_personas_export_certs`
+* **New Resource** `resource_personas_promote_primary`
+* **New Resource** `resource_personas_register_node`
+* **New Resource** `resource_personas_update_roles_services`
 ## 0.6.4-beta (Jun 07, 2022)
 
 BUG FIXES:
