@@ -355,22 +355,22 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							Optional:     true,
 						},
 						"link": &schema.Schema{
-							Type: schema.TypeList,
-							Optional:   true,
+							Type:     schema.TypeList,
+							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"href": &schema.Schema{
-										Type: schema.TypeString,
-										Optional:   true,
+										Type:     schema.TypeString,
+										Optional: true,
 									},
 									"rel": &schema.Schema{
-										Type: schema.TypeString,
-										Optional:   true,
+										Type:     schema.TypeString,
+										Optional: true,
 									},
 									"type": &schema.Schema{
-										Type: schema.TypeString,
-										Optional:   true,
+										Type:     schema.TypeString,
+										Optional: true,
 									},
 								},
 							},

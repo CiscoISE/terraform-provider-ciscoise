@@ -72,6 +72,11 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"ciscoise_personas_check_standalone":                                   resourcePersonasCheckStandalone(),
+			"ciscoise_personas_export_certs":                                       resourcePersonasExportCerts(),
+			"ciscoise_personas_promote_primary":                                    resourcePersonasPromotePrimary(),
+			"ciscoise_personas_register_node":                                      resourcePersonasRegisterNode(),
+			"ciscoise_personas_update_roles_services":                              resourcePersonasUpdateRolesServices(),
 			"ciscoise_system_certificate_import":                                   resourceSystemCertificateImport(),
 			"ciscoise_trusted_certificate_import":                                  resourceTrustedCertificateImport(),
 			"ciscoise_node_standalone_to_primary":                                  resourceNodeStandaloneToPrimary(),
