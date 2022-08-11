@@ -70,7 +70,6 @@ func (node Node) AppServerIsRunning() (bool, error) {
 
 func (node Node) ReturnIdOfCertificate() (*string, error) {
 	path := fmt.Sprintf("https://%s/api/v1/certs/system-certificate/%s", node.Ip, node.HostName)
-	log.Printf("[DEBUG] ImportCertificateIntoPrimary 2 %s", path)
 	_, resty, err := customGetCerts(path, node.UserName, node.Password, false)
 
 	if err != nil {
@@ -79,9 +78,7 @@ func (node Node) ReturnIdOfCertificate() (*string, error) {
 		}
 		return nil, err
 	}
-	log.Printf("[DEBUG] ImportCertificateIntoPrimary 3 %s", resty.String())
 	response := resty.Result().(*isegosdk.ResponseCertificatesGetSystemCertificates)
-	log.Printf("[DEBUG] ImportCertificateIntoPrimary 4 %s", response)
 	if response.Response == nil {
 		return nil, err
 	}
