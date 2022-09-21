@@ -109,7 +109,7 @@ output "ciscoise_device_administration_policy_set_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
+- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
 
 ### Optional
 
