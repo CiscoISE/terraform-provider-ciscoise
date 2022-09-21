@@ -107,70 +107,91 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"allowed_values": &schema.Schema{
-							Description: `all of the allowed values for the dictionary attribute`,
-							Type:        schema.TypeList,
-							Optional:    true,
+							Description:      `all of the allowed values for the dictionary attribute`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"is_default": &schema.Schema{
-										Description:  `true if this key value is the default between the allowed values of the dictionary attribute`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `true if this key value is the default between the allowed values of the dictionary attribute`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"key": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"value": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"data_type": &schema.Schema{
-							Description: `the data type for the dictionary attribute`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `the data type for the dictionary attribute`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Description: `The description of the Dictionary attribute`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The description of the Dictionary attribute`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"dictionary_name": &schema.Schema{
-							Description: `the name of the dictionary which the dictionary attribute belongs to`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `the name of the dictionary which the dictionary attribute belongs to`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"direction_type": &schema.Schema{
-							Description: `the direction for the useage of the dictionary attribute`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `the direction for the useage of the dictionary attribute`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Description: `Identifier for the dictionary attribute`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Identifier for the dictionary attribute`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"internal_name": &schema.Schema{
-							Description: `the internal name of the dictionary attribute`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `the internal name of the dictionary attribute`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"name": &schema.Schema{
-							Description: `The dictionary attribute's name`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The dictionary attribute's name`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -181,7 +202,8 @@ func resourceNetworkAccessDictionaryAttribute() *schema.Resource {
 
 func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessDictionaryAttribute create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -241,7 +263,8 @@ func resourceNetworkAccessDictionaryAttributeCreate(ctx context.Context, d *sche
 
 func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessDictionaryAttribute read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -286,6 +309,12 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessDictionaryAttributesByDictionaryName search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -312,6 +341,12 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessDictionaryAttributeByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -320,7 +355,8 @@ func resourceNetworkAccessDictionaryAttributeRead(ctx context.Context, d *schema
 
 func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessDictionaryAttribute update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -386,7 +422,8 @@ func resourceNetworkAccessDictionaryAttributeUpdate(ctx context.Context, d *sche
 
 func resourceNetworkAccessDictionaryAttributeDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessDictionaryAttribute delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -607,7 +644,8 @@ func getAllItemsNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttrib
 }
 
 func searchNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryName(m interface{}, items []isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributesByDictionaryNameResponse, name string, id string) (*isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseNetworkAccessDictionaryAttributeGetNetworkAccessDictionaryAttributeByNameResponse
 	for _, item := range items {

@@ -291,7 +291,8 @@ Wildcard certificate and SAML certificate can be generated only on PPAN or Stand
 func resourceSelfsignedCertificateGenerateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GenerateSelfSignedCertificate create")
 	log.Printf("[DEBUG] Missing GenerateSelfSignedCertificate create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

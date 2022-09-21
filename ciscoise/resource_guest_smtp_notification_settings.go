@@ -130,63 +130,106 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"connection_timeout": &schema.Schema{
-							Description: `Interval in seconds for all the SMTP client connections`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Interval in seconds for all the SMTP client connections`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"default_from_address": &schema.Schema{
-							Description: `The default from email address to be used to send emails from`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The default from email address to be used to send emails from`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"notification_enabled": &schema.Schema{
-							Description:  `Indicates if the email notification service is to be enabled`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Indicates if the email notification service is to be enabled`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"password": &schema.Schema{
-							Description: `Password of Secure SMTP server`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Sensitive:   true,
+							Description:      `Password of Secure SMTP server`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Sensitive:        true,
+							Computed:         true,
 						},
 						"smtp_port": &schema.Schema{
-							Description: `Port at which SMTP Secure Server is listening`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Port at which SMTP Secure Server is listening`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"smtp_server": &schema.Schema{
-							Description: `The SMTP server ip address or fqdn such as outbound.mycompany.com`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The SMTP server ip address or fqdn such as outbound.mycompany.com`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"use_default_from_address": &schema.Schema{
-							Description:  `If the default from address should be used rather than using a sponsor user email address`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `If the default from address should be used rather than using a sponsor user email address`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"use_password_authentication": &schema.Schema{
-							Description:  `If configured to true, SMTP server authentication will happen using username/password`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `If configured to true, SMTP server authentication will happen using username/password`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"use_tlsor_ssl_encryption": &schema.Schema{
-							Description:  `If configured to true, SMTP server authentication will happen using TLS/SSL`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `If configured to true, SMTP server authentication will happen using TLS/SSL`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"user_name": &schema.Schema{
-							Description: `Username of Secure SMTP server`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Username of Secure SMTP server`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -197,8 +240,10 @@ func resourceGuestSmtpNotificationSettings() *schema.Resource {
 
 func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -209,26 +254,28 @@ func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettingsByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			d.SetId(joinResourceID(resourceMap))
-			return resourceGuestSmtpNotificationSettingsRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetGuestSmtpNotificationSettingsQueryParams{}
-
-		response2, _, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettings(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m, response2, &queryParams2)
-			item2, err := searchGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m, items2, "", vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettingsByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				d.SetId(joinResourceID(resourceMap))
 				return resourceGuestSmtpNotificationSettingsRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetGuestSmtpNotificationSettingsQueryParams{}
+
+			response2, _, err := client.GuestSmtpNotificationConfiguration.GetGuestSmtpNotificationSettings(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m, response2, &queryParams2)
+				item2, err := searchGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m, items2, "", vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					d.SetId(joinResourceID(resourceMap))
+					return resourceGuestSmtpNotificationSettingsRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -255,7 +302,8 @@ func resourceGuestSmtpNotificationSettingsCreate(ctx context.Context, d *schema.
 
 func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -299,6 +347,12 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestSmtpNotificationSettings search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -324,6 +378,12 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestSmtpNotificationSettingsByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -332,7 +392,8 @@ func resourceGuestSmtpNotificationSettingsRead(ctx context.Context, d *schema.Re
 
 func resourceGuestSmtpNotificationSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestSmtpNotificationSettings update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -481,7 +542,8 @@ func expandRequestGuestSmtpNotificationSettingsUpdateGuestSmtpNotificationSettin
 }
 
 func getAllItemsGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m interface{}, response *isegosdk.ResponseGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings, queryParams *isegosdk.GetGuestSmtpNotificationSettingsQueryParams) []isegosdk.ResponseGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -509,7 +571,8 @@ func getAllItemsGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettin
 }
 
 func searchGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettings(m interface{}, items []isegosdk.ResponseGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsSearchResultResources, name string, id string) (*isegosdk.ResponseGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsByIDERSGuestSmtpNotificationSettings, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseGuestSmtpNotificationConfigurationGetGuestSmtpNotificationSettingsByIDERSGuestSmtpNotificationSettings
 	for _, item := range items {

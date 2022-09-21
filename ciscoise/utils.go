@@ -48,6 +48,21 @@ func compareMacAddress(old_mac_address, new_mac_address string) bool {
 	return strings.ToLower(oldClear) == strings.ToLower(newClear)
 }
 
+func compareBoolean(new string, old string) bool {
+	oldBool, err := strconv.ParseBool(old)
+	newBool, err := strconv.ParseBool(new)
+	if err != nil {
+		return true
+	}
+	if oldBool == newBool {
+		return true
+	}
+	return false
+}
+
+func compareOptional(new_value string, old_value string) bool {
+	return new_value == "" || new_value == old_value
+}
 func fixKeyAccess(key string) string {
 	return strings.Trim(key, ".")
 }

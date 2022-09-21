@@ -91,7 +91,8 @@ delete the node, but failover is no longer carried out if the node is not part a
 
 func resourceNodeGroupNodeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeGroupNode read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -137,7 +138,8 @@ func resourceNodeGroupNodeRead(ctx context.Context, d *schema.ResourceData, m in
 
 func resourceNodeGroupNodeCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeGroupNode create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -189,6 +191,12 @@ func resourceNodeGroupNodeCreate(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting AddNode response",
+				err))
+			return diags
+		}
 		resourceMap := make(map[string]string)
 		resourceMap["node_group_name"] = vvNodeGroupName
 		resourceMap["hostname"] = vvHostname
@@ -199,7 +207,8 @@ func resourceNodeGroupNodeCreate(ctx context.Context, d *schema.ResourceData, m 
 }
 
 func resourceNodeGroupNodeDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -247,6 +256,12 @@ func resourceNodeGroupNodeDelete(ctx context.Context, d *schema.ResourceData, m 
 
 		vItem1 := flattenNodeGroupRemoveNodeItem(response1)
 		if err := d.Set("item", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting RemoveNode response",
+				err))
+			return diags
+		}
+		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting RemoveNode response",
 				err))

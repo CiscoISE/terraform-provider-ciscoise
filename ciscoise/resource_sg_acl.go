@@ -114,42 +114,82 @@ func resourceSgACL() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"aclcontent": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"generation_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"ip_version": &schema.Schema{
 							Description: `Allowed values:
-- IPV4,
-- IPV6,
-- IP_AGNOSTIC`,
-							Type:     schema.TypeString,
-							Optional: true,
+		- IPV4,
+		- IPV6,
+		- IP_AGNOSTIC`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"is_read_only": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"modelled_content": &schema.Schema{
-							Description: `Modelled content of contract`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Modelled content of contract`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -160,8 +200,10 @@ func resourceSgACL() *schema.Resource {
 
 func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgACL create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -174,28 +216,30 @@ func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.SecurityGroupsACLs.GetSecurityGroupsACLByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceSgACLRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetSecurityGroupsACLQueryParams{}
-
-		response2, _, err := client.SecurityGroupsACLs.GetSecurityGroupsACL(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsSecurityGroupsACLsGetSecurityGroupsACL(m, response2, &queryParams2)
-			item2, err := searchSecurityGroupsACLsGetSecurityGroupsACL(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.SecurityGroupsACLs.GetSecurityGroupsACLByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceSgACLRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetSecurityGroupsACLQueryParams{}
+
+			response2, _, err := client.SecurityGroupsACLs.GetSecurityGroupsACL(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsSecurityGroupsACLsGetSecurityGroupsACL(m, response2, &queryParams2)
+				item2, err := searchSecurityGroupsACLsGetSecurityGroupsACL(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceSgACLRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -223,7 +267,8 @@ func resourceSgACLCreate(ctx context.Context, d *schema.ResourceData, m interfac
 
 func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgACL read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -269,6 +314,12 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroupsACL search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -294,6 +345,12 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroupsACLByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -302,7 +359,8 @@ func resourceSgACLRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 func resourceSgACLUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgACL update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -367,7 +425,8 @@ func resourceSgACLUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 
 func resourceSgACLDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgACL delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -528,7 +587,8 @@ func expandRequestSgACLUpdateSecurityGroupsACLByIDSgaclModelledContent(ctx conte
 }
 
 func getAllItemsSecurityGroupsACLsGetSecurityGroupsACL(m interface{}, response *isegosdk.ResponseSecurityGroupsACLsGetSecurityGroupsACL, queryParams *isegosdk.GetSecurityGroupsACLQueryParams) []isegosdk.ResponseSecurityGroupsACLsGetSecurityGroupsACLSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseSecurityGroupsACLsGetSecurityGroupsACLSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -556,7 +616,8 @@ func getAllItemsSecurityGroupsACLsGetSecurityGroupsACL(m interface{}, response *
 }
 
 func searchSecurityGroupsACLsGetSecurityGroupsACL(m interface{}, items []isegosdk.ResponseSecurityGroupsACLsGetSecurityGroupsACLSearchResultResources, name string, id string) (*isegosdk.ResponseSecurityGroupsACLsGetSecurityGroupsACLByIDSgacl, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseSecurityGroupsACLsGetSecurityGroupsACLByIDSgacl
 	for _, item := range items {

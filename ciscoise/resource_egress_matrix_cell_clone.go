@@ -89,7 +89,8 @@ func resourceEgressMatrixCellClone() *schema.Resource {
 func resourceEgressMatrixCellCloneCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning CloneMatrixCell create")
 	log.Printf("[DEBUG] Missing CloneMatrixCell create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	vID := d.Get("parameters.0.id")
 	vSrcSgtID := d.Get("parameters.0.src_sgt_id")

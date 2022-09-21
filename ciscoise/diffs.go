@@ -12,6 +12,17 @@ func diffSupressHotpatchName() schema.SchemaDiffSuppressFunc {
 	}
 }
 
+func diffSupressOptional() schema.SchemaDiffSuppressFunc {
+	return func(k, old, new string, d *schema.ResourceData) bool {
+		return compareOptional(new, old)
+	}
+}
+func diffSupressBool() schema.SchemaDiffSuppressFunc {
+	return func(k, old, new string, d *schema.ResourceData) bool {
+		return compareBoolean(new, old)
+	}
+}
+
 func diffSupressMacAddress() schema.SchemaDiffSuppressFunc {
 	return func(k, old, new string, d *schema.ResourceData) bool {
 		return compareMacAddress(old, new)

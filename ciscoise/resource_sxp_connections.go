@@ -113,41 +113,80 @@ func resourceSxpConnections() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"enabled": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"ip_address": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"sxp_mode": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sxp_node": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sxp_peer": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sxp_version": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sxp_vpn": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -158,8 +197,10 @@ func resourceSxpConnections() *schema.Resource {
 
 func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpConnections create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -170,26 +211,28 @@ func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.SxpConnections.GetSxpConnectionsByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			d.SetId(joinResourceID(resourceMap))
-			return resourceSxpConnectionsRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetSxpConnectionsQueryParams{}
-
-		response2, _, err := client.SxpConnections.GetSxpConnections(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsSxpConnectionsGetSxpConnections(m, response2, &queryParams2)
-			item2, err := searchSxpConnectionsGetSxpConnections(m, items2, "", vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.SxpConnections.GetSxpConnectionsByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				d.SetId(joinResourceID(resourceMap))
 				return resourceSxpConnectionsRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetSxpConnectionsQueryParams{}
+
+			response2, _, err := client.SxpConnections.GetSxpConnections(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsSxpConnectionsGetSxpConnections(m, response2, &queryParams2)
+				item2, err := searchSxpConnectionsGetSxpConnections(m, items2, "", vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					d.SetId(joinResourceID(resourceMap))
+					return resourceSxpConnectionsRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -216,7 +259,8 @@ func resourceSxpConnectionsCreate(ctx context.Context, d *schema.ResourceData, m
 
 func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpConnections read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -260,6 +304,12 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSxpConnections search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -285,6 +335,12 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSxpConnectionsByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -293,7 +349,8 @@ func resourceSxpConnectionsRead(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceSxpConnectionsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpConnections update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -341,7 +398,8 @@ func resourceSxpConnectionsUpdate(ctx context.Context, d *schema.ResourceData, m
 
 func resourceSxpConnectionsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpConnections delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -492,7 +550,8 @@ func expandRequestSxpConnectionsUpdateSxpConnectionsByIDERSSxpConnection(ctx con
 }
 
 func getAllItemsSxpConnectionsGetSxpConnections(m interface{}, response *isegosdk.ResponseSxpConnectionsGetSxpConnections, queryParams *isegosdk.GetSxpConnectionsQueryParams) []isegosdk.ResponseSxpConnectionsGetSxpConnectionsSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseSxpConnectionsGetSxpConnectionsSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -520,7 +579,8 @@ func getAllItemsSxpConnectionsGetSxpConnections(m interface{}, response *isegosd
 }
 
 func searchSxpConnectionsGetSxpConnections(m interface{}, items []isegosdk.ResponseSxpConnectionsGetSxpConnectionsSearchResultResources, name string, id string) (*isegosdk.ResponseSxpConnectionsGetSxpConnectionsByIDERSSxpConnection, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseSxpConnectionsGetSxpConnectionsByIDERSSxpConnection
 	for _, item := range items {

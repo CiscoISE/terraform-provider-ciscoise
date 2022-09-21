@@ -58,9 +58,31 @@ func resourceAncEndpoint() *schema.Resource {
 							DiffSuppressFunc: diffSupressMacAddress(),
 						},
 						"policy_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Required: true,
-							ForceNew: true,
+							Type:             schema.TypeString,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							ForceNew:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -113,8 +135,10 @@ func resourceAncEndpoint() *schema.Resource {
 
 func resourceAncEndpointCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncEndpoint create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -138,38 +162,40 @@ func resourceAncEndpointCreate(ctx context.Context, d *schema.ResourceData, m in
 	if okPolicyName {
 		vvPolicyName = vPolicyName.(string)
 	}
-	if okID && vvID != "" {
-		response2, _, err := client.AncEndpoint.GetAncEndpointByID(vvID)
-		if err == nil && response2 != nil && response2.ErsAncEndpoint != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			if vvMacAddress == "" {
-				vvMacAddress = response2.ErsAncEndpoint.MacAddress
-			}
-			if vvPolicyName == "" {
-				vvPolicyName = response2.ErsAncEndpoint.PolicyName
-			}
-			resourceMap["ip_address"] = vvIpAddress
-			resourceMap["mac_address"] = vvMacAddress
-			resourceMap["policy_name"] = vvPolicyName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceAncEndpointRead(ctx, d, m)
-		}
-	} else {
-		queryParams1 := isegosdk.GetAncEndpointQueryParams{}
-		queryParams1.Filter = []string{fmt.Sprintf("name.EQ.%s", vvPolicyName)}
-		response1, _, err := client.AncEndpoint.GetAncEndpoint(&queryParams1)
-		if err == nil && response1 != nil {
-			items1 := getAllItemsAncEndpointGetAncEndpoint(m, response1, &queryParams1)
-			item1, err := searchAncEndpointGetAncEndpoint(m, items1, vvPolicyName, vvMacAddress, vvID)
-			if err == nil && item1 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			response2, _, err := client.AncEndpoint.GetAncEndpointByID(vvID)
+			if err == nil && response2 != nil && response2.ErsAncEndpoint != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
+				if vvMacAddress == "" {
+					vvMacAddress = response2.ErsAncEndpoint.MacAddress
+				}
+				if vvPolicyName == "" {
+					vvPolicyName = response2.ErsAncEndpoint.PolicyName
+				}
 				resourceMap["ip_address"] = vvIpAddress
 				resourceMap["mac_address"] = vvMacAddress
 				resourceMap["policy_name"] = vvPolicyName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceAncEndpointRead(ctx, d, m)
+			}
+		} else {
+			queryParams1 := isegosdk.GetAncEndpointQueryParams{}
+			queryParams1.Filter = []string{fmt.Sprintf("name.EQ.%s", vvPolicyName)}
+			response1, _, err := client.AncEndpoint.GetAncEndpoint(&queryParams1)
+			if err == nil && response1 != nil {
+				items1 := getAllItemsAncEndpointGetAncEndpoint(m, response1, &queryParams1)
+				item1, err := searchAncEndpointGetAncEndpoint(m, items1, vvPolicyName, vvMacAddress, vvID)
+				if err == nil && item1 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item1.ID
+					resourceMap["ip_address"] = vvIpAddress
+					resourceMap["mac_address"] = vvMacAddress
+					resourceMap["policy_name"] = vvPolicyName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceAncEndpointRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -197,6 +223,7 @@ func resourceAncEndpointCreate(ctx context.Context, d *schema.ResourceData, m in
 	}
 	operational_data := isegosdk.RequestAncEndpointApplyAncEndpointOperationAdditionalData{AdditionalData: &additional_data}
 	request1 := &isegosdk.RequestAncEndpointApplyAncEndpoint{}
+
 	request1.OperationAdditionalData = &operational_data
 	response1, err := client.AncEndpoint.ApplyAncEndpoint(request1)
 
@@ -232,7 +259,8 @@ func resourceAncEndpointCreate(ctx context.Context, d *schema.ResourceData, m in
 func resourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncEndpoint read for id=[%s]", d.Id())
 
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -270,6 +298,12 @@ func resourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m inte
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAncEndpoint response",
+				err))
+			return diags
+		}
 		return diags
 	}
 	if okID && vvID != "" {
@@ -294,6 +328,12 @@ func resourceAncEndpointRead(ctx context.Context, d *schema.ResourceData, m inte
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAncEndpointByID response",
+				err))
+			return diags
+		}
 		return diags
 	}
 	return diags
@@ -308,7 +348,8 @@ func resourceAncEndpointUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 func resourceAncEndpointDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncEndpoint delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -399,7 +440,8 @@ func resourceAncEndpointDelete(ctx context.Context, d *schema.ResourceData, m in
 }
 
 func getAllItemsAncEndpointGetAncEndpoint(m interface{}, response *isegosdk.ResponseAncEndpointGetAncEndpoint, queryParams *isegosdk.GetAncEndpointQueryParams) []isegosdk.ResponseAncEndpointGetAncEndpointSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseAncEndpointGetAncEndpointSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -425,7 +467,8 @@ func getAllItemsAncEndpointGetAncEndpoint(m interface{}, response *isegosdk.Resp
 }
 
 func searchAncEndpointGetAncEndpoint(m interface{}, items []isegosdk.ResponseAncEndpointGetAncEndpointSearchResultResources, name string, mac_address string, id string) (*isegosdk.ResponseAncEndpointGetAncEndpointByIDErsAncEndpoint, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseAncEndpointGetAncEndpointByIDErsAncEndpoint
 	for _, item := range items {

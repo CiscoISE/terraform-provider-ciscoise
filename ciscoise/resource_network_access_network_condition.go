@@ -183,91 +183,119 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"condition_type": &schema.Schema{
-							Description: `This field determines the content of the conditions field`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `This field determines the content of the conditions field`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"conditions": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"cli_dnis_list": &schema.Schema{
-										Description: `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
-										Type:        schema.TypeList,
-										Optional:    true,
+										Description:      `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"condition_type": &schema.Schema{
-										Description: `This field determines the content of the conditions field`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `This field determines the content of the conditions field`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"device_group_list": &schema.Schema{
-										Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
-										Type:        schema.TypeList,
-										Optional:    true,
+										Description:      `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"device_list": &schema.Schema{
-										Description: `<p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>`,
-										Type:        schema.TypeList,
-										Optional:    true,
+										Description:      `<p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"ip_addr_list": &schema.Schema{
-										Description: `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
-										Type:        schema.TypeList,
-										Optional:    true,
+										Description:      `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 
 									"mac_addr_list": &schema.Schema{
-										Description: `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
-										Type:        schema.TypeList,
-										Optional:    true,
+										Description:      `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Schema{
 											Type: schema.TypeString,
 										},
 									},
 									"name": &schema.Schema{
-										Description: `Network Condition name`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `Network Condition name`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 
 						"name": &schema.Schema{
-							Description: `Network Condition name`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Network Condition name`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -278,8 +306,10 @@ func resourceNetworkAccessNetworkCondition() *schema.Resource {
 
 func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessNetworkCondition create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -292,26 +322,28 @@ func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditionByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceNetworkAccessNetworkConditionRead(ctx, d, m)
-		}
-	} else {
-		response2, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditions()
-		if response2 != nil && err == nil {
-			items2 := getAllItemsNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, response2)
-			item2, err := searchNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditionByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceNetworkAccessNetworkConditionRead(ctx, d, m)
+			}
+		} else {
+			response2, _, err := client.NetworkAccessNetworkConditions.GetNetworkAccessNetworkConditions()
+			if response2 != nil && err == nil {
+				items2 := getAllItemsNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, response2)
+				item2, err := searchNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceNetworkAccessNetworkConditionRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -341,7 +373,8 @@ func resourceNetworkAccessNetworkConditionCreate(ctx context.Context, d *schema.
 
 func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessNetworkCondition read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -385,6 +418,12 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessNetworkConditions search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -409,6 +448,12 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessNetworkConditionByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -417,7 +462,8 @@ func resourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.Re
 
 func resourceNetworkAccessNetworkConditionUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessNetworkCondition update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -479,7 +525,8 @@ func resourceNetworkAccessNetworkConditionUpdate(ctx context.Context, d *schema.
 
 func resourceNetworkAccessNetworkConditionDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessNetworkCondition delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -783,7 +830,8 @@ func getAllItemsNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(
 }
 
 func searchNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditions(m interface{}, items []isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionsResponse, name string, id string) (*isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseNetworkAccessNetworkConditionsGetNetworkAccessNetworkConditionByIDResponse
 	for _, item := range items {

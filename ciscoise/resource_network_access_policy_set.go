@@ -226,100 +226,127 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
 				MaxItems: 1,
+				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"condition": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"children": &schema.Schema{
-										Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
-										Type:        schema.TypeList,
-										Optional:    true,
+										Description:      `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"attribute_id": &schema.Schema{
-													Description: `Dictionary attribute id (Optional), used for additional verification`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Dictionary attribute id (Optional), used for additional verification`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"attribute_name": &schema.Schema{
-													Description: `Dictionary attribute name`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Dictionary attribute name`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"attribute_value": &schema.Schema{
-													Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"dictionary_name": &schema.Schema{
-													Description: `Dictionary name`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Dictionary name`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"dictionary_value": &schema.Schema{
-													Description: `Dictionary value`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Dictionary value`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"end_date": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"name": &schema.Schema{
-													Description: `Dictionary attribute name`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Dictionary attribute name`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"operator": &schema.Schema{
-													Description: `Equality operator`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Equality operator`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"start_date": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"condition_type": &schema.Schema{
-										Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"is_negate": &schema.Schema{
-										Description:  `Indicates whereas this condition is in negate mode`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `Indicates whereas this condition is in negate mode`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"href": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
+													Computed: true,
 												},
 												"rel": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
+													Computed: true,
 												},
 												"type": &schema.Schema{
+
 													Type:     schema.TypeString,
-													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -328,72 +355,91 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							},
 						},
 						"default": &schema.Schema{
-							Description:  `Flag which indicates if this policy set is the default one`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Flag which indicates if this policy set is the default one`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Description: `The description for the policy set`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The description for the policy set`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"hit_counts": &schema.Schema{
-							Description: `The amount of times the policy was matched`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `The amount of times the policy was matched`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Description: `Identifier for the policy set`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Identifier for the policy set`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"is_proxy": &schema.Schema{
-							Description:  `Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Flag which indicates if the policy set service is of type 'Proxy Sequence' or 'Allowed Protocols'`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
-							Optional: true,
+							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"href": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
+										Computed: true,
 									},
 									"rel": &schema.Schema{
 										Type:     schema.TypeString,
-										Optional: true,
+										Computed: true,
 									},
 									"type": &schema.Schema{
+
 										Type:     schema.TypeString,
-										Optional: true,
+										Computed: true,
 									},
 								},
 							},
 						},
 						"name": &schema.Schema{
-							Description: `Given name for the policy set, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Given name for the policy set, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"rank": &schema.Schema{
-							Description: `The rank(priority) in relation to other policy set. Lower rank is higher priority.`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `The rank(priority) in relation to other policy set. Lower rank is higher priority.`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"service_name": &schema.Schema{
-							Description: `Policy set service identifier - Allowed Protocols,Server Sequence..`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Policy set service identifier - Allowed Protocols,Server Sequence..`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"state": &schema.Schema{
-							Description: `The state that the policy set is in. A disabled policy set cannot be matched.`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The state that the policy set is in. A disabled policy set cannot be matched.`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -403,8 +449,10 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 }
 
 func resourceNetworkAccessPolicySetCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -418,26 +466,28 @@ func resourceNetworkAccessPolicySetCreate(ctx context.Context, d *schema.Resourc
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.NetworkAccessPolicySet.GetNetworkAccessPolicySetByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceNetworkAccessPolicySetRead(ctx, d, m)
-		}
-	} else {
-		response2, _, err := client.NetworkAccessPolicySet.GetNetworkAccessPolicySets()
-		if response2 != nil && err == nil {
-			items2 := getAllItemsNetworkAccessPolicySetGetNetworkAccessPolicySets(m, response2)
-			item2, err := searchNetworkAccessPolicySetGetNetworkAccessPolicySets(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.NetworkAccessPolicySet.GetNetworkAccessPolicySetByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceNetworkAccessPolicySetRead(ctx, d, m)
+			}
+		} else {
+			response2, _, err := client.NetworkAccessPolicySet.GetNetworkAccessPolicySets()
+			if response2 != nil && err == nil {
+				items2 := getAllItemsNetworkAccessPolicySetGetNetworkAccessPolicySets(m, response2)
+				item2, err := searchNetworkAccessPolicySetGetNetworkAccessPolicySets(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceNetworkAccessPolicySetRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -467,7 +517,8 @@ func resourceNetworkAccessPolicySetCreate(ctx context.Context, d *schema.Resourc
 
 func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -512,6 +563,12 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessPolicySets search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -536,6 +593,12 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessPolicySetByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -544,7 +607,8 @@ func resourceNetworkAccessPolicySetRead(ctx context.Context, d *schema.ResourceD
 
 func resourceNetworkAccessPolicySetUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -606,7 +670,8 @@ func resourceNetworkAccessPolicySetUpdate(ctx context.Context, d *schema.Resourc
 
 func resourceNetworkAccessPolicySetDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessPolicySet delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -985,7 +1050,8 @@ func getAllItemsNetworkAccessPolicySetGetNetworkAccessPolicySets(m interface{}, 
 }
 
 func searchNetworkAccessPolicySetGetNetworkAccessPolicySets(m interface{}, items []isegosdk.ResponseNetworkAccessPolicySetGetNetworkAccessPolicySetsResponse, name string, id string) (*isegosdk.ResponseNetworkAccessPolicySetGetNetworkAccessPolicySetByIDResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseNetworkAccessPolicySetGetNetworkAccessPolicySetByIDResponse
 	for _, item := range items {

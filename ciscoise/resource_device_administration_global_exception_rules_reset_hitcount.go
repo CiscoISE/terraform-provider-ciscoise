@@ -56,7 +56,8 @@ func resourceDeviceAdministrationGlobalExceptionRulesResetHitcount() *schema.Res
 func resourceDeviceAdministrationGlobalExceptionRulesResetHitcountCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ResetHitCountsDeviceAdminGlobalExceptions create")
 	log.Printf("[DEBUG] Missing ResetHitCountsDeviceAdminGlobalExceptions create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	d.Set("parameters", nil)

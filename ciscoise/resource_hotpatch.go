@@ -86,7 +86,8 @@ unavailable for a certain period of time.
 
 func resourceHotpatchCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Hotpatch create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -173,7 +174,8 @@ func resourceHotpatchCreate(ctx context.Context, d *schema.ResourceData, m inter
 func resourceHotpatchRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Hotpatch read for id=[%s]", d.Id())
 
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -221,7 +223,8 @@ func resourceHotpatchUpdate(ctx context.Context, d *schema.ResourceData, m inter
 
 func resourceHotpatchDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Hotpatch delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

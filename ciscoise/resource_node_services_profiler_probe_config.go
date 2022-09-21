@@ -274,53 +274,54 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						"hostname": &schema.Schema{
-							Description: `hostname path parameter. Hostname of the node.`,
-							Type:        schema.TypeString,
-							Required:    true,
-						},
+
 						"active_directory": &schema.Schema{
 							Description: `The Active Directory probe queries the Active Directory for Windows information.`,
 							Type:        schema.TypeList,
-							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"days_before_rescan": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
+										Computed: true,
 									},
 								},
 							},
 						},
+						"days_before_rescan": &schema.Schema{
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
 						"dhcp": &schema.Schema{
 							Description: `The DHCP probe listens for DHCP packets from IP helpers.`,
 							Type:        schema.TypeList,
-							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"interfaces": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
+													Computed: true,
 												},
 											},
 										},
 									},
 									"port": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -328,19 +329,19 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 						"dhcp_span": &schema.Schema{
 							Description: `The DHCP SPAN probe collects DHCP packets.`,
 							Type:        schema.TypeList,
-							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"interfaces": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -351,33 +352,38 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 						"dns": &schema.Schema{
 							Description: `The DNS probe performs a DNS lookup for the FQDN.`,
 							Type:        schema.TypeList,
-							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"timeout": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
+										Computed: true,
 									},
 								},
 							},
 						},
+						"hostname": &schema.Schema{
+							Description: `hostname path parameter. Hostname of the node.`,
+							Type:        schema.TypeString,
+							Required:    true,
+						},
 						"http": &schema.Schema{
 							Description: `The HTTP probe receives and parses HTTP packets.`,
 							Type:        schema.TypeList,
-							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"interfaces": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
+													Computed: true,
 												},
 											},
 										},
@@ -388,78 +394,72 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 						"netflow": &schema.Schema{
 							Description: `The NetFlow probe collects the NetFlow packets that are sent to it from routers.`,
 							Type:        schema.TypeList,
-							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"interfaces": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
+													Computed: true,
 												},
 											},
 										},
 									},
 									"port": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
+										Computed: true,
 									},
 								},
 							},
 						},
 						"nmap": &schema.Schema{
-							Description: `The NMAP probe scans endpoints for open ports and OS.
-							If set to true, it will activate the NMAP probe.
-							If set to false, it will deactivate the NMAP probe.
-							Finally, if set to empty string or no-set (default), it will maintain the NMAP probe state.
-							`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description: `The NMAP probe scans endpoints for open ports and OS.`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"pxgrid": &schema.Schema{
-							Description: `The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.
-							If set to true, it will activate the pxGrid probe.
-							If set to false, it will deactivate the pxGrid probe.
-							Finally, if set to empty string or no-set (default), it will maintain the pxGrid probe state.
-							`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description: `The pxGrid probe fetches attributes of MAC address or IP address as a subscriber from the pxGrid queue.`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"radius": &schema.Schema{
-							Description: `The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.
-							If set to true, it will activate the RADIUS probe.
-							If set to false, it will deactivate the RADIUS probe.
-							Finally, if set to empty string or no-set (default), it will maintain the RADIUS probe state.
-							`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description: `The RADIUS probe collects RADIUS session attributes as well as CDP, LLDP, DHCP, HTTP, and MDM attributes from IOS Sensors.`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"snmp_query": &schema.Schema{
 							Description: `The SNMP query probe collects details from network devices such as interface, CDP, LLDP, and ARP.`,
 							Type:        schema.TypeList,
-							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"event_timeout": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
+										Computed: true,
 									},
 									"retries": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
+										Computed: true,
 									},
 									"timeout": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -467,36 +467,34 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 						"snmp_trap": &schema.Schema{
 							Description: `The SNMP trap probe receives linkup, linkdown, and MAC notification traps from network devices.`,
 							Type:        schema.TypeList,
-							Optional:    true,
+							Computed:    true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"interfaces": &schema.Schema{
 										Type:     schema.TypeList,
-										Optional: true,
+										Computed: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"interface": &schema.Schema{
 													Type:     schema.TypeString,
-													Optional: true,
+													Computed: true,
 												},
 											},
 										},
 									},
 									"link_trap_query": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"mac_trap_query": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"port": &schema.Schema{
 										Type:     schema.TypeInt,
-										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -511,7 +509,8 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 func resourceNodeServicesProfilerProbeConfigCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig create")
 	log.Printf("[DEBUG] Missing NodeServicesProfilerProbeConfig create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -545,7 +544,8 @@ func resourceNodeServicesProfilerProbeConfigCreate(ctx context.Context, d *schem
 
 func resourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -577,6 +577,12 @@ func resourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schema.
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetProfilerProbeConfig response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -585,7 +591,8 @@ func resourceNodeServicesProfilerProbeConfigRead(ctx context.Context, d *schema.
 
 func resourceNodeServicesProfilerProbeConfigUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeServicesProfilerProbeConfig update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

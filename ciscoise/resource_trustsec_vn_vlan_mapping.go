@@ -47,48 +47,64 @@ func resourceTrustsecVnVLANMapping() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Description: `Identifier of the VN-Vlan Mapping`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Identifier of the VN-Vlan Mapping`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"is_data": &schema.Schema{
 							Description: `Flag which indicates whether the Vlan is data or voice type`,
 							// Type:        schema.TypeBool,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"is_default_vlan": &schema.Schema{
 							Description: `Flag which indicates if the Vlan is default`,
 							// Type:        schema.TypeBool,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"last_update": &schema.Schema{
-							Description: `Timestamp for the last update of the VN-Vlan Mapping`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Timestamp for the last update of the VN-Vlan Mapping`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"max_value": &schema.Schema{
-							Description: `Max value`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `Max value`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"name": &schema.Schema{
-							Description: `Name of the Vlan`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Name of the Vlan`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"vn_id": &schema.Schema{
-							Description: `Identifier for the associated Virtual Network which is required unless its name is provided`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Identifier for the associated Virtual Network which is required unless its name is provided`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"vn_name": &schema.Schema{
-							Description: `Name of the associated Virtual Network to be used for identity if id is not provided`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Name of the associated Virtual Network to be used for identity if id is not provided`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -148,8 +164,10 @@ func resourceTrustsecVnVLANMapping() *schema.Resource {
 
 func resourceTrustsecVnVLANMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -166,25 +184,10 @@ func resourceTrustsecVnVLANMappingCreate(ctx context.Context, d *schema.Resource
 	vvVnID := interfaceToString(vVnID)
 	vVnName, _ := resourceItem["vn_name"]
 	vvVnName := interfaceToString(vVnName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.VnVLANMapping.GetVnVLANMappingByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			resourceMap["vn_id"] = vvVnID
-			resourceMap["vn_name"] = vvVnName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTrustsecVnVLANMappingRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetVnVLANMappingsQueryParams{}
-
-		response2, _, err := client.VnVLANMapping.GetVnVLANMappings(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsVnVLANMappingGetVnVLANMappings(m, response2, &queryParams2)
-			item2, err := searchVnVLANMappingGetVnVLANMappings(m, items2, vvName, vvVnID, vvVnName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.VnVLANMapping.GetVnVLANMappingByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
@@ -192,6 +195,23 @@ func resourceTrustsecVnVLANMappingCreate(ctx context.Context, d *schema.Resource
 				resourceMap["vn_name"] = vvVnName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceTrustsecVnVLANMappingRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetVnVLANMappingsQueryParams{}
+
+			response2, _, err := client.VnVLANMapping.GetVnVLANMappings(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsVnVLANMappingGetVnVLANMappings(m, response2, &queryParams2)
+				item2, err := searchVnVLANMappingGetVnVLANMappings(m, items2, vvName, vvVnID, vvVnName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = vvID
+					resourceMap["name"] = vvName
+					resourceMap["vn_id"] = vvVnID
+					resourceMap["vn_name"] = vvVnName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceTrustsecVnVLANMappingRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -217,7 +237,8 @@ func resourceTrustsecVnVLANMappingCreate(ctx context.Context, d *schema.Resource
 
 func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -264,6 +285,12 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetVnVLANMappings search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -289,6 +316,12 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetVnVLANMappingByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -297,7 +330,8 @@ func resourceTrustsecVnVLANMappingRead(ctx context.Context, d *schema.ResourceDa
 
 func resourceTrustsecVnVLANMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -363,7 +397,8 @@ func resourceTrustsecVnVLANMappingUpdate(ctx context.Context, d *schema.Resource
 
 func resourceTrustsecVnVLANMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecVnVLANMapping delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -507,7 +542,8 @@ func getAllItemsVnVLANMappingGetVnVLANMappings(m interface{}, response *isegosdk
 }
 
 func searchVnVLANMappingGetVnVLANMappings(m interface{}, items []isegosdk.ResponseVnVLANMappingGetVnVLANMappingsResponse, name string, vnID string, vnName string, id string) (*[]isegosdk.ResponseVnVLANMappingGetVnVLANMappingByIDResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *[]isegosdk.ResponseVnVLANMappingGetVnVLANMappingByIDResponse
 	for _, item := range items {

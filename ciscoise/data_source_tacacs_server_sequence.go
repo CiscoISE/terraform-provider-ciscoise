@@ -243,7 +243,8 @@ The order of the names in the string is the order of servers that will be used d
 }
 
 func dataSourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	vPage, okPage := d.GetOk("page")

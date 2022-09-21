@@ -70,6 +70,13 @@ func Provider() *schema.Provider {
 				ValidateFunc: validateIntegerGeqThan(0),
 				Description:  "Timeout (in seconds) for the RESTful HTTP requests. If not set, it uses the ISE_SINGLE_REQUEST_TIMEOUT environment varible; defaults to 60.",
 			},
+			"enable_auto_import": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				DefaultFunc:  schema.EnvDefaultFunc("ISE_ENABLE_AUTO_IMPORT", "false"),
+				ValidateFunc: validateStringHasValueFunc([]string{"true", "false"}),
+				Description:  "Flag to enable or disable terraform automatic import (Automatic import means that when Terraform attempts to create the resource, it will perform a get operation if it founds a matching resource, it will perform an import of the resource it found, this is a similar operation to the terraform import command.) in resources, this is a configuration added to the provider, it uses the ISE_ENABLE_AUTO_IMPORT environment varible; `true` to enable it, defaults to `false`.",
+			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			"ciscoise_personas_check_standalone":                                   resourcePersonasCheckStandalone(),

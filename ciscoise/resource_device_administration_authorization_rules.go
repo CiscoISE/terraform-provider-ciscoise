@@ -356,240 +356,249 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 					Schema: map[string]*schema.Schema{
 
 						"commands": &schema.Schema{
-							Description: `Command sets enforce the specified list of commands that can be executed by a device administrator`,
-							Type:        schema.TypeList,
-							Optional:    true,
+							Description:      `Command sets enforce the specified list of commands that can be executed by a device administrator`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"id": &schema.Schema{
-							Description: `id path parameter. Rule id`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `id path parameter. Rule id`,
+							Type:             schema.TypeString,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
 						},
-						"profile": &schema.Schema{
-							Description: `Device admin profiles control the initial login session of the device administrator`,
-							Type:        schema.TypeString,
-							Optional:    true,
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"policy_id": &schema.Schema{
-							Description: `policyId path parameter. Policy id`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `policyId path parameter. Policy id`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"profile": &schema.Schema{
+							Description:      `Device admin profiles control the initial login session of the device administrator`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"rule": &schema.Schema{
-							Description: `Common attributes in rule authentication/authorization`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							MaxItems:    1,
+							Description:      `Common attributes in rule authentication/authorization`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"condition": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"attribute_name": &schema.Schema{
-													Description: `Dictionary attribute name`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"attribute_value": &schema.Schema{
-													Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
 												"children": &schema.Schema{
-													Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
-													Type:        schema.TypeList,
-													Optional:    true,
+													Description:      `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"condition_type": &schema.Schema{
-																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
-																Type:        schema.TypeString,
-																Optional:    true,
+															"attribute_id": &schema.Schema{
+																Description:      `Dictionary attribute id (Optional), used for additional verification`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
 															},
-															"is_negate": &schema.Schema{
-																Description:  `Indicates whereas this condition is in negate mode`,
-																Type:         schema.TypeString,
-																ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-																Optional:     true,
+															"attribute_name": &schema.Schema{
+																Description:      `Dictionary attribute name`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"attribute_value": &schema.Schema{
+																Description:      `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"dictionary_name": &schema.Schema{
+																Description:      `Dictionary name`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"dictionary_value": &schema.Schema{
+																Description:      `Dictionary value`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"end_date": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"name": &schema.Schema{
+																Description:      `Dictionary attribute name`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"operator": &schema.Schema{
+																Description:      `Equality operator`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"start_date": &schema.Schema{
+																Description:      `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"link": &schema.Schema{
+																Type:     schema.TypeList,
+																Computed: true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"href": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"rel": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																		"type": &schema.Schema{
+																			Type:     schema.TypeString,
+																			Computed: true,
+																		},
+																	},
+																},
 															},
 														},
 													},
 												},
 												"condition_type": &schema.Schema{
-													Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
-													Type:        schema.TypeList,
-													Optional:    true,
-													MaxItems:    1,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"end_date": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"start_date": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-														},
-													},
-												},
-												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
-													Type:        schema.TypeList,
-													Optional:    true,
-													MaxItems:    1,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"end_date": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"start_date": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-														},
-													},
-												},
-												"description": &schema.Schema{
-													Description: `Condition description`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"dictionary_name": &schema.Schema{
-													Description: `Dictionary name`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"dictionary_value": &schema.Schema{
-													Description: `Dictionary value`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
-													Type:        schema.TypeList,
-													Optional:    true,
-													MaxItems:    1,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"end_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-														},
-													},
-												},
-												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
-													Type:        schema.TypeList,
-													Optional:    true,
-													MaxItems:    1,
-													Elem: &schema.Resource{
-														Schema: map[string]*schema.Schema{
-
-															"end_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-															"start_time": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
-															},
-														},
-													},
-												},
-												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Description:      `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"is_negate": &schema.Schema{
-													Description:  `Indicates whereas this condition is in negate mode`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Description:      `Indicates whereas this condition is in negate mode`,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
+												"link": &schema.Schema{
+													Type:     schema.TypeList,
+													Computed: true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
 
-												"name": &schema.Schema{
-													Description: `Condition name`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"operator": &schema.Schema{
-													Description: `Equality operator`,
-													Type:        schema.TypeString,
-													Optional:    true,
-												},
-												"week_days": &schema.Schema{
-													Description: `<p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>`,
-													Type:        schema.TypeList,
-													Optional:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
-													},
-												},
-												"week_days_exception": &schema.Schema{
-													Description: `<p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>`,
-													Type:        schema.TypeList,
-													Optional:    true,
-													Elem: &schema.Schema{
-														Type: schema.TypeString,
+															"href": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"rel": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+															"type": &schema.Schema{
+																Type:     schema.TypeString,
+																Computed: true,
+															},
+														},
 													},
 												},
 											},
 										},
 									},
 									"default": &schema.Schema{
-										Description:  `Indicates if this rule is the default one`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `Indicates if this rule is the default one`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"hit_counts": &schema.Schema{
-										Description: `The amount of times the rule was matched`,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `The amount of times the rule was matched`,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"id": &schema.Schema{
-										Description: `The identifier of the rule`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `The identifier of the rule`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"name": &schema.Schema{
-										Description: `Rule name, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `Rule name, [Valid characters are alphanumerics, underscore, hyphen, space, period, parentheses]`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"rank": &schema.Schema{
-										Description: `The rank(priority) in relation to other rules. Lower rank is higher priority.`,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `The rank(priority) in relation to other rules. Lower rank is higher priority.`,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"state": &schema.Schema{
-										Description: `The state that the rule is in. A disabled rule cannot be matched.`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `The state that the rule is in. A disabled rule cannot be matched.`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
@@ -603,7 +612,9 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 
 func resourceDeviceAdministrationAuthorizationRulesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthorizationRules create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
+	isEnableAutoImport := clientConfig.EnableAutoImport
 
 	var diags diag.Diagnostics
 
@@ -616,7 +627,9 @@ func resourceDeviceAdministrationAuthorizationRulesCreate(ctx context.Context, d
 	vPolicyID, okPolicyID := resourceItem["policy_id"]
 	vvPolicyID := interfaceToString(vPolicyID)
 	vID, okID := resourceItem["id"]
+	var vvID string
 	var vvName string
+
 	if !okID || vID == "" {
 		if _, ok := d.GetOk("parameters.0.rule"); ok {
 			if v, ok2 := d.GetOkExists("parameters.0.rule.0.id"); ok2 {
@@ -625,34 +638,37 @@ func resourceDeviceAdministrationAuthorizationRulesCreate(ctx context.Context, d
 			}
 		}
 	}
-	vvID := interfaceToString(vID)
+	vvID = interfaceToString(vID)
 	if _, ok := d.GetOk("parameters.0.rule"); ok {
 		if v, ok2 := d.GetOkExists("parameters.0.rule.0.name"); ok2 {
 			vvName = interfaceToString(v)
 		}
 	}
-	if okPolicyID && vvPolicyID != "" && okID && vvID != "" {
-		getResponse2, _, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRuleByID(vvPolicyID, vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["policy_id"] = vvPolicyID
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceDeviceAdministrationAuthorizationRulesRead(ctx, d, m)
-		}
-	} else {
-		response2, _, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRules(vvPolicyID)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m, response2, vvPolicyID)
-			item2, err := searchDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m, items2, vvName, vvID, vvPolicyID)
-			if err == nil && item2 != nil {
+
+	if isEnableAutoImport {
+		if okPolicyID && vvPolicyID != "" && okID && vvID != "" {
+			getResponse2, _, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRuleByID(vvPolicyID, vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["policy_id"] = vvPolicyID
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceDeviceAdministrationAuthorizationRulesRead(ctx, d, m)
+			}
+		} else {
+			response2, _, err := client.DeviceAdministrationAuthorizationRules.GetDeviceAdminAuthorizationRules(vvPolicyID)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m, response2, vvPolicyID)
+				item2, err := searchDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m, items2, vvName, vvID, vvPolicyID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["policy_id"] = vvPolicyID
+					resourceMap["id"] = vvID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceDeviceAdministrationAuthorizationRulesRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -682,7 +698,8 @@ func resourceDeviceAdministrationAuthorizationRulesCreate(ctx context.Context, d
 
 func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthorizationRules read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -743,6 +760,12 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminAuthorizationRules search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -769,6 +792,12 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeviceAdminAuthorizationRuleByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -777,7 +806,8 @@ func resourceDeviceAdministrationAuthorizationRulesRead(ctx context.Context, d *
 
 func resourceDeviceAdministrationAuthorizationRulesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthorizationRules update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -856,7 +886,8 @@ func resourceDeviceAdministrationAuthorizationRulesUpdate(ctx context.Context, d
 
 func resourceDeviceAdministrationAuthorizationRulesDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning DeviceAdministrationAuthorizationRules delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -1445,7 +1476,8 @@ func getAllItemsDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizatio
 }
 
 func searchDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRules(m interface{}, items []isegosdk.ResponseDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRulesResponse, name string, id string, policyID string) (*isegosdk.ResponseDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRuleByIDResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseDeviceAdministrationAuthorizationRulesGetDeviceAdminAuthorizationRuleByIDResponse
 	for _, item := range items {

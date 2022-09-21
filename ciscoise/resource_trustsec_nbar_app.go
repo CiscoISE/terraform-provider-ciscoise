@@ -85,36 +85,21 @@ func resourceTrustsecNbarApp() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
 						"id": &schema.Schema{
-							Description: `id path parameter.`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `id path parameter.`,
+							Type:             schema.TypeString,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
 						},
-						"name": &schema.Schema{
+						"ports": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
-						"network_identities": &schema.Schema{
-							Description: `Array of NIs`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"ports": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-									"protocol": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-									},
-								},
-							},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -125,8 +110,10 @@ func resourceTrustsecNbarApp() *schema.Resource {
 
 func resourceTrustsecNbarAppCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecNbarApp create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -139,29 +126,31 @@ func resourceTrustsecNbarAppCreate(ctx context.Context, d *schema.ResourceData, 
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.NbarApp.GetNbarAppByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTrustsecNbarAppRead(ctx, d, m)
-		}
-	}
-	if okName && vvName != "" {
-		queryParams2 := isegosdk.GetNbarAppsQueryParams{}
-
-		response2, _, err := client.NbarApp.GetNbarApps(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsNbarAppGetNbarApps(m, response2, &queryParams2)
-			item2, err := searchNbarAppGetNbarApps(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.NbarApp.GetNbarAppByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceTrustsecNbarAppRead(ctx, d, m)
+			}
+		}
+		if okName && vvName != "" {
+			queryParams2 := isegosdk.GetNbarAppsQueryParams{}
+
+			response2, _, err := client.NbarApp.GetNbarApps(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsNbarAppGetNbarApps(m, response2, &queryParams2)
+				item2, err := searchNbarAppGetNbarApps(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = vvID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceTrustsecNbarAppRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -185,7 +174,8 @@ func resourceTrustsecNbarAppCreate(ctx context.Context, d *schema.ResourceData, 
 
 func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecNbarApp read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -232,6 +222,12 @@ func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNbarApps search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -257,6 +253,12 @@ func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m 
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNbarAppByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -265,7 +267,8 @@ func resourceTrustsecNbarAppRead(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceTrustsecNbarAppUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecNbarApp update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -333,7 +336,8 @@ func resourceTrustsecNbarAppUpdate(ctx context.Context, d *schema.ResourceData, 
 
 func resourceTrustsecNbarAppDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecNbarApp delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -527,7 +531,8 @@ func getAllItemsNbarAppGetNbarApps(m interface{}, response *isegosdk.ResponseNba
 }
 
 func searchNbarAppGetNbarApps(m interface{}, items []isegosdk.ResponseNbarAppGetNbarAppsResponse, name string, id string) (*[]isegosdk.ResponseNbarAppGetNbarAppByIDResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *[]isegosdk.ResponseNbarAppGetNbarAppByIDResponse
 	for _, item := range items {

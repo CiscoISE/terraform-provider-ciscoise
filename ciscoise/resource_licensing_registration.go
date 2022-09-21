@@ -70,32 +70,42 @@ func resourceLicensingRegistration() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"connection_type": &schema.Schema{
-							Type:         schema.TypeString,
-							Optional:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "HTTP_DIRECT", "PROXY", "SSM_ONPREM_SERVER", "TRANSPORT_GATEWAY"}),
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "HTTP_DIRECT", "PROXY", "SSM_ONPREM_SERVER", "TRANSPORT_GATEWAY"}),
 						},
 						"registration_type": &schema.Schema{
-							Type:         schema.TypeString,
-							Optional:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "DEREGISTER", "REGISTER", "RENEW", "UPDATE"}),
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "DEREGISTER", "REGISTER", "RENEW", "UPDATE"}),
 						},
 						"ssm_on_prem_server": &schema.Schema{
-							Description: `If connection type is selected as SSM_ONPREM_SERVER, then  IP address or the hostname (or FQDN) of the SSM On-Prem server Host.`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `If connection type is selected as SSM_ONPREM_SERVER, then  IP address or the hostname (or FQDN) of the SSM On-Prem server Host.`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"tier": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type:         schema.TypeString,
 								ValidateFunc: validateStringHasValueFunc([]string{"", "ADVANTAGE", "DEVICEADMIN", "ESSENTIAL", "PREMIER", "VM"}),
 							},
 						},
 						"token": &schema.Schema{
-							Description: `token`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `token`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -106,7 +116,8 @@ func resourceLicensingRegistration() *schema.Resource {
 
 func resourceLicensingRegistrationCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning LicenseRegistration create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -138,7 +149,8 @@ func resourceLicensingRegistrationCreate(ctx context.Context, d *schema.Resource
 
 func resourceLicensingRegistrationRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning LicenseRegistration read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -161,12 +173,19 @@ func resourceLicensingRegistrationRead(ctx context.Context, d *schema.ResourceDa
 			err))
 		return diags
 	}
+	if err := d.Set("parameters", vItem1); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting GetRegistrationInfo response",
+			err))
+		return diags
+	}
 	return diags
 }
 
 func resourceLicensingRegistrationUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning LicenseRegistration update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

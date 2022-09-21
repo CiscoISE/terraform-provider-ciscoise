@@ -72,7 +72,8 @@ setting is enabled in the secondary PAN.
 func resourceNodeSecondaryToPrimaryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PromoteNode create")
 	log.Printf("[DEBUG] Missing PromoteNode create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	response1, restyResp1, err := client.NodeDeployment.PromoteNode()

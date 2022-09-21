@@ -73,7 +73,8 @@ func resourceActiveDirectoryLeaveDomainWithAllNodes() *schema.Resource {
 func resourceActiveDirectoryLeaveDomainWithAllNodesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning LeaveDomainWithAllNodes create")
 	log.Printf("[DEBUG] Missing LeaveDomainWithAllNodes create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	vID := d.Get("parameters.0.id")
 	var diags diag.Diagnostics
 

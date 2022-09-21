@@ -115,6 +115,7 @@ func resourceSgt() *schema.Resource {
 						"default_sgacls": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -122,33 +123,65 @@ func resourceSgt() *schema.Resource {
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"generation_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							Computed:         true,
+							DiffSuppressFunc: diffSupressOptional(),
 						},
 						"is_read_only": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							Computed:         true,
+							DiffSuppressFunc: diffSupressBool(),
 						},
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"propogate_to_apic": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
+							Computed:     true,
 							Optional:     true,
 						},
 						"value": &schema.Schema{
-							Description: `Value range: 2 ot 65519 or -1 to auto-generate`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `Value range: 2 ot 65519`,
+							Type:             schema.TypeInt,
+							Computed:         true,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							ValidateFunc:     validateIntegerInRange(2, 65519),
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -159,7 +192,12 @@ func resourceSgt() *schema.Resource {
 
 func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Sgt create")
-	client := m.(*isegosdk.Client)
+
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
+	isEnableAutoImport := m.(ClientConfig).EnableAutoImport
+	log.Printf("[INFO] Is new resource => %t", d.IsNewResource())
+	log.Printf("[INFO] Is EnableAutoImport => %t", m.(ClientConfig).EnableAutoImport)
 
 	var diags diag.Diagnostics
 
@@ -173,28 +211,30 @@ func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.SecurityGroups.GetSecurityGroupByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceSgtRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetSecurityGroupsQueryParams{}
-
-		response2, _, err := client.SecurityGroups.GetSecurityGroups(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsSecurityGroupsGetSecurityGroups(m, response2, &queryParams2)
-			item2, err := searchSecurityGroupsGetSecurityGroups(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.SecurityGroups.GetSecurityGroupByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceSgtRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetSecurityGroupsQueryParams{}
+
+			response2, _, err := client.SecurityGroups.GetSecurityGroups(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsSecurityGroupsGetSecurityGroups(m, response2, &queryParams2)
+				item2, err := searchSecurityGroupsGetSecurityGroups(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceSgtRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -222,7 +262,8 @@ func resourceSgtCreate(ctx context.Context, d *schema.ResourceData, m interface{
 
 func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Sgt read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -230,7 +271,6 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 	resourceMap := separateResourceID(resourceID)
 	vID, okID := resourceMap["id"]
 	vName, okName := resourceMap["name"]
-
 	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
 	method2 := []bool{okName}
@@ -262,12 +302,25 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 			return diags
 		}
 		vItem1 := flattenSecurityGroupsGetSecurityGroupByIDItem(item1)
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroups search response",
+				err))
+			return diags
+		}
+
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetSecurityGroups search response",
 				err))
 			return diags
 		}
+		// if err := d.Set("parameters", remove_parameters(vItem1, "link")); err != nil {
+		// 	diags = append(diags, diagError(
+		// 		"Failure when setting GetSecurityGroups response to parameters",
+		// 		err))
+		// 	return diags
+		// }
 
 	}
 	if selectedMethod == 1 {
@@ -289,11 +342,22 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 		vItem2 := flattenSecurityGroupsGetSecurityGroupByIDItem(response2.Sgt)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetSecurityGroupByID response",
+				"Failure when setting GetSecurityGroups search response",
 				err))
 			return diags
 		}
-		return diags
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroups search response",
+				err))
+			return diags
+		}
+		// if err := d.Set("parameters", remove_parameters(vItem2, "link")); err != nil {
+		// 	diags = append(diags, diagError(
+		// 		"Failure when setting GetSecurityGroups response to parameters",
+		// 		err))
+		// 	return diags
+		// }
 
 	}
 	return diags
@@ -301,7 +365,8 @@ func resourceSgtRead(ctx context.Context, d *schema.ResourceData, m interface{})
 
 func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Sgt update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -338,6 +403,7 @@ func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 		vvID = vID
 	}
 	if d.HasChange("parameters") {
+		log.Printf("[DEBUG] if dentro")
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestSgtUpdateSecurityGroupByID(ctx, "parameters.0", d)
 		if request1 != nil {
@@ -365,7 +431,8 @@ func resourceSgtUpdate(ctx context.Context, d *schema.ResourceData, m interface{
 
 func resourceSgtDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Sgt delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -571,7 +638,8 @@ func expandRequestSgtUpdateSecurityGroupByIDSgtDefaultSgACLs(ctx context.Context
 }
 
 func getAllItemsSecurityGroupsGetSecurityGroups(m interface{}, response *isegosdk.ResponseSecurityGroupsGetSecurityGroups, queryParams *isegosdk.GetSecurityGroupsQueryParams) []isegosdk.ResponseSecurityGroupsGetSecurityGroupsSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseSecurityGroupsGetSecurityGroupsSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -599,7 +667,8 @@ func getAllItemsSecurityGroupsGetSecurityGroups(m interface{}, response *isegosd
 }
 
 func searchSecurityGroupsGetSecurityGroups(m interface{}, items []isegosdk.ResponseSecurityGroupsGetSecurityGroupsSearchResultResources, name string, id string) (*isegosdk.ResponseSecurityGroupsGetSecurityGroupByIDSgt, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseSecurityGroupsGetSecurityGroupByIDSgt
 	for _, item := range items {

@@ -71,7 +71,8 @@ node.
 func resourceNodePrimaryToStandaloneCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning MakeStandalone create")
 	log.Printf("[DEBUG] Missing MakeStandalone create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	d.Set("parameters", nil)
 	var diags diag.Diagnostics
 	response1, restyResp1, err := client.NodeDeployment.MakeStandalone()

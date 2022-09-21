@@ -150,79 +150,128 @@ Allowed Values:
 					Schema: map[string]*schema.Schema{
 
 						"accounting_port": &schema.Schema{
-							Description: `Valid Range 1 to 65535`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `Valid Range 1 to 65535`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"authentication_port": &schema.Schema{
-							Description: `Valid Range 1 to 65535`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `Valid Range 1 to 65535`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"authenticator_key": &schema.Schema{
 							Description: `The authenticatorKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
-							Type:     schema.TypeString,
-							Optional: true,
+		The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"enable_key_wrap": &schema.Schema{
 							Description: `KeyWrap may only be enabled if it is supported on the device.
-When running in FIPS mode this option should be enabled for such devices`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+		When running in FIPS mode this option should be enabled for such devices`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"encryption_key": &schema.Schema{
 							Description: `The encryptionKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
-							Type:     schema.TypeString,
-							Optional: true,
+		The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"host_ip": &schema.Schema{
-							Description: `The IP of the host - must be a valid IPV4 address`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The IP of the host - must be a valid IPV4 address`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"key_input_format": &schema.Schema{
 							Description: `Specifies the format of the input for fields 'encryptionKey' and 'authenticatorKey'.
-Allowed Values:
-- ASCII
-- HEXADECIMAL`,
-							Type:     schema.TypeString,
-							Optional: true,
+		Allowed Values:
+		- ASCII
+		- HEXADECIMAL`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Description: `Resource Name. Allowed charactera are alphanumeric and _ (underscore).`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Resource Name. Allowed charactera are alphanumeric and _ (underscore).`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"proxy_timeout": &schema.Schema{
-							Description: `Valid Range 1 to 600`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `Valid Range 1 to 600`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"retries": &schema.Schema{
-							Description: `Valid Range 1 to 9`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `Valid Range 1 to 9`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"shared_secret": &schema.Schema{
-							Description: `Shared secret maximum length is 128 characters`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Shared secret maximum length is 128 characters`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"timeout": &schema.Schema{
-							Description: `Valid Range 1 to 120`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `Valid Range 1 to 120`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -233,7 +282,9 @@ Allowed Values:
 
 func resourceExternalRadiusServerCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ExternalRadiusServer create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
+	isEnableAutoImport := clientConfig.EnableAutoImport
 
 	var diags diag.Diagnostics
 
@@ -247,24 +298,26 @@ func resourceExternalRadiusServerCreate(ctx context.Context, d *schema.ResourceD
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.ExternalRadiusServer.GetExternalRadiusServerByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceExternalRadiusServerRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.ExternalRadiusServer.GetExternalRadiusServerByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceExternalRadiusServerRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.ExternalRadiusServer.GetExternalRadiusServerByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceExternalRadiusServerRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.ExternalRadiusServer.GetExternalRadiusServerByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.ExternalRadiusServer.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceExternalRadiusServerRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.ExternalRadiusServer.CreateExternalRadiusServer(request1)
@@ -291,7 +344,8 @@ func resourceExternalRadiusServerCreate(ctx context.Context, d *schema.ResourceD
 
 func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ExternalRadiusServer read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -329,6 +383,12 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetExternalRadiusServerByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -355,6 +415,12 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetExternalRadiusServerByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -363,7 +429,8 @@ func resourceExternalRadiusServerRead(ctx context.Context, d *schema.ResourceDat
 
 func resourceExternalRadiusServerUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ExternalRadiusServer update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -425,7 +492,8 @@ func resourceExternalRadiusServerUpdate(ctx context.Context, d *schema.ResourceD
 
 func resourceExternalRadiusServerDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ExternalRadiusServer delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

@@ -86,13 +86,38 @@ func resourceGuestSSID() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Description: `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Resource Name. Name may contain alphanumeric or any of the following characters [_.-]`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -103,8 +128,10 @@ func resourceGuestSSID() *schema.Resource {
 
 func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestSSID create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -117,28 +144,30 @@ func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m inte
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.GuestSSID.GetGuestSSIDByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceGuestSSIDRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetGuestSSIDQueryParams{}
-
-		response2, _, err := client.GuestSSID.GetGuestSSID(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsGuestSSIDGetGuestSSID(m, response2, &queryParams2)
-			item2, err := searchGuestSSIDGetGuestSSID(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.GuestSSID.GetGuestSSIDByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceGuestSSIDRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetGuestSSIDQueryParams{}
+
+			response2, _, err := client.GuestSSID.GetGuestSSID(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsGuestSSIDGetGuestSSID(m, response2, &queryParams2)
+				item2, err := searchGuestSSIDGetGuestSSID(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceGuestSSIDRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -166,7 +195,8 @@ func resourceGuestSSIDCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestSSID read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -213,6 +243,12 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestSSID search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -238,6 +274,12 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestSSIDByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -246,7 +288,8 @@ func resourceGuestSSIDRead(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceGuestSSIDUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestSSID update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -311,7 +354,8 @@ func resourceGuestSSIDUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceGuestSSIDDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestSSID delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -421,7 +465,8 @@ func expandRequestGuestSSIDUpdateGuestSSIDByIDGuestSSID(ctx context.Context, key
 }
 
 func getAllItemsGuestSSIDGetGuestSSID(m interface{}, response *isegosdk.ResponseGuestSSIDGetGuestSSID, queryParams *isegosdk.GetGuestSSIDQueryParams) []isegosdk.ResponseGuestSSIDGetGuestSSIDSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseGuestSSIDGetGuestSSIDSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -449,7 +494,8 @@ func getAllItemsGuestSSIDGetGuestSSID(m interface{}, response *isegosdk.Response
 }
 
 func searchGuestSSIDGetGuestSSID(m interface{}, items []isegosdk.ResponseGuestSSIDGetGuestSSIDSearchResultResources, name string, id string) (*isegosdk.ResponseGuestSSIDGetGuestSSIDByIDGuestSSID, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseGuestSSIDGetGuestSSIDByIDGuestSSID
 	for _, item := range items {

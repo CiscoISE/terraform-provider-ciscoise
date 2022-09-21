@@ -106,57 +106,94 @@ func resourceCertificateProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"allowed_as_user_name": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"certificate_attribute_name": &schema.Schema{
 							Description: `Attribute name of the Certificate Profile - used only when CERTIFICATE is chosen in usernameFrom.
-Allowed values:
-- SUBJECT_COMMON_NAME
-- SUBJECT_ALTERNATIVE_NAME
-- SUBJECT_SERIAL_NUMBER
-- SUBJECT
-- SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
-- SUBJECT_ALTERNATIVE_NAME_EMAIL
-- SUBJECT_ALTERNATIVE_NAME_DNS.
-- Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN`,
-							Type:     schema.TypeString,
-							Optional: true,
+		Allowed values:
+		- SUBJECT_COMMON_NAME
+		- SUBJECT_ALTERNATIVE_NAME
+		- SUBJECT_SERIAL_NUMBER
+		- SUBJECT
+		- SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
+		- SUBJECT_ALTERNATIVE_NAME_EMAIL
+		- SUBJECT_ALTERNATIVE_NAME_DNS.
+		- Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"external_identity_store_name": &schema.Schema{
-							Description: `Referred IDStore name for the Certificate Profile or [not applicable] in case no identity store is chosen`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Referred IDStore name for the Certificate Profile or [not applicable] in case no identity store is chosen`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"match_mode": &schema.Schema{
 							Description: `Match mode of the Certificate Profile.
-Allowed values:
-- NEVER
-- RESOLVE_IDENTITY_AMBIGUITY
-- BINARY_COMPARISON`,
-							Type:     schema.TypeString,
-							Optional: true,
+		Allowed values:
+		- NEVER
+		- RESOLVE_IDENTITY_AMBIGUITY
+		- BINARY_COMPARISON`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"username_from": &schema.Schema{
 							Description: `The attribute in the certificate where the user name should be taken from.
-Allowed values:
-- CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
-- UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)`,
-							Type:     schema.TypeString,
-							Optional: true,
+		Allowed values:
+		- CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
+		- UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -167,7 +204,9 @@ Allowed values:
 
 func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning CertificateProfile create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
+	isEnableAutoImport := clientConfig.EnableAutoImport
 
 	var diags diag.Diagnostics
 
@@ -181,24 +220,26 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.CertificateProfile.GetCertificateProfileByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceCertificateProfileRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.CertificateProfile.GetCertificateProfileByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceCertificateProfileRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.CertificateProfile.GetCertificateProfileByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceCertificateProfileRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.CertificateProfile.GetCertificateProfileByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.CertificateProfile.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceCertificateProfileRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.CertificateProfile.CreateCertificateProfile(request1)
@@ -225,7 +266,8 @@ func resourceCertificateProfileCreate(ctx context.Context, d *schema.ResourceDat
 
 func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning CertificateProfile read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -263,6 +305,12 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetCertificateProfileByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -289,6 +337,12 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetCertificateProfileByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -297,7 +351,8 @@ func resourceCertificateProfileRead(ctx context.Context, d *schema.ResourceData,
 
 func resourceCertificateProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning CertificateProfile update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

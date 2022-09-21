@@ -55,7 +55,8 @@ func resourcePxgridAccountCreate() *schema.Resource {
 func resourcePxgridAccountCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning CreateAccount create")
 	log.Printf("[DEBUG] Missing CreateAccount create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

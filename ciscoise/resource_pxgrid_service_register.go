@@ -55,7 +55,8 @@ func resourcePxgridServiceRegister() *schema.Resource {
 func resourcePxgridServiceRegisterCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning RegisterService create")
 	log.Printf("[DEBUG] Missing RegisterService create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

@@ -78,32 +78,40 @@ At least one of subnet or sgt or vn should be defined`,
 					Schema: map[string]*schema.Schema{
 
 						"domains": &schema.Schema{
-							Description: `List of SXP Domains, separated with comma`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `List of SXP Domains, separated with comma`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Description: `id path parameter.`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `id path parameter.`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
 						},
 						"sgt": &schema.Schema{
 							Description:      `SGT name or ID. At least one of subnet or sgt or vn should be defined`,
 							Type:             schema.TypeString,
 							Optional:         true,
-							DiffSuppressFunc: diffSuppressSgt(),
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"subnet": &schema.Schema{
 							Description: `Subnet for filter policy (hostname is not supported).
-At least one of subnet or sgt or vn should be defined`,
-							Type:     schema.TypeString,
-							Optional: true,
+		At least one of subnet or sgt or vn should be defined`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"vn": &schema.Schema{
 							Description: `Virtual Network.
-At least one of subnet or sgt or vn should be defined`,
-							Type:     schema.TypeString,
-							Optional: true,
+		At least one of subnet or sgt or vn should be defined`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -114,7 +122,9 @@ At least one of subnet or sgt or vn should be defined`,
 
 func resourceFilterPolicyCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning FilterPolicy create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
+	isEnableAutoImport := clientConfig.EnableAutoImport
 
 	var diags diag.Diagnostics
 
@@ -132,35 +142,37 @@ func resourceFilterPolicyCreate(ctx context.Context, d *schema.ResourceData, m i
 	vvSgt := interfaceToString(vSgt)
 	vvSubnet := interfaceToString(vSubnet)
 	vvVn := interfaceToString(vVn)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.FilterPolicy.GetFilterPolicyByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["sgt"] = vvSgt
-			resourceMap["subnet"] = vvSubnet
-			resourceMap["vn"] = vvVn
-			d.SetId(joinResourceID(resourceMap))
-			return diags
-		}
-	} else {
-		queryParams2 := isegosdk.GetFilterPolicyQueryParams{}
-
-		response2, _, err := client.FilterPolicy.GetFilterPolicy(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsFilterPolicyGetFilterPolicy(m, response2, &queryParams2)
-			item2, nID, err := searchFilterPolicyGetFilterPolicy(m, items2, vvSgt, vvSubnet, vvVn, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.FilterPolicy.GetFilterPolicyByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
-				if nID != "" && nID != vvID {
-					resourceMap["id"] = nID
-				}
 				resourceMap["sgt"] = vvSgt
 				resourceMap["subnet"] = vvSubnet
 				resourceMap["vn"] = vvVn
 				d.SetId(joinResourceID(resourceMap))
 				return diags
+			}
+		} else {
+			queryParams2 := isegosdk.GetFilterPolicyQueryParams{}
+
+			response2, _, err := client.FilterPolicy.GetFilterPolicy(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsFilterPolicyGetFilterPolicy(m, response2, &queryParams2)
+				item2, nID, err := searchFilterPolicyGetFilterPolicy(m, items2, vvSgt, vvSubnet, vvVn, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.Sgt
+					if nID != "" && nID != vvID {
+						resourceMap["id"] = nID
+					}
+					resourceMap["sgt"] = vvSgt
+					resourceMap["subnet"] = vvSubnet
+					resourceMap["vn"] = vvVn
+					d.SetId(joinResourceID(resourceMap))
+					return diags
+				}
 			}
 		}
 	}
@@ -190,7 +202,8 @@ func resourceFilterPolicyCreate(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning FilterPolicy read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -239,6 +252,12 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetFilterPolicy search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -263,6 +282,12 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetFilterPolicyByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -271,7 +296,8 @@ func resourceFilterPolicyRead(ctx context.Context, d *schema.ResourceData, m int
 
 func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning FilterPolicy update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -335,7 +361,8 @@ func resourceFilterPolicyUpdate(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceFilterPolicyDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning FilterPolicy delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -460,7 +487,8 @@ func expandRequestFilterPolicyUpdateFilterPolicyByIDERSFilterPolicy(ctx context.
 }
 
 func getAllItemsFilterPolicyGetFilterPolicy(m interface{}, response *isegosdk.ResponseFilterPolicyGetFilterPolicy, queryParams *isegosdk.GetFilterPolicyQueryParams) []isegosdk.ResponseFilterPolicyGetFilterPolicySearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseFilterPolicyGetFilterPolicySearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -488,7 +516,8 @@ func getAllItemsFilterPolicyGetFilterPolicy(m interface{}, response *isegosdk.Re
 }
 
 func searchFilterPolicyGetFilterPolicy(m interface{}, items []isegosdk.ResponseFilterPolicyGetFilterPolicySearchResultResources, sgt string, subnet string, vn string, id string) (*isegosdk.ResponseFilterPolicyGetFilterPolicyByIDERSFilterPolicy, string, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundID string
 	var foundItem *isegosdk.ResponseFilterPolicyGetFilterPolicyByIDERSFilterPolicy

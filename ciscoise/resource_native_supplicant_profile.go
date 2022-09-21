@@ -116,56 +116,94 @@ Allowed values:
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"wireless_profiles": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"action_type": &schema.Schema{
 										Description: `Action type for WifiProfile.
-Allowed values:
-- ADD,
-- UPDATE,
-- DELETE
-(required for updating existing WirelessProfile)`,
-										Type:     schema.TypeString,
-										Optional: true,
+		Allowed values:
+		- ADD,
+		- UPDATE,
+		- DELETE
+		(required for updating existing WirelessProfile)`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"allowed_protocol": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"certificate_template_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"previous_ssid": &schema.Schema{
-										Description: `Previous ssid for WifiProfile (required for updating existing WirelessProfile)`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `Previous ssid for WifiProfile (required for updating existing WirelessProfile)`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"ssid": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
@@ -180,7 +218,8 @@ Allowed values:
 func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NativeSupplicantProfile create")
 	log.Printf("[DEBUG] Missing NativeSupplicantProfile create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -214,7 +253,8 @@ func resourceNativeSupplicantProfileCreate(ctx context.Context, d *schema.Resour
 
 func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NativeSupplicantProfile read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -260,6 +300,12 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNativeSupplicantProfile search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -285,6 +331,12 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNativeSupplicantProfileByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -293,7 +345,8 @@ func resourceNativeSupplicantProfileRead(ctx context.Context, d *schema.Resource
 
 func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NativeSupplicantProfile update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -357,7 +410,8 @@ func resourceNativeSupplicantProfileUpdate(ctx context.Context, d *schema.Resour
 
 func resourceNativeSupplicantProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NativeSupplicantProfile delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -499,7 +553,8 @@ func expandRequestNativeSupplicantProfileUpdateNativeSupplicantProfileByIDERSNSp
 }
 
 func getAllItemsNativeSupplicantProfileGetNativeSupplicantProfile(m interface{}, response *isegosdk.ResponseNativeSupplicantProfileGetNativeSupplicantProfile, queryParams *isegosdk.GetNativeSupplicantProfileQueryParams) []isegosdk.ResponseNativeSupplicantProfileGetNativeSupplicantProfileSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseNativeSupplicantProfileGetNativeSupplicantProfileSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -527,7 +582,8 @@ func getAllItemsNativeSupplicantProfileGetNativeSupplicantProfile(m interface{},
 }
 
 func searchNativeSupplicantProfileGetNativeSupplicantProfile(m interface{}, items []isegosdk.ResponseNativeSupplicantProfileGetNativeSupplicantProfileSearchResultResources, name string, id string) (*isegosdk.ResponseNativeSupplicantProfileGetNativeSupplicantProfileByIDERSNSpProfile, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseNativeSupplicantProfileGetNativeSupplicantProfileByIDERSNSpProfile
 	for _, item := range items {

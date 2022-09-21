@@ -187,7 +187,8 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 func resourceBindSignedCertificateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BindCsr create")
 	log.Printf("[DEBUG] Missing BindCsr create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

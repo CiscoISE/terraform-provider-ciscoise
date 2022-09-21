@@ -113,42 +113,79 @@ func resourceTacacsExternalServers() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"connection_port": &schema.Schema{
-							Description: `The port to connect the server`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `The port to connect the server`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"host_ip": &schema.Schema{
-							Description: `The server IPV4 address`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The server IPV4 address`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"shared_secret": &schema.Schema{
-							Description: `The server shared secret`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The server shared secret`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"single_connect": &schema.Schema{
-							Description:  `Define the use of single connection`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Define the use of single connection`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"timeout": &schema.Schema{
-							Description: `The server timeout`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `The server timeout`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -159,8 +196,10 @@ func resourceTacacsExternalServers() *schema.Resource {
 
 func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsExternalServers create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -173,24 +212,26 @@ func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.Resource
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.TacacsExternalServers.GetTacacsExternalServersByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTacacsExternalServersRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.TacacsExternalServers.GetTacacsExternalServersByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceTacacsExternalServersRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.TacacsExternalServers.GetTacacsExternalServersByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTacacsExternalServersRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.TacacsExternalServers.GetTacacsExternalServersByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.TacacsExternalServer.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceTacacsExternalServersRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.TacacsExternalServers.CreateTacacsExternalServers(request1)
@@ -217,7 +258,8 @@ func resourceTacacsExternalServersCreate(ctx context.Context, d *schema.Resource
 
 func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsExternalServers read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -255,6 +297,12 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsExternalServersByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -281,6 +329,12 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsExternalServersByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -289,7 +343,8 @@ func resourceTacacsExternalServersRead(ctx context.Context, d *schema.ResourceDa
 
 func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsExternalServers update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -351,7 +406,8 @@ func resourceTacacsExternalServersUpdate(ctx context.Context, d *schema.Resource
 
 func resourceTacacsExternalServersDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsExternalServers delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

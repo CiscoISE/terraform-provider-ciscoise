@@ -148,105 +148,128 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 					Schema: map[string]*schema.Schema{
 
 						"change_password": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"custom_attributes": &schema.Schema{
 							Description: `Key value map`,
-							Type:        schema.TypeMap,
-							Optional:    true,
+							// CHECK: The type of this param
+							// Replaced List to Map
+							Type:             schema.TypeString, //TEST,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"email": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"enable_password": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								vChangePassword, okChangePassword := d.GetOk("parameters.0.change_password")
-								vvChangePassword := interfaceToBoolPtr(vChangePassword)
-								hasDiff := old != new
-								if hasDiff {
-									// Do not suppress diff if it has change_password set
-									if okChangePassword && vvChangePassword != nil && *vvChangePassword {
-										log.Printf("[DEBUG] key %s does not require suppresion", k)
-										return false
-									}
-									return true
-								}
-								return true
-							},
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"enabled": &schema.Schema{
 							Description: `Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
-The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+		The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"expiry_date": &schema.Schema{
-							Description: `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"expiry_date_enabled": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"first_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"identity_groups": &schema.Schema{
-							Description: `CSV of identity group IDs`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `CSV of identity group IDs`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"last_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
-						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-						},
-						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Optional:  true,
-							Sensitive: true,
-							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
-								log.Printf("[DEBUG] Performing comparison to see if key %s requires diff suppression", k)
-								vChangePassword, okChangePassword := d.GetOk("parameters.0.change_password")
-								vvChangePassword := interfaceToBoolPtr(vChangePassword)
-								hasDiff := old != new
-								if hasDiff {
-									// Do not suppress diff if it has change_password set
-									if okChangePassword && vvChangePassword != nil && *vvChangePassword {
-										log.Printf("[DEBUG] key %s does not require suppresion", k)
-										return false
-									}
-									return true
-								}
-								return true
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
 							},
 						},
+						"name": &schema.Schema{
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"password": &schema.Schema{
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Sensitive:        true,
+							Computed:         true,
+						},
 						"password_idstore": &schema.Schema{
-							Description: `The id store where the internal user's password is kept`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Sensitive:   true,
+							Description:      `The id store where the internal user's password is kept`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Sensitive:        true,
+							Computed:         true,
 						},
 					},
 				},
@@ -257,8 +280,10 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 
 func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning InternalUser create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -271,24 +296,26 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.InternalUser.GetInternalUserByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceInternalUserRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.InternalUser.GetInternalUserByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceInternalUserRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.InternalUser.GetInternalUserByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceInternalUserRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.InternalUser.GetInternalUserByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.InternalUser.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceInternalUserRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.InternalUser.CreateInternalUser(request1)
@@ -315,7 +342,8 @@ func resourceInternalUserCreate(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning InternalUser read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -353,6 +381,12 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetInternalUserByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -379,6 +413,12 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetInternalUserByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -387,7 +427,8 @@ func resourceInternalUserRead(ctx context.Context, d *schema.ResourceData, m int
 
 func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning InternalUser update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -449,7 +490,8 @@ func resourceInternalUserUpdate(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceInternalUserDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning InternalUser delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

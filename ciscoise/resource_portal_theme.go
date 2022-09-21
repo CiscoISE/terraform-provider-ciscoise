@@ -94,21 +94,50 @@ func resourcePortalTheme() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"theme_data": &schema.Schema{
-							Description: `Portal Theme for all portals`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Portal Theme for all portals`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -119,8 +148,10 @@ func resourcePortalTheme() *schema.Resource {
 
 func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PortalTheme create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -133,28 +164,30 @@ func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m in
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.PortalTheme.GetPortalThemeByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourcePortalThemeRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetPortalThemesQueryParams{}
-
-		response2, _, err := client.PortalTheme.GetPortalThemes(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsPortalThemeGetPortalThemes(m, response2, &queryParams2)
-			item2, err := searchPortalThemeGetPortalThemes(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.PortalTheme.GetPortalThemeByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourcePortalThemeRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetPortalThemesQueryParams{}
+
+			response2, _, err := client.PortalTheme.GetPortalThemes(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsPortalThemeGetPortalThemes(m, response2, &queryParams2)
+				item2, err := searchPortalThemeGetPortalThemes(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourcePortalThemeRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -182,7 +215,8 @@ func resourcePortalThemeCreate(ctx context.Context, d *schema.ResourceData, m in
 
 func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PortalTheme read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -229,6 +263,12 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPortalThemes search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -254,6 +294,12 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPortalThemeByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -262,7 +308,8 @@ func resourcePortalThemeRead(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourcePortalThemeUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PortalTheme update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -327,7 +374,8 @@ func resourcePortalThemeUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 func resourcePortalThemeDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PortalTheme delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -449,7 +497,8 @@ func expandRequestPortalThemeUpdatePortalThemeByIDPortalTheme(ctx context.Contex
 }
 
 func getAllItemsPortalThemeGetPortalThemes(m interface{}, response *isegosdk.ResponsePortalThemeGetPortalThemes, queryParams *isegosdk.GetPortalThemesQueryParams) []isegosdk.ResponsePortalThemeGetPortalThemesSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponsePortalThemeGetPortalThemesSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -477,7 +526,8 @@ func getAllItemsPortalThemeGetPortalThemes(m interface{}, response *isegosdk.Res
 }
 
 func searchPortalThemeGetPortalThemes(m interface{}, items []isegosdk.ResponsePortalThemeGetPortalThemesSearchResultResources, name string, id string) (*isegosdk.ResponsePortalThemeGetPortalThemeByIDPortalTheme, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponsePortalThemeGetPortalThemeByIDPortalTheme
 	for _, item := range items {
