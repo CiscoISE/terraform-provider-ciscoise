@@ -45,24 +45,30 @@ a certain period of time.
 				Computed:    true,
 			},
 			"parameters": &schema.Schema{
-				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Type:             schema.TypeList,
+				Required:         true,
+				DiffSuppressFunc: diffSupressOptional(),
+				Computed:         true,
+				MaxItems:         1,
+				MinItems:         1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"repository_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Required: true,
+							Type:             schema.TypeString,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
 						},
 						"patch_number": &schema.Schema{
-							Type:     schema.TypeInt,
-							Required: true,
-							ForceNew: true,
+							Type:             schema.TypeInt,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							ForceNew:         true,
 						},
 						"patch_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Required: true,
+							Type:             schema.TypeString,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
 						},
 					},
 				},
@@ -89,7 +95,8 @@ a certain period of time.
 
 func resourcePatchCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Patch create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -183,7 +190,8 @@ func resourcePatchCreate(ctx context.Context, d *schema.ResourceData, m interfac
 func resourcePatchRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Patch read for id=[%s]", d.Id())
 
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -226,7 +234,8 @@ func resourcePatchUpdate(ctx context.Context, d *schema.ResourceData, m interfac
 
 func resourcePatchDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Patch delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

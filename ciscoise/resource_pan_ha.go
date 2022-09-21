@@ -95,35 +95,47 @@ func resourcePanHa() *schema.Resource {
 							Required:     true,
 						},
 						"failed_attempts": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"polling_interval": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"primary_health_check_node": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							MaxItems:         1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"hostname": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"secondary_health_check_node": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							MaxItems:         1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"hostname": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
@@ -143,7 +155,8 @@ secondary_health_check_node_hostname
 func resourcePanHaCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PanHa create")
 	log.Printf("[DEBUG] Missing PanHa create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -199,7 +212,8 @@ func resourcePanHaCreate(ctx context.Context, d *schema.ResourceData, m interfac
 
 func resourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PanHa read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -226,6 +240,12 @@ func resourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interface{
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPanHaStatus response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -234,7 +254,8 @@ func resourcePanHaRead(ctx context.Context, d *schema.ResourceData, m interface{
 
 func resourcePanHaUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PanHa update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

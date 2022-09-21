@@ -5,8 +5,6 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -34,7 +32,8 @@ func dataSourceMntSessionByIP() *schema.Resource {
 }
 
 func dataSourceMntSessionByIPRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	vEndpointIPv4 := d.Get("endpoint_ipv4")

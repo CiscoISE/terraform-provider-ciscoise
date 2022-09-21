@@ -55,7 +55,8 @@ func resourcePxgridServiceLookup() *schema.Resource {
 func resourcePxgridServiceLookupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning LookupService create")
 	log.Printf("[DEBUG] Missing LookupService create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestPxgridServiceLookupLookupService(ctx, "parameters.0", d)

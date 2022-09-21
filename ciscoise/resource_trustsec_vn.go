@@ -50,21 +50,25 @@ func resourceTrustsecVn() *schema.Resource {
 							Description: `JSON String of additional attributes for the Virtual Network`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"id": &schema.Schema{
 							Description: `Identifier of the Virtual Network`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"last_update": &schema.Schema{
 							Description: `Timestamp for the last update of the Virtual Network`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"name": &schema.Schema{
 							Description: `Name of the Virtual Network`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -104,8 +108,10 @@ func resourceTrustsecVn() *schema.Resource {
 
 func resourceTrustsecVnCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecVn create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -118,28 +124,30 @@ func resourceTrustsecVnCreate(ctx context.Context, d *schema.ResourceData, m int
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.VirtualNetwork.GetVirtualNetworkByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTrustsecVnRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetVirtualNetworksQueryParams{}
-
-		response2, _, err := client.VirtualNetwork.GetVirtualNetworks(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsVirtualNetworkGetVirtualNetworks(m, response2, &queryParams2)
-			item2, err := searchVirtualNetworkGetVirtualNetworks(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.VirtualNetwork.GetVirtualNetworkByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceTrustsecVnRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetVirtualNetworksQueryParams{}
+
+			response2, _, err := client.VirtualNetwork.GetVirtualNetworks(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsVirtualNetworkGetVirtualNetworks(m, response2, &queryParams2)
+				item2, err := searchVirtualNetworkGetVirtualNetworks(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = vvID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceTrustsecVnRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -163,7 +171,8 @@ func resourceTrustsecVnCreate(ctx context.Context, d *schema.ResourceData, m int
 
 func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecVn read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -208,6 +217,12 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetVirtualNetworks search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -231,6 +246,12 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetVirtualNetworkByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -239,7 +260,8 @@ func resourceTrustsecVnRead(ctx context.Context, d *schema.ResourceData, m inter
 
 func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecVn update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -302,7 +324,8 @@ func resourceTrustsecVnUpdate(ctx context.Context, d *schema.ResourceData, m int
 
 func resourceTrustsecVnDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecVn delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -423,7 +446,8 @@ func getAllItemsVirtualNetworkGetVirtualNetworks(m interface{}, response *isegos
 }
 
 func searchVirtualNetworkGetVirtualNetworks(m interface{}, items []isegosdk.ResponseVirtualNetworkGetVirtualNetworksResponse, name string, id string) (*[]isegosdk.ResponseVirtualNetworkGetVirtualNetworkByIDResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *[]isegosdk.ResponseVirtualNetworkGetVirtualNetworkByIDResponse
 	for _, item := range items {

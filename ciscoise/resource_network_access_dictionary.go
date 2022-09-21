@@ -95,37 +95,66 @@ func resourceNetworkAccessDictionary() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Description: `The description of the Dictionary`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The description of the Dictionary`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"dictionary_attr_type": &schema.Schema{
-							Description: `The dictionary attribute type`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The dictionary attribute type`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Description: `Identifier for the dictionary`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Identifier for the dictionary`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
 
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"name": &schema.Schema{
-							Description: `The dictionary name`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The dictionary name`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"version": &schema.Schema{
-							Description: `The dictionary version`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The dictionary version`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -136,7 +165,8 @@ func resourceNetworkAccessDictionary() *schema.Resource {
 
 func resourceNetworkAccessDictionaryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessDictionary create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -199,7 +229,8 @@ func resourceNetworkAccessDictionaryCreate(ctx context.Context, d *schema.Resour
 
 func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessDictionary read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -244,6 +275,12 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessDictionaries search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -269,6 +306,12 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkAccessDictionaryByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -277,7 +320,8 @@ func resourceNetworkAccessDictionaryRead(ctx context.Context, d *schema.Resource
 
 func resourceNetworkAccessDictionaryUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessDictionary update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -339,7 +383,8 @@ func resourceNetworkAccessDictionaryUpdate(ctx context.Context, d *schema.Resour
 
 func resourceNetworkAccessDictionaryDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkAccessDictionary delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -493,7 +538,8 @@ func getAllItemsNetworkAccessDictionaryGetNetworkAccessDictionaries(m interface{
 }
 
 func searchNetworkAccessDictionaryGetNetworkAccessDictionaries(m interface{}, items []isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionariesResponse, name string, id string) (*isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionaryByNameResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseNetworkAccessDictionaryGetNetworkAccessDictionaryByNameResponse
 	for _, item := range items {

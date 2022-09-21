@@ -82,15 +82,39 @@ func resourceLicensingTierState() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type:         schema.TypeString,
-							Optional:     true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+
 							ForceNew:     true,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "ESSENTIAL", "ADVANTAGE", "PREMIER", "DEVICEADMIN"}),
 						},
 						"status": &schema.Schema{
-							Type:         schema.TypeString,
-							Optional:     true,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "ENABLED", "DISABLED"}),
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "ENABLED", "DISABLED"}),
+						},
+						"compliance": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"consumption_counter": &schema.Schema{
+							Description: `Compliance counter for tier`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"days_out_of_compliance": &schema.Schema{
+							Description: `Number of days tier is out of compliance`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"last_authorization": &schema.Schema{
+							Description: `Last date of authorization`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -101,7 +125,8 @@ func resourceLicensingTierState() *schema.Resource {
 
 func resourceLicensingTierStateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TierState create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -130,7 +155,8 @@ func resourceLicensingTierStateCreate(ctx context.Context, d *schema.ResourceDat
 
 func resourceLicensingTierStateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TierState read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -168,7 +194,8 @@ func resourceLicensingTierStateRead(ctx context.Context, d *schema.ResourceData,
 
 func resourceLicensingTierStateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TierState update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

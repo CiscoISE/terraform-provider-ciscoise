@@ -96,22 +96,49 @@ func resourceAncPolicy() *schema.Resource {
 
 						"actions": &schema.Schema{
 							Description: `- QUARANTINE: Allows you to use Exception policies (authorization policies) to limit or deny an endpoint access to the network.
-- PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
-- SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
-- RE_AUTHENTICATE: Re-authenticates the session from the endpoint.`,
-							Type:     schema.TypeList,
-							Optional: true,
+		- PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
+		- SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
+		- RE_AUTHENTICATE: Re-authenticates the session from the endpoint.`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -122,8 +149,9 @@ func resourceAncPolicy() *schema.Resource {
 
 func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncPolicy create")
-	client := m.(*isegosdk.Client)
-
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -136,24 +164,26 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.AncPolicy.GetAncPolicyByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceAncPolicyRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.AncPolicy.GetAncPolicyByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceAncPolicyRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.AncPolicy.GetAncPolicyByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceAncPolicyRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.AncPolicy.GetAncPolicyByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.ErsAncPolicy.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceAncPolicyRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.AncPolicy.CreateAncPolicy(request1)
@@ -180,7 +210,8 @@ func resourceAncPolicyCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncPolicy read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -218,6 +249,12 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAncPolicyByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -244,6 +281,12 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetAncPolicyByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -252,7 +295,8 @@ func resourceAncPolicyRead(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncPolicy update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -314,7 +358,8 @@ func resourceAncPolicyUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceAncPolicyDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AncPolicy delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

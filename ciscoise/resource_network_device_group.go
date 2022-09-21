@@ -92,20 +92,49 @@ func resourceNetworkDeviceGroup() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"othername": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -116,8 +145,10 @@ func resourceNetworkDeviceGroup() *schema.Resource {
 
 func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkDeviceGroup create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -130,24 +161,26 @@ func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceDat
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceNetworkDeviceGroupRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceNetworkDeviceGroupRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceNetworkDeviceGroupRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.NetworkDeviceGroup.GetNetworkDeviceGroupByName(replaceAllStr(vvName, "#", ":")) // WARNING: (:) colon is used as a separator instead of (#) in the NDG name.
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.NetworkDeviceGroup.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceNetworkDeviceGroupRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.NetworkDeviceGroup.CreateNetworkDeviceGroup(request1)
@@ -174,7 +207,8 @@ func resourceNetworkDeviceGroupCreate(ctx context.Context, d *schema.ResourceDat
 
 func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkDeviceGroup read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -212,6 +246,12 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkDeviceGroupByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -238,6 +278,12 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkDeviceGroupByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -246,7 +292,8 @@ func resourceNetworkDeviceGroupRead(ctx context.Context, d *schema.ResourceData,
 
 func resourceNetworkDeviceGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkDeviceGroup update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -308,7 +355,8 @@ func resourceNetworkDeviceGroupUpdate(ctx context.Context, d *schema.ResourceDat
 
 func resourceNetworkDeviceGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkDeviceGroup delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

@@ -5,8 +5,6 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -48,7 +46,8 @@ func resourcePxgridServiceReregister() *schema.Resource {
 func resourcePxgridServiceReregisterCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ReregisterService create")
 	log.Printf("[DEBUG] Missing ReregisterService create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	d.Set("parameters", nil)

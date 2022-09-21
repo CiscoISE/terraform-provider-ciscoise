@@ -304,7 +304,8 @@ func dataSourceNetworkAccessNetworkCondition() *schema.Resource {
 }
 
 func dataSourceNetworkAccessNetworkConditionRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	vID, okID := d.GetOk("id")

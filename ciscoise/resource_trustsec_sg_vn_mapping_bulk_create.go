@@ -107,7 +107,8 @@ func resourceTrustsecSgVnMappingBulkCreate() *schema.Resource {
 func resourceTrustsecSgVnMappingBulkCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BulkCreateSgVnMappings create")
 	log.Printf("[DEBUG] Missing BulkCreateSgVnMappings create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestTrustsecSgVnMappingBulkCreateBulkCreateSgVnMappings(ctx, "parameters.0", d)

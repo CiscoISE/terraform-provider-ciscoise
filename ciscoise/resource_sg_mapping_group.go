@@ -92,39 +92,66 @@ func resourceSgMappingGroup() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"deploy_to": &schema.Schema{
-							Description: `Mandatory unless mappingGroup is set or unless deployType=ALL`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Mandatory unless mappingGroup is set or unless deployType=ALL`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"deploy_type": &schema.Schema{
 							Description: `Allowed values:
-- ALL,
-- ND,
-- NDG`,
-							Type:     schema.TypeString,
-							Optional: true,
+		- ALL,
+		- ND,
+		- NDG`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
 							Description: `id path parameter.`,
 							Type:        schema.TypeString,
-							Optional:    true,
+							Required:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sgt": &schema.Schema{
 							Description:      `Mandatory unless mappingGroup is set`,
 							Type:             schema.TypeString,
 							Optional:         true,
-							DiffSuppressFunc: diffSuppressSgt(),
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -135,7 +162,8 @@ func resourceSgMappingGroup() *schema.Resource {
 
 func resourceSgMappingGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgMappingGroup create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -198,7 +226,8 @@ func resourceSgMappingGroupCreate(ctx context.Context, d *schema.ResourceData, m
 
 func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgMappingGroup read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -244,6 +273,12 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPToSgtMappingGroup search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -269,6 +304,12 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPToSgtMappingGroupByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -277,7 +318,8 @@ func resourceSgMappingGroupRead(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceSgMappingGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgMappingGroup update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -336,7 +378,8 @@ func resourceSgMappingGroupUpdate(ctx context.Context, d *schema.ResourceData, m
 
 func resourceSgMappingGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgMappingGroup delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -458,7 +501,8 @@ func expandRequestSgMappingGroupUpdateIPToSgtMappingGroupByIDSgMappingGroup(ctx 
 }
 
 func getAllItemsIPToSgtMappingGroupGetIPToSgtMappingGroup(m interface{}, response *isegosdk.ResponseIPToSgtMappingGroupGetIPToSgtMappingGroup, queryParams *isegosdk.GetIPToSgtMappingGroupQueryParams) []isegosdk.ResponseIPToSgtMappingGroupGetIPToSgtMappingGroupSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseIPToSgtMappingGroupGetIPToSgtMappingGroupSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -486,7 +530,8 @@ func getAllItemsIPToSgtMappingGroupGetIPToSgtMappingGroup(m interface{}, respons
 }
 
 func searchIPToSgtMappingGroupGetIPToSgtMappingGroup(m interface{}, items []isegosdk.ResponseIPToSgtMappingGroupGetIPToSgtMappingGroupSearchResultResources, name string, id string) (*isegosdk.ResponseIPToSgtMappingGroupGetIPToSgtMappingGroupByIDSgMappingGroup, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseIPToSgtMappingGroupGetIPToSgtMappingGroupByIDSgMappingGroup
 	for _, item := range items {

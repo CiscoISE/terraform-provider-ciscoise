@@ -146,7 +146,8 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 func resourceTrustedCertificateImportCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ImportTrustCert create")
 	log.Printf("[DEBUG] Missing ImportTrustCert create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestTrustedCertificateImportImportTrustCert(ctx, "parameters.0", d)

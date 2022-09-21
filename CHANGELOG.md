@@ -1,3 +1,13 @@
+## 0.6.6-beta (Sep 21, 2022)
+
+FEATURES:
+* New provider configuration variable added:
+  - **enable_auto_import** (String) Flag to enable or disable terraform automatic import (Automatic import means that when Terraform attempts to create the resource, it will perform a get operation if it founds a matching resource, it will perform an import of the resource it found, this is a similar operation to the terraform import command.) in resources, this is a configuration added to the provider, it uses the ISE_ENABLE_AUTO_IMPORT environment variable; `true` to enable it, defaults to `false`.
+
+BUG FIXES:
+* The provider overwrites the configuration to the one in the `tf file` even if it is updated outside of the provider.
+* On `resource_sgt` `value` parameter adds new validation, it only allows numbers greatest or equal than `2` and lower or equal than `65519`.
+
 ## 0.6.5-beta (Jun 07, 2022)
 
 FEATURES:

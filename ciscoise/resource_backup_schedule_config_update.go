@@ -145,7 +145,8 @@ only helps in editing the schedule.
 func resourceBackupScheduleConfigUpdateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning UpdateScheduledConfigBackup create")
 	log.Printf("[DEBUG] Missing UpdateScheduledConfigBackup create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

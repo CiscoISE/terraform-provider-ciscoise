@@ -103,36 +103,48 @@ pxGrid Cloud
 					Schema: map[string]*schema.Schema{
 
 						"bypass_hosts": &schema.Schema{
-							Description: `Bypass hosts for the proxy connection`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Bypass hosts for the proxy connection`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"fqdn": &schema.Schema{
-							Description: `proxy IP address or DNS-resolvable host name`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `proxy IP address or DNS-resolvable host name`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"password": &schema.Schema{
-							Description: `Password for the proxy connection`,
-							Type:        schema.TypeString,
-							Optional:    true,
-							Sensitive:   true,
+							Description:      `Password for the proxy connection`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							Sensitive:        true,
 						},
 						"password_required": &schema.Schema{
-							Description:  `Indicates whether password configuration is required for Proxy.`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Indicates whether password configuration is required for Proxy.`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"port": &schema.Schema{
-							Description: `Port for proxy connection. should be between 1 and 65535`,
-							Type:        schema.TypeInt,
-							Optional:    true,
+							Description:      `Port for proxy connection. should be between 1 and 65535`,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"user_name": &schema.Schema{
-							Description: `User name for the proxy connection`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `User name for the proxy connection`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -144,7 +156,8 @@ pxGrid Cloud
 func resourceProxyConnectionSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ProxyConnectionSettings create")
 	log.Printf("[DEBUG] Missing ProxyConnectionSettings create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -177,7 +190,8 @@ func resourceProxyConnectionSettingsCreate(ctx context.Context, d *schema.Resour
 
 func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ProxyConnectionSettings read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -204,6 +218,12 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetProxyConnection response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -212,7 +232,8 @@ func resourceProxyConnectionSettingsRead(ctx context.Context, d *schema.Resource
 
 func resourceProxyConnectionSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ProxyConnectionSettings update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

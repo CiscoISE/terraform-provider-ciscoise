@@ -60,7 +60,8 @@ func resourceSgToVnToVLANBulkRequest() *schema.Resource {
 func resourceSgToVnToVLANBulkRequestCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BulkRequestForSecurityGroupsToVnToVLAN create")
 	log.Printf("[DEBUG] Missing BulkRequestForSecurityGroupsToVnToVLAN create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestSgToVnToVLANBulkRequestBulkRequestForSecurityGroupsToVnToVLAN(ctx, "parameters.0", d)

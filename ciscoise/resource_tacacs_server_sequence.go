@@ -122,54 +122,95 @@ The order of the names in the string is the order of servers that will be used d
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"prefix_delimiter": &schema.Schema{
-							Description: `The delimiter that will be used for prefix strip`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The delimiter that will be used for prefix strip`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"prefix_strip": &schema.Schema{
-							Description:  `Define if a delimiter will be used for prefix strip`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Define if a delimiter will be used for prefix strip`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"server_list": &schema.Schema{
 							Description: `The names of Tacacs external servers separated by commas.
-The order of the names in the string is the order of servers that will be used during authentication`,
-							Type:     schema.TypeString,
-							Optional: true,
+		The order of the names in the string is the order of servers that will be used during authentication`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"suffix_delimiter": &schema.Schema{
-							Description: `The delimiter that will be used for suffix strip`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The delimiter that will be used for suffix strip`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"suffix_strip": &schema.Schema{
-							Description:  `Define if a delimiter will be used for suffix strip`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Define if a delimiter will be used for suffix strip`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 					},
 				},
@@ -180,8 +221,10 @@ The order of the names in the string is the order of servers that will be used d
 
 func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsServerSequence create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -194,24 +237,26 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.TacacsServerSequence.GetTacacsServerSequenceByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTacacsServerSequenceRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.TacacsServerSequence.GetTacacsServerSequenceByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceTacacsServerSequenceRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.TacacsServerSequence.GetTacacsServerSequenceByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTacacsServerSequenceRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.TacacsServerSequence.GetTacacsServerSequenceByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.TacacsServerSequence.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceTacacsServerSequenceRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.TacacsServerSequence.CreateTacacsServerSequence(request1)
@@ -238,7 +283,8 @@ func resourceTacacsServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 
 func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsServerSequence read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -276,6 +322,12 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsServerSequenceByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -302,6 +354,12 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsServerSequenceByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -310,7 +368,8 @@ func resourceTacacsServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 
 func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsServerSequence update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -372,7 +431,8 @@ func resourceTacacsServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 
 func resourceTacacsServerSequenceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsServerSequence delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

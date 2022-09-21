@@ -120,7 +120,8 @@ func resourceTrustsecVnVLANMappingBulkUpdate() *schema.Resource {
 func resourceTrustsecVnVLANMappingBulkUpdateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BulkUpdateVnVLANMappings create")
 	log.Printf("[DEBUG] Missing BulkUpdateVnVLANMappings create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestTrustsecVnVLANMappingBulkUpdateBulkUpdateVnVLANMappings(ctx, "parameters.0", d)

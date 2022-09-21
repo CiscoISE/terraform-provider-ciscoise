@@ -121,46 +121,83 @@ func resourceEgressMatrixCell() *schema.Resource {
 
 						"default_rule": &schema.Schema{
 							Description: `Allowed values:
-- NONE,
-- DENY_IP,
-- PERMIT_IP`,
-							Type:     schema.TypeString,
-							Optional: true,
+		- NONE,
+		- DENY_IP,
+		- PERMIT_IP`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"destination_sgt_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"matrix_cell_status": &schema.Schema{
 							Description: `Allowed values:
-- DISABLED,
-- ENABLED,
-- MONITOR`,
-							Type:     schema.TypeString,
-							Optional: true,
+		- DISABLED,
+		- ENABLED,
+		- MONITOR`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sgacls": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"source_sgt_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -171,7 +208,9 @@ func resourceEgressMatrixCell() *schema.Resource {
 
 func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning EgressMatrixCell create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
+	isEnableAutoImport := clientConfig.EnableAutoImport
 
 	var diags diag.Diagnostics
 
@@ -185,31 +224,35 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.EgressMatrixCell.GetEgressMatrixCellByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceEgressMatrixCellRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetEgressMatrixCellQueryParams{}
 
-		response2, _, err := client.EgressMatrixCell.GetEgressMatrixCell(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsEgressMatrixCellGetEgressMatrixCell(m, response2, &queryParams2)
-			item2, err := searchEgressMatrixCellGetEgressMatrixCell(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.EgressMatrixCell.GetEgressMatrixCellByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceEgressMatrixCellRead(ctx, d, m)
 			}
+		} else {
+			queryParams2 := isegosdk.GetEgressMatrixCellQueryParams{}
+
+			response2, _, err := client.EgressMatrixCell.GetEgressMatrixCell(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsEgressMatrixCellGetEgressMatrixCell(m, response2, &queryParams2)
+				item2, err := searchEgressMatrixCellGetEgressMatrixCell(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceEgressMatrixCellRead(ctx, d, m)
+				}
+			}
 		}
 	}
+
 	restyResp1, err := client.EgressMatrixCell.CreateEgressMatrixCell(request1)
 	if err != nil {
 		if restyResp1 != nil {
@@ -234,7 +277,8 @@ func resourceEgressMatrixCellCreate(ctx context.Context, d *schema.ResourceData,
 
 func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning EgressMatrixCell read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -281,6 +325,12 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetEgressMatrixCell search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -305,6 +355,12 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetEgressMatrixCellByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -313,7 +369,8 @@ func resourceEgressMatrixCellRead(ctx context.Context, d *schema.ResourceData, m
 
 func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning EgressMatrixCell update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -378,7 +435,8 @@ func resourceEgressMatrixCellUpdate(ctx context.Context, d *schema.ResourceData,
 
 func resourceEgressMatrixCellDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning EgressMatrixCell delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -525,7 +583,8 @@ func expandRequestEgressMatrixCellUpdateEgressMatrixCellByIDEgressMatrixCell(ctx
 }
 
 func getAllItemsEgressMatrixCellGetEgressMatrixCell(m interface{}, response *isegosdk.ResponseEgressMatrixCellGetEgressMatrixCell, queryParams *isegosdk.GetEgressMatrixCellQueryParams) []isegosdk.ResponseEgressMatrixCellGetEgressMatrixCellSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseEgressMatrixCellGetEgressMatrixCellSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -553,7 +612,8 @@ func getAllItemsEgressMatrixCellGetEgressMatrixCell(m interface{}, response *ise
 }
 
 func searchEgressMatrixCellGetEgressMatrixCell(m interface{}, items []isegosdk.ResponseEgressMatrixCellGetEgressMatrixCellSearchResultResources, name string, id string) (*isegosdk.ResponseEgressMatrixCellGetEgressMatrixCellByIDEgressMatrixCell, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseEgressMatrixCellGetEgressMatrixCellByIDEgressMatrixCell
 	for _, item := range items {

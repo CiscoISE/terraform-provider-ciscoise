@@ -110,38 +110,72 @@ func resourceSxpLocalBindings() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"binding_name": &schema.Schema{
-							Description: `This field is depricated from Cisco ISE 3.0`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `This field is depricated from Cisco ISE 3.0`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"ip_address_or_host": &schema.Schema{
-							Description: `IP address for static mapping (hostname is not supported)`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `IP address for static mapping (hostname is not supported)`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"sgt": &schema.Schema{
 							Description:      `SGT name or ID`,
 							Type:             schema.TypeString,
 							Optional:         true,
-							DiffSuppressFunc: diffSuppressSgt(),
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sxp_vpn": &schema.Schema{
-							Description: `List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"vns": &schema.Schema{
-							Description: `List of Virtual Networks, separated with comma. At least one of: sxpVpn or vns should be defined`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `List of Virtual Networks, separated with comma. At least one of: sxpVpn or vns should be defined`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -152,8 +186,10 @@ func resourceSxpLocalBindings() *schema.Resource {
 
 func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpLocalBindings create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -164,26 +200,28 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 
 	vID, okID := resourceItem["id"]
 	vvID := interfaceToString(vID)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.SxpLocalBindings.GetSxpLocalBindingsByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			d.SetId(joinResourceID(resourceMap))
-			return resourceSxpLocalBindingsRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetSxpLocalBindingsQueryParams{}
-
-		response2, _, err := client.SxpLocalBindings.GetSxpLocalBindings(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsSxpLocalBindingsGetSxpLocalBindings(m, response2, &queryParams2)
-			item2, err := searchSxpLocalBindingsGetSxpLocalBindings(m, items2, "", vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.SxpLocalBindings.GetSxpLocalBindingsByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				d.SetId(joinResourceID(resourceMap))
 				return resourceSxpLocalBindingsRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetSxpLocalBindingsQueryParams{}
+
+			response2, _, err := client.SxpLocalBindings.GetSxpLocalBindings(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsSxpLocalBindingsGetSxpLocalBindings(m, response2, &queryParams2)
+				item2, err := searchSxpLocalBindingsGetSxpLocalBindings(m, items2, "", vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					d.SetId(joinResourceID(resourceMap))
+					return resourceSxpLocalBindingsRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -210,7 +248,8 @@ func resourceSxpLocalBindingsCreate(ctx context.Context, d *schema.ResourceData,
 
 func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpLocalBindings read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -254,6 +293,12 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSxpLocalBindings search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -279,6 +324,12 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSxpLocalBindingsByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -287,7 +338,8 @@ func resourceSxpLocalBindingsRead(ctx context.Context, d *schema.ResourceData, m
 
 func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpLocalBindings update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -334,7 +386,8 @@ func resourceSxpLocalBindingsUpdate(ctx context.Context, d *schema.ResourceData,
 
 func resourceSxpLocalBindingsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpLocalBindings delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -478,7 +531,8 @@ func expandRequestSxpLocalBindingsUpdateSxpLocalBindingsByIDERSSxpLocalBindings(
 }
 
 func getAllItemsSxpLocalBindingsGetSxpLocalBindings(m interface{}, response *isegosdk.ResponseSxpLocalBindingsGetSxpLocalBindings, queryParams *isegosdk.GetSxpLocalBindingsQueryParams) []isegosdk.ResponseSxpLocalBindingsGetSxpLocalBindingsSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseSxpLocalBindingsGetSxpLocalBindingsSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -506,7 +560,8 @@ func getAllItemsSxpLocalBindingsGetSxpLocalBindings(m interface{}, response *ise
 }
 
 func searchSxpLocalBindingsGetSxpLocalBindings(m interface{}, items []isegosdk.ResponseSxpLocalBindingsGetSxpLocalBindingsSearchResultResources, name string, id string) (*isegosdk.ResponseSxpLocalBindingsGetSxpLocalBindingsByIDERSSxpLocalBindings, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseSxpLocalBindingsGetSxpLocalBindingsByIDERSSxpLocalBindings
 	for _, item := range items {

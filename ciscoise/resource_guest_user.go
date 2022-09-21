@@ -215,143 +215,225 @@ func resourceGuestUser() *schema.Resource {
 				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
 						"custom_fields": &schema.Schema{
 							Description: `Key value map`,
-							Type:        schema.TypeMap,
-							Optional:    true,
+							// CHECK: The type of this param
+							// Replaced List to Map
+							Type:             schema.TypeString, //TEST,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"guest_access_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"from_date": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"group_tag": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"location": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"ssid": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"to_date": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"valid_days": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"guest_info": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"company": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"creation_time": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"email_address": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"enabled": &schema.Schema{
-										Description:  `This field is only for Get operation not applicable for Create, Update operations`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `This field is only for Get operation not applicable for Create, Update operations`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"first_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"last_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"notification_language": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"password": &schema.Schema{
-										Type:      schema.TypeString,
-										Optional:  true,
-										Sensitive: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Sensitive:        true,
+										Computed:         true,
 									},
 									"phone_number": &schema.Schema{
-										Description: `Phone number should be E.164 format`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `Phone number should be E.164 format`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"sms_service_provider": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"user_name": &schema.Schema{
-										Description: `If account needs be created with mobile number, please provide mobile number here`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `If account needs be created with mobile number, please provide mobile number here`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"guest_type": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"portal_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"reason_for_visit": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sponsor_user_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sponsor_user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"status": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"status_reason": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -362,8 +444,10 @@ func resourceGuestUser() *schema.Resource {
 
 func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestUser create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -376,24 +460,26 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.GuestUser.GetGuestUserByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceGuestUserRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.GuestUser.GetGuestUserByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceGuestUserRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.GuestUser.GetGuestUserByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceGuestUserRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.GuestUser.GetGuestUserByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.GuestUser.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceGuestUserRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.GuestUser.CreateGuestUser(request1)
@@ -420,7 +506,8 @@ func resourceGuestUserCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestUser read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -458,6 +545,12 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestUserByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -484,6 +577,12 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestUserByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -492,7 +591,8 @@ func resourceGuestUserRead(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestUser update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -583,7 +683,8 @@ func resourceGuestUserUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceGuestUserDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestUser delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

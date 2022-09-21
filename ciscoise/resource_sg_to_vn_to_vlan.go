@@ -151,75 +151,128 @@ func resourceSgToVnToVLAN() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sgt_id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"virtualnetworklist": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"default_virtual_network": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"vlans": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"default_vlan": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"description": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"max_value": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
+													Type:             schema.TypeInt,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
@@ -236,8 +289,10 @@ func resourceSgToVnToVLAN() *schema.Resource {
 
 func resourceSgToVnToVLANCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgToVnToVLAN create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -250,28 +305,30 @@ func resourceSgToVnToVLANCreate(ctx context.Context, d *schema.ResourceData, m i
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.SecurityGroupToVirtualNetwork.GetSecurityGroupsToVnToVLANByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceSgToVnToVLANRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetSecurityGroupsToVnToVLANQueryParams{}
-
-		response2, _, err := client.SecurityGroupToVirtualNetwork.GetSecurityGroupsToVnToVLAN(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m, response2, &queryParams2)
-			item2, err := searchSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.SecurityGroupToVirtualNetwork.GetSecurityGroupsToVnToVLANByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceSgToVnToVLANRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetSecurityGroupsToVnToVLANQueryParams{}
+
+			response2, _, err := client.SecurityGroupToVirtualNetwork.GetSecurityGroupsToVnToVLAN(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m, response2, &queryParams2)
+				item2, err := searchSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceSgToVnToVLANRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -299,7 +356,8 @@ func resourceSgToVnToVLANCreate(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgToVnToVLAN read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -345,6 +403,12 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroupsToVnToVLAN search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -370,6 +434,12 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSecurityGroupsToVnToVLANByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -378,7 +448,8 @@ func resourceSgToVnToVLANRead(ctx context.Context, d *schema.ResourceData, m int
 
 func resourceSgToVnToVLANUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgToVnToVLAN update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -442,7 +513,8 @@ func resourceSgToVnToVLANUpdate(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceSgToVnToVLANDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgToVnToVLAN delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -763,7 +835,8 @@ func expandRequestSgToVnToVLANUpdateSecurityGroupsToVnToVLANByIDSgtVnVLANContain
 }
 
 func getAllItemsSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m interface{}, response *isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN, queryParams *isegosdk.GetSecurityGroupsToVnToVLANQueryParams) []isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -791,7 +864,8 @@ func getAllItemsSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m inter
 }
 
 func searchSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLAN(m interface{}, items []isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANSearchResultResources, name string, id string) (*isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDSgtVnVLANContainer, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseSecurityGroupToVirtualNetworkGetSecurityGroupsToVnToVLANByIDSgtVnVLANContainer
 	for _, item := range items {

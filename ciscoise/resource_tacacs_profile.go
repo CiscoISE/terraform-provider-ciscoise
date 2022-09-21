@@ -121,43 +121,79 @@ func resourceTacacsProfile() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"session_attributes": &schema.Schema{
-							Description: `Holds list of session attributes. View type for GUI is Shell by default`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							MaxItems:    1,
+							Description:      `Holds list of session attributes. View type for GUI is Shell by default`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"session_attribute_list": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"name": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"type": &schema.Schema{
-													Description: `Allowed values: MANDATORY, OPTIONAL`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Allowed values: MANDATORY, OPTIONAL`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"value": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
@@ -174,8 +210,10 @@ func resourceTacacsProfile() *schema.Resource {
 
 func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsProfile create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -188,24 +226,26 @@ func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m 
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.TacacsProfile.GetTacacsProfileByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTacacsProfileRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.TacacsProfile.GetTacacsProfileByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceTacacsProfileRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.TacacsProfile.GetTacacsProfileByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTacacsProfileRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.TacacsProfile.GetTacacsProfileByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.TacacsProfile.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceTacacsProfileRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.TacacsProfile.CreateTacacsProfile(request1)
@@ -232,7 +272,8 @@ func resourceTacacsProfileCreate(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsProfile read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -270,6 +311,12 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsProfileByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -296,6 +343,12 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTacacsProfileByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -304,7 +357,8 @@ func resourceTacacsProfileRead(ctx context.Context, d *schema.ResourceData, m in
 
 func resourceTacacsProfileUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsProfile update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -366,7 +420,8 @@ func resourceTacacsProfileUpdate(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceTacacsProfileDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TacacsProfile delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

@@ -96,7 +96,8 @@ func dataSourceAncEndpointBulkMonitorStatus() *schema.Resource {
 }
 
 func dataSourceAncEndpointBulkMonitorStatusRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	vBulkid := d.Get("bulkid")

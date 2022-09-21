@@ -56,7 +56,8 @@ given MAC Address.
 func resourceThreatVulnerabilitiesClearCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ClearThreatsAndVulnerabilities create")
 	log.Printf("[DEBUG] Missing ClearThreatsAndVulnerabilities create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestThreatVulnerabilitiesClearClearThreatsAndVulnerabilities(ctx, "parameters.0", d)

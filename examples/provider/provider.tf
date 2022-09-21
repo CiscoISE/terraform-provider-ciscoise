@@ -31,4 +31,8 @@ provider "ciscoise" {
   # Timeout (in seconds) for the RESTful HTTP requests
   single_request_timeout = 60
   # it can be set using the environment variable ISE_SINGLE_REQUEST_TIMEOUT
+
+  # Boolean to enable or disable autoimport on resources
+  enable_auto_import = "false"
+  # it can be set using the environment variable ISE_ENABLE_AUTO_IMPORT
 }

@@ -689,7 +689,8 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 }
 
 func dataSourceActiveDirectoryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	vPage, okPage := d.GetOk("page")

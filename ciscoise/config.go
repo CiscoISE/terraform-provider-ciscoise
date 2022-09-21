@@ -2,6 +2,7 @@ package ciscoise
 
 import (
 	"context"
+	"strconv"
 	"time"
 
 	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
@@ -21,6 +22,11 @@ type Config struct {
 	UseAPIGateway  string
 	UseCSRFToken   string
 	RequestTimeout int
+}
+
+type ClientConfig struct {
+	Client           *isegosdk.Client
+	EnableAutoImport bool
 }
 
 // NewClient returns a new Cisco Identity Services Engine client.
@@ -63,5 +69,15 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 		})
 		return nil, diags
 	}
-	return client, diags
+	boolValue, err := strconv.ParseBool(d.Get("enable_auto_import").(string))
+
+	if err != nil {
+		boolValue = false
+	}
+
+	clientConfig := ClientConfig{
+		Client:           client,
+		EnableAutoImport: boolValue,
+	}
+	return clientConfig, diags
 }

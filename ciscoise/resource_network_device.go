@@ -355,288 +355,408 @@ func resourceNetworkDevice() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"network_device_group_list": &schema.Schema{
-							Description: `List of Network Device Group names for this node`,
-							Type:        schema.TypeList,
-							Optional:    true,
+							Description:      `List of Network Device Group names for this node`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"network_device_iplist": &schema.Schema{
-							Description: `List of IP Subnets for this node`,
-							Type:        schema.TypeList,
-							Optional:    true,
+							Description:      `List of IP Subnets for this node`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"get_ipaddress_exclude": &schema.Schema{
-										Description: `It can be either single IP address or IP range address`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `It can be either single IP address or IP range address`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"ipaddress": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"mask": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"authentication_settings": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"dtls_required": &schema.Schema{
-										Description:  `This value enforces use of dtls`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `This value enforces use of dtls`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"enable_key_wrap": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"enable_multi_secret": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"enabled": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"key_encryption_key": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"key_input_format": &schema.Schema{
 										Description: `Allowed values:
-- ASCII,
-- HEXADECIMAL`,
-										Type:     schema.TypeString,
-										Optional: true,
+		- ASCII,
+		- HEXADECIMAL`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"message_authenticator_code_key": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"network_protocol": &schema.Schema{
 										Description: `Allowed values:
-- RADIUS,
-- TACACS_PLUS`,
-										Type:     schema.TypeString,
-										Optional: true,
+		- RADIUS,
+		- TACACS_PLUS`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"radius_shared_secret": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"second_radius_shared_secret": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"coa_port": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"dtls_dns_name": &schema.Schema{
-							Description: `This value is used to verify the client identity contained in the X.509 RADIUS/DTLS client certificate`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `This value is used to verify the client identity contained in the X.509 RADIUS/DTLS client certificate`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"model_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"profile_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"snmpsettings": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"link_trap_query": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"mac_trap_query": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"originating_policy_services_node": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"polling_interval": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"ro_community": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"version": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"software_version": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"tacacs_settings": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"connect_mode_options": &schema.Schema{
 										Description: `Allowed values:
-- OFF,
-- ON_LEGACY,
-- ON_DRAFT_COMPLIANT`,
-										Type:     schema.TypeString,
-										Optional: true,
+		- OFF,
+		- ON_LEGACY,
+		- ON_DRAFT_COMPLIANT`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"shared_secret": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"trustsecsettings": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"device_authentication_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"sga_device_id": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"sga_device_password": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"device_configuration_deployment": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"enable_mode_password": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"exec_mode_password": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"exec_mode_username": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"include_when_deploying_sgt_updates": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"push_id_support": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"sga_notification_and_updates": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"coa_source_host": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"downlaod_environment_data_every_x_seconds": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
+													Type:             schema.TypeInt,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"downlaod_peer_authorization_policy_every_x_seconds": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
+													Type:             schema.TypeInt,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"download_sga_cllists_every_x_seconds": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
+													Type:             schema.TypeInt,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"other_sga_devices_to_trust_this_device": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"re_authentication_every_x_seconds": &schema.Schema{
-													Type:     schema.TypeInt,
-													Optional: true,
+													Type:             schema.TypeInt,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"send_configuration_to_device": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"send_configuration_to_device_using": &schema.Schema{
 													Description: `Allowed values:
-- ENABLE_USING_COA,
-- ENABLE_USING_CLI,
-- DISABLE_ALL`,
-													Type:     schema.TypeString,
-													Optional: true,
+		- ENABLE_USING_COA,
+		- ENABLE_USING_CLI,
+		- DISABLE_ALL`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
@@ -653,8 +773,10 @@ func resourceNetworkDevice() *schema.Resource {
 
 func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkDevice create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -667,24 +789,26 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 	vvID := interfaceToString(vID)
 	vName, okName := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse1, _, err := client.NetworkDevice.GetNetworkDeviceByID(vvID)
-		if err == nil && getResponse1 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceNetworkDeviceRead(ctx, d, m)
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse1, _, err := client.NetworkDevice.GetNetworkDeviceByID(vvID)
+			if err == nil && getResponse1 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = vvID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceNetworkDeviceRead(ctx, d, m)
+			}
 		}
-	}
-	if okName && vvName != "" {
-		getResponse2, _, err := client.NetworkDevice.GetNetworkDeviceByName(vvName)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceNetworkDeviceRead(ctx, d, m)
+		if okName && vvName != "" {
+			getResponse2, _, err := client.NetworkDevice.GetNetworkDeviceByName(vvName)
+			if err == nil && getResponse2 != nil {
+				resourceMap := make(map[string]string)
+				resourceMap["id"] = getResponse2.NetworkDevice.ID
+				resourceMap["name"] = vvName
+				d.SetId(joinResourceID(resourceMap))
+				return resourceNetworkDeviceRead(ctx, d, m)
+			}
 		}
 	}
 	restyResp1, err := client.NetworkDevice.CreateNetworkDevice(request1)
@@ -711,7 +835,8 @@ func resourceNetworkDeviceCreate(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkDevice read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -749,6 +874,12 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemName1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkDeviceByName response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -775,6 +906,12 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItemID2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNetworkDeviceByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -783,7 +920,8 @@ func resourceNetworkDeviceRead(ctx context.Context, d *schema.ResourceData, m in
 
 func resourceNetworkDeviceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkDevice update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -845,7 +983,8 @@ func resourceNetworkDeviceUpdate(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceNetworkDeviceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NetworkDevice delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

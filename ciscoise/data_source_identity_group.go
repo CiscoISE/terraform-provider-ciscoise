@@ -247,7 +247,8 @@ string parameter. Each resource Data model description should specify if an attr
 }
 
 func dataSourceIDentityGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	vPage, okPage := d.GetOk("page")

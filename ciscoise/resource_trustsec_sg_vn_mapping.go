@@ -47,34 +47,46 @@ func resourceTrustsecSgVnMapping() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"id": &schema.Schema{
-							Description: `Identifier of the SG-VN mapping`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Identifier of the SG-VN mapping`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"last_update": &schema.Schema{
-							Description: `Timestamp for the last update of the SG-VN mapping`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Timestamp for the last update of the SG-VN mapping`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sg_name": &schema.Schema{
-							Description: `Name of the associated Security Group to be used for identity if id is not provided`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Name of the associated Security Group to be used for identity if id is not provided`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sgt_id": &schema.Schema{
-							Description: `Identifier of the associated Security Group which is required unless its name is provided`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Identifier of the associated Security Group which is required unless its name is provided`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"vn_id": &schema.Schema{
-							Description: `Identifier for the associated Virtual Network which is required unless its name is provided`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Identifier for the associated Virtual Network which is required unless its name is provided`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"vn_name": &schema.Schema{
-							Description: `Name of the associated Virtual Network to be used for identity if id is not provided`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Name of the associated Virtual Network to be used for identity if id is not provided`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -124,8 +136,10 @@ func resourceTrustsecSgVnMapping() *schema.Resource {
 
 func resourceTrustsecSgVnMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -144,26 +158,10 @@ func resourceTrustsecSgVnMappingCreate(ctx context.Context, d *schema.ResourceDa
 	vvVnID := interfaceToString(vVnID)
 	vVnName, _ := resourceItem["vn_name"]
 	vvVnName := interfaceToString(vVnName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.SgVnMapping.GetSgVnMappingByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["sg_name"] = vvSgName
-			resourceMap["sgt_id"] = vvSgtID
-			resourceMap["vn_id"] = vvVnID
-			resourceMap["vn_name"] = vvVnName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceTrustsecSgVnMappingRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetSgVnMappingsQueryParams{}
-
-		response2, _, err := client.SgVnMapping.GetSgVnMappings(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsSgVnMappingGetSgVnMappings(m, response2, &queryParams2)
-			item2, err := searchSgVnMappingGetSgVnMappings(m, items2, vvSgName, vvSgtID, vvVnID, vvVnName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.SgVnMapping.GetSgVnMappingByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["sg_name"] = vvSgName
@@ -172,6 +170,24 @@ func resourceTrustsecSgVnMappingCreate(ctx context.Context, d *schema.ResourceDa
 				resourceMap["vn_name"] = vvVnName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceTrustsecSgVnMappingRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetSgVnMappingsQueryParams{}
+
+			response2, _, err := client.SgVnMapping.GetSgVnMappings(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsSgVnMappingGetSgVnMappings(m, response2, &queryParams2)
+				item2, err := searchSgVnMappingGetSgVnMappings(m, items2, vvSgName, vvSgtID, vvVnID, vvVnName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = vvID
+					resourceMap["sg_name"] = vvSgName
+					resourceMap["sgt_id"] = vvSgtID
+					resourceMap["vn_id"] = vvVnID
+					resourceMap["vn_name"] = vvVnName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceTrustsecSgVnMappingRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -198,7 +214,8 @@ func resourceTrustsecSgVnMappingCreate(ctx context.Context, d *schema.ResourceDa
 
 func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -249,6 +266,12 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSgVnMappings search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -274,6 +297,12 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSgVnMappingByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -282,7 +311,8 @@ func resourceTrustsecSgVnMappingRead(ctx context.Context, d *schema.ResourceData
 
 func resourceTrustsecSgVnMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -354,7 +384,8 @@ func resourceTrustsecSgVnMappingUpdate(ctx context.Context, d *schema.ResourceDa
 
 func resourceTrustsecSgVnMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TrustsecSgVnMapping delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -496,7 +527,8 @@ func getAllItemsSgVnMappingGetSgVnMappings(m interface{}, response *isegosdk.Res
 }
 
 func searchSgVnMappingGetSgVnMappings(m interface{}, items []isegosdk.ResponseSgVnMappingGetSgVnMappingsResponse, sgName string, sgtID string, vnID string, vnName string, id string) (*[]isegosdk.ResponseSgVnMappingGetSgVnMappingByIDResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *[]isegosdk.ResponseSgVnMappingGetSgVnMappingByIDResponse
 	for _, item := range items {

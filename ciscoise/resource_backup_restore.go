@@ -110,7 +110,8 @@ to get the status of the backup job
 func resourceBackupRestoreCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning RestoreConfigBackup create")
 	log.Printf("[DEBUG] Missing RestoreConfigBackup create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

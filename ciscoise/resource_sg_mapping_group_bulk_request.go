@@ -60,7 +60,8 @@ func resourceSgMappingGroupBulkRequest() *schema.Resource {
 func resourceSgMappingGroupBulkRequestCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BulkRequestForIPToSgtMappingGroup create")
 	log.Printf("[DEBUG] Missing BulkRequestForIPToSgtMappingGroup create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestSgMappingGroupBulkRequestBulkRequestForIPToSgtMappingGroup(ctx, "parameters.0", d)

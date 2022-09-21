@@ -150,9 +150,8 @@ func resourceAciSettings() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -161,94 +160,113 @@ func resourceAciSettings() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"aci51": &schema.Schema{
 							Description:  `Enable 5.1 ACI Version`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"aciipaddress": &schema.Schema{
 							Description: `ACI Domain manager Ip Address.`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"acipassword": &schema.Schema{
 							Description: `ACI Domain manager Password.`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							Sensitive:   true,
+							Computed:    true,
 						},
 						"aciuser_name": &schema.Schema{
 							Description: `ACI Domain manager Username.`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"admin_name": &schema.Schema{
 							Description: `ACI Cluster Admin name`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"admin_password": &schema.Schema{
 							Description: `ACI Cluster Admin password`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"all_sxp_domain": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"default_sgt_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"enable_aci": &schema.Schema{
 							Description:  `Enable ACI Integration`,
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_data_plane": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"enable_elements_limit": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"id": &schema.Schema{
 							Description: `Resource UUID value`,
 							Type:        schema.TypeString,
-							Required:    true,
+							Optional:    true,
+							Computed:    true,
 						},
 						"ip_address_host_name": &schema.Schema{
 							Description: `ACI Cluster IP Address / Host name`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"l3_route_network": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"max_num_iepg_from_aci": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"max_num_sgt_to_aci": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"specific_sxp_domain": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"specifix_sxp_domain_list": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
+							Computed: true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -256,18 +274,22 @@ func resourceAciSettings() *schema.Resource {
 						"suffix_to_epg": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"suffix_to_sgt": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"tenant_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"untagged_packet_iepg_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -279,7 +301,8 @@ func resourceAciSettings() *schema.Resource {
 func resourceAciSettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AciSettings create")
 	log.Printf("[DEBUG] Missing AciSettings create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -313,7 +336,8 @@ func resourceAciSettingsCreate(ctx context.Context, d *schema.ResourceData, m in
 
 func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AciSettings read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -342,7 +366,7 @@ func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m inte
 		}
 		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetAciSettings response to parameters",
+				"Failure when setting GetAciSettings response to item",
 				err))
 			return diags
 		}
@@ -354,7 +378,8 @@ func resourceAciSettingsRead(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceAciSettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AciSettings update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

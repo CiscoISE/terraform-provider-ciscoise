@@ -55,7 +55,8 @@ func resourcePxgridAccessSecret() *schema.Resource {
 func resourcePxgridAccessSecretCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning AccessSecret create")
 	log.Printf("[DEBUG] Missing AccessSecret create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

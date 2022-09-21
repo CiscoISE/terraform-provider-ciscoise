@@ -64,7 +64,8 @@ func resourceNetworkAccessAuthorizationRulesResetHitcount() *schema.Resource {
 func resourceNetworkAccessAuthorizationRulesResetHitcountCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ResetHitCountsNetworkAccessAuthorizationRules create")
 	log.Printf("[DEBUG] Missing ResetHitCountsNetworkAccessAuthorizationRules create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	vPolicyID := d.Get("parameters.0.policy_id")

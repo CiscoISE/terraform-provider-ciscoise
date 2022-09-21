@@ -55,9 +55,8 @@ in case of air-gapped network.
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -66,11 +65,13 @@ in case of air-gapped network.
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"url": &schema.Schema{
 							Description: `URL of transport gateway`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -82,7 +83,8 @@ in case of air-gapped network.
 func resourceTransportGatewaySettingsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TransportGatewaySettings create")
 	log.Printf("[DEBUG] Missing TransportGatewaySettings create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -114,7 +116,8 @@ func resourceTransportGatewaySettingsCreate(ctx context.Context, d *schema.Resou
 
 func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TransportGatewaySettings read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -141,6 +144,12 @@ func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resourc
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetTransportGateway response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -149,7 +158,8 @@ func resourceTransportGatewaySettingsRead(ctx context.Context, d *schema.Resourc
 
 func resourceTransportGatewaySettingsUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning TransportGatewaySettings update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	if d.HasChange("parameters") {

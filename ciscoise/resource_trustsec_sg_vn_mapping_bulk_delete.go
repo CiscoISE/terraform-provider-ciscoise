@@ -68,7 +68,8 @@ func resourceTrustsecSgVnMappingBulkDelete() *schema.Resource {
 func resourceTrustsecSgVnMappingBulkDeleteCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BulkDeleteSgVnMappings create")
 	log.Printf("[DEBUG] Missing BulkDeleteSgVnMappings create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestTrustsecSgVnMappingBulkDeleteBulkDeleteSgVnMappings(ctx, "parameters.0", d)
@@ -93,6 +94,7 @@ func resourceTrustsecSgVnMappingBulkDeleteCreate(ctx context.Context, d *schema.
 		return diags
 	}
 	_ = d.Set("last_updated", getUnixTimeString())
+	log.Printf("[INFO] CREATED")
 	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 	d.SetId(getUnixTimeString())
 	return resourceTrustsecSgVnMappingBulkDeleteRead(ctx, d, m)

@@ -91,54 +91,66 @@ longer carried out among the nodes.
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"mar_cache": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"query_attempts": &schema.Schema{
-										Description: `The number of times Cisco ISE attempts to perform the cache entry query. (0 - 5). `,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `The number of times Cisco ISE attempts to perform the cache entry query. (0 - 5). `,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"query_timeout": &schema.Schema{
-										Description: `The time, in seconds, after which the cache entry query times out. (1 - 10). `,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `The time, in seconds, after which the cache entry query times out. (1 - 10). `,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"replication_attempts": &schema.Schema{
-										Description: `The number of times Cisco ISE attempts to perform MAR cache entry replication. (0 - 5). `,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `The number of times Cisco ISE attempts to perform MAR cache entry replication. (0 - 5). `,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"replication_timeout": &schema.Schema{
-										Description: `The time, in seconds, after which the cache entry replication times out. (1 - 10). `,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `The time, in seconds, after which the cache entry replication times out. (1 - 10). `,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"node_group_name": &schema.Schema{
 							Description: `nodeGroupName path parameter. Name of the existing node group.`,
 							Type:        schema.TypeString,
-							Optional:    true,
+							Required:    true,
 						},
 					},
 				},
@@ -149,7 +161,8 @@ longer carried out among the nodes.
 
 func resourceNodeGroupCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeGroup create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -201,7 +214,8 @@ func resourceNodeGroupCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeGroup read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -244,6 +258,12 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNodeGroups search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -269,6 +289,12 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNodeGroup response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -277,7 +303,8 @@ func resourceNodeGroupRead(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeGroup update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -338,7 +365,8 @@ func resourceNodeGroupUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceNodeGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeGroup delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -482,7 +510,8 @@ func getAllItemsNodeGroupGetNodeGroups(m interface{}, response *isegosdk.Respons
 }
 
 func searchNodeGroupGetNodeGroups(m interface{}, items []isegosdk.ResponseNodeGroupGetNodeGroupsResponse, name string, id string) (*isegosdk.ResponseNodeGroupGetNodeGroupResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseNodeGroupGetNodeGroupResponse
 	for _, item := range items {

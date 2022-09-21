@@ -95,7 +95,8 @@ func resourceTrustsecVnBulkCreate() *schema.Resource {
 func resourceTrustsecVnBulkCreateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BulkCreateVirtualNetworks create")
 	log.Printf("[DEBUG] Missing BulkCreateVirtualNetworks create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestTrustsecVnBulkCreateBulkCreateVirtualNetworks(ctx, "parameters.0", d)

@@ -77,22 +77,46 @@ func resourcePortalGlobalSetting() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"customization": &schema.Schema{
 							Description: `Allowed values:
-- HTML,
-- HTMLANDJAVASCRIPT`,
-							Type:     schema.TypeString,
-							Optional: true,
+		- HTML,
+		- HTMLANDJAVASCRIPT`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Required: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -104,7 +128,8 @@ func resourcePortalGlobalSetting() *schema.Resource {
 func resourcePortalGlobalSettingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PortalGlobalSetting create")
 	log.Printf("[DEBUG] Missing PortalGlobalSetting create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -137,7 +162,8 @@ func resourcePortalGlobalSettingCreate(ctx context.Context, d *schema.ResourceDa
 
 func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PortalGlobalSetting read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -182,6 +208,12 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPortalGlobalSettings search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -207,6 +239,12 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetPortalGlobalSettingByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -215,7 +253,8 @@ func resourcePortalGlobalSettingRead(ctx context.Context, d *schema.ResourceData
 
 func resourcePortalGlobalSettingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning PortalGlobalSetting update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -303,7 +342,8 @@ func expandRequestPortalGlobalSettingUpdatePortalGlobalSettingByIDPortalCustomiz
 }
 
 func getAllItemsPortalGlobalSettingGetPortalGlobalSettings(m interface{}, response *isegosdk.ResponsePortalGlobalSettingGetPortalGlobalSettings, queryParams *isegosdk.GetPortalGlobalSettingsQueryParams) []isegosdk.ResponsePortalGlobalSettingGetPortalGlobalSettingsSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponsePortalGlobalSettingGetPortalGlobalSettingsSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -331,7 +371,8 @@ func getAllItemsPortalGlobalSettingGetPortalGlobalSettings(m interface{}, respon
 }
 
 func searchPortalGlobalSettingGetPortalGlobalSettings(m interface{}, items []isegosdk.ResponsePortalGlobalSettingGetPortalGlobalSettingsSearchResultResources, name string, id string) (*isegosdk.ResponsePortalGlobalSettingGetPortalGlobalSettingByIDPortalCustomizationGlobalSetting, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponsePortalGlobalSettingGetPortalGlobalSettingByIDPortalCustomizationGlobalSetting
 	for _, item := range items {

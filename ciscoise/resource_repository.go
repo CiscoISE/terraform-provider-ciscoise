@@ -82,9 +82,8 @@ func resourceRepository() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
@@ -92,35 +91,42 @@ func resourceRepository() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
-							Description: `repositoryName path parameter. Unique name for a repository. Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
+							Description: `Repository name should be less than 80 characters and can contain alphanumeric, underscore, hyphen and dot characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"password": &schema.Schema{
 							Description: `Password can contain alphanumeric and/or special characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
 							Sensitive:   true,
+							Computed:    true,
 						},
 						"path": &schema.Schema{
 							Description: `Path should always start with "/" and can contain alphanumeric, underscore, hyphen and dot characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"server_name": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"user_name": &schema.Schema{
 							Description: `Username may contain alphanumeric and _-./@\\$ characters.`,
 							Type:        schema.TypeString,
 							Optional:    true,
+							Computed:    true,
 						},
 					},
 				},
@@ -131,7 +137,8 @@ func resourceRepository() *schema.Resource {
 
 func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Repository create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -183,7 +190,8 @@ func resourceRepositoryCreate(ctx context.Context, d *schema.ResourceData, m int
 
 func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Repository read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -226,6 +234,12 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetRepositories search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -251,6 +265,12 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetRepository response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -259,7 +279,8 @@ func resourceRepositoryRead(ctx context.Context, d *schema.ResourceData, m inter
 
 func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Repository update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -320,7 +341,8 @@ func resourceRepositoryUpdate(ctx context.Context, d *schema.ResourceData, m int
 
 func resourceRepositoryDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Repository delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -451,7 +473,8 @@ func getAllItemsRepositoryGetRepositories(m interface{}, response *isegosdk.Resp
 }
 
 func searchRepositoryGetRepositories(m interface{}, items []isegosdk.ResponseRepositoryGetRepositoriesResponse, name string, id string) (*isegosdk.ResponseRepositoryGetRepositoryResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseRepositoryGetRepositoryResponse
 	for _, item := range items {

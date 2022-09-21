@@ -258,193 +258,271 @@ Allowed values are:
 					Schema: map[string]*schema.Schema{
 
 						"access_time": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"allow_access_on_specific_days_times": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"day_time_limits": &schema.Schema{
-										Description: `List of Time Ranges for account access`,
-										Type:        schema.TypeList,
-										Optional:    true,
+										Description:      `List of Time Ranges for account access`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"days": &schema.Schema{
 													Description: `List of Days
-Values should be one of Week day.
-Allowed values are:
-- Sunday,
-- Monday,
-- Tuesday,
-- Wednesday,
-- Thursday,
-- Friday,
-- Saturday`,
-													Type:     schema.TypeList,
-													Optional: true,
+		Values should be one of Week day.
+		Allowed values are:
+		- Sunday,
+		- Monday,
+		- Tuesday,
+		- Wednesday,
+		- Thursday,
+		- Friday,
+		- Saturday`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
 												},
 												"end_time": &schema.Schema{
-													Description: `End time in HH:mm format`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `End time in HH:mm format`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"start_time": &schema.Schema{
-													Description: `Start time in HH:mm format`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Start time in HH:mm format`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"default_duration": &schema.Schema{
-										Type:     schema.TypeInt,
-										Optional: true,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"duration_time_unit": &schema.Schema{
 										Description: `Allowed values are:
-- DAYS,
-- HOURS,
-- MINUTES`,
-										Type:     schema.TypeString,
-										Optional: true,
+		- DAYS,
+		- HOURS,
+		- MINUTES`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"from_first_login": &schema.Schema{
-										Description:  `When Account Duration starts from first login or specified date`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `When Account Duration starts from first login or specified date`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"max_account_duration": &schema.Schema{
-										Description: `Maximum value of Account Duration`,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `Maximum value of Account Duration`,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"expiration_notification": &schema.Schema{
-							Description: `Expiration Notification Settings`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							MaxItems:    1,
+							Description:      `Expiration Notification Settings`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"advance_notification_duration": &schema.Schema{
-										Description: `Send Account Expiration Notification Duration before ( Days, Hours, Minutes )`,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `Send Account Expiration Notification Duration before ( Days, Hours, Minutes )`,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"advance_notification_units": &schema.Schema{
 										Description: `Allowed values are:
-- DAYS,
-- HOURS,
-- MINUTES`,
-										Type:     schema.TypeString,
-										Optional: true,
+		- DAYS,
+		- HOURS,
+		- MINUTES`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"email_text": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"enable_notification": &schema.Schema{
-										Description:  `Enable Notification settings`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `Enable Notification settings`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"send_email_notification": &schema.Schema{
-										Description:  `Enable Email Notification`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `Enable Email Notification`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"send_sms_notification": &schema.Schema{
-										Description:  `Maximum devices guests can register`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `Maximum devices guests can register`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"sms_text": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"is_default_type": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"login_options": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
-							MaxItems: 1,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"allow_guest_portal_bypass": &schema.Schema{
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"failure_action": &schema.Schema{
 										Description: `When Guest Exceeds limit this action will be invoked.
-Allowed values are:
-- Disconnect_Oldest_Connection,
-- Disconnect_Newest_Connection`,
-										Type:     schema.TypeString,
-										Optional: true,
+		Allowed values are:
+		- Disconnect_Oldest_Connection,
+		- Disconnect_Newest_Connection`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"identity_group_id": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"limit_simultaneous_logins": &schema.Schema{
-										Description:  `Enable Simultaneous Logins`,
-										Type:         schema.TypeString,
-										ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-										Optional:     true,
+										Description:      `Enable Simultaneous Logins`,
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
 									},
 									"max_registered_devices": &schema.Schema{
-										Description: `Maximum devices guests can register`,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `Maximum devices guests can register`,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"max_simultaneous_logins": &schema.Schema{
-										Description: `Number of Simultaneous Logins`,
-										Type:        schema.TypeInt,
-										Optional:    true,
+										Description:      `Number of Simultaneous Logins`,
+										Type:             schema.TypeInt,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sponsor_groups": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
@@ -458,8 +536,10 @@ Allowed values are:
 
 func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestType create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -472,28 +552,30 @@ func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m inte
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.GuestType.GetGuestTypeByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceGuestTypeRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetGuestTypeQueryParams{}
-
-		response2, _, err := client.GuestType.GetGuestType(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsGuestTypeGetGuestType(m, response2, &queryParams2)
-			item2, err := searchGuestTypeGetGuestType(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.GuestType.GetGuestTypeByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceGuestTypeRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetGuestTypeQueryParams{}
+
+			response2, _, err := client.GuestType.GetGuestType(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsGuestTypeGetGuestType(m, response2, &queryParams2)
+				item2, err := searchGuestTypeGetGuestType(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceGuestTypeRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -521,7 +603,8 @@ func resourceGuestTypeCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestType read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -567,6 +650,12 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestType search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -592,6 +681,12 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetGuestTypeByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -600,7 +695,8 @@ func resourceGuestTypeRead(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceGuestTypeUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestType update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -663,7 +759,8 @@ func resourceGuestTypeUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceGuestTypeDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning GuestType delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -1051,7 +1148,8 @@ func expandRequestGuestTypeUpdateGuestTypeByIDGuestTypeExpirationNotification(ct
 }
 
 func getAllItemsGuestTypeGetGuestType(m interface{}, response *isegosdk.ResponseGuestTypeGetGuestType, queryParams *isegosdk.GetGuestTypeQueryParams) []isegosdk.ResponseGuestTypeGetGuestTypeSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseGuestTypeGetGuestTypeSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -1079,7 +1177,8 @@ func getAllItemsGuestTypeGetGuestType(m interface{}, response *isegosdk.Response
 }
 
 func searchGuestTypeGetGuestType(m interface{}, items []isegosdk.ResponseGuestTypeGetGuestTypeSearchResultResources, name string, id string) (*isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestType, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseGuestTypeGetGuestTypeByIDGuestType
 	for _, item := range items {

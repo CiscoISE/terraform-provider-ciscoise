@@ -144,110 +144,221 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"admin": &schema.Schema{
-							Description:  `Use certificate to authenticate the Cisco ISE Admin Portal`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Use certificate to authenticate the Cisco ISE Admin Portal`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"allow_portal_tag_transfer_for_same_subject": &schema.Schema{
-							Description:  `Allow overwriting the portal tag from matching certificate of same subject`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Allow overwriting the portal tag from matching certificate of same subject`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"allow_replacement_of_portal_group_tag": &schema.Schema{
-							Description:  `Allow Replacement of Portal Group Tag (required)`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Allow Replacement of Portal Group Tag (required)`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"allow_role_transfer_for_same_subject": &schema.Schema{
-							Description:  `Allow transfer of roles for certificate with matching subject `,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Allow transfer of roles for certificate with matching subject `,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Description: `Description of System Certificate`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Description of System Certificate`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"eap": &schema.Schema{
-							Description:  `Use certificate for EAP protocols that use SSL/TLS tunneling`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Use certificate for EAP protocols that use SSL/TLS tunneling`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
+						},
+						"expiration_date": &schema.Schema{
+							Description: `Time and date past which the certificate is no longer valid`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 						"expiration_ttl_period": &schema.Schema{
-							Type:     schema.TypeInt,
-							Optional: true,
+							Type:             schema.TypeInt,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"expiration_ttl_units": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
-						"ims": &schema.Schema{
-							Description:  `Use certificate for the Cisco ISE Messaging Service`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+						"friendly_name": &schema.Schema{
+							Description: `Friendly name of system certificate`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"group_tag": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"host_name": &schema.Schema{
 							Description: `hostName path parameter. Name of Host whose certificate needs to be updated`,
 							Type:        schema.TypeString,
-							Optional:    true,
+							Required:    true,
 						},
 						"id": &schema.Schema{
 							Description: `id path parameter. ID of the System Certificate to be updated`,
 							Type:        schema.TypeString,
-							Optional:    true,
+							Required:    true,
+						},
+						"ims": &schema.Schema{
+							Description:      `Use certificate for the Cisco ISE Messaging Service`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
+						},
+						"issued_by": &schema.Schema{
+							Description: `Common Name of the certificate issuer`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"issued_to": &schema.Schema{
+							Description: `Common Name of the certificate subject`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"key_size": &schema.Schema{
+							Description: `Length of key used for encrypting system certificate`,
+							Type:        schema.TypeInt,
+							Computed:    true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Description: `Name of the certificate`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Name of the certificate`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"portal": &schema.Schema{
-							Description:  `Use for portal`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Use for portal`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"portal_group_tag": &schema.Schema{
-							Description: `Set Group tag`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Set Group tag`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"portals_using_the_tag": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"pxgrid": &schema.Schema{
-							Description:  `Use certificate for the pxGrid Controller`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Use certificate for the pxGrid Controller`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"radius": &schema.Schema{
-							Description:  `Use certificate for the RADSec server`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Use certificate for the RADSec server`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"renew_self_signed_certificate": &schema.Schema{
-							Description:  `Renew Self-signed Certificate`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Renew Self-signed Certificate`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"saml": &schema.Schema{
-							Description:  `Use certificate for SAML Signing`,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Use certificate for SAML Signing`,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
+						},
+						"self_signed": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"serial_number_decimal_format": &schema.Schema{
+							Description: `Used to uniquely identify the certificate within a CA's systems`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
+						"sha256_fingerprint": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"signature_algorithm": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"used_by": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"valid_from": &schema.Schema{
+							Description: `Time and date on which the certificate was created, also known as the Not Before certificate attribute`,
+							Type:        schema.TypeString,
+							Computed:    true,
 						},
 					},
 				},
@@ -259,7 +370,8 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 func resourceSystemCertificateCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SystemCertificate create")
 	log.Printf("[DEBUG] Missing SystemCertificate create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -295,7 +407,8 @@ func resourceSystemCertificateCreate(ctx context.Context, d *schema.ResourceData
 
 func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SystemCertificate read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -343,6 +456,12 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSystemCertificates search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -367,6 +486,12 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSystemCertificateByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -375,7 +500,8 @@ func resourceSystemCertificateRead(ctx context.Context, d *schema.ResourceData, 
 
 func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SystemCertificate update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -428,7 +554,8 @@ func resourceSystemCertificateUpdate(ctx context.Context, d *schema.ResourceData
 
 func resourceSystemCertificateDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SystemCertificate delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -532,7 +659,8 @@ func expandRequestSystemCertificateUpdateSystemCert(ctx context.Context, key str
 }
 
 func getAllItemsCertificatesGetSystemCertificates(m interface{}, response *isegosdk.ResponseCertificatesGetSystemCertificates, hostname string, queryParams *isegosdk.GetSystemCertificatesQueryParams) []isegosdk.ResponseCertificatesGetSystemCertificatesResponse {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseCertificatesGetSystemCertificatesResponse
 	for response.Response != nil && len(*response.Response) > 0 {
 		respItems = append(respItems, *response.Response...)
@@ -560,7 +688,8 @@ func getAllItemsCertificatesGetSystemCertificates(m interface{}, response *isego
 }
 
 func searchCertificatesGetSystemCertificates(m interface{}, items []isegosdk.ResponseCertificatesGetSystemCertificatesResponse, name string, id string, hostname string) (*isegosdk.ResponseCertificatesGetSystemCertificateByIDResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseCertificatesGetSystemCertificateByIDResponse
 	for _, item := range items {

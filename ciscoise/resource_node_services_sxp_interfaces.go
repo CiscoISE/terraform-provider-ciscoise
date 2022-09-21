@@ -48,11 +48,11 @@ func resourceNodeServicesSxpInterfaces() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
 						"hostname": &schema.Schema{
 							Description: `hostname path parameter. Hostname of the node.`,
 							Type:        schema.TypeString,
@@ -61,6 +61,7 @@ func resourceNodeServicesSxpInterfaces() *schema.Resource {
 						"interface": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -72,7 +73,8 @@ func resourceNodeServicesSxpInterfaces() *schema.Resource {
 func resourceNodeServicesSxpInterfacesCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces create")
 	log.Printf("[DEBUG] Missing NodeServicesSxpInterfaces create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -107,7 +109,8 @@ func resourceNodeServicesSxpInterfacesCreate(ctx context.Context, d *schema.Reso
 
 func resourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -139,6 +142,12 @@ func resourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.Resour
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSxpInterface response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -147,7 +156,8 @@ func resourceNodeServicesSxpInterfacesRead(ctx context.Context, d *schema.Resour
 
 func resourceNodeServicesSxpInterfacesUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeServicesSxpInterfaces update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 

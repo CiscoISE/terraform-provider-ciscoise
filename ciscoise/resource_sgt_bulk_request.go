@@ -60,7 +60,8 @@ func resourceSgtBulkRequest() *schema.Resource {
 func resourceSgtBulkRequestCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BulkRequestForSecurityGroup create")
 	log.Printf("[DEBUG] Missing BulkRequestForSecurityGroup create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestSgtBulkRequestBulkRequestForSecurityGroup(ctx, "parameters.0", d)

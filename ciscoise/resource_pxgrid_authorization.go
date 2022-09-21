@@ -5,8 +5,6 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -48,7 +46,8 @@ func resourcePxgridAuthorization() *schema.Resource {
 func resourcePxgridAuthorizationCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning Authorization create")
 	log.Printf("[DEBUG] Missing Authorization create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	d.Set("parameters", nil)
 	var diags diag.Diagnostics
 	response1, err := client.Provider.Authorization()

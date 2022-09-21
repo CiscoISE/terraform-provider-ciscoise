@@ -68,7 +68,8 @@ func resourceTrustsecVnVLANMappingBulkDelete() *schema.Resource {
 func resourceTrustsecVnVLANMappingBulkDeleteCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning BulkDeleteVnVLANMappings create")
 	log.Printf("[DEBUG] Missing BulkDeleteVnVLANMappings create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	request1 := expandRequestTrustsecVnVLANMappingBulkDeleteBulkDeleteVnVLANMappings(ctx, "parameters.0", d)

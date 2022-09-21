@@ -206,140 +206,211 @@ func resourceRadiusServerSequence() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"before_accept_attr_manipulators_list": &schema.Schema{
-							Description: `The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true`,
-							Type:        schema.TypeList,
-							Optional:    true,
+							Description:      `The beforeAcceptAttrManipulators is required only if useAttrSetBeforeAcc is true`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"action": &schema.Schema{
 										Description: `Allowed Values:
-- ADD,
-- UPDATE,
-- REMOVE,
-- REMOVEANY`,
-										Type:     schema.TypeString,
-										Optional: true,
+		- ADD,
+		- UPDATE,
+		- REMOVE,
+		- REMOVEANY`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"attribute_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"changed_val": &schema.Schema{
-										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `The changedVal is required only if the action equals to 'UPDATE'`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"dictionary_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"value": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"on_request_attr_manipulator_list": &schema.Schema{
-							Description: `The onRequestAttrManipulators is required only if useAttrSetOnRequest is true`,
-							Type:        schema.TypeList,
-							Optional:    true,
+							Description:      `The onRequestAttrManipulators is required only if useAttrSetOnRequest is true`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"action": &schema.Schema{
 										Description: `Allowed Values:
-- ADD,
-- UPDATE,
-- REMOVE,
-- REMOVEANY`,
-										Type:     schema.TypeString,
-										Optional: true,
+		- ADD,
+		- UPDATE,
+		- REMOVE,
+		- REMOVEANY`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"attribute_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"changed_val": &schema.Schema{
-										Description: `The changedVal is required only if the action equals to 'UPDATE'`,
-										Type:        schema.TypeString,
-										Optional:    true,
+										Description:      `The changedVal is required only if the action equals to 'UPDATE'`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"dictionary_name": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 									"value": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 									},
 								},
 							},
 						},
 						"radius_server_list": &schema.Schema{
-							Type:     schema.TypeList,
-							Optional: true,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"continue_authorz_policy": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"local_accounting": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"prefix_separator": &schema.Schema{
-							Description: `The prefixSeparator is required only if stripPrefix is true. The maximum length is 1 character`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The prefixSeparator is required only if stripPrefix is true. The maximum length is 1 character`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"remote_accounting": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"strip_prefix": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"strip_suffix": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"suffix_separator": &schema.Schema{
-							Description: `The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `The suffixSeparator is required only if stripSuffix is true. The maximum length is 1 character`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"use_attr_set_before_acc": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 						"use_attr_set_on_request": &schema.Schema{
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
 						},
 					},
 				},
@@ -350,8 +421,10 @@ func resourceRadiusServerSequence() *schema.Resource {
 
 func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning RadiusServerSequence create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -364,28 +437,30 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 	vName, _ := resourceItem["name"]
 	vvID := interfaceToString(vID)
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.RadiusServerSequence.GetRadiusServerSequenceByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceRadiusServerSequenceRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetRadiusServerSequenceQueryParams{}
-
-		response2, _, err := client.RadiusServerSequence.GetRadiusServerSequence(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsRadiusServerSequenceGetRadiusServerSequence(m, response2, &queryParams2)
-			item2, err := searchRadiusServerSequenceGetRadiusServerSequence(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.RadiusServerSequence.GetRadiusServerSequenceByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceRadiusServerSequenceRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetRadiusServerSequenceQueryParams{}
+
+			response2, _, err := client.RadiusServerSequence.GetRadiusServerSequence(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsRadiusServerSequenceGetRadiusServerSequence(m, response2, &queryParams2)
+				item2, err := searchRadiusServerSequenceGetRadiusServerSequence(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceRadiusServerSequenceRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -413,7 +488,8 @@ func resourceRadiusServerSequenceCreate(ctx context.Context, d *schema.ResourceD
 
 func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning RadiusServerSequence read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -459,6 +535,12 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetRadiusServerSequence search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -484,6 +566,12 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetRadiusServerSequenceByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -492,7 +580,8 @@ func resourceRadiusServerSequenceRead(ctx context.Context, d *schema.ResourceDat
 
 func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning RadiusServerSequence update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -556,7 +645,8 @@ func resourceRadiusServerSequenceUpdate(ctx context.Context, d *schema.ResourceD
 
 func resourceRadiusServerSequenceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning RadiusServerSequence delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -949,7 +1039,8 @@ func expandRequestRadiusServerSequenceUpdateRadiusServerSequenceByIDRadiusServer
 }
 
 func getAllItemsRadiusServerSequenceGetRadiusServerSequence(m interface{}, response *isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequence, queryParams *isegosdk.GetRadiusServerSequenceQueryParams) []isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequenceSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequenceSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -977,7 +1068,8 @@ func getAllItemsRadiusServerSequenceGetRadiusServerSequence(m interface{}, respo
 }
 
 func searchRadiusServerSequenceGetRadiusServerSequence(m interface{}, items []isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequenceSearchResultResources, name string, id string) (*isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequenceByIDRadiusServerSequence, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseRadiusServerSequenceGetRadiusServerSequenceByIDRadiusServerSequence
 	for _, item := range items {

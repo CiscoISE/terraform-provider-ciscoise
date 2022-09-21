@@ -81,14 +81,39 @@ func resourceSxpVpns() *schema.Resource {
 				MinItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+
 						"id": &schema.Schema{
-							Description: `id path parameter.`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `id path parameter.`,
+							Type:             schema.TypeString,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"sxp_vpn_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -99,8 +124,10 @@ func resourceSxpVpns() *schema.Resource {
 
 func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpVpns create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -113,28 +140,30 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 	vName, _ := resourceItem["sxp_vpn_name"]
 	vvID := interfaceToString(vID)
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.SxpVpns.GetSxpVpnByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["sxp_vpn_name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceSxpVpnsRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetSxpVpnsQueryParams{}
-
-		response2, _, err := client.SxpVpns.GetSxpVpns(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsSxpVpnsGetSxpVpns(m, response2, &queryParams2)
-			item2, err := searchSxpVpnsGetSxpVpns(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.SxpVpns.GetSxpVpnByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["sxp_vpn_name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceSxpVpnsRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetSxpVpnsQueryParams{}
+
+			response2, _, err := client.SxpVpns.GetSxpVpns(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsSxpVpnsGetSxpVpns(m, response2, &queryParams2)
+				item2, err := searchSxpVpnsGetSxpVpns(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["sxp_vpn_name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceSxpVpnsRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -162,7 +191,8 @@ func resourceSxpVpnsCreate(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpVpns read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -208,6 +238,12 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSxpVpns search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -233,6 +269,12 @@ func resourceSxpVpnsRead(ctx context.Context, d *schema.ResourceData, m interfac
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetSxpVpnByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -248,7 +290,8 @@ func resourceSxpVpnsUpdate(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceSxpVpnsDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SxpVpns delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -335,7 +378,8 @@ func expandRequestSxpVpnsCreateSxpVpnERSSxpVpn(ctx context.Context, key string, 
 }
 
 func getAllItemsSxpVpnsGetSxpVpns(m interface{}, response *isegosdk.ResponseSxpVpnsGetSxpVpns, queryParams *isegosdk.GetSxpVpnsQueryParams) []isegosdk.ResponseSxpVpnsGetSxpVpnsSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseSxpVpnsGetSxpVpnsSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -363,7 +407,8 @@ func getAllItemsSxpVpnsGetSxpVpns(m interface{}, response *isegosdk.ResponseSxpV
 }
 
 func searchSxpVpnsGetSxpVpns(m interface{}, items []isegosdk.ResponseSxpVpnsGetSxpVpnsSearchResultResources, name string, id string) (*isegosdk.ResponseSxpVpnsGetSxpVpnByIDERSSxpVpn, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseSxpVpnsGetSxpVpnByIDERSSxpVpn
 	for _, item := range items {

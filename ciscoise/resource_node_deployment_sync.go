@@ -70,7 +70,8 @@ Approximate execution time 300 seconds.
 func resourceNodeDeploymentSyncCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SyncNode create")
 	log.Printf("[DEBUG] Missing SyncNode create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 	resourceItem := *getResourceItem(d.Get("parameters"))

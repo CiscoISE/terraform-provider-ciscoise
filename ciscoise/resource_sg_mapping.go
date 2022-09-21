@@ -118,46 +118,82 @@ func resourceSgMapping() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"deploy_to": &schema.Schema{
-							Description: `Mandatory unless mappingGroup is set or unless deployType=ALL`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Mandatory unless mappingGroup is set or unless deployType=ALL`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"deploy_type": &schema.Schema{
 							Description: `Allowed values:
-- ALL,
-- ND,
-- NDG`,
-							Type:     schema.TypeString,
-							Optional: true,
+		- ALL,
+		- ND,
+		- NDG`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"host_ip": &schema.Schema{
-							Description: `Mandatory if hostName is empty -- valid IP`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Mandatory if hostName is empty -- valid IP`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"host_name": &schema.Schema{
-							Description: `Mandatory if hostIp is empty`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Mandatory if hostIp is empty`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"mapping_group": &schema.Schema{
-							Description: `Mapping Group Id. Mandatory unless sgt and deployTo and deployType are set`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `Mapping Group Id. Mandatory unless sgt and deployTo and deployType are set`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"sgt": &schema.Schema{
 							Description:      `Mandatory unless mappingGroup is set`,
 							Type:             schema.TypeString,
 							Optional:         true,
-							DiffSuppressFunc: diffSuppressSgt(),
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -168,8 +204,10 @@ func resourceSgMapping() *schema.Resource {
 
 func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgMapping create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -182,28 +220,30 @@ func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m inte
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.IPToSgtMapping.GetIPToSgtMappingByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceSgMappingRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetIPToSgtMappingQueryParams{}
-
-		response2, _, err := client.IPToSgtMapping.GetIPToSgtMapping(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsIPToSgtMappingGetIPToSgtMapping(m, response2, &queryParams2)
-			item2, err := searchIPToSgtMappingGetIPToSgtMapping(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.IPToSgtMapping.GetIPToSgtMappingByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceSgMappingRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetIPToSgtMappingQueryParams{}
+
+			response2, _, err := client.IPToSgtMapping.GetIPToSgtMapping(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsIPToSgtMappingGetIPToSgtMapping(m, response2, &queryParams2)
+				item2, err := searchIPToSgtMappingGetIPToSgtMapping(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceSgMappingRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -231,7 +271,8 @@ func resourceSgMappingCreate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgMapping read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -277,6 +318,12 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPToSgtMapping search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -302,6 +349,12 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetIPToSgtMappingByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -310,7 +363,8 @@ func resourceSgMappingRead(ctx context.Context, d *schema.ResourceData, m interf
 
 func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgMapping update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -373,7 +427,8 @@ func resourceSgMappingUpdate(ctx context.Context, d *schema.ResourceData, m inte
 
 func resourceSgMappingDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning SgMapping delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -521,7 +576,8 @@ func expandRequestSgMappingUpdateIPToSgtMappingByIDSgMapping(ctx context.Context
 }
 
 func getAllItemsIPToSgtMappingGetIPToSgtMapping(m interface{}, response *isegosdk.ResponseIPToSgtMappingGetIPToSgtMapping, queryParams *isegosdk.GetIPToSgtMappingQueryParams) []isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -549,7 +605,8 @@ func getAllItemsIPToSgtMappingGetIPToSgtMapping(m interface{}, response *isegosd
 }
 
 func searchIPToSgtMappingGetIPToSgtMapping(m interface{}, items []isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingSearchResultResources, name string, id string) (*isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingByIDSgMapping, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseIPToSgtMappingGetIPToSgtMappingByIDSgMapping
 	for _, item := range items {

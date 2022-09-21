@@ -56,7 +56,8 @@ func resourceNetworkAccessGlobalExceptionRulesResetHitcount() *schema.Resource {
 func resourceNetworkAccessGlobalExceptionRulesResetHitcountCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning ResetHitCountsNetworkAccessGlobalExceptions create")
 	log.Printf("[DEBUG] Missing ResetHitCountsNetworkAccessGlobalExceptions create on Cisco ISE. It will only be create it on Terraform")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	d.Set("parameters", nil)
 	var diags diag.Diagnostics
 	response1, restyResp1, err := client.NetworkAccessAuthorizationGlobalExceptionRules.ResetHitCountsNetworkAccessGlobalExceptions()

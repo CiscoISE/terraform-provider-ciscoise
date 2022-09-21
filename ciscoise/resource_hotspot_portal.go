@@ -494,88 +494,108 @@ Allowed values:
 					Schema: map[string]*schema.Schema{
 
 						"customizations": &schema.Schema{
-							Description: `Defines all of the Portal Customizations available`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							MaxItems:    1,
+							Description:      `Defines all of the Portal Customizations available`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"global_customizations": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"background_image": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													MaxItems: 1,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Description: `Represented as base 64 encoded string of the image byte array`,
-																Type:        schema.TypeString,
-																Optional:    true,
+																Description:      `Represented as base 64 encoded string of the image byte array`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
 															},
 														},
 													},
 												},
 												"banner_image": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													MaxItems: 1,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Description: `Represented as base 64 encoded string of the image byte array`,
-																Type:        schema.TypeString,
-																Optional:    true,
+																Description:      `Represented as base 64 encoded string of the image byte array`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
 															},
 														},
 													},
 												},
 												"banner_title": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"contact_text": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"desktop_logo_image": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													MaxItems: 1,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Description: `Represented as base 64 encoded string of the image byte array`,
-																Type:        schema.TypeString,
-																Optional:    true,
+																Description:      `Represented as base 64 encoded string of the image byte array`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
 															},
 														},
 													},
 												},
 												"footer_element": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"mobile_logo_image": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
-													MaxItems: 1,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"data": &schema.Schema{
-																Description: `Represented as base 64 encoded string of the image byte array`,
-																Type:        schema.TypeString,
-																Optional:    true,
+																Description:      `Represented as base 64 encoded string of the image byte array`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
 															},
 														},
 													},
@@ -585,40 +605,50 @@ Allowed values:
 									},
 									"language": &schema.Schema{
 										Description: `This property is supported only for Read operation and it allows to show the customizations in English.
-Other languages are not supported`,
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+		Other languages are not supported`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"view_language": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"page_customizations": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"data": &schema.Schema{
-													Type:     schema.TypeList,
-													Optional: true,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
 															"key": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
 															},
 															"value": &schema.Schema{
-																Type:     schema.TypeString,
-																Optional: true,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
 															},
 														},
 													},
@@ -627,57 +657,73 @@ Other languages are not supported`,
 										},
 									},
 									"portal_theme": &schema.Schema{
-										Description: `Defines the configuration for portal theme`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										MaxItems:    1,
+										Description:      `Defines the configuration for portal theme`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"id": &schema.Schema{
-													Description: `The unique internal identifier of the portal theme`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `The unique internal identifier of the portal theme`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"name": &schema.Schema{
-													Description: `The system- or user-assigned name of the portal theme`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `The system- or user-assigned name of the portal theme`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"theme_data": &schema.Schema{
-													Description: `A CSS file, represented as a Base64-encoded byte array`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `A CSS file, represented as a Base64-encoded byte array`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"portal_tweak_settings": &schema.Schema{
 										Description: `The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-The Tweak Settings can subsequently be changed by the user`,
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+		When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+		The Tweak Settings can subsequently be changed by the user`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"banner_color": &schema.Schema{
-													Description: `Hex value of color`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Hex value of color`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"banner_text_color": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"page_background_color": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"page_label_and_text_color": &schema.Schema{
-													Type:     schema.TypeString,
-													Optional: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
@@ -686,251 +732,337 @@ The Tweak Settings can subsequently be changed by the user`,
 							},
 						},
 						"description": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"id": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
+						"link": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+
+									"href": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rel": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
 						},
 						"name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"portal_test_url": &schema.Schema{
-							Description: `URL to bring up a test page for this portal`,
-							Type:        schema.TypeString,
-							Optional:    true,
+							Description:      `URL to bring up a test page for this portal`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"portal_type": &schema.Schema{
 							Description: `Allowed values:
-- BYOD,
-- HOTSPOTGUEST,
-- MYDEVICE,
-- SELFREGGUEST,
-- SPONSOR,
-- SPONSOREDGUEST`,
-							Type:     schema.TypeString,
-							Optional: true,
+		- BYOD,
+		- HOTSPOTGUEST,
+		- MYDEVICE,
+		- SELFREGGUEST,
+		- SPONSOR,
+		- SPONSOREDGUEST`,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"settings": &schema.Schema{
-							Description: `Defines all of the settings groups available for a BYOD`,
-							Type:        schema.TypeList,
-							Optional:    true,
-							MaxItems:    1,
+							Description:      `Defines all of the settings groups available for a BYOD`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
 									"aup_settings": &schema.Schema{
-										Description: `Configuration of the Acceptable Use Policy (AUP) for a portal`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										MaxItems:    1,
+										Description:      `Configuration of the Acceptable Use Policy (AUP) for a portal`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"access_code": &schema.Schema{
-													Description: `Access code that must be entered by the portal user (only valid if requireAccessCode = true)`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Access code that must be entered by the portal user (only valid if requireAccessCode = true)`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"include_aup": &schema.Schema{
-													Description:  `Require the portal user to read and accept an AUP`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Description:      `Require the portal user to read and accept an AUP`,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"require_access_code": &schema.Schema{
 													Description: `Require the portal user to enter an access code.
-Only used in Hotspot portal`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+		Only used in Hotspot portal`,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"require_scrolling": &schema.Schema{
-													Description:  `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Description:      `Require the portal user to scroll to the end of the AUP. Only valid if requireAupAcceptance = true`,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"auth_success_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"redirect_url": &schema.Schema{
-													Description: `Target URL for redirection, used when successRedirect = URL`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Target URL for redirection, used when successRedirect = URL`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"success_redirect": &schema.Schema{
 													Description: `After an Authentication Success where should device be redirected. Allowed values:
-- AUTHSUCCESSPAGE,
-- ORIGINATINGURL,
-- URL`,
-													Type:     schema.TypeString,
-													Optional: true,
+		- AUTHSUCCESSPAGE,
+		- ORIGINATINGURL,
+		- URL`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"portal_settings": &schema.Schema{
-										Description: `The port, interface, certificate, and other basic settings of a portal`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										MaxItems:    1,
+										Description:      `The port, interface, certificate, and other basic settings of a portal`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"allowed_interfaces": &schema.Schema{
 													Description: `Interfaces that the portal will be reachable on.
-Allowed values:
-- eth0
-- eth1
-- eth2
-- eth3
-- eth4
-- eth5
-- bond0
-- bond1
-- bond2`,
-													Type:     schema.TypeList,
-													Optional: true,
+		Allowed values:
+		- eth0
+		- eth1
+		- eth2
+		- eth3
+		- eth4
+		- eth5
+		- bond0
+		- bond1
+		- bond2`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 													Elem: &schema.Schema{
 														Type: schema.TypeString,
 													},
 												},
 												"always_used_language": &schema.Schema{
-													Description: `Used when displayLang = ALWAYSUSE`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Used when displayLang = ALWAYSUSE`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"certificate_group_tag": &schema.Schema{
-													Description: `Logical name of the x.509 server certificate that will be used for the portal`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Logical name of the x.509 server certificate that will be used for the portal`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"coa_type": &schema.Schema{
 													Description: `Allowed Values:
-- COAREAUTHENTICATE,
-- COATERMINATE`,
-													Type:     schema.TypeString,
-													Optional: true,
+		- COAREAUTHENTICATE,
+		- COATERMINATE`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"display_lang": &schema.Schema{
 													Description: `Allowed values:
-- USEBROWSERLOCALE,
-- ALWAYSUSE`,
-													Type:     schema.TypeString,
-													Optional: true,
+		- USEBROWSERLOCALE,
+		- ALWAYSUSE`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"endpoint_identity_group": &schema.Schema{
-													Description: `Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"fallback_language": &schema.Schema{
-													Description: `Used when displayLang = USEBROWSERLOCALE`,
-													Type:        schema.TypeString,
-													Optional:    true,
+													Description:      `Used when displayLang = USEBROWSERLOCALE`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"https_port": &schema.Schema{
 													Description: `The port number that the allowed interfaces will listen on.
-Range from 8000 to 8999`,
-													Type:     schema.TypeInt,
-													Optional: true,
+		Range from 8000 to 8999`,
+													Type:             schema.TypeInt,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"post_access_banner_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"post_login_banner_settings": &schema.Schema{
-										Type:     schema.TypeList,
-										Optional: true,
-										MaxItems: 1,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"include_post_access_banner": &schema.Schema{
-													Description:  `Include a Post-Login Banner page`,
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Description:      `Include a Post-Login Banner page`,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 											},
 										},
 									},
 									"support_info_settings": &schema.Schema{
-										Description: `Portal Support Information Settings`,
-										Type:        schema.TypeList,
-										Optional:    true,
-										MaxItems:    1,
+										Description:      `Portal Support Information Settings`,
+										Type:             schema.TypeList,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"default_empty_field_value": &schema.Schema{
 													Description: `The default value displayed for an empty field.
-Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
-													Type:     schema.TypeString,
-													Optional: true,
+		Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"empty_field_display": &schema.Schema{
 													Description: `Specifies how empty fields are handled on the Support Information Page.
-Allowed values:
-- HIDE,
-- DISPLAYWITHNOVALUE,
-- DISPLAYWITHDEFAULTVALUE`,
-													Type:     schema.TypeString,
-													Optional: true,
+		Allowed values:
+		- HIDE,
+		- DISPLAYWITHNOVALUE,
+		- DISPLAYWITHDEFAULTVALUE`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"include_browser_user_agent": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"include_failure_code": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"include_ip_address": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"include_mac_addr": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"include_policy_server": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 												"include_support_info_page": &schema.Schema{
-													Type:         schema.TypeString,
-													ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-													Optional:     true,
+													Type:             schema.TypeString,
+													ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+													Optional:         true,
+													DiffSuppressFunc: diffSupressBool(),
+													Computed:         true,
 												},
 											},
 										},
@@ -947,8 +1079,10 @@ Allowed values:
 
 func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning HotspotPortal create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
+	isEnableAutoImport := clientConfig.EnableAutoImport
 	var diags diag.Diagnostics
 
 	resourceItem := *getResourceItem(d.Get("parameters"))
@@ -961,28 +1095,30 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 	vvID := interfaceToString(vID)
 	vName, _ := resourceItem["name"]
 	vvName := interfaceToString(vName)
-	if okID && vvID != "" {
-		getResponse2, _, err := client.HotspotPortal.GetHotspotPortalByID(vvID)
-		if err == nil && getResponse2 != nil {
-			resourceMap := make(map[string]string)
-			resourceMap["id"] = vvID
-			resourceMap["name"] = vvName
-			d.SetId(joinResourceID(resourceMap))
-			return resourceHotspotPortalRead(ctx, d, m)
-		}
-	} else {
-		queryParams2 := isegosdk.GetHotspotPortalQueryParams{}
-
-		response2, _, err := client.HotspotPortal.GetHotspotPortal(&queryParams2)
-		if response2 != nil && err == nil {
-			items2 := getAllItemsHotspotPortalGetHotspotPortal(m, response2, &queryParams2)
-			item2, err := searchHotspotPortalGetHotspotPortal(m, items2, vvName, vvID)
-			if err == nil && item2 != nil {
+	if isEnableAutoImport {
+		if okID && vvID != "" {
+			getResponse2, _, err := client.HotspotPortal.GetHotspotPortalByID(vvID)
+			if err == nil && getResponse2 != nil {
 				resourceMap := make(map[string]string)
 				resourceMap["id"] = vvID
 				resourceMap["name"] = vvName
 				d.SetId(joinResourceID(resourceMap))
 				return resourceHotspotPortalRead(ctx, d, m)
+			}
+		} else {
+			queryParams2 := isegosdk.GetHotspotPortalQueryParams{}
+
+			response2, _, err := client.HotspotPortal.GetHotspotPortal(&queryParams2)
+			if response2 != nil && err == nil {
+				items2 := getAllItemsHotspotPortalGetHotspotPortal(m, response2, &queryParams2)
+				item2, err := searchHotspotPortalGetHotspotPortal(m, items2, vvName, vvID)
+				if err == nil && item2 != nil {
+					resourceMap := make(map[string]string)
+					resourceMap["id"] = item2.ID
+					resourceMap["name"] = vvName
+					d.SetId(joinResourceID(resourceMap))
+					return resourceHotspotPortalRead(ctx, d, m)
+				}
 			}
 		}
 	}
@@ -1010,7 +1146,8 @@ func resourceHotspotPortalCreate(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning HotspotPortal read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -1057,6 +1194,12 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetHotspotPortal search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 1 {
@@ -1082,6 +1225,12 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetHotspotPortalByID response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -1090,7 +1239,8 @@ func resourceHotspotPortalRead(ctx context.Context, d *schema.ResourceData, m in
 
 func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning HotspotPortal update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -1153,7 +1303,8 @@ func resourceHotspotPortalUpdate(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceHotspotPortalDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning HotspotPortal delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -1969,7 +2120,8 @@ func expandRequestHotspotPortalUpdateHotspotPortalByIDHotspotPortalCustomization
 }
 
 func getAllItemsHotspotPortalGetHotspotPortal(m interface{}, response *isegosdk.ResponseHotspotPortalGetHotspotPortal, queryParams *isegosdk.GetHotspotPortalQueryParams) []isegosdk.ResponseHotspotPortalGetHotspotPortalSearchResultResources {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var respItems []isegosdk.ResponseHotspotPortalGetHotspotPortalSearchResultResources
 	for response.SearchResult != nil && response.SearchResult.Resources != nil && len(*response.SearchResult.Resources) > 0 {
 		respItems = append(respItems, *response.SearchResult.Resources...)
@@ -1997,7 +2149,8 @@ func getAllItemsHotspotPortalGetHotspotPortal(m interface{}, response *isegosdk.
 }
 
 func searchHotspotPortalGetHotspotPortal(m interface{}, items []isegosdk.ResponseHotspotPortalGetHotspotPortalSearchResultResources, name string, id string) (*isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortal, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseHotspotPortalGetHotspotPortalByIDHotspotPortal
 	for _, item := range items {

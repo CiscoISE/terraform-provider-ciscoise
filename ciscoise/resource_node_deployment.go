@@ -86,51 +86,70 @@ standalone node.
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
 						"allow_cert_import": &schema.Schema{
-							Description:  `Consent to import the self-signed certificate of the registering node. `,
-							Type:         schema.TypeString,
-							ValidateFunc: validateStringHasValueFunc([]string{"", "true", "false"}),
-							Optional:     true,
+							Description:      `Consent to import the self-signed certificate of the registering node. `,
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
+						},
+						"fqdn": &schema.Schema{
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"hostname": &schema.Schema{
 							Description: `hostname path parameter. Hostname of the deployed node.`,
 							Type:        schema.TypeString,
-							Optional:    true,
+							Required:    true,
 						},
-						"fqdn": &schema.Schema{
+						"ip_address": &schema.Schema{
 							Type:     schema.TypeString,
-							Optional: true,
+							Computed: true,
+						},
+						"node_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"password": &schema.Schema{
-							Type:      schema.TypeString,
-							Optional:  true,
-							Sensitive: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Sensitive:        true,
+							Computed:         true,
 						},
 						"roles": &schema.Schema{
-							Description: `Roles can be empty or have many values for a node. `,
-							Type:        schema.TypeList,
-							Optional:    true,
+							Description:      `Roles can be empty or have many values for a node. `,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"services": &schema.Schema{
-							Description: `Services can be empty or have many values for a node. `,
-							Type:        schema.TypeList,
-							Optional:    true,
+							Description:      `Services can be empty or have many values for a node. `,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 							Elem: &schema.Schema{
 								Type: schema.TypeString,
 							},
 						},
 						"user_name": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},
@@ -141,7 +160,8 @@ standalone node.
 
 func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeDeployment create")
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -198,7 +218,8 @@ func resourceNodeDeploymentCreate(ctx context.Context, d *schema.ResourceData, m
 
 func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeDeployment read for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -243,6 +264,12 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem1); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetDeploymentNodes search response",
+				err))
+			return diags
+		}
 
 	}
 	if selectedMethod == 2 {
@@ -268,6 +295,12 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 				err))
 			return diags
 		}
+		if err := d.Set("parameters", vItem2); err != nil {
+			diags = append(diags, diagError(
+				"Failure when setting GetNodeDetails response",
+				err))
+			return diags
+		}
 		return diags
 
 	}
@@ -276,7 +309,8 @@ func resourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m i
 
 func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeDeployment update for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -339,7 +373,8 @@ func resourceNodeDeploymentUpdate(ctx context.Context, d *schema.ResourceData, m
 
 func resourceNodeDeploymentDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning NodeDeployment delete for id=[%s]", d.Id())
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 
 	var diags diag.Diagnostics
 
@@ -454,7 +489,8 @@ func getAllItemsNodeDeploymentGetDeploymentNodes(m interface{}, response *isegos
 }
 
 func searchNodeDeploymentGetDeploymentNodes(m interface{}, items []isegosdk.ResponseNodeDeploymentGetDeploymentNodesResponse, name string, fqdn string, id string) (*isegosdk.ResponseNodeDeploymentGetNodeDetailsResponse, error) {
-	client := m.(*isegosdk.Client)
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
 	var err error
 	var foundItem *isegosdk.ResponseNodeDeploymentGetNodeDetailsResponse
 	for _, item := range items {
