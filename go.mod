@@ -2,9 +2,10 @@ module terraform-provider-ciscoise
 
 go 1.17
 
-require github.com/CiscoISE/ciscoise-go-sdk v1.1.6
+require github.com/CiscoISE/ciscoise-go-sdk v1.1.7
 
 require (
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/gruntwork-io/terratest v0.40.15
 	github.com/hashicorp/terraform-plugin-docs v0.9.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.17.0
@@ -26,7 +27,6 @@ require (
 	github.com/bgentry/speakeasy v0.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fatih/color v1.13.0 // indirect
-	github.com/go-resty/resty/v2 v2.7.0 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.3 // indirect
@@ -98,6 +98,5 @@ require (
 	google.golang.org/genproto v0.0.0-20210602131652-f16073e35f0c // indirect
 	google.golang.org/grpc v1.46.0 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
-	gopkg.in/resty.v1 v1.12.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0 // indirect
 )
