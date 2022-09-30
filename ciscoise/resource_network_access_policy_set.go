@@ -335,6 +335,13 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										DiffSuppressFunc: diffSupressOptional(),
 										Computed:         true,
 									},
+									"description": &schema.Schema{
+										Description:      `Condition description`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
+									},
 									"is_negate": &schema.Schema{
 										Description:      `Indicates whereas this condition is in negate mode`,
 										Type:             schema.TypeString,
@@ -344,23 +351,31 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Computed:         true,
 									},
 									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
+										Type:             schema.TypeList,
+										Computed:         true,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
 												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 												"type": &schema.Schema{
 
-													Type:     schema.TypeString,
-													Computed: true,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
 												},
 											},
 										},
@@ -803,6 +818,9 @@ func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetCondition(ct
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
 		request.Link = expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionLink(ctx, key+".link.0", d)

@@ -20,6 +20,7 @@ resource "ciscoise_network_access_policy_set" "example" {
       condition_type = "string"
       name = "string"
       id = "string"
+      description = "string"
       is_negate      = "false"
 
     }

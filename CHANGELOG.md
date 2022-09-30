@@ -1,3 +1,12 @@
+## 0.6.7-beta (Sep 30, 2022)
+
+BUG FIXES:
+* Parameters `name`, `id`, `description` added to resource `network_access_policy_set`
+
+IMPROVEMENTS:
+* Documentation updated.
+* Samples added.
+
 ## 0.6.6-beta (Sep 21, 2022)
 
 FEATURES:
