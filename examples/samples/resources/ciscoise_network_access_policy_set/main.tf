@@ -22,14 +22,13 @@ resource "ciscoise_network_access_policy_set" "example" {
   parameters {
     condition {
       condition_type = "ConditionReference"
-      id             = "898c705e-d80c-4c88-bc2a-f0900488e430"
       is_negate      = "false"
-      name           = "My New Condition"
+      name           = "Wired_MAB"
+      id             = "9aab0da7-e3e3-4cd7-81c2-18c3ebbe6a96"
+      description    = "A condition to match MAC Authentication Bypass service based authentication requests from switches, according to the corresponding MAB attributes defined in the device profile."
     }
-    default      = "false"
-    description  = "New Policy Set test 1"
-    hit_counts   = 0
-    is_proxy     = "false"
+    description = "New Policy Set test 1"
+    is_proxy    = "false"
     name         = "New Policy Set 1"
     rank         = 0
     service_name = "Default Network Access"
