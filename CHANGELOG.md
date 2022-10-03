@@ -1,4 +1,15 @@
-## 0.6.7-beta (Sep 30, 2022)
+## 0.6.8-beta (Oct 03, 2022)
+
+BUG FIXES:
+* Issue #53, network_access_policy_set resource update doesn't work, Fixed
+* Resource ciscoise_network_access_authentication_rules fails #54, Fixed
+* Resource ciscoise_network_access_authorization_rules fails, Fixed
+
+IMPROVEMENTS:
+* Documentation updated.
+* Samples added.
+
+## 0.6.8-beta (Sep 30, 2022)
 
 BUG FIXES:
 * Parameters `name`, `id`, `description` added to resource `network_access_policy_set`
@@ -7,7 +18,7 @@ IMPROVEMENTS:
 * Documentation updated.
 * Samples added.
 
-## 0.6.7-beta (Sep 21, 2022)
+## 0.6.8-beta (Sep 21, 2022)
 
 FEATURES:
 * New provider configuration variable added:
