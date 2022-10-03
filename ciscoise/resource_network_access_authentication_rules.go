@@ -365,15 +365,8 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 						"id": &schema.Schema{
 							Description:      `id path parameter. Rule id`,
 							Type:             schema.TypeString,
-							Required:         true,
-							DiffSuppressFunc: diffSupressOptional(),
-						},
-						"identity_source_id": &schema.Schema{
-							Description:      `Identity source id from the identity stores`,
-							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: diffSupressOptional(),
-							Computed:         true,
 						},
 						"identity_source_name": &schema.Schema{
 							Description:      `Identity source name from the identity stores`,
@@ -447,6 +440,20 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"attribute_name": &schema.Schema{
+													Description:      `Dictionary attribute name`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
+												"attribute_value": &schema.Schema{
+													Description:      `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
 												"children": &schema.Schema{
 													Description:      `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
 													Type:             schema.TypeList,
@@ -456,66 +463,19 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"attribute_id": &schema.Schema{
-																Description:      `Dictionary attribute id (Optional), used for additional verification`,
+															"condition_type": &schema.Schema{
+																Description:      `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
 																Type:             schema.TypeString,
 																Optional:         true,
 																DiffSuppressFunc: diffSupressOptional(),
 																Computed:         true,
 															},
-															"attribute_name": &schema.Schema{
-																Description:      `Dictionary attribute name`,
+															"is_negate": &schema.Schema{
+																Description:      `Indicates whereas this condition is in negate mode`,
 																Type:             schema.TypeString,
+																ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
 																Optional:         true,
-																DiffSuppressFunc: diffSupressOptional(),
-																Computed:         true,
-															},
-															"attribute_value": &schema.Schema{
-																Description:      `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
-																Type:             schema.TypeString,
-																Optional:         true,
-																DiffSuppressFunc: diffSupressOptional(),
-																Computed:         true,
-															},
-															"dictionary_name": &schema.Schema{
-																Description:      `Dictionary name`,
-																Type:             schema.TypeString,
-																Optional:         true,
-																DiffSuppressFunc: diffSupressOptional(),
-																Computed:         true,
-															},
-															"dictionary_value": &schema.Schema{
-																Description:      `Dictionary value`,
-																Type:             schema.TypeString,
-																Optional:         true,
-																DiffSuppressFunc: diffSupressOptional(),
-																Computed:         true,
-															},
-															"end_date": &schema.Schema{
-																Type:             schema.TypeString,
-																Optional:         true,
-																DiffSuppressFunc: diffSupressOptional(),
-																Computed:         true,
-															},
-															"name": &schema.Schema{
-																Description:      `Dictionary attribute name`,
-																Type:             schema.TypeString,
-																Optional:         true,
-																DiffSuppressFunc: diffSupressOptional(),
-																Computed:         true,
-															},
-															"operator": &schema.Schema{
-																Description:      `Equality operator`,
-																Type:             schema.TypeString,
-																Optional:         true,
-																DiffSuppressFunc: diffSupressOptional(),
-																Computed:         true,
-															},
-															"start_date": &schema.Schema{
-																Description:      `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
-																Type:             schema.TypeString,
-																Optional:         true,
-																DiffSuppressFunc: diffSupressOptional(),
+																DiffSuppressFunc: diffSupressBool(),
 																Computed:         true,
 															},
 															"link": &schema.Schema{
@@ -549,6 +509,129 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													DiffSuppressFunc: diffSupressOptional(),
 													Computed:         true,
 												},
+												"dates_range": &schema.Schema{
+													Description:      `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_date": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"start_date": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+														},
+													},
+												},
+												"dates_range_exception": &schema.Schema{
+													Description:      `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_date": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"start_date": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+														},
+													},
+												},
+												"description": &schema.Schema{
+													Description:      `Condition description`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
+												"dictionary_name": &schema.Schema{
+													Description:      `Dictionary name`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
+												"dictionary_value": &schema.Schema{
+													Description:      `Dictionary value`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
+												"hours_range": &schema.Schema{
+													Description:      `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_time": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"start_time": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+														},
+													},
+												},
+												"hours_range_exception": &schema.Schema{
+													Description:      `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+													Elem: &schema.Resource{
+														Schema: map[string]*schema.Schema{
+
+															"end_time": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"start_time": &schema.Schema{
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+														},
+													},
+												},
+												"id": &schema.Schema{
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
 												"is_negate": &schema.Schema{
 													Description:      `Indicates whereas this condition is in negate mode`,
 													Type:             schema.TypeString,
@@ -576,6 +659,40 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																Computed: true,
 															},
 														},
+													},
+												},
+												"name": &schema.Schema{
+													Description:      `Condition name`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
+												"operator": &schema.Schema{
+													Description:      `Equality operator`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
+												"week_days": &schema.Schema{
+													Description:      `<p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
+												},
+												"week_days_exception": &schema.Schema{
+													Description:      `<p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>`,
+													Type:             schema.TypeList,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
 													},
 												},
 											},
