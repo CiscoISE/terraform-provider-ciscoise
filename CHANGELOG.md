@@ -1,3 +1,12 @@
+## 0.6.9-beta (Oct 12, 2022)
+
+BUG FIXES:
+* Function `compareBoolean` fixed for no omit false in some times.
+
+IMPROVEMENTS:
+* Documentation updated.
+* Samples added.
+
 ## 0.6.8-beta (Oct 03, 2022)
 
 BUG FIXES:
