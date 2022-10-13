@@ -2,6 +2,7 @@
 
 BUG FIXES:
 * Function `compareBoolean` fixed for no omit false in some times.
+* `ciscoise_trusted_certificate` re-designed for use with `ciscoise_trusted_certificate_import`.(Problems with idempotency in API should be fixed after)
 
 IMPROVEMENTS:
 * Documentation updated.
