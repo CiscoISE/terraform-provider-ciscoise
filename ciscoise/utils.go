@@ -49,11 +49,18 @@ func compareMacAddress(old_mac_address, new_mac_address string) bool {
 }
 
 func compareBoolean(new string, old string) bool {
+	if old == "" && new != "" {
+		return false
+	}
 	oldBool, err := strconv.ParseBool(old)
+	if err != nil {
+		return true
+	}
 	newBool, err := strconv.ParseBool(new)
 	if err != nil {
 		return true
 	}
+
 	if oldBool == newBool {
 		return true
 	}

@@ -382,9 +382,8 @@ func resourceTrustedCertificate() *schema.Resource {
 						"name": &schema.Schema{
 							Description:      `Friendly name of the certificate`,
 							Type:             schema.TypeString,
-							Optional:         true,
+							Required:         true,
 							DiffSuppressFunc: diffSupressOptional(),
-							Computed:         true,
 						},
 						"non_automatic_crl_update_period": &schema.Schema{
 							Description:      `Non automatic CRL update period`,
@@ -526,8 +525,7 @@ func resourceTrustedCertificateCreate(ctx context.Context, d *schema.ResourceDat
 			"Failure at UpdateTrustedCertificate, unexpected response", ""))
 		return diags
 	}
-	resourceMap["id"] = interfaceToString(resourceItem["id"])
-	resourceMap["name"] = interfaceToString(resourceItem["name"])
+	resourceMap["id"] = vvID
 	d.SetId(joinResourceID(resourceMap))
 	return resourceTrustedCertificateRead(ctx, d, m)
 }
@@ -542,85 +540,38 @@ func resourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceData,
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
 	vID, okID := resourceMap["id"]
-	vName, okName := resourceMap["name"]
-	vvName := vName
 	vvID := vID
 
 	method1 := []bool{okID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
-	selectedMethod := pickMethod([][]bool{method1, method2})
-	if selectedMethod == 2 {
-		log.Printf("[DEBUG] Selected method: GetTrustedCertificates")
-		queryParams1 := isegosdk.GetTrustedCertificatesQueryParams{}
+	log.Printf("[DEBUG] Selected method: GetTrustedCertificateByID")
 
-		response1, restyResp1, err := client.Certificates.GetTrustedCertificates(&queryParams1)
+	response2, restyResp2, err := client.Certificates.GetTrustedCertificateByID(vvID)
 
-		if err != nil || response1 == nil {
-			if restyResp1 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
-			}
-			d.SetId("")
-			return diags
+	if err != nil || response2 == nil {
+		if restyResp2 != nil {
+			log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
 		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
-
-		items1 := getAllItemsCertificatesGetTrustedCertificates(m, response1, &queryParams1)
-		item1, err := searchCertificatesGetTrustedCertificates(m, items1, vvName, vvID)
-		if err != nil || item1 == nil {
-			d.SetId("")
-			return diags
-		}
-		vItem1 := flattenCertificatesGetTrustedCertificateByIDItem(item1)
-		if err := d.Set("item", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTrustedCertificates search response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", vItem1); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTrustedCertificates search response",
-				err))
-			return diags
-		}
-
-	}
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetTrustedCertificateByID")
-		vvID := vID
-
-		response2, restyResp2, err := client.Certificates.GetTrustedCertificateByID(vvID)
-
-		if err != nil || response2 == nil {
-			if restyResp2 != nil {
-				log.Printf("[DEBUG] Retrieved error response %s", restyResp2.String())
-			}
-			d.SetId("")
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
-
-		vItem2 := flattenCertificatesGetTrustedCertificateByIDItem(response2.Response)
-		if err := d.Set("item", vItem2); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTrustedCertificateByID response",
-				err))
-			return diags
-		}
-		if err := d.Set("parameters", vItem2); err != nil {
-			diags = append(diags, diagError(
-				"Failure when setting GetTrustedCertificateByID response",
-				err))
-			return diags
-		}
+		d.SetId("")
 		return diags
-
 	}
+
+	log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
+
+	vItem2 := flattenCertificatesGetTrustedCertificateByIDItem(response2.Response)
+	if err := d.Set("item", vItem2); err != nil {
+		diags = append(diags, diagError(
+			"Failure when setting GetTrustedCertificateByID response",
+			err))
+		return diags
+	}
+	// if err := d.Set("parameters", vItem2); err != nil {
+	// 	diags = append(diags, diagError(
+	// 		"Failure when setting GetTrustedCertificateByID response",
+	// 		err))
+	// 	return diags
+	// }
 	return diags
 }
 
@@ -633,35 +584,8 @@ func resourceTrustedCertificateUpdate(ctx context.Context, d *schema.ResourceDat
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vID, okID := resourceMap["id"]
-	vName, okName := resourceMap["name"]
+	vvID := resourceMap["id"]
 
-	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
-	var vvID string
-	// NOTE: Added getAllItems and search function to get missing params
-	if selectedMethod == 2 {
-		queryParams1 := isegosdk.GetTrustedCertificatesQueryParams{}
-		getResp1, _, err := client.Certificates.GetTrustedCertificates(&queryParams1)
-		if err == nil && getResp1 != nil {
-			items1 := getAllItemsCertificatesGetTrustedCertificates(m, getResp1, &queryParams1)
-			item1, err := searchCertificatesGetTrustedCertificates(m, items1, vName, vID)
-			if err == nil && item1 != nil {
-				if vID != item1.ID {
-					vvID = item1.ID
-				} else {
-					vvID = vID
-				}
-			}
-		}
-	}
-	if selectedMethod == 1 {
-		vvID = vID
-	}
 	if d.HasChange("parameters") {
 		log.Printf("[DEBUG] ID used for update operation %s", vvID)
 		request1 := expandRequestTrustedCertificateUpdateTrustedCertificate(ctx, "parameters.0", d)
@@ -697,45 +621,16 @@ func resourceTrustedCertificateDelete(ctx context.Context, d *schema.ResourceDat
 
 	resourceID := d.Id()
 	resourceMap := separateResourceID(resourceID)
-	vID, okID := resourceMap["id"]
-	vName, okName := resourceMap["name"]
+	vvID := resourceMap["id"]
 
-	method1 := []bool{okID}
-	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okName}
-	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
-
-	selectedMethod := pickMethod([][]bool{method1, method2})
-	var vvID string
 	// REVIEW: Add getAllItems and search function to get missing params
-	if selectedMethod == 2 {
-		queryParams1 := isegosdk.GetTrustedCertificatesQueryParams{}
 
-		getResp1, _, err := client.Certificates.GetTrustedCertificates(&queryParams1)
-		if err != nil || getResp1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		items1 := getAllItemsCertificatesGetTrustedCertificates(m, getResp1, &queryParams1)
-		item1, err := searchCertificatesGetTrustedCertificates(m, items1, vName, vID)
-		if err != nil || item1 == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-		if vID != item1.ID {
-			vvID = item1.ID
-		} else {
-			vvID = vID
-		}
+	getResp, _, err := client.Certificates.GetTrustedCertificateByID(vvID)
+	if err != nil || getResp == nil {
+		// Assume that element it is already gone
+		return diags
 	}
-	if selectedMethod == 1 {
-		vvID = vID
-		getResp, _, err := client.Certificates.GetTrustedCertificateByID(vvID)
-		if err != nil || getResp == nil {
-			// Assume that element it is already gone
-			return diags
-		}
-	}
+
 	response1, restyResp1, err := client.Certificates.DeleteTrustedCertificateByID(vvID)
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
@@ -846,9 +741,6 @@ func expandRequestTrustedCertificateUpdateTrustedCertificate(ctx context.Context
 	}
 	if v, ok := d.GetOkExists(key + ".trust_for_ise_auth"); !isEmptyValue(reflect.ValueOf(d.Get(key+".trust_for_ise_auth"))) && (ok || !reflect.DeepEqual(v, d.Get(key+".trust_for_ise_auth"))) {
 		request.TrustForIseAuth = interfaceToBoolPtr(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
 	}
 	return &request
 }
