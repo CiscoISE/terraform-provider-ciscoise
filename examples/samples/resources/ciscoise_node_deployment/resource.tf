@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.6.9-beta"
+      version = "0.6.10-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -17,12 +17,12 @@ resource "ciscoise_node_deployment" "example" {
     hostname          = "ise31-2"
     password          = "redacted"
     # roles             = ["string"]
-    services          = ["Session","Profiler", "DeviceAdmin"]
-    user_name         = "admin"
+    services  = ["Session", "Profiler", "DeviceAdmin"]
+    user_name = "admin"
   }
 }
 
 output "ciscoise_node_deployment_example" {
-  value = ciscoise_node_deployment.example
+  value     = ciscoise_node_deployment.example
   sensitive = true
 }

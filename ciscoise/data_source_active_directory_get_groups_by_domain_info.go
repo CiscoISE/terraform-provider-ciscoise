@@ -58,7 +58,7 @@ func dataSourceActiveDirectoryGetGroupsByDomainInfo() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
-									"group_name": &schema.Schema{
+									"name": &schema.Schema{ //ISSUE group_name => name
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -188,7 +188,7 @@ func flattenActiveDirectoryGetGroupsByDomainItemGroups(items *[]isegosdk.Respons
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
-		respItem["group_name"] = item.GroupName
+		respItem["name"] = item.Name //ISSUE group_name => name
 		respItem["sid"] = item.Sid
 		respItem["type"] = item.Type
 		respItems = append(respItems, respItem)

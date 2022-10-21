@@ -1,3 +1,9 @@
+## 0.6.10-beta (Oct 21, 2022)
+BUG FIXES:
+*  Issue 62 group_name => name change parameter name
+*  Issue #65, bad parameters on resource
+*  Issue #64 changing "othername" to "ndgtype"
+
 ## 0.6.9-beta (Oct 12, 2022)
 
 BUG FIXES:
