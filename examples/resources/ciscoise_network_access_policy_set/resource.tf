@@ -18,9 +18,9 @@ resource "ciscoise_network_access_policy_set" "example" {
         start_date       = "string"
       }
       condition_type = "string"
-      name = "string"
-      id = "string"
-      description = "string"
+      name           = "string"
+      id             = "string"
+      description    = "string"
       is_negate      = "false"
 
     }

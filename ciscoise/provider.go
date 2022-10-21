@@ -173,6 +173,7 @@ func Provider() *schema.Provider {
 			"ciscoise_device_administration_time_date_conditions":                  resourceDeviceAdministrationTimeDateConditions(),
 			"ciscoise_aci_settings":                                                resourceAciSettings(),
 			"ciscoise_active_directory":                                            resourceActiveDirectory(),
+			"ciscoise_active_directory_add_groups":                                 resourceActiveDirectoryAddGroups(),
 			"ciscoise_allowed_protocols":                                           resourceAllowedProtocols(),
 			"ciscoise_anc_endpoint":                                                resourceAncEndpoint(),
 			"ciscoise_anc_policy":                                                  resourceAncPolicy(),

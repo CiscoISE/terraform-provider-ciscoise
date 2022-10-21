@@ -14,7 +14,7 @@ resource "ciscoise_sgt" "example" {
   provider = ciscoise
   parameters {
 
-    description       = "Terraform created with updatieee"
+    description = "Terraform created with updatieee"
     #generation_id     = "string123"
     # id                = "8ed911d4-b2aa-46b8-ba97-97684d88f1d5"
     is_read_only      = "false"

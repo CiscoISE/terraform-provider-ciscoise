@@ -21,16 +21,16 @@ resource "ciscoise_network_access_authentication_rules" "example" {
     policy_id = "d2da0d1d-5d32-41e2-a88d-7dd2107bf0ca"
     rule {
       condition {
-          condition_type= "ConditionReference"
-          is_negate = false
-          name = "Wired_MAB"
-          id = "9aab0da7-e3e3-4cd7-81c2-18c3ebbe6a96"
+        condition_type = "ConditionReference"
+        is_negate      = false
+        name           = "Wired_MAB"
+        id             = "9aab0da7-e3e3-4cd7-81c2-18c3ebbe6a96"
       }
-      default    = "false"
-    #   id         = "9aab0da7-e3e3-4cd7-81c2-18c3ebbe6a96"
-      name       = "auth_wim"
-      rank       = 1
-      state      = "enabled"
+      default = "false"
+      #   id         = "9aab0da7-e3e3-4cd7-81c2-18c3ebbe6a96"
+      name  = "auth_wim"
+      rank  = 1
+      state = "enabled"
     }
   }
 }
