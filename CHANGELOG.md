@@ -1,6 +1,15 @@
+## 0.6.11-beta (Oct 27, 2022)
+BUG FIXES:
+* Issue #68 => Resource 'ciscoise_network_access_authentication_rules' does not support nested children blocks [Fixed]
+* Issue #69 =>  Resource 'ciscoise_device_administration_policy_set' with single condition match returns multiple unsupported argument errors [Fixed]
+
+IMPROVEMENTS:
+* Documentation updated.
+* Samples added.
+
 ## 0.6.10-beta (Oct 21, 2022)
 BUG FIXES:
-*  Issue 62 group_name => name change parameter name
+*  Issue #62 group_name => name change parameter name
 *  Issue #65, bad parameters on resource
 *  Issue #64 changing "othername" to "ndgtype"
 
