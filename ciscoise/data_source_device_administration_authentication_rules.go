@@ -37,6 +37,11 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"policy_id": &schema.Schema{
+							Description: `policyId path parameter. Policy id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 
 						"identity_source_name": &schema.Schema{
 							Description: `Identity source name from the identity stores`,
@@ -694,7 +699,7 @@ func dataSourceDeviceAdministrationAuthenticationRulesRead(ctx context.Context, 
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItem2 := flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItem(response2.Response)
+		vItem2 := flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItem(response2.Response, vvPolicyID)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetDeviceAdminAuthenticationRuleByID response",
@@ -891,7 +896,7 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 
 }
 
-func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItem(item *isegosdk.ResponseDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDResponse) []map[string]interface{} {
+func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItem(item *isegosdk.ResponseDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDResponse, vPolicyID string) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -900,6 +905,7 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 	respItem["if_auth_fail"] = item.IfAuthFail
 	respItem["if_process_fail"] = item.IfProcessFail
 	respItem["if_user_not_found"] = item.IfUserNotFound
+	respItem["policy_id"] = vPolicyID
 	respItem["link"] = flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItemLink(item.Link)
 	respItem["rule"] = flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationRuleByIDItemRule(item.Rule)
 	return []map[string]interface{}{

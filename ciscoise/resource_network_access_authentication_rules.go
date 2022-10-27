@@ -56,6 +56,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"policy_id": &schema.Schema{
+							Description: `policyId path parameter. Policy id`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 
 						"identity_source_name": &schema.Schema{
 							Description: `Identity source name from the identity stores`,
@@ -98,11 +103,6 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 								},
 							},
 						},
-						"policy_id": &schema.Schema{
-							Description: `policyId path parameter. Policy id`,
-							Type:        schema.TypeString,
-							Computed:    true,
-						},
 						"rule": &schema.Schema{
 							Description: `Common attributes in rule authentication/authorization`,
 							Type:        schema.TypeList,
@@ -117,12 +117,12 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 											Schema: map[string]*schema.Schema{
 
 												"attribute_name": &schema.Schema{
-													Description: `Dictionary attribute name`,
+													Description: `Atribute Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 												"attribute_value": &schema.Schema{
-													Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+													Description: `Attibute Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -133,8 +133,23 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
+															"attribute_name": &schema.Schema{
+																Description: `Atribute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"attribute_value": &schema.Schema{
+																Description: `Attibute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
 															"condition_type": &schema.Schema{
 																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"dictionary_name": &schema.Schema{
+																Description: `Dictionary Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -163,6 +178,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																		},
 																	},
 																},
+															},
+															"operator": &schema.Schema{
+																Description: `Operator`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -214,7 +234,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Computed:    true,
 												},
 												"dictionary_name": &schema.Schema{
-													Description: `Dictionary name`,
+													Description: `Dictionary Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -295,7 +315,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Computed:    true,
 												},
 												"operator": &schema.Schema{
-													Description: `Equality operator`,
+													Description: `Operator`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -367,6 +387,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"identity_source_name": &schema.Schema{
 							Description:      `Identity source name from the identity stores`,
@@ -418,10 +439,12 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							},
 						},
 						"policy_id": &schema.Schema{
-							Description:      `policyId path parameter. Policy id`,
-							Type:             schema.TypeString,
-							Required:         true,
+							Description: `policyId path parameter. Policy id`,
+							Type:        schema.TypeString,
+
+							Optional:         true,
 							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 						"rule": &schema.Schema{
 							Description:      `Common attributes in rule authentication/authorization`,
@@ -441,14 +464,14 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 											Schema: map[string]*schema.Schema{
 
 												"attribute_name": &schema.Schema{
-													Description:      `Dictionary attribute name`,
+													Description:      `Atribute Name`,
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: diffSupressOptional(),
 													Computed:         true,
 												},
 												"attribute_value": &schema.Schema{
-													Description:      `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+													Description:      `Attibute Name`,
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: diffSupressOptional(),
@@ -463,8 +486,29 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
+															"attribute_name": &schema.Schema{
+																Description:      `Atribute Name`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"attribute_value": &schema.Schema{
+																Description:      `Attibute Name`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
 															"condition_type": &schema.Schema{
 																Description:      `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"dictionary_name": &schema.Schema{
+																Description:      `Dictionary Name`,
 																Type:             schema.TypeString,
 																Optional:         true,
 																DiffSuppressFunc: diffSupressOptional(),
@@ -498,6 +542,13 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																		},
 																	},
 																},
+															},
+															"operator": &schema.Schema{
+																Description:      `Operator`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
 															},
 														},
 													},
@@ -565,7 +616,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Computed:         true,
 												},
 												"dictionary_name": &schema.Schema{
-													Description:      `Dictionary name`,
+													Description:      `Dictionary Name`,
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: diffSupressOptional(),
@@ -669,7 +720,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Computed:         true,
 												},
 												"operator": &schema.Schema{
-													Description:      `Equality operator`,
+													Description:      `Operator`,
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: diffSupressOptional(),
@@ -889,13 +940,14 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 			d.SetId("")
 			return diags
 		}
-		vItem1 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(item1)
+		vItem1 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(item1, vID, vPolicyID)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthenticationRules search response",
 				err))
 			return diags
 		}
+		log.Printf("[DEBUG] Parameters %+v", responseInterfaceToString(d.Get("parameters")))
 		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthenticationRules search response",
@@ -918,7 +970,7 @@ func resourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *schema
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItem2 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(response2.Response)
+		vItem2 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(response2.Response, vID, vPolicyID)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthenticationRuleByID response",
@@ -1112,6 +1164,9 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".if_user_not_found")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".if_user_not_found")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".if_user_not_found")))) {
 		request.IfUserNotFound = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
+		request.Link = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleLink(ctx, key+".link.0", d)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rule")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rule")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rule")))) {
 		request.Rule = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRule(ctx, key+".rule.0", d)
 	}
@@ -1175,6 +1230,21 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
+		request.Link = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionLink(ctx, key+".link.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
+		request.DictionaryName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
+		request.AttributeName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
+		request.Operator = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
+		request.AttributeValue = interfaceToString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1184,20 +1254,8 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
-		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
-		request.AttributeValue = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
-		request.DictionaryName = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
 		request.DictionaryValue = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
-		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".children")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".children")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".children")))) {
 		request.Children = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenArray(ctx, key+".children", d)
@@ -1273,6 +1331,21 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
+		request.Link = expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenLink(ctx, key+".link.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
+		request.DictionaryName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
+		request.AttributeName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
+		request.Operator = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
+		request.AttributeValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1367,6 +1440,9 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".if_user_not_found")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".if_user_not_found")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".if_user_not_found")))) {
 		request.IfUserNotFound = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
+		request.Link = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDLink(ctx, key+".link.0", d)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rule")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rule")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rule")))) {
 		request.Rule = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRule(ctx, key+".rule.0", d)
 	}
@@ -1430,6 +1506,21 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
+		request.Link = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionLink(ctx, key+".link.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
+		request.DictionaryName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
+		request.AttributeName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
+		request.Operator = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
+		request.AttributeValue = interfaceToString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1439,20 +1530,8 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
-		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
-		request.AttributeValue = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
-		request.DictionaryName = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
 		request.DictionaryValue = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
-		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".children")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".children")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".children")))) {
 		request.Children = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenArray(ctx, key+".children", d)
@@ -1528,6 +1607,21 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
+		request.Link = expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
+		request.DictionaryName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
+		request.AttributeName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
+		request.Operator = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
+		request.AttributeValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

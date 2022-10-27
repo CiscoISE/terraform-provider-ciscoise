@@ -37,6 +37,12 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"policy_id": &schema.Schema{
+							Description: `policyId path parameter. Policy id`,
+							Type:        schema.TypeString,
+
+							Computed: true,
+						},
 
 						"identity_source_name": &schema.Schema{
 							Description: `Identity source name from the identity stores`,
@@ -93,12 +99,12 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"attribute_name": &schema.Schema{
-													Description: `Dictionary attribute name`,
+													Description: `Atribute Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 												"attribute_value": &schema.Schema{
-													Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+													Description: `Attibute Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -109,8 +115,23 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
+															"attribute_name": &schema.Schema{
+																Description: `Atribute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"attribute_value": &schema.Schema{
+																Description: `Attibute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
 															"condition_type": &schema.Schema{
 																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"dictionary_name": &schema.Schema{
+																Description: `Dictionary Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -139,6 +160,11 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 																		},
 																	},
 																},
+															},
+															"operator": &schema.Schema{
+																Description: `Operator`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -190,7 +216,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dictionary_name": &schema.Schema{
-													Description: `Dictionary name`,
+													Description: `Dictionary Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -271,7 +297,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"operator": &schema.Schema{
-													Description: `Equality operator`,
+													Description: `Operator`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -391,12 +417,12 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"attribute_name": &schema.Schema{
-													Description: `Dictionary attribute name`,
+													Description: `Atribute Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 												"attribute_value": &schema.Schema{
-													Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
+													Description: `Attibute Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -407,8 +433,23 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
+															"attribute_name": &schema.Schema{
+																Description: `Atribute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"attribute_value": &schema.Schema{
+																Description: `Attibute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
 															"condition_type": &schema.Schema{
 																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"dictionary_name": &schema.Schema{
+																Description: `Dictionary Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -437,6 +478,11 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 																		},
 																	},
 																},
+															},
+															"operator": &schema.Schema{
+																Description: `Operator`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
@@ -488,7 +534,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dictionary_name": &schema.Schema{
-													Description: `Dictionary name`,
+													Description: `Dictionary Name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -569,7 +615,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"operator": &schema.Schema{
-													Description: `Equality operator`,
+													Description: `Operator`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -640,9 +686,9 @@ func dataSourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *sche
 	vPolicyID, okPolicyID := d.GetOk("policy_id")
 	vID, okID := d.GetOk("id")
 
-	method1 := []bool{okID}
+	method1 := []bool{okPolicyID}
 	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
-	method2 := []bool{okPolicyID}
+	method2 := []bool{okPolicyID, okID}
 	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
 
 	selectedMethod := pickMethod([][]bool{method1, method2})
@@ -694,7 +740,7 @@ func dataSourceNetworkAccessAuthenticationRulesRead(ctx context.Context, d *sche
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
-		vItem2 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(response2.Response)
+		vItem2 := flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(response2.Response, vvID, vvPolicyID)
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthenticationRuleByID response",
@@ -768,14 +814,14 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionLink(item.Link)
+	respItem["dictionary_name"] = item.DictionaryName
+	respItem["attribute_name"] = item.AttributeName
+	respItem["operator"] = item.Operator
+	respItem["attribute_value"] = item.AttributeValue
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
-	respItem["attribute_name"] = item.AttributeName
-	respItem["attribute_value"] = item.AttributeValue
-	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
-	respItem["operator"] = item.Operator
 	respItem["children"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionChildren(item.Children)
 	respItem["dates_range"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionDatesRange(item.DatesRange)
 	respItem["dates_range_exception"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionDatesRangeException(item.DatesRangeException)
@@ -815,6 +861,10 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionChildrenLink(item.Link)
+		respItem["dictionary_name"] = item.DictionaryName
+		respItem["attribute_name"] = item.AttributeName
+		respItem["operator"] = item.Operator
+		respItem["attribute_value"] = item.AttributeValue
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -891,7 +941,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 
 }
 
-func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(item *isegosdk.ResponseNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDResponse) []map[string]interface{} {
+func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItem(item *isegosdk.ResponseNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDResponse, vID string, vPolicyID string) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -900,6 +950,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 	respItem["if_auth_fail"] = item.IfAuthFail
 	respItem["if_process_fail"] = item.IfProcessFail
 	respItem["if_user_not_found"] = item.IfUserNotFound
+	respItem["policy_id"] = vPolicyID
 	respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemLink(item.Link)
 	respItem["rule"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRule(item.Rule)
 	return []map[string]interface{}{
@@ -949,14 +1000,14 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionLink(item.Link)
+	respItem["dictionary_name"] = item.DictionaryName
+	respItem["attribute_name"] = item.AttributeName
+	respItem["operator"] = item.Operator
+	respItem["attribute_value"] = item.AttributeValue
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
-	respItem["attribute_name"] = item.AttributeName
-	respItem["attribute_value"] = item.AttributeValue
-	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
-	respItem["operator"] = item.Operator
 	respItem["children"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionChildren(item.Children)
 	respItem["dates_range"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionDatesRange(item.DatesRange)
 	respItem["dates_range_exception"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionDatesRangeException(item.DatesRangeException)
@@ -996,6 +1047,10 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionChildrenLink(item.Link)
+		respItem["dictionary_name"] = item.DictionaryName
+		respItem["attribute_name"] = item.AttributeName
+		respItem["operator"] = item.Operator
+		respItem["attribute_value"] = item.AttributeValue
 		respItems = append(respItems, respItem)
 	}
 	return respItems
