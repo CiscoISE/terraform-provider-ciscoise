@@ -114,6 +114,12 @@ In the docs directory you can find the documentation source code.
 
 You can find the documentation online at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/CiscoISE/ciscoise/latest/docs).
 
+## Compatibility matrix
+
+| Cisco DNA Center version | Terraform "ciscoise" provider version | Go "ciscoise-go-sdk" version|
+|--------------------------|----------------------------------------|---------------------|
+| 3.1._Patch_1                    | 0.6.11-beta                                 | 1.1.14 |
+
 # Contributing
 
 Ongoing development efforts and contributions to this provider are tracked as issues in this repository.
