@@ -27,7 +27,7 @@ Please provide an screenshot of the successful API call with cuRL, Postman, etc.
 * OS version: 
 
 **Verify compatibility**
-* https://github.com/CiscoISE/terraform-provider-ciscoise/tree/develop#compatibility-matrix
+* https://github.com/CiscoISE/terraform-provider-ciscoise/tree/main#compatibility-matrix
 
 **Additional context**
 Add any other context about the problem here.
