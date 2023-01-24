@@ -899,12 +899,15 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 			return diags
 		}
 		vItem1 := flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItem(item1)
+
+		log.Printf("[DEBUG] Retrieved vItem1 %+v", responseInterfaceToString(vItem1))
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRules search response",
 				err))
 			return diags
 		}
+		vItem1[0]["policy_id"] = vvPolicyID
 		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRules search response",
@@ -929,12 +932,14 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response2))
 
 		vItem2 := flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItem(response2.Response)
+
 		if err := d.Set("item", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRuleByID response",
 				err))
 			return diags
 		}
+		vItem2[0]["policy_id"] = vvPolicyID
 		if err := d.Set("parameters", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRuleByID response",
