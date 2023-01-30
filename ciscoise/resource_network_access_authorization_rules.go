@@ -109,6 +109,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
+
 												"children": &schema.Schema{
 													Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
 													Type:        schema.TypeList,
@@ -123,6 +124,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"id": &schema.Schema{
+																Description: `id`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -492,6 +498,13 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 															},
 															"operator": &schema.Schema{
 																Description:      `Operator`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"id": &schema.Schema{
+																Description:      `id`,
 																Type:             schema.TypeString,
 																Optional:         true,
 																DiffSuppressFunc: diffSupressOptional(),
@@ -899,12 +912,16 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 			return diags
 		}
 		vItem1 := flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItem(item1)
+
+		log.Printf("[DEBUG] Retrieved vItem1 %+v", responseInterfaceToString(vItem1))
+		vItem1[0]["id"] = vvID
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRules search response",
 				err))
 			return diags
 		}
+		vItem1[0]["policy_id"] = vvPolicyID
 		if err := d.Set("parameters", vItem1); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRules search response",
@@ -935,6 +952,8 @@ func resourceNetworkAccessAuthorizationRulesRead(ctx context.Context, d *schema.
 				err))
 			return diags
 		}
+		vItem2[0]["policy_id"] = vvPolicyID
+		vItem2[0]["id"] = vvID
 		if err := d.Set("parameters", vItem2); err != nil {
 			diags = append(diags, diagError(
 				"Failure when setting GetNetworkAccessAuthorizationRuleByID response",
@@ -1299,6 +1318,9 @@ func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizatio
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
 		request.Operator = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
 		request.AttributeValue = interfaceToString(v)

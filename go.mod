@@ -2,7 +2,7 @@ module terraform-provider-ciscoise
 
 go 1.17
 
-require github.com/CiscoISE/ciscoise-go-sdk v1.1.14
+require github.com/CiscoISE/ciscoise-go-sdk v1.1.15
 
 require (
 	github.com/go-resty/resty/v2 v2.7.0
@@ -87,7 +87,7 @@ require (
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/mod v0.4.2 // indirect
-	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
+	golang.org/x/net v0.0.0-20220615171555-694bf12d69de // indirect
 	golang.org/x/oauth2 v0.0.0-20210514164344-f6687ab2804c // indirect
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	golang.org/x/text v0.3.7 // indirect

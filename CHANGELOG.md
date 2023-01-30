@@ -1,3 +1,9 @@
+## 0.6.12-beta (Jan 30, 2023)
+BUG FIXES:
+* Issue #76 =>Resource ciscoise_network_access_authorization_rules wrong state handling [Fixed]
+* Issue #71 =>  ciscoise_network_access_authorization_rules fixing issues [Fixed]
+* Issue #77 =>  ConditionReference support in children section of resource ciscoise_network_access_authorization_rules [Fixed]
+
 ## 0.6.11-beta (Oct 27, 2022)
 BUG FIXES:
 * Issue #68 => Resource 'ciscoise_network_access_authentication_rules' does not support nested children blocks [Fixed]
