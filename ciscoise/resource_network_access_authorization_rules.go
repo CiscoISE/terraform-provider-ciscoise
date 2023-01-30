@@ -109,6 +109,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
+
 												"children": &schema.Schema{
 													Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
 													Type:        schema.TypeList,
@@ -123,6 +124,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 															},
 															"is_negate": &schema.Schema{
 																Description: `Indicates whereas this condition is in negate mode`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"id": &schema.Schema{
+																Description: `id`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -492,6 +498,13 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 															},
 															"operator": &schema.Schema{
 																Description:      `Operator`,
+																Type:             schema.TypeString,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+															},
+															"id": &schema.Schema{
+																Description:      `id`,
 																Type:             schema.TypeString,
 																Optional:         true,
 																DiffSuppressFunc: diffSupressOptional(),
