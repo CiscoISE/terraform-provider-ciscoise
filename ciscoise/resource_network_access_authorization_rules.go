@@ -117,18 +117,28 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
+															"attribute_name": &schema.Schema{
+																Description: `Atribute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"attribute_value": &schema.Schema{
+																Description: `Attibute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
 															"condition_type": &schema.Schema{
 																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-															"is_negate": &schema.Schema{
-																Description: `Indicates whereas this condition is in negate mode`,
+															"dictionary_name": &schema.Schema{
+																Description: `Dictionary Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
-															"id": &schema.Schema{
-																Description: `id`,
+															"is_negate": &schema.Schema{
+																Description: `Indicates whereas this condition is in negate mode`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -152,6 +162,16 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																		},
 																	},
 																},
+															},
+															"operator": &schema.Schema{
+																Description: `Operator`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"id": &schema.Schema{
+																Description: `id`,
+																Type:        schema.TypeString,
+																Computed:    true,
 															},
 														},
 													},
