@@ -40,8 +40,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 						"policy_id": &schema.Schema{
 							Description: `policyId path parameter. Policy id`,
 							Type:        schema.TypeString,
-
-							Computed: true,
+							Computed:    true,
 						},
 
 						"identity_source_name": &schema.Schema{
@@ -163,6 +162,11 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 															},
 															"operator": &schema.Schema{
 																Description: `Operator`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"id": &schema.Schema{
+																Description: `id`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -1051,6 +1055,8 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 		respItem["attribute_name"] = item.AttributeName
 		respItem["operator"] = item.Operator
 		respItem["attribute_value"] = item.AttributeValue
+		respItem["operator"] = item.Operator
+		respItem["id"] = item.ID
 		respItems = append(respItems, respItem)
 	}
 	return respItems

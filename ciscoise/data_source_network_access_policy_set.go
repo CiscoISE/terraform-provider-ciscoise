@@ -112,6 +112,11 @@ func dataSourceNetworkAccessPolicySet() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
+												"id": &schema.Schema{
+													Description: `id`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
 											},
 										},
 									},
@@ -797,6 +802,7 @@ func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetsItemsConditionChildr
 		respItem["attribute_name"] = item.AttributeName
 		respItem["operator"] = item.Operator
 		respItem["attribute_value"] = item.AttributeValue
+		respItem["id"] = item.ID
 		respItems = append(respItems, respItem)
 	}
 	return respItems

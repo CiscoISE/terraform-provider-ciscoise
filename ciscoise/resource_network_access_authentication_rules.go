@@ -184,6 +184,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
+															"id": &schema.Schema{
+																Description: `id`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
 														},
 													},
 												},
