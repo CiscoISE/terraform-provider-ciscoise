@@ -1,3 +1,7 @@
+## 0.6.15-beta (Feb 15, 2023)
+BUG FIXES:
+* Issue #77 =>  flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildren parameter `is_negate` parsed to string.
+
 ## 0.6.14-beta (Feb 10, 2023)
 BUG FIXES:
 * Issue #77 =>  ConditionReference support in children section of resource ciscoise_network_access_authorization_rules, ciscoise_network_access_policy_set, ciscoise_network_access_authentication_rules (idempotency problem) #77 [Fixed]
