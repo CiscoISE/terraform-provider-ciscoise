@@ -1002,7 +1002,7 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
-		respItem["is_negate"] = item.IsNegate
+		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["attribute_name"] = item.AttributeName
 		respItem["attribute_value"] = item.AttributeValue
 		respItem["condition_type"] = item.ConditionType
