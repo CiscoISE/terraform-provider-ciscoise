@@ -112,14 +112,14 @@ $ make testacc
 
 In the docs directory you can find the documentation source code.
 
-You can find the documentation online at [Terraform Registry - Cisco DNA Center provider](https://registry.terraform.io/providers/CiscoISE/ciscoise/latest/docs).
+You can find the documentation online at [Terraform Registry - Cisco ISE provider](https://registry.terraform.io/providers/CiscoISE/ciscoise/latest/docs).
 
 ## Compatibility matrix
 The following table shows the supported versions.
 
-| Cisco DNA Center version | Terraform "ciscoise" provider version | Go "ciscoise-go-sdk" version|
-|--------------------------|----------------------------------------|---------------------|
-| 3.1._Patch_1                    | 0.6.15-beta                                 | 1.1.14 |
+| Cisco ISE version | Terraform "ciscoise" provider version | Go "ciscoise-go-sdk" version|
+|-------------------|---------------------------------------|---------------------|
+| 3.1._Patch_1      | 0.6.15-beta                           | 1.1.14              |
 
 If your SDK, Terraform provider is older please consider updating it first.
 
