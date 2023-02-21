@@ -42,23 +42,20 @@ output "ciscoise_node_group_node_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **hostname** (String)
-- **node_group_name** (String) nodeGroupName path parameter. Name of the existing node group.
+- `hostname` (String)
+- `node_group_name` (String) nodeGroupName path parameter. Name of the existing node group.
 
 
 <a id="nestedatt--item"></a>
@@ -66,16 +63,16 @@ Required:
 
 Read-Only:
 
-- **hostname** (String)
-- **success** (List of Object) (see [below for nested schema](#nestedobjatt--item--success))
-- **version** (String)
+- `hostname` (String)
+- `success` (List of Object) (see [below for nested schema](#nestedobjatt--item--success))
+- `version` (String)
 
 <a id="nestedobjatt--item--success"></a>
 ### Nested Schema for `item.success`
 
 Read-Only:
 
-- **message** (String)
+- `message` (String)
 
 ## Import
 

@@ -43,37 +43,37 @@ output "ciscoise_network_access_dictionary_attribute_example" {
 
 ### Optional
 
-- **dictionary_name** (String) dictionaryName path parameter. the name of the dictionary the dictionary attribute belongs to
-- **id** (String) The ID of this resource.
-- **name** (String) name path parameter. the dictionary attribute name
+- `dictionary_name` (String) dictionaryName path parameter. the name of the dictionary the dictionary attribute belongs to
+- `name` (String) name path parameter. the dictionary attribute name
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **allowed_values** (List of Object) (see [below for nested schema](#nestedobjatt--item--allowed_values))
-- **data_type** (String)
-- **description** (String)
-- **dictionary_name** (String)
-- **direction_type** (String)
-- **id** (String)
-- **internal_name** (String)
-- **name** (String)
+- `allowed_values` (List of Object) (see [below for nested schema](#nestedobjatt--item--allowed_values))
+- `data_type` (String)
+- `description` (String)
+- `dictionary_name` (String)
+- `direction_type` (String)
+- `id` (String)
+- `internal_name` (String)
+- `name` (String)
 
 <a id="nestedobjatt--item--allowed_values"></a>
 ### Nested Schema for `item.allowed_values`
 
 Read-Only:
 
-- **is_default** (String)
-- **key** (String)
-- **value** (String)
+- `is_default` (String)
+- `key` (String)
+- `value` (String)
 
 
 
@@ -82,22 +82,22 @@ Read-Only:
 
 Read-Only:
 
-- **allowed_values** (List of Object) (see [below for nested schema](#nestedobjatt--items--allowed_values))
-- **data_type** (String)
-- **description** (String)
-- **dictionary_name** (String)
-- **direction_type** (String)
-- **id** (String)
-- **internal_name** (String)
-- **name** (String)
+- `allowed_values` (List of Object) (see [below for nested schema](#nestedobjatt--items--allowed_values))
+- `data_type` (String)
+- `description` (String)
+- `dictionary_name` (String)
+- `direction_type` (String)
+- `id` (String)
+- `internal_name` (String)
+- `name` (String)
 
 <a id="nestedobjatt--items--allowed_values"></a>
 ### Nested Schema for `items.allowed_values`
 
 Read-Only:
 
-- **is_default** (String)
-- **key** (String)
-- **value** (String)
+- `is_default` (String)
+- `key` (String)
+- `value` (String)
 
 

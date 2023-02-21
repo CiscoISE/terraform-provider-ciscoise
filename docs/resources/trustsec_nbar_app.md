@@ -40,35 +40,25 @@ output "ciscoise_trustsec_nbar_app_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
-Optional:
+Required:
 
-- **description** (String)
-- **id** (String) id path parameter.
-- **name** (String)
-- **network_identities** (Block List) Array of NIs (see [below for nested schema](#nestedblock--parameters--network_identities))
-
-<a id="nestedblock--parameters--network_identities"></a>
-### Nested Schema for `parameters.network_identities`
+- `id` (String) id path parameter.
 
 Optional:
 
-- **ports** (String)
-- **protocol** (String)
-
+- `ports` (String)
+- `protocol` (String)
 
 
 <a id="nestedatt--item"></a>
@@ -76,18 +66,18 @@ Optional:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **name** (String)
-- **network_identities** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_identities))
+- `description` (String)
+- `id` (String)
+- `name` (String)
+- `network_identities` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_identities))
 
 <a id="nestedobjatt--item--network_identities"></a>
 ### Nested Schema for `item.network_identities`
 
 Read-Only:
 
-- **ports** (String)
-- **protocol** (String)
+- `ports` (String)
+- `protocol` (String)
 
 ## Import
 

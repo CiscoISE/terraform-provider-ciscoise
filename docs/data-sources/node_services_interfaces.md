@@ -31,21 +31,18 @@ output "ciscoise_node_services_interfaces_example" {
 
 ### Required
 
-- **hostname** (String) hostname path parameter. Hostname of the node.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `hostname` (String) hostname path parameter. Hostname of the node.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **interface** (String)
+- `interface` (String)
 
 

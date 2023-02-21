@@ -14,6 +14,7 @@ It performs create operation on Backup And Restore.
 - Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API
 to get the status of the backup job
 
+
 ~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
@@ -39,26 +40,23 @@ resource "ciscoise_backup_restore" "example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **backup_encryption_key** (String) The encryption key which was provided at the time of taking backup.
-- **repository_name** (String) Name of the configred repository where the backup file exists.
-- **restore_file** (String) Name of the backup file to be restored on ISE node.
-- **restore_include_adeos** (String) Determines whether the ADE-OS configure is restored. Possible values true, false
+- `backup_encryption_key` (String) The encryption key which was provided at the time of taking backup.
+- `repository_name` (String) Name of the configred repository where the backup file exists.
+- `restore_file` (String) Name of the backup file to be restored on ISE node.
+- `restore_include_adeos` (String) Determines whether the ADE-OS configure is restored. Possible values true, false
 
 
 <a id="nestedatt--item"></a>
@@ -66,17 +64,17 @@ Optional:
 
 Read-Only:
 
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **message** (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `message` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

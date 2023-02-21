@@ -41,27 +41,27 @@ output "ciscoise_tasks_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **task_id** (String) taskId path parameter. The id of the task executed before
+- `task_id` (String) taskId path parameter. The id of the task executed before
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **detail_status** (List of String)
-- **execution_status** (String)
-- **fail_count** (Number)
-- **id** (String)
-- **module_type** (String)
-- **resources_count** (Number)
-- **start_time** (String)
-- **success_count** (Number)
+- `detail_status` (List of String)
+- `execution_status` (String)
+- `fail_count` (Number)
+- `id` (String)
+- `module_type` (String)
+- `resources_count` (Number)
+- `start_time` (String)
+- `success_count` (Number)
 
 
 <a id="nestedatt--items"></a>
@@ -69,13 +69,13 @@ Read-Only:
 
 Read-Only:
 
-- **detail_status** (List of String)
-- **execution_status** (String)
-- **fail_count** (Number)
-- **id** (String)
-- **module_type** (String)
-- **resources_count** (Number)
-- **start_time** (String)
-- **success_count** (Number)
+- `detail_status` (List of String)
+- `execution_status` (String)
+- `fail_count` (Number)
+- `id` (String)
+- `module_type` (String)
+- `resources_count` (Number)
+- `start_time` (String)
+- `success_count` (Number)
 
 

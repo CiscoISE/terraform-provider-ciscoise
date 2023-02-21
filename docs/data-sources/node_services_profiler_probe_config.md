@@ -31,39 +31,36 @@ output "ciscoise_node_services_profiler_probe_config_example" {
 
 ### Required
 
-- **hostname** (String) hostname path parameter. Hostname of the node.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `hostname` (String) hostname path parameter. Hostname of the node.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **active_directory** (List of Object) (see [below for nested schema](#nestedobjatt--item--active_directory))
-- **dhcp** (List of Object) (see [below for nested schema](#nestedobjatt--item--dhcp))
-- **dhcp_span** (List of Object) (see [below for nested schema](#nestedobjatt--item--dhcp_span))
-- **dns** (List of Object) (see [below for nested schema](#nestedobjatt--item--dns))
-- **http** (List of Object) (see [below for nested schema](#nestedobjatt--item--http))
-- **netflow** (List of Object) (see [below for nested schema](#nestedobjatt--item--netflow))
-- **nmap** (List of String)
-- **pxgrid** (List of String)
-- **radius** (List of String)
-- **snmp_query** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_query))
-- **snmp_trap** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_trap))
+- `active_directory` (List of Object) (see [below for nested schema](#nestedobjatt--item--active_directory))
+- `dhcp` (List of Object) (see [below for nested schema](#nestedobjatt--item--dhcp))
+- `dhcp_span` (List of Object) (see [below for nested schema](#nestedobjatt--item--dhcp_span))
+- `dns` (List of Object) (see [below for nested schema](#nestedobjatt--item--dns))
+- `http` (List of Object) (see [below for nested schema](#nestedobjatt--item--http))
+- `netflow` (List of Object) (see [below for nested schema](#nestedobjatt--item--netflow))
+- `nmap` (List of String)
+- `pxgrid` (List of String)
+- `radius` (List of String)
+- `snmp_query` (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_query))
+- `snmp_trap` (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_trap))
 
 <a id="nestedobjatt--item--active_directory"></a>
 ### Nested Schema for `item.active_directory`
 
 Read-Only:
 
-- **days_before_rescan** (Number)
+- `days_before_rescan` (Number)
 
 
 <a id="nestedobjatt--item--dhcp"></a>
@@ -71,15 +68,15 @@ Read-Only:
 
 Read-Only:
 
-- **interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--item--dhcp--interfaces))
-- **port** (Number)
+- `interfaces` (List of Object) (see [below for nested schema](#nestedobjatt--item--dhcp--interfaces))
+- `port` (Number)
 
 <a id="nestedobjatt--item--dhcp--interfaces"></a>
 ### Nested Schema for `item.dhcp.interfaces`
 
 Read-Only:
 
-- **interface** (String)
+- `interface` (String)
 
 
 
@@ -88,14 +85,14 @@ Read-Only:
 
 Read-Only:
 
-- **interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--item--dhcp_span--interfaces))
+- `interfaces` (List of Object) (see [below for nested schema](#nestedobjatt--item--dhcp_span--interfaces))
 
 <a id="nestedobjatt--item--dhcp_span--interfaces"></a>
 ### Nested Schema for `item.dhcp_span.interfaces`
 
 Read-Only:
 
-- **interface** (String)
+- `interface` (String)
 
 
 
@@ -104,7 +101,7 @@ Read-Only:
 
 Read-Only:
 
-- **timeout** (Number)
+- `timeout` (Number)
 
 
 <a id="nestedobjatt--item--http"></a>
@@ -112,14 +109,14 @@ Read-Only:
 
 Read-Only:
 
-- **interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--item--http--interfaces))
+- `interfaces` (List of Object) (see [below for nested schema](#nestedobjatt--item--http--interfaces))
 
 <a id="nestedobjatt--item--http--interfaces"></a>
 ### Nested Schema for `item.http.interfaces`
 
 Read-Only:
 
-- **interface** (String)
+- `interface` (String)
 
 
 
@@ -128,15 +125,15 @@ Read-Only:
 
 Read-Only:
 
-- **interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--item--netflow--interfaces))
-- **port** (Number)
+- `interfaces` (List of Object) (see [below for nested schema](#nestedobjatt--item--netflow--interfaces))
+- `port` (Number)
 
 <a id="nestedobjatt--item--netflow--interfaces"></a>
 ### Nested Schema for `item.netflow.interfaces`
 
 Read-Only:
 
-- **interface** (String)
+- `interface` (String)
 
 
 
@@ -145,9 +142,9 @@ Read-Only:
 
 Read-Only:
 
-- **event_timeout** (Number)
-- **retries** (Number)
-- **timeout** (Number)
+- `event_timeout` (Number)
+- `retries` (Number)
+- `timeout` (Number)
 
 
 <a id="nestedobjatt--item--snmp_trap"></a>
@@ -155,16 +152,16 @@ Read-Only:
 
 Read-Only:
 
-- **interfaces** (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_trap--interfaces))
-- **link_trap_query** (String)
-- **mac_trap_query** (String)
-- **port** (Number)
+- `interfaces` (List of Object) (see [below for nested schema](#nestedobjatt--item--snmp_trap--interfaces))
+- `link_trap_query` (String)
+- `mac_trap_query` (String)
+- `port` (Number)
 
 <a id="nestedobjatt--item--snmp_trap--interfaces"></a>
 ### Nested Schema for `item.snmp_trap.interfaces`
 
 Read-Only:
 
-- **interface** (String)
+- `interface` (String)
 
 

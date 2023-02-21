@@ -35,18 +35,15 @@ output "ciscoise_mnt_session_disconnect_example" {
 
 ### Required
 
-- **dis_con_nec_tty_pe** (String) DISCONNECT_TYPE path parameter.
-- **end_poi_nti_p** (String) ENDPOINT_IP path parameter.
-- **mac** (String) MAC path parameter.
-- **nas_ipv4** (String) NAS_IPV4 path parameter.
-- **psn_nam_e** (String) PSN_NAME path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `dis_con_nec_tty_pe` (String) DISCONNECT_TYPE path parameter.
+- `end_poi_nti_p` (String) ENDPOINT_IP path parameter.
+- `mac` (String) MAC path parameter.
+- `nas_ipv4` (String) NAS_IPV4 path parameter.
+- `psn_nam_e` (String) PSN_NAME path parameter.
 
 ### Read-Only
 
-- **item** (String)
+- `id` (String) The ID of this resource.
+- `item` (String)
 
 

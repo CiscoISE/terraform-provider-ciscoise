@@ -12,6 +12,7 @@ description: |-
 It performs update operation on ActiveDirectory.
 - This resource joins makes all Cisco ISE nodes leave an Active Directory domain.
 
+
 ~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
@@ -40,34 +41,31 @@ resource "ciscoise_active_directory_leave_domain_with_all_nodes" "example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (String)
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (String)
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **id** (String) id path parameter.
+- `id` (String) id path parameter.
 
 Optional:
 
-- **additional_data** (Block List) (see [below for nested schema](#nestedblock--parameters--additional_data))
+- `additional_data` (Block List) (see [below for nested schema](#nestedblock--parameters--additional_data))
 
 <a id="nestedblock--parameters--additional_data"></a>
 ### Nested Schema for `parameters.additional_data`
 
 Optional:
 
-- **name** (String)
-- **value** (String)
+- `name` (String)
+- `value` (String)
 
 

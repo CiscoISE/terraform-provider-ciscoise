@@ -31,22 +31,19 @@ output "ciscoise_repository_files_example" {
 
 ### Required
 
-- **repository_name** (String) repositoryName path parameter. Unique name for a repository
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `repository_name` (String) repositoryName path parameter. Unique name for a repository
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **response** (List of String)
-- **version** (String)
+- `response` (List of String)
+- `version` (String)
 
 

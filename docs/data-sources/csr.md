@@ -72,7 +72,7 @@ output "ciscoise_csr_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
  
  
  
@@ -150,44 +150,44 @@ Contains
 NCONTAINS
  
 Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **host_name** (String) hostName path parameter. Name of the host of which CSR's should be returned
-- **id** (String) id path parameter. ID of the Certificate Signing Request returned
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sort** (String) sort query parameter. sort type asc or desc
-- **sort_by** (String) sortBy query parameter. sort column by which objects needs to be sorted
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `host_name` (String) hostName path parameter. Name of the host of which CSR's should be returned
+- `id` (String) id path parameter. ID of the Certificate Signing Request returned
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sort` (String) sort query parameter. sort type asc or desc
+- `sort_by` (String) sortBy query parameter. sort column by which objects needs to be sorted
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **csr_contents** (String)
-- **friendly_name** (String)
-- **group_tag** (String)
-- **host_name** (String)
-- **id** (String)
-- **key_size** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **signature_algorithm** (String)
-- **subject** (String)
-- **time_stamp** (String)
-- **used_for** (String)
+- `csr_contents` (String)
+- `friendly_name` (String)
+- `group_tag` (String)
+- `host_name` (String)
+- `id` (String)
+- `key_size` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `signature_algorithm` (String)
+- `subject` (String)
+- `time_stamp` (String)
+- `used_for` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -196,24 +196,24 @@ Read-Only:
 
 Read-Only:
 
-- **friendly_name** (String)
-- **group_tag** (String)
-- **host_name** (String)
-- **id** (String)
-- **key_size** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **signature_algorithm** (String)
-- **subject** (String)
-- **time_stamp** (String)
-- **used_for** (String)
+- `friendly_name` (String)
+- `group_tag` (String)
+- `host_name` (String)
+- `id` (String)
+- `key_size` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `signature_algorithm` (String)
+- `subject` (String)
+- `time_stamp` (String)
+- `used_for` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

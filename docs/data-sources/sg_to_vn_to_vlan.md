@@ -51,7 +51,7 @@ output "ciscoise_sg_to_vn_to_vlan_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
 
 **Simple filtering** should be available through the filter query string parameter. The structure of a filter is
 a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
@@ -83,36 +83,36 @@ string parameter. Each resource Data model description should specify if an attr
               CONTAINS	  | Contains 
 
               NCONTAINS	  | Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **sgt_id** (String)
-- **virtualnetworklist** (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `sgt_id` (String)
+- `virtualnetworklist` (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist))
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--virtualnetworklist"></a>
@@ -120,23 +120,23 @@ Read-Only:
 
 Read-Only:
 
-- **default_virtual_network** (String)
-- **description** (String)
-- **id** (String)
-- **name** (String)
-- **vlans** (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist--vlans))
+- `default_virtual_network` (String)
+- `description` (String)
+- `id` (String)
+- `name` (String)
+- `vlans` (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist--vlans))
 
 <a id="nestedobjatt--item--virtualnetworklist--vlans"></a>
 ### Nested Schema for `item.virtualnetworklist.vlans`
 
 Read-Only:
 
-- **data** (String)
-- **default_vlan** (String)
-- **description** (String)
-- **id** (String)
-- **max_value** (Number)
-- **name** (String)
+- `data` (String)
+- `default_vlan` (String)
+- `description` (String)
+- `id` (String)
+- `max_value` (Number)
+- `name` (String)
 
 
 
@@ -146,18 +146,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

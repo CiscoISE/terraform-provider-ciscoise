@@ -44,29 +44,40 @@ output "ciscoise_sxp_local_bindings_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **binding_name** (String) This field is depricated from Cisco ISE 3.0
-- **description** (String)
-- **id** (String) The ID of this resource.
-- **ip_address_or_host** (String) IP address for static mapping (hostname is not supported)
-- **sgt** (String) SGT name or ID
-- **sxp_vpn** (String) List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined
-- **vns** (String) List of Virtual Networks, separated with comma. At least one of: sxpVpn or vns should be defined
+- `binding_name` (String) This field is depricated from Cisco ISE 3.0
+- `description` (String)
+- `ip_address_or_host` (String) IP address for static mapping (hostname is not supported)
+- `sgt` (String) SGT name or ID
+- `sxp_vpn` (String) List of SXP Domains, separated with comma. At least one of: sxpVpn or vns should be defined
+- `vns` (String) List of Virtual Networks, separated with comma. At least one of: sxpVpn or vns should be defined
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -74,23 +85,23 @@ Optional:
 
 Read-Only:
 
-- **binding_name** (String)
-- **description** (String)
-- **id** (String)
-- **ip_address_or_host** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **sgt** (String)
-- **sxp_vpn** (String)
-- **vns** (String)
+- `binding_name` (String)
+- `description` (String)
+- `id` (String)
+- `ip_address_or_host` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `sgt` (String)
+- `sxp_vpn` (String)
+- `vns` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

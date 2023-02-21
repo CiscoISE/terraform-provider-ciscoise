@@ -31,14 +31,11 @@ output "ciscoise_mnt_session_by_ip_example" {
 
 ### Required
 
-- **endpoint_ipv4** (String) endpoint_ipv4 path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `endpoint_ipv4` (String) endpoint_ipv4 path parameter.
 
 ### Read-Only
 
-- **item** (String)
+- `id` (String) The ID of this resource.
+- `item` (String)
 
 

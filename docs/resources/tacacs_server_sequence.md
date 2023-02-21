@@ -47,33 +47,44 @@ output "ciscoise_tacacs_server_sequence_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **description** (String)
-- **id** (String) The ID of this resource.
-- **local_accounting** (String)
-- **name** (String)
-- **prefix_delimiter** (String) The delimiter that will be used for prefix strip
-- **prefix_strip** (String) Define if a delimiter will be used for prefix strip
-- **remote_accounting** (String)
-- **server_list** (String) The names of Tacacs external servers separated by commas.
-The order of the names in the string is the order of servers that will be used during authentication
-- **suffix_delimiter** (String) The delimiter that will be used for suffix strip
-- **suffix_strip** (String) Define if a delimiter will be used for suffix strip
+- `description` (String)
+- `local_accounting` (String)
+- `name` (String)
+- `prefix_delimiter` (String) The delimiter that will be used for prefix strip
+- `prefix_strip` (String) Define if a delimiter will be used for prefix strip
+- `remote_accounting` (String)
+- `server_list` (String) The names of Tacacs external servers separated by commas.
+		The order of the names in the string is the order of servers that will be used during authentication
+- `suffix_delimiter` (String) The delimiter that will be used for suffix strip
+- `suffix_strip` (String) Define if a delimiter will be used for suffix strip
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -81,26 +92,26 @@ The order of the names in the string is the order of servers that will be used d
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **local_accounting** (String)
-- **name** (String)
-- **prefix_delimiter** (String)
-- **prefix_strip** (String)
-- **remote_accounting** (String)
-- **server_list** (String)
-- **suffix_delimiter** (String)
-- **suffix_strip** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `local_accounting` (String)
+- `name` (String)
+- `prefix_delimiter` (String)
+- `prefix_strip` (String)
+- `remote_accounting` (String)
+- `server_list` (String)
+- `suffix_delimiter` (String)
+- `suffix_strip` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

@@ -16,13 +16,21 @@ It performs update operation on ActiveDirectory.
 ## Example Usage
 
 ```terraform
+terraform {
+  required_providers {
+    ciscoise = {
+      version = "0.6.16-beta"
+      source  = "hashicorp.com/edu/ciscoise"
+    }
+  }
+}
 data "ciscoise_active_directory_get_groups_by_domain_info" "example" {
   provider = ciscoise
-  id       = "string"
+  id       = "4964ba10-4f1c-11ed-9aa4-6e36de26f9f6"
   additional_data {
 
-    name  = "string"
-    value = "string"
+    name  = "domain"
+    value = "dcloud12121.com"
   }
 }
 ```
@@ -32,23 +40,23 @@ data "ciscoise_active_directory_get_groups_by_domain_info" "example" {
 
 ### Required
 
-- **id** (String) id path parameter.
+- `id` (String) id path parameter.
 
 ### Optional
 
-- **additional_data** (Block List) (see [below for nested schema](#nestedblock--additional_data))
+- `additional_data` (Block List) (see [below for nested schema](#nestedblock--additional_data))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedblock--additional_data"></a>
 ### Nested Schema for `additional_data`
 
 Optional:
 
-- **name** (String)
-- **value** (String)
+- `name` (String)
+- `value` (String)
 
 
 <a id="nestedatt--item"></a>
@@ -56,15 +64,15 @@ Optional:
 
 Read-Only:
 
-- **groups** (List of Object) (see [below for nested schema](#nestedobjatt--item--groups))
+- `groups` (List of Object) (see [below for nested schema](#nestedobjatt--item--groups))
 
 <a id="nestedobjatt--item--groups"></a>
 ### Nested Schema for `item.groups`
 
 Read-Only:
 
-- **group_name** (String)
-- **sid** (String)
-- **type** (String)
+- `name` (String)
+- `sid` (String)
+- `type` (String)
 
 

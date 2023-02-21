@@ -47,7 +47,7 @@ output "ciscoise_node_deployment_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
  
  
  
@@ -113,26 +113,26 @@ Contains
 NCONTAINS
  
 Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to all filter criteria is AND by default, and can be changed by using this parameter.
-- **hostname** (String) hostname path parameter. Hostname of the deployed node.
-- **id** (String) The ID of this resource.
+- `filter_type` (String) filterType query parameter. The logical operator common to all filter criteria is AND by default, and can be changed by using this parameter.
+- `hostname` (String) hostname path parameter. Hostname of the deployed node.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **fqdn** (String)
-- **hostname** (String)
-- **ip_address** (String)
-- **node_status** (String)
-- **roles** (List of String)
-- **services** (List of String)
+- `fqdn` (String)
+- `hostname` (String)
+- `ip_address` (String)
+- `node_status` (String)
+- `roles` (List of String)
+- `services` (List of String)
 
 
 <a id="nestedatt--items"></a>
@@ -140,11 +140,11 @@ Read-Only:
 
 Read-Only:
 
-- **fqdn** (String)
-- **hostname** (String)
-- **ip_address** (String)
-- **node_status** (String)
-- **roles** (List of String)
-- **services** (List of String)
+- `fqdn` (String)
+- `hostname` (String)
+- `ip_address` (String)
+- `node_status` (String)
+- `roles` (List of String)
+- `services` (List of String)
 
 

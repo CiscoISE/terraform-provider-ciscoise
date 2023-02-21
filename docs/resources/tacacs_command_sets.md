@@ -50,44 +50,55 @@ output "ciscoise_tacacs_command_sets_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **commands** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--commands))
-- **description** (String)
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **permit_unmatched** (String)
+- `commands` (Block List) (see [below for nested schema](#nestedblock--parameters--commands))
+- `description` (String)
+- `name` (String)
+- `permit_unmatched` (String)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--commands"></a>
 ### Nested Schema for `parameters.commands`
 
 Optional:
 
-- **command_list** (Block List) (see [below for nested schema](#nestedblock--parameters--commands--command_list))
+- `command_list` (Block List) (see [below for nested schema](#nestedblock--parameters--commands--command_list))
 
 <a id="nestedblock--parameters--commands--command_list"></a>
 ### Nested Schema for `parameters.commands.command_list`
 
 Optional:
 
-- **arguments** (String)
-- **command** (String)
-- **grant** (String) Allowed values: PERMIT, DENY, DENY_ALWAYS
+- `arguments` (String)
+- `command` (String)
+- `grant` (String) Allowed values: PERMIT, DENY, DENY_ALWAYS
 
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -96,28 +107,28 @@ Optional:
 
 Read-Only:
 
-- **commands** (List of Object) (see [below for nested schema](#nestedobjatt--item--commands))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **permit_unmatched** (String)
+- `commands` (List of Object) (see [below for nested schema](#nestedobjatt--item--commands))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `permit_unmatched` (String)
 
 <a id="nestedobjatt--item--commands"></a>
 ### Nested Schema for `item.commands`
 
 Read-Only:
 
-- **command_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--commands--command_list))
+- `command_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--commands--command_list))
 
 <a id="nestedobjatt--item--commands--command_list"></a>
 ### Nested Schema for `item.commands.command_list`
 
 Read-Only:
 
-- **arguments** (String)
-- **command** (String)
-- **grant** (String)
+- `arguments` (String)
+- `command` (String)
+- `grant` (String)
 
 
 
@@ -126,9 +137,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

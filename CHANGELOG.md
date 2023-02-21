@@ -1,3 +1,10 @@
+## 0.6.16-beta (Feb 21, 2023)
+FEATURES:
+* **New Resource** `resource_device_administration_authorization_rules_update` issue #71.
+* **New Resource** `resource_network_access_authorization_rules_update` issue #71.
+BUG FIXES:
+* Issue #83 =>  Update README as requested.
+
 ## 0.6.15-beta (Feb 15, 2023)
 BUG FIXES:
 * Issue #77 =>  flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildren parameter `is_negate` parsed to string.

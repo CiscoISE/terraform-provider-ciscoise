@@ -42,29 +42,26 @@ output "ciscoise_filter_policy_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **domains** (String) List of SXP Domains, separated with comma
-- **id** (String) id path parameter.
-- **sgt** (String) SGT name or ID. At least one of subnet or sgt or vn should be defined
-- **subnet** (String) Subnet for filter policy (hostname is not supported).
-At least one of subnet or sgt or vn should be defined
-- **vn** (String) Virtual Network.
-At least one of subnet or sgt or vn should be defined
+- `domains` (String) List of SXP Domains, separated with comma
+- `id` (String) id path parameter.
+- `sgt` (String) SGT name or ID. At least one of subnet or sgt or vn should be defined
+- `subnet` (String) Subnet for filter policy (hostname is not supported).
+		At least one of subnet or sgt or vn should be defined
+- `vn` (String) Virtual Network.
+		At least one of subnet or sgt or vn should be defined
 
 
 <a id="nestedatt--item"></a>
@@ -72,10 +69,10 @@ At least one of subnet or sgt or vn should be defined
 
 Read-Only:
 
-- **domains** (String)
-- **sgt** (String)
-- **subnet** (String)
-- **vn** (String)
+- `domains` (String)
+- `sgt` (String)
+- `subnet` (String)
+- `vn` (String)
 
 ## Import
 

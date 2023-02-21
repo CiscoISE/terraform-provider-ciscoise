@@ -31,14 +31,11 @@ output "ciscoise_mnt_session_by_nas_ip_example" {
 
 ### Required
 
-- **nas_ipv4** (String) nas_ipv4 path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `nas_ipv4` (String) nas_ipv4 path parameter.
 
 ### Read-Only
 
-- **item** (String)
+- `id` (String) The ID of this resource.
+- `item` (String)
 
 

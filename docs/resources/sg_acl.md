@@ -44,33 +44,44 @@ output "ciscoise_sg_acl_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **aclcontent** (String)
-- **description** (String)
-- **generation_id** (String)
-- **id** (String) The ID of this resource.
-- **ip_version** (String) Allowed values:
-- IPV4,
-- IPV6,
-- IP_AGNOSTIC
-- **is_read_only** (String)
-- **modelled_content** (String) Modelled content of contract
-- **name** (String)
+- `aclcontent` (String)
+- `description` (String)
+- `generation_id` (String)
+- `ip_version` (String) Allowed values:
+		- IPV4,
+		- IPV6,
+		- IP_AGNOSTIC
+- `is_read_only` (String)
+- `modelled_content` (List of String) Modelled content of contract
+- `name` (String)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -78,24 +89,24 @@ Optional:
 
 Read-Only:
 
-- **aclcontent** (String)
-- **description** (String)
-- **generation_id** (String)
-- **id** (String)
-- **ip_version** (String)
-- **is_read_only** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **modelled_content** (String)
-- **name** (String)
+- `aclcontent` (String)
+- `description` (String)
+- `generation_id` (String)
+- `id` (String)
+- `ip_version` (String)
+- `is_read_only` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `modelled_content` (String)
+- `name` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

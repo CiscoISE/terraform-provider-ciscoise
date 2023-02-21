@@ -31,40 +31,37 @@ output "ciscoise_sxp_connections_bulk_monitor_status_example" {
 
 ### Required
 
-- **bulkid** (String) bulkid path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `bulkid` (String) bulkid path parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **bulk_id** (String)
-- **execution_status** (String)
-- **fail_count** (Number)
-- **media_type** (String)
-- **operation_type** (String)
-- **resources_count** (Number)
-- **resources_status** (List of Object) (see [below for nested schema](#nestedobjatt--item--resources_status))
-- **start_time** (String)
-- **success_count** (Number)
+- `bulk_id` (String)
+- `execution_status` (String)
+- `fail_count` (Number)
+- `media_type` (String)
+- `operation_type` (String)
+- `resources_count` (Number)
+- `resources_status` (List of Object) (see [below for nested schema](#nestedobjatt--item--resources_status))
+- `start_time` (String)
+- `success_count` (Number)
 
 <a id="nestedobjatt--item--resources_status"></a>
 ### Nested Schema for `item.resources_status`
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **name** (String)
-- **resource_execution_status** (String)
-- **status** (String)
+- `description` (String)
+- `id` (String)
+- `name` (String)
+- `resource_execution_status` (String)
+- `status` (String)
 
 

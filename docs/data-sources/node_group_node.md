@@ -31,21 +31,18 @@ output "ciscoise_node_group_node_example" {
 
 ### Required
 
-- **node_group_name** (String) nodeGroupName path parameter. Name of the existing node group.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `node_group_name` (String) nodeGroupName path parameter. Name of the existing node group.
 
 ### Read-Only
 
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--items"></a>
 ### Nested Schema for `items`
 
 Read-Only:
 
-- **hostname** (String)
+- `hostname` (String)
 
 

@@ -45,32 +45,32 @@ output "ciscoise_node_group_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **node_group_name** (String) nodeGroupName path parameter. Name of the existing node group.
+- `node_group_name` (String) nodeGroupName path parameter. Name of the existing node group.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **mar_cache** (List of Object) (see [below for nested schema](#nestedobjatt--item--mar_cache))
-- **name** (String)
+- `description` (String)
+- `mar_cache` (List of Object) (see [below for nested schema](#nestedobjatt--item--mar_cache))
+- `name` (String)
 
 <a id="nestedobjatt--item--mar_cache"></a>
 ### Nested Schema for `item.mar_cache`
 
 Read-Only:
 
-- **query_attempts** (Number)
-- **query_timeout** (Number)
-- **replication_attempts** (Number)
-- **replication_timeout** (Number)
+- `query_attempts` (Number)
+- `query_timeout` (Number)
+- `replication_attempts` (Number)
+- `replication_timeout` (Number)
 
 
 
@@ -79,18 +79,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **mar_cache** (List of Object) (see [below for nested schema](#nestedobjatt--items--mar_cache))
-- **name** (String)
+- `description` (String)
+- `mar_cache` (List of Object) (see [below for nested schema](#nestedobjatt--items--mar_cache))
+- `name` (String)
 
 <a id="nestedobjatt--items--mar_cache"></a>
 ### Nested Schema for `items.mar_cache`
 
 Read-Only:
 
-- **query_attempts** (Number)
-- **query_timeout** (Number)
-- **replication_attempts** (Number)
-- **replication_timeout** (Number)
+- `query_attempts` (Number)
+- `query_timeout` (Number)
+- `replication_attempts` (Number)
+- `replication_timeout` (Number)
 
 

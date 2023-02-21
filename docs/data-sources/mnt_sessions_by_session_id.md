@@ -31,14 +31,11 @@ output "ciscoise_mnt_sessions_by_session_id_example" {
 
 ### Required
 
-- **session_id** (String) session_id path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `session_id` (String) session_id path parameter.
 
 ### Read-Only
 
-- **item** (String)
+- `id` (String) The ID of this resource.
+- `item` (String)
 
 

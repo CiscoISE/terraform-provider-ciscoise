@@ -67,28 +67,25 @@ output "ciscoise_proxy_connection_settings_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **bypass_hosts** (String) Bypass hosts for the proxy connection
-- **fqdn** (String) proxy IP address or DNS-resolvable host name
-- **password** (String, Sensitive) Password for the proxy connection
-- **password_required** (String) Indicates whether password configuration is required for Proxy.
-- **port** (Number) Port for proxy connection. should be between 1 and 65535
-- **user_name** (String) User name for the proxy connection
+- `bypass_hosts` (String) Bypass hosts for the proxy connection
+- `fqdn` (String) proxy IP address or DNS-resolvable host name
+- `password` (String, Sensitive) Password for the proxy connection
+- `password_required` (String) Indicates whether password configuration is required for Proxy.
+- `port` (Number) Port for proxy connection. should be between 1 and 65535
+- `user_name` (String) User name for the proxy connection
 
 
 <a id="nestedatt--item"></a>
@@ -96,12 +93,12 @@ Optional:
 
 Read-Only:
 
-- **bypass_hosts** (String)
-- **fqdn** (String)
-- **password** (String)
-- **password_required** (String)
-- **port** (Number)
-- **user_name** (String)
+- `bypass_hosts` (String)
+- `fqdn` (String)
+- `password` (String)
+- `password_required` (String)
+- `port` (Number)
+- `user_name` (String)
 
 ## Import
 

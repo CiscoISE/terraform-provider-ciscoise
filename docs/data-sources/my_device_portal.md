@@ -59,7 +59,7 @@ output "ciscoise_my_device_portal_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
 
 **Simple filtering** should be available through the filter query string parameter. The structure of a filter is
 a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
@@ -91,62 +91,62 @@ string parameter. Each resource Data model description should specify if an attr
               CONTAINS	  | Contains 
 
               NCONTAINS	  | Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sortasc** (String) sortasc query parameter. sort asc
-- **sortdsc** (String) sortdsc query parameter. sort desc
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sortasc` (String) sortasc query parameter. sort asc
+- `sortdsc` (String) sortdsc query parameter. sort desc
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **portal_test_url** (String)
-- **portal_type** (String)
-- **settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings))
+- `customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `portal_test_url` (String)
+- `portal_type` (String)
+- `settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings))
 
 <a id="nestedobjatt--item--customizations"></a>
 ### Nested Schema for `item.customizations`
 
 Read-Only:
 
-- **global_customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations))
-- **language** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--language))
-- **page_customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations))
-- **portal_theme** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_theme))
-- **portal_tweak_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_tweak_settings))
+- `global_customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations))
+- `language` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--language))
+- `page_customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations))
+- `portal_theme` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_theme))
+- `portal_tweak_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_tweak_settings))
 
 <a id="nestedobjatt--item--customizations--global_customizations"></a>
 ### Nested Schema for `item.customizations.global_customizations`
 
 Read-Only:
 
-- **background_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--background_image))
-- **banner_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--banner_image))
-- **banner_title** (String)
-- **contact_text** (String)
-- **desktop_logo_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--desktop_logo_image))
-- **footer_element** (String)
-- **mobile_logo_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--mobile_logo_image))
+- `background_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--background_image))
+- `banner_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--banner_image))
+- `banner_title` (String)
+- `contact_text` (String)
+- `desktop_logo_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--desktop_logo_image))
+- `footer_element` (String)
+- `mobile_logo_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedobjatt--item--customizations--global_customizations--background_image"></a>
 ### Nested Schema for `item.customizations.global_customizations.mobile_logo_image`
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--banner_image"></a>
@@ -154,7 +154,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--desktop_logo_image"></a>
@@ -162,7 +162,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--mobile_logo_image"></a>
@@ -170,7 +170,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 
@@ -179,7 +179,7 @@ Read-Only:
 
 Read-Only:
 
-- **view_language** (String)
+- `view_language` (String)
 
 
 <a id="nestedobjatt--item--customizations--page_customizations"></a>
@@ -187,15 +187,15 @@ Read-Only:
 
 Read-Only:
 
-- **data** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations--data))
+- `data` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations--data))
 
 <a id="nestedobjatt--item--customizations--page_customizations--data"></a>
 ### Nested Schema for `item.customizations.page_customizations.data`
 
 Read-Only:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
 
 
@@ -204,9 +204,9 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
-- **name** (String)
-- **theme_data** (String)
+- `id` (String)
+- `name` (String)
+- `theme_data` (String)
 
 
 <a id="nestedobjatt--item--customizations--portal_tweak_settings"></a>
@@ -214,10 +214,10 @@ Read-Only:
 
 Read-Only:
 
-- **banner_color** (String)
-- **banner_text_color** (String)
-- **page_background_color** (String)
-- **page_label_and_text_color** (String)
+- `banner_color` (String)
+- `banner_text_color` (String)
+- `page_background_color` (String)
+- `page_label_and_text_color` (String)
 
 
 
@@ -226,9 +226,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--settings"></a>
@@ -236,23 +236,23 @@ Read-Only:
 
 Read-Only:
 
-- **aup_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--aup_settings))
-- **employee_change_password_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--employee_change_password_settings))
-- **login_page_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--login_page_settings))
-- **portal_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--portal_settings))
-- **post_access_banner_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--post_access_banner_settings))
-- **post_login_banner_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--post_login_banner_settings))
-- **support_info_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--support_info_settings))
+- `aup_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--aup_settings))
+- `employee_change_password_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--employee_change_password_settings))
+- `login_page_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--login_page_settings))
+- `portal_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--portal_settings))
+- `post_access_banner_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--post_access_banner_settings))
+- `post_login_banner_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--post_login_banner_settings))
+- `support_info_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--support_info_settings))
 
 <a id="nestedobjatt--item--settings--aup_settings"></a>
 ### Nested Schema for `item.settings.aup_settings`
 
 Read-Only:
 
-- **display_frequency** (String)
-- **display_frequency_interval_days** (Number)
-- **include_aup** (String)
-- **require_scrolling** (String)
+- `display_frequency` (String)
+- `display_frequency_interval_days` (Number)
+- `include_aup` (String)
+- `require_scrolling` (String)
 
 
 <a id="nestedobjatt--item--settings--employee_change_password_settings"></a>
@@ -260,7 +260,7 @@ Read-Only:
 
 Read-Only:
 
-- **allow_employee_to_change_pwd** (String)
+- `allow_employee_to_change_pwd` (String)
 
 
 <a id="nestedobjatt--item--settings--login_page_settings"></a>
@@ -268,13 +268,13 @@ Read-Only:
 
 Read-Only:
 
-- **aup_display** (String)
-- **include_aup** (String)
-- **max_failed_attempts_before_rate_limit** (Number)
-- **require_aup_acceptance** (String)
-- **require_scrolling** (String)
-- **social_configs** (List of String)
-- **time_between_logins_during_rate_limit** (Number)
+- `aup_display` (String)
+- `include_aup` (String)
+- `max_failed_attempts_before_rate_limit` (Number)
+- `require_aup_acceptance` (String)
+- `require_scrolling` (String)
+- `social_configs` (List of String)
+- `time_between_logins_during_rate_limit` (Number)
 
 
 <a id="nestedobjatt--item--settings--portal_settings"></a>
@@ -282,13 +282,13 @@ Read-Only:
 
 Read-Only:
 
-- **allowed_interfaces** (List of String)
-- **always_used_language** (String)
-- **certificate_group_tag** (String)
-- **display_lang** (String)
-- **endpoint_identity_group** (String)
-- **fallback_language** (String)
-- **https_port** (Number)
+- `allowed_interfaces` (List of String)
+- `always_used_language` (String)
+- `certificate_group_tag` (String)
+- `display_lang` (String)
+- `endpoint_identity_group` (String)
+- `fallback_language` (String)
+- `https_port` (Number)
 
 
 <a id="nestedobjatt--item--settings--post_access_banner_settings"></a>
@@ -296,7 +296,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (String)
+- `include_post_access_banner` (String)
 
 
 <a id="nestedobjatt--item--settings--post_login_banner_settings"></a>
@@ -304,7 +304,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (String)
+- `include_post_access_banner` (String)
 
 
 <a id="nestedobjatt--item--settings--support_info_settings"></a>
@@ -312,14 +312,14 @@ Read-Only:
 
 Read-Only:
 
-- **default_empty_field_value** (String)
-- **empty_field_display** (String)
-- **include_browser_user_agent** (String)
-- **include_failure_code** (String)
-- **include_ip_address** (String)
-- **include_mac_addr** (String)
-- **include_policy_server** (String)
-- **include_support_info_page** (String)
+- `default_empty_field_value` (String)
+- `empty_field_display` (String)
+- `include_browser_user_agent` (String)
+- `include_failure_code` (String)
+- `include_ip_address` (String)
+- `include_mac_addr` (String)
+- `include_policy_server` (String)
+- `include_support_info_page` (String)
 
 
 
@@ -329,18 +329,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

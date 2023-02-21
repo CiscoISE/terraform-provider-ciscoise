@@ -55,49 +55,60 @@ output "ciscoise_rest_id_store_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **description** (String)
-- **ers_rest_idstore_attributes** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--ers_rest_idstore_attributes))
-- **id** (String) The ID of this resource.
-- **name** (String)
+- `description` (String)
+- `ers_rest_idstore_attributes` (Block List) (see [below for nested schema](#nestedblock--parameters--ers_rest_idstore_attributes))
+- `name` (String)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--ers_rest_idstore_attributes"></a>
 ### Nested Schema for `parameters.ers_rest_idstore_attributes`
 
 Optional:
 
-- **headers** (Block List) (see [below for nested schema](#nestedblock--parameters--ers_rest_idstore_attributes--headers))
-- **predefined** (String) The cloud provider connected to of the RestIDStore.
-Options are:
-- Azure,
-- Okta,
-- None
-- **root_url** (String) url of the root of the RestIDStore
-- **username_suffix** (String) Suffix of the username domain
+- `headers` (Block List) (see [below for nested schema](#nestedblock--parameters--ers_rest_idstore_attributes--headers))
+- `predefined` (String) The cloud provider connected to of the RestIDStore.
+		Options are:
+		- Azure,
+		- Okta,
+		- None
+- `root_url` (String) url of the root of the RestIDStore
+- `username_suffix` (String) Suffix of the username domain
 
 <a id="nestedblock--parameters--ers_rest_idstore_attributes--headers"></a>
 ### Nested Schema for `parameters.ers_rest_idstore_attributes.headers`
 
 Optional:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -106,29 +117,29 @@ Optional:
 
 Read-Only:
 
-- **description** (String)
-- **ers_rest_idstore_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item--ers_rest_idstore_attributes))
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
+- `description` (String)
+- `ers_rest_idstore_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item--ers_rest_idstore_attributes))
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
 
 <a id="nestedobjatt--item--ers_rest_idstore_attributes"></a>
 ### Nested Schema for `item.ers_rest_idstore_attributes`
 
 Read-Only:
 
-- **headers** (List of Object) (see [below for nested schema](#nestedobjatt--item--ers_rest_idstore_attributes--headers))
-- **predefined** (String)
-- **root_url** (String)
-- **username_suffix** (String)
+- `headers` (List of Object) (see [below for nested schema](#nestedobjatt--item--ers_rest_idstore_attributes--headers))
+- `predefined` (String)
+- `root_url` (String)
+- `username_suffix` (String)
 
 <a id="nestedobjatt--item--ers_rest_idstore_attributes--headers"></a>
 ### Nested Schema for `item.ers_rest_idstore_attributes.headers`
 
 Read-Only:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
 
 
@@ -137,9 +148,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

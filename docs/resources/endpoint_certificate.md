@@ -12,6 +12,7 @@ description: |-
 It performs update operation on EndpointCertificate.
 - This resource allows the client to create an endpoint certificate.
 
+
 ~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
@@ -41,34 +42,31 @@ resource "ciscoise_endpoint_certificate" "example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (String)
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (String)
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **dirpath** (String) Directory absolute path in which to save the file.
+- `dirpath` (String) Directory absolute path in which to save the file.
 
 Optional:
 
-- **cert_template_name** (String) Name of an Internal CA template
-- **certificate_request** (Block List) Key value map. Must have CN and SAN entries (see [below for nested schema](#nestedblock--parameters--certificate_request))
-- **format** (String) Allowed values:
+- `cert_template_name` (String) Name of an Internal CA template
+- `certificate_request` (Block List) Key value map. Must have CN and SAN entries (see [below for nested schema](#nestedblock--parameters--certificate_request))
+- `format` (String) Allowed values:
 			- PKCS12,
 			- PKCS12_CHAIN,
 			- PKCS8,
 			- PKCS8_CHAIN
-- **password** (String, Sensitive) Protects the private key. Must have more than 8 characters, less than 15 characters,
+- `password` (String, Sensitive) Protects the private key. Must have more than 8 characters, less than 15 characters,
 			at least one upper case letter, at least one lower case letter, at least one digit,
 			and can only contain [A-Z][a-z][0-9]_#
 
@@ -77,8 +75,8 @@ Optional:
 
 Optional:
 
-- **cn** (String) Matches the requester's User Name, unless the Requester is an ERS Admin.
+- `cn` (String) Matches the requester's User Name, unless the Requester is an ERS Admin.
 			ERS Admins are allowed to create requests for any CN
-- **san** (String) Valid MAC Address, delimited by '-'
+- `san` (String) Valid MAC Address, delimited by '-'
 
 

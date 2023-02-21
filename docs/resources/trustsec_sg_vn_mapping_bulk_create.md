@@ -12,6 +12,7 @@ description: |-
 It performs create operation on sgVnMapping.
 - Create SG-VN Mappings in bulk
 
+
 ~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
@@ -41,35 +42,32 @@ resource "ciscoise_trustsec_sg_vn_mapping_bulk_create" "example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **payload** (Block List) Array of RequestSgVnMappingBulkCreateSgVnMappings (see [below for nested schema](#nestedblock--parameters--payload))
+- `payload` (Block List) Array of RequestSgVnMappingBulkCreateSgVnMappings (see [below for nested schema](#nestedblock--parameters--payload))
 
 <a id="nestedblock--parameters--payload"></a>
 ### Nested Schema for `parameters.payload`
 
 Optional:
 
-- **id** (String) Identifier of the SG-VN mapping
-- **last_update** (String) Timestamp for the last update of the SG-VN mapping
-- **sg_name** (String) Name of the associated Security Group to be used for identity if id is not provided
-- **sgt_id** (String) Identifier of the associated Security Group which is required unless its name is provided
-- **vn_id** (String) Identifier for the associated Virtual Network which is required unless its name is provided
-- **vn_name** (String) Name of the associated Virtual Network to be used for identity if id is not provided
+- `id` (String) Identifier of the SG-VN mapping
+- `last_update` (String) Timestamp for the last update of the SG-VN mapping
+- `sg_name` (String) Name of the associated Security Group to be used for identity if id is not provided
+- `sgt_id` (String) Identifier of the associated Security Group which is required unless its name is provided
+- `vn_id` (String) Identifier for the associated Virtual Network which is required unless its name is provided
+- `vn_name` (String) Name of the associated Virtual Network to be used for identity if id is not provided
 
 
 
@@ -78,6 +76,6 @@ Optional:
 
 Read-Only:
 
-- **id** (String)
+- `id` (String)
 
 

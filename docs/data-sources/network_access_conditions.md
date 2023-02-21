@@ -52,56 +52,56 @@ output "ciscoise_network_access_conditions_example" {
 
 ### Optional
 
-- **id** (String) id path parameter. Condition id
-- **name** (String) name path parameter. Condition name
+- `id` (String) id path parameter. Condition id
+- `name` (String) name path parameter. Condition name
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **attribute_name** (String)
-- **attribute_value** (String)
-- **children** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--children))
-- **condition_type** (String)
-- **dates_range** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--dates_range))
-- **dates_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--dates_range_exception))
-- **description** (String)
-- **dictionary_name** (String)
-- **dictionary_value** (String)
-- **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--hours_range))
-- **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--hours_range_exception))
-- **id** (String)
-- **is_negate** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **name** (String)
-- **operator** (String)
-- **week_days** (List of String)
-- **week_days_exception** (List of String)
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `children` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--children))
+- `condition_type` (String)
+- `dates_range` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--dates_range))
+- `dates_range_exception` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--dates_range_exception))
+- `description` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `hours_range` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--hours_range))
+- `hours_range_exception` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--hours_range_exception))
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `name` (String)
+- `operator` (String)
+- `week_days` (List of String)
+- `week_days_exception` (List of String)
 
 <a id="nestedobjatt--item_id--children"></a>
 ### Nested Schema for `item_id.children`
 
 Read-Only:
 
-- **condition_type** (String)
-- **is_negate** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--children--link))
+- `condition_type` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--children--link))
 
 <a id="nestedobjatt--item_id--children--link"></a>
 ### Nested Schema for `item_id.children.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -110,8 +110,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedobjatt--item_id--dates_range_exception"></a>
@@ -119,8 +119,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedobjatt--item_id--hours_range"></a>
@@ -128,8 +128,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedobjatt--item_id--hours_range_exception"></a>
@@ -137,8 +137,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedobjatt--item_id--link"></a>
@@ -146,9 +146,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -157,42 +157,42 @@ Read-Only:
 
 Read-Only:
 
-- **attribute_name** (String)
-- **attribute_value** (String)
-- **children** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--children))
-- **condition_type** (String)
-- **dates_range** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--dates_range))
-- **dates_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--dates_range_exception))
-- **description** (String)
-- **dictionary_name** (String)
-- **dictionary_value** (String)
-- **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--hours_range))
-- **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--hours_range_exception))
-- **id** (String)
-- **is_negate** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **name** (String)
-- **operator** (String)
-- **week_days** (List of String)
-- **week_days_exception** (List of String)
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `children` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--children))
+- `condition_type` (String)
+- `dates_range` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--dates_range))
+- `dates_range_exception` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--dates_range_exception))
+- `description` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `hours_range` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--hours_range))
+- `hours_range_exception` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--hours_range_exception))
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `name` (String)
+- `operator` (String)
+- `week_days` (List of String)
+- `week_days_exception` (List of String)
 
 <a id="nestedobjatt--item_name--children"></a>
 ### Nested Schema for `item_name.children`
 
 Read-Only:
 
-- **condition_type** (String)
-- **is_negate** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--children--link))
+- `condition_type` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--children--link))
 
 <a id="nestedobjatt--item_name--children--link"></a>
 ### Nested Schema for `item_name.children.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -201,8 +201,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedobjatt--item_name--dates_range_exception"></a>
@@ -210,8 +210,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedobjatt--item_name--hours_range"></a>
@@ -219,8 +219,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedobjatt--item_name--hours_range_exception"></a>
@@ -228,8 +228,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedobjatt--item_name--link"></a>
@@ -237,9 +237,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -248,42 +248,42 @@ Read-Only:
 
 Read-Only:
 
-- **attribute_name** (String)
-- **attribute_value** (String)
-- **children** (List of Object) (see [below for nested schema](#nestedobjatt--items--children))
-- **condition_type** (String)
-- **dates_range** (List of Object) (see [below for nested schema](#nestedobjatt--items--dates_range))
-- **dates_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--items--dates_range_exception))
-- **description** (String)
-- **dictionary_name** (String)
-- **dictionary_value** (String)
-- **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range))
-- **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range_exception))
-- **id** (String)
-- **is_negate** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
-- **operator** (String)
-- **week_days** (List of String)
-- **week_days_exception** (List of String)
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `children` (List of Object) (see [below for nested schema](#nestedobjatt--items--children))
+- `condition_type` (String)
+- `dates_range` (List of Object) (see [below for nested schema](#nestedobjatt--items--dates_range))
+- `dates_range_exception` (List of Object) (see [below for nested schema](#nestedobjatt--items--dates_range_exception))
+- `description` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `hours_range` (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range))
+- `hours_range_exception` (List of Object) (see [below for nested schema](#nestedobjatt--items--hours_range_exception))
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
+- `operator` (String)
+- `week_days` (List of String)
+- `week_days_exception` (List of String)
 
 <a id="nestedobjatt--items--children"></a>
 ### Nested Schema for `items.children`
 
 Read-Only:
 
-- **condition_type** (String)
-- **is_negate** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--children--link))
+- `condition_type` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--children--link))
 
 <a id="nestedobjatt--items--children--link"></a>
 ### Nested Schema for `items.children.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -292,8 +292,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedobjatt--items--dates_range_exception"></a>
@@ -301,8 +301,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedobjatt--items--hours_range"></a>
@@ -310,8 +310,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedobjatt--items--hours_range_exception"></a>
@@ -319,8 +319,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedobjatt--items--link"></a>
@@ -328,8 +328,8 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

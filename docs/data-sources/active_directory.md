@@ -54,50 +54,50 @@ output "ciscoise_active_directory_example" {
 
 ### Optional
 
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **ad_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--ad_attributes))
-- **ad_scopes_names** (String)
-- **adgroups** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--adgroups))
-- **advanced_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_settings))
-- **description** (String)
-- **domain** (String)
-- **enable_domain_allowed_list** (String)
-- **enable_domain_white_list** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **name** (String)
+- `ad_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--ad_attributes))
+- `ad_scopes_names` (String)
+- `adgroups` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--adgroups))
+- `advanced_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_settings))
+- `description` (String)
+- `domain` (String)
+- `enable_domain_allowed_list` (String)
+- `enable_domain_white_list` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `name` (String)
 
 <a id="nestedobjatt--item_id--ad_attributes"></a>
 ### Nested Schema for `item_id.ad_attributes`
 
 Read-Only:
 
-- **attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--ad_attributes--attributes))
+- `attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--ad_attributes--attributes))
 
 <a id="nestedobjatt--item_id--ad_attributes--attributes"></a>
 ### Nested Schema for `item_id.ad_attributes.attributes`
 
 Read-Only:
 
-- **default_value** (String)
-- **internal_name** (String)
-- **name** (String)
-- **type** (String)
+- `default_value` (String)
+- `internal_name` (String)
+- `name` (String)
+- `type` (String)
 
 
 
@@ -106,16 +106,16 @@ Read-Only:
 
 Read-Only:
 
-- **groups** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--adgroups--groups))
+- `groups` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--adgroups--groups))
 
 <a id="nestedobjatt--item_id--adgroups--groups"></a>
 ### Nested Schema for `item_id.adgroups.groups`
 
 Read-Only:
 
-- **name** (String)
-- **sid** (String)
-- **type** (String)
+- `name` (String)
+- `sid` (String)
+- `type` (String)
 
 
 
@@ -124,41 +124,41 @@ Read-Only:
 
 Read-Only:
 
-- **aging_time** (Number)
-- **auth_protection_type** (String)
-- **country** (String)
-- **department** (String)
-- **email** (String)
-- **enable_callback_for_dialin_client** (String)
-- **enable_dialin_permission_check** (String)
-- **enable_failed_auth_protection** (String)
-- **enable_machine_access** (String)
-- **enable_machine_auth** (String)
-- **enable_pass_change** (String)
-- **enable_rewrites** (String)
-- **failed_auth_threshold** (Number)
-- **first_name** (String)
-- **identity_not_in_ad_behaviour** (String)
-- **job_title** (String)
-- **last_name** (String)
-- **locality** (String)
-- **organizational_unit** (String)
-- **plaintext_auth** (String)
-- **rewrite_rules** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_settings--rewrite_rules))
-- **schema** (String)
-- **state_or_province** (String)
-- **street_address** (String)
-- **telephone** (String)
-- **unreachable_domains_behaviour** (String)
+- `aging_time` (Number)
+- `auth_protection_type` (String)
+- `country` (String)
+- `department` (String)
+- `email` (String)
+- `enable_callback_for_dialin_client` (String)
+- `enable_dialin_permission_check` (String)
+- `enable_failed_auth_protection` (String)
+- `enable_machine_access` (String)
+- `enable_machine_auth` (String)
+- `enable_pass_change` (String)
+- `enable_rewrites` (String)
+- `failed_auth_threshold` (Number)
+- `first_name` (String)
+- `identity_not_in_ad_behaviour` (String)
+- `job_title` (String)
+- `last_name` (String)
+- `locality` (String)
+- `organizational_unit` (String)
+- `plaintext_auth` (String)
+- `rewrite_rules` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_settings--rewrite_rules))
+- `schema` (String)
+- `state_or_province` (String)
+- `street_address` (String)
+- `telephone` (String)
+- `unreachable_domains_behaviour` (String)
 
 <a id="nestedobjatt--item_id--advanced_settings--rewrite_rules"></a>
 ### Nested Schema for `item_id.advanced_settings.rewrite_rules`
 
 Read-Only:
 
-- **rewrite_match** (String)
-- **rewrite_result** (String)
-- **row_id** (Number)
+- `rewrite_match` (String)
+- `rewrite_result` (String)
+- `row_id` (Number)
 
 
 
@@ -167,9 +167,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -178,34 +178,34 @@ Read-Only:
 
 Read-Only:
 
-- **ad_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--ad_attributes))
-- **ad_scopes_names** (String)
-- **adgroups** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--adgroups))
-- **advanced_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_settings))
-- **description** (String)
-- **domain** (String)
-- **enable_domain_allowed_list** (String)
-- **enable_domain_white_list** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **name** (String)
+- `ad_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--ad_attributes))
+- `ad_scopes_names` (String)
+- `adgroups` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--adgroups))
+- `advanced_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_settings))
+- `description` (String)
+- `domain` (String)
+- `enable_domain_allowed_list` (String)
+- `enable_domain_white_list` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `name` (String)
 
 <a id="nestedobjatt--item_name--ad_attributes"></a>
 ### Nested Schema for `item_name.ad_attributes`
 
 Read-Only:
 
-- **attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--ad_attributes--attributes))
+- `attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--ad_attributes--attributes))
 
 <a id="nestedobjatt--item_name--ad_attributes--attributes"></a>
 ### Nested Schema for `item_name.ad_attributes.attributes`
 
 Read-Only:
 
-- **default_value** (String)
-- **internal_name** (String)
-- **name** (String)
-- **type** (String)
+- `default_value` (String)
+- `internal_name` (String)
+- `name` (String)
+- `type` (String)
 
 
 
@@ -214,16 +214,16 @@ Read-Only:
 
 Read-Only:
 
-- **groups** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--adgroups--groups))
+- `groups` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--adgroups--groups))
 
 <a id="nestedobjatt--item_name--adgroups--groups"></a>
 ### Nested Schema for `item_name.adgroups.groups`
 
 Read-Only:
 
-- **name** (String)
-- **sid** (String)
-- **type** (String)
+- `name` (String)
+- `sid` (String)
+- `type` (String)
 
 
 
@@ -232,41 +232,41 @@ Read-Only:
 
 Read-Only:
 
-- **aging_time** (Number)
-- **auth_protection_type** (String)
-- **country** (String)
-- **department** (String)
-- **email** (String)
-- **enable_callback_for_dialin_client** (String)
-- **enable_dialin_permission_check** (String)
-- **enable_failed_auth_protection** (String)
-- **enable_machine_access** (String)
-- **enable_machine_auth** (String)
-- **enable_pass_change** (String)
-- **enable_rewrites** (String)
-- **failed_auth_threshold** (Number)
-- **first_name** (String)
-- **identity_not_in_ad_behaviour** (String)
-- **job_title** (String)
-- **last_name** (String)
-- **locality** (String)
-- **organizational_unit** (String)
-- **plaintext_auth** (String)
-- **rewrite_rules** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_settings--rewrite_rules))
-- **schema** (String)
-- **state_or_province** (String)
-- **street_address** (String)
-- **telephone** (String)
-- **unreachable_domains_behaviour** (String)
+- `aging_time` (Number)
+- `auth_protection_type` (String)
+- `country` (String)
+- `department` (String)
+- `email` (String)
+- `enable_callback_for_dialin_client` (String)
+- `enable_dialin_permission_check` (String)
+- `enable_failed_auth_protection` (String)
+- `enable_machine_access` (String)
+- `enable_machine_auth` (String)
+- `enable_pass_change` (String)
+- `enable_rewrites` (String)
+- `failed_auth_threshold` (Number)
+- `first_name` (String)
+- `identity_not_in_ad_behaviour` (String)
+- `job_title` (String)
+- `last_name` (String)
+- `locality` (String)
+- `organizational_unit` (String)
+- `plaintext_auth` (String)
+- `rewrite_rules` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_settings--rewrite_rules))
+- `schema` (String)
+- `state_or_province` (String)
+- `street_address` (String)
+- `telephone` (String)
+- `unreachable_domains_behaviour` (String)
 
 <a id="nestedobjatt--item_name--advanced_settings--rewrite_rules"></a>
 ### Nested Schema for `item_name.advanced_settings.rewrite_rules`
 
 Read-Only:
 
-- **rewrite_match** (String)
-- **rewrite_result** (String)
-- **row_id** (Number)
+- `rewrite_match` (String)
+- `rewrite_result` (String)
+- `row_id` (Number)
 
 
 
@@ -275,9 +275,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -286,18 +286,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

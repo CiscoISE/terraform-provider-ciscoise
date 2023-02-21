@@ -32,15 +32,12 @@ output "ciscoise_mnt_account_status_example" {
 
 ### Required
 
-- **duration** (String) duration path parameter.
-- **mac** (String) mac path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `duration` (String) duration path parameter.
+- `mac` (String) mac path parameter.
 
 ### Read-Only
 
-- **item** (String)
+- `id` (String) The ID of this resource.
+- `item` (String)
 
 

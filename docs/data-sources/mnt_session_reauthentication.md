@@ -33,16 +33,13 @@ output "ciscoise_mnt_session_reauthentication_example" {
 
 ### Required
 
-- **end_poi_ntm_ac** (String) ENDPOINT_MAC path parameter.
-- **psn_nam_e** (String) PSN_NAME path parameter.
-- **rea_uth_typ_e** (String) REAUTH_TYPE path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `end_poi_ntm_ac` (String) ENDPOINT_MAC path parameter.
+- `psn_nam_e` (String) PSN_NAME path parameter.
+- `rea_uth_typ_e` (String) REAUTH_TYPE path parameter.
 
 ### Read-Only
 
-- **item** (String)
+- `id` (String) The ID of this resource.
+- `item` (String)
 
 

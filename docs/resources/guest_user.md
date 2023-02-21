@@ -76,47 +76,48 @@ output "ciscoise_guest_user_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **custom_fields** (Map of String) Key value map
-- **description** (String)
-- **guest_access_info** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--guest_access_info))
-- **guest_info** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--guest_info))
-- **guest_type** (String)
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **portal_id** (String)
-- **reason_for_visit** (String)
-- **sponsor_user_id** (String)
-- **sponsor_user_name** (String)
-- **status** (String)
-- **status_reason** (String)
+- `custom_fields` (String) Key value map
+- `description` (String)
+- `guest_access_info` (Block List) (see [below for nested schema](#nestedblock--parameters--guest_access_info))
+- `guest_info` (Block List) (see [below for nested schema](#nestedblock--parameters--guest_info))
+- `guest_type` (String)
+- `name` (String)
+- `portal_id` (String)
+- `reason_for_visit` (String)
+- `sponsor_user_id` (String)
+- `sponsor_user_name` (String)
+- `status` (String)
+- `status_reason` (String)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--guest_access_info"></a>
 ### Nested Schema for `parameters.guest_access_info`
 
 Optional:
 
-- **from_date** (String)
-- **group_tag** (String)
-- **location** (String)
-- **ssid** (String)
-- **to_date** (String)
-- **valid_days** (Number)
+- `from_date` (String)
+- `group_tag` (String)
+- `location` (String)
+- `ssid` (String)
+- `to_date` (String)
+- `valid_days` (Number)
 
 
 <a id="nestedblock--parameters--guest_info"></a>
@@ -124,17 +125,27 @@ Optional:
 
 Optional:
 
-- **company** (String)
-- **creation_time** (String)
-- **email_address** (String)
-- **enabled** (String) This field is only for Get operation not applicable for Create, Update operations
-- **first_name** (String)
-- **last_name** (String)
-- **notification_language** (String)
-- **password** (String, Sensitive)
-- **phone_number** (String) Phone number should be E.164 format
-- **sms_service_provider** (String)
-- **user_name** (String) If account needs be created with mobile number, please provide mobile number here
+- `company` (String)
+- `creation_time` (String)
+- `email_address` (String)
+- `enabled` (String) This field is only for Get operation not applicable for Create, Update operations
+- `first_name` (String)
+- `last_name` (String)
+- `notification_language` (String)
+- `password` (String, Sensitive)
+- `phone_number` (String) Phone number should be E.164 format
+- `sms_service_provider` (String)
+- `user_name` (String) If account needs be created with mobile number, please provide mobile number here
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -143,32 +154,32 @@ Optional:
 
 Read-Only:
 
-- **custom_fields** (Map of String)
-- **description** (String)
-- **guest_access_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--guest_access_info))
-- **guest_info** (List of Object) (see [below for nested schema](#nestedobjatt--item--guest_info))
-- **guest_type** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **portal_id** (String)
-- **reason_for_visit** (String)
-- **sponsor_user_id** (String)
-- **sponsor_user_name** (String)
-- **status** (String)
-- **status_reason** (String)
+- `custom_fields` (Map of String)
+- `description` (String)
+- `guest_access_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--guest_access_info))
+- `guest_info` (List of Object) (see [below for nested schema](#nestedobjatt--item--guest_info))
+- `guest_type` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `portal_id` (String)
+- `reason_for_visit` (String)
+- `sponsor_user_id` (String)
+- `sponsor_user_name` (String)
+- `status` (String)
+- `status_reason` (String)
 
 <a id="nestedobjatt--item--guest_access_info"></a>
 ### Nested Schema for `item.guest_access_info`
 
 Read-Only:
 
-- **from_date** (String)
-- **group_tag** (String)
-- **location** (String)
-- **ssid** (String)
-- **to_date** (String)
-- **valid_days** (Number)
+- `from_date` (String)
+- `group_tag` (String)
+- `location` (String)
+- `ssid` (String)
+- `to_date` (String)
+- `valid_days` (Number)
 
 
 <a id="nestedobjatt--item--guest_info"></a>
@@ -176,17 +187,17 @@ Read-Only:
 
 Read-Only:
 
-- **company** (String)
-- **creation_time** (String)
-- **email_address** (String)
-- **enabled** (String)
-- **first_name** (String)
-- **last_name** (String)
-- **notification_language** (String)
-- **password** (String)
-- **phone_number** (String)
-- **sms_service_provider** (String)
-- **user_name** (String)
+- `company` (String)
+- `creation_time` (String)
+- `email_address` (String)
+- `enabled` (String)
+- `first_name` (String)
+- `last_name` (String)
+- `notification_language` (String)
+- `password` (String)
+- `phone_number` (String)
+- `sms_service_provider` (String)
+- `user_name` (String)
 
 
 <a id="nestedobjatt--item--link"></a>
@@ -194,9 +205,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

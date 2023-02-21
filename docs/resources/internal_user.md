@@ -55,38 +55,49 @@ output "ciscoise_internal_user_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **change_password** (String)
-- **custom_attributes** (Map of String) Key value map
-- **description** (String)
-- **email** (String)
-- **enable_password** (String)
-- **enabled** (String) Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
-The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'
-- **expiry_date** (String) To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'
-- **expiry_date_enabled** (String)
-- **first_name** (String)
-- **id** (String) The ID of this resource.
-- **identity_groups** (String) CSV of identity group IDs
-- **last_name** (String)
-- **name** (String)
-- **password** (String, Sensitive)
-- **password_idstore** (String, Sensitive) The id store where the internal user's password is kept
+- `change_password` (String)
+- `custom_attributes` (String) Key value map
+- `description` (String)
+- `email` (String)
+- `enable_password` (String)
+- `enabled` (String) Whether the user is enabled/disabled. To use it as filter, the values should be 'Enabled' or 'Disabled'.
+		The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.Enabled'
+- `expiry_date` (String) To store the internal user's expiry date information. It's format is = 'YYYY-MM-DD'
+- `expiry_date_enabled` (String)
+- `first_name` (String)
+- `identity_groups` (String) CSV of identity group IDs
+- `last_name` (String)
+- `name` (String)
+- `password` (String, Sensitive)
+- `password_idstore` (String, Sensitive) The id store where the internal user's password is kept
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -94,31 +105,31 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 
 Read-Only:
 
-- **change_password** (String)
-- **custom_attributes** (Map of String)
-- **description** (String)
-- **email** (String)
-- **enable_password** (String)
-- **enabled** (String)
-- **expiry_date** (String)
-- **expiry_date_enabled** (String)
-- **first_name** (String)
-- **id** (String)
-- **identity_groups** (String)
-- **last_name** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **password** (String)
-- **password_idstore** (String)
+- `change_password` (String)
+- `custom_attributes` (Map of String)
+- `description` (String)
+- `email` (String)
+- `enable_password` (String)
+- `enabled` (String)
+- `expiry_date` (String)
+- `expiry_date_enabled` (String)
+- `first_name` (String)
+- `id` (String)
+- `identity_groups` (String)
+- `last_name` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `password` (String)
+- `password_idstore` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

@@ -59,7 +59,7 @@ output "ciscoise_guest_type_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
 
 **Simple filtering** should be available through the filter query string parameter. The structure of a filter is
 a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
@@ -91,53 +91,53 @@ string parameter. Each resource Data model description should specify if an attr
               CONTAINS	  | Contains 
 
               NCONTAINS	  | Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sortasc** (String) sortasc query parameter. sort asc
-- **sortdsc** (String) sortdsc query parameter. sort desc
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sortasc` (String) sortasc query parameter. sort asc
+- `sortdsc` (String) sortdsc query parameter. sort desc
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **access_time** (List of Object) (see [below for nested schema](#nestedobjatt--item--access_time))
-- **description** (String)
-- **expiration_notification** (List of Object) (see [below for nested schema](#nestedobjatt--item--expiration_notification))
-- **id** (String)
-- **is_default_type** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **login_options** (List of Object) (see [below for nested schema](#nestedobjatt--item--login_options))
-- **name** (String)
-- **sponsor_groups** (List of String)
+- `access_time` (List of Object) (see [below for nested schema](#nestedobjatt--item--access_time))
+- `description` (String)
+- `expiration_notification` (List of Object) (see [below for nested schema](#nestedobjatt--item--expiration_notification))
+- `id` (String)
+- `is_default_type` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `login_options` (List of Object) (see [below for nested schema](#nestedobjatt--item--login_options))
+- `name` (String)
+- `sponsor_groups` (List of String)
 
 <a id="nestedobjatt--item--access_time"></a>
 ### Nested Schema for `item.access_time`
 
 Read-Only:
 
-- **allow_access_on_specific_days_times** (String)
-- **day_time_limits** (List of Object) (see [below for nested schema](#nestedobjatt--item--access_time--day_time_limits))
-- **default_duration** (Number)
-- **duration_time_unit** (String)
-- **from_first_login** (String)
-- **max_account_duration** (Number)
+- `allow_access_on_specific_days_times` (String)
+- `day_time_limits` (List of Object) (see [below for nested schema](#nestedobjatt--item--access_time--day_time_limits))
+- `default_duration` (Number)
+- `duration_time_unit` (String)
+- `from_first_login` (String)
+- `max_account_duration` (Number)
 
 <a id="nestedobjatt--item--access_time--day_time_limits"></a>
 ### Nested Schema for `item.access_time.day_time_limits`
 
 Read-Only:
 
-- **days** (List of String)
-- **end_time** (String)
-- **start_time** (String)
+- `days` (List of String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 
@@ -146,13 +146,13 @@ Read-Only:
 
 Read-Only:
 
-- **advance_notification_duration** (Number)
-- **advance_notification_units** (String)
-- **email_text** (String)
-- **enable_notification** (String)
-- **send_email_notification** (String)
-- **send_sms_notification** (String)
-- **sms_text** (String)
+- `advance_notification_duration` (Number)
+- `advance_notification_units` (String)
+- `email_text` (String)
+- `enable_notification` (String)
+- `send_email_notification` (String)
+- `send_sms_notification` (String)
+- `sms_text` (String)
 
 
 <a id="nestedobjatt--item--link"></a>
@@ -160,9 +160,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--login_options"></a>
@@ -170,12 +170,12 @@ Read-Only:
 
 Read-Only:
 
-- **allow_guest_portal_bypass** (String)
-- **failure_action** (String)
-- **identity_group_id** (String)
-- **limit_simultaneous_logins** (String)
-- **max_registered_devices** (Number)
-- **max_simultaneous_logins** (Number)
+- `allow_guest_portal_bypass` (String)
+- `failure_action` (String)
+- `identity_group_id` (String)
+- `limit_simultaneous_logins` (String)
+- `max_registered_devices` (Number)
+- `max_simultaneous_logins` (Number)
 
 
 
@@ -184,18 +184,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

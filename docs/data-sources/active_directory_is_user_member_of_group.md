@@ -32,23 +32,23 @@ data "ciscoise_active_directory_is_user_member_of_group" "example" {
 
 ### Required
 
-- **id** (String) id path parameter.
+- `id` (String) id path parameter.
 
 ### Optional
 
-- **additional_data** (Block List) (see [below for nested schema](#nestedblock--additional_data))
+- `additional_data` (Block List) (see [below for nested schema](#nestedblock--additional_data))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedblock--additional_data"></a>
 ### Nested Schema for `additional_data`
 
 Optional:
 
-- **name** (String)
-- **value** (String)
+- `name` (String)
+- `value` (String)
 
 
 <a id="nestedatt--item"></a>
@@ -56,15 +56,15 @@ Optional:
 
 Read-Only:
 
-- **groups** (List of Object) (see [below for nested schema](#nestedobjatt--item--groups))
+- `groups` (List of Object) (see [below for nested schema](#nestedobjatt--item--groups))
 
 <a id="nestedobjatt--item--groups"></a>
 ### Nested Schema for `item.groups`
 
 Read-Only:
 
-- **group_name** (String)
-- **sid** (String)
-- **type** (String)
+- `name` (String)
+- `sid` (String)
+- `type` (String)
 
 

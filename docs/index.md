@@ -3,14 +3,12 @@
 page_title: "ciscoise Provider"
 subcategory: ""
 description: |-
-  The Cisco ISE provider is used to interact with Cisco Identity Services Engine APIs.
+  
 ---
 
 # ciscoise Provider
 
-The Cisco ISE provider is used to interact with Cisco Identity Services Engine APIs. The provider needs to be configured with the proper credentials before it can be used.
 
-Use the navigation to the left to read about the available resources and data sources.
 
 ## Example Usage
 
@@ -60,12 +58,12 @@ provider "ciscoise" {
 
 ### Optional
 
-- **base_url** (String) Identity Services Engine base URL, FQDN or IP. If not set, it uses the ISE_BASE_URL environment variable.
-- **debug** (String) Flag for Identity Services Engine to enable debugging. If not set, it uses the ISE_DEBUG environment variable; defaults to `false`.
-- **password** (String, Sensitive) Identity Services Engine password to authenticate. If not set, it uses the ISE_PASSWORD environment variable.
-- **single_request_timeout** (Number) Timeout (in seconds) for the RESTful HTTP requests. If not set, it uses the ISE_SINGLE_REQUEST_TIMEOUT environment varible; defaults to 60.
-- **ssl_verify** (String, Sensitive) Flag to enable or disable SSL certificate verification. If not set, it uses the ISE_SSL_VERIFY environment variable; defaults to `true`.
-- **use_api_gateway** (String) Flag to enable or disable the usage of the ISE's API Gateway. If not set, it uses the ISE_USE_API_GATEWAY environment variable; defaults to `false`.
-- **use_csrf_token** (String) Flag to enable or disable the usage of the X-CSRF-Token header. If not set, it uses the ISE_USE_CSRF_TOKEN environment varible; defaults to `false`.
-- **username** (String, Sensitive) Identity Services Engine username to authenticate. If not set, it uses the ISE_USERNAME environment variable.
-- **enable_auto_import** (String) Flag to enable or disable terraform automatic import (Automatic import means that when Terraform attempts to create the resource, it will perform a get operation if it founds a matching resource, it will perform an import of the resource it found, this is a similar operation to the terraform import command.) in resources, this is a configuration added to the provider, it uses the ISE_ENABLE_AUTO_IMPORT environment varible; `true` to enable it, defaults to `false`.
+- `base_url` (String) Identity Services Engine base URL, FQDN or IP. If not set, it uses the ISE_BASE_URL environment variable.
+- `debug` (String) Flag for Identity Services Engine to enable debugging. If not set, it uses the ISE_DEBUG environment variable; defaults to `false`.
+- `enable_auto_import` (String) Flag to enable or disable terraform automatic import (Automatic import means that when Terraform attempts to create the resource, it will perform a get operation if it founds a matching resource, it will perform an import of the resource it found, this is a similar operation to the terraform import command.) in resources, this is a configuration added to the provider, it uses the ISE_ENABLE_AUTO_IMPORT environment varible; `true` to enable it, defaults to `false`.
+- `password` (String, Sensitive) Identity Services Engine password to authenticate. If not set, it uses the ISE_PASSWORD environment variable.
+- `single_request_timeout` (Number) Timeout (in seconds) for the RESTful HTTP requests. If not set, it uses the ISE_SINGLE_REQUEST_TIMEOUT environment varible; defaults to 60.
+- `ssl_verify` (String, Sensitive) Flag to enable or disable SSL certificate verification. If not set, it uses the ISE_SSL_VERIFY environment variable; defaults to `true`.
+- `use_api_gateway` (String) Flag to enable or disable the usage of the ISE's API Gateway. If not set, it uses the ISE_USE_API_GATEWAY environment variable; defaults to `false`.
+- `use_csrf_token` (String) Flag to enable or disable the usage of the X-CSRF-Token header. If not set, it uses the ISE_USE_CSRF_TOKEN environment varible; defaults to `false`.
+- `username` (String, Sensitive) Identity Services Engine username to authenticate. If not set, it uses the ISE_USERNAME environment variable.

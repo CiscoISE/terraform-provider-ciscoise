@@ -38,24 +38,28 @@ output "ciscoise_licensing_tier_state_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **name** (String)
-- **status** (String)
+- `name` (String)
+- `status` (String)
+
+Read-Only:
+
+- `compliance` (String)
+- `consumption_counter` (Number) Compliance counter for tier
+- `days_out_of_compliance` (String) Number of days tier is out of compliance
+- `last_authorization` (String) Last date of authorization
 
 
 <a id="nestedatt--item"></a>
@@ -63,12 +67,12 @@ Optional:
 
 Read-Only:
 
-- **compliance** (String)
-- **consumption_counter** (Number)
-- **days_out_of_compliance** (String)
-- **last_authorization** (String)
-- **name** (String)
-- **status** (String)
+- `compliance` (String)
+- `consumption_counter` (Number)
+- `days_out_of_compliance` (String)
+- `last_authorization` (String)
+- `name` (String)
+- `status` (String)
 
 ## Import
 

@@ -51,42 +51,53 @@ output "ciscoise_external_radius_server_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **accounting_port** (Number) Valid Range 1 to 65535
-- **authentication_port** (Number) Valid Range 1 to 65535
-- **authenticator_key** (String) The authenticatorKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')
-- **description** (String)
-- **enable_key_wrap** (String) KeyWrap may only be enabled if it is supported on the device.
-When running in FIPS mode this option should be enabled for such devices
-- **encryption_key** (String) The encryptionKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
-The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')
-- **host_ip** (String) The IP of the host - must be a valid IPV4 address
-- **id** (String) The ID of this resource.
-- **key_input_format** (String) Specifies the format of the input for fields 'encryptionKey' and 'authenticatorKey'.
-Allowed Values:
-- ASCII
-- HEXADECIMAL
-- **name** (String) Resource Name. Allowed charactera are alphanumeric and _ (underscore).
-- **proxy_timeout** (Number) Valid Range 1 to 600
-- **retries** (Number) Valid Range 1 to 9
-- **shared_secret** (String) Shared secret maximum length is 128 characters
-- **timeout** (Number) Valid Range 1 to 120
+- `accounting_port` (Number) Valid Range 1 to 65535
+- `authentication_port` (Number) Valid Range 1 to 65535
+- `authenticator_key` (String) The authenticatorKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
+		The maximum length is 20 ASCII characters or 40 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')
+- `description` (String)
+- `enable_key_wrap` (String) KeyWrap may only be enabled if it is supported on the device.
+		When running in FIPS mode this option should be enabled for such devices
+- `encryption_key` (String) The encryptionKey is required only if enableKeyWrap is true, otherwise it must be ignored or empty.
+		The maximum length is 16 ASCII characters or 32 HEXADECIMAL characters (depend on selection in field 'keyInputFormat')
+- `host_ip` (String) The IP of the host - must be a valid IPV4 address
+- `key_input_format` (String) Specifies the format of the input for fields 'encryptionKey' and 'authenticatorKey'.
+		Allowed Values:
+		- ASCII
+		- HEXADECIMAL
+- `name` (String) Resource Name. Allowed charactera are alphanumeric and _ (underscore).
+- `proxy_timeout` (Number) Valid Range 1 to 600
+- `retries` (Number) Valid Range 1 to 9
+- `shared_secret` (String) Shared secret maximum length is 128 characters
+- `timeout` (Number) Valid Range 1 to 120
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -94,30 +105,30 @@ Allowed Values:
 
 Read-Only:
 
-- **accounting_port** (Number)
-- **authentication_port** (Number)
-- **authenticator_key** (String)
-- **description** (String)
-- **enable_key_wrap** (String)
-- **encryption_key** (String)
-- **host_ip** (String)
-- **id** (String)
-- **key_input_format** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **proxy_timeout** (Number)
-- **retries** (Number)
-- **shared_secret** (String)
-- **timeout** (Number)
+- `accounting_port` (Number)
+- `authentication_port` (Number)
+- `authenticator_key` (String)
+- `description` (String)
+- `enable_key_wrap` (String)
+- `encryption_key` (String)
+- `host_ip` (String)
+- `id` (String)
+- `key_input_format` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `proxy_timeout` (Number)
+- `retries` (Number)
+- `shared_secret` (String)
+- `timeout` (Number)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 
