@@ -54,36 +54,36 @@ output "ciscoise_tacacs_profile_example" {
 
 ### Optional
 
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **name** (String)
-- **session_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--session_attributes))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `name` (String)
+- `session_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--session_attributes))
 
 <a id="nestedobjatt--item_id--link"></a>
 ### Nested Schema for `item_id.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item_id--session_attributes"></a>
@@ -91,16 +91,16 @@ Read-Only:
 
 Read-Only:
 
-- **session_attribute_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--session_attributes--session_attribute_list))
+- `session_attribute_list` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--session_attributes--session_attribute_list))
 
 <a id="nestedobjatt--item_id--session_attributes--session_attribute_list"></a>
 ### Nested Schema for `item_id.session_attributes.session_attribute_list`
 
 Read-Only:
 
-- **name** (String)
-- **type** (String)
-- **value** (String)
+- `name` (String)
+- `type` (String)
+- `value` (String)
 
 
 
@@ -110,20 +110,20 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **name** (String)
-- **session_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--session_attributes))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `name` (String)
+- `session_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--session_attributes))
 
 <a id="nestedobjatt--item_name--link"></a>
 ### Nested Schema for `item_name.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item_name--session_attributes"></a>
@@ -131,16 +131,16 @@ Read-Only:
 
 Read-Only:
 
-- **session_attribute_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--session_attributes--session_attribute_list))
+- `session_attribute_list` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--session_attributes--session_attribute_list))
 
 <a id="nestedobjatt--item_name--session_attributes--session_attribute_list"></a>
 ### Nested Schema for `item_name.session_attributes.session_attribute_list`
 
 Read-Only:
 
-- **name** (String)
-- **type** (String)
-- **value** (String)
+- `name` (String)
+- `type` (String)
+- `value` (String)
 
 
 
@@ -150,18 +150,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

@@ -54,28 +54,28 @@ output "ciscoise_certificate_template_example" {
 
 ### Optional
 
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **key_size** (Number)
-- **name** (String)
-- **raprofile** (String)
-- **validity_period** (Number)
+- `description` (String)
+- `id` (String)
+- `key_size` (Number)
+- `name` (String)
+- `raprofile` (String)
+- `validity_period` (Number)
 
 
 <a id="nestedatt--item_name"></a>
@@ -83,12 +83,12 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **key_size** (Number)
-- **name** (String)
-- **raprofile** (String)
-- **validity_period** (Number)
+- `description` (String)
+- `id` (String)
+- `key_size` (Number)
+- `name` (String)
+- `raprofile` (String)
+- `validity_period` (Number)
 
 
 <a id="nestedatt--items"></a>
@@ -96,18 +96,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

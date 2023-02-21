@@ -29,6 +29,7 @@ The certificate may have a validity period longer than 398 days. It may be untru
 NOTE:
 Request parameters accepting True and False as input can be replaced by 1 and 0 respectively.
 
+
 ~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
@@ -67,39 +68,36 @@ resource "ciscoise_bind_signed_certificate" "example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **admin** (String) Use certificate to authenticate the Cisco ISE Admin Portal
-- **allow_extended_validity** (String) Allow import of certificates with validity greater than 398 days (required)
-- **allow_out_of_date_cert** (String) Allow out of date certificates (required)
-- **allow_replacement_of_certificates** (String) Allow Replacement of certificates (required)
-- **allow_replacement_of_portal_group_tag** (String) Allow Replacement of Portal Group Tag (required)
-- **data** (String) Signed certificate data (required)
-- **eap** (String) Use certificate for EAP protocols that use SSL/TLS tunneling
-- **host_name** (String) Name of Host whose CSR ID has been provided (required)
-- **id** (String) ID of the generated CSR (required)
-- **ims** (String) Use certificate for the Cisco ISE Messaging Service
-- **name** (String) Friendly Name of the certificate
-- **portal** (String) Use for portal
-- **portal_group_tag** (String) Set Group tag
-- **pxgrid** (String) Use certificate for the pxGrid Controller
-- **radius** (String) Use certificate for the RADSec server
-- **saml** (String) Use certificate for SAML Signing
-- **validate_certificate_extensions** (String) Validate Certificate Extensions
+- `admin` (String) Use certificate to authenticate the Cisco ISE Admin Portal
+- `allow_extended_validity` (String) Allow import of certificates with validity greater than 398 days (required)
+- `allow_out_of_date_cert` (String) Allow out of date certificates (required)
+- `allow_replacement_of_certificates` (String) Allow Replacement of certificates (required)
+- `allow_replacement_of_portal_group_tag` (String) Allow Replacement of Portal Group Tag (required)
+- `data` (String) Signed certificate data (required)
+- `eap` (String) Use certificate for EAP protocols that use SSL/TLS tunneling
+- `host_name` (String) Name of Host whose CSR ID has been provided (required)
+- `id` (String) ID of the generated CSR (required)
+- `ims` (String) Use certificate for the Cisco ISE Messaging Service
+- `name` (String) Friendly Name of the certificate
+- `portal` (String) Use for portal
+- `portal_group_tag` (String) Set Group tag
+- `pxgrid` (String) Use certificate for the pxGrid Controller
+- `radius` (String) Use certificate for the RADSec server
+- `saml` (String) Use certificate for SAML Signing
+- `validate_certificate_extensions` (String) Validate Certificate Extensions
 
 
 <a id="nestedatt--item"></a>
@@ -107,7 +105,7 @@ Optional:
 
 Read-Only:
 
-- **message** (String)
-- **status** (String)
+- `message` (String)
+- `status` (String)
 
 

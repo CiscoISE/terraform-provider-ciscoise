@@ -37,27 +37,24 @@ output "ciscoise_licensing_registration_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **connection_type** (String)
-- **registration_type** (String)
-- **ssm_on_prem_server** (String) If connection type is selected as SSM_ONPREM_SERVER, then  IP address or the hostname (or FQDN) of the SSM On-Prem server Host.
-- **tier** (List of String)
-- **token** (String) token
+- `connection_type` (String)
+- `registration_type` (String)
+- `ssm_on_prem_server` (String) If connection type is selected as SSM_ONPREM_SERVER, then  IP address or the hostname (or FQDN) of the SSM On-Prem server Host.
+- `tier` (List of String)
+- `token` (String) token
 
 
 <a id="nestedatt--item"></a>
@@ -65,10 +62,10 @@ Optional:
 
 Read-Only:
 
-- **connection_type** (String)
-- **registration_state** (String)
-- **ssm_on_prem_server** (String)
-- **tier** (List of String)
+- `connection_type` (String)
+- `registration_state` (String)
+- `ssm_on_prem_server` (String)
+- `tier` (List of String)
 
 ## Import
 

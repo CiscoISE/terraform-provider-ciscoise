@@ -57,51 +57,68 @@ output "ciscoise_sg_to_vn_to_vlan_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **description** (String)
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **sgt_id** (String)
-- **virtualnetworklist** (Block List) (see [below for nested schema](#nestedblock--parameters--virtualnetworklist))
+- `description` (String)
+- `name` (String)
+- `sgt_id` (String)
+- `virtualnetworklist` (Block List) (see [below for nested schema](#nestedblock--parameters--virtualnetworklist))
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--virtualnetworklist"></a>
 ### Nested Schema for `parameters.virtualnetworklist`
 
 Optional:
 
-- **default_virtual_network** (String)
-- **description** (String)
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **vlans** (Block List) (see [below for nested schema](#nestedblock--parameters--virtualnetworklist--vlans))
+- `default_virtual_network` (String)
+- `description` (String)
+- `name` (String)
+- `vlans` (Block List) (see [below for nested schema](#nestedblock--parameters--virtualnetworklist--vlans))
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--parameters--virtualnetworklist--vlans"></a>
 ### Nested Schema for `parameters.virtualnetworklist.vlans`
 
 Optional:
 
-- **data** (String)
-- **default_vlan** (String)
-- **description** (String)
-- **id** (String) The ID of this resource.
-- **max_value** (Number)
-- **name** (String)
+- `data` (String)
+- `default_vlan` (String)
+- `description` (String)
+- `max_value` (Number)
+- `name` (String)
 
+Read-Only:
+
+- `id` (String) The ID of this resource.
+
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -110,21 +127,21 @@ Optional:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **sgt_id** (String)
-- **virtualnetworklist** (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `sgt_id` (String)
+- `virtualnetworklist` (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist))
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--virtualnetworklist"></a>
@@ -132,23 +149,23 @@ Read-Only:
 
 Read-Only:
 
-- **default_virtual_network** (String)
-- **description** (String)
-- **id** (String)
-- **name** (String)
-- **vlans** (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist--vlans))
+- `default_virtual_network` (String)
+- `description` (String)
+- `id` (String)
+- `name` (String)
+- `vlans` (List of Object) (see [below for nested schema](#nestedobjatt--item--virtualnetworklist--vlans))
 
 <a id="nestedobjatt--item--virtualnetworklist--vlans"></a>
 ### Nested Schema for `item.virtualnetworklist.vlans`
 
 Read-Only:
 
-- **data** (String)
-- **default_vlan** (String)
-- **description** (String)
-- **id** (String)
-- **max_value** (Number)
-- **name** (String)
+- `data` (String)
+- `default_vlan` (String)
+- `description` (String)
+- `id` (String)
+- `max_value` (Number)
+- `name` (String)
 
 ## Import
 

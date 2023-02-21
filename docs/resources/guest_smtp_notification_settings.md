@@ -46,33 +46,44 @@ output "ciscoise_guest_smtp_notification_settings_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **connection_timeout** (String) Interval in seconds for all the SMTP client connections
-- **default_from_address** (String) The default from email address to be used to send emails from
-- **id** (String) The ID of this resource.
-- **notification_enabled** (String) Indicates if the email notification service is to be enabled
-- **password** (String, Sensitive) Password of Secure SMTP server
-- **smtp_port** (String) Port at which SMTP Secure Server is listening
-- **smtp_server** (String) The SMTP server ip address or fqdn such as outbound.mycompany.com
-- **use_default_from_address** (String) If the default from address should be used rather than using a sponsor user email address
-- **use_password_authentication** (String) If configured to true, SMTP server authentication will happen using username/password
-- **use_tlsor_ssl_encryption** (String) If configured to true, SMTP server authentication will happen using TLS/SSL
-- **user_name** (String) Username of Secure SMTP server
+- `connection_timeout` (String) Interval in seconds for all the SMTP client connections
+- `default_from_address` (String) The default from email address to be used to send emails from
+- `notification_enabled` (String) Indicates if the email notification service is to be enabled
+- `password` (String, Sensitive) Password of Secure SMTP server
+- `smtp_port` (String) Port at which SMTP Secure Server is listening
+- `smtp_server` (String) The SMTP server ip address or fqdn such as outbound.mycompany.com
+- `use_default_from_address` (String) If the default from address should be used rather than using a sponsor user email address
+- `use_password_authentication` (String) If configured to true, SMTP server authentication will happen using username/password
+- `use_tlsor_ssl_encryption` (String) If configured to true, SMTP server authentication will happen using TLS/SSL
+- `user_name` (String) Username of Secure SMTP server
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -80,27 +91,27 @@ Optional:
 
 Read-Only:
 
-- **connection_timeout** (String)
-- **default_from_address** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **notification_enabled** (String)
-- **password** (String)
-- **smtp_port** (String)
-- **smtp_server** (String)
-- **use_default_from_address** (String)
-- **use_password_authentication** (String)
-- **use_tlsor_ssl_encryption** (String)
-- **user_name** (String)
+- `connection_timeout` (String)
+- `default_from_address` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `notification_enabled` (String)
+- `password` (String)
+- `smtp_port` (String)
+- `smtp_server` (String)
+- `use_default_from_address` (String)
+- `use_password_authentication` (String)
+- `use_tlsor_ssl_encryption` (String)
+- `user_name` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

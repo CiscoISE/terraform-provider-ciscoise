@@ -152,47 +152,62 @@ output "ciscoise_network_access_conditions_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **attribute_name** (String) Dictionary attribute name
-- **attribute_value** (String) <ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>
-- **children** (Block List) In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition (see [below for nested schema](#nestedblock--parameters--children))
-- **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
-- **dates_range** (Block List, Max: 1) <p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--parameters--dates_range))
-- **dates_range_exception** (Block List, Max: 1) <p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--parameters--dates_range_exception))
-- **description** (String) Condition description
-- **dictionary_name** (String) Dictionary name
-- **dictionary_value** (String) Dictionary value
-- **hours_range** (Block List, Max: 1) <p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--parameters--hours_range))
-- **hours_range_exception** (Block List, Max: 1) <p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--parameters--hours_range_exception))
-- **id** (String) The ID of this resource.
-- **is_negate** (String) Indicates whereas this condition is in negate mode
-- **name** (String) Condition name
-- **operator** (String) Equality operator
-- **week_days** (List of String) <p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>
-- **week_days_exception** (List of String) <p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>
+- `attribute_name` (String) Dictionary attribute name
+- `attribute_value` (String) <ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>
+- `children` (Block List) In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition (see [below for nested schema](#nestedblock--parameters--children))
+- `condition_type` (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
+- `dates_range` (Block List, Max: 1) <p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--parameters--dates_range))
+- `dates_range_exception` (Block List, Max: 1) <p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p> (see [below for nested schema](#nestedblock--parameters--dates_range_exception))
+- `description` (String) Condition description
+- `dictionary_name` (String) Dictionary name
+- `dictionary_value` (String) Dictionary value
+- `hours_range` (Block List, Max: 1) <p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--parameters--hours_range))
+- `hours_range_exception` (Block List, Max: 1) <p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p> (see [below for nested schema](#nestedblock--parameters--hours_range_exception))
+- `is_negate` (String) Indicates whereas this condition is in negate mode
+- `name` (String) Condition name
+- `operator` (String) Equality operator
+- `week_days` (List of String) <p>Defines for which days this condition will be matched<br> Days format - Arrays of WeekDay enums <br> Default - List of All week days</p>
+- `week_days_exception` (List of String) <p>Defines for which days this condition will NOT be matched<br> Days format - Arrays of WeekDay enums <br> Default - Not enabled</p>
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--children"></a>
 ### Nested Schema for `parameters.children`
 
 Optional:
 
-- **condition_type** (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
-- **is_negate** (String) Indicates whereas this condition is in negate mode
+- `condition_type` (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
+- `is_negate` (String) Indicates whereas this condition is in negate mode
+
+Read-Only:
+
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--children--link))
+
+<a id="nestedatt--parameters--children--link"></a>
+### Nested Schema for `parameters.children.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedblock--parameters--dates_range"></a>
@@ -200,8 +215,8 @@ Optional:
 
 Optional:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedblock--parameters--dates_range_exception"></a>
@@ -209,8 +224,8 @@ Optional:
 
 Optional:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedblock--parameters--hours_range"></a>
@@ -218,8 +233,8 @@ Optional:
 
 Optional:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedblock--parameters--hours_range_exception"></a>
@@ -227,8 +242,18 @@ Optional:
 
 Optional:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -237,42 +262,42 @@ Optional:
 
 Read-Only:
 
-- **attribute_name** (String)
-- **attribute_value** (String)
-- **children** (List of Object) (see [below for nested schema](#nestedobjatt--item--children))
-- **condition_type** (String)
-- **dates_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--dates_range))
-- **dates_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--dates_range_exception))
-- **description** (String)
-- **dictionary_name** (String)
-- **dictionary_value** (String)
-- **hours_range** (List of Object) (see [below for nested schema](#nestedobjatt--item--hours_range))
-- **hours_range_exception** (List of Object) (see [below for nested schema](#nestedobjatt--item--hours_range_exception))
-- **id** (String)
-- **is_negate** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **operator** (String)
-- **week_days** (List of String)
-- **week_days_exception** (List of String)
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `children` (List of Object) (see [below for nested schema](#nestedobjatt--item--children))
+- `condition_type` (String)
+- `dates_range` (List of Object) (see [below for nested schema](#nestedobjatt--item--dates_range))
+- `dates_range_exception` (List of Object) (see [below for nested schema](#nestedobjatt--item--dates_range_exception))
+- `description` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `hours_range` (List of Object) (see [below for nested schema](#nestedobjatt--item--hours_range))
+- `hours_range_exception` (List of Object) (see [below for nested schema](#nestedobjatt--item--hours_range_exception))
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `operator` (String)
+- `week_days` (List of String)
+- `week_days_exception` (List of String)
 
 <a id="nestedobjatt--item--children"></a>
 ### Nested Schema for `item.children`
 
 Read-Only:
 
-- **condition_type** (String)
-- **is_negate** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--children--link))
+- `condition_type` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--children--link))
 
 <a id="nestedobjatt--item--children--link"></a>
 ### Nested Schema for `item.children.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -281,8 +306,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedobjatt--item--dates_range_exception"></a>
@@ -290,8 +315,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_date** (String)
-- **start_date** (String)
+- `end_date` (String)
+- `start_date` (String)
 
 
 <a id="nestedobjatt--item--hours_range"></a>
@@ -299,8 +324,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedobjatt--item--hours_range_exception"></a>
@@ -308,8 +333,8 @@ Read-Only:
 
 Read-Only:
 
-- **end_time** (String)
-- **start_time** (String)
+- `end_time` (String)
+- `start_time` (String)
 
 
 <a id="nestedobjatt--item--link"></a>
@@ -317,9 +342,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

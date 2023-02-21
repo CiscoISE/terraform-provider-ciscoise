@@ -54,44 +54,44 @@ output "ciscoise_tacacs_command_sets_example" {
 
 ### Optional
 
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **commands** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--commands))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **name** (String)
-- **permit_unmatched** (String)
+- `commands` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--commands))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `name` (String)
+- `permit_unmatched` (String)
 
 <a id="nestedobjatt--item_id--commands"></a>
 ### Nested Schema for `item_id.commands`
 
 Read-Only:
 
-- **command_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--commands--command_list))
+- `command_list` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--commands--command_list))
 
 <a id="nestedobjatt--item_id--commands--command_list"></a>
 ### Nested Schema for `item_id.commands.command_list`
 
 Read-Only:
 
-- **arguments** (String)
-- **command** (String)
-- **grant** (String)
+- `arguments` (String)
+- `command` (String)
+- `grant` (String)
 
 
 
@@ -100,9 +100,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -111,28 +111,28 @@ Read-Only:
 
 Read-Only:
 
-- **commands** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--commands))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **name** (String)
-- **permit_unmatched** (String)
+- `commands` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--commands))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `name` (String)
+- `permit_unmatched` (String)
 
 <a id="nestedobjatt--item_name--commands"></a>
 ### Nested Schema for `item_name.commands`
 
 Read-Only:
 
-- **command_list** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--commands--command_list))
+- `command_list` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--commands--command_list))
 
 <a id="nestedobjatt--item_name--commands--command_list"></a>
 ### Nested Schema for `item_name.commands.command_list`
 
 Read-Only:
 
-- **arguments** (String)
-- **command** (String)
-- **grant** (String)
+- `arguments` (String)
+- `command` (String)
+- `grant` (String)
 
 
 
@@ -141,9 +141,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -152,18 +152,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

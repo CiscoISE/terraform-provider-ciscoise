@@ -31,14 +31,11 @@ output "ciscoise_mnt_session_by_username_example" {
 
 ### Required
 
-- **username** (String) username path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `username` (String) username path parameter.
 
 ### Read-Only
 
-- **item** (String)
+- `id` (String) The ID of this resource.
+- `item` (String)
 
 

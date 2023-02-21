@@ -40,31 +40,31 @@ output "ciscoise_aci_bindings_example" {
 
 ### Optional
 
-- **filter_by** (List of String) filterBy query parameter.
-- **filter_value** (List of String) filterValue query parameter.
-- **id** (String) The ID of this resource.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sort** (String) sort query parameter. sort type asc or desc
-- **sort_by** (String) sortBy query parameter. sort column by which objects needs to be sorted
+- `filter_by` (List of String) filterBy query parameter.
+- `filter_value` (List of String) filterValue query parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sort` (String) sort query parameter. sort type asc or desc
+- `sort_by` (String) sortBy query parameter. sort column by which objects needs to be sorted
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **ip** (String)
-- **learned_by** (String)
-- **learned_from** (String)
-- **name** (String)
-- **psn** (String)
-- **sgt_value** (String)
-- **vn** (String)
+- `description` (String)
+- `id` (String)
+- `ip` (String)
+- `learned_by` (String)
+- `learned_from` (String)
+- `name` (String)
+- `psn` (String)
+- `sgt_value` (String)
+- `vn` (String)
 
 

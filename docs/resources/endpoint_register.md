@@ -12,6 +12,7 @@ description: |-
 It performs update operation on endpoint.
 - This resource allows the client to register an endpoint.
 
+
 ~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
@@ -63,42 +64,42 @@ resource "ciscoise_endpoint_register" "example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (String)
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (String)
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **custom_attributes** (Block List) (see [below for nested schema](#nestedblock--parameters--custom_attributes))
-- **description** (String)
-- **group_id** (String)
-- **id** (String) The ID of this resource.
-- **identity_store** (String)
-- **identity_store_id** (String)
-- **mac** (String)
-- **mdm_attributes** (Block List) (see [below for nested schema](#nestedblock--parameters--mdm_attributes))
-- **name** (String)
-- **portal_user** (String)
-- **profile_id** (String)
-- **static_group_assignment** (String)
-- **static_profile_assignment** (String)
+- `custom_attributes` (Block List) (see [below for nested schema](#nestedblock--parameters--custom_attributes))
+- `description` (String)
+- `group_id` (String)
+- `identity_store` (String)
+- `identity_store_id` (String)
+- `mac` (String)
+- `mdm_attributes` (Block List) (see [below for nested schema](#nestedblock--parameters--mdm_attributes))
+- `name` (String)
+- `portal_user` (String)
+- `profile_id` (String)
+- `static_group_assignment` (String)
+- `static_profile_assignment` (String)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--parameters--custom_attributes"></a>
 ### Nested Schema for `parameters.custom_attributes`
 
 Optional:
 
-- **custom_attributes** (Map of String) Key value map
+- `custom_attributes` (Map of String) Key value map
 
 
 <a id="nestedblock--parameters--mdm_attributes"></a>
@@ -106,18 +107,18 @@ Optional:
 
 Optional:
 
-- **mdm_compliance_status** (String)
-- **mdm_encrypted** (String)
-- **mdm_enrolled** (String)
-- **mdm_ime_i** (String)
-- **mdm_jail_broken** (String)
-- **mdm_manufacturer** (String)
-- **mdm_model** (String)
-- **mdm_os** (String)
-- **mdm_phone_number** (String)
-- **mdm_pinlock** (String)
-- **mdm_reachable** (String)
-- **mdm_serial** (String)
-- **mdm_server_name** (String)
+- `mdm_compliance_status` (String)
+- `mdm_encrypted` (String)
+- `mdm_enrolled` (String)
+- `mdm_ime_i` (String)
+- `mdm_jail_broken` (String)
+- `mdm_manufacturer` (String)
+- `mdm_model` (String)
+- `mdm_os` (String)
+- `mdm_phone_number` (String)
+- `mdm_pinlock` (String)
+- `mdm_reachable` (String)
+- `mdm_serial` (String)
+- `mdm_server_name` (String)
 
 

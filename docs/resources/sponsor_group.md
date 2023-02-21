@@ -73,48 +73,49 @@ output "ciscoise_sponsor_group_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **auto_notification** (String)
-- **create_permissions** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--create_permissions))
-- **description** (String)
-- **guest_types** (List of String)
-- **id** (String) The ID of this resource.
-- **is_default_group** (String)
-- **is_enabled** (String)
-- **locations** (List of String)
-- **manage_permission** (String)
-- **member_groups** (List of String)
-- **name** (String)
-- **other_permissions** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--other_permissions))
+- `auto_notification` (String)
+- `create_permissions` (Block List) (see [below for nested schema](#nestedblock--parameters--create_permissions))
+- `description` (String)
+- `guest_types` (List of String)
+- `is_default_group` (String)
+- `is_enabled` (String)
+- `locations` (List of String)
+- `manage_permission` (String)
+- `member_groups` (List of String)
+- `name` (String)
+- `other_permissions` (Block List) (see [below for nested schema](#nestedblock--parameters--other_permissions))
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--create_permissions"></a>
 ### Nested Schema for `parameters.create_permissions`
 
 Optional:
 
-- **can_create_random_accounts** (String)
-- **can_import_multiple_accounts** (String)
-- **can_set_future_start_date** (String)
-- **can_specify_username_prefix** (String)
-- **default_username_prefix** (String)
-- **import_batch_size_limit** (Number)
-- **random_batch_size_limit** (Number)
-- **start_date_future_limit_days** (Number)
+- `can_create_random_accounts` (String)
+- `can_import_multiple_accounts` (String)
+- `can_set_future_start_date` (String)
+- `can_specify_username_prefix` (String)
+- `default_username_prefix` (String)
+- `import_batch_size_limit` (Number)
+- `random_batch_size_limit` (Number)
+- `start_date_future_limit_days` (Number)
 
 
 <a id="nestedblock--parameters--other_permissions"></a>
@@ -122,18 +123,28 @@ Optional:
 
 Optional:
 
-- **can_access_via_rest** (String)
-- **can_approve_selfreg_guests** (String)
-- **can_delete_guest_accounts** (String)
-- **can_extend_guest_accounts** (String)
-- **can_reinstate_suspended_accounts** (String)
-- **can_reset_guest_passwords** (String)
-- **can_send_sms_notifications** (String)
-- **can_suspend_guest_accounts** (String)
-- **can_update_guest_contact_info** (String)
-- **can_view_guest_passwords** (String)
-- **limit_approval_to_sponsors_guests** (String)
-- **require_suspension_reason** (String)
+- `can_access_via_rest` (String)
+- `can_approve_selfreg_guests` (String)
+- `can_delete_guest_accounts` (String)
+- `can_extend_guest_accounts` (String)
+- `can_reinstate_suspended_accounts` (String)
+- `can_reset_guest_passwords` (String)
+- `can_send_sms_notifications` (String)
+- `can_suspend_guest_accounts` (String)
+- `can_update_guest_contact_info` (String)
+- `can_view_guest_passwords` (String)
+- `limit_approval_to_sponsors_guests` (String)
+- `require_suspension_reason` (String)
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -142,33 +153,33 @@ Optional:
 
 Read-Only:
 
-- **auto_notification** (String)
-- **create_permissions** (List of Object) (see [below for nested schema](#nestedobjatt--item--create_permissions))
-- **description** (String)
-- **guest_types** (List of String)
-- **id** (String)
-- **is_default_group** (String)
-- **is_enabled** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **locations** (List of String)
-- **manage_permission** (String)
-- **member_groups** (List of String)
-- **name** (String)
-- **other_permissions** (List of Object) (see [below for nested schema](#nestedobjatt--item--other_permissions))
+- `auto_notification` (String)
+- `create_permissions` (List of Object) (see [below for nested schema](#nestedobjatt--item--create_permissions))
+- `description` (String)
+- `guest_types` (List of String)
+- `id` (String)
+- `is_default_group` (String)
+- `is_enabled` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `locations` (List of String)
+- `manage_permission` (String)
+- `member_groups` (List of String)
+- `name` (String)
+- `other_permissions` (List of Object) (see [below for nested schema](#nestedobjatt--item--other_permissions))
 
 <a id="nestedobjatt--item--create_permissions"></a>
 ### Nested Schema for `item.create_permissions`
 
 Read-Only:
 
-- **can_create_random_accounts** (String)
-- **can_import_multiple_accounts** (String)
-- **can_set_future_start_date** (String)
-- **can_specify_username_prefix** (String)
-- **default_username_prefix** (String)
-- **import_batch_size_limit** (Number)
-- **random_batch_size_limit** (Number)
-- **start_date_future_limit_days** (Number)
+- `can_create_random_accounts` (String)
+- `can_import_multiple_accounts` (String)
+- `can_set_future_start_date` (String)
+- `can_specify_username_prefix` (String)
+- `default_username_prefix` (String)
+- `import_batch_size_limit` (Number)
+- `random_batch_size_limit` (Number)
+- `start_date_future_limit_days` (Number)
 
 
 <a id="nestedobjatt--item--link"></a>
@@ -176,9 +187,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--other_permissions"></a>
@@ -186,18 +197,18 @@ Read-Only:
 
 Read-Only:
 
-- **can_access_via_rest** (String)
-- **can_approve_selfreg_guests** (String)
-- **can_delete_guest_accounts** (String)
-- **can_extend_guest_accounts** (String)
-- **can_reinstate_suspended_accounts** (String)
-- **can_reset_guest_passwords** (String)
-- **can_send_sms_notifications** (String)
-- **can_suspend_guest_accounts** (String)
-- **can_update_guest_contact_info** (String)
-- **can_view_guest_passwords** (String)
-- **limit_approval_to_sponsors_guests** (String)
-- **require_suspension_reason** (String)
+- `can_access_via_rest` (String)
+- `can_approve_selfreg_guests` (String)
+- `can_delete_guest_accounts` (String)
+- `can_extend_guest_accounts` (String)
+- `can_reinstate_suspended_accounts` (String)
+- `can_reset_guest_passwords` (String)
+- `can_send_sms_notifications` (String)
+- `can_suspend_guest_accounts` (String)
+- `can_update_guest_contact_info` (String)
+- `can_view_guest_passwords` (String)
+- `limit_approval_to_sponsors_guests` (String)
+- `require_suspension_reason` (String)
 
 ## Import
 

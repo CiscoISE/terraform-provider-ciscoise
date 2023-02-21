@@ -45,36 +45,47 @@ output "ciscoise_egress_matrix_cell_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **default_rule** (String) Allowed values:
-- NONE,
-- DENY_IP,
-- PERMIT_IP
-- **description** (String)
-- **destination_sgt_id** (String)
-- **id** (String) The ID of this resource.
-- **matrix_cell_status** (String) Allowed values:
-- DISABLED,
-- ENABLED,
-- MONITOR
-- **name** (String)
-- **sgacls** (List of String)
-- **source_sgt_id** (String)
+- `default_rule` (String) Allowed values:
+		- NONE,
+		- DENY_IP,
+		- PERMIT_IP
+- `description` (String)
+- `destination_sgt_id` (String)
+- `matrix_cell_status` (String) Allowed values:
+		- DISABLED,
+		- ENABLED,
+		- MONITOR
+- `name` (String)
+- `sgacls` (List of String)
+- `source_sgt_id` (String)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -82,24 +93,24 @@ Optional:
 
 Read-Only:
 
-- **default_rule** (String)
-- **description** (String)
-- **destination_sgt_id** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **matrix_cell_status** (String)
-- **name** (String)
-- **sgacls** (List of String)
-- **source_sgt_id** (String)
+- `default_rule` (String)
+- `description` (String)
+- `destination_sgt_id` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `matrix_cell_status` (String)
+- `name` (String)
+- `sgacls` (List of String)
+- `source_sgt_id` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

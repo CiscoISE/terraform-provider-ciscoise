@@ -47,7 +47,7 @@ output "ciscoise_trustsec_vn_vlan_mapping_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
  
  
  
@@ -125,31 +125,31 @@ Contains
 NCONTAINS
  
 Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sort** (String) sort query parameter. sort type asc or desc
-- **sort_by** (String) sortBy query parameter. sort column by which objects needs to be sorted
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sort` (String) sort query parameter. sort type asc or desc
+- `sort_by` (String) sortBy query parameter. sort column by which objects needs to be sorted
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **id** (String)
-- **is_data** (String)
-- **is_default_vlan** (String)
-- **last_update** (String)
-- **max_value** (Number)
-- **name** (String)
-- **vn_id** (String)
-- **vn_name** (String)
+- `id` (String)
+- `is_data` (String)
+- `is_default_vlan` (String)
+- `last_update` (String)
+- `max_value` (Number)
+- `name` (String)
+- `vn_id` (String)
+- `vn_name` (String)
 
 
 <a id="nestedatt--items"></a>
@@ -157,13 +157,13 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
-- **is_data** (String)
-- **is_default_vlan** (String)
-- **last_update** (String)
-- **max_value** (Number)
-- **name** (String)
-- **vn_id** (String)
-- **vn_name** (String)
+- `id` (String)
+- `is_data` (String)
+- `is_default_vlan` (String)
+- `last_update` (String)
+- `max_value` (Number)
+- `name` (String)
+- `vn_id` (String)
+- `vn_name` (String)
 
 

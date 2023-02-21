@@ -14,28 +14,40 @@ It performs create operation on Backup And Restore.
 - Schedules the configuration backup on the ISE node as per the input parameters. This resource helps in
 creating the schedule for the first time.
 
+
 ~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
 
 ```terraform
-resource "ciscoise_backup_schedule_config" "example" {
+resource "ciscoise_system_certificate_import" "response" {
   provider = ciscoise
   lifecycle {
     create_before_destroy = true
   }
   parameters {
-    backup_description    = "string"
-    backup_encryption_key = "string"
-    backup_name           = "string"
-    end_date              = "string"
-    frequency             = "string"
-    month_day             = "string"
-    repository_name       = "string"
-    start_date            = "string"
-    status                = "string"
-    time                  = "string"
-    week_day              = "string"
+    admin                                      = "false"
+    allow_extended_validity                    = "false"
+    allow_out_of_date_cert                     = "false"
+    allow_portal_tag_transfer_for_same_subject = "false"
+    allow_replacement_of_certificates          = "false"
+    allow_replacement_of_portal_group_tag      = "false"
+    allow_role_transfer_for_same_subject       = "false"
+    allow_sha1_certificates                    = "false"
+    allow_wild_card_certificates               = "false"
+    data                                       = "string"
+    eap                                        = "false"
+    ims                                        = "false"
+
+    name                            = "string"
+    password                        = "******"
+    portal                          = "false"
+    portal_group_tag                = "string"
+    private_key_data                = "string"
+    pxgrid                          = "false"
+    radius                          = "false"
+    saml                            = "false"
+    validate_certificate_extensions = "false"
   }
 }
 ```
@@ -45,33 +57,30 @@ resource "ciscoise_backup_schedule_config" "example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **backup_description** (String) Description of the backup.
-- **backup_encryption_key** (String) The encyption key for the backed up file. Encryption key must satisfy the following criteria - Contains at least one uppercase letter [A-Z], Contains at least one lowercase letter [a-z], Contains at least one digit [0-9], Contain only [A-Z][a-z][0-9]_#, Has at least 8 characters, Has not more than 15 characters, Must not contain 'CcIiSsCco', Must not begin with
-- **backup_name** (String) The backup file will get saved with this name.
-- **end_date** (String) End date of the scheduled backup job. Allowed format MM/DD/YYYY. End date is not required in case of ONE_TIME frequency.
-- **frequency** (String)
-- **month_day** (String) Day of month you want backup to be performed on when scheduled frequency is MONTHLY. Allowed values - from 1 to 28.
-- **repository_name** (String) Name of the configured repository where the generated backup file will get copied.
-- **start_date** (String) Start date for scheduling the backup job. Allowed format MM/DD/YYYY.
-- **status** (String)
-- **time** (String) Time at which backup job get scheduled. example- 12:00 AM
-- **week_day** (String)
+- `backup_description` (String) Description of the backup.
+- `backup_encryption_key` (String) The encyption key for the backed up file. Encryption key must satisfy the following criteria - Contains at least one uppercase letter [A-Z], Contains at least one lowercase letter [a-z], Contains at least one digit [0-9], Contain only [A-Z][a-z][0-9]_#, Has at least 8 characters, Has not more than 15 characters, Must not contain 'CcIiSsCco', Must not begin with
+- `backup_name` (String) The backup file will get saved with this name.
+- `end_date` (String) End date of the scheduled backup job. Allowed format MM/DD/YYYY. End date is not required in case of ONE_TIME frequency.
+- `frequency` (String)
+- `month_day` (String) Day of month you want backup to be performed on when scheduled frequency is MONTHLY. Allowed values - from 1 to 28.
+- `repository_name` (String) Name of the configured repository where the generated backup file will get copied.
+- `start_date` (String) Start date for scheduling the backup job. Allowed format MM/DD/YYYY.
+- `status` (String)
+- `time` (String) Time at which backup job get scheduled. example- 12:00 AM
+- `week_day` (String)
 
 
 <a id="nestedatt--item"></a>
@@ -79,16 +88,16 @@ Optional:
 
 Read-Only:
 
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **message** (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `message` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

@@ -96,79 +96,80 @@ output "ciscoise_authorization_profile_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **access_type** (String) Allowed Values:
-- ACCESS_ACCEPT,
-- ACCESS_REJECT
-- **acl** (String)
-- **advanced_attributes** (Block List) (see [below for nested schema](#nestedblock--parameters--advanced_attributes))
-- **agentless_posture** (String)
-- **airespace_acl** (String)
-- **airespace_ipv6_acl** (String)
-- **asa_vpn** (String)
-- **authz_profile_type** (String) Allowed Values:
-- SWITCH,
-- TRUSTSEC,
-- TACACS
-SWITCH is used for Standard Authorization Profiles
-- **auto_smart_port** (String)
-- **avc_profile** (String)
-- **dacl_name** (String)
-- **description** (String)
-- **easywired_session_candidate** (String)
-- **id** (String) Resource UUID value
-- **interface_template** (String)
-- **ipv6_acl_filter** (String)
-- **ipv6_dacl_name** (String)
-- **mac_sec_policy** (String) Allowed Values:
-- MUST_SECURE,
-- MUST_NOT_SECURE,
-- SHOULD_SECURE
-- **name** (String) Resource Name
-- **neat** (String)
-- **profile_name** (String)
-- **reauth** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--reauth))
-- **service_template** (String)
-- **track_movement** (String)
-- **vlan** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--vlan))
-- **voice_domain_permission** (String)
-- **web_auth** (String)
-- **web_redirection** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--web_redirection))
+- `access_type` (String) Allowed Values:
+		- ACCESS_ACCEPT,
+		- ACCESS_REJECT
+- `acl` (String)
+- `advanced_attributes` (Block List) (see [below for nested schema](#nestedblock--parameters--advanced_attributes))
+- `agentless_posture` (String)
+- `airespace_acl` (String)
+- `airespace_ipv6_acl` (String)
+- `asa_vpn` (String)
+- `authz_profile_type` (String) Allowed Values:
+		- SWITCH,
+		- TRUSTSEC,
+		- TACACS
+		SWITCH is used for Standard Authorization Profiles
+- `auto_smart_port` (String)
+- `avc_profile` (String)
+- `dacl_name` (String)
+- `description` (String)
+- `easywired_session_candidate` (String)
+- `id` (String) Resource UUID value
+- `interface_template` (String)
+- `ipv6_acl_filter` (String)
+- `ipv6_dacl_name` (String)
+- `mac_sec_policy` (String) Allowed Values:
+		- MUST_SECURE,
+		- MUST_NOT_SECURE,
+		- SHOULD_SECURE
+- `name` (String) Resource Name
+- `neat` (String)
+- `profile_name` (String)
+- `reauth` (Block List) (see [below for nested schema](#nestedblock--parameters--reauth))
+- `service_template` (String)
+- `track_movement` (String)
+- `vlan` (Block List) (see [below for nested schema](#nestedblock--parameters--vlan))
+- `voice_domain_permission` (String)
+- `web_auth` (String)
+- `web_redirection` (Block List) (see [below for nested schema](#nestedblock--parameters--web_redirection))
+
+Read-Only:
+
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--advanced_attributes"></a>
 ### Nested Schema for `parameters.advanced_attributes`
 
 Optional:
 
-- **left_hand_side_dictionary_attribue** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--advanced_attributes--left_hand_side_dictionary_attribue))
-- **right_hand_side_attribue_value** (Block List, Max: 1) Attribute value can be of type AttributeValue or AdvancedDictionaryAttribute.
-For AttributeValue the value is String,
-For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties (see [below for nested schema](#nestedblock--parameters--advanced_attributes--right_hand_side_attribue_value))
+- `left_hand_side_dictionary_attribue` (Block List) (see [below for nested schema](#nestedblock--parameters--advanced_attributes--left_hand_side_dictionary_attribue))
+- `right_hand_side_attribue_value` (Block List) Attribute value can be of type AttributeValue or AdvancedDictionaryAttribute.
+		For AttributeValue the value is String,
+		For AdvancedDictionaryAttribute the value is dictionaryName and attributeName properties (see [below for nested schema](#nestedblock--parameters--advanced_attributes--right_hand_side_attribue_value))
 
 <a id="nestedblock--parameters--advanced_attributes--left_hand_side_dictionary_attribue"></a>
 ### Nested Schema for `parameters.advanced_attributes.left_hand_side_dictionary_attribue`
 
 Optional:
 
-- **advanced_attribute_value_type** (String)
-- **attribute_name** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `advanced_attribute_value_type` (String)
+- `attribute_name` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 <a id="nestedblock--parameters--advanced_attributes--right_hand_side_attribue_value"></a>
@@ -176,10 +177,10 @@ Optional:
 
 Optional:
 
-- **advanced_attribute_value_type** (String)
-- **attribute_name** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `advanced_attribute_value_type` (String)
+- `attribute_name` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 
@@ -188,10 +189,10 @@ Optional:
 
 Optional:
 
-- **connectivity** (String) Allowed Values:
-- DEFAULT,
-- RADIUS_REQUEST
-- **timer** (Number) Valid range is 1-65535
+- `connectivity` (String) Allowed Values:
+		- DEFAULT,
+		- RADIUS_REQUEST
+- `timer` (Number) Valid range is 1-65535
 
 
 <a id="nestedblock--parameters--vlan"></a>
@@ -199,8 +200,8 @@ Optional:
 
 Optional:
 
-- **name_id** (String)
-- **tag_id** (Number) Valid range is 0-31
+- `name_id` (String)
+- `tag_id` (Number) Valid range is 0-31
 
 
 <a id="nestedblock--parameters--web_redirection"></a>
@@ -208,13 +209,23 @@ Optional:
 
 Optional:
 
-- **acl** (String)
-- **display_certificates_renewal_messages** (String) The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
-For all other 'WebRedirectionType' values the field must be ignored
-- **portal_name** (String) A portal that exist in the DB and fits the WebRedirectionType
-- **static_iphost_name_fqd_n** (String)
-- **web_redirection_type** (String) Value MUST be one of the following:CentralizedWebAuth, HotSpot, NativeSupplicanProvisioning, ClientProvisioning. 
-The WebRedirectionType must fit the portalName
+- `acl` (String)
+- `display_certificates_renewal_messages` (String) The displayCertificatesRenewalMessages is mandatory when 'WebRedirectionType' value is 'CentralizedWebAuth'.
+		For all other 'WebRedirectionType' values the field must be ignored
+- `portal_name` (String) A portal that exist in the DB and fits the WebRedirectionType
+- `static_iphost_name_fqd_n` (String)
+- `web_redirection_type` (String) Value MUST be one of the following:CentralizedWebAuth, HotSpot, NativeSupplicanProvisioning, ClientProvisioning. 
+		The WebRedirectionType must fit the portalName
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -223,53 +234,53 @@ The WebRedirectionType must fit the portalName
 
 Read-Only:
 
-- **access_type** (String)
-- **acl** (String)
-- **advanced_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item--advanced_attributes))
-- **agentless_posture** (String)
-- **airespace_acl** (String)
-- **airespace_ipv6_acl** (String)
-- **asa_vpn** (String)
-- **authz_profile_type** (String)
-- **auto_smart_port** (String)
-- **avc_profile** (String)
-- **dacl_name** (String)
-- **description** (String)
-- **easywired_session_candidate** (String)
-- **id** (String)
-- **interface_template** (String)
-- **ipv6_acl_filter** (String)
-- **ipv6_dacl_name** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **mac_sec_policy** (String)
-- **name** (String)
-- **neat** (String)
-- **profile_name** (String)
-- **reauth** (List of Object) (see [below for nested schema](#nestedobjatt--item--reauth))
-- **service_template** (String)
-- **track_movement** (String)
-- **vlan** (List of Object) (see [below for nested schema](#nestedobjatt--item--vlan))
-- **voice_domain_permission** (String)
-- **web_auth** (String)
-- **web_redirection** (List of Object) (see [below for nested schema](#nestedobjatt--item--web_redirection))
+- `access_type` (String)
+- `acl` (String)
+- `advanced_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item--advanced_attributes))
+- `agentless_posture` (String)
+- `airespace_acl` (String)
+- `airespace_ipv6_acl` (String)
+- `asa_vpn` (String)
+- `authz_profile_type` (String)
+- `auto_smart_port` (String)
+- `avc_profile` (String)
+- `dacl_name` (String)
+- `description` (String)
+- `easywired_session_candidate` (String)
+- `id` (String)
+- `interface_template` (String)
+- `ipv6_acl_filter` (String)
+- `ipv6_dacl_name` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `mac_sec_policy` (String)
+- `name` (String)
+- `neat` (String)
+- `profile_name` (String)
+- `reauth` (List of Object) (see [below for nested schema](#nestedobjatt--item--reauth))
+- `service_template` (String)
+- `track_movement` (String)
+- `vlan` (List of Object) (see [below for nested schema](#nestedobjatt--item--vlan))
+- `voice_domain_permission` (String)
+- `web_auth` (String)
+- `web_redirection` (List of Object) (see [below for nested schema](#nestedobjatt--item--web_redirection))
 
 <a id="nestedobjatt--item--advanced_attributes"></a>
 ### Nested Schema for `item.advanced_attributes`
 
 Read-Only:
 
-- **left_hand_side_dictionary_attribue** (List of Object) (see [below for nested schema](#nestedobjatt--item--advanced_attributes--left_hand_side_dictionary_attribue))
-- **right_hand_side_attribue_value** (List of Object) (see [below for nested schema](#nestedobjatt--item--advanced_attributes--right_hand_side_attribue_value))
+- `left_hand_side_dictionary_attribue` (List of Object) (see [below for nested schema](#nestedobjatt--item--advanced_attributes--left_hand_side_dictionary_attribue))
+- `right_hand_side_attribue_value` (List of Object) (see [below for nested schema](#nestedobjatt--item--advanced_attributes--right_hand_side_attribue_value))
 
 <a id="nestedobjatt--item--advanced_attributes--left_hand_side_dictionary_attribue"></a>
 ### Nested Schema for `item.advanced_attributes.left_hand_side_dictionary_attribue`
 
 Read-Only:
 
-- **advanced_attribute_value_type** (String)
-- **attribute_name** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `advanced_attribute_value_type` (String)
+- `attribute_name` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--item--advanced_attributes--right_hand_side_attribue_value"></a>
@@ -277,10 +288,10 @@ Read-Only:
 
 Read-Only:
 
-- **advanced_attribute_value_type** (String)
-- **attribute_name** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `advanced_attribute_value_type` (String)
+- `attribute_name` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 
@@ -289,9 +300,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--reauth"></a>
@@ -299,8 +310,8 @@ Read-Only:
 
 Read-Only:
 
-- **connectivity** (String)
-- **timer** (Number)
+- `connectivity` (String)
+- `timer` (Number)
 
 
 <a id="nestedobjatt--item--vlan"></a>
@@ -308,8 +319,8 @@ Read-Only:
 
 Read-Only:
 
-- **name_id** (String)
-- **tag_id** (Number)
+- `name_id` (String)
+- `tag_id` (Number)
 
 
 <a id="nestedobjatt--item--web_redirection"></a>
@@ -317,11 +328,11 @@ Read-Only:
 
 Read-Only:
 
-- **acl** (String)
-- **display_certificates_renewal_messages** (String)
-- **portal_name** (String)
-- **static_iphost_name_fqd_n** (String)
-- **web_redirection_type** (String)
+- `acl` (String)
+- `display_certificates_renewal_messages` (String)
+- `portal_name` (String)
+- `static_iphost_name_fqd_n` (String)
+- `web_redirection_type` (String)
 
 ## Import
 

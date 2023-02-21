@@ -12,6 +12,7 @@ description: |-
 It performs update operation on GuestUser.
 - This resource allows the client to reset the guest user password.
 
+
 ~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
 
 ## Example Usage
@@ -33,23 +34,20 @@ resource "ciscoise_guest_user_reset_password" "example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **id** (String) id path parameter.
+- `id` (String) id path parameter.
 
 
 <a id="nestedatt--item"></a>
@@ -57,14 +55,14 @@ Required:
 
 Read-Only:
 
-- **result_value** (List of Object) (see [below for nested schema](#nestedobjatt--item--result_value))
+- `result_value` (List of Object) (see [below for nested schema](#nestedobjatt--item--result_value))
 
 <a id="nestedobjatt--item--result_value"></a>
 ### Nested Schema for `item.result_value`
 
 Read-Only:
 
-- **name** (String)
-- **value** (String)
+- `name` (String)
+- `value` (String)
 
 

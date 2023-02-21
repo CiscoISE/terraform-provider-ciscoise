@@ -30,12 +30,15 @@ data "ciscoise_system_certificate_export_info" "example" {
 
 ### Required
 
-- **dirpath** (String) Directory absolute path in which to save the file.
+- `dirpath` (String) Directory absolute path in which to save the file.
 
 ### Optional
 
-- **export** (String)
-- **id** (String) The ID of this resource.
-- **password** (String, Sensitive)
+- `export` (String)
+- `password` (String, Sensitive)
+
+### Read-Only
+
+- `id` (String) The ID of this resource.
 
 

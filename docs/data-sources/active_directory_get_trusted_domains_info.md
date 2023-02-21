@@ -29,26 +29,26 @@ data "ciscoise_active_directory_get_trusted_domains_info" "example" {
 
 ### Required
 
-- **id** (String) id path parameter.
+- `id` (String) id path parameter.
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **domains** (List of Object) (see [below for nested schema](#nestedobjatt--item--domains))
+- `domains` (List of Object) (see [below for nested schema](#nestedobjatt--item--domains))
 
 <a id="nestedobjatt--item--domains"></a>
 ### Nested Schema for `item.domains`
 
 Read-Only:
 
-- **dns_name** (String)
-- **forest** (String)
-- **unusable_reason** (String)
+- `dns_name` (String)
+- `forest` (String)
+- `unusable_reason` (String)
 
 

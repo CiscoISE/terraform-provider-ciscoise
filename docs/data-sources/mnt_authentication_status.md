@@ -33,16 +33,13 @@ output "ciscoise_mnt_authentication_status_example" {
 
 ### Required
 
-- **mac** (String) MAC path parameter.
-- **rec_ord_s** (String) RECORDS path parameter.
-- **sec_ond_s** (String) SECONDS path parameter.
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `mac` (String) MAC path parameter.
+- `rec_ord_s` (String) RECORDS path parameter.
+- `sec_ond_s` (String) SECONDS path parameter.
 
 ### Read-Only
 
-- **item** (String)
+- `id` (String) The ID of this resource.
+- `item` (String)
 
 

@@ -41,26 +41,23 @@ output "ciscoise_trustsec_vn_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **additional_attributes** (String) JSON String of additional attributes for the Virtual Network
-- **id** (String) Identifier of the Virtual Network
-- **last_update** (String) Timestamp for the last update of the Virtual Network
-- **name** (String) Name of the Virtual Network
+- `additional_attributes` (String) JSON String of additional attributes for the Virtual Network
+- `id` (String) Identifier of the Virtual Network
+- `last_update` (String) Timestamp for the last update of the Virtual Network
+- `name` (String) Name of the Virtual Network
 
 
 <a id="nestedatt--item"></a>
@@ -68,10 +65,10 @@ Optional:
 
 Read-Only:
 
-- **additional_attributes** (String)
-- **id** (String)
-- **last_update** (String)
-- **name** (String)
+- `additional_attributes` (String)
+- `id` (String)
+- `last_update` (String)
+- `name` (String)
 
 ## Import
 

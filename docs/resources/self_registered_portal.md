@@ -300,68 +300,69 @@ output "ciscoise_self_registered_portal_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **customizations** (Block List, Max: 1) Defines all of the Portal Customizations available (see [below for nested schema](#nestedblock--parameters--customizations))
-- **description** (String)
-- **id** (String) The ID of this resource.
-- **name** (String)
-- **portal_test_url** (String) URL to bring up a test page for this portal
-- **portal_type** (String) Allowed values:
-- BYOD,
-- HOTSPOTGUEST,
-- MYDEVICE,
-- SELFREGGUEST,
-- SPONSOR,
-- SPONSOREDGUEST
-- **settings** (Block List, Max: 1) Defines all of the settings groups available for a portal (see [below for nested schema](#nestedblock--parameters--settings))
+- `customizations` (Block List) Defines all of the Portal Customizations available (see [below for nested schema](#nestedblock--parameters--customizations))
+- `description` (String)
+- `name` (String)
+- `portal_test_url` (String) URL to bring up a test page for this portal
+- `portal_type` (String) Allowed values:
+		- BYOD,
+		- HOTSPOTGUEST,
+		- MYDEVICE,
+		- SELFREGGUEST,
+		- SPONSOR,
+		- SPONSOREDGUEST
+- `settings` (Block List) Defines all of the settings groups available for a portal (see [below for nested schema](#nestedblock--parameters--settings))
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--customizations"></a>
 ### Nested Schema for `parameters.customizations`
 
 Optional:
 
-- **global_customizations** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations))
-- **language** (Block List, Max: 1) This property is supported only for Read operation and it allows to show the customizations in English. Other languages are not supported (see [below for nested schema](#nestedblock--parameters--customizations--language))
-- **page_customizations** (Block List, Max: 1) Represent the entire page customization as a giant dictionary (see [below for nested schema](#nestedblock--parameters--customizations--page_customizations))
-- **portal_theme** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--portal_theme))
-- **portal_tweak_settings** (Block List, Max: 1) The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--parameters--customizations--portal_tweak_settings))
+- `global_customizations` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations))
+- `language` (Block List) This property is supported only for Read operation and it allows to show the customizations in English. Other languages are not supported (see [below for nested schema](#nestedblock--parameters--customizations--language))
+- `page_customizations` (Block List) Represent the entire page customization as a giant dictionary (see [below for nested schema](#nestedblock--parameters--customizations--page_customizations))
+- `portal_theme` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--portal_theme))
+- `portal_tweak_settings` (Block List) The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+		When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+		The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--parameters--customizations--portal_tweak_settings))
 
 <a id="nestedblock--parameters--customizations--global_customizations"></a>
 ### Nested Schema for `parameters.customizations.global_customizations`
 
 Optional:
 
-- **background_image** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--background_image))
-- **banner_image** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--banner_image))
-- **banner_title** (String)
-- **contact_text** (String)
-- **desktop_logo_image** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--desktop_logo_image))
-- **footer_element** (String)
-- **mobile_logo_image** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--mobile_logo_image))
+- `background_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--background_image))
+- `banner_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--banner_image))
+- `banner_title` (String)
+- `contact_text` (String)
+- `desktop_logo_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--desktop_logo_image))
+- `footer_element` (String)
+- `mobile_logo_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedblock--parameters--customizations--global_customizations--background_image"></a>
 ### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
 
 Optional:
 
-- **data** (String) Represented as base 64 encoded string of the image byte array
+- `data` (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--banner_image"></a>
@@ -369,7 +370,7 @@ Optional:
 
 Optional:
 
-- **data** (String) Represented as base 64 encoded string of the image byte array
+- `data` (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--desktop_logo_image"></a>
@@ -377,7 +378,7 @@ Optional:
 
 Optional:
 
-- **data** (String) Represented as base 64 encoded string of the image byte array
+- `data` (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--mobile_logo_image"></a>
@@ -385,7 +386,7 @@ Optional:
 
 Optional:
 
-- **data** (String) Represented as base 64 encoded string of the image byte array
+- `data` (String) Represented as base 64 encoded string of the image byte array
 
 
 
@@ -394,7 +395,7 @@ Optional:
 
 Optional:
 
-- **view_language** (String)
+- `view_language` (String)
 
 
 <a id="nestedblock--parameters--customizations--page_customizations"></a>
@@ -402,15 +403,15 @@ Optional:
 
 Optional:
 
-- **data** (Block List) The Dictionary will be exposed here as key value pair (see [below for nested schema](#nestedblock--parameters--customizations--page_customizations--data))
+- `data` (Block List) The Dictionary will be exposed here as key value pair (see [below for nested schema](#nestedblock--parameters--customizations--page_customizations--data))
 
 <a id="nestedblock--parameters--customizations--page_customizations--data"></a>
 ### Nested Schema for `parameters.customizations.page_customizations.data`
 
 Optional:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
 
 
@@ -419,9 +420,12 @@ Optional:
 
 Optional:
 
-- **id** (String) The ID of this resource.
-- **name** (String) The system- or user-assigned name of the portal theme
-- **theme_data** (String) A CSS file, represented as a Base64-encoded byte array
+- `name` (String) The system- or user-assigned name of the portal theme
+- `theme_data` (String) A CSS file, represented as a Base64-encoded byte array
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
 
 
 <a id="nestedblock--parameters--customizations--portal_tweak_settings"></a>
@@ -429,10 +433,10 @@ Optional:
 
 Optional:
 
-- **banner_color** (String) Hex value of color
-- **banner_text_color** (String)
-- **page_background_color** (String)
-- **page_label_and_text_color** (String)
+- `banner_color` (String) Hex value of color
+- `banner_text_color` (String)
+- `page_background_color` (String)
+- `page_label_and_text_color` (String)
 
 
 
@@ -441,37 +445,37 @@ Optional:
 
 Optional:
 
-- **aup_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--aup_settings))
-- **auth_success_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--auth_success_settings))
-- **byod_settings** (Block List, Max: 1) Configuration of BYOD Device Welcome, Registration and Success steps (see [below for nested schema](#nestedblock--parameters--settings--byod_settings))
-- **guest_change_password_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--guest_change_password_settings))
-- **guest_device_registration_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--guest_device_registration_settings))
-- **login_page_settings** (Block List, Max: 1) Portal Login Page settings groups follow (see [below for nested schema](#nestedblock--parameters--settings--login_page_settings))
-- **portal_settings** (Block List, Max: 1) The port, interface, certificate, and other basic settings of a portal (see [below for nested schema](#nestedblock--parameters--settings--portal_settings))
-- **post_access_banner_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--post_access_banner_settings))
-- **post_login_banner_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--post_login_banner_settings))
-- **self_reg_page_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings))
-- **self_reg_success_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_success_settings))
-- **support_info_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--support_info_settings))
+- `aup_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--aup_settings))
+- `auth_success_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--auth_success_settings))
+- `byod_settings` (Block List) Configuration of BYOD Device Welcome, Registration and Success steps (see [below for nested schema](#nestedblock--parameters--settings--byod_settings))
+- `guest_change_password_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--guest_change_password_settings))
+- `guest_device_registration_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--guest_device_registration_settings))
+- `login_page_settings` (Block List) Portal Login Page settings groups follow (see [below for nested schema](#nestedblock--parameters--settings--login_page_settings))
+- `portal_settings` (Block List) The port, interface, certificate, and other basic settings of a portal (see [below for nested schema](#nestedblock--parameters--settings--portal_settings))
+- `post_access_banner_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--post_access_banner_settings))
+- `post_login_banner_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--post_login_banner_settings))
+- `self_reg_page_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings))
+- `self_reg_success_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_success_settings))
+- `support_info_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--support_info_settings))
 
 <a id="nestedblock--parameters--settings--aup_settings"></a>
 ### Nested Schema for `parameters.settings.aup_settings`
 
 Optional:
 
-- **display_frequency** (String) How the AUP should be displayed, either on page or as a link.
-Only valid if includeAup = true.
-Allowed Values:
-- FIRSTLOGIN,
-- EVERYLOGIN,
-- RECURRING
-- **display_frequency_interval_days** (Number) Number of days between AUP confirmations (when displayFrequency = recurring)
-- **include_aup** (String) Require the portal user to read and accept an AUP
-- **require_aup_scrolling** (String) Require the portal user to scroll to the end of the AUP.
-Only valid if requireAupAcceptance = true
-- **require_scrolling** (String)
-- **skip_aup_for_employees** (String) Only valid if requireAupAcceptance = trueG
-- **use_diff_aup_for_employees** (String) Only valid if requireAupAcceptance = trueG
+- `display_frequency` (String) How the AUP should be displayed, either on page or as a link.
+		Only valid if includeAup = true.
+		Allowed Values:
+		- FIRSTLOGIN,
+		- EVERYLOGIN,
+		- RECURRING
+- `display_frequency_interval_days` (Number) Number of days between AUP confirmations (when displayFrequency = recurring)
+- `include_aup` (String) Require the portal user to read and accept an AUP
+- `require_aup_scrolling` (String) Require the portal user to scroll to the end of the AUP.
+		Only valid if requireAupAcceptance = true
+- `require_scrolling` (String)
+- `skip_aup_for_employees` (String) Only valid if requireAupAcceptance = trueG
+- `use_diff_aup_for_employees` (String) Only valid if requireAupAcceptance = trueG
 
 
 <a id="nestedblock--parameters--settings--auth_success_settings"></a>
@@ -479,8 +483,8 @@ Only valid if requireAupAcceptance = true
 
 Optional:
 
-- **redirect_url** (String)
-- **success_redirect** (String)
+- `redirect_url` (String)
+- `success_redirect` (String)
 
 
 <a id="nestedblock--parameters--settings--byod_settings"></a>
@@ -488,17 +492,17 @@ Optional:
 
 Optional:
 
-- **byod_registration_settings** (Block List, Max: 1) Configuration of BYOD endpoint Registration step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_registration_settings))
-- **byod_registration_success_settings** (Block List, Max: 1) Configuration of BYOD endpoint Registration Success step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_registration_success_settings))
-- **byod_welcome_settings** (Block List, Max: 1) Configuration of BYOD endpoint welcome step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_welcome_settings))
+- `byod_registration_settings` (Block List) Configuration of BYOD endpoint Registration step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_registration_settings))
+- `byod_registration_success_settings` (Block List) Configuration of BYOD endpoint Registration Success step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_registration_success_settings))
+- `byod_welcome_settings` (Block List) Configuration of BYOD endpoint welcome step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_welcome_settings))
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_settings"></a>
 ### Nested Schema for `parameters.settings.byod_settings.byod_welcome_settings`
 
 Optional:
 
-- **end_point_identity_group_id** (String) Identity group id for which endpoint belongs
-- **show_device_id** (String) Display Device ID field during registration
+- `end_point_identity_group_id` (String) Identity group id for which endpoint belongs
+- `show_device_id` (String) Display Device ID field during registration
 
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_success_settings"></a>
@@ -506,12 +510,12 @@ Optional:
 
 Optional:
 
-- **redirect_url** (String) Target URL for redirection, used when successRedirect = URL
-- **success_redirect** (String) After an Authentication Success where should device be redirected.
-Allowed values:
-- AUTHSUCCESSPAGE,
-- ORIGINATINGURL,
-- URL
+- `redirect_url` (String) Target URL for redirection, used when successRedirect = URL
+- `success_redirect` (String) After an Authentication Success where should device be redirected.
+		Allowed values:
+		- AUTHSUCCESSPAGE,
+		- ORIGINATINGURL,
+		- URL
 
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_welcome_settings"></a>
@@ -519,18 +523,18 @@ Allowed values:
 
 Optional:
 
-- **aup_display** (String) How the AUP should be displayed, either on page or as a link.
-Only valid if includeAup = true.
-Allowed values:
-- ONPAGE,
-- ASLINK
-- **enable_byo_d** (String)
-- **enable_guest_access** (String)
-- **include_aup** (String)
-- **require_aup_acceptance** (String)
-- **require_mdm** (String)
-- **require_scrolling** (String) Require BYOD devices to scroll down to the bottom of the AUP, 
-Only valid if includeAup = true
+- `aup_display` (String) How the AUP should be displayed, either on page or as a link.
+		Only valid if includeAup = true.
+		Allowed values:
+		- ONPAGE,
+		- ASLINK
+- `enable_byo_d` (String)
+- `enable_guest_access` (String)
+- `include_aup` (String)
+- `require_aup_acceptance` (String)
+- `require_mdm` (String)
+- `require_scrolling` (String) Require BYOD devices to scroll down to the bottom of the AUP, 
+		Only valid if includeAup = true
 
 
 
@@ -539,7 +543,7 @@ Only valid if includeAup = true
 
 Optional:
 
-- **allow_change_passwd_at_first_login** (String) Allow guest to change their own passwords
+- `allow_change_passwd_at_first_login` (String) Allow guest to change their own passwords
 
 
 <a id="nestedblock--parameters--settings--guest_device_registration_settings"></a>
@@ -547,8 +551,8 @@ Optional:
 
 Optional:
 
-- **allow_guests_to_register_devices** (String) Allow guests to register devices
-- **auto_register_guest_devices** (String) Automatically register guest devices
+- `allow_guests_to_register_devices` (String) Allow guests to register devices
+- `auto_register_guest_devices` (String) Automatically register guest devices
 
 
 <a id="nestedblock--parameters--settings--login_page_settings"></a>
@@ -556,33 +560,33 @@ Optional:
 
 Optional:
 
-- **access_code** (String) Access code that must be entered by the portal user (only valid if requireAccessCode = true)
-- **allow_alternate_guest_portal** (String)
-- **allow_forgot_password** (String)
-- **allow_guest_to_change_password** (String) Require the portal user to enter an access code
-- **allow_guest_to_create_accounts** (String)
-- **allow_guest_to_use_social_accounts** (String)
-- **allow_show_guest_form** (String)
-- **alternate_guest_portal** (String)
-- **aup_display** (String) How the AUP should be displayed, either on page or as a link.
-Only valid if includeAup = true.
-Allowed values:
--  ONPAGE,
-- ASLINK
-- **include_aup** (String) Include an Acceptable Use Policy (AUP) that should be displayed during login
-- **max_failed_attempts_before_rate_limit** (Number) Maximum failed login attempts before rate limiting
-- **require_access_code** (String) Require the portal user to enter an access code
-- **require_aup_acceptance** (String) Require the portal user to accept the AUP. Only valid if includeAup = true
-- **social_configs** (Block List) (see [below for nested schema](#nestedblock--parameters--settings--login_page_settings--social_configs))
-- **time_between_logins_during_rate_limit** (Number) Time between login attempts when rate limiting
+- `access_code` (String) Access code that must be entered by the portal user (only valid if requireAccessCode = true)
+- `allow_alternate_guest_portal` (String)
+- `allow_forgot_password` (String)
+- `allow_guest_to_change_password` (String) Require the portal user to enter an access code
+- `allow_guest_to_create_accounts` (String)
+- `allow_guest_to_use_social_accounts` (String)
+- `allow_show_guest_form` (String)
+- `alternate_guest_portal` (String)
+- `aup_display` (String) How the AUP should be displayed, either on page or as a link.
+		Only valid if includeAup = true.
+		Allowed values:
+		-  ONPAGE,
+		- ASLINK
+- `include_aup` (String) Include an Acceptable Use Policy (AUP) that should be displayed during login
+- `max_failed_attempts_before_rate_limit` (Number) Maximum failed login attempts before rate limiting
+- `require_access_code` (String) Require the portal user to enter an access code
+- `require_aup_acceptance` (String) Require the portal user to accept the AUP. Only valid if includeAup = true
+- `social_configs` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--login_page_settings--social_configs))
+- `time_between_logins_during_rate_limit` (Number) Time between login attempts when rate limiting
 
 <a id="nestedblock--parameters--settings--login_page_settings--social_configs"></a>
 ### Nested Schema for `parameters.settings.login_page_settings.time_between_logins_during_rate_limit`
 
 Optional:
 
-- **social_media_type** (String)
-- **social_media_value** (String)
+- `social_media_type` (String)
+- `social_media_value` (String)
 
 
 
@@ -591,28 +595,28 @@ Optional:
 
 Optional:
 
-- **allowed_interfaces** (List of String) Interfaces that the portal will be reachable on.
-Allowed values:
-- eth0,
-- eth1,
-- eth2,
-- eth3,
-- eth4,
-- eth5,
-- bond0,
-- bond1,
-- bond2
-- **always_used_language** (String)
-- **assigned_guest_type_for_employee** (String) Unique Id of a guest type.
-Employees using this portal as a guest inherit login options from the guest type
-- **authentication_method** (String) Unique Id of the identity source sequence
-- **certificate_group_tag** (String) Logical name of the x.509 server certificate that will be used for the portal
-- **display_lang** (String) Allowed values:
-- USEBROWSERLOCALE,
-- ALWAYSUSE
-- **fallback_language** (String) Used when displayLang = USEBROWSERLOCALE
-- **https_port** (Number) The port number that the allowed interfaces will listen on.
-Range from 8000 to 8999
+- `allowed_interfaces` (List of String) Interfaces that the portal will be reachable on.
+		Allowed values:
+		- eth0,
+		- eth1,
+		- eth2,
+		- eth3,
+		- eth4,
+		- eth5,
+		- bond0,
+		- bond1,
+		- bond2
+- `always_used_language` (String)
+- `assigned_guest_type_for_employee` (String) Unique Id of a guest type.
+		Employees using this portal as a guest inherit login options from the guest type
+- `authentication_method` (String) Unique Id of the identity source sequence
+- `certificate_group_tag` (String) Logical name of the x.509 server certificate that will be used for the portal
+- `display_lang` (String) Allowed values:
+		- USEBROWSERLOCALE,
+		- ALWAYSUSE
+- `fallback_language` (String) Used when displayLang = USEBROWSERLOCALE
+- `https_port` (Number) The port number that the allowed interfaces will listen on.
+		Range from 8000 to 8999
 
 
 <a id="nestedblock--parameters--settings--post_access_banner_settings"></a>
@@ -620,7 +624,7 @@ Range from 8000 to 8999
 
 Optional:
 
-- **include_post_access_banner** (String)
+- `include_post_access_banner` (String)
 
 
 <a id="nestedblock--parameters--settings--post_login_banner_settings"></a>
@@ -628,7 +632,7 @@ Optional:
 
 Optional:
 
-- **include_post_access_banner** (String) Include a Post-Login Banner page
+- `include_post_access_banner` (String) Include a Post-Login Banner page
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings"></a>
@@ -636,88 +640,88 @@ Optional:
 
 Optional:
 
-- **account_validity_duration** (Number) Self-registered guest account is valid for this many account_validity_time_units
-- **account_validity_time_units** (String) Time units for account_validity_duration.
-Allowed Values:
-- DAYS,
-- HOURS,
-- MINUTES
-- **allow_grace_access** (String)
-- **approval_email_addresses** (String) Only valid if requireGuestApproval = true and sendApprovalRequestTo = SELECTEDEMAILADDRESSES
-- **approve_deny_links_time_units** (String) This attribute, along with approveDenyLinksValidFor, specifies how long the link can be used.
-Only valid if requireGuestApproval = true.
-Allowed Values:
-- DAYS,
-- HOURS,
-- MINUTES
-- **approve_deny_links_valid_for** (Number) This attribute, along with approveDenyLinksTimeUnits, specifies how long the link can be used.
-Only valid if requireGuestApproval = true
-- **assign_guests_to_guest_type** (String) Guests are assigned to this guest type
-- **aup_display** (String) How the AUP should be displayed, either on page or as a link.
-Only valid if includeAup = true.
-Allowed values:
-- ONPAGE,
-- ASLINK
-- **authenticate_sponsors_using_portal_list** (String)
-- **auto_login_self_wait** (String) Allow guests to login automatically from self-registration after sponsor's approval.
-No need to provide the credentials by guest to login
-- **auto_login_time_period** (Number) Waiting period for auto login until sponsor's approval.
-If time exceeds, guest has to login manually by providing the credentials.
-Default value is 5 minutes
-- **credential_notification_using_email** (String) If true, send credential notification upon approval using email.
-Only valid if requireGuestApproval = true
-- **credential_notification_using_sms** (String) If true, send credential notification upon approval using SMS.
-Only valid if requireGuestApproval = true
-- **enable_guest_email_blacklist** (String) Disallow guests with an e-mail address from selected domains
-- **enable_guest_email_whitelist** (String) Allow guests with an e-mail address from selected domains
-- **field_company** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_company))
-- **field_email_addr** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_email_addr))
-- **field_first_name** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_first_name))
-- **field_last_name** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_last_name))
-- **field_location** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_location))
-- **field_person_being_visited** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_person_being_visited))
-- **field_phone_no** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_phone_no))
-- **field_reason_for_visit** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_reason_for_visit))
-- **field_sms_provider** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_sms_provider))
-- **field_user_name** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_user_name))
-- **grace_access_expire_interval** (Number)
-- **grace_access_send_account_expiration** (String)
-- **guest_email_blacklist_domains** (List of String) Disallow guests with an e-mail address from selected domains
-- **guest_email_whitelist_domains** (List of String) Self-registered guests whose e-mail address is in one of these domains will be allowed.
-Only valid if enableGuestEmailWhitelist = true
-- **include_aup** (String) Include an Acceptable Use Policy (AUP) that should be displayed during login
-- **post_registration_redirect** (String) After the registration submission direct the guest user to one of the following pages.
-Only valid if requireGuestApproval = true.
-Allowed Values:
-- SELFREGISTRATIONSUCCESS,
-- LOGINPAGEWITHINSTRUCTIONS
-- URL
-- **post_registration_redirect_url** (String) URL where guest user is redirected after registration.
-Only valid if requireGuestApproval = true and postRegistrationRedirect = URL
-- **registration_code** (String) The registration code that the guest user must enter
-- **require_approver_to_authenticate** (String) When self-registered guests require approval, an approval request is e-mailed to one or more sponsor users.
-If the Cisco ISE Administrator chooses to include an approval link in the e-mail,
-a sponsor user who clicks the link will be required to enter their username and password if this attribute is true.
-Only valid if requireGuestApproval = true
-- **require_aup_acceptance** (String) Require the portal user to accept the AUP. Only valid if includeAup = true
-- **require_guest_approval** (String) Require self-registered guests to be approved if true
-- **require_registration_code** (String) Self-registered guests are required to enter a registration code
-- **selectable_locations** (List of String) Guests can choose from these locations to set their time zone
-- **selectable_sms_providers** (List of String) This attribute is an array of SMS provider names
-- **send_approval_request_to** (String) Specifies where approval requests are sent.
-Only valid if requireGuestApproval = true.
-Allowed Values:
-- SELECTEDEMAILADDRESSES,
-- PERSONBEINGVISITED
-- **sponsor_portal_list** (List of String)
+- `account_validity_duration` (Number) Self-registered guest account is valid for this many account_validity_time_units
+- `account_validity_time_units` (String) Time units for account_validity_duration.
+		Allowed Values:
+		- DAYS,
+		- HOURS,
+		- MINUTES
+- `allow_grace_access` (String)
+- `approval_email_addresses` (String) Only valid if requireGuestApproval = true and sendApprovalRequestTo = SELECTEDEMAILADDRESSES
+- `approve_deny_links_time_units` (String) This attribute, along with approveDenyLinksValidFor, specifies how long the link can be used.
+		Only valid if requireGuestApproval = true.
+		Allowed Values:
+		- DAYS,
+		- HOURS,
+		- MINUTES
+- `approve_deny_links_valid_for` (Number) This attribute, along with approveDenyLinksTimeUnits, specifies how long the link can be used.
+		Only valid if requireGuestApproval = true
+- `assign_guests_to_guest_type` (String) Guests are assigned to this guest type
+- `aup_display` (String) How the AUP should be displayed, either on page or as a link.
+		Only valid if includeAup = true.
+		Allowed values:
+		- ONPAGE,
+		- ASLINK
+- `authenticate_sponsors_using_portal_list` (String)
+- `auto_login_self_wait` (String) Allow guests to login automatically from self-registration after sponsor's approval.
+		No need to provide the credentials by guest to login
+- `auto_login_time_period` (Number) Waiting period for auto login until sponsor's approval.
+		If time exceeds, guest has to login manually by providing the credentials.
+		Default value is 5 minutes
+- `credential_notification_using_email` (String) If true, send credential notification upon approval using email.
+		Only valid if requireGuestApproval = true
+- `credential_notification_using_sms` (String) If true, send credential notification upon approval using SMS.
+		Only valid if requireGuestApproval = true
+- `enable_guest_email_blacklist` (String) Disallow guests with an e-mail address from selected domains
+- `enable_guest_email_whitelist` (String) Allow guests with an e-mail address from selected domains
+- `field_company` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_company))
+- `field_email_addr` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_email_addr))
+- `field_first_name` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_first_name))
+- `field_last_name` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_last_name))
+- `field_location` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_location))
+- `field_person_being_visited` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_person_being_visited))
+- `field_phone_no` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_phone_no))
+- `field_reason_for_visit` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_reason_for_visit))
+- `field_sms_provider` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_sms_provider))
+- `field_user_name` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--self_reg_page_settings--field_user_name))
+- `grace_access_expire_interval` (Number)
+- `grace_access_send_account_expiration` (String)
+- `guest_email_blacklist_domains` (List of String) Disallow guests with an e-mail address from selected domains
+- `guest_email_whitelist_domains` (List of String) Self-registered guests whose e-mail address is in one of these domains will be allowed.
+		Only valid if enableGuestEmailWhitelist = true
+- `include_aup` (String) Include an Acceptable Use Policy (AUP) that should be displayed during login
+- `post_registration_redirect` (String) After the registration submission direct the guest user to one of the following pages.
+		Only valid if requireGuestApproval = true.
+		Allowed Values:
+		- SELFREGISTRATIONSUCCESS,
+		- LOGINPAGEWITHINSTRUCTIONS
+		- URL
+- `post_registration_redirect_url` (String) URL where guest user is redirected after registration.
+		Only valid if requireGuestApproval = true and postRegistrationRedirect = URL
+- `registration_code` (String) The registration code that the guest user must enter
+- `require_approver_to_authenticate` (String) When self-registered guests require approval, an approval request is e-mailed to one or more sponsor users.
+		If the Cisco ISE Administrator chooses to include an approval link in the e-mail,
+		a sponsor user who clicks the link will be required to enter their username and password if this attribute is true.
+		Only valid if requireGuestApproval = true
+- `require_aup_acceptance` (String) Require the portal user to accept the AUP. Only valid if includeAup = true
+- `require_guest_approval` (String) Require self-registered guests to be approved if true
+- `require_registration_code` (String) Self-registered guests are required to enter a registration code
+- `selectable_locations` (List of String) Guests can choose from these locations to set their time zone
+- `selectable_sms_providers` (List of String) This attribute is an array of SMS provider names
+- `send_approval_request_to` (String) Specifies where approval requests are sent.
+		Only valid if requireGuestApproval = true.
+		Allowed Values:
+		- SELECTEDEMAILADDRESSES,
+		- PERSONBEINGVISITED
+- `sponsor_portal_list` (List of String)
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_company"></a>
 ### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_email_addr"></a>
@@ -725,8 +729,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_first_name"></a>
@@ -734,8 +738,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_last_name"></a>
@@ -743,8 +747,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_location"></a>
@@ -752,8 +756,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_person_being_visited"></a>
@@ -761,8 +765,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_phone_no"></a>
@@ -770,8 +774,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_reason_for_visit"></a>
@@ -779,8 +783,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_sms_provider"></a>
@@ -788,8 +792,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_user_name"></a>
@@ -797,8 +801,8 @@ Optional:
 
 Optional:
 
-- **include** (String)
-- **require** (String) Only applicable if include = true
+- `include` (String)
+- `require` (String) Only applicable if include = true
 
 
 
@@ -807,25 +811,25 @@ Optional:
 
 Optional:
 
-- **allow_guest_login_from_selfreg_success_page** (String)
-- **allow_guest_send_self_using_email** (String)
-- **allow_guest_send_self_using_print** (String)
-- **allow_guest_send_self_using_sms** (String)
-- **aup_on_page** (String)
-- **include_aup** (String)
-- **include_company** (String)
-- **include_email_addr** (String)
-- **include_first_name** (String)
-- **include_last_name** (String)
-- **include_location** (String)
-- **include_password** (String)
-- **include_person_being_visited** (String)
-- **include_phone_no** (String)
-- **include_reason_for_visit** (String)
-- **include_sms_provider** (String)
-- **include_user_name** (String)
-- **require_aup_acceptance** (String)
-- **require_aup_scrolling** (String)
+- `allow_guest_login_from_selfreg_success_page` (String)
+- `allow_guest_send_self_using_email` (String)
+- `allow_guest_send_self_using_print` (String)
+- `allow_guest_send_self_using_sms` (String)
+- `aup_on_page` (String)
+- `include_aup` (String)
+- `include_company` (String)
+- `include_email_addr` (String)
+- `include_first_name` (String)
+- `include_last_name` (String)
+- `include_location` (String)
+- `include_password` (String)
+- `include_person_being_visited` (String)
+- `include_phone_no` (String)
+- `include_reason_for_visit` (String)
+- `include_sms_provider` (String)
+- `include_user_name` (String)
+- `require_aup_acceptance` (String)
+- `require_aup_scrolling` (String)
 
 
 <a id="nestedblock--parameters--settings--support_info_settings"></a>
@@ -833,19 +837,29 @@ Optional:
 
 Optional:
 
-- **default_empty_field_value** (String) The default value displayed for an empty field.
-Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
-- **empty_field_display** (String) Specifies how empty fields are handled on the Support Information Page. Allowed values:
-- HIDE,
-- DISPLAYWITHNOVALUE,
-- DISPLAYWITHDEFAULTVALUE
-- **include_browser_user_agent** (String)
-- **include_failure_code** (String)
-- **include_ip_address** (String)
-- **include_mac_addr** (String)
-- **include_policy_server** (String)
-- **include_support_info_page** (String)
+- `default_empty_field_value` (String) The default value displayed for an empty field.
+		Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
+- `empty_field_display` (String) Specifies how empty fields are handled on the Support Information Page. Allowed values:
+		- HIDE,
+		- DISPLAYWITHNOVALUE,
+		- DISPLAYWITHDEFAULTVALUE
+- `include_browser_user_agent` (String)
+- `include_failure_code` (String)
+- `include_ip_address` (String)
+- `include_mac_addr` (String)
+- `include_policy_server` (String)
+- `include_support_info_page` (String)
 
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -854,45 +868,45 @@ Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
 
 Read-Only:
 
-- **customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **portal_test_url** (String)
-- **portal_type** (String)
-- **settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings))
+- `customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `portal_test_url` (String)
+- `portal_type` (String)
+- `settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings))
 
 <a id="nestedobjatt--item--customizations"></a>
 ### Nested Schema for `item.customizations`
 
 Read-Only:
 
-- **global_customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations))
-- **language** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--language))
-- **page_customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations))
-- **portal_theme** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_theme))
-- **portal_tweak_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_tweak_settings))
+- `global_customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations))
+- `language` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--language))
+- `page_customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations))
+- `portal_theme` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_theme))
+- `portal_tweak_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_tweak_settings))
 
 <a id="nestedobjatt--item--customizations--global_customizations"></a>
 ### Nested Schema for `item.customizations.global_customizations`
 
 Read-Only:
 
-- **background_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--background_image))
-- **banner_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--banner_image))
-- **banner_title** (String)
-- **contact_text** (String)
-- **desktop_logo_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--desktop_logo_image))
-- **footer_element** (String)
-- **mobile_logo_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--mobile_logo_image))
+- `background_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--background_image))
+- `banner_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--banner_image))
+- `banner_title` (String)
+- `contact_text` (String)
+- `desktop_logo_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--desktop_logo_image))
+- `footer_element` (String)
+- `mobile_logo_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedobjatt--item--customizations--global_customizations--background_image"></a>
 ### Nested Schema for `item.customizations.global_customizations.mobile_logo_image`
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--banner_image"></a>
@@ -900,7 +914,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--desktop_logo_image"></a>
@@ -908,7 +922,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--mobile_logo_image"></a>
@@ -916,7 +930,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 
@@ -925,7 +939,7 @@ Read-Only:
 
 Read-Only:
 
-- **view_language** (String)
+- `view_language` (String)
 
 
 <a id="nestedobjatt--item--customizations--page_customizations"></a>
@@ -933,15 +947,15 @@ Read-Only:
 
 Read-Only:
 
-- **data** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations--data))
+- `data` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations--data))
 
 <a id="nestedobjatt--item--customizations--page_customizations--data"></a>
 ### Nested Schema for `item.customizations.page_customizations.data`
 
 Read-Only:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
 
 
@@ -950,9 +964,9 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
-- **name** (String)
-- **theme_data** (String)
+- `id` (String)
+- `name` (String)
+- `theme_data` (String)
 
 
 <a id="nestedobjatt--item--customizations--portal_tweak_settings"></a>
@@ -960,10 +974,10 @@ Read-Only:
 
 Read-Only:
 
-- **banner_color** (String)
-- **banner_text_color** (String)
-- **page_background_color** (String)
-- **page_label_and_text_color** (String)
+- `banner_color` (String)
+- `banner_text_color` (String)
+- `page_background_color` (String)
+- `page_label_and_text_color` (String)
 
 
 
@@ -972,9 +986,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--settings"></a>
@@ -982,31 +996,31 @@ Read-Only:
 
 Read-Only:
 
-- **aup_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--aup_settings))
-- **auth_success_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--auth_success_settings))
-- **byod_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings))
-- **guest_change_password_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--guest_change_password_settings))
-- **guest_device_registration_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--guest_device_registration_settings))
-- **login_page_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--login_page_settings))
-- **portal_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--portal_settings))
-- **post_access_banner_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--post_access_banner_settings))
-- **post_login_banner_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--post_login_banner_settings))
-- **self_reg_page_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings))
-- **self_reg_success_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_success_settings))
-- **support_info_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--support_info_settings))
+- `aup_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--aup_settings))
+- `auth_success_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--auth_success_settings))
+- `byod_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings))
+- `guest_change_password_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--guest_change_password_settings))
+- `guest_device_registration_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--guest_device_registration_settings))
+- `login_page_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--login_page_settings))
+- `portal_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--portal_settings))
+- `post_access_banner_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--post_access_banner_settings))
+- `post_login_banner_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--post_login_banner_settings))
+- `self_reg_page_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings))
+- `self_reg_success_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_success_settings))
+- `support_info_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--support_info_settings))
 
 <a id="nestedobjatt--item--settings--aup_settings"></a>
 ### Nested Schema for `item.settings.aup_settings`
 
 Read-Only:
 
-- **display_frequency** (String)
-- **display_frequency_interval_days** (Number)
-- **include_aup** (String)
-- **require_aup_scrolling** (String)
-- **require_scrolling** (String)
-- **skip_aup_for_employees** (String)
-- **use_diff_aup_for_employees** (String)
+- `display_frequency` (String)
+- `display_frequency_interval_days` (Number)
+- `include_aup` (String)
+- `require_aup_scrolling` (String)
+- `require_scrolling` (String)
+- `skip_aup_for_employees` (String)
+- `use_diff_aup_for_employees` (String)
 
 
 <a id="nestedobjatt--item--settings--auth_success_settings"></a>
@@ -1014,8 +1028,8 @@ Read-Only:
 
 Read-Only:
 
-- **redirect_url** (String)
-- **success_redirect** (String)
+- `redirect_url` (String)
+- `success_redirect` (String)
 
 
 <a id="nestedobjatt--item--settings--byod_settings"></a>
@@ -1023,17 +1037,17 @@ Read-Only:
 
 Read-Only:
 
-- **byod_registration_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_registration_settings))
-- **byod_registration_success_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_registration_success_settings))
-- **byod_welcome_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_welcome_settings))
+- `byod_registration_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_registration_settings))
+- `byod_registration_success_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_registration_success_settings))
+- `byod_welcome_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_welcome_settings))
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_registration_settings"></a>
 ### Nested Schema for `item.settings.byod_settings.byod_welcome_settings`
 
 Read-Only:
 
-- **end_point_identity_group_id** (String)
-- **show_device_id** (String)
+- `end_point_identity_group_id` (String)
+- `show_device_id` (String)
 
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_registration_success_settings"></a>
@@ -1041,8 +1055,8 @@ Read-Only:
 
 Read-Only:
 
-- **redirect_url** (String)
-- **success_redirect** (String)
+- `redirect_url` (String)
+- `success_redirect` (String)
 
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_welcome_settings"></a>
@@ -1050,13 +1064,13 @@ Read-Only:
 
 Read-Only:
 
-- **aup_display** (String)
-- **enable_byo_d** (String)
-- **enable_guest_access** (String)
-- **include_aup** (String)
-- **require_aup_acceptance** (String)
-- **require_mdm** (String)
-- **require_scrolling** (String)
+- `aup_display` (String)
+- `enable_byo_d` (String)
+- `enable_guest_access` (String)
+- `include_aup` (String)
+- `require_aup_acceptance` (String)
+- `require_mdm` (String)
+- `require_scrolling` (String)
 
 
 
@@ -1065,7 +1079,7 @@ Read-Only:
 
 Read-Only:
 
-- **allow_change_passwd_at_first_login** (String)
+- `allow_change_passwd_at_first_login` (String)
 
 
 <a id="nestedobjatt--item--settings--guest_device_registration_settings"></a>
@@ -1073,8 +1087,8 @@ Read-Only:
 
 Read-Only:
 
-- **allow_guests_to_register_devices** (String)
-- **auto_register_guest_devices** (String)
+- `allow_guests_to_register_devices` (String)
+- `auto_register_guest_devices` (String)
 
 
 <a id="nestedobjatt--item--settings--login_page_settings"></a>
@@ -1082,29 +1096,29 @@ Read-Only:
 
 Read-Only:
 
-- **access_code** (String)
-- **allow_alternate_guest_portal** (String)
-- **allow_forgot_password** (String)
-- **allow_guest_to_change_password** (String)
-- **allow_guest_to_create_accounts** (String)
-- **allow_guest_to_use_social_accounts** (String)
-- **allow_show_guest_form** (String)
-- **alternate_guest_portal** (String)
-- **aup_display** (String)
-- **include_aup** (String)
-- **max_failed_attempts_before_rate_limit** (Number)
-- **require_access_code** (String)
-- **require_aup_acceptance** (String)
-- **social_configs** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--login_page_settings--social_configs))
-- **time_between_logins_during_rate_limit** (Number)
+- `access_code` (String)
+- `allow_alternate_guest_portal` (String)
+- `allow_forgot_password` (String)
+- `allow_guest_to_change_password` (String)
+- `allow_guest_to_create_accounts` (String)
+- `allow_guest_to_use_social_accounts` (String)
+- `allow_show_guest_form` (String)
+- `alternate_guest_portal` (String)
+- `aup_display` (String)
+- `include_aup` (String)
+- `max_failed_attempts_before_rate_limit` (Number)
+- `require_access_code` (String)
+- `require_aup_acceptance` (String)
+- `social_configs` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--login_page_settings--social_configs))
+- `time_between_logins_during_rate_limit` (Number)
 
 <a id="nestedobjatt--item--settings--login_page_settings--social_configs"></a>
 ### Nested Schema for `item.settings.login_page_settings.time_between_logins_during_rate_limit`
 
 Read-Only:
 
-- **social_media_type** (String)
-- **social_media_value** (String)
+- `social_media_type` (String)
+- `social_media_value` (String)
 
 
 
@@ -1113,14 +1127,14 @@ Read-Only:
 
 Read-Only:
 
-- **allowed_interfaces** (List of String)
-- **always_used_language** (String)
-- **assigned_guest_type_for_employee** (String)
-- **authentication_method** (String)
-- **certificate_group_tag** (String)
-- **display_lang** (String)
-- **fallback_language** (String)
-- **https_port** (Number)
+- `allowed_interfaces` (List of String)
+- `always_used_language` (String)
+- `assigned_guest_type_for_employee` (String)
+- `authentication_method` (String)
+- `certificate_group_tag` (String)
+- `display_lang` (String)
+- `fallback_language` (String)
+- `https_port` (Number)
 
 
 <a id="nestedobjatt--item--settings--post_access_banner_settings"></a>
@@ -1128,7 +1142,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (String)
+- `include_post_access_banner` (String)
 
 
 <a id="nestedobjatt--item--settings--post_login_banner_settings"></a>
@@ -1136,7 +1150,7 @@ Read-Only:
 
 Read-Only:
 
-- **include_post_access_banner** (String)
+- `include_post_access_banner` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings"></a>
@@ -1144,55 +1158,55 @@ Read-Only:
 
 Read-Only:
 
-- **account_validity_duration** (Number)
-- **account_validity_time_units** (String)
-- **allow_grace_access** (String)
-- **approval_email_addresses** (String)
-- **approve_deny_links_time_units** (String)
-- **approve_deny_links_valid_for** (Number)
-- **assign_guests_to_guest_type** (String)
-- **aup_display** (String)
-- **authenticate_sponsors_using_portal_list** (String)
-- **auto_login_self_wait** (String)
-- **auto_login_time_period** (Number)
-- **credential_notification_using_email** (String)
-- **credential_notification_using_sms** (String)
-- **enable_guest_email_blacklist** (String)
-- **enable_guest_email_whitelist** (String)
-- **field_company** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_company))
-- **field_email_addr** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_email_addr))
-- **field_first_name** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_first_name))
-- **field_last_name** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_last_name))
-- **field_location** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_location))
-- **field_person_being_visited** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_person_being_visited))
-- **field_phone_no** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_phone_no))
-- **field_reason_for_visit** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_reason_for_visit))
-- **field_sms_provider** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_sms_provider))
-- **field_user_name** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_user_name))
-- **grace_access_expire_interval** (Number)
-- **grace_access_send_account_expiration** (String)
-- **guest_email_blacklist_domains** (List of String)
-- **guest_email_whitelist_domains** (List of String)
-- **include_aup** (String)
-- **post_registration_redirect** (String)
-- **post_registration_redirect_url** (String)
-- **registration_code** (String)
-- **require_approver_to_authenticate** (String)
-- **require_aup_acceptance** (String)
-- **require_guest_approval** (String)
-- **require_registration_code** (String)
-- **selectable_locations** (List of String)
-- **selectable_sms_providers** (List of String)
-- **send_approval_request_to** (String)
-- **sponsor_portal_list** (List of String)
+- `account_validity_duration` (Number)
+- `account_validity_time_units` (String)
+- `allow_grace_access` (String)
+- `approval_email_addresses` (String)
+- `approve_deny_links_time_units` (String)
+- `approve_deny_links_valid_for` (Number)
+- `assign_guests_to_guest_type` (String)
+- `aup_display` (String)
+- `authenticate_sponsors_using_portal_list` (String)
+- `auto_login_self_wait` (String)
+- `auto_login_time_period` (Number)
+- `credential_notification_using_email` (String)
+- `credential_notification_using_sms` (String)
+- `enable_guest_email_blacklist` (String)
+- `enable_guest_email_whitelist` (String)
+- `field_company` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_company))
+- `field_email_addr` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_email_addr))
+- `field_first_name` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_first_name))
+- `field_last_name` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_last_name))
+- `field_location` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_location))
+- `field_person_being_visited` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_person_being_visited))
+- `field_phone_no` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_phone_no))
+- `field_reason_for_visit` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_reason_for_visit))
+- `field_sms_provider` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_sms_provider))
+- `field_user_name` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--self_reg_page_settings--field_user_name))
+- `grace_access_expire_interval` (Number)
+- `grace_access_send_account_expiration` (String)
+- `guest_email_blacklist_domains` (List of String)
+- `guest_email_whitelist_domains` (List of String)
+- `include_aup` (String)
+- `post_registration_redirect` (String)
+- `post_registration_redirect_url` (String)
+- `registration_code` (String)
+- `require_approver_to_authenticate` (String)
+- `require_aup_acceptance` (String)
+- `require_guest_approval` (String)
+- `require_registration_code` (String)
+- `selectable_locations` (List of String)
+- `selectable_sms_providers` (List of String)
+- `send_approval_request_to` (String)
+- `sponsor_portal_list` (List of String)
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_company"></a>
 ### Nested Schema for `item.settings.self_reg_page_settings.sponsor_portal_list`
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_email_addr"></a>
@@ -1200,8 +1214,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_first_name"></a>
@@ -1209,8 +1223,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_last_name"></a>
@@ -1218,8 +1232,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_location"></a>
@@ -1227,8 +1241,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_person_being_visited"></a>
@@ -1236,8 +1250,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_phone_no"></a>
@@ -1245,8 +1259,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_reason_for_visit"></a>
@@ -1254,8 +1268,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_sms_provider"></a>
@@ -1263,8 +1277,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 <a id="nestedobjatt--item--settings--self_reg_page_settings--field_user_name"></a>
@@ -1272,8 +1286,8 @@ Read-Only:
 
 Read-Only:
 
-- **include** (String)
-- **require** (String)
+- `include` (String)
+- `require` (String)
 
 
 
@@ -1282,25 +1296,25 @@ Read-Only:
 
 Read-Only:
 
-- **allow_guest_login_from_selfreg_success_page** (String)
-- **allow_guest_send_self_using_email** (String)
-- **allow_guest_send_self_using_print** (String)
-- **allow_guest_send_self_using_sms** (String)
-- **aup_on_page** (String)
-- **include_aup** (String)
-- **include_company** (String)
-- **include_email_addr** (String)
-- **include_first_name** (String)
-- **include_last_name** (String)
-- **include_location** (String)
-- **include_password** (String)
-- **include_person_being_visited** (String)
-- **include_phone_no** (String)
-- **include_reason_for_visit** (String)
-- **include_sms_provider** (String)
-- **include_user_name** (String)
-- **require_aup_acceptance** (String)
-- **require_aup_scrolling** (String)
+- `allow_guest_login_from_selfreg_success_page` (String)
+- `allow_guest_send_self_using_email` (String)
+- `allow_guest_send_self_using_print` (String)
+- `allow_guest_send_self_using_sms` (String)
+- `aup_on_page` (String)
+- `include_aup` (String)
+- `include_company` (String)
+- `include_email_addr` (String)
+- `include_first_name` (String)
+- `include_last_name` (String)
+- `include_location` (String)
+- `include_password` (String)
+- `include_person_being_visited` (String)
+- `include_phone_no` (String)
+- `include_reason_for_visit` (String)
+- `include_sms_provider` (String)
+- `include_user_name` (String)
+- `require_aup_acceptance` (String)
+- `require_aup_scrolling` (String)
 
 
 <a id="nestedobjatt--item--settings--support_info_settings"></a>
@@ -1308,14 +1322,14 @@ Read-Only:
 
 Read-Only:
 
-- **default_empty_field_value** (String)
-- **empty_field_display** (String)
-- **include_browser_user_agent** (String)
-- **include_failure_code** (String)
-- **include_ip_address** (String)
-- **include_mac_addr** (String)
-- **include_policy_server** (String)
-- **include_support_info_page** (String)
+- `default_empty_field_value` (String)
+- `empty_field_display` (String)
+- `include_browser_user_agent` (String)
+- `include_failure_code` (String)
+- `include_ip_address` (String)
+- `include_mac_addr` (String)
+- `include_policy_server` (String)
+- `include_support_info_page` (String)
 
 ## Import
 

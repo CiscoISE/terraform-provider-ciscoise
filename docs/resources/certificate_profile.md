@@ -43,46 +43,57 @@ output "ciscoise_certificate_profile_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **allowed_as_user_name** (String)
-- **certificate_attribute_name** (String) Attribute name of the Certificate Profile - used only when CERTIFICATE is chosen in usernameFrom.
-Allowed values:
-- SUBJECT_COMMON_NAME
-- SUBJECT_ALTERNATIVE_NAME
-- SUBJECT_SERIAL_NUMBER
-- SUBJECT
-- SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
-- SUBJECT_ALTERNATIVE_NAME_EMAIL
-- SUBJECT_ALTERNATIVE_NAME_DNS.
-- Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN
-- **description** (String)
-- **external_identity_store_name** (String) Referred IDStore name for the Certificate Profile or [not applicable] in case no identity store is chosen
-- **id** (String) The ID of this resource.
-- **match_mode** (String) Match mode of the Certificate Profile.
-Allowed values:
-- NEVER
-- RESOLVE_IDENTITY_AMBIGUITY
-- BINARY_COMPARISON
-- **name** (String)
-- **username_from** (String) The attribute in the certificate where the user name should be taken from.
-Allowed values:
-- CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
-- UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)
+- `allowed_as_user_name` (String)
+- `certificate_attribute_name` (String) Attribute name of the Certificate Profile - used only when CERTIFICATE is chosen in usernameFrom.
+		Allowed values:
+		- SUBJECT_COMMON_NAME
+		- SUBJECT_ALTERNATIVE_NAME
+		- SUBJECT_SERIAL_NUMBER
+		- SUBJECT
+		- SUBJECT_ALTERNATIVE_NAME_OTHER_NAME
+		- SUBJECT_ALTERNATIVE_NAME_EMAIL
+		- SUBJECT_ALTERNATIVE_NAME_DNS.
+		- Additional internal value ALL_SUBJECT_AND_ALTERNATIVE_NAMES is used automatically when usernameFrom=UPN
+- `description` (String)
+- `external_identity_store_name` (String) Referred IDStore name for the Certificate Profile or [not applicable] in case no identity store is chosen
+- `match_mode` (String) Match mode of the Certificate Profile.
+		Allowed values:
+		- NEVER
+		- RESOLVE_IDENTITY_AMBIGUITY
+		- BINARY_COMPARISON
+- `name` (String)
+- `username_from` (String) The attribute in the certificate where the user name should be taken from.
+		Allowed values:
+		- CERTIFICATE (for a specific attribute as defined in certificateAttributeName)
+		- UPN (for using any Subject or Alternative Name Attributes in the Certificate - an option only in AD)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -90,24 +101,24 @@ Allowed values:
 
 Read-Only:
 
-- **allowed_as_user_name** (String)
-- **certificate_attribute_name** (String)
-- **description** (String)
-- **external_identity_store_name** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **match_mode** (String)
-- **name** (String)
-- **username_from** (String)
+- `allowed_as_user_name` (String)
+- `certificate_attribute_name` (String)
+- `description` (String)
+- `external_identity_store_name` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `match_mode` (String)
+- `name` (String)
+- `username_from` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

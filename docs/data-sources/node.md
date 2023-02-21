@@ -62,7 +62,7 @@ output "ciscoise_node_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
 
 **Simple filtering** should be available through the filter query string parameter. The structure of a filter is
 a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
@@ -94,49 +94,49 @@ string parameter. Each resource Data model description should specify if an attr
               CONTAINS	  | Contains 
 
               NCONTAINS	  | Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **display_name** (String)
-- **fqdn** (String)
-- **gate_way** (String)
-- **id** (String)
-- **in_deployment** (String)
-- **ip_address** (String)
-- **ip_addresses** (List of String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **name** (String)
-- **node_service_types** (String)
-- **other_pap_fqdn** (String)
-- **pap_node** (String)
-- **pass_word** (String)
-- **primary_pap_node** (String)
-- **px_grid_node** (String)
-- **sxp_ip_address** (String)
-- **user_name** (String)
+- `display_name` (String)
+- `fqdn` (String)
+- `gate_way` (String)
+- `id` (String)
+- `in_deployment` (String)
+- `ip_address` (String)
+- `ip_addresses` (List of String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `name` (String)
+- `node_service_types` (String)
+- `other_pap_fqdn` (String)
+- `pap_node` (String)
+- `pass_word` (String)
+- `primary_pap_node` (String)
+- `px_grid_node` (String)
+- `sxp_ip_address` (String)
+- `user_name` (String)
 
 <a id="nestedobjatt--item_id--link"></a>
 ### Nested Schema for `item_id.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -145,32 +145,32 @@ Read-Only:
 
 Read-Only:
 
-- **display_name** (String)
-- **fqdn** (String)
-- **gate_way** (String)
-- **id** (String)
-- **in_deployment** (String)
-- **ip_address** (String)
-- **ip_addresses** (List of String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **name** (String)
-- **node_service_types** (String)
-- **other_pap_fqdn** (String)
-- **pap_node** (String)
-- **pass_word** (String)
-- **primary_pap_node** (String)
-- **px_grid_node** (String)
-- **sxp_ip_address** (String)
-- **user_name** (String)
+- `display_name` (String)
+- `fqdn` (String)
+- `gate_way` (String)
+- `id` (String)
+- `in_deployment` (String)
+- `ip_address` (String)
+- `ip_addresses` (List of String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `name` (String)
+- `node_service_types` (String)
+- `other_pap_fqdn` (String)
+- `pap_node` (String)
+- `pass_word` (String)
+- `primary_pap_node` (String)
+- `px_grid_node` (String)
+- `sxp_ip_address` (String)
+- `user_name` (String)
 
 <a id="nestedobjatt--item_name--link"></a>
 ### Nested Schema for `item_name.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -179,18 +179,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

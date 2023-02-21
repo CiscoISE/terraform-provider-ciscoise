@@ -28,7 +28,7 @@ data "ciscoise_trusted_certificate_export" "example" {
 
 ### Required
 
-- **dirpath** (String) Directory absolute path in which to save the file.
-- **id** (String) id path parameter. ID of the Trusted Certificate to be exported.
+- `dirpath` (String) Directory absolute path in which to save the file.
+- `id` (String) id path parameter. ID of the Trusted Certificate to be exported.
 
 

@@ -72,7 +72,7 @@ output "ciscoise_guest_user_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
 
 **Simple filtering** should be available through the filter query string parameter. The structure of a filter is
 a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
@@ -104,51 +104,51 @@ string parameter. Each resource Data model description should specify if an attr
               CONTAINS	  | Contains 
 
               NCONTAINS	  | Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sortasc** (String) sortasc query parameter. sort asc
-- **sortdsc** (String) sortdsc query parameter. sort desc
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sortasc` (String) sortasc query parameter. sort asc
+- `sortdsc` (String) sortdsc query parameter. sort desc
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **custom_fields** (Map of String)
-- **description** (String)
-- **guest_access_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--guest_access_info))
-- **guest_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--guest_info))
-- **guest_type** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **name** (String)
-- **portal_id** (String)
-- **reason_for_visit** (String)
-- **sponsor_user_id** (String)
-- **sponsor_user_name** (String)
-- **status** (String)
-- **status_reason** (String)
+- `custom_fields` (Map of String)
+- `description` (String)
+- `guest_access_info` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--guest_access_info))
+- `guest_info` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--guest_info))
+- `guest_type` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `name` (String)
+- `portal_id` (String)
+- `reason_for_visit` (String)
+- `sponsor_user_id` (String)
+- `sponsor_user_name` (String)
+- `status` (String)
+- `status_reason` (String)
 
 <a id="nestedobjatt--item_id--guest_access_info"></a>
 ### Nested Schema for `item_id.guest_access_info`
 
 Read-Only:
 
-- **from_date** (String)
-- **group_tag** (String)
-- **location** (String)
-- **ssid** (String)
-- **to_date** (String)
-- **valid_days** (Number)
+- `from_date` (String)
+- `group_tag` (String)
+- `location` (String)
+- `ssid` (String)
+- `to_date` (String)
+- `valid_days` (Number)
 
 
 <a id="nestedobjatt--item_id--guest_info"></a>
@@ -156,17 +156,17 @@ Read-Only:
 
 Read-Only:
 
-- **company** (String)
-- **creation_time** (String)
-- **email_address** (String)
-- **enabled** (String)
-- **first_name** (String)
-- **last_name** (String)
-- **notification_language** (String)
-- **password** (String)
-- **phone_number** (String)
-- **sms_service_provider** (String)
-- **user_name** (String)
+- `company` (String)
+- `creation_time` (String)
+- `email_address` (String)
+- `enabled` (String)
+- `first_name` (String)
+- `last_name` (String)
+- `notification_language` (String)
+- `password` (String)
+- `phone_number` (String)
+- `sms_service_provider` (String)
+- `user_name` (String)
 
 
 <a id="nestedobjatt--item_id--link"></a>
@@ -174,9 +174,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -185,32 +185,32 @@ Read-Only:
 
 Read-Only:
 
-- **custom_fields** (Map of String)
-- **description** (String)
-- **guest_access_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--guest_access_info))
-- **guest_info** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--guest_info))
-- **guest_type** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **name** (String)
-- **portal_id** (String)
-- **reason_for_visit** (String)
-- **sponsor_user_id** (String)
-- **sponsor_user_name** (String)
-- **status** (String)
-- **status_reason** (String)
+- `custom_fields` (Map of String)
+- `description` (String)
+- `guest_access_info` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--guest_access_info))
+- `guest_info` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--guest_info))
+- `guest_type` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `name` (String)
+- `portal_id` (String)
+- `reason_for_visit` (String)
+- `sponsor_user_id` (String)
+- `sponsor_user_name` (String)
+- `status` (String)
+- `status_reason` (String)
 
 <a id="nestedobjatt--item_name--guest_access_info"></a>
 ### Nested Schema for `item_name.guest_access_info`
 
 Read-Only:
 
-- **from_date** (String)
-- **group_tag** (String)
-- **location** (String)
-- **ssid** (String)
-- **to_date** (String)
-- **valid_days** (Number)
+- `from_date` (String)
+- `group_tag` (String)
+- `location` (String)
+- `ssid` (String)
+- `to_date` (String)
+- `valid_days` (Number)
 
 
 <a id="nestedobjatt--item_name--guest_info"></a>
@@ -218,17 +218,17 @@ Read-Only:
 
 Read-Only:
 
-- **company** (String)
-- **creation_time** (String)
-- **email_address** (String)
-- **enabled** (String)
-- **first_name** (String)
-- **last_name** (String)
-- **notification_language** (String)
-- **password** (String)
-- **phone_number** (String)
-- **sms_service_provider** (String)
-- **user_name** (String)
+- `company` (String)
+- `creation_time` (String)
+- `email_address` (String)
+- `enabled` (String)
+- `first_name` (String)
+- `last_name` (String)
+- `notification_language` (String)
+- `password` (String)
+- `phone_number` (String)
+- `sms_service_provider` (String)
+- `user_name` (String)
 
 
 <a id="nestedobjatt--item_name--link"></a>
@@ -236,9 +236,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -247,18 +247,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

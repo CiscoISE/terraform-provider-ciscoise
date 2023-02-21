@@ -139,69 +139,70 @@ output "ciscoise_byod_portal_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **customizations** (Block List, Max: 1) Defines all of the Portal Customizations available for a BYOD (see [below for nested schema](#nestedblock--parameters--customizations))
-- **description** (String)
-- **id** (String) Resource UUID, mandatory for update
-- **name** (String) Resource Name
-- **portal_test_url** (String) URL to bring up a test page for this portal
-- **portal_type** (String) Allowed values:
-- BYOD,
-- HOTSPOTGUEST,
-- MYDEVICE,
-- SELFREGGUEST,
-- SPONSOR,
-- SPONSOREDGUEST
-- **settings** (Block List, Max: 1) Defines all of the settings groups available for a BYOD (see [below for nested schema](#nestedblock--parameters--settings))
+- `customizations` (Block List) Defines all of the Portal Customizations available for a BYOD (see [below for nested schema](#nestedblock--parameters--customizations))
+- `description` (String)
+- `id` (String) Resource UUID, mandatory for update
+- `name` (String) Resource Name
+- `portal_test_url` (String) URL to bring up a test page for this portal
+- `portal_type` (String) Allowed values:
+		- BYOD,
+		- HOTSPOTGUEST,
+		- MYDEVICE,
+		- SELFREGGUEST,
+		- SPONSOR,
+		- SPONSOREDGUEST
+- `settings` (Block List) Defines all of the settings groups available for a BYOD (see [below for nested schema](#nestedblock--parameters--settings))
+
+Read-Only:
+
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
 
 <a id="nestedblock--parameters--customizations"></a>
 ### Nested Schema for `parameters.customizations`
 
 Optional:
 
-- **global_customizations** (Block List, Max: 1) Represent the portal Global customizations (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations))
-- **language** (Block List, Max: 1) This property is supported only for Read operation and it allows to show the customizations in English.
-Other languages are not supported (see [below for nested schema](#nestedblock--parameters--customizations--language))
-- **page_customizations** (Block List, Max: 1) Represent the entire page customization as a giant dictionary (see [below for nested schema](#nestedblock--parameters--customizations--page_customizations))
-- **portal_theme** (Block List, Max: 1) Defines the configuration for portal theme (see [below for nested schema](#nestedblock--parameters--customizations--portal_theme))
-- **portal_tweak_settings** (Block List, Max: 1) The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
-When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
-The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--parameters--customizations--portal_tweak_settings))
+- `global_customizations` (Block List) Represent the portal Global customizations (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations))
+- `language` (Block List) This property is supported only for Read operation and it allows to show the customizations in English.
+		Other languages are not supported (see [below for nested schema](#nestedblock--parameters--customizations--language))
+- `page_customizations` (Block List) Represent the entire page customization as a giant dictionary (see [below for nested schema](#nestedblock--parameters--customizations--page_customizations))
+- `portal_theme` (Block List) Defines the configuration for portal theme (see [below for nested schema](#nestedblock--parameters--customizations--portal_theme))
+- `portal_tweak_settings` (Block List) The Tweak Settings are a customization of the Portal Theme that has been selected for the portal.
+		When the Portal Theme selection is changed, the Tweak Settings are overwritten to match the values in the theme.
+		The Tweak Settings can subsequently be changed by the user (see [below for nested schema](#nestedblock--parameters--customizations--portal_tweak_settings))
 
 <a id="nestedblock--parameters--customizations--global_customizations"></a>
 ### Nested Schema for `parameters.customizations.global_customizations`
 
 Optional:
 
-- **background_image** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--background_image))
-- **banner_image** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--banner_image))
-- **banner_title** (String)
-- **contact_text** (String)
-- **desktop_logo_image** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--desktop_logo_image))
-- **footer_element** (String)
-- **mobile_logo_image** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--mobile_logo_image))
+- `background_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--background_image))
+- `banner_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--banner_image))
+- `banner_title` (String)
+- `contact_text` (String)
+- `desktop_logo_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--desktop_logo_image))
+- `footer_element` (String)
+- `mobile_logo_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedblock--parameters--customizations--global_customizations--background_image"></a>
 ### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
 
 Optional:
 
-- **data** (String) Represented as base 64 encoded string of the image byte array
+- `data` (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--banner_image"></a>
@@ -209,7 +210,7 @@ Optional:
 
 Optional:
 
-- **data** (String) Represented as base 64 encoded string of the image byte array
+- `data` (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--desktop_logo_image"></a>
@@ -217,7 +218,7 @@ Optional:
 
 Optional:
 
-- **data** (String) Represented as base 64 encoded string of the image byte array
+- `data` (String) Represented as base 64 encoded string of the image byte array
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--mobile_logo_image"></a>
@@ -225,7 +226,7 @@ Optional:
 
 Optional:
 
-- **data** (String) Represented as base 64 encoded string of the image byte array
+- `data` (String) Represented as base 64 encoded string of the image byte array
 
 
 
@@ -234,7 +235,7 @@ Optional:
 
 Optional:
 
-- **view_language** (String)
+- `view_language` (String)
 
 
 <a id="nestedblock--parameters--customizations--page_customizations"></a>
@@ -242,15 +243,15 @@ Optional:
 
 Optional:
 
-- **data** (Block List) The Dictionary will be exposed here as key value pair (see [below for nested schema](#nestedblock--parameters--customizations--page_customizations--data))
+- `data` (Block List) The Dictionary will be exposed here as key value pair (see [below for nested schema](#nestedblock--parameters--customizations--page_customizations--data))
 
 <a id="nestedblock--parameters--customizations--page_customizations--data"></a>
 ### Nested Schema for `parameters.customizations.page_customizations.data`
 
 Optional:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
 
 
@@ -259,9 +260,9 @@ Optional:
 
 Optional:
 
-- **id** (String) The unique internal identifier of the portal theme
-- **name** (String) The system- or user-assigned name of the portal theme
-- **theme_data** (String) A CSS file, represented as a Base64-encoded byte array
+- `id` (String) The unique internal identifier of the portal theme
+- `name` (String) The system- or user-assigned name of the portal theme
+- `theme_data` (String) A CSS file, represented as a Base64-encoded byte array
 
 
 <a id="nestedblock--parameters--customizations--portal_tweak_settings"></a>
@@ -269,10 +270,10 @@ Optional:
 
 Optional:
 
-- **banner_color** (String) Hex value of color
-- **banner_text_color** (String)
-- **page_background_color** (String)
-- **page_label_and_text_color** (String)
+- `banner_color` (String) Hex value of color
+- `banner_text_color` (String)
+- `page_background_color` (String)
+- `page_label_and_text_color` (String)
 
 
 
@@ -281,26 +282,26 @@ Optional:
 
 Optional:
 
-- **byod_settings** (Block List, Max: 1) Configuration of BYOD Device Welcome, Registration and Success steps (see [below for nested schema](#nestedblock--parameters--settings--byod_settings))
-- **portal_settings** (Block List, Max: 1) The port, interface, certificate, and other basic settings of a portal (see [below for nested schema](#nestedblock--parameters--settings--portal_settings))
-- **support_info_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--support_info_settings))
+- `byod_settings` (Block List) Configuration of BYOD Device Welcome, Registration and Success steps (see [below for nested schema](#nestedblock--parameters--settings--byod_settings))
+- `portal_settings` (Block List) The port, interface, certificate, and other basic settings of a portal (see [below for nested schema](#nestedblock--parameters--settings--portal_settings))
+- `support_info_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--support_info_settings))
 
 <a id="nestedblock--parameters--settings--byod_settings"></a>
 ### Nested Schema for `parameters.settings.byod_settings`
 
 Optional:
 
-- **byod_registration_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_registration_settings))
-- **byod_registration_success_settings** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_registration_success_settings))
-- **byod_welcome_settings** (Block List, Max: 1) Configuration of BYOD endpoint welcome step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_welcome_settings))
+- `byod_registration_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_registration_settings))
+- `byod_registration_success_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_registration_success_settings))
+- `byod_welcome_settings` (Block List) Configuration of BYOD endpoint welcome step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_welcome_settings))
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_settings"></a>
 ### Nested Schema for `parameters.settings.byod_settings.byod_welcome_settings`
 
 Optional:
 
-- **end_point_identity_group_id** (String)
-- **show_device_id** (String)
+- `end_point_identity_group_id` (String)
+- `show_device_id` (String)
 
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_success_settings"></a>
@@ -308,8 +309,8 @@ Optional:
 
 Optional:
 
-- **redirect_url** (String) Target URL for redirection, used when successRedirect = URL
-- **success_redirect** (String) After an Authentication Success where should device be redirected. Allowed values:
+- `redirect_url` (String) Target URL for redirection, used when successRedirect = URL
+- `success_redirect` (String) After an Authentication Success where should device be redirected. Allowed values:
 
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_welcome_settings"></a>
@@ -317,17 +318,17 @@ Optional:
 
 Optional:
 
-- **aup_display** (String) How the AUP should be displayed, either on page or as a link.
-Only valid if includeAup = true.
-Allowed values:
-- ONPAGE,
-- ASLINK
-- **enable_byo_d** (String)
-- **enable_guest_access** (String)
-- **include_aup** (String)
-- **require_aup_acceptance** (String)
-- **require_mdm** (String)
-- **require_scrolling** (String) Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true
+- `aup_display` (String) How the AUP should be displayed, either on page or as a link.
+		Only valid if includeAup = true.
+		Allowed values:
+		- ONPAGE,
+		- ASLINK
+- `enable_byo_d` (String)
+- `enable_guest_access` (String)
+- `include_aup` (String)
+- `require_aup_acceptance` (String)
+- `require_mdm` (String)
+- `require_scrolling` (String) Require BYOD devices to scroll down to the bottom of the AUP, Only valid if includeAup = true
 
 
 
@@ -336,25 +337,25 @@ Allowed values:
 
 Optional:
 
-- **allowed_interfaces** (List of String) Interfaces that the portal will be reachable on.
-Allowed values:
-- eth0,
-- eth1,
-- eth2,
-- eth3,
-- eth4,
-- eth5,
-- bond0,
-- bond1,
-- bond2
-- **always_used_language** (String) Used when displayLang = ALWAYSUSE
-- **certificate_group_tag** (String) Logical name of the x.509 server certificate that will be used for the portal
-- **display_lang** (String) Allowed values:
-- USEBROWSERLOCALE,
-- ALWAYSUSE
-- **endpoint_identity_group** (String) Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal
-- **fallback_language** (String) Used when displayLang = USEBROWSERLOCALE
-- **https_port** (Number) The port number that the allowed interfaces will listen on. Range from 8000 to 8999
+- `allowed_interfaces` (List of String) Interfaces that the portal will be reachable on.
+		Allowed values:
+		- eth0,
+		- eth1,
+		- eth2,
+		- eth3,
+		- eth4,
+		- eth5,
+		- bond0,
+		- bond1,
+		- bond2
+- `always_used_language` (String) Used when displayLang = ALWAYSUSE
+- `certificate_group_tag` (String) Logical name of the x.509 server certificate that will be used for the portal
+- `display_lang` (String) Allowed values:
+		- USEBROWSERLOCALE,
+		- ALWAYSUSE
+- `endpoint_identity_group` (String) Unique Id of the endpoint identity group where user's devices will be added. Used only in Hotspot Portal
+- `fallback_language` (String) Used when displayLang = USEBROWSERLOCALE
+- `https_port` (Number) The port number that the allowed interfaces will listen on. Range from 8000 to 8999
 
 
 <a id="nestedblock--parameters--settings--support_info_settings"></a>
@@ -362,20 +363,30 @@ Allowed values:
 
 Optional:
 
-- **default_empty_field_value** (String) The default value displayed for an empty field.
-Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
-- **empty_field_display** (String) Specifies how empty fields are handled on the Support Information Page.
-Allowed values:
-- HIDE,
-- DISPLAYWITHNOVALUE,
-- DISPLAYWITHDEFAULTVALUE
-- **include_browser_user_agent** (String)
-- **include_failure_code** (String)
-- **include_ip_address** (String)
-- **include_mac_addr** (String)
-- **include_policy_server** (String)
-- **include_support_info_page** (String)
+- `default_empty_field_value` (String) The default value displayed for an empty field.
+		Only valid when emptyFieldDisplay = DISPLAYWITHDEFAULTVALUE
+- `empty_field_display` (String) Specifies how empty fields are handled on the Support Information Page.
+		Allowed values:
+		- HIDE,
+		- DISPLAYWITHNOVALUE,
+		- DISPLAYWITHDEFAULTVALUE
+- `include_browser_user_agent` (String)
+- `include_failure_code` (String)
+- `include_ip_address` (String)
+- `include_mac_addr` (String)
+- `include_policy_server` (String)
+- `include_support_info_page` (String)
 
+
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -384,45 +395,45 @@ Allowed values:
 
 Read-Only:
 
-- **customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **portal_test_url** (String)
-- **portal_type** (String)
-- **settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings))
+- `customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `portal_test_url` (String)
+- `portal_type` (String)
+- `settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings))
 
 <a id="nestedobjatt--item--customizations"></a>
 ### Nested Schema for `item.customizations`
 
 Read-Only:
 
-- **global_customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations))
-- **language** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--language))
-- **page_customizations** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations))
-- **portal_theme** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_theme))
-- **portal_tweak_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_tweak_settings))
+- `global_customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations))
+- `language` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--language))
+- `page_customizations` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations))
+- `portal_theme` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_theme))
+- `portal_tweak_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--portal_tweak_settings))
 
 <a id="nestedobjatt--item--customizations--global_customizations"></a>
 ### Nested Schema for `item.customizations.global_customizations`
 
 Read-Only:
 
-- **background_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--background_image))
-- **banner_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--banner_image))
-- **banner_title** (String)
-- **contact_text** (String)
-- **desktop_logo_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--desktop_logo_image))
-- **footer_element** (String)
-- **mobile_logo_image** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--mobile_logo_image))
+- `background_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--background_image))
+- `banner_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--banner_image))
+- `banner_title` (String)
+- `contact_text` (String)
+- `desktop_logo_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--desktop_logo_image))
+- `footer_element` (String)
+- `mobile_logo_image` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedobjatt--item--customizations--global_customizations--background_image"></a>
 ### Nested Schema for `item.customizations.global_customizations.mobile_logo_image`
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--banner_image"></a>
@@ -430,7 +441,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--desktop_logo_image"></a>
@@ -438,7 +449,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 <a id="nestedobjatt--item--customizations--global_customizations--mobile_logo_image"></a>
@@ -446,7 +457,7 @@ Read-Only:
 
 Read-Only:
 
-- **data** (String)
+- `data` (String)
 
 
 
@@ -455,7 +466,7 @@ Read-Only:
 
 Read-Only:
 
-- **view_language** (String)
+- `view_language` (String)
 
 
 <a id="nestedobjatt--item--customizations--page_customizations"></a>
@@ -463,15 +474,15 @@ Read-Only:
 
 Read-Only:
 
-- **data** (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations--data))
+- `data` (List of Object) (see [below for nested schema](#nestedobjatt--item--customizations--page_customizations--data))
 
 <a id="nestedobjatt--item--customizations--page_customizations--data"></a>
 ### Nested Schema for `item.customizations.page_customizations.data`
 
 Read-Only:
 
-- **key** (String)
-- **value** (String)
+- `key` (String)
+- `value` (String)
 
 
 
@@ -480,9 +491,9 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
-- **name** (String)
-- **theme_data** (String)
+- `id` (String)
+- `name` (String)
+- `theme_data` (String)
 
 
 <a id="nestedobjatt--item--customizations--portal_tweak_settings"></a>
@@ -490,10 +501,10 @@ Read-Only:
 
 Read-Only:
 
-- **banner_color** (String)
-- **banner_text_color** (String)
-- **page_background_color** (String)
-- **page_label_and_text_color** (String)
+- `banner_color` (String)
+- `banner_text_color` (String)
+- `page_background_color` (String)
+- `page_label_and_text_color` (String)
 
 
 
@@ -502,9 +513,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--settings"></a>
@@ -512,26 +523,26 @@ Read-Only:
 
 Read-Only:
 
-- **byod_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings))
-- **portal_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--portal_settings))
-- **support_info_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--support_info_settings))
+- `byod_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings))
+- `portal_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--portal_settings))
+- `support_info_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--support_info_settings))
 
 <a id="nestedobjatt--item--settings--byod_settings"></a>
 ### Nested Schema for `item.settings.byod_settings`
 
 Read-Only:
 
-- **byod_registration_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_registration_settings))
-- **byod_registration_success_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_registration_success_settings))
-- **byod_welcome_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_welcome_settings))
+- `byod_registration_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_registration_settings))
+- `byod_registration_success_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_registration_success_settings))
+- `byod_welcome_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item--settings--byod_settings--byod_welcome_settings))
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_registration_settings"></a>
 ### Nested Schema for `item.settings.byod_settings.byod_welcome_settings`
 
 Read-Only:
 
-- **end_point_identity_group_id** (String)
-- **show_device_id** (String)
+- `end_point_identity_group_id` (String)
+- `show_device_id` (String)
 
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_registration_success_settings"></a>
@@ -539,8 +550,8 @@ Read-Only:
 
 Read-Only:
 
-- **redirect_url** (String)
-- **success_redirect** (String)
+- `redirect_url` (String)
+- `success_redirect` (String)
 
 
 <a id="nestedobjatt--item--settings--byod_settings--byod_welcome_settings"></a>
@@ -548,13 +559,13 @@ Read-Only:
 
 Read-Only:
 
-- **aup_display** (String)
-- **enable_byo_d** (String)
-- **enable_guest_access** (String)
-- **include_aup** (String)
-- **require_aup_acceptance** (String)
-- **require_mdm** (String)
-- **require_scrolling** (String)
+- `aup_display` (String)
+- `enable_byo_d` (String)
+- `enable_guest_access` (String)
+- `include_aup` (String)
+- `require_aup_acceptance` (String)
+- `require_mdm` (String)
+- `require_scrolling` (String)
 
 
 
@@ -563,13 +574,13 @@ Read-Only:
 
 Read-Only:
 
-- **allowed_interfaces** (List of String)
-- **always_used_language** (String)
-- **certificate_group_tag** (String)
-- **display_lang** (String)
-- **endpoint_identity_group** (String)
-- **fallback_language** (String)
-- **https_port** (Number)
+- `allowed_interfaces` (List of String)
+- `always_used_language` (String)
+- `certificate_group_tag` (String)
+- `display_lang` (String)
+- `endpoint_identity_group` (String)
+- `fallback_language` (String)
+- `https_port` (Number)
 
 
 <a id="nestedobjatt--item--settings--support_info_settings"></a>
@@ -577,14 +588,14 @@ Read-Only:
 
 Read-Only:
 
-- **default_empty_field_value** (String)
-- **empty_field_display** (String)
-- **include_browser_user_agent** (String)
-- **include_failure_code** (String)
-- **include_ip_address** (String)
-- **include_mac_addr** (String)
-- **include_policy_server** (String)
-- **include_support_info_page** (String)
+- `default_empty_field_value` (String)
+- `empty_field_display` (String)
+- `include_browser_user_agent` (String)
+- `include_failure_code` (String)
+- `include_ip_address` (String)
+- `include_mac_addr` (String)
+- `include_policy_server` (String)
+- `include_support_info_page` (String)
 
 ## Import
 

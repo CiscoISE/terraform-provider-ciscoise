@@ -59,7 +59,7 @@ output "ciscoise_sxp_local_bindings_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
 
 **Simple filtering** should be available through the filter query string parameter. The structure of a filter is
 a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
@@ -91,40 +91,40 @@ string parameter. Each resource Data model description should specify if an attr
               CONTAINS	  | Contains 
 
               NCONTAINS	  | Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sortasc** (String) sortasc query parameter. sort asc
-- **sortdsc** (String) sortdsc query parameter. sort desc
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sortasc` (String) sortasc query parameter. sort asc
+- `sortdsc` (String) sortdsc query parameter. sort desc
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **binding_name** (String)
-- **description** (String)
-- **id** (String)
-- **ip_address_or_host** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **sgt** (String)
-- **sxp_vpn** (String)
-- **vns** (String)
+- `binding_name` (String)
+- `description` (String)
+- `id` (String)
+- `ip_address_or_host` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `sgt` (String)
+- `sxp_vpn` (String)
+- `vns` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -133,16 +133,16 @@ Read-Only:
 
 Read-Only:
 
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

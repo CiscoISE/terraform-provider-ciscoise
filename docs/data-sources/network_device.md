@@ -70,7 +70,7 @@ output "ciscoise_network_device_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
 
 **Simple filtering** should be available through the filter query string parameter. The structure of a filter is
 a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
@@ -102,56 +102,56 @@ string parameter. Each resource Data model description should specify if an attr
               CONTAINS	  | Contains 
 
               NCONTAINS	  | Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sortasc** (String) sortasc query parameter. sort asc
-- **sortdsc** (String) sortdsc query parameter. sort desc
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sortasc` (String) sortasc query parameter. sort asc
+- `sortdsc` (String) sortdsc query parameter. sort desc
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **authentication_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--authentication_settings))
-- **coa_port** (Number)
-- **description** (String)
-- **dtls_dns_name** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **model_name** (String)
-- **name** (String)
-- **network_device_group_list** (List of String)
-- **network_device_iplist** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--network_device_iplist))
-- **profile_name** (String)
-- **snmpsettings** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--snmpsettings))
-- **software_version** (String)
-- **tacacs_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--tacacs_settings))
-- **trustsecsettings** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings))
+- `authentication_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--authentication_settings))
+- `coa_port` (Number)
+- `description` (String)
+- `dtls_dns_name` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `model_name` (String)
+- `name` (String)
+- `network_device_group_list` (List of String)
+- `network_device_iplist` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--network_device_iplist))
+- `profile_name` (String)
+- `snmpsettings` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--snmpsettings))
+- `software_version` (String)
+- `tacacs_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--tacacs_settings))
+- `trustsecsettings` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings))
 
 <a id="nestedobjatt--item_id--authentication_settings"></a>
 ### Nested Schema for `item_id.authentication_settings`
 
 Read-Only:
 
-- **dtls_required** (String)
-- **enable_key_wrap** (String)
-- **enable_multi_secret** (String)
-- **enabled** (String)
-- **key_encryption_key** (String)
-- **key_input_format** (String)
-- **message_authenticator_code_key** (String)
-- **network_protocol** (String)
-- **radius_shared_secret** (String)
-- **second_radius_shared_secret** (String)
+- `dtls_required` (String)
+- `enable_key_wrap` (String)
+- `enable_multi_secret` (String)
+- `enabled` (String)
+- `key_encryption_key` (String)
+- `key_input_format` (String)
+- `message_authenticator_code_key` (String)
+- `network_protocol` (String)
+- `radius_shared_secret` (String)
+- `second_radius_shared_secret` (String)
 
 
 <a id="nestedobjatt--item_id--link"></a>
@@ -159,9 +159,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item_id--network_device_iplist"></a>
@@ -169,9 +169,9 @@ Read-Only:
 
 Read-Only:
 
-- **get_ipaddress_exclude** (String)
-- **ipaddress** (String)
-- **mask** (Number)
+- `get_ipaddress_exclude` (String)
+- `ipaddress` (String)
+- `mask` (Number)
 
 
 <a id="nestedobjatt--item_id--snmpsettings"></a>
@@ -179,12 +179,12 @@ Read-Only:
 
 Read-Only:
 
-- **link_trap_query** (String)
-- **mac_trap_query** (String)
-- **originating_policy_services_node** (String)
-- **polling_interval** (Number)
-- **ro_community** (String)
-- **version** (String)
+- `link_trap_query` (String)
+- `mac_trap_query` (String)
+- `originating_policy_services_node` (String)
+- `polling_interval` (Number)
+- `ro_community` (String)
+- `version` (String)
 
 
 <a id="nestedobjatt--item_id--tacacs_settings"></a>
@@ -192,8 +192,8 @@ Read-Only:
 
 Read-Only:
 
-- **connect_mode_options** (String)
-- **shared_secret** (String)
+- `connect_mode_options` (String)
+- `shared_secret` (String)
 
 
 <a id="nestedobjatt--item_id--trustsecsettings"></a>
@@ -201,18 +201,18 @@ Read-Only:
 
 Read-Only:
 
-- **device_authentication_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--device_authentication_settings))
-- **device_configuration_deployment** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--device_configuration_deployment))
-- **push_id_support** (String)
-- **sga_notification_and_updates** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--sga_notification_and_updates))
+- `device_authentication_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--device_authentication_settings))
+- `device_configuration_deployment` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--device_configuration_deployment))
+- `push_id_support` (String)
+- `sga_notification_and_updates` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--trustsecsettings--sga_notification_and_updates))
 
 <a id="nestedobjatt--item_id--trustsecsettings--device_authentication_settings"></a>
 ### Nested Schema for `item_id.trustsecsettings.device_authentication_settings`
 
 Read-Only:
 
-- **sga_device_id** (String)
-- **sga_device_password** (String)
+- `sga_device_id` (String)
+- `sga_device_password` (String)
 
 
 <a id="nestedobjatt--item_id--trustsecsettings--device_configuration_deployment"></a>
@@ -220,10 +220,10 @@ Read-Only:
 
 Read-Only:
 
-- **enable_mode_password** (String)
-- **exec_mode_password** (String)
-- **exec_mode_username** (String)
-- **include_when_deploying_sgt_updates** (String)
+- `enable_mode_password` (String)
+- `exec_mode_password` (String)
+- `exec_mode_username` (String)
+- `include_when_deploying_sgt_updates` (String)
 
 
 <a id="nestedobjatt--item_id--trustsecsettings--sga_notification_and_updates"></a>
@@ -231,14 +231,14 @@ Read-Only:
 
 Read-Only:
 
-- **coa_source_host** (String)
-- **downlaod_environment_data_every_x_seconds** (Number)
-- **downlaod_peer_authorization_policy_every_x_seconds** (Number)
-- **download_sga_cllists_every_x_seconds** (Number)
-- **other_sga_devices_to_trust_this_device** (String)
-- **re_authentication_every_x_seconds** (Number)
-- **send_configuration_to_device** (String)
-- **send_configuration_to_device_using** (String)
+- `coa_source_host` (String)
+- `downlaod_environment_data_every_x_seconds` (Number)
+- `downlaod_peer_authorization_policy_every_x_seconds` (Number)
+- `download_sga_cllists_every_x_seconds` (Number)
+- `other_sga_devices_to_trust_this_device` (String)
+- `re_authentication_every_x_seconds` (Number)
+- `send_configuration_to_device` (String)
+- `send_configuration_to_device_using` (String)
 
 
 
@@ -248,37 +248,37 @@ Read-Only:
 
 Read-Only:
 
-- **authentication_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--authentication_settings))
-- **coa_port** (Number)
-- **description** (String)
-- **dtls_dns_name** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **model_name** (String)
-- **name** (String)
-- **network_device_group_list** (List of String)
-- **network_device_iplist** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--network_device_iplist))
-- **profile_name** (String)
-- **snmpsettings** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--snmpsettings))
-- **software_version** (String)
-- **tacacs_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--tacacs_settings))
-- **trustsecsettings** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings))
+- `authentication_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--authentication_settings))
+- `coa_port` (Number)
+- `description` (String)
+- `dtls_dns_name` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `model_name` (String)
+- `name` (String)
+- `network_device_group_list` (List of String)
+- `network_device_iplist` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--network_device_iplist))
+- `profile_name` (String)
+- `snmpsettings` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--snmpsettings))
+- `software_version` (String)
+- `tacacs_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--tacacs_settings))
+- `trustsecsettings` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings))
 
 <a id="nestedobjatt--item_name--authentication_settings"></a>
 ### Nested Schema for `item_name.authentication_settings`
 
 Read-Only:
 
-- **dtls_required** (String)
-- **enable_key_wrap** (String)
-- **enable_multi_secret** (String)
-- **enabled** (String)
-- **key_encryption_key** (String)
-- **key_input_format** (String)
-- **message_authenticator_code_key** (String)
-- **network_protocol** (String)
-- **radius_shared_secret** (String)
-- **second_radius_shared_secret** (String)
+- `dtls_required` (String)
+- `enable_key_wrap` (String)
+- `enable_multi_secret` (String)
+- `enabled` (String)
+- `key_encryption_key` (String)
+- `key_input_format` (String)
+- `message_authenticator_code_key` (String)
+- `network_protocol` (String)
+- `radius_shared_secret` (String)
+- `second_radius_shared_secret` (String)
 
 
 <a id="nestedobjatt--item_name--link"></a>
@@ -286,9 +286,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item_name--network_device_iplist"></a>
@@ -296,9 +296,9 @@ Read-Only:
 
 Read-Only:
 
-- **get_ipaddress_exclude** (String)
-- **ipaddress** (String)
-- **mask** (Number)
+- `get_ipaddress_exclude` (String)
+- `ipaddress` (String)
+- `mask` (Number)
 
 
 <a id="nestedobjatt--item_name--snmpsettings"></a>
@@ -306,12 +306,12 @@ Read-Only:
 
 Read-Only:
 
-- **link_trap_query** (String)
-- **mac_trap_query** (String)
-- **originating_policy_services_node** (String)
-- **polling_interval** (Number)
-- **ro_community** (String)
-- **version** (String)
+- `link_trap_query` (String)
+- `mac_trap_query` (String)
+- `originating_policy_services_node` (String)
+- `polling_interval` (Number)
+- `ro_community` (String)
+- `version` (String)
 
 
 <a id="nestedobjatt--item_name--tacacs_settings"></a>
@@ -319,8 +319,8 @@ Read-Only:
 
 Read-Only:
 
-- **connect_mode_options** (String)
-- **shared_secret** (String)
+- `connect_mode_options` (String)
+- `shared_secret` (String)
 
 
 <a id="nestedobjatt--item_name--trustsecsettings"></a>
@@ -328,18 +328,18 @@ Read-Only:
 
 Read-Only:
 
-- **device_authentication_settings** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--device_authentication_settings))
-- **device_configuration_deployment** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--device_configuration_deployment))
-- **push_id_support** (String)
-- **sga_notification_and_updates** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--sga_notification_and_updates))
+- `device_authentication_settings` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--device_authentication_settings))
+- `device_configuration_deployment` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--device_configuration_deployment))
+- `push_id_support` (String)
+- `sga_notification_and_updates` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--trustsecsettings--sga_notification_and_updates))
 
 <a id="nestedobjatt--item_name--trustsecsettings--device_authentication_settings"></a>
 ### Nested Schema for `item_name.trustsecsettings.device_authentication_settings`
 
 Read-Only:
 
-- **sga_device_id** (String)
-- **sga_device_password** (String)
+- `sga_device_id` (String)
+- `sga_device_password` (String)
 
 
 <a id="nestedobjatt--item_name--trustsecsettings--device_configuration_deployment"></a>
@@ -347,10 +347,10 @@ Read-Only:
 
 Read-Only:
 
-- **enable_mode_password** (String)
-- **exec_mode_password** (String)
-- **exec_mode_username** (String)
-- **include_when_deploying_sgt_updates** (String)
+- `enable_mode_password` (String)
+- `exec_mode_password` (String)
+- `exec_mode_username` (String)
+- `include_when_deploying_sgt_updates` (String)
 
 
 <a id="nestedobjatt--item_name--trustsecsettings--sga_notification_and_updates"></a>
@@ -358,14 +358,14 @@ Read-Only:
 
 Read-Only:
 
-- **coa_source_host** (String)
-- **downlaod_environment_data_every_x_seconds** (Number)
-- **downlaod_peer_authorization_policy_every_x_seconds** (Number)
-- **download_sga_cllists_every_x_seconds** (Number)
-- **other_sga_devices_to_trust_this_device** (String)
-- **re_authentication_every_x_seconds** (Number)
-- **send_configuration_to_device** (String)
-- **send_configuration_to_device_using** (String)
+- `coa_source_host` (String)
+- `downlaod_environment_data_every_x_seconds` (Number)
+- `downlaod_peer_authorization_policy_every_x_seconds` (Number)
+- `download_sga_cllists_every_x_seconds` (Number)
+- `other_sga_devices_to_trust_this_device` (String)
+- `re_authentication_every_x_seconds` (Number)
+- `send_configuration_to_device` (String)
+- `send_configuration_to_device_using` (String)
 
 
 
@@ -375,18 +375,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

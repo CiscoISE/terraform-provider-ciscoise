@@ -29,8 +29,8 @@ data "ciscoise_csr_export" "example" {
 
 ### Required
 
-- **dirpath** (String) Directory absolute path in which to save the file.
-- **hostname** (String) hostname path parameter. Hostname to which the CSR belongs.
-- **id** (String) id path parameter. ID of the CSR to be exported.
+- `dirpath` (String) Directory absolute path in which to save the file.
+- `hostname` (String) hostname path parameter. Hostname to which the CSR belongs.
+- `id` (String) id path parameter. ID of the CSR to be exported.
 
 

@@ -41,37 +41,34 @@ output "ciscoise_pan_ha_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Required:
 
-- **is_enabled** (String)
+- `is_enabled` (String)
 
 Optional:
 
-- **failed_attempts** (Number)
-- **polling_interval** (Number)
-- **primary_health_check_node** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--primary_health_check_node))
-- **secondary_health_check_node** (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--secondary_health_check_node))
+- `failed_attempts` (Number)
+- `polling_interval` (Number)
+- `primary_health_check_node` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--primary_health_check_node))
+- `secondary_health_check_node` (Block List, Max: 1) (see [below for nested schema](#nestedblock--parameters--secondary_health_check_node))
 
 <a id="nestedblock--parameters--primary_health_check_node"></a>
 ### Nested Schema for `parameters.primary_health_check_node`
 
 Optional:
 
-- **hostname** (String)
+- `hostname` (String)
 
 
 <a id="nestedblock--parameters--secondary_health_check_node"></a>
@@ -79,7 +76,7 @@ Optional:
 
 Optional:
 
-- **hostname** (String)
+- `hostname` (String)
 
 
 
@@ -88,18 +85,18 @@ Optional:
 
 Read-Only:
 
-- **failed_attempts** (Number)
-- **is_enabled** (String)
-- **polling_interval** (Number)
-- **primary_health_check_node** (List of Object) (see [below for nested schema](#nestedobjatt--item--primary_health_check_node))
-- **secondary_health_check_node** (List of Object) (see [below for nested schema](#nestedobjatt--item--secondary_health_check_node))
+- `failed_attempts` (Number)
+- `is_enabled` (String)
+- `polling_interval` (Number)
+- `primary_health_check_node` (List of Object) (see [below for nested schema](#nestedobjatt--item--primary_health_check_node))
+- `secondary_health_check_node` (List of Object) (see [below for nested schema](#nestedobjatt--item--secondary_health_check_node))
 
 <a id="nestedobjatt--item--primary_health_check_node"></a>
 ### Nested Schema for `item.primary_health_check_node`
 
 Read-Only:
 
-- **hostname** (String)
+- `hostname` (String)
 
 
 <a id="nestedobjatt--item--secondary_health_check_node"></a>
@@ -107,7 +104,7 @@ Read-Only:
 
 Read-Only:
 
-- **hostname** (String)
+- `hostname` (String)
 
 ## Import
 

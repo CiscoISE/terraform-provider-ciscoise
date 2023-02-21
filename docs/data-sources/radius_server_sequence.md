@@ -43,47 +43,47 @@ output "ciscoise_radius_server_sequence_example" {
 
 ### Optional
 
-- **id** (String) id path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
+- `id` (String) id path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **before_accept_attr_manipulators_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--before_accept_attr_manipulators_list))
-- **continue_authorz_policy** (String)
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **local_accounting** (String)
-- **name** (String)
-- **on_request_attr_manipulator_list** (List of Object) (see [below for nested schema](#nestedobjatt--item--on_request_attr_manipulator_list))
-- **prefix_separator** (String)
-- **radius_server_list** (List of String)
-- **remote_accounting** (String)
-- **strip_prefix** (String)
-- **strip_suffix** (String)
-- **suffix_separator** (String)
-- **use_attr_set_before_acc** (String)
-- **use_attr_set_on_request** (String)
+- `before_accept_attr_manipulators_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--before_accept_attr_manipulators_list))
+- `continue_authorz_policy` (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `local_accounting` (String)
+- `name` (String)
+- `on_request_attr_manipulator_list` (List of Object) (see [below for nested schema](#nestedobjatt--item--on_request_attr_manipulator_list))
+- `prefix_separator` (String)
+- `radius_server_list` (List of String)
+- `remote_accounting` (String)
+- `strip_prefix` (String)
+- `strip_suffix` (String)
+- `suffix_separator` (String)
+- `use_attr_set_before_acc` (String)
+- `use_attr_set_on_request` (String)
 
 <a id="nestedobjatt--item--before_accept_attr_manipulators_list"></a>
 ### Nested Schema for `item.before_accept_attr_manipulators_list`
 
 Read-Only:
 
-- **action** (String)
-- **attribute_name** (String)
-- **changed_val** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `action` (String)
+- `attribute_name` (String)
+- `changed_val` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--item--link"></a>
@@ -91,9 +91,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item--on_request_attr_manipulator_list"></a>
@@ -101,11 +101,11 @@ Read-Only:
 
 Read-Only:
 
-- **action** (String)
-- **attribute_name** (String)
-- **changed_val** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `action` (String)
+- `attribute_name` (String)
+- `changed_val` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 
@@ -114,18 +114,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

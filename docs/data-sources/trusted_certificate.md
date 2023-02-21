@@ -99,7 +99,7 @@ output "ciscoise_trusted_certificate_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
  
  
  
@@ -177,65 +177,65 @@ Contains
 NCONTAINS
  
 Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter. ID of the trust certificate
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sort** (String) sort query parameter. sort type asc or desc
-- **sort_by** (String) sortBy query parameter. sort column by which objects needs to be sorted
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter. ID of the trust certificate
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sort` (String) sort query parameter. sort type asc or desc
+- `sort_by` (String) sortBy query parameter. sort column by which objects needs to be sorted
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **authenticate_before_crl_received** (String)
-- **automatic_crl_update** (String)
-- **automatic_crl_update_period** (String)
-- **automatic_crl_update_units** (String)
-- **crl_distribution_url** (String)
-- **crl_download_failure_retries** (String)
-- **crl_download_failure_retries_units** (String)
-- **description** (String)
-- **download_crl** (String)
-- **enable_ocsp_validation** (String)
-- **enable_server_identity_check** (String)
-- **expiration_date** (String)
-- **friendly_name** (String)
-- **id** (String)
-- **ignore_crl_expiration** (String)
-- **internal_ca** (String)
-- **is_referred_in_policy** (String)
-- **issued_by** (String)
-- **issued_to** (String)
-- **key_size** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **non_automatic_crl_update_period** (String)
-- **non_automatic_crl_update_units** (String)
-- **reject_if_no_status_from_ocs_p** (String)
-- **reject_if_unreachable_from_ocs_p** (String)
-- **selected_ocsp_service** (String)
-- **serial_number_decimal_format** (String)
-- **sha256_fingerprint** (String)
-- **signature_algorithm** (String)
-- **status** (String)
-- **subject** (String)
-- **trusted_for** (String)
-- **valid_from** (String)
+- `authenticate_before_crl_received` (String)
+- `automatic_crl_update` (String)
+- `automatic_crl_update_period` (String)
+- `automatic_crl_update_units` (String)
+- `crl_distribution_url` (String)
+- `crl_download_failure_retries` (String)
+- `crl_download_failure_retries_units` (String)
+- `description` (String)
+- `download_crl` (String)
+- `enable_ocsp_validation` (String)
+- `enable_server_identity_check` (String)
+- `expiration_date` (String)
+- `friendly_name` (String)
+- `id` (String)
+- `ignore_crl_expiration` (String)
+- `internal_ca` (String)
+- `is_referred_in_policy` (String)
+- `issued_by` (String)
+- `issued_to` (String)
+- `key_size` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `non_automatic_crl_update_period` (String)
+- `non_automatic_crl_update_units` (String)
+- `reject_if_no_status_from_ocs_p` (String)
+- `reject_if_unreachable_from_ocs_p` (String)
+- `selected_ocsp_service` (String)
+- `serial_number_decimal_format` (String)
+- `sha256_fingerprint` (String)
+- `signature_algorithm` (String)
+- `status` (String)
+- `subject` (String)
+- `trusted_for` (String)
+- `valid_from` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -244,46 +244,46 @@ Read-Only:
 
 Read-Only:
 
-- **authenticate_before_crl_received** (String)
-- **automatic_crl_update** (String)
-- **automatic_crl_update_period** (String)
-- **automatic_crl_update_units** (String)
-- **crl_distribution_url** (String)
-- **crl_download_failure_retries** (String)
-- **crl_download_failure_retries_units** (String)
-- **description** (String)
-- **download_crl** (String)
-- **enable_ocsp_validation** (String)
-- **enable_server_identity_check** (String)
-- **expiration_date** (String)
-- **friendly_name** (String)
-- **id** (String)
-- **ignore_crl_expiration** (String)
-- **internal_ca** (String)
-- **issued_by** (String)
-- **issued_to** (String)
-- **key_size** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **non_automatic_crl_update_period** (String)
-- **non_automatic_crl_update_units** (String)
-- **reject_if_no_status_from_ocs_p** (String)
-- **reject_if_unreachable_from_ocs_p** (String)
-- **selected_ocsp_service** (String)
-- **serial_number_decimal_format** (String)
-- **sha256_fingerprint** (String)
-- **signature_algorithm** (String)
-- **status** (String)
-- **subject** (String)
-- **trusted_for** (String)
-- **valid_from** (String)
+- `authenticate_before_crl_received` (String)
+- `automatic_crl_update` (String)
+- `automatic_crl_update_period` (String)
+- `automatic_crl_update_units` (String)
+- `crl_distribution_url` (String)
+- `crl_download_failure_retries` (String)
+- `crl_download_failure_retries_units` (String)
+- `description` (String)
+- `download_crl` (String)
+- `enable_ocsp_validation` (String)
+- `enable_server_identity_check` (String)
+- `expiration_date` (String)
+- `friendly_name` (String)
+- `id` (String)
+- `ignore_crl_expiration` (String)
+- `internal_ca` (String)
+- `issued_by` (String)
+- `issued_to` (String)
+- `key_size` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `non_automatic_crl_update_period` (String)
+- `non_automatic_crl_update_units` (String)
+- `reject_if_no_status_from_ocs_p` (String)
+- `reject_if_unreachable_from_ocs_p` (String)
+- `selected_ocsp_service` (String)
+- `serial_number_decimal_format` (String)
+- `sha256_fingerprint` (String)
+- `signature_algorithm` (String)
+- `status` (String)
+- `subject` (String)
+- `trusted_for` (String)
+- `valid_from` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

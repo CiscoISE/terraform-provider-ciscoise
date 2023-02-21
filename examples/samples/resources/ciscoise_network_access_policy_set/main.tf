@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.6.15-beta"
+      version = "0.6.16-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -23,23 +23,23 @@ resource "ciscoise_network_access_policy_set" "wired-mm-test" {
 
     condition {
       condition_type = "ConditionAndBlock"
-      is_negate = "false"
+      is_negate      = "false"
       children {
-        dictionary_name  = "Radius"
+        dictionary_name = "Radius"
         attribute_name  = "NAS-Port-Type"
-        operator = "equals"
+        operator        = "equals"
         attribute_value = "Ethernet"
       }
       children {
-        dictionary_name  = "DEVICE"
+        dictionary_name = "DEVICE"
         attribute_name  = "Deployment Stage"
-        operator = "equals"
+        operator        = "equals"
         attribute_value = "Deployment Stage#Monitor Mode"
       }
     }
-    default     = "false"
-    description = "Wired Monitor Mode TEST"
-    is_proxy    = "false"
+    default      = "false"
+    description  = "Wired Monitor Mode TEST"
+    is_proxy     = "false"
     name         = "Wired_MM_TEST"
     rank         = 0
     service_name = "Default Network Access"

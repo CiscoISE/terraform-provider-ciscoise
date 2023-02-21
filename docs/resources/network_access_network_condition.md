@@ -55,42 +55,45 @@ output "ciscoise_network_access_network_condition_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **condition_type** (String) This field determines the content of the conditions field
-- **conditions** (Block List) (see [below for nested schema](#nestedblock--parameters--conditions))
-- **description** (String)
-- **id** (String) The ID of this resource.
-- **name** (String) Network Condition name
+- `condition_type` (String) This field determines the content of the conditions field
+- `conditions` (Block List) (see [below for nested schema](#nestedblock--parameters--conditions))
+- `description` (String)
+- `name` (String) Network Condition name
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
 
 <a id="nestedblock--parameters--conditions"></a>
 ### Nested Schema for `parameters.conditions`
 
 Optional:
 
-- **cli_dnis_list** (List of String) <p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>
-- **condition_type** (String) This field determines the content of the conditions field
-- **description** (String)
-- **device_group_list** (List of String) <p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>
-- **device_list** (List of String) <p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>
-- **id** (String) The ID of this resource.
-- **ip_addr_list** (List of String) <p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>
-- **mac_addr_list** (List of String) <p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>
-- **name** (String) Network Condition name
+- `cli_dnis_list` (List of String) <p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>
+- `condition_type` (String) This field determines the content of the conditions field
+- `description` (String)
+- `device_group_list` (List of String) <p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>
+- `device_list` (List of String) <p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>
+- `ip_addr_list` (List of String) <p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>
+- `mac_addr_list` (List of String) <p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>
+- `name` (String) Network Condition name
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
 
 
 
@@ -99,37 +102,37 @@ Optional:
 
 Read-Only:
 
-- **condition_type** (String)
-- **conditions** (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
+- `condition_type` (String)
+- `conditions` (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
 
 <a id="nestedobjatt--item--conditions"></a>
 ### Nested Schema for `item.conditions`
 
 Read-Only:
 
-- **cli_dnis_list** (List of String)
-- **condition_type** (String)
-- **description** (String)
-- **device_group_list** (List of String)
-- **device_list** (List of String)
-- **id** (String)
-- **ip_addr_list** (List of String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions--link))
-- **mac_addr_list** (List of String)
-- **name** (String)
+- `cli_dnis_list` (List of String)
+- `condition_type` (String)
+- `description` (String)
+- `device_group_list` (List of String)
+- `device_list` (List of String)
+- `id` (String)
+- `ip_addr_list` (List of String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions--link))
+- `mac_addr_list` (List of String)
+- `name` (String)
 
 <a id="nestedobjatt--item--conditions--link"></a>
 ### Nested Schema for `item.conditions.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -138,9 +141,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

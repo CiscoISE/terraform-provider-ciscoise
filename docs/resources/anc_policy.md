@@ -40,28 +40,39 @@ output "ciscoise_anc_policy_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **actions** (List of String) - QUARANTINE: Allows you to use Exception policies (authorization policies) to limit or deny an endpoint access to the network.
-- PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
-- SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
-- RE_AUTHENTICATE: Re-authenticates the session from the endpoint.
-- **id** (String) The ID of this resource.
-- **name** (String)
+- `actions` (List of String) - QUARANTINE: Allows you to use Exception policies (authorization policies) to limit or deny an endpoint access to the network.
+		- PORTBOUNCE: Resets the port on the network device to which the endpoint is connected.
+		- SHUTDOWN : Shuts down the port on the network device to which the endpoint is connected.
+		- RE_AUTHENTICATE: Re-authenticates the session from the endpoint.
+- `name` (String)
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -69,19 +80,19 @@ Optional:
 
 Read-Only:
 
-- **actions** (List of String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
+- `actions` (List of String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

@@ -47,7 +47,7 @@ output "ciscoise_trustsec_nbar_app_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
  
  
  
@@ -125,35 +125,35 @@ Contains
 NCONTAINS
  
 Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sort** (String) sort query parameter. sort type asc or desc
-- **sort_by** (String) sortBy query parameter. sort column by which objects needs to be sorted
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sort` (String) sort query parameter. sort type asc or desc
+- `sort_by` (String) sortBy query parameter. sort column by which objects needs to be sorted
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **name** (String)
-- **network_identities** (List of Object) (see [below for nested schema](#nestedobjatt--item--network_identities))
+- `description` (String)
+- `id` (String)
+- `name` (String)
+- `network_identities` (List of Object) (see [below for nested schema](#nestedobjatt--item--network_identities))
 
 <a id="nestedobjatt--item--network_identities"></a>
 ### Nested Schema for `item.network_identities`
 
 Read-Only:
 
-- **ports** (String)
-- **protocol** (String)
+- `ports` (String)
+- `protocol` (String)
 
 
 
@@ -162,17 +162,17 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **name** (String)
-- **network_identities** (List of Object) (see [below for nested schema](#nestedobjatt--items--network_identities))
+- `description` (String)
+- `id` (String)
+- `name` (String)
+- `network_identities` (List of Object) (see [below for nested schema](#nestedobjatt--items--network_identities))
 
 <a id="nestedobjatt--items--network_identities"></a>
 ### Nested Schema for `items.network_identities`
 
 Read-Only:
 
-- **ports** (String)
-- **protocol** (String)
+- `ports` (String)
+- `protocol` (String)
 
 

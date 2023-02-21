@@ -41,26 +41,26 @@ output "ciscoise_repository_example" {
 
 ### Optional
 
-- **id** (String) The ID of this resource.
-- **repository_name** (String) repositoryName path parameter. Unique name for a repository
+- `repository_name` (String) repositoryName path parameter. Unique name for a repository
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **enable_pki** (String)
-- **name** (String)
-- **password** (String)
-- **path** (String)
-- **protocol** (String)
-- **server_name** (String)
-- **user_name** (String)
+- `enable_pki` (String)
+- `name` (String)
+- `password` (String)
+- `path` (String)
+- `protocol` (String)
+- `server_name` (String)
+- `user_name` (String)
 
 
 <a id="nestedatt--items"></a>
@@ -68,12 +68,12 @@ Read-Only:
 
 Read-Only:
 
-- **enable_pki** (String)
-- **name** (String)
-- **password** (String)
-- **path** (String)
-- **protocol** (String)
-- **server_name** (String)
-- **user_name** (String)
+- `enable_pki` (String)
+- `name` (String)
+- `password` (String)
+- `path` (String)
+- `protocol` (String)
+- `server_name` (String)
+- `user_name` (String)
 
 

@@ -42,30 +42,41 @@ output "ciscoise_downloadable_acl_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **dacl** (String) The DACL Content. Use the string \\n for a newline
-- **dacl_type** (String) Allowed values:
-- IPV4,
-- IPV6,
-- IP_AGNOSTIC
-- **description** (String) Use the string \\n for a newline
-- **id** (String) The ID of this resource.
-- **name** (String) Resource Name. Name may contain alphanumeric or any of the following characters [_.-]
+- `dacl` (String) The DACL Content. Use the string \\n for a newline
+- `dacl_type` (String) Allowed values:
+		- IPV4,
+		- IPV6,
+		- IP_AGNOSTIC
+- `description` (String) Use the string \\n for a newline
+- `name` (String) Resource Name. Name may contain alphanumeric or any of the following characters [_.-]
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -73,21 +84,21 @@ Optional:
 
 Read-Only:
 
-- **dacl** (String)
-- **dacl_type** (String)
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
+- `dacl` (String)
+- `dacl_type` (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

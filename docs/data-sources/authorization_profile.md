@@ -54,69 +54,69 @@ output "ciscoise_authorization_profile_example" {
 
 ### Optional
 
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **access_type** (String)
-- **acl** (String)
-- **advanced_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_attributes))
-- **agentless_posture** (String)
-- **airespace_acl** (String)
-- **airespace_ipv6_acl** (String)
-- **asa_vpn** (String)
-- **authz_profile_type** (String)
-- **auto_smart_port** (String)
-- **avc_profile** (String)
-- **dacl_name** (String)
-- **description** (String)
-- **easywired_session_candidate** (String)
-- **id** (String)
-- **interface_template** (String)
-- **ipv6_acl_filter** (String)
-- **ipv6_dacl_name** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **mac_sec_policy** (String)
-- **name** (String)
-- **neat** (String)
-- **profile_name** (String)
-- **reauth** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--reauth))
-- **service_template** (String)
-- **track_movement** (String)
-- **vlan** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--vlan))
-- **voice_domain_permission** (String)
-- **web_auth** (String)
-- **web_redirection** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--web_redirection))
+- `access_type` (String)
+- `acl` (String)
+- `advanced_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_attributes))
+- `agentless_posture` (String)
+- `airespace_acl` (String)
+- `airespace_ipv6_acl` (String)
+- `asa_vpn` (String)
+- `authz_profile_type` (String)
+- `auto_smart_port` (String)
+- `avc_profile` (String)
+- `dacl_name` (String)
+- `description` (String)
+- `easywired_session_candidate` (String)
+- `id` (String)
+- `interface_template` (String)
+- `ipv6_acl_filter` (String)
+- `ipv6_dacl_name` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `mac_sec_policy` (String)
+- `name` (String)
+- `neat` (String)
+- `profile_name` (String)
+- `reauth` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--reauth))
+- `service_template` (String)
+- `track_movement` (String)
+- `vlan` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--vlan))
+- `voice_domain_permission` (String)
+- `web_auth` (String)
+- `web_redirection` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--web_redirection))
 
 <a id="nestedobjatt--item_id--advanced_attributes"></a>
 ### Nested Schema for `item_id.advanced_attributes`
 
 Read-Only:
 
-- **left_hand_side_dictionary_attribue** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_attributes--left_hand_side_dictionary_attribue))
-- **right_hand_side_attribue_value** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_attributes--right_hand_side_attribue_value))
+- `left_hand_side_dictionary_attribue` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_attributes--left_hand_side_dictionary_attribue))
+- `right_hand_side_attribue_value` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--advanced_attributes--right_hand_side_attribue_value))
 
 <a id="nestedobjatt--item_id--advanced_attributes--left_hand_side_dictionary_attribue"></a>
 ### Nested Schema for `item_id.advanced_attributes.left_hand_side_dictionary_attribue`
 
 Read-Only:
 
-- **advanced_attribute_value_type** (String)
-- **attribute_name** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `advanced_attribute_value_type` (String)
+- `attribute_name` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--item_id--advanced_attributes--right_hand_side_attribue_value"></a>
@@ -124,10 +124,10 @@ Read-Only:
 
 Read-Only:
 
-- **advanced_attribute_value_type** (String)
-- **attribute_name** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `advanced_attribute_value_type` (String)
+- `attribute_name` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 
@@ -136,9 +136,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item_id--reauth"></a>
@@ -146,8 +146,8 @@ Read-Only:
 
 Read-Only:
 
-- **connectivity** (String)
-- **timer** (Number)
+- `connectivity` (String)
+- `timer` (Number)
 
 
 <a id="nestedobjatt--item_id--vlan"></a>
@@ -155,8 +155,8 @@ Read-Only:
 
 Read-Only:
 
-- **name_id** (String)
-- **tag_id** (Number)
+- `name_id` (String)
+- `tag_id` (Number)
 
 
 <a id="nestedobjatt--item_id--web_redirection"></a>
@@ -164,11 +164,11 @@ Read-Only:
 
 Read-Only:
 
-- **acl** (String)
-- **display_certificates_renewal_messages** (String)
-- **portal_name** (String)
-- **static_iphost_name_fqd_n** (String)
-- **web_redirection_type** (String)
+- `acl` (String)
+- `display_certificates_renewal_messages` (String)
+- `portal_name` (String)
+- `static_iphost_name_fqd_n` (String)
+- `web_redirection_type` (String)
 
 
 
@@ -177,53 +177,53 @@ Read-Only:
 
 Read-Only:
 
-- **access_type** (String)
-- **acl** (String)
-- **advanced_attributes** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_attributes))
-- **agentless_posture** (String)
-- **airespace_acl** (String)
-- **airespace_ipv6_acl** (String)
-- **asa_vpn** (String)
-- **authz_profile_type** (String)
-- **auto_smart_port** (String)
-- **avc_profile** (String)
-- **dacl_name** (String)
-- **description** (String)
-- **easywired_session_candidate** (String)
-- **id** (String)
-- **interface_template** (String)
-- **ipv6_acl_filter** (String)
-- **ipv6_dacl_name** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **mac_sec_policy** (String)
-- **name** (String)
-- **neat** (String)
-- **profile_name** (String)
-- **reauth** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--reauth))
-- **service_template** (String)
-- **track_movement** (String)
-- **vlan** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--vlan))
-- **voice_domain_permission** (String)
-- **web_auth** (String)
-- **web_redirection** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--web_redirection))
+- `access_type` (String)
+- `acl` (String)
+- `advanced_attributes` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_attributes))
+- `agentless_posture` (String)
+- `airespace_acl` (String)
+- `airespace_ipv6_acl` (String)
+- `asa_vpn` (String)
+- `authz_profile_type` (String)
+- `auto_smart_port` (String)
+- `avc_profile` (String)
+- `dacl_name` (String)
+- `description` (String)
+- `easywired_session_candidate` (String)
+- `id` (String)
+- `interface_template` (String)
+- `ipv6_acl_filter` (String)
+- `ipv6_dacl_name` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `mac_sec_policy` (String)
+- `name` (String)
+- `neat` (String)
+- `profile_name` (String)
+- `reauth` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--reauth))
+- `service_template` (String)
+- `track_movement` (String)
+- `vlan` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--vlan))
+- `voice_domain_permission` (String)
+- `web_auth` (String)
+- `web_redirection` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--web_redirection))
 
 <a id="nestedobjatt--item_name--advanced_attributes"></a>
 ### Nested Schema for `item_name.advanced_attributes`
 
 Read-Only:
 
-- **left_hand_side_dictionary_attribue** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_attributes--left_hand_side_dictionary_attribue))
-- **right_hand_side_attribue_value** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_attributes--right_hand_side_attribue_value))
+- `left_hand_side_dictionary_attribue` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_attributes--left_hand_side_dictionary_attribue))
+- `right_hand_side_attribue_value` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--advanced_attributes--right_hand_side_attribue_value))
 
 <a id="nestedobjatt--item_name--advanced_attributes--left_hand_side_dictionary_attribue"></a>
 ### Nested Schema for `item_name.advanced_attributes.left_hand_side_dictionary_attribue`
 
 Read-Only:
 
-- **advanced_attribute_value_type** (String)
-- **attribute_name** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `advanced_attribute_value_type` (String)
+- `attribute_name` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 <a id="nestedobjatt--item_name--advanced_attributes--right_hand_side_attribue_value"></a>
@@ -231,10 +231,10 @@ Read-Only:
 
 Read-Only:
 
-- **advanced_attribute_value_type** (String)
-- **attribute_name** (String)
-- **dictionary_name** (String)
-- **value** (String)
+- `advanced_attribute_value_type` (String)
+- `attribute_name` (String)
+- `dictionary_name` (String)
+- `value` (String)
 
 
 
@@ -243,9 +243,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 <a id="nestedobjatt--item_name--reauth"></a>
@@ -253,8 +253,8 @@ Read-Only:
 
 Read-Only:
 
-- **connectivity** (String)
-- **timer** (Number)
+- `connectivity` (String)
+- `timer` (Number)
 
 
 <a id="nestedobjatt--item_name--vlan"></a>
@@ -262,8 +262,8 @@ Read-Only:
 
 Read-Only:
 
-- **name_id** (String)
-- **tag_id** (Number)
+- `name_id` (String)
+- `tag_id` (Number)
 
 
 <a id="nestedobjatt--item_name--web_redirection"></a>
@@ -271,11 +271,11 @@ Read-Only:
 
 Read-Only:
 
-- **acl** (String)
-- **display_certificates_renewal_messages** (String)
-- **portal_name** (String)
-- **static_iphost_name_fqd_n** (String)
-- **web_redirection_type** (String)
+- `acl` (String)
+- `display_certificates_renewal_messages` (String)
+- `portal_name` (String)
+- `static_iphost_name_fqd_n` (String)
+- `web_redirection_type` (String)
 
 
 
@@ -284,18 +284,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

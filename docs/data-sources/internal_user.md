@@ -70,7 +70,7 @@ output "ciscoise_internal_user_example" {
 
 ### Optional
 
-- **filter** (List of String) filter query parameter. 
+- `filter` (List of String) filter query parameter. 
 
 **Simple filtering** should be available through the filter query string parameter. The structure of a filter is
 a triplet of field operator and value separated with dots. More than one filter can be sent. The logical operator
@@ -102,50 +102,50 @@ string parameter. Each resource Data model description should specify if an attr
               CONTAINS	  | Contains 
 
               NCONTAINS	  | Not Contains
-- **filter_type** (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
-- **id** (String) id path parameter.
-- **name** (String) name path parameter.
-- **page** (Number) page query parameter. Page number
-- **size** (Number) size query parameter. Number of objects returned per page
-- **sortasc** (String) sortasc query parameter. sort asc
-- **sortdsc** (String) sortdsc query parameter. sort desc
+- `filter_type` (String) filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter
+- `id` (String) id path parameter.
+- `name` (String) name path parameter.
+- `page` (Number) page query parameter. Page number
+- `size` (Number) size query parameter. Number of objects returned per page
+- `sortasc` (String) sortasc query parameter. sort asc
+- `sortdsc` (String) sortdsc query parameter. sort desc
 
 ### Read-Only
 
-- **item_id** (List of Object) (see [below for nested schema](#nestedatt--item_id))
-- **item_name** (List of Object) (see [below for nested schema](#nestedatt--item_name))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item_id` (List of Object) (see [below for nested schema](#nestedatt--item_id))
+- `item_name` (List of Object) (see [below for nested schema](#nestedatt--item_name))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item_id"></a>
 ### Nested Schema for `item_id`
 
 Read-Only:
 
-- **change_password** (String)
-- **custom_attributes** (Map of String)
-- **description** (String)
-- **email** (String)
-- **enable_password** (String)
-- **enabled** (String)
-- **expiry_date** (String)
-- **expiry_date_enabled** (String)
-- **first_name** (String)
-- **id** (String)
-- **identity_groups** (String)
-- **last_name** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
-- **name** (String)
-- **password** (String)
-- **password_idstore** (String)
+- `change_password` (String)
+- `custom_attributes` (Map of String)
+- `description` (String)
+- `email` (String)
+- `enable_password` (String)
+- `enabled` (String)
+- `expiry_date` (String)
+- `expiry_date_enabled` (String)
+- `first_name` (String)
+- `id` (String)
+- `identity_groups` (String)
+- `last_name` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
+- `name` (String)
+- `password` (String)
+- `password_idstore` (String)
 
 <a id="nestedobjatt--item_id--link"></a>
 ### Nested Schema for `item_id.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -154,31 +154,31 @@ Read-Only:
 
 Read-Only:
 
-- **change_password** (String)
-- **custom_attributes** (Map of String)
-- **description** (String)
-- **email** (String)
-- **enable_password** (String)
-- **enabled** (String)
-- **expiry_date** (String)
-- **expiry_date_enabled** (String)
-- **first_name** (String)
-- **id** (String)
-- **identity_groups** (String)
-- **last_name** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
-- **name** (String)
-- **password** (String)
-- **password_idstore** (String)
+- `change_password` (String)
+- `custom_attributes` (Map of String)
+- `description` (String)
+- `email` (String)
+- `enable_password` (String)
+- `enabled` (String)
+- `expiry_date` (String)
+- `expiry_date_enabled` (String)
+- `first_name` (String)
+- `id` (String)
+- `identity_groups` (String)
+- `last_name` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
+- `name` (String)
+- `password` (String)
+- `password_idstore` (String)
 
 <a id="nestedobjatt--item_name--link"></a>
 ### Nested Schema for `item_name.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -187,18 +187,18 @@ Read-Only:
 
 Read-Only:
 
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--link"></a>
 ### Nested Schema for `items.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

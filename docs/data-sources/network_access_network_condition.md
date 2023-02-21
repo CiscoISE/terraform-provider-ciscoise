@@ -41,49 +41,49 @@ output "ciscoise_network_access_network_condition_example" {
 
 ### Optional
 
-- **id** (String) id path parameter. Condition id
+- `id` (String) id path parameter. Condition id
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **items** (List of Object) (see [below for nested schema](#nestedatt--items))
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `items` (List of Object) (see [below for nested schema](#nestedatt--items))
 
 <a id="nestedatt--item"></a>
 ### Nested Schema for `item`
 
 Read-Only:
 
-- **condition_type** (String)
-- **conditions** (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
+- `condition_type` (String)
+- `conditions` (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
 
 <a id="nestedobjatt--item--conditions"></a>
 ### Nested Schema for `item.conditions`
 
 Read-Only:
 
-- **cli_dnis_list** (List of String)
-- **condition_type** (String)
-- **description** (String)
-- **device_group_list** (List of String)
-- **device_list** (List of String)
-- **id** (String)
-- **ip_addr_list** (List of String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions--link))
-- **mac_addr_list** (List of String)
-- **name** (String)
+- `cli_dnis_list` (List of String)
+- `condition_type` (String)
+- `description` (String)
+- `device_group_list` (List of String)
+- `device_list` (List of String)
+- `id` (String)
+- `ip_addr_list` (List of String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--conditions--link))
+- `mac_addr_list` (List of String)
+- `name` (String)
 
 <a id="nestedobjatt--item--conditions--link"></a>
 ### Nested Schema for `item.conditions.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -92,9 +92,9 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -103,37 +103,37 @@ Read-Only:
 
 Read-Only:
 
-- **condition_type** (String)
-- **conditions** (List of Object) (see [below for nested schema](#nestedobjatt--items--conditions))
-- **description** (String)
-- **id** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
-- **name** (String)
+- `condition_type` (String)
+- `conditions` (List of Object) (see [below for nested schema](#nestedobjatt--items--conditions))
+- `description` (String)
+- `id` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--link))
+- `name` (String)
 
 <a id="nestedobjatt--items--conditions"></a>
 ### Nested Schema for `items.conditions`
 
 Read-Only:
 
-- **cli_dnis_list** (List of String)
-- **condition_type** (String)
-- **description** (String)
-- **device_group_list** (List of String)
-- **device_list** (List of String)
-- **id** (String)
-- **ip_addr_list** (List of String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--items--conditions--link))
-- **mac_addr_list** (List of String)
-- **name** (String)
+- `cli_dnis_list` (List of String)
+- `condition_type` (String)
+- `description` (String)
+- `device_group_list` (List of String)
+- `device_list` (List of String)
+- `id` (String)
+- `ip_addr_list` (List of String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--conditions--link))
+- `mac_addr_list` (List of String)
+- `name` (String)
 
 <a id="nestedobjatt--items--conditions--link"></a>
 ### Nested Schema for `items.conditions.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 
 
@@ -142,8 +142,8 @@ Read-Only:
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 

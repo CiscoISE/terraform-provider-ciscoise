@@ -44,30 +44,41 @@ output "ciscoise_sgt_example" {
 
 ### Required
 
-- **parameters** (Block List, Min: 1, Max: 1) it is a container o ISE API parameters. (see [below for nested schema](#nestedblock--parameters))
-
-### Optional
-
-- **id** (String) The ID of this resource.
+- `parameters` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--parameters))
 
 ### Read-Only
 
-- **item** (List of Object) (see [below for nested schema](#nestedatt--item))
-- **last_updated** (String) Unix timestamp records the last time that the resource was updated.
+- `id` (String) The ID of this resource.
+- `item` (List of Object) (see [below for nested schema](#nestedatt--item))
+- `last_updated` (String) Unix timestamp records the last time that the resource was updated.
 
 <a id="nestedblock--parameters"></a>
 ### Nested Schema for `parameters`
 
 Optional:
 
-- **default_sgacls** (List of String)
-- **description** (String)
-- **generation_id** (String)
-- **id** (String) The ID of this resource.
-- **is_read_only** (String)
-- **name** (String)
-- **propogate_to_apic** (String)
-- **value** (Number) Value range: 2 ot 65519 or -1 to auto-generate
+- `default_sgacls` (List of String)
+- `description` (String)
+- `generation_id` (String)
+- `is_read_only` (String)
+- `name` (String)
+- `propogate_to_apic` (String)
+- `value` (Number) Value range: 2 ot 65519
+
+Read-Only:
+
+- `id` (String) The ID of this resource.
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--link))
+
+<a id="nestedatt--parameters--link"></a>
+### Nested Schema for `parameters.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
 
 
 <a id="nestedatt--item"></a>
@@ -75,24 +86,24 @@ Optional:
 
 Read-Only:
 
-- **default_sgacls** (List of String)
-- **description** (String)
-- **generation_id** (String)
-- **id** (String)
-- **is_read_only** (String)
-- **link** (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
-- **name** (String)
-- **propogate_to_apic** (String)
-- **value** (Number)
+- `default_sgacls` (List of String)
+- `description` (String)
+- `generation_id` (String)
+- `id` (String)
+- `is_read_only` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
+- `name` (String)
+- `propogate_to_apic` (String)
+- `value` (Number)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`
 
 Read-Only:
 
-- **href** (String)
-- **rel** (String)
-- **type** (String)
+- `href` (String)
+- `rel` (String)
+- `type` (String)
 
 ## Import
 

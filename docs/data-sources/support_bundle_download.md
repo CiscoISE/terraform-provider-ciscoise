@@ -28,11 +28,14 @@ data "ciscoise_support_bundle_download" "example" {
 
 ### Required
 
-- **dirpath** (String) Directory absolute path in which to save the file.
+- `dirpath` (String) Directory absolute path in which to save the file.
 
 ### Optional
 
-- **file_name** (String)
-- **id** (String) The ID of this resource.
+- `file_name` (String)
+
+### Read-Only
+
+- `id` (String) The ID of this resource.
 
 
