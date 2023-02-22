@@ -801,8 +801,11 @@ func resourceDeviceAdministrationAuthorizationRulesUpdateUpdateCreate(ctx contex
 	if err != nil || response1 == nil {
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			err = fmt.Errorf(restyResp1.String())
 		}
-		d.SetId("")
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing resourceDeviceAdministrationAuthorizationRulesUpdateUpdateCreate ", err,
+			"Failure at resourceDeviceAdministrationAuthorizationRulesUpdateUpdateCreate, unexpected response", ""))
 		return diags
 	}
 
