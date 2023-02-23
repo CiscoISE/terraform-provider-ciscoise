@@ -1,7 +1,14 @@
+## 0.6.17-beta (Feb 22, 2023)
+BUG FIXES:
+* Errors handled in new resources:
+  - `resource_device_administration_authorization_rules_update`
+  - `resource_network_access_authorization_rules_update`
+
 ## 0.6.16-beta (Feb 21, 2023)
 FEATURES:
 * **New Resource** `resource_device_administration_authorization_rules_update` issue #71.
 * **New Resource** `resource_network_access_authorization_rules_update` issue #71.
+
 BUG FIXES:
 * Issue #83 =>  Update README as requested.
 

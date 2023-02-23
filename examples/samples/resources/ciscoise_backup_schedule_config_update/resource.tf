@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.6.16-beta"
+      version = "0.6.17-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
