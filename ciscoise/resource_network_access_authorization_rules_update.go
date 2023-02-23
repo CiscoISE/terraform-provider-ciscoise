@@ -758,8 +758,11 @@ func resourceNetworkAccessAuthorizationRulesUpdateUpdateCreate(ctx context.Conte
 		}
 		if restyResp1 != nil {
 			log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
+			err = fmt.Errorf(restyResp1.String())
 		}
-		d.SetId("")
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing resourceNetworkAccessAuthorizationRulesUpdateUpdateCreate ", err,
+			"Failure at resourceNetworkAccessAuthorizationRulesUpdateUpdateCreate, unexpected response", ""))
 		return diags
 	}
 
