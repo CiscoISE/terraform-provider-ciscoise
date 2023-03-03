@@ -1,3 +1,7 @@
+## 0.6.18-beta (Mar 03, 2023)
+UPGRADE NOTES:
+* The go version of the provider was updated to 1.20, this due to the new prerequisites of terraform gorealeser, in which it is detailed that you must have a GO version of 1.18 or higher. Here are [gorealeaser docs](https://developer.hashicorp.com/terraform/tutorials/providers-plugin-framework/providers-plugin-framework-release-publish).
+
 ## 0.6.17-beta (Feb 22, 2023)
 BUG FIXES:
 * Errors handled in new resources:
