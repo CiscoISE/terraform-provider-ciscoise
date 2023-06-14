@@ -115,6 +115,46 @@ TimeAndDate
 										Type:        schema.TypeString,
 										Computed:    true,
 									},
+									"name": &schema.Schema{
+										Description: `Condition name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"operator": &schema.Schema{
+										Description: `Equality operator`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"dictionary_name": &schema.Schema{
+										Description: `Dictionary name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"dictionary_value": &schema.Schema{
+										Description: `Dictionary value`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"description": &schema.Schema{
+										Description: `Condition description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"attribute_value": &schema.Schema{
+										Description: `Attribute value`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"attribute_name": &schema.Schema{
+										Description: `Dictionary attribute name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
+									"id": &schema.Schema{
+										Description: `id`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
 									"link": &schema.Schema{
 										Type:     schema.TypeList,
 										Computed: true,
@@ -374,6 +414,54 @@ TimeAndDate
 												},
 											},
 										},
+									},
+									"name": &schema.Schema{
+										Description: `Condition name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+										Optional:    true,
+									},
+									"operator": &schema.Schema{
+										Description: `Equality operator`,
+										Type:        schema.TypeString,
+										Computed:    true,
+										Optional:    true,
+									},
+									"dictionary_name": &schema.Schema{
+										Description: `Dictionary name`,
+										Type:        schema.TypeString,
+										Computed:    true,
+										Optional:    true,
+									},
+									"dictionary_value": &schema.Schema{
+										Description: `Dictionary value`,
+										Type:        schema.TypeString,
+										Computed:    true,
+										Optional:    true,
+									},
+									"description": &schema.Schema{
+										Description: `Condition description`,
+										Type:        schema.TypeString,
+										Computed:    true,
+										Optional:    true,
+									},
+									"attribute_value": &schema.Schema{
+										Description: `Attribute value`,
+										Type:        schema.TypeString,
+										Computed:    true,
+										Optional:    true,
+									},
+									"attribute_name": &schema.Schema{
+										Description:      `Dictionary attribute name`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
+									},
+									"id": &schema.Schema{
+										Description: `id`,
+										Type:        schema.TypeString,
+										Computed:    true,
 									},
 								},
 							},
@@ -937,6 +1025,30 @@ func expandRequestNetworkAccessConditionsCreateNetworkAccessConditionChildren(ct
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
+		request.AttributeName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
+		request.AttributeValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
+		request.DictionaryName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
+		request.DictionaryValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
+		request.Operator = interfaceToString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
 	}
@@ -1125,6 +1237,30 @@ func expandRequestNetworkAccessConditionsUpdateNetworkAccessConditionByIDChildre
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".is_negate")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".is_negate")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".is_negate")))) {
 		request.IsNegate = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
+		request.Description = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
+		request.ID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
+		request.Name = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
+		request.AttributeName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
+		request.AttributeValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
+		request.DictionaryName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
+		request.DictionaryValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
+		request.Operator = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.6.18-beta"
+      version = "0.6.19-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -26,7 +26,7 @@ data "ciscoise_network_access_conditions" "example1" {
 }
 
 output "ciscoise_network_access_conditions_example1" {
-  value = data.ciscoise_network_access_conditions.example1.item_name
+  value = data.ciscoise_network_access_conditions.example1.items
 }
 
 data "ciscoise_network_access_conditions" "example2" {
@@ -35,5 +35,5 @@ data "ciscoise_network_access_conditions" "example2" {
 }
 
 output "ciscoise_network_access_conditions_example2" {
-  value = data.ciscoise_network_access_conditions.example2.item_id
+  value = data.ciscoise_network_access_conditions.example2.item
 }

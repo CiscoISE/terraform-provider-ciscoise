@@ -11,6 +11,7 @@ import (
 	"unicode/utf8"
 
 	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+
 	"github.com/go-resty/resty/v2"
 )
 
