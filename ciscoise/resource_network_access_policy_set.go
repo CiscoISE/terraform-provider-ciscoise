@@ -140,6 +140,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
+												"dictionary_value": &schema.Schema{
+													Description: `dictionary_value`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
 											},
 										},
 									},
@@ -461,6 +466,13 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 												},
 												"operator": &schema.Schema{
 													Description:      `Operator`,
+													Type:             schema.TypeString,
+													Optional:         true,
+													DiffSuppressFunc: diffSupressOptional(),
+													Computed:         true,
+												},
+												"dictionary_value": &schema.Schema{
+													Description:      `dictionary_value`,
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: diffSupressOptional(),
@@ -1208,6 +1220,9 @@ func expandRequestNetworkAccessPolicySetCreateNetworkAccessPolicySetConditionChi
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
 		request.DictionaryName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
+		request.DictionaryValue = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
