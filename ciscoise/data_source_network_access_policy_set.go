@@ -999,7 +999,7 @@ func flattenNetworkAccessPolicySetGetNetworkAccessPolicySetByIDItemConditionChil
 		respItem["attribute_name"] = item.AttributeName
 		respItem["operator"] = item.Operator
 		respItem["attribute_value"] = item.AttributeValue
-		respItem["id"] = item.AttributeValue
+		respItem["id"] = item.ID
 		respItems = append(respItems, respItem)
 	}
 	return respItems
