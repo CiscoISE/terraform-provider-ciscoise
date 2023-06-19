@@ -137,6 +137,12 @@ func resourceEndpointGroup() *schema.Resource {
 							DiffSuppressFunc: diffSupressBool(),
 							Computed:         true,
 						},
+						"parent_id": &schema.Schema{
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+						},
 					},
 				},
 			},
@@ -434,6 +440,9 @@ func expandRequestEndpointGroupCreateEndpointGroupEndPointGroup(ctx context.Cont
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".system_defined")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".system_defined")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".system_defined")))) {
 		request.SystemDefined = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".parent_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".parent_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".parent_id")))) {
+		request.ParentID = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
