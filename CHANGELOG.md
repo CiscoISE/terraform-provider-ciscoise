@@ -1,3 +1,10 @@
+## 0.6.20-beta (June 19, 2023)
+BUG FIXES:
+* Resource ciscoise_network_access_policy_set wrong state handling when using children blocks #92
+* Ciscoise_network_device_group missing othername #94
+* No parent_id parameter available in cisco_endpoint_group resource #95
+* Getting all network access policy sets throwing error #90
+
 ## 0.6.19-beta (Jun 14, 2023)
 BUG FIXES:
 *  Resource 'ciscoise_network_access_conditions' does not support children blocks #91 
