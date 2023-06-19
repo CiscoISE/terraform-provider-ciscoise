@@ -6,7 +6,7 @@ resource "ciscoise_network_device_group" "example" {
     description = "string"
     id          = "string"
     name        = "string"
-    ndgtype     = "string"
+    othername   = "string"
   }
 }
 
