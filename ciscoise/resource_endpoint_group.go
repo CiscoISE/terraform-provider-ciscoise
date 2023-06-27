@@ -80,6 +80,10 @@ func resourceEndpointGroup() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"parent_id": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},

@@ -438,6 +438,7 @@ func flattenEndpointIDentityGroupGetEndpointGroupByNameItemName(item *isegosdk.R
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
 	respItem["system_defined"] = boolPtrToString(item.SystemDefined)
+	respItem["parent_id"] = item.ParentID
 	respItem["link"] = flattenEndpointIDentityGroupGetEndpointGroupByNameItemNameLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
@@ -469,6 +470,7 @@ func flattenEndpointIDentityGroupGetEndpointGroupByIDItemID(item *isegosdk.Respo
 	respItem["description"] = item.Description
 	respItem["system_defined"] = boolPtrToString(item.SystemDefined)
 	respItem["link"] = flattenEndpointIDentityGroupGetEndpointGroupByIDItemIDLink(item.Link)
+	respItem["parent_id"] = item.ParentID
 	return []map[string]interface{}{
 		respItem,
 	}
