@@ -1,3 +1,9 @@
+## 0.6.21-beta (June 27, 2023)
+BUG FIXES:
+* ciscoise_internal_user import results in Error #88
+* Ciscoise_network_device_group missing othername #94
+* No parent_id parameter available in cisco_endpoint_group resource #95
+
 ## 0.6.20-beta (June 19, 2023)
 BUG FIXES:
 * Resource ciscoise_network_access_policy_set wrong state handling when using children blocks #92
