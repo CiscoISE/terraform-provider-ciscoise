@@ -158,7 +158,7 @@ The values are case sensitive. For example, '[ERSObjectURL]?filter=enabled.EQ.En
 							Description: `Key value map`,
 							// CHECK: The type of this param
 							// Replaced List to Map
-							Type:             schema.TypeString, //TEST,
+							Type:             schema.TypeMap, //TEST,
 							Optional:         true,
 							DiffSuppressFunc: diffSupressOptional(),
 							Computed:         true,
