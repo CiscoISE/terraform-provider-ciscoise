@@ -1,0 +1,1 @@
+terraform import ciscoise_internal_user.example "id:=string\name:=string"
