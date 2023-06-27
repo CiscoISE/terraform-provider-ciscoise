@@ -148,7 +148,7 @@ For example, if the name is a#b#c it should appear in the request URL as a:b:c`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"ndgtype": &schema.Schema{
+						"othername": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -194,7 +194,7 @@ For example, if the name is a#b#c it should appear in the request URL as a:b:c`,
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"ndgtype": &schema.Schema{
+						"othername": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -439,7 +439,7 @@ func flattenNetworkDeviceGroupGetNetworkDeviceGroupByNameItemName(item *isegosdk
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
 	respItem["link"] = flattenNetworkDeviceGroupGetNetworkDeviceGroupByNameItemNameLink(item.Link)
-	respItem["ndgtype"] = item.Ndgtype
+	respItem["othername"] = item.Othername
 	return []map[string]interface{}{
 		respItem,
 	}
@@ -469,7 +469,7 @@ func flattenNetworkDeviceGroupGetNetworkDeviceGroupByIDItemID(item *isegosdk.Res
 	respItem["name"] = item.Name
 	respItem["description"] = item.Description
 	respItem["link"] = flattenNetworkDeviceGroupGetNetworkDeviceGroupByIDItemIDLink(item.Link)
-	respItem["ndgtype"] = item.Ndgtype
+	respItem["othername"] = item.Othername
 	return []map[string]interface{}{
 		respItem,
 	}
