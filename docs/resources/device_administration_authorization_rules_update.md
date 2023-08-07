@@ -13,8 +13,6 @@ It performs update operation on Device Administration - Authorization Rules.
 
 - Device Admin Update authorization rule.
 
-~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
 ## Example Usage
 
 ```terraform
@@ -159,7 +157,7 @@ Read-Only:
 - `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--rule--condition--link))
 
 <a id="nestedblock--parameters--rule--condition--children"></a>
-### Nested Schema for `parameters.rule.condition.link`
+### Nested Schema for `parameters.rule.condition.children`
 
 Optional:
 
@@ -172,10 +170,10 @@ Optional:
 
 Read-Only:
 
-- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--rule--condition--link--link))
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--rule--condition--children--link))
 
-<a id="nestedatt--parameters--rule--condition--link--link"></a>
-### Nested Schema for `parameters.rule.condition.link.link`
+<a id="nestedatt--parameters--rule--condition--children--link"></a>
+### Nested Schema for `parameters.rule.condition.children.link`
 
 Read-Only:
 
@@ -186,7 +184,7 @@ Read-Only:
 
 
 <a id="nestedblock--parameters--rule--condition--dates_range"></a>
-### Nested Schema for `parameters.rule.condition.link`
+### Nested Schema for `parameters.rule.condition.dates_range`
 
 Optional:
 
@@ -195,7 +193,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--rule--condition--dates_range_exception"></a>
-### Nested Schema for `parameters.rule.condition.link`
+### Nested Schema for `parameters.rule.condition.dates_range_exception`
 
 Optional:
 
@@ -204,7 +202,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--rule--condition--hours_range"></a>
-### Nested Schema for `parameters.rule.condition.link`
+### Nested Schema for `parameters.rule.condition.hours_range`
 
 Optional:
 
@@ -213,7 +211,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--rule--condition--hours_range_exception"></a>
-### Nested Schema for `parameters.rule.condition.link`
+### Nested Schema for `parameters.rule.condition.hours_range_exception`
 
 Optional:
 

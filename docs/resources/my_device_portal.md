@@ -202,7 +202,7 @@ Optional:
 - `mobile_logo_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedblock--parameters--customizations--global_customizations--background_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.background_image`
 
 Optional:
 
@@ -210,7 +210,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--banner_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.banner_image`
 
 Optional:
 
@@ -218,7 +218,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--desktop_logo_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.desktop_logo_image`
 
 Optional:
 

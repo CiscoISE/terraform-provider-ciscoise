@@ -358,7 +358,7 @@ Optional:
 - `mobile_logo_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedblock--parameters--customizations--global_customizations--background_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.background_image`
 
 Optional:
 
@@ -366,7 +366,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--banner_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.banner_image`
 
 Optional:
 
@@ -374,7 +374,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--desktop_logo_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.desktop_logo_image`
 
 Optional:
 
@@ -497,7 +497,7 @@ Optional:
 - `byod_welcome_settings` (Block List) Configuration of BYOD endpoint welcome step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_welcome_settings))
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_settings"></a>
-### Nested Schema for `parameters.settings.byod_settings.byod_welcome_settings`
+### Nested Schema for `parameters.settings.byod_settings.byod_registration_settings`
 
 Optional:
 
@@ -506,7 +506,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_success_settings"></a>
-### Nested Schema for `parameters.settings.byod_settings.byod_welcome_settings`
+### Nested Schema for `parameters.settings.byod_settings.byod_registration_success_settings`
 
 Optional:
 
@@ -581,7 +581,7 @@ Optional:
 - `time_between_logins_during_rate_limit` (Number) Time between login attempts when rate limiting
 
 <a id="nestedblock--parameters--settings--login_page_settings--social_configs"></a>
-### Nested Schema for `parameters.settings.login_page_settings.time_between_logins_during_rate_limit`
+### Nested Schema for `parameters.settings.login_page_settings.social_configs`
 
 Optional:
 
@@ -716,7 +716,7 @@ Optional:
 - `sponsor_portal_list` (List of String)
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_company"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_company`
 
 Optional:
 
@@ -725,7 +725,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_email_addr"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_email_addr`
 
 Optional:
 
@@ -734,7 +734,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_first_name"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_first_name`
 
 Optional:
 
@@ -743,7 +743,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_last_name"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_last_name`
 
 Optional:
 
@@ -752,7 +752,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_location"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_location`
 
 Optional:
 
@@ -761,7 +761,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_person_being_visited"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_person_being_visited`
 
 Optional:
 
@@ -770,7 +770,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_phone_no"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_phone_no`
 
 Optional:
 
@@ -779,7 +779,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_reason_for_visit"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_reason_for_visit`
 
 Optional:
 
@@ -788,7 +788,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_sms_provider"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_sms_provider`
 
 Optional:
 
@@ -797,7 +797,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--self_reg_page_settings--field_user_name"></a>
-### Nested Schema for `parameters.settings.self_reg_page_settings.sponsor_portal_list`
+### Nested Schema for `parameters.settings.self_reg_page_settings.field_user_name`
 
 Optional:
 

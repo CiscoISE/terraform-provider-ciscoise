@@ -14,9 +14,6 @@ It performs update operation on Backup And Restore.
 - Update the Schedule of the configuration backup on the ISE node as per the input parameters. This resource
 only helps in editing the schedule.
 
-
-~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
 ## Example Usage
 
 ```terraform

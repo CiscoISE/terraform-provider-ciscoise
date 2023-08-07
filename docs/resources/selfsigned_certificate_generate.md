@@ -24,9 +24,6 @@ Request parameters accepting True and False as input can be replaced by 1 and 0 
 NOTE:
 Wildcard certificate and SAML certificate can be generated only on PPAN or Standalone
 
-
-~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
 ## Example Usage
 
 ```terraform

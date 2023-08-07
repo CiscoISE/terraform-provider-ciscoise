@@ -198,7 +198,7 @@ Optional:
 - `mobile_logo_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedblock--parameters--customizations--global_customizations--background_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.background_image`
 
 Optional:
 
@@ -206,7 +206,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--banner_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.banner_image`
 
 Optional:
 
@@ -214,7 +214,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--desktop_logo_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.desktop_logo_image`
 
 Optional:
 
@@ -296,7 +296,7 @@ Optional:
 - `byod_welcome_settings` (Block List) Configuration of BYOD endpoint welcome step configuration (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_welcome_settings))
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_settings"></a>
-### Nested Schema for `parameters.settings.byod_settings.byod_welcome_settings`
+### Nested Schema for `parameters.settings.byod_settings.byod_registration_settings`
 
 Optional:
 
@@ -305,7 +305,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_success_settings"></a>
-### Nested Schema for `parameters.settings.byod_settings.byod_welcome_settings`
+### Nested Schema for `parameters.settings.byod_settings.byod_registration_success_settings`
 
 Optional:
 

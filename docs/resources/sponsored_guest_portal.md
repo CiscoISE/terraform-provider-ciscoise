@@ -249,7 +249,7 @@ Optional:
 - `mobile_logo_image` (Block List) (see [below for nested schema](#nestedblock--parameters--customizations--global_customizations--mobile_logo_image))
 
 <a id="nestedblock--parameters--customizations--global_customizations--background_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.background_image`
 
 Optional:
 
@@ -257,7 +257,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--banner_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.banner_image`
 
 Optional:
 
@@ -265,7 +265,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--customizations--global_customizations--desktop_logo_image"></a>
-### Nested Schema for `parameters.customizations.global_customizations.mobile_logo_image`
+### Nested Schema for `parameters.customizations.global_customizations.desktop_logo_image`
 
 Optional:
 
@@ -387,7 +387,7 @@ Optional:
 - `byod_welcome_settings` (Block List) (see [below for nested schema](#nestedblock--parameters--settings--byod_settings--byod_welcome_settings))
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_settings"></a>
-### Nested Schema for `parameters.settings.byod_settings.byod_welcome_settings`
+### Nested Schema for `parameters.settings.byod_settings.byod_registration_settings`
 
 Optional:
 
@@ -396,7 +396,7 @@ Optional:
 
 
 <a id="nestedblock--parameters--settings--byod_settings--byod_registration_success_settings"></a>
-### Nested Schema for `parameters.settings.byod_settings.byod_welcome_settings`
+### Nested Schema for `parameters.settings.byod_settings.byod_registration_success_settings`
 
 Optional:
 
@@ -468,7 +468,7 @@ Optional:
 - `time_between_logins_during_rate_limit` (Number) Time between login attempts when rate limiting
 
 <a id="nestedblock--parameters--settings--login_page_settings--social_configs"></a>
-### Nested Schema for `parameters.settings.login_page_settings.time_between_logins_during_rate_limit`
+### Nested Schema for `parameters.settings.login_page_settings.social_configs`
 
 Optional:
 

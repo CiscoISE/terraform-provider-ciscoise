@@ -56,7 +56,7 @@ Optional:
 
 - `description` (String)
 - `name` (String)
-- `ndgtype` (String)
+- `othername` (String)
 
 Read-Only:
 
@@ -83,7 +83,7 @@ Read-Only:
 - `id` (String)
 - `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - `name` (String)
-- `ndgtype` (String)
+- `othername` (String)
 
 <a id="nestedobjatt--item--link"></a>
 ### Nested Schema for `item.link`

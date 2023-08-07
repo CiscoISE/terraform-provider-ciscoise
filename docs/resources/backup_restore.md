@@ -14,9 +14,6 @@ It performs create operation on Backup And Restore.
 - Triggers a configuration DB restore job on the ISE node. The API returns the task ID. Use the Task Service status API
 to get the status of the backup job
 
-
-~>Warning: This resource does not represent a real-world entity in Cisco ISE, therefore changing or deleting this resource on its own has no immediate effect. Instead, it is a task part of a Cisco ISE workflow. It is executed in ISE without any additional verification. It does not check if it was executed before or if a similar configuration or action already existed previously.
-
 ## Example Usage
 
 ```terraform

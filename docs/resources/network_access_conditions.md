@@ -192,11 +192,19 @@ Read-Only:
 
 Optional:
 
+- `attribute_name` (String) Dictionary attribute name
+- `attribute_value` (String) Attribute value
 - `condition_type` (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
+- `description` (String) Condition description
+- `dictionary_name` (String) Dictionary name
+- `dictionary_value` (String) Dictionary value
 - `is_negate` (String) Indicates whereas this condition is in negate mode
+- `name` (String) Condition name
+- `operator` (String) Equality operator
 
 Read-Only:
 
+- `id` (String) id
 - `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--children--link))
 
 <a id="nestedatt--parameters--children--link"></a>
@@ -286,9 +294,17 @@ Read-Only:
 
 Read-Only:
 
+- `attribute_name` (String)
+- `attribute_value` (String)
 - `condition_type` (String)
+- `description` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `id` (String)
 - `is_negate` (String)
 - `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--children--link))
+- `name` (String)
+- `operator` (String)
 
 <a id="nestedobjatt--item--children--link"></a>
 ### Nested Schema for `item.children.link`

@@ -69,7 +69,7 @@ output "ciscoise_internal_user_example" {
 Optional:
 
 - `change_password` (String)
-- `custom_attributes` (String) Key value map
+- `custom_attributes` (Map of String) Key value map
 - `description` (String)
 - `email` (String)
 - `enable_password` (String)

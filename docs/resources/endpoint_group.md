@@ -57,6 +57,7 @@ Optional:
 
 - `description` (String)
 - `name` (String)
+- `parent_id` (String)
 - `system_defined` (String)
 
 Read-Only:
@@ -84,6 +85,7 @@ Read-Only:
 - `id` (String)
 - `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--link))
 - `name` (String)
+- `parent_id` (String)
 - `system_defined` (String)
 
 <a id="nestedobjatt--item--link"></a>

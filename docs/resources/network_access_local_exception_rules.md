@@ -168,7 +168,7 @@ Read-Only:
 - `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--rule--condition--link))
 
 <a id="nestedblock--parameters--rule--condition--children"></a>
-### Nested Schema for `parameters.rule.condition.link`
+### Nested Schema for `parameters.rule.condition.children`
 
 Optional:
 
@@ -184,10 +184,10 @@ Optional:
 
 Read-Only:
 
-- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--rule--condition--link--link))
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--rule--condition--children--link))
 
-<a id="nestedatt--parameters--rule--condition--link--link"></a>
-### Nested Schema for `parameters.rule.condition.link.link`
+<a id="nestedatt--parameters--rule--condition--children--link"></a>
+### Nested Schema for `parameters.rule.condition.children.link`
 
 Read-Only:
 

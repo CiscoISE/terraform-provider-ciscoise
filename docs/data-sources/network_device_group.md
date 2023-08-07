@@ -126,7 +126,7 @@ Read-Only:
 - `id` (String)
 - `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_id--link))
 - `name` (String)
-- `ndgtype` (String)
+- `othername` (String)
 
 <a id="nestedobjatt--item_id--link"></a>
 ### Nested Schema for `item_id.link`
@@ -148,7 +148,7 @@ Read-Only:
 - `id` (String)
 - `link` (List of Object) (see [below for nested schema](#nestedobjatt--item_name--link))
 - `name` (String)
-- `ndgtype` (String)
+- `othername` (String)
 
 <a id="nestedobjatt--item_name--link"></a>
 ### Nested Schema for `item_name.link`
