@@ -14,19 +14,19 @@ resource "ciscoise_network_access_conditions" "conditions" {
   provider = ciscoise
 
   parameters {
-    name            = "condtion_11"
-    condition_type  = "LibraryConditionAndBlock"
-    is_negate       = false
- 
+    name           = "condtion_11"
+    condition_type = "LibraryConditionAndBlock"
+    is_negate      = false
+
     children {
-          condition_type = "ConditionReference"
-          id = "ff6008e0-5c35-48a3-9fab-e0e709983369"
+      condition_type = "ConditionReference"
+      id             = "ff6008e0-5c35-48a3-9fab-e0e709983369"
     }
     children {
-          condition_type = "ConditionReference"
-          id = "2f1a717d-cc09-41e3-a2ac-ecea19a841f8"
+      condition_type = "ConditionReference"
+      id             = "2f1a717d-cc09-41e3-a2ac-ecea19a841f8"
     }
- 
+
   }
 }
 

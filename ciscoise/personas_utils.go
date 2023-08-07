@@ -10,7 +10,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "github.com/kuba-mazurkiewicz/ciscoise-go-sdk/sdk"
 
 	"github.com/go-resty/resty/v2"
 )
