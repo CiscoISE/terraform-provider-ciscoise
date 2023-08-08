@@ -8,7 +8,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/kuba-mazurkiewicz/ciscoise-go-sdk/sdk"
+	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
