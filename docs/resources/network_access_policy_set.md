@@ -157,8 +157,10 @@ Optional:
 
 - `attribute_name` (String) Atribute Name
 - `attribute_value` (String) Attibute Name
+- `children` (Block List) In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition (see [below for nested schema](#nestedblock--parameters--condition--children--children))
 - `condition_type` (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
 - `dictionary_name` (String) Dictionary Name
+- `dictionary_value` (String) dictionary_value
 - `id` (String) ID
 - `is_negate` (String) Indicates whereas this condition is in negate mode
 - `operator` (String) Operator
@@ -166,6 +168,62 @@ Optional:
 Read-Only:
 
 - `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--condition--children--link))
+
+<a id="nestedblock--parameters--condition--children--children"></a>
+### Nested Schema for `parameters.condition.children.children`
+
+Optional:
+
+- `attribute_name` (String) Atribute Name
+- `attribute_value` (String) Attibute Name
+- `condition_type` (String) <ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>
+- `dictionary_name` (String) Dictionary Name
+- `dictionary_value` (String) dictionary_value
+- `id` (String) ID
+- `is_negate` (String) Indicates whereas this condition is in negate mode
+- `operator` (String) Operator
+
+Read-Only:
+
+- `children` (List of Object) In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition (see [below for nested schema](#nestedatt--parameters--condition--children--children--children))
+- `link` (List of Object) (see [below for nested schema](#nestedatt--parameters--condition--children--children--link))
+
+<a id="nestedatt--parameters--condition--children--children--children"></a>
+### Nested Schema for `parameters.condition.children.children.children`
+
+Read-Only:
+
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `condition_type` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--parameters--condition--children--children--children--link))
+- `operator` (String)
+
+<a id="nestedobjatt--parameters--condition--children--children--children--link"></a>
+### Nested Schema for `parameters.condition.children.children.children.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
+
+
+<a id="nestedatt--parameters--condition--children--children--link"></a>
+### Nested Schema for `parameters.condition.children.children.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
+
 
 <a id="nestedatt--parameters--condition--children--link"></a>
 ### Nested Schema for `parameters.condition.children.link`
@@ -284,12 +342,67 @@ Read-Only:
 
 - `attribute_name` (String)
 - `attribute_value` (String)
+- `children` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--children))
 - `condition_type` (String)
 - `dictionary_name` (String)
+- `dictionary_value` (String)
 - `id` (String)
 - `is_negate` (String)
 - `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--link))
 - `operator` (String)
+
+<a id="nestedobjatt--item--condition--children--children"></a>
+### Nested Schema for `item.condition.children.operator`
+
+Read-Only:
+
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `children` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--operator--children))
+- `condition_type` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--operator--link))
+- `operator` (String)
+
+<a id="nestedobjatt--item--condition--children--operator--children"></a>
+### Nested Schema for `item.condition.children.operator.children`
+
+Read-Only:
+
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `condition_type` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--operator--children--link))
+- `operator` (String)
+
+<a id="nestedobjatt--item--condition--children--operator--children--link"></a>
+### Nested Schema for `item.condition.children.operator.children.operator`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
+
+
+<a id="nestedobjatt--item--condition--children--operator--link"></a>
+### Nested Schema for `item.condition.children.operator.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
+
 
 <a id="nestedobjatt--item--condition--children--link"></a>
 ### Nested Schema for `item.condition.children.operator`

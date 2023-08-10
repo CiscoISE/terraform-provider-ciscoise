@@ -114,6 +114,7 @@ resource "ciscoise_allowed_protocols" "example" {
       allow_teap_eap_tls                           = "false"
       allow_teap_eap_tls_auth_of_expired_certs     = "false"
       enable_eap_chaining                          = "false"
+      request_basic_pwd_auth                       = "false"
     }
   }
 }
@@ -455,6 +456,7 @@ Read-Only:
 - `allow_teap_eap_tls` (String)
 - `allow_teap_eap_tls_auth_of_expired_certs` (String)
 - `enable_eap_chaining` (String)
+- `request_basic_pwd_auth` (String)
 
 ## Import
 

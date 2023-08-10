@@ -500,6 +500,10 @@ Valid range is 0-3`,
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"request_basic_pwd_auth": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 								},
 							},
 						},
@@ -1189,6 +1193,13 @@ Valid range is 0-3`,
 										DiffSuppressFunc: diffSupressBool(),
 										Computed:         true,
 									},
+									"request_basic_pwd_auth": &schema.Schema{
+										Type:             schema.TypeString,
+										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+										Optional:         true,
+										DiffSuppressFunc: diffSupressBool(),
+										Computed:         true,
+									},
 								},
 							},
 						},
@@ -1760,6 +1771,9 @@ func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsTeap(ctx 
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_downgrade_msk")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_downgrade_msk")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_downgrade_msk")))) {
 		request.AllowDowngradeMsk = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".request_basic_pwd_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".request_basic_pwd_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".request_basic_pwd_auth")))) {
+		request.RequestBasicPwdAuth = interfaceToBoolPtr(v)
+	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -2148,6 +2162,9 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsTeap(
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_downgrade_msk")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_downgrade_msk")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_downgrade_msk")))) {
 		request.AllowDowngradeMsk = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".request_basic_pwd_auth")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".request_basic_pwd_auth")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".request_basic_pwd_auth")))) {
+		request.RequestBasicPwdAuth = interfaceToBoolPtr(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
