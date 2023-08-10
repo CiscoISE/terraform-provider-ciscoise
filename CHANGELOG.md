@@ -1,3 +1,8 @@
+## 0.6.22-beta (August 09, 2023)
+BUG FIXES:
+* Resource 'ciscoise_network_access_policy_set' does not support nested children blocks #101
+* No request_basic_pwd_auth parameter available in ciscoise_allowed_protocols resource in teap block #99 
+
 ## 0.6.21-beta (June 27, 2023)
 BUG FIXES:
 * ciscoise_internal_user import results in Error #88

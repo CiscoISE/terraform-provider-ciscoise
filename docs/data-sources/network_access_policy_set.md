@@ -71,6 +71,7 @@ Read-Only:
 
 Read-Only:
 
+- `attribute_id` (String)
 - `attribute_name` (String)
 - `attribute_value` (String)
 - `children` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children))
@@ -97,12 +98,40 @@ Read-Only:
 
 - `attribute_name` (String)
 - `attribute_value` (String)
+- `children` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--children))
 - `condition_type` (String)
 - `dictionary_name` (String)
+- `dictionary_value` (String)
 - `id` (String)
 - `is_negate` (String)
 - `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--link))
 - `operator` (String)
+
+<a id="nestedobjatt--item--condition--children--children"></a>
+### Nested Schema for `item.condition.children.operator`
+
+Read-Only:
+
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `condition_type` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--item--condition--children--operator--link))
+- `operator` (String)
+
+<a id="nestedobjatt--item--condition--children--operator--link"></a>
+### Nested Schema for `item.condition.children.operator.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
+
 
 <a id="nestedobjatt--item--condition--children--link"></a>
 ### Nested Schema for `item.condition.children.operator`
@@ -195,6 +224,7 @@ Read-Only:
 
 Read-Only:
 
+- `attribute_id` (String)
 - `attribute_name` (String)
 - `attribute_value` (String)
 - `children` (List of Object) (see [below for nested schema](#nestedobjatt--items--condition--children))
@@ -221,11 +251,40 @@ Read-Only:
 
 - `attribute_name` (String)
 - `attribute_value` (String)
+- `children` (List of Object) (see [below for nested schema](#nestedobjatt--items--condition--children--children))
 - `condition_type` (String)
 - `dictionary_name` (String)
+- `dictionary_value` (String)
+- `id` (String)
 - `is_negate` (String)
 - `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--condition--children--link))
 - `operator` (String)
+
+<a id="nestedobjatt--items--condition--children--children"></a>
+### Nested Schema for `items.condition.children.operator`
+
+Read-Only:
+
+- `attribute_name` (String)
+- `attribute_value` (String)
+- `condition_type` (String)
+- `dictionary_name` (String)
+- `dictionary_value` (String)
+- `id` (String)
+- `is_negate` (String)
+- `link` (List of Object) (see [below for nested schema](#nestedobjatt--items--condition--children--operator--link))
+- `operator` (String)
+
+<a id="nestedobjatt--items--condition--children--operator--link"></a>
+### Nested Schema for `items.condition.children.operator.link`
+
+Read-Only:
+
+- `href` (String)
+- `rel` (String)
+- `type` (String)
+
+
 
 <a id="nestedobjatt--items--condition--children--link"></a>
 ### Nested Schema for `items.condition.children.operator`
@@ -293,5 +352,4 @@ Read-Only:
 - `href` (String)
 - `rel` (String)
 - `type` (String)
-
 

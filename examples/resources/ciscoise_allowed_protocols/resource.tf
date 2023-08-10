@@ -93,6 +93,7 @@ resource "ciscoise_allowed_protocols" "example" {
       allow_teap_eap_tls                           = "false"
       allow_teap_eap_tls_auth_of_expired_certs     = "false"
       enable_eap_chaining                          = "false"
+      request_basic_pwd_auth                       = "false"
     }
   }
 }
