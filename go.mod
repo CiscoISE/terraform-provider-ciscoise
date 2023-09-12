@@ -7,7 +7,7 @@ require (
 	github.com/gruntwork-io/terratest v0.41.12
 	github.com/hashicorp/terraform-plugin-docs v0.14.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.25.0
-	github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.1.30
+	github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.1.32
 	github.com/stretchr/testify v1.8.1
 )
 

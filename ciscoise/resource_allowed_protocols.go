@@ -220,8 +220,8 @@ Allowed Values:
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
-										Description: `The eapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning
+									"eap_fast_use_pacs_server_returns": &schema.Schema{
+										Description: `The EapFastUsePacsServerReturns
 is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored`,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -448,6 +448,10 @@ Allowed Values:
 							Computed: true,
 						},
 						"process_host_lookup": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"five_g": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -792,8 +796,8 @@ Valid range is 0-3`,
 										DiffSuppressFunc: diffSupressOptional(),
 										Computed:         true,
 									},
-									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
-										Description: `The eapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning
+									"eap_fast_use_pacs_server_returns": &schema.Schema{
+										Description: `The EapFastUsePacsServerReturns
 		is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored`,
 										Type:             schema.TypeString,
 										ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
@@ -1110,6 +1114,13 @@ Valid range is 0-3`,
 							Computed:         true,
 						},
 						"process_host_lookup": &schema.Schema{
+							Type:             schema.TypeString,
+							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+							Optional:         true,
+							DiffSuppressFunc: diffSupressBool(),
+							Computed:         true,
+						},
+						"five_g": &schema.Schema{
 							Type:             schema.TypeString,
 							ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
 							Optional:         true,
@@ -1515,6 +1526,9 @@ func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocols(ctx cont
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".process_host_lookup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".process_host_lookup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".process_host_lookup")))) {
 		request.ProcessHostLookup = interfaceToBoolPtr(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".five_g")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".five_g")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".five_g")))) {
+		request.FiveG = interfaceToBoolPtr(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_pap_ascii")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_pap_ascii")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_pap_ascii")))) {
 		request.AllowPapAscii = interfaceToBoolPtr(v)
 	}
@@ -1674,8 +1688,8 @@ func expandRequestAllowedProtocolsCreateAllowedProtocolAllowedProtocolsEapFast(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".eap_fast_use_pacs_allow_authen_provisioning")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".eap_fast_use_pacs_allow_authen_provisioning")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".eap_fast_use_pacs_allow_authen_provisioning")))) {
 		request.EapFastUsePacsAllowAuthenProvisioning = interfaceToBoolPtr(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning")))) {
-		request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".eap_fast_use_pacs_server_returns")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".eap_fast_use_pacs_server_returns")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".eap_fast_use_pacs_server_returns")))) {
+		request.EapFastUsePacsServerReturns = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".eap_fast_use_pacs_accept_client_cert")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".eap_fast_use_pacs_accept_client_cert")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".eap_fast_use_pacs_accept_client_cert")))) {
 		request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(v)
@@ -1838,6 +1852,9 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocols(ctx 
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".process_host_lookup")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".process_host_lookup")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".process_host_lookup")))) {
 		request.ProcessHostLookup = interfaceToBoolPtr(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".five_g")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".five_g")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".five_g")))) {
+		request.FiveG = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".allow_pap_ascii")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".allow_pap_ascii")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".allow_pap_ascii")))) {
 		request.AllowPapAscii = interfaceToBoolPtr(v)
@@ -2039,8 +2056,8 @@ func expandRequestAllowedProtocolsUpdateAllowedProtocolByIDAllowedProtocolsEapFa
 		vEapFastUsePacsAllowAuthenProvisioning, okEapFastUsePacsAllowAuthenProvisioning := d.GetOk(fixKeyAccess(key + ".eap_fast_use_pacs_allow_authen_provisioning"))
 		vvEapFastUsePacsAllowAuthenProvisioning := interfaceToBoolPtr(vEapFastUsePacsAllowAuthenProvisioning)
 		if okEapFastUsePacsAllowAuthenProvisioning && vvEapFastUsePacsAllowAuthenProvisioning != nil && *vvEapFastUsePacsAllowAuthenProvisioning {
-			if v, ok := d.GetOkExists(fixKeyAccess(key + ".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning")))) {
-				request.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning = interfaceToBoolPtr(v)
+			if v, ok := d.GetOkExists(fixKeyAccess(key + ".eap_fast_use_pacs_server_returns")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".eap_fast_use_pacs_server_returns")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".eap_fast_use_pacs_server_returns")))) {
+				request.EapFastUsePacsServerReturns = interfaceToBoolPtr(v)
 			}
 			if v, ok := d.GetOkExists(fixKeyAccess(key + ".eap_fast_use_pacs_accept_client_cert")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".eap_fast_use_pacs_accept_client_cert")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".eap_fast_use_pacs_accept_client_cert")))) {
 				request.EapFastUsePacsAcceptClientCert = interfaceToBoolPtr(v)

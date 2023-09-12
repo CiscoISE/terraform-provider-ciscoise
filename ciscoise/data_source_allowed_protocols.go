@@ -227,8 +227,8 @@ Allowed Values:
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
-										Description: `The eapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning
+									"eap_fast_use_pacs_server_returns": &schema.Schema{
+										Description: `The EapFastUsePacsServerReturns
 is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored`,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -455,6 +455,10 @@ Allowed Values:
 							Computed: true,
 						},
 						"process_host_lookup": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"five_g": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -696,8 +700,8 @@ Allowed Values:
 										Type:     schema.TypeString,
 										Computed: true,
 									},
-									"eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning": &schema.Schema{
-										Description: `The eapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning
+									"eap_fast_use_pacs_server_returns": &schema.Schema{
+										Description: `The EapFastUsePacsServerReturns
 is required only if eapFastUsePacsAllowAuthenProvisioning is true, otherwise it must be ignored`,
 										Type:     schema.TypeString,
 										Computed: true,
@@ -924,6 +928,10 @@ Allowed Values:
 							Computed: true,
 						},
 						"process_host_lookup": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"five_g": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -1209,6 +1217,7 @@ func flattenAllowedProtocolsGetAllowedProtocolByNameItemName(item *isegosdk.Resp
 	respItem["eap_ttls"] = flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapTtls(item.EapTtls)
 	respItem["teap"] = flattenAllowedProtocolsGetAllowedProtocolByNameItemNameTeap(item.Teap)
 	respItem["process_host_lookup"] = boolPtrToString(item.ProcessHostLookup)
+	respItem["five_g"] = boolPtrToString(item.FiveG)
 	respItem["allow_pap_ascii"] = boolPtrToString(item.AllowPapAscii)
 	respItem["allow_chap"] = boolPtrToString(item.AllowChap)
 	respItem["allow_ms_chap_v1"] = boolPtrToString(item.AllowMsChapV1)
@@ -1289,7 +1298,7 @@ func flattenAllowedProtocolsGetAllowedProtocolByNameItemNameEapFast(item *isegos
 	respItem["eap_fast_use_pacs_use_proactive_pac_update_precentage"] = item.EapFastUsePacsUseProactivePacUpdatePrecentage
 	respItem["eap_fast_use_pacs_allow_anonym_provisioning"] = boolPtrToString(item.EapFastUsePacsAllowAnonymProvisioning)
 	respItem["eap_fast_use_pacs_allow_authen_provisioning"] = boolPtrToString(item.EapFastUsePacsAllowAuthenProvisioning)
-	respItem["eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"] = boolPtrToString(item.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning)
+	respItem["eap_fast_use_pacs_server_returns"] = boolPtrToString(item.EapFastUsePacsServerReturns)
 	respItem["eap_fast_use_pacs_accept_client_cert"] = boolPtrToString(item.EapFastUsePacsAcceptClientCert)
 	respItem["eap_fast_use_pacs_machine_pac_ttl"] = item.EapFastUsePacsMachinePacTtl
 	respItem["eap_fast_use_pacs_machine_pac_ttl_units"] = item.EapFastUsePacsMachinePacTtlUnits
@@ -1376,6 +1385,7 @@ func flattenAllowedProtocolsGetAllowedProtocolByIDItemID(item *isegosdk.Response
 	respItem["eap_ttls"] = flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapTtls(item.EapTtls)
 	respItem["teap"] = flattenAllowedProtocolsGetAllowedProtocolByIDItemIDTeap(item.Teap)
 	respItem["process_host_lookup"] = boolPtrToString(item.ProcessHostLookup)
+	respItem["five_g"] = boolPtrToString(item.FiveG)
 	respItem["allow_pap_ascii"] = boolPtrToString(item.AllowPapAscii)
 	respItem["allow_chap"] = boolPtrToString(item.AllowChap)
 	respItem["allow_ms_chap_v1"] = boolPtrToString(item.AllowMsChapV1)
@@ -1456,7 +1466,7 @@ func flattenAllowedProtocolsGetAllowedProtocolByIDItemIDEapFast(item *isegosdk.R
 	respItem["eap_fast_use_pacs_use_proactive_pac_update_precentage"] = item.EapFastUsePacsUseProactivePacUpdatePrecentage
 	respItem["eap_fast_use_pacs_allow_anonym_provisioning"] = boolPtrToString(item.EapFastUsePacsAllowAnonymProvisioning)
 	respItem["eap_fast_use_pacs_allow_authen_provisioning"] = boolPtrToString(item.EapFastUsePacsAllowAuthenProvisioning)
-	respItem["eap_fast_use_pacs_return_access_accept_after_authenticated_provisioning"] = boolPtrToString(item.EapFastUsePacsReturnAccessAcceptAfterAuthenticatedProvisioning)
+	respItem["eap_fast_use_pacs_server_returns"] = boolPtrToString(item.EapFastUsePacsServerReturns)
 	respItem["eap_fast_use_pacs_accept_client_cert"] = boolPtrToString(item.EapFastUsePacsAcceptClientCert)
 	respItem["eap_fast_use_pacs_machine_pac_ttl"] = item.EapFastUsePacsMachinePacTtl
 	respItem["eap_fast_use_pacs_machine_pac_ttl_units"] = item.EapFastUsePacsMachinePacTtlUnits
