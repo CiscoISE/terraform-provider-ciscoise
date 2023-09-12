@@ -5,7 +5,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "github.com/kuba-mazurkiewicz/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -1018,7 +1018,7 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettings(item *is
 	respItem["device_authentication_settings"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceAuthenticationSettings(item.DeviceAuthenticationSettings)
 	respItem["sga_notification_and_updates"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsSgaNotificationAndUpdates(item.SgaNotificationAndUpdates)
 	respItem["device_configuration_deployment"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceConfigurationDeployment(item.DeviceConfigurationDeployment)
-	respItem["push_id_support"] = boolPtrToString(item.PushIDSupport)
+	respItem["push_id_support"] = item.PushIDSupport
 
 	return []map[string]interface{}{
 		respItem,
@@ -1193,7 +1193,7 @@ func flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettings(item *isegos
 	respItem["device_authentication_settings"] = flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceAuthenticationSettings(item.DeviceAuthenticationSettings)
 	respItem["sga_notification_and_updates"] = flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsSgaNotificationAndUpdates(item.SgaNotificationAndUpdates)
 	respItem["device_configuration_deployment"] = flattenNetworkDeviceGetNetworkDeviceByIDItemIDTrustsecsettingsDeviceConfigurationDeployment(item.DeviceConfigurationDeployment)
-	respItem["push_id_support"] = boolPtrToString(item.PushIDSupport)
+	respItem["push_id_support"] = item.PushIDSupport
 
 	return []map[string]interface{}{
 		respItem,

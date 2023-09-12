@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "github.com/kuba-mazurkiewicz/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -1174,7 +1174,7 @@ func expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettings(
 		request.DeviceConfigurationDeployment = expandRequestNetworkDeviceCreateNetworkDeviceNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment(ctx, key+".device_configuration_deployment.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".push_id_support")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".push_id_support")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".push_id_support")))) {
-		request.PushIDSupport = interfaceToBoolPtr(v)
+		request.PushIDSupport = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1437,7 +1437,7 @@ func expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsetti
 		request.DeviceConfigurationDeployment = expandRequestNetworkDeviceUpdateNetworkDeviceByIDNetworkDeviceTrustsecsettingsDeviceConfigurationDeployment(ctx, key+".device_configuration_deployment.0", d)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".push_id_support")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".push_id_support")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".push_id_support")))) {
-		request.PushIDSupport = interfaceToBoolPtr(v)
+		request.PushIDSupport = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

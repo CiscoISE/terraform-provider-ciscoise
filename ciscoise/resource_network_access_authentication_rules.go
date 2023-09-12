@@ -7,7 +7,7 @@ import (
 
 	"log"
 
-	isegosdk "github.com/CiscoISE/ciscoise-go-sdk/sdk"
+	isegosdk "github.com/kuba-mazurkiewicz/ciscoise-go-sdk/sdk"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -188,6 +188,72 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																Description: `id`,
 																Type:        schema.TypeString,
 																Computed:    true,
+															},
+															"children": &schema.Schema{
+																Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+																Type:        schema.TypeList,
+																Computed:    true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"attribute_name": &schema.Schema{
+																			Description: `Atribute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"attribute_value": &schema.Schema{
+																			Description: `Attibute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"condition_type": &schema.Schema{
+																			Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"dictionary_name": &schema.Schema{
+																			Description: `Dictionary Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"is_negate": &schema.Schema{
+																			Description: `Indicates whereas this condition is in negate mode`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"link": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Computed: true,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"href": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"rel": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"type": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																				},
+																			},
+																		},
+																		"operator": &schema.Schema{
+																			Description: `Operator`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"id": &schema.Schema{
+																			Description: `id`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -561,6 +627,72 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																Optional:         true,
 																DiffSuppressFunc: diffSupressOptional(),
 																Computed:         true,
+															},
+															"children": &schema.Schema{
+																Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+																Type:        schema.TypeList,
+																Computed:    true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"attribute_name": &schema.Schema{
+																			Description: `Atribute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"attribute_value": &schema.Schema{
+																			Description: `Attibute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"condition_type": &schema.Schema{
+																			Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"dictionary_name": &schema.Schema{
+																			Description: `Dictionary Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"is_negate": &schema.Schema{
+																			Description: `Indicates whereas this condition is in negate mode`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"link": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Computed: true,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"href": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"rel": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"type": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																				},
+																			},
+																		},
+																		"operator": &schema.Schema{
+																			Description: `Operator`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"id": &schema.Schema{
+																			Description: `id`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -1313,8 +1445,8 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	return &request
 }
 
-func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildren {
-	request := []isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildren{}
+func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleCondition {
+	request := []isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleCondition{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -1325,7 +1457,7 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleCondition(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -1336,8 +1468,8 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	return &request
 }
 
-func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildren {
-	request := isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildren{}
+func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleCondition {
+	request := isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleCondition{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
@@ -1368,8 +1500,8 @@ func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticat
 	return &request
 }
 
-func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenLink {
-	request := isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenLink{}
+func expandRequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionChildrenLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionLink {
+	request := isegosdk.RequestNetworkAccessAuthenticationRulesCreateNetworkAccessAuthenticationRuleRuleConditionLink{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
@@ -1592,8 +1724,8 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	return &request
 }
 
-func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildren {
-	request := []isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildren{}
+func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleCondition {
+	request := []isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleCondition{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -1604,7 +1736,7 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleCondition(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -1615,8 +1747,8 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	return &request
 }
 
-func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildren {
-	request := isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildren{}
+func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleCondition {
+	request := isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleCondition{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
@@ -1647,8 +1779,8 @@ func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticat
 	return &request
 }
 
-func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenLink {
-	request := isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenLink{}
+func expandRequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionChildrenLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionLink {
+	request := isegosdk.RequestNetworkAccessAuthenticationRulesUpdateNetworkAccessAuthenticationRuleByIDRuleConditionLink{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
