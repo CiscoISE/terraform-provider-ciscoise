@@ -173,6 +173,72 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
+															"children": &schema.Schema{
+																Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+																Type:        schema.TypeList,
+																Computed:    true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"attribute_name": &schema.Schema{
+																			Description: `Atribute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"attribute_value": &schema.Schema{
+																			Description: `Attibute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"condition_type": &schema.Schema{
+																			Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"dictionary_name": &schema.Schema{
+																			Description: `Dictionary Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"is_negate": &schema.Schema{
+																			Description: `Indicates whereas this condition is in negate mode`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"link": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Computed: true,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"href": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"rel": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"type": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																				},
+																			},
+																		},
+																		"operator": &schema.Schema{
+																			Description: `Operator`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"id": &schema.Schema{
+																			Description: `id`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																	},
+																},
+															},
 														},
 													},
 												},
@@ -529,6 +595,89 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 																Optional:         true,
 																DiffSuppressFunc: diffSupressOptional(),
 																Computed:         true,
+															},
+															"children": &schema.Schema{
+																Description:      `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+																Type:             schema.TypeList,
+																Optional:         true,
+																DiffSuppressFunc: diffSupressOptional(),
+																Computed:         true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"attribute_name": &schema.Schema{
+																			Description:      `Atribute Name`,
+																			Type:             schema.TypeString,
+																			Optional:         true,
+																			DiffSuppressFunc: diffSupressOptional(),
+																			Computed:         true,
+																		},
+																		"attribute_value": &schema.Schema{
+																			Description:      `Attibute Name`,
+																			Type:             schema.TypeString,
+																			Optional:         true,
+																			DiffSuppressFunc: diffSupressOptional(),
+																			Computed:         true,
+																		},
+																		"condition_type": &schema.Schema{
+																			Description:      `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																			Type:             schema.TypeString,
+																			Optional:         true,
+																			DiffSuppressFunc: diffSupressOptional(),
+																			Computed:         true,
+																		},
+																		"dictionary_name": &schema.Schema{
+																			Description:      `Dictionary Name`,
+																			Type:             schema.TypeString,
+																			Optional:         true,
+																			DiffSuppressFunc: diffSupressOptional(),
+																			Computed:         true,
+																		},
+																		"is_negate": &schema.Schema{
+																			Description:      `Indicates whereas this condition is in negate mode`,
+																			Type:             schema.TypeString,
+																			ValidateFunc:     validateStringHasValueFunc([]string{"", "true", "false"}),
+																			Optional:         true,
+																			DiffSuppressFunc: diffSupressBool(),
+																			Computed:         true,
+																		},
+																		"link": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Computed: true,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"href": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"rel": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"type": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																				},
+																			},
+																		},
+																		"operator": &schema.Schema{
+																			Description:      `Operator`,
+																			Type:             schema.TypeString,
+																			Optional:         true,
+																			DiffSuppressFunc: diffSupressOptional(),
+																			Computed:         true,
+																		},
+																		"id": &schema.Schema{
+																			Description:      `id`,
+																			Type:             schema.TypeString,
+																			Optional:         true,
+																			DiffSuppressFunc: diffSupressOptional(),
+																			Computed:         true,
+																		},
+																	},
+																},
 															},
 														},
 													},
@@ -1296,8 +1445,8 @@ func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizatio
 	return &request
 }
 
-func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildren {
-	request := []isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildren{}
+func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleCondition {
+	request := []isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleCondition{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -1308,7 +1457,7 @@ func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizatio
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleCondition(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -1319,8 +1468,8 @@ func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizatio
 	return &request
 }
 
-func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildren {
-	request := isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildren{}
+func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleCondition {
+	request := isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleCondition{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}
@@ -1351,8 +1500,8 @@ func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizatio
 	return &request
 }
 
-func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildrenLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildrenLink {
-	request := isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildrenLink{}
+func expandRequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionChildrenLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionLink {
+	request := isegosdk.RequestNetworkAccessAuthorizationRulesCreateNetworkAccessAuthorizationRuleRuleConditionLink{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
@@ -1569,8 +1718,8 @@ func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizatio
 	return &request
 }
 
-func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildren {
-	request := []isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildren{}
+func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildrenArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleCondition {
+	request := []isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleCondition{}
 	key = fixKeyAccess(key)
 	o := d.Get(key)
 	if o == nil {
@@ -1581,7 +1730,7 @@ func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizatio
 		return nil
 	}
 	for item_no := range objs {
-		i := expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildren(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		i := expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleCondition(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
 		if i != nil {
 			request = append(request, *i)
 		}
@@ -1592,8 +1741,8 @@ func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizatio
 	return &request
 }
 
-func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildren {
-	request := isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildren{}
+func expandRequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildren(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleCondition {
+	request := isegosdk.RequestNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleByIDRuleCondition{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
 		request.ConditionType = interfaceToString(v)
 	}

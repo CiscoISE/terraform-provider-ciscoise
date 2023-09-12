@@ -154,6 +154,72 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
+															"children": &schema.Schema{
+																Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+																Type:        schema.TypeList,
+																Computed:    true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"attribute_name": &schema.Schema{
+																			Description: `Atribute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"attribute_value": &schema.Schema{
+																			Description: `Attibute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"condition_type": &schema.Schema{
+																			Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"dictionary_name": &schema.Schema{
+																			Description: `Dictionary Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"is_negate": &schema.Schema{
+																			Description: `Indicates whereas this condition is in negate mode`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"link": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Computed: true,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"href": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"rel": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"type": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																				},
+																			},
+																		},
+																		"operator": &schema.Schema{
+																			Description: `Operator`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"id": &schema.Schema{
+																			Description: `id`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																	},
+																},
+															},
 														},
 													},
 												},
@@ -414,8 +480,23 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
+															"attribute_name": &schema.Schema{
+																Description: `Atribute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"attribute_value": &schema.Schema{
+																Description: `Attibute Name`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
 															"condition_type": &schema.Schema{
 																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"dictionary_name": &schema.Schema{
+																Description: `Dictionary Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -441,6 +522,82 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 																		"type": &schema.Schema{
 																			Type:     schema.TypeString,
 																			Computed: true,
+																		},
+																	},
+																},
+															},
+															"operator": &schema.Schema{
+																Description: `Operator`,
+																Type:        schema.TypeString,
+																Computed:    true,
+															},
+															"children": &schema.Schema{
+																Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
+																Type:        schema.TypeList,
+																Computed:    true,
+																Elem: &schema.Resource{
+																	Schema: map[string]*schema.Schema{
+
+																		"attribute_name": &schema.Schema{
+																			Description: `Atribute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"attribute_value": &schema.Schema{
+																			Description: `Attibute Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"condition_type": &schema.Schema{
+																			Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"dictionary_name": &schema.Schema{
+																			Description: `Dictionary Name`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"is_negate": &schema.Schema{
+																			Description: `Indicates whereas this condition is in negate mode`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"link": &schema.Schema{
+																			Type:     schema.TypeList,
+																			Computed: true,
+																			Elem: &schema.Resource{
+																				Schema: map[string]*schema.Schema{
+
+																					"href": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"rel": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																					"type": &schema.Schema{
+																						Type:     schema.TypeString,
+																						Computed: true,
+																					},
+																				},
+																			},
+																		},
+																		"operator": &schema.Schema{
+																			Description: `Operator`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"id": &schema.Schema{
+																			Description: `id`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
+																		},
+																		"dictionary_value": &schema.Schema{
+																			Description: `dictionary_value`,
+																			Type:        schema.TypeString,
+																			Computed:    true,
 																		},
 																	},
 																},
@@ -815,7 +972,7 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildren(items *[]isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionChildren) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildren(items *[]isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleCondition) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -825,12 +982,19 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildrenLink(item.Link)
+		if item.Children != nil {
+			respItem["children"] = flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildren(item.Children)
+		}
+		respItem["dictionary_name"] = item.DictionaryName
+		respItem["attribute_name"] = item.AttributeName
+		respItem["operator"] = item.Operator
+		respItem["attribute_value"] = item.AttributeValue
 		respItems = append(respItems, respItem)
 	}
 	return respItems
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildrenLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionChildrenLink) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesItemsRuleConditionChildrenLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesResponseRuleConditionLink) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -994,7 +1158,7 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildren(items *[]isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionChildren) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildren(items *[]isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleCondition) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -1008,6 +1172,9 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 		respItem["condition_type"] = item.ConditionType
 		respItem["dictionary_name"] = item.DictionaryName
 		respItem["operator"] = item.Operator
+		if item.Children != nil {
+			respItem["children"] = flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildren(item.Children) //modify here
+		}
 		respItem["id"] = item.ID
 		respItem["link"] = flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
@@ -1015,7 +1182,7 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 	return respItems
 }
 
-func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildrenLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionChildrenLink) []map[string]interface{} {
+func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildrenLink(item *isegosdk.ResponseNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDResponseRuleConditionLink) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
