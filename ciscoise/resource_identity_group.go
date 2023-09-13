@@ -14,9 +14,11 @@ import (
 
 func resourceIDentityGroup() *schema.Resource {
 	return &schema.Resource{
-		Description: `It manages create, read and update operations on IdentityGroups.
+		Description: `It manages create, read, update and delete operations on IdentityGroups.
 
 - This resource allows the client to update an identity group.
+
+- This resource deletes an identity group.
 
 - This resource creates an identity group.
 `,
@@ -353,8 +355,63 @@ func resourceIDentityGroupUpdate(ctx context.Context, d *schema.ResourceData, m 
 
 func resourceIDentityGroupDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	log.Printf("[DEBUG] Beginning IDentityGroup delete for id=[%s]", d.Id())
+	clientConfig := m.(ClientConfig)
+	client := clientConfig.Client
+
 	var diags diag.Diagnostics
-	log.Printf("[DEBUG] Missing IDentityGroup delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
+
+	resourceID := d.Id()
+	resourceMap := separateResourceID(resourceID)
+	vName, okName := resourceMap["name"]
+	vID, okID := resourceMap["id"]
+
+	method1 := []bool{okID}
+	log.Printf("[DEBUG] Selecting method. Method 1 %v", method1)
+	method2 := []bool{okName}
+	log.Printf("[DEBUG] Selecting method. Method 2 %v", method2)
+
+	selectedMethod := pickMethod([][]bool{method1, method2})
+	var vvID string
+	var vvName string
+	if selectedMethod == 1 {
+		vvID = vID
+		getResp, _, err := client.IDentityGroups.GetIDentityGroupByID(vvID)
+		if err != nil || getResp == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+	}
+	if selectedMethod == 2 {
+		vvName = vName
+		getResp, _, err := client.IDentityGroups.GetIDentityGroupByName(vvName)
+		if err != nil || getResp == nil {
+			// Assume that element it is already gone
+			return diags
+		}
+		//Set value vvID = getResp.
+		if getResp.IDentityGroup != nil {
+			vvID = getResp.IDentityGroup.ID
+		}
+	}
+	restyResp1, err := client.IDentityGroups.DeleteIDentityGroupByID(vvID)
+	if err != nil {
+		if restyResp1 != nil {
+			log.Printf("[DEBUG] resty response for delete operation => %v", restyResp1.String())
+			diags = append(diags, diagErrorWithAltAndResponse(
+				"Failure when executing DeleteIDentityGroupByID", err, restyResp1.String(),
+				"Failure at DeleteIDentityGroupByID, unexpected response", ""))
+			return diags
+		}
+		diags = append(diags, diagErrorWithAlt(
+			"Failure when executing DeleteIDentityGroupByID", err,
+			"Failure at DeleteIDentityGroupByID, unexpected response", ""))
+		return diags
+	}
+
+	// d.SetId("") is automatically called assuming delete returns no errors, but
+	// it is added here for explicitness.
+	d.SetId("")
+
 	return diags
 }
 func expandRequestIDentityGroupCreateIDentityGroup(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestIDentityGroupsCreateIDentityGroup {

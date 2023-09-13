@@ -482,6 +482,10 @@ github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.1.31 h1:sYLsz1lH9Hc/8itvIZisXbYq
 github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.1.31/go.mod h1:DzHO5j68EyvM/WU4KMRcZ3KcjP9aw49oOM7yO1Dyisc=
 github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.1.32 h1:v17VPS1eNfL4L39/pMjIJyd4WSG8htNCmHzuKUdQiFo=
 github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.1.32/go.mod h1:DzHO5j68EyvM/WU4KMRcZ3KcjP9aw49oOM7yO1Dyisc=
+github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.2.0 h1:UrNgMNlbJt9WGxwcgkKXOerYDwrDZaePnBHi6Rccnco=
+github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.2.0/go.mod h1:DzHO5j68EyvM/WU4KMRcZ3KcjP9aw49oOM7yO1Dyisc=
+github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.2.1 h1:McZAnbzTSM3MtzZnIq4BHmU+dW3D1lPJw7zkE3tN/Bc=
+github.com/kuba-mazurkiewicz/ciscoise-go-sdk v1.2.1/go.mod h1:DzHO5j68EyvM/WU4KMRcZ3KcjP9aw49oOM7yO1Dyisc=
 github.com/kylelemons/godebug v0.0.0-20170820004349-d65d576e9348/go.mod h1:B69LEHPfb2qLo0BaaOLcbitczOKLWTsrBG9LczfCD4k=
 github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0SNc=
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
