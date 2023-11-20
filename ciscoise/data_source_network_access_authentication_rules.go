@@ -42,7 +42,11 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
+						"identity_source_id": &schema.Schema{
+							Description: `Identity source id from the identity stores`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 						"identity_source_name": &schema.Schema{
 							Description: `Identity source name from the identity stores`,
 							Type:        schema.TypeString,
@@ -97,13 +101,18 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"attribute_id": &schema.Schema{
+													Description: `Dictionary attribute id (Optional), used for additional verification`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
 												"attribute_name": &schema.Schema{
-													Description: `Atribute Name`,
+													Description: `Dictionary attribute name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 												"attribute_value": &schema.Schema{
-													Description: `Attibute Name`,
+													Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -114,23 +123,8 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"attribute_name": &schema.Schema{
-																Description: `Atribute Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"attribute_value": &schema.Schema{
-																Description: `Attibute Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
 															"condition_type": &schema.Schema{
 																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"dictionary_name": &schema.Schema{
-																Description: `Dictionary Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -160,16 +154,6 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 																	},
 																},
 															},
-															"operator": &schema.Schema{
-																Description: `Operator`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"id": &schema.Schema{
-																Description: `id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
 														},
 													},
 												},
@@ -179,7 +163,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -197,7 +181,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -220,7 +204,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dictionary_name": &schema.Schema{
-													Description: `Dictionary Name`,
+													Description: `Dictionary name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -230,7 +214,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -248,7 +232,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -301,7 +285,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"operator": &schema.Schema{
-													Description: `Operator`,
+													Description: `Equality operator`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -366,6 +350,11 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"identity_source_id": &schema.Schema{
+							Description: `Identity source id from the identity stores`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 						"identity_source_name": &schema.Schema{
 							Description: `Identity source name from the identity stores`,
 							Type:        schema.TypeString,
@@ -420,13 +409,18 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"attribute_id": &schema.Schema{
+													Description: `Dictionary attribute id (Optional), used for additional verification`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
 												"attribute_name": &schema.Schema{
-													Description: `Atribute Name`,
+													Description: `Dictionary attribute name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
 												"attribute_value": &schema.Schema{
-													Description: `Attibute Name`,
+													Description: `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -437,23 +431,8 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"attribute_name": &schema.Schema{
-																Description: `Atribute Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"attribute_value": &schema.Schema{
-																Description: `Attibute Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
 															"condition_type": &schema.Schema{
 																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"dictionary_name": &schema.Schema{
-																Description: `Dictionary Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -483,11 +462,6 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 																	},
 																},
 															},
-															"operator": &schema.Schema{
-																Description: `Operator`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
 														},
 													},
 												},
@@ -497,7 +471,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -515,7 +489,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -538,7 +512,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dictionary_name": &schema.Schema{
-													Description: `Dictionary Name`,
+													Description: `Dictionary name`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -548,7 +522,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -566,7 +540,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -619,7 +593,7 @@ func dataSourceNetworkAccessAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"operator": &schema.Schema{
-													Description: `Operator`,
+													Description: `Equality operator`,
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
@@ -765,6 +739,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
+		respItem["identity_source_id"] = item.IDentitySourceID
 		respItem["identity_source_name"] = item.IDentitySourceName
 		respItem["if_auth_fail"] = item.IfAuthFail
 		respItem["if_process_fail"] = item.IfProcessFail
@@ -818,14 +793,15 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionLink(item.Link)
-	respItem["dictionary_name"] = item.DictionaryName
-	respItem["attribute_name"] = item.AttributeName
-	respItem["operator"] = item.Operator
-	respItem["attribute_value"] = item.AttributeValue
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
+	respItem["attribute_name"] = item.AttributeName
+	respItem["attribute_id"] = item.AttributeID
+	respItem["attribute_value"] = item.AttributeValue
+	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
+	respItem["operator"] = item.Operator
 	respItem["children"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionChildren(item.Children)
 	respItem["dates_range"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionDatesRange(item.DatesRange)
 	respItem["dates_range_exception"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionDatesRangeException(item.DatesRangeException)
@@ -865,10 +841,6 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesI
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRulesItemsRuleConditionChildrenLink(item.Link)
-		respItem["dictionary_name"] = item.DictionaryName
-		respItem["attribute_name"] = item.AttributeName
-		respItem["operator"] = item.Operator
-		respItem["attribute_value"] = item.AttributeValue
 		respItems = append(respItems, respItem)
 	}
 	return respItems
@@ -950,6 +922,7 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 		return nil
 	}
 	respItem := make(map[string]interface{})
+	respItem["identity_source_id"] = item.IDentitySourceID
 	respItem["identity_source_name"] = item.IDentitySourceName
 	respItem["if_auth_fail"] = item.IfAuthFail
 	respItem["if_process_fail"] = item.IfProcessFail
@@ -1004,14 +977,15 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 	respItem["condition_type"] = item.ConditionType
 	respItem["is_negate"] = boolPtrToString(item.IsNegate)
 	respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionLink(item.Link)
-	respItem["dictionary_name"] = item.DictionaryName
-	respItem["attribute_name"] = item.AttributeName
-	respItem["operator"] = item.Operator
-	respItem["attribute_value"] = item.AttributeValue
 	respItem["description"] = item.Description
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
+	respItem["attribute_name"] = item.AttributeName
+	respItem["attribute_id"] = item.AttributeID
+	respItem["attribute_value"] = item.AttributeValue
+	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
+	respItem["operator"] = item.Operator
 	respItem["children"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionChildren(item.Children)
 	respItem["dates_range"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionDatesRange(item.DatesRange)
 	respItem["dates_range_exception"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionDatesRangeException(item.DatesRangeException)
@@ -1051,12 +1025,6 @@ func flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleBy
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = boolPtrToString(item.IsNegate)
 		respItem["link"] = flattenNetworkAccessAuthenticationRulesGetNetworkAccessAuthenticationRuleByIDItemRuleConditionChildrenLink(item.Link)
-		respItem["dictionary_name"] = item.DictionaryName
-		respItem["attribute_name"] = item.AttributeName
-		respItem["operator"] = item.Operator
-		respItem["attribute_value"] = item.AttributeValue
-		respItem["operator"] = item.Operator
-		respItem["id"] = item.ID
 		respItems = append(respItems, respItem)
 	}
 	return respItems

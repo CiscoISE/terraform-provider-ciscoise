@@ -5,24 +5,46 @@ resource "ciscoise_network_access_policy_set" "example" {
 
     condition {
 
+      attribute_id    = "string"
+      attribute_name  = "string"
+      attribute_value = "string"
       children {
 
-        attribute_id     = "string"
-        attribute_name   = "string"
-        attribute_value  = "string"
-        dictionary_name  = "string"
-        dictionary_value = "string"
-        end_date         = "string"
-        name             = "string"
-        operator         = "string"
-        start_date       = "string"
+        condition_type = "string"
+        is_negate      = "false"
+
       }
       condition_type = "string"
-      name           = "string"
-      id             = "string"
-      description    = "string"
-      is_negate      = "false"
+      dates_range {
 
+        end_date   = "string"
+        start_date = "string"
+      }
+      dates_range_exception {
+
+        end_date   = "string"
+        start_date = "string"
+      }
+      description      = "string"
+      dictionary_name  = "string"
+      dictionary_value = "string"
+      hours_range {
+
+        end_time   = "string"
+        start_time = "string"
+      }
+      hours_range_exception {
+
+        end_time   = "string"
+        start_time = "string"
+      }
+      id        = "string"
+      is_negate = "false"
+
+      name                = "string"
+      operator            = "string"
+      week_days           = ["string"]
+      week_days_exception = ["string"]
     }
     default     = "false"
     description = "string"

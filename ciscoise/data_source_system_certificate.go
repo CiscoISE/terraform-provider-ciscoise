@@ -15,9 +15,9 @@ func dataSourceSystemCertificate() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Certificates.
 
-- This data source supports Filtering, Sorting and Pagination.
+- This data source supports filtering, sorting and pagination.
 
-Filtering and Sorting supported on below mentioned attributes:
+Filtering and sorting supported for the following attributes:
 
 
 friendlyName
@@ -44,7 +44,7 @@ Supported Operators: EQ, NEQ, GT and LT
 
 
 
-- This data source provides details of a System Certificate of a particular node based on given HostName and ID.
+- This data source provides details of a system certificate of a particular node based on given hostname and ID.
 `,
 
 		ReadContext: dataSourceSystemCertificateRead,
@@ -209,7 +209,7 @@ Not Contains
 							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Description: `Length of key used for encrypting system certificate`,
+							Description: `Length of the key used for encrypting system certificate`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},
@@ -303,7 +303,7 @@ Not Contains
 							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Description: `Length of key used for encrypting system certificate`,
+							Description: `Length of the key used for encrypting system certificate`,
 							Type:        schema.TypeInt,
 							Computed:    true,
 						},

@@ -1593,9 +1593,40 @@ func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPage
 		request.RequireAupScrolling = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".social_configs")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".social_configs")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".social_configs")))) {
-		vSocialConfigs := v.([]interface{})
-		request.SocialConfigs = &vSocialConfigs
+		request.SocialConfigs = expandRequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key+".social_configs", d)
 	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPageSettingsSocialConfigsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPageSettingsSocialConfigs {
+	request := []isegosdk.RequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPageSettingsSocialConfigs{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPageSettingsSocialConfigs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPageSettingsSocialConfigs(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPageSettingsSocialConfigs {
+	var request isegosdk.RequestSponsorPortalCreateSponsorPortalSponsorPortalSettingsLoginPageSettingsSocialConfigs
+	request = d.Get(fixKeyAccess(key))
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}
@@ -2002,9 +2033,40 @@ func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLogin
 		request.RequireAupScrolling = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".social_configs")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".social_configs")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".social_configs")))) {
-		vSocialConfigs := v.([]interface{})
-		request.SocialConfigs = &vSocialConfigs
+		request.SocialConfigs = expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigsArray(ctx, key+".social_configs", d)
 	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigs {
+	request := []isegosdk.RequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigs{}
+	key = fixKeyAccess(key)
+	o := d.Get(key)
+	if o == nil {
+		return nil
+	}
+	objs := o.([]interface{})
+	if len(objs) == 0 {
+		return nil
+	}
+	for item_no := range objs {
+		i := expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigs(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
+		if i != nil {
+			request = append(request, *i)
+		}
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
+	}
+	return &request
+}
+
+func expandRequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigs(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigs {
+	var request isegosdk.RequestSponsorPortalUpdateSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigs
+	request = d.Get(fixKeyAccess(key))
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
 	}

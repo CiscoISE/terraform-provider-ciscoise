@@ -856,12 +856,24 @@ func flattenSponsorPortalGetSponsorPortalByIDItemSettingsLoginPageSettings(item 
 	respItem["aup_display"] = item.AupDisplay
 	respItem["require_aup_acceptance"] = boolPtrToString(item.RequireAupAcceptance)
 	respItem["require_aup_scrolling"] = boolPtrToString(item.RequireAupScrolling)
-	respItem["social_configs"] = responseInterfaceToSliceString(item.SocialConfigs)
+	respItem["social_configs"] = flattenSponsorPortalGetSponsorPortalByIDItemSettingsLoginPageSettingsSocialConfigs(item.SocialConfigs)
 
 	return []map[string]interface{}{
 		respItem,
 	}
 
+}
+
+func flattenSponsorPortalGetSponsorPortalByIDItemSettingsLoginPageSettingsSocialConfigs(items *[]isegosdk.ResponseSponsorPortalGetSponsorPortalByIDSponsorPortalSettingsLoginPageSettingsSocialConfigs) []interface{} {
+	if items == nil {
+		return nil
+	}
+	var respItems []interface{}
+	for _, item := range *items {
+		respItem := item
+		respItems = append(respItems, responseInterfaceToString(respItem))
+	}
+	return respItems
 }
 
 func flattenSponsorPortalGetSponsorPortalByIDItemSettingsAupSettings(item *isegosdk.ResponseSponsorPortalGetSponsorPortalByIDSponsorPortalSettingsAupSettings) []map[string]interface{} {

@@ -160,7 +160,7 @@ func resourceSgt() *schema.Resource {
 							Computed:         true,
 							Optional:         true,
 							DiffSuppressFunc: diffSupressOptional(),
-							ValidateFunc:     validateIntegerInRange(2, 65519),
+							ValidateFunc:     validateIntegerInRange(-1, 65519),
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,

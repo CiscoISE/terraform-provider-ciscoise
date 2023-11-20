@@ -42,8 +42,9 @@ func resourcePxgridServiceLookup() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -92,6 +93,7 @@ func resourcePxgridServiceLookupCreate(ctx context.Context, d *schema.ResourceDa
 }
 
 func resourcePxgridServiceLookupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	//client := m.(*isegosdk.Client)
 	var diags diag.Diagnostics
 	return diags
 }
@@ -103,8 +105,8 @@ func resourcePxgridServiceLookupDelete(ctx context.Context, d *schema.ResourceDa
 	return diags
 }
 
-func expandRequestPxgridServiceLookupLookupService(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesLookupService {
-	request := isegosdk.RequestClearThreatsAndVulnerabilitiesLookupService{}
+func expandRequestPxgridServiceLookupLookupService(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestConfigurationLookupService {
+	request := isegosdk.RequestConfigurationLookupService{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}

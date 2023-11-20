@@ -36,14 +36,6 @@ func resourceNetworkAccessAuthorizationRulesUpdateUpdate() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
-						"commands": &schema.Schema{
-							Description: `Command sets enforce the specified list of commands that can be executed by a device administrator`,
-							Type:        schema.TypeList,
-							Computed:    true,
-							Elem: &schema.Schema{
-								Type: schema.TypeString,
-							},
-						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -66,7 +58,7 @@ func resourceNetworkAccessAuthorizationRulesUpdateUpdate() *schema.Resource {
 							},
 						},
 						"profile": &schema.Schema{
-							Description: `Device admin profiles control the initial login session of the device administrator`,
+							Description: `The authorization profile/s`,
 							Type:        schema.TypeList,
 							Computed:    true,
 							Elem: &schema.Schema{
@@ -295,8 +287,9 @@ func resourceNetworkAccessAuthorizationRulesUpdateUpdate() *schema.Resource {
 									},
 									"default": &schema.Schema{
 										Description: `Indicates if this rule is the default one`,
-										Type:        schema.TypeString,
-										Computed:    true,
+										// Type:        schema.TypeBool,
+										Type:     schema.TypeString,
+										Computed: true,
 									},
 									"hit_counts": &schema.Schema{
 										Description: `The amount of times the rule was matched`,
@@ -860,6 +853,9 @@ func expandRequestNetworkAccessAuthorizationRulesUpdateUpdateNetworkAccessAuthor
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
 		request.AttributeName = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_id")))) {
+		request.AttributeID = interfaceToString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
 		request.AttributeValue = interfaceToString(v)
 	}
@@ -941,25 +937,6 @@ func expandRequestNetworkAccessAuthorizationRulesUpdateUpdateNetworkAccessAuthor
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
 		request.Link = expandRequestNetworkAccessAuthorizationRulesUpdateUpdateNetworkAccessAuthorizationRuleByIDRuleConditionChildrenLink(ctx, key+".link.0", d)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
-		request.DictionaryName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
-		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
-		request.Operator = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
-		request.ID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
-		request.AttributeValue = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
 	return &request
 }
 
@@ -1081,6 +1058,7 @@ func flattenNetworkAccessAuthorizationRulesUpdateNetworkAccessAuthorizationRuleB
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
+	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue

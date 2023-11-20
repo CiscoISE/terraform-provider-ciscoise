@@ -5,6 +5,7 @@ resource "ciscoise_device_administration_policy_set" "example" {
 
     condition {
 
+      attribute_id    = "string"
       attribute_name  = "string"
       attribute_value = "string"
       children {

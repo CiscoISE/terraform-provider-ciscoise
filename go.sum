@@ -187,8 +187,8 @@ cloud.google.com/go/workflows v1.7.0/go.mod h1:JhSrZuVZWuiDfKEFxU0/F1PQjmpnpcoIS
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
-github.com/CiscoISE/ciscoise-go-sdk v1.1.22 h1:d22hDcIeA0FS/awqaQJji9D6xSBNlRcY6532K1VRhZs=
-github.com/CiscoISE/ciscoise-go-sdk v1.1.22/go.mod h1:XjQ8S87lr8LIXdGKiU1gHOOiO0cWKR6eGD+d2JfSOQU=
+github.com/CiscoISE/ciscoise-go-sdk v1.2.0 h1:NB+3NrRCO5gp2s6X35LvldE6aEqBh4ePNeZILzpRwik=
+github.com/CiscoISE/ciscoise-go-sdk v1.2.0/go.mod h1:XjQ8S87lr8LIXdGKiU1gHOOiO0cWKR6eGD+d2JfSOQU=
 github.com/Masterminds/goutils v1.1.1 h1:5nUrii3FMTL5diU80unEVvNevw1nH4+ZV4DSLVJLSYI=
 github.com/Masterminds/goutils v1.1.1/go.mod h1:8cTjp+g8YejhMuvIA5y2vz3BpJxksy863GQaJW2MFNU=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=

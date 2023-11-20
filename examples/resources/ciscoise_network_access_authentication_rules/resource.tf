@@ -4,6 +4,7 @@ resource "ciscoise_network_access_authentication_rules" "example" {
   parameters {
 
     id                   = "string"
+    identity_source_id   = "string"
     identity_source_name = "string"
     if_auth_fail         = "string"
     if_process_fail      = "string"
@@ -14,6 +15,7 @@ resource "ciscoise_network_access_authentication_rules" "example" {
 
       condition {
 
+        attribute_id    = "string"
         attribute_name  = "string"
         attribute_value = "string"
         children {

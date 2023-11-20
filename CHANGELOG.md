@@ -1,3 +1,7 @@
+## 0.7.0-beta (November 20, 2023)
+IMPROVEMENTS:
+* provider: Update ciscoisesdk from v1.1.19 to v1.2.0
+
 ## 0.6.22-beta (August 09, 2023)
 BUG FIXES:
 * Resource 'ciscoise_network_access_policy_set' does not support nested children blocks #101

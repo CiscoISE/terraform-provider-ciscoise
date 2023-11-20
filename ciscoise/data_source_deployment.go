@@ -146,8 +146,11 @@ func dataSourceDeployment() *schema.Resource {
 																				Schema: map[string]*schema.Schema{
 
 																					"http_count": &schema.Schema{
-																						Type:     schema.TypeString,
+																						Type:     schema.TypeList,
 																						Computed: true,
+																						Elem: &schema.Schema{
+																							Type: schema.TypeString,
+																						},
 																					},
 																					"latency_count": &schema.Schema{
 																						Type:     schema.TypeString,
@@ -201,8 +204,11 @@ func dataSourceDeployment() *schema.Resource {
 											Schema: map[string]*schema.Schema{
 
 												"node": &schema.Schema{
-													Type:     schema.TypeString,
+													Type:     schema.TypeList,
 													Computed: true,
+													Elem: &schema.Schema{
+														Type: schema.TypeString,
+													},
 												},
 											},
 										},

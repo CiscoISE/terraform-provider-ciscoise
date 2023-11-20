@@ -17,7 +17,7 @@ func dataSourceDeviceAdministrationServiceNames() *schema.Resource {
 
 - Returns list of Allowed Protocols and Server Sequences for Device Admin Policy Set results.
  'isLocalAuthorization' property is available only for Network Access Policy Set results of type Server Sequence.
- (Other CRUD APIs available through ERS)
+ (Other CRUD APIs available throught ERS)
 `,
 
 		ReadContext: dataSourceDeviceAdministrationServiceNamesRead,

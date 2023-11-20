@@ -139,7 +139,7 @@ string parameter. Each resource Data model description should specify if an attr
 										Description: `Key value map`,
 										// CHECK: The type of this param
 										// Replaced List to Map
-										Type:     schema.TypeMap,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 								},
@@ -290,7 +290,7 @@ string parameter. Each resource Data model description should specify if an attr
 										Description: `Key value map`,
 										// CHECK: The type of this param
 										// Replaced List to Map
-										Type:     schema.TypeMap,
+										Type:     schema.TypeString,
 										Computed: true,
 									},
 								},
