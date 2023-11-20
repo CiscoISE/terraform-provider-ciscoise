@@ -62,6 +62,11 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"attribute_id": &schema.Schema{
+										Description: `Dictionary attribute id (Optional), used for additional verification`,
+										Type:        schema.TypeString,
+										Computed:    true,
+									},
 									"attribute_name": &schema.Schema{
 										Description: `Dictionary attribute name`,
 										Type:        schema.TypeString,
@@ -119,7 +124,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Computed:    true,
 									},
 									"dates_range": &schema.Schema{
-										Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+										Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -137,7 +142,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										},
 									},
 									"dates_range_exception": &schema.Schema{
-										Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+										Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -170,7 +175,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Computed:    true,
 									},
 									"hours_range": &schema.Schema{
-										Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+										Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -188,7 +193,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										},
 									},
 									"hours_range_exception": &schema.Schema{
-										Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+										Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 										Type:        schema.TypeList,
 										Computed:    true,
 										Elem: &schema.Resource{
@@ -349,15 +354,22 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 
+									"attribute_id": &schema.Schema{
+										Description:      `Dictionary attribute id (Optional), used for additional verification`,
+										Type:             schema.TypeString,
+										Optional:         true,
+										DiffSuppressFunc: diffSupressOptional(),
+										Computed:         true,
+									},
 									"attribute_name": &schema.Schema{
-										Description:      `Atribute Name`,
+										Description:      `Dictionary attribute name`,
 										Type:             schema.TypeString,
 										Optional:         true,
 										DiffSuppressFunc: diffSupressOptional(),
 										Computed:         true,
 									},
 									"attribute_value": &schema.Schema{
-										Description:      `Attibute Name`,
+										Description:      `<ul><li>Attribute value for condition</li> <li>Value type is specified in dictionary object</li> <li>if multiple values allowed is specified in dictionary object</li></ul>`,
 										Type:             schema.TypeString,
 										Optional:         true,
 										DiffSuppressFunc: diffSupressOptional(),
@@ -372,29 +384,8 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
-												"attribute_name": &schema.Schema{
-													Description:      `Atribute Name`,
-													Type:             schema.TypeString,
-													Optional:         true,
-													DiffSuppressFunc: diffSupressOptional(),
-													Computed:         true,
-												},
-												"attribute_value": &schema.Schema{
-													Description:      `Attibute Name`,
-													Type:             schema.TypeString,
-													Optional:         true,
-													DiffSuppressFunc: diffSupressOptional(),
-													Computed:         true,
-												},
 												"condition_type": &schema.Schema{
 													Description:      `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
-													Type:             schema.TypeString,
-													Optional:         true,
-													DiffSuppressFunc: diffSupressOptional(),
-													Computed:         true,
-												},
-												"dictionary_name": &schema.Schema{
-													Description:      `Dictionary Name`,
 													Type:             schema.TypeString,
 													Optional:         true,
 													DiffSuppressFunc: diffSupressOptional(),
@@ -429,13 +420,6 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 														},
 													},
 												},
-												"operator": &schema.Schema{
-													Description:      `Operator`,
-													Type:             schema.TypeString,
-													Optional:         true,
-													DiffSuppressFunc: diffSupressOptional(),
-													Computed:         true,
-												},
 											},
 										},
 									},
@@ -447,7 +431,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Computed:         true,
 									},
 									"dates_range": &schema.Schema{
-										Description:      `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+										Description:      `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 										Type:             schema.TypeList,
 										Optional:         true,
 										DiffSuppressFunc: diffSupressOptional(),
@@ -471,7 +455,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										},
 									},
 									"dates_range_exception": &schema.Schema{
-										Description:      `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+										Description:      `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 										Type:             schema.TypeList,
 										Optional:         true,
 										DiffSuppressFunc: diffSupressOptional(),
@@ -502,7 +486,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Computed:         true,
 									},
 									"dictionary_name": &schema.Schema{
-										Description:      `Dictionary Name`,
+										Description:      `Dictionary name`,
 										Type:             schema.TypeString,
 										Optional:         true,
 										DiffSuppressFunc: diffSupressOptional(),
@@ -516,7 +500,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Computed:         true,
 									},
 									"hours_range": &schema.Schema{
-										Description:      `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+										Description:      `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 										Type:             schema.TypeList,
 										Optional:         true,
 										DiffSuppressFunc: diffSupressOptional(),
@@ -540,7 +524,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										},
 									},
 									"hours_range_exception": &schema.Schema{
-										Description:      `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+										Description:      `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 										Type:             schema.TypeList,
 										Optional:         true,
 										DiffSuppressFunc: diffSupressOptional(),
@@ -606,7 +590,7 @@ ConditionAttributes, ConditionAndBlock, ConditionOrBlock
 										Computed:         true,
 									},
 									"operator": &schema.Schema{
-										Description:      `Operator`,
+										Description:      `Equality operator`,
 										Type:             schema.TypeString,
 										Optional:         true,
 										DiffSuppressFunc: diffSupressOptional(),
@@ -1065,18 +1049,6 @@ func expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditi
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
 		request.Link = expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditionLink(ctx, key+".link.0", d)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
-		request.DictionaryName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
-		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
-		request.Operator = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
-		request.AttributeValue = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1086,8 +1058,23 @@ func expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditi
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
+		request.AttributeName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_id")))) {
+		request.AttributeID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
+		request.AttributeValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
+		request.DictionaryName = interfaceToString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
 		request.DictionaryValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
+		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".children")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".children")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".children")))) {
 		request.Children = expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditionChildrenArray(ctx, key+".children", d)
@@ -1166,18 +1153,6 @@ func expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditi
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
 		request.Link = expandRequestDeviceAdministrationPolicySetCreateDeviceAdminPolicySetConditionChildrenLink(ctx, key+".link.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
-		request.DictionaryName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
-		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
-		request.Operator = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
-		request.AttributeValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -1327,18 +1302,6 @@ func expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDCon
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
 		request.Link = expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDConditionLink(ctx, key+".link.0", d)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
-		request.DictionaryName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
-		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
-		request.Operator = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
-		request.AttributeValue = interfaceToString(v)
-	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
@@ -1348,8 +1311,23 @@ func expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDCon
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
+		request.AttributeName = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_id")))) {
+		request.AttributeID = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
+		request.AttributeValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
+		request.DictionaryName = interfaceToString(v)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_value")))) {
 		request.DictionaryValue = interfaceToString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
+		request.Operator = interfaceToString(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".children")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".children")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".children")))) {
 		request.Children = expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDConditionChildrenArray(ctx, key+".children", d)
@@ -1428,18 +1406,6 @@ func expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDCon
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
 		request.Link = expandRequestDeviceAdministrationPolicySetUpdateDeviceAdminPolicySetByIDConditionChildrenLink(ctx, key+".link.0", d)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".dictionary_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".dictionary_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".dictionary_name")))) {
-		request.DictionaryName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_name")))) {
-		request.AttributeName = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".operator")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".operator")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".operator")))) {
-		request.Operator = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".attribute_value")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".attribute_value")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".attribute_value")))) {
-		request.AttributeValue = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil

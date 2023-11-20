@@ -364,9 +364,10 @@ Ex: Below payload will disable NMAP, PxGrid and SNMPTRAP probes
 							},
 						},
 						"hostname": &schema.Schema{
-							Description: `hostname path parameter. Hostname of the node.`,
-							Type:        schema.TypeString,
-							Required:    true,
+							Description:      `hostname path parameter. Hostname of the node.`,
+							Type:             schema.TypeString,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
 						},
 						"http": &schema.Schema{
 							Description: `The HTTP probe receives and parses HTTP packets.`,
@@ -679,6 +680,9 @@ func expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfig(ctx cont
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".snmp_trap")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".snmp_trap")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".snmp_trap")))) {
 		request.SNMPTrap = expandRequestNodeServicesProfilerProbeConfigSetProfilerProbeConfigSNMPTrap(ctx, key+".snmp_trap.0", d)
+	}
+	if isEmptyValue(reflect.ValueOf(request)) {
+		return nil
 	}
 	return &request
 }

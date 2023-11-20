@@ -12,7 +12,7 @@ resource "ciscoise_device_administration_authorization_rules_update" "example" {
 
       condition {
 
-        attribute_id    = "string"
+        #attribute_id    = "string"
         attribute_name  = "string"
         attribute_value = "string"
         children {

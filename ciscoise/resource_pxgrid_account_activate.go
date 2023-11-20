@@ -42,8 +42,9 @@ func resourcePxgridAccountActivate() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
-							ForceNew: true,
 							Optional: true,
+							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -103,8 +104,8 @@ func resourcePxgridAccountActivateDelete(ctx context.Context, d *schema.Resource
 	return diags
 }
 
-func expandRequestPxgridAccountActivateActivateAccount(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesActivateAccount {
-	request := isegosdk.RequestClearThreatsAndVulnerabilitiesActivateAccount{}
+func expandRequestPxgridAccountActivateActivateAccount(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestConfigurationActivateAccount {
+	request := isegosdk.RequestConfigurationActivateAccount{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}

@@ -44,6 +44,7 @@ func resourcePxgridAccountCreate() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -97,8 +98,8 @@ func resourcePxgridAccountCreateDelete(ctx context.Context, d *schema.ResourceDa
 	log.Printf("[DEBUG] Missing PxgridAccountCreate delete on Cisco ISE. It will only be delete it on Terraform id=[%s]", d.Id())
 	return diags
 }
-func expandRequestPxgridAccountCreateCreateAccount(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesCreateAccount {
-	request := isegosdk.RequestClearThreatsAndVulnerabilitiesCreateAccount{}
+func expandRequestPxgridAccountCreateCreateAccount(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestConfigurationCreateAccount {
+	request := isegosdk.RequestConfigurationCreateAccount{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".node_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".node_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".node_name")))) {
 		request.NodeName = interfaceToString(v)
 	}

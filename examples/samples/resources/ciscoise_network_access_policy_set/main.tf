@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.6.22-beta"
+      version = "0.7.0-beta"
       source  = "hashicorp.com/edu/ciscoise"
     }
   }
@@ -40,7 +40,7 @@ resource "ciscoise_network_access_policy_set" "policy_sets" {
       #     attribute_value = "All Device Types"
       # }
       children {
-        id             = "ff6008e0-5c35-48a3-9fab-e0e709983369"
+        #id             = "ff6008e0-5c35-48a3-9fab-e0e709983369"
         condition_type = "ConditionReference"
       }
     }

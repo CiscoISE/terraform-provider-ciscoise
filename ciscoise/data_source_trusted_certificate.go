@@ -17,7 +17,7 @@ func dataSourceTrustedCertificate() *schema.Resource {
 
 - This data source supports Filtering, Sorting and Pagination.
 
-Filtering and Sorting supported on below mentioned attributes:
+Filtering and Sorting are supported for the following attributes:
 
 
 friendlyName
@@ -53,6 +53,9 @@ Supported Operators: EQ, NEQ
 
 
 
+
+Note:
+ ISE internal CA certificates will not be exported.
 
 - This data source can displays details of a Trust Certificate based on a given ID.
 `,
@@ -278,7 +281,7 @@ Not Contains
 							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Description: `The length of key used for encrypting trust certificate`,
+							Description: `Length of the key used for encrypting trust certificate`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
@@ -460,7 +463,7 @@ Not Contains
 							Computed:    true,
 						},
 						"key_size": &schema.Schema{
-							Description: `The length of key used for encrypting trust certificate`,
+							Description: `Length of the key used for encrypting trust certificate`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},

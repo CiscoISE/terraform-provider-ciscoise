@@ -54,14 +54,16 @@ func resourceNodeServicesSxpInterfaces() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 
 						"hostname": &schema.Schema{
-							Description: `hostname path parameter. Hostname of the node.`,
-							Type:        schema.TypeString,
-							Required:    true,
+							Description:      `hostname path parameter. Hostname of the node.`,
+							Type:             schema.TypeString,
+							Required:         true,
+							DiffSuppressFunc: diffSupressOptional(),
 						},
 						"interface": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
 						},
 					},
 				},

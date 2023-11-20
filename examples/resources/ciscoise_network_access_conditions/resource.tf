@@ -3,6 +3,7 @@ resource "ciscoise_network_access_conditions" "example" {
   provider = ciscoise
   parameters {
 
+    attribute_id    = "string"
     attribute_name  = "string"
     attribute_value = "string"
     children {

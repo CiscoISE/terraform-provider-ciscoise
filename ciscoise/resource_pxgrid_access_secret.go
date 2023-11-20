@@ -44,6 +44,7 @@ func resourcePxgridAccessSecret() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							ForceNew: true,
+							Computed: true,
 						},
 					},
 				},
@@ -98,8 +99,8 @@ func resourcePxgridAccessSecretDelete(ctx context.Context, d *schema.ResourceDat
 	return diags
 }
 
-func expandRequestPxgridAccessSecretAccessSecret(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestClearThreatsAndVulnerabilitiesAccessSecret {
-	request := isegosdk.RequestClearThreatsAndVulnerabilitiesAccessSecret{}
+func expandRequestPxgridAccessSecretAccessSecret(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestConfigurationAccessSecret {
+	request := isegosdk.RequestConfigurationAccessSecret{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".peer_node_name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".peer_node_name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".peer_node_name")))) {
 		request.PeerNodeName = interfaceToString(v)
 	}

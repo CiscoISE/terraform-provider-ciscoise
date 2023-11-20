@@ -80,6 +80,11 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"attribute_id": &schema.Schema{
+													Description: `Dictionary attribute id (Optional), used for additional verification`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
 												"attribute_name": &schema.Schema{
 													Description: `Dictionary attribute name`,
 													Type:        schema.TypeString,
@@ -90,7 +95,6 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													Type:        schema.TypeString,
 													Computed:    true,
 												},
-
 												"children": &schema.Schema{
 													Description: `In case type is andBlock or orBlock addtional conditions will be aggregated under this logical (OR/AND) condition`,
 													Type:        schema.TypeList,
@@ -98,23 +102,8 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													Elem: &schema.Resource{
 														Schema: map[string]*schema.Schema{
 
-															"attribute_name": &schema.Schema{
-																Description: `Atribute Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"attribute_value": &schema.Schema{
-																Description: `Attibute Name`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
 															"condition_type": &schema.Schema{
 																Description: `<ul><li>Inidicates whether the record is the condition itself(data) or a logical(or,and) aggregation</li> <li>Data type enum(reference,single) indicates than "conditonId" OR "ConditionAttrs" fields should contain condition data but not both</li> <li>Logical aggreation(and,or) enum indicates that additional conditions are present under the children field</li></ul>`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"dictionary_name": &schema.Schema{
-																Description: `Dictionary Name`,
 																Type:        schema.TypeString,
 																Computed:    true,
 															},
@@ -144,16 +133,6 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 																	},
 																},
 															},
-															"operator": &schema.Schema{
-																Description: `Operator`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
-															"id": &schema.Schema{
-																Description: `id`,
-																Type:        schema.TypeString,
-																Computed:    true,
-															},
 														},
 													},
 												},
@@ -163,7 +142,7 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -181,7 +160,7 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -214,7 +193,7 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -232,7 +211,7 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -397,6 +376,11 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"attribute_id": &schema.Schema{
+													Description: `Dictionary attribute id (Optional), used for additional verification`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
 												"attribute_name": &schema.Schema{
 													Description: `Dictionary attribute name`,
 													Type:        schema.TypeString,
@@ -454,7 +438,7 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -472,7 +456,7 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -505,7 +489,7 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -523,7 +507,7 @@ func dataSourceNetworkAccessAuthorizationRules() *schema.Resource {
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -782,6 +766,7 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRulesIte
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
+	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
@@ -961,6 +946,7 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
+	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
@@ -1003,12 +989,6 @@ func flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByID
 		respItem := make(map[string]interface{})
 		respItem["condition_type"] = item.ConditionType
 		respItem["is_negate"] = boolPtrToString(item.IsNegate)
-		respItem["attribute_name"] = item.AttributeName
-		respItem["attribute_value"] = item.AttributeValue
-		respItem["condition_type"] = item.ConditionType
-		respItem["dictionary_name"] = item.DictionaryName
-		respItem["operator"] = item.Operator
-		respItem["id"] = item.ID
 		respItem["link"] = flattenNetworkAccessAuthorizationRulesGetNetworkAccessAuthorizationRuleByIDItemRuleConditionChildrenLink(item.Link)
 		respItems = append(respItems, respItem)
 	}

@@ -42,7 +42,11 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-
+						"identity_source_id": &schema.Schema{
+							Description: `Identity source id from the identity stores`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 						"identity_source_name": &schema.Schema{
 							Description: `Identity source name from the identity stores`,
 							Type:        schema.TypeString,
@@ -97,6 +101,11 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"attribute_id": &schema.Schema{
+													Description: `Dictionary attribute id (Optional), used for additional verification`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
 												"attribute_name": &schema.Schema{
 													Description: `Dictionary attribute name`,
 													Type:        schema.TypeString,
@@ -154,7 +163,7 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -172,7 +181,7 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -205,7 +214,7 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -223,7 +232,7 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -341,6 +350,11 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"identity_source_id": &schema.Schema{
+							Description: `Identity source id from the identity stores`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 						"identity_source_name": &schema.Schema{
 							Description: `Identity source name from the identity stores`,
 							Type:        schema.TypeString,
@@ -395,6 +409,11 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 
+												"attribute_id": &schema.Schema{
+													Description: `Dictionary attribute id (Optional), used for additional verification`,
+													Type:        schema.TypeString,
+													Computed:    true,
+												},
 												"attribute_name": &schema.Schema{
 													Description: `Dictionary attribute name`,
 													Type:        schema.TypeString,
@@ -452,7 +471,7 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"dates_range": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -470,7 +489,7 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													},
 												},
 												"dates_range_exception": &schema.Schema{
-													Description: `<p>Defines for which date/s TimeAndDate condition will be matched<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
+													Description: `<p>Defines for which date/s TimeAndDate condition will be matched or NOT matched if used in exceptionDates prooperty<br> Options are - Date range, for specific date, the same date should be used for start/end date <br> Default - no specific dates<br> In order to reset the dates to have no specific dates Date format - yyyy-mm-dd (MM = month, dd = day, yyyy = year)</p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -503,7 +522,7 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													Computed:    true,
 												},
 												"hours_range": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -521,7 +540,7 @@ func dataSourceDeviceAdministrationAuthenticationRules() *schema.Resource {
 													},
 												},
 												"hours_range_exception": &schema.Schema{
-													Description: `<p>Defines for which hours a TimeAndDate condition will be matched<br> Time format - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
+													Description: `<p>Defines for which hours a TimeAndDate condition will be matched or not matched if used in exceptionHours property<br> Time foramt - hh:mm  ( h = hour , mm = minutes ) <br> Default - All Day </p>`,
 													Type:        schema.TypeList,
 													Computed:    true,
 													Elem: &schema.Resource{
@@ -720,6 +739,7 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 	var respItems []map[string]interface{}
 	for _, item := range *items {
 		respItem := make(map[string]interface{})
+		respItem["identity_source_id"] = item.IDentitySourceID
 		respItem["identity_source_name"] = item.IDentitySourceName
 		respItem["if_auth_fail"] = item.IfAuthFail
 		respItem["if_process_fail"] = item.IfProcessFail
@@ -777,6 +797,7 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
+	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue
@@ -901,6 +922,7 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 		return nil
 	}
 	respItem := make(map[string]interface{})
+	respItem["identity_source_id"] = item.IDentitySourceID
 	respItem["identity_source_name"] = item.IDentitySourceName
 	respItem["if_auth_fail"] = item.IfAuthFail
 	respItem["if_process_fail"] = item.IfProcessFail
@@ -959,6 +981,7 @@ func flattenDeviceAdministrationAuthenticationRulesGetDeviceAdminAuthenticationR
 	respItem["id"] = item.ID
 	respItem["name"] = item.Name
 	respItem["attribute_name"] = item.AttributeName
+	respItem["attribute_id"] = item.AttributeID
 	respItem["attribute_value"] = item.AttributeValue
 	respItem["dictionary_name"] = item.DictionaryName
 	respItem["dictionary_value"] = item.DictionaryValue

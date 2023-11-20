@@ -31,6 +31,7 @@ func dataSourceSupportBundleDownload() *schema.Resource {
 			"file_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -42,35 +43,31 @@ func dataSourceSupportBundleDownloadRead(ctx context.Context, d *schema.Resource
 
 	var diags diag.Diagnostics
 
-	selectedMethod := 1
-	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: DownloadSupportBundle")
-		request1 := expandRequestSupportBundleDownloadDownloadSupportBundle(ctx, "", d)
+	request1 := expandRequestSupportBundleDownloadDownloadSupportBundle(ctx, "", d)
 
-		response1, _, err := client.SupportBundleDownload.DownloadSupportBundle(request1)
+	response1, _, err := client.SupportBundleDownload.DownloadSupportBundle(request1)
 
-		if request1 != nil {
-			log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
-		}
-
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when executing DownloadSupportBundle", err))
-			return diags
-		}
-
-		log.Printf("[DEBUG] Retrieved response")
-
-		vvDirpath := d.Get("dirpath").(string)
-		err = response1.SaveDownload(vvDirpath)
-		if err != nil {
-			diags = append(diags, diagError(
-				"Failure when downloading file", err))
-			return diags
-		}
-		log.Printf("[DEBUG] Downloaded file %s", vvDirpath)
-
+	if request1 != nil {
+		log.Printf("[DEBUG] request sent => %v", responseInterfaceToString(*request1))
 	}
+
+	if err != nil {
+		diags = append(diags, diagError(
+			"Failure when executing DownloadSupportBundle", err))
+		return diags
+	}
+
+	log.Printf("[DEBUG] Retrieved response")
+
+	vvDirpath := d.Get("dirpath").(string)
+	err = response1.SaveDownload(vvDirpath)
+	if err != nil {
+		diags = append(diags, diagError(
+			"Failure when downloading file", err))
+		return diags
+	}
+	log.Printf("[DEBUG] Downloaded file %s", vvDirpath)
+
 	return diags
 }
 

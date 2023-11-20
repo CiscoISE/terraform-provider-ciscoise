@@ -44,106 +44,50 @@ func resourceDeviceAdministrationNetworkConditions() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"cli_dnis_list": &schema.Schema{
+							Description: `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 						"condition_type": &schema.Schema{
 							Description: `This field determines the content of the conditions field`,
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-						"conditions": &schema.Schema{
-							Type:     schema.TypeList,
-							Computed: true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"cli_dnis_list": &schema.Schema{
-										Description: `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"condition_type": &schema.Schema{
-										Description: `This field determines the content of the conditions field`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-									"description": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"device_group_list": &schema.Schema{
-										Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"device_list": &schema.Schema{
-										Description: `<p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"id": &schema.Schema{
-										Type:     schema.TypeString,
-										Computed: true,
-									},
-									"ip_addr_list": &schema.Schema{
-										Description: `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-									"mac_addr_list": &schema.Schema{
-										Description: `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
-										Type:        schema.TypeList,
-										Computed:    true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"name": &schema.Schema{
-										Description: `Network Condition name`,
-										Type:        schema.TypeString,
-										Computed:    true,
-									},
-								},
-							},
-						},
 						"description": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"device_group_list": &schema.Schema{
+							Description: `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"device_list": &schema.Schema{
+							Description: `<p>This field should contain Device Name. The device name must be the same as the name field in a Network Device object. Line format - Device Name</p>`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 						"id": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"ip_addr_list": &schema.Schema{
+							Description: `<p>This field should contain IP address or subnet.<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet</p>`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -164,6 +108,14 @@ func resourceDeviceAdministrationNetworkConditions() *schema.Resource {
 										Computed: true,
 									},
 								},
+							},
+						},
+						"mac_addr_list": &schema.Schema{
+							Description: `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
+							Type:        schema.TypeList,
+							Computed:    true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
 						},
 						"name": &schema.Schema{
@@ -176,12 +128,21 @@ func resourceDeviceAdministrationNetworkConditions() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
-				MaxItems: 1,
-				MinItems: 1,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 
+						"cli_dnis_list": &schema.Schema{
+							Description:      `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 						"condition_type": &schema.Schema{
 							Description:      `This field determines the content of the conditions field`,
 							Type:             schema.TypeString,
@@ -189,99 +150,47 @@ func resourceDeviceAdministrationNetworkConditions() *schema.Resource {
 							DiffSuppressFunc: diffSupressOptional(),
 							Computed:         true,
 						},
-						"conditions": &schema.Schema{
-							Type:             schema.TypeList,
-							Optional:         true,
-							DiffSuppressFunc: diffSupressOptional(),
-							Computed:         true,
-							Elem: &schema.Resource{
-								Schema: map[string]*schema.Schema{
-
-									"cli_dnis_list": &schema.Schema{
-										Description:      `<p>This field should contain a Caller ID (CLI), comma, and Called ID (DNIS).<br> Line format -  Caller ID (CLI), Called ID (DNIS)</p>`,
-										Type:             schema.TypeList,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"device_group_list": &schema.Schema{
-										Description:      `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
-										Type:             schema.TypeList,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"device_list": &schema.Schema{
-										Description:      `<p>This field should contain Device-Name,port-number. The device name must be the same as the name field in a Network Device object.<br> Line format - Device Name,Port</p>`,
-										Type:             schema.TypeList,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"ip_addr_list": &schema.Schema{
-										Description:      `<p>This field should contain IP-address-or-subnet,port number<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet,Port</p>`,
-										Type:             schema.TypeList,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"mac_addr_list": &schema.Schema{
-										Description:      `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
-										Type:             schema.TypeList,
-										Optional:         true,
-										DiffSuppressFunc: diffSupressOptional(),
-										Computed:         true,
-										Elem: &schema.Schema{
-											Type: schema.TypeString,
-										},
-									},
-									"link": &schema.Schema{
-										Type:     schema.TypeList,
-										Computed: true,
-										Elem: &schema.Resource{
-											Schema: map[string]*schema.Schema{
-
-												"href": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"rel": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-												"type": &schema.Schema{
-													Type:     schema.TypeString,
-													Computed: true,
-												},
-											},
-										},
-									},
-								},
-							},
-						},
 						"description": &schema.Schema{
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: diffSupressOptional(),
 							Computed:         true,
 						},
+						"device_group_list": &schema.Schema{
+							Description:      `<p>This field should contain a tuple with NDG Root, comma, and an NDG (that it under the root).<br> Line format - NDG Root Name, NDG, Port</p>`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"device_list": &schema.Schema{
+							Description:      `<p>This field should contain Device Name. The device name must be the same as the name field in a Network Device object. Line format - Device Name</p>`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
 						"id": &schema.Schema{
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: diffSupressOptional(),
 							Computed:         true,
+						},
+						"ip_addr_list": &schema.Schema{
+							Description:      `<p>This field should contain IP address or subnet.<br> IP address can be IPV4 format (n.n.n.n) or IPV6 format (n:n:n:n:n:n:n:n).<br> IP subnet can be IPV4 format (n.n.n.n/m) or IPV6 format (n:n:n:n:n:n:n:n/m).<br> Line format - IP Address or subnet</p>`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
 						},
 						"link": &schema.Schema{
 							Type:     schema.TypeList,
@@ -302,6 +211,16 @@ func resourceDeviceAdministrationNetworkConditions() *schema.Resource {
 										Computed: true,
 									},
 								},
+							},
+						},
+						"mac_addr_list": &schema.Schema{
+							Description:      `<p>This field should contain Endstation MAC address, comma, and Destination MAC addresses.<br> Each Max address must include twelve hexadecimal digits using formats nn:nn:nn:nn:nn:nn or nn-nn-nn-nn-nn-nn or nnnn.nnnn.nnnn or nnnnnnnnnnnn.<br> Line format - Endstation MAC,Destination MAC </p>`,
+							Type:             schema.TypeList,
+							Optional:         true,
+							DiffSuppressFunc: diffSupressOptional(),
+							Computed:         true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
 							},
 						},
 						"name": &schema.Schema{
@@ -617,11 +536,26 @@ func expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkC
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
+		request.Link = expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionLink(ctx, key+".link.0", d)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".conditions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".conditions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".conditions")))) {
-		request.Conditions = expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditionsArray(ctx, key+".conditions", d)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_list")))) {
+		request.DeviceList = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli_dnis_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli_dnis_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli_dnis_list")))) {
+		request.CliDnisList = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_addr_list")))) {
+		request.IPAddrList = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_addr_list")))) {
+		request.MacAddrList = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_group_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_group_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_group_list")))) {
+		request.DeviceGroupList = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -631,81 +565,6 @@ func expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkC
 
 func expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionLink {
 	request := isegosdk.RequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionLink{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
-		request.Href = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
-		request.Rel = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditionsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditions {
-	request := []isegosdk.RequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditions{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditions(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditions {
-	request := isegosdk.RequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditions{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli_dnis_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli_dnis_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli_dnis_list")))) {
-		request.CliDnisList = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
-		request.ConditionType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
-		request.Description = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
-		request.ID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_addr_list")))) {
-		request.IPAddrList = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_addr_list")))) {
-		request.MacAddrList = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_group_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_group_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_group_list")))) {
-		request.DeviceGroupList = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_list")))) {
-		request.DeviceList = interfaceToSliceString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditionsLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditionsLink {
-	request := isegosdk.RequestDeviceAdministrationNetworkConditionsCreateDeviceAdminNetworkConditionConditionsLink{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}
@@ -732,11 +591,26 @@ func expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkC
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
 		request.ID = interfaceToString(v)
 	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".link")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".link")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".link")))) {
+		request.Link = expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDLink(ctx, key+".link.0", d)
+	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
 		request.Name = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".conditions")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".conditions")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".conditions")))) {
-		request.Conditions = expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditionsArray(ctx, key+".conditions", d)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_list")))) {
+		request.DeviceList = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli_dnis_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli_dnis_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli_dnis_list")))) {
+		request.CliDnisList = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_addr_list")))) {
+		request.IPAddrList = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_addr_list")))) {
+		request.MacAddrList = interfaceToSliceString(v)
+	}
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_group_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_group_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_group_list")))) {
+		request.DeviceGroupList = interfaceToSliceString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -746,81 +620,6 @@ func expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkC
 
 func expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDLink {
 	request := isegosdk.RequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDLink{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
-		request.Href = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".rel")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".rel")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".rel")))) {
-		request.Rel = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".type")))) {
-		request.Type = interfaceToString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditionsArray(ctx context.Context, key string, d *schema.ResourceData) *[]isegosdk.RequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditions {
-	request := []isegosdk.RequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditions{}
-	key = fixKeyAccess(key)
-	o := d.Get(key)
-	if o == nil {
-		return nil
-	}
-	objs := o.([]interface{})
-	if len(objs) == 0 {
-		return nil
-	}
-	for item_no := range objs {
-		i := expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditions(ctx, fmt.Sprintf("%s.%d", key, item_no), d)
-		if i != nil {
-			request = append(request, *i)
-		}
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditions(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditions {
-	request := isegosdk.RequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditions{}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".cli_dnis_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".cli_dnis_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".cli_dnis_list")))) {
-		request.CliDnisList = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".condition_type")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".condition_type")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".condition_type")))) {
-		request.ConditionType = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
-		request.Description = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".id")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".id")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".id")))) {
-		request.ID = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ip_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ip_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ip_addr_list")))) {
-		request.IPAddrList = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".mac_addr_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".mac_addr_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".mac_addr_list")))) {
-		request.MacAddrList = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".name")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".name")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".name")))) {
-		request.Name = interfaceToString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_group_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_group_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_group_list")))) {
-		request.DeviceGroupList = interfaceToSliceString(v)
-	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".device_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".device_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".device_list")))) {
-		request.DeviceList = interfaceToSliceString(v)
-	}
-	if isEmptyValue(reflect.ValueOf(request)) {
-		return nil
-	}
-	return &request
-}
-
-func expandRequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditionsLink(ctx context.Context, key string, d *schema.ResourceData) *isegosdk.RequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditionsLink {
-	request := isegosdk.RequestDeviceAdministrationNetworkConditionsUpdateDeviceAdminNetworkConditionByIDConditionsLink{}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".href")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".href")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".href")))) {
 		request.Href = interfaceToString(v)
 	}

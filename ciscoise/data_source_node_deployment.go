@@ -217,7 +217,7 @@ func dataSourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m
 		queryParams1 := isegosdk.GetDeploymentNodesQueryParams{}
 
 		if okFilter {
-			queryParams1.Filter = interfaceToSliceString(vFilter)
+			queryParams1.Filter = vFilter.(string)
 		}
 		if okFilterType {
 			queryParams1.FilterType = vFilterType.(string)
