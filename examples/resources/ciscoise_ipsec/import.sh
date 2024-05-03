@@ -1,0 +1,1 @@
+terraform import ciscoise_ipsec.example "host_name:=string\nad_ip:=string"

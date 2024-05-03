@@ -1,0 +1,30 @@
+
+resource "ciscoise_trustsec_vn_vlan_mapping" "example" {
+  provider = ciscoise
+  item {
+
+
+
+
+
+
+
+
+
+  }
+  parameters {
+
+    id              = "string"
+    is_data         = "false"
+    is_default_vlan = "false"
+    last_update     = "string"
+    max_value       = 1
+    name            = "string"
+    vn_id           = "string"
+    vn_name         = "string"
+  }
+}
+
+output "ciscoise_trustsec_vn_vlan_mapping_example" {
+  value = ciscoise_trustsec_vn_vlan_mapping.example
+}

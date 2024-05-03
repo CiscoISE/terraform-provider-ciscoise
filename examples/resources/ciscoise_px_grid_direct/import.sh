@@ -1,0 +1,1 @@
+terraform import ciscoise_px_grid_direct.example "connector_name:=string"

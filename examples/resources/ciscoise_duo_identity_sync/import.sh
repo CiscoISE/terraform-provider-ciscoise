@@ -1,0 +1,1 @@
+terraform import ciscoise_duo_identity_sync.example "sync_name:=string"

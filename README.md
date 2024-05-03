@@ -67,7 +67,7 @@ terraform {
   required_providers {
     ciscoise = {
       source = "hashicorp.com/edu/ciscoise"
-      version = "0.7.0-beta"
+      version = "0.8.0-beta"
     }
   }
 }
@@ -119,8 +119,9 @@ The following table shows the supported versions.
 
 | Cisco ISE version | Terraform "ciscoise" provider version | Go "ciscoise-go-sdk" version|
 |-------------------|---------------------------------------|---------------------|
-| 3.1_Patch_1      | 0.6.22-beta                           | 1.1.19              |
+| 3.1_Patch_1       | 0.6.22-beta                           | 1.1.19              |
 | 3.2-Beta          | 0.7.0-beta                            | 1.2.0               |
+| 3.3_patch_1       | 0.8.0-beta                            | 1.3.1               |
 
 If your SDK, Terraform provider is older please consider updating it first.
 

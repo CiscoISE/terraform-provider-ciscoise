@@ -217,7 +217,7 @@ func dataSourceNodeDeploymentRead(ctx context.Context, d *schema.ResourceData, m
 		queryParams1 := isegosdk.GetDeploymentNodesQueryParams{}
 
 		if okFilter {
-			queryParams1.Filter = vFilter.(string)
+			queryParams1.Filter = interfaceToSliceString(vFilter)
 		}
 		if okFilterType {
 			queryParams1.FilterType = vFilterType.(string)
@@ -290,7 +290,7 @@ func flattenNodeDeploymentGetDeploymentNodesItems(items *[]isegosdk.ResponseNode
 		respItem["fqdn"] = item.Fqdn
 		respItem["hostname"] = item.Hostname
 		respItem["ip_address"] = item.IPAddress
-		respItem["node_status"] = item.NodeStatus
+		respItem["node_status"] = item.Nodestatus
 		respItem["roles"] = item.Roles
 		respItem["services"] = item.Services
 		respItems = append(respItems, respItem)
@@ -306,7 +306,7 @@ func flattenNodeDeploymentGetNodeDetailsItem(item *isegosdk.ResponseNodeDeployme
 	respItem["fqdn"] = item.Fqdn
 	respItem["hostname"] = item.Hostname
 	respItem["ip_address"] = item.IPAddress
-	respItem["node_status"] = item.NodeStatus
+	respItem["node_status"] = item.Nodestatus
 	respItem["roles"] = item.Roles
 	respItem["services"] = item.Services
 	return []map[string]interface{}{

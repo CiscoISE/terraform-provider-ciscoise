@@ -1,3 +1,73 @@
+## 0.8.0-beta (May 05, 2024)
+IMPROVEMENTS:
+* provider: Update ciscoisesdk from v1.2.0 to v1.3.1
+FEATURES:
+* **New Resource:** `ciscoise_custom_attributes`
+* **New Resource:** `ciscoise_custom_attributes_rename`
+* **New Resource:** `ciscoise_duo_identity_sync`
+* **New Resource:** `ciscoise_duo_identity_sync_status`
+* **New Resource:** `ciscoise_duo_mfa`
+* **New Resource:** `ciscoise_duo_mfa_testconnection`
+* **New Resource:** `ciscoise_endpoints`
+* **New Resource:** `ciscoise_endpoints_bulk`
+* **New Resource:** `ciscoise_endpoints_task`
+* **New Resource:** `ciscoise_ipsec`
+* **New Resource:** `ciscoise_ipsec_bulk`
+* **New Resource:** `ciscoise_ipsec_delete`
+* **New Resource:** `ciscoise_ipsec_disable`
+* **New Resource:** `ciscoise_ipsec_enable`
+* **New Resource:** `ciscoise_px_grid_direct`
+* **New Resource:** `ciscoise_px_grid_direct_sync`
+* **New Resource:** `ciscoise_px_grid_direct_test_connector`
+* **New Resource:** `ciscoise_reservation`
+* **New Resource:** `ciscoise_stop_replication`
+* **New Resource:** `ciscoise_trustsec_nbar_app`
+* **New Resource:** `ciscoise_trustsec_sg_vn_mapping`
+* **New Resource:** `ciscoise_trustsec_sg_vn_mapping_bulk_create`
+* **New Resource:** `ciscoise_trustsec_sg_vn_mapping_bulk_delete`
+* **New Resource:** `ciscoise_trustsec_sg_vn_mapping_bulk_update`
+* **New Resource:** `ciscoise_trustsec_vn`
+* **New Resource:** `ciscoise_trustsec_vn_bulk_create`
+* **New Resource:** `ciscoise_trustsec_vn_bulk_delete`
+* **New Resource:** `ciscoise_trustsec_vn_bulk_update`
+* **New Resource:** `ciscoise_trustsec_vn_vlan_mapping`
+* **New Resource:** `ciscoise_trustsec_vn_vlan_mapping_bulk_create`
+* **New Resource:** `ciscoise_trustsec_vn_vlan_mapping_bulk_delete`
+* **New Resource:** `ciscoise_trustsec_vn_vlan_mapping_bulk_update`
+* **New Resource:** `ciscoise_upgrade_proceed`
+* **New Resource:** `ciscoise_upgrade_stage_cancel`
+* **New Resource:** `ciscoise_upgrade_stage_start`
+* **New Resource:** `ciscoise_user_equipment`
+* **New Resource:** `ciscoise_user_equipment_bulk`
+* **New Resource:** `ciscoise_user_equipment_csv`
+* **New DataSource** `ciscoise_active_directories_info`
+* **New DataSource** `ciscoise_ad_groups_info`
+* **New DataSource** `ciscoise_configuration`
+* **New DataSource** `ciscoise_custom_attributes`
+* **New DataSource** `ciscoise_dataconnect_info`
+* **New DataSource** `ciscoise_dataconnect_settings`
+* **New DataSource** `ciscoise_duo_identity_sync`
+* **New DataSource** `ciscoise_duo_identity_sync_cancel_info`
+* **New DataSource** `ciscoise_duo_identitysync_sync_info`
+* **New DataSource** `ciscoise_duo_mfa`
+* **New DataSource** `ciscoise_endpoints`
+* **New DataSource** `ciscoise_endpoints_device_type_info`
+* **New DataSource** `ciscoise_ipsec_certificates_info`
+* **New DataSource** `ciscoise_ipsec_info`
+* **New DataSource** `ciscoise_px_grid_direct`
+* **New DataSource** `ciscoise_px_grid_direct_dictionary_info`
+* **New DataSource** `ciscoise_px_grid_direct_sync`
+* **New DataSource** `ciscoise_reservation`
+* **New DataSource** `ciscoise_stop_replication`
+* **New DataSource** `ciscoise_trustsec_nbar_app`
+* **New DataSource** `ciscoise_trustsec_sg_vn_mapping`
+* **New DataSource** `ciscoise_trustsec_vn`
+* **New DataSource** `ciscoise_trustsec_vn_vlan_mapping`
+* **New DataSource** `ciscoise_upgrade_proceed`
+* **New DataSource** `ciscoise_user_equipment`
+* **New DataSource** `ciscoise_user_equipment_imei_info`
+* **New DataSource** `ciscoise_user_equipment_subscriber_info`
+
 ## 0.7.0-beta (November 20, 2023)
 IMPROVEMENTS:
 * provider: Update ciscoisesdk from v1.1.19 to v1.2.0

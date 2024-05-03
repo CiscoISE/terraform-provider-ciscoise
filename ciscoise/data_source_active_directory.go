@@ -95,7 +95,7 @@ func dataSourceActiveDirectory() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-						"adgroups": &schema.Schema{
+						"ad_groups": &schema.Schema{
 							Description: `Holds list of AD Groups`,
 							Type:        schema.TypeList,
 							Computed:    true,
@@ -394,7 +394,7 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-						"adgroups": &schema.Schema{
+						"ad_groups": &schema.Schema{
 							Description: `Holds list of AD Groups`,
 							Type:        schema.TypeList,
 							Computed:    true,
@@ -866,7 +866,7 @@ func flattenActiveDirectoryGetActiveDirectoryByNameItemName(item *isegosdk.Respo
 	respItem["domain"] = item.Domain
 	respItem["enable_domain_allowed_list"] = boolPtrToString(item.EnableDomainAllowedList)
 	respItem["enable_domain_white_list"] = boolPtrToString(item.EnableDomainWhiteList)
-	respItem["adgroups"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroups(item.Adgroups)
+	respItem["ad_groups"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdgroups(item.Adgroups)
 	respItem["advanced_settings"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdvancedSettings(item.AdvancedSettings)
 	respItem["ad_attributes"] = flattenActiveDirectoryGetActiveDirectoryByNameItemNameAdAttributes(item.AdAttributes)
 	respItem["ad_scopes_names"] = item.AdScopesNames
@@ -1012,7 +1012,7 @@ func flattenActiveDirectoryGetActiveDirectoryByIDItemID(item *isegosdk.ResponseA
 	respItem["domain"] = item.Domain
 	respItem["enable_domain_white_list"] = boolPtrToString(item.EnableDomainWhiteList)
 	respItem["enable_domain_allowed_list"] = boolPtrToString(item.EnableDomainAllowedList)
-	respItem["adgroups"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroups(item.Adgroups)
+	respItem["ad_groups"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdgroups(item.Adgroups)
 	respItem["advanced_settings"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdvancedSettings(item.AdvancedSettings)
 	respItem["ad_attributes"] = flattenActiveDirectoryGetActiveDirectoryByIDItemIDAdAttributes(item.AdAttributes)
 	respItem["ad_scopes_names"] = item.AdScopesNames

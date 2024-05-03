@@ -15,9 +15,9 @@ func dataSourceCsr() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on Certificates.
 
-- This data source supports Filtering, Sorting and Pagination.
+- This data source supports filtering, sorting and pagination.
 
-Filtering and Sorting supported on below mentioned attributes:
+Filtering and sorting are supported for the following attributes:
 
 
 friendlyName
@@ -34,7 +34,7 @@ Supported Operators: EQ, NEQ, GT and LT
 
 
 
-- This data source displays details of a Certificate Signing Request of a particular node for given HostName and ID.
+- This data source displays details of a certificate signing request of a particular node for a given hostname and ID.
 `,
 
 		ReadContext: dataSourceCsrRead,
@@ -122,11 +122,8 @@ Not Contains
  
  
  `,
-				Type:     schema.TypeList,
+				Type:     schema.TypeString,
 				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
 			},
 			"filter_type": &schema.Schema{
 				Description: `filterType query parameter. The logical operator common to ALL filter criteria will be by default AND, and can be changed by using the parameter`,
@@ -295,6 +292,11 @@ Not Contains
 								},
 							},
 						},
+						"san_names": &schema.Schema{
+							Description: `String representation of subject alternative names.`,
+							Type:        schema.TypeString,
+							Computed:    true,
+						},
 						"signature_algorithm": &schema.Schema{
 							Description: `Algorithm used for encrypting CSR`,
 							Type:        schema.TypeString,
@@ -359,7 +361,7 @@ func dataSourceCsrRead(ctx context.Context, d *schema.ResourceData, m interface{
 			queryParams1.SortBy = vSortBy.(string)
 		}
 		if okFilter {
-			queryParams1.Filter = interfaceToSliceString(vFilter)
+			queryParams1.Filter = vFilter.(string)
 		}
 		if okFilterType {
 			queryParams1.FilterType = vFilterType.(string)
@@ -457,6 +459,7 @@ func flattenCertificatesGetCsrsItems(items *[]isegosdk.ResponseCertificatesGetCs
 		respItem["id"] = item.ID
 		respItem["key_size"] = item.KeySize
 		respItem["link"] = flattenCertificatesGetCsrsItemsLink(item.Link)
+		respItem["san_names"] = item.SanNames
 		respItem["signature_algorithm"] = item.SignatureAlgorithm
 		respItem["subject"] = item.Subject
 		respItem["time_stamp"] = item.TimeStamp
@@ -493,13 +496,16 @@ func flattenCertificatesGetCsrByIDItem(item *isegosdk.ResponseCertificatesGetCsr
 	respItem["id"] = item.ID
 	respItem["key_size"] = item.KeySize
 	respItem["link"] = flattenCertificatesGetCsrByIDItemLink(item.Link)
+	respItem["san_names"] = item.SanNames
 	respItem["signature_algorithm"] = item.SignatureAlgorithm
 	respItem["subject"] = item.Subject
 	respItem["time_stamp"] = item.TimeStamp
 	respItem["used_for"] = item.UsedFor
+
 	return []map[string]interface{}{
 		respItem,
 	}
+
 }
 
 func flattenCertificatesGetCsrByIDItemLink(item *isegosdk.ResponseCertificatesGetCsrByIDResponseLink) []map[string]interface{} {

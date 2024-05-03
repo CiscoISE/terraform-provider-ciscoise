@@ -1,0 +1,1 @@
+terraform import ciscoise_duo_mfa.example "connection_name:=string"

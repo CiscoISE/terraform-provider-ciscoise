@@ -3427,8 +3427,7 @@ func expandRequestSelfRegisteredPortalCreateSelfRegisteredPortalSelfRegPortalSet
 		request.AuthenticateSponsorsUsingPortalList = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sponsor_portal_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sponsor_portal_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sponsor_portal_list")))) {
-		vSponsorPortalList := v.([]interface{})
-		request.SponsorPortalList = &vSponsorPortalList
+		request.SponsorPortalList = interfaceToSliceString(v)
 	}
 	return &request
 }
@@ -4353,8 +4352,7 @@ func expandRequestSelfRegisteredPortalUpdateSelfRegisteredPortalByIDSelfRegPorta
 		request.AuthenticateSponsorsUsingPortalList = interfaceToBoolPtr(v)
 	}
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".sponsor_portal_list")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".sponsor_portal_list")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".sponsor_portal_list")))) {
-		vSponsorPortalList := v.([]interface{})
-		request.SponsorPortalList = &vSponsorPortalList
+		request.SponsorPortalList = interfaceToSliceString(v)
 	}
 	return &request
 }

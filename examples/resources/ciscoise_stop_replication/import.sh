@@ -1,0 +1,1 @@
+terraform import ciscoise_stop_replication.example "id:=string"

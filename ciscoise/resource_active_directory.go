@@ -89,7 +89,7 @@ func resourceActiveDirectory() *schema.Resource {
 							Type:        schema.TypeString,
 							Computed:    true,
 						},
-						"adgroups": &schema.Schema{
+						"ad_groups": &schema.Schema{
 							Description: `Holds list of AD Groups`,
 							Type:        schema.TypeList,
 							Computed:    true,
@@ -404,7 +404,7 @@ default value if schema is ACTIVE_DIRECTORY. Values can be changed only for CUST
 							DiffSuppressFunc: diffSupressOptional(),
 							Computed:         true,
 						},
-						"adgroups": &schema.Schema{
+						"ad_groups": &schema.Schema{
 							Description:      `Holds list of AD Groups`,
 							Type:             schema.TypeList,
 							Optional:         true,

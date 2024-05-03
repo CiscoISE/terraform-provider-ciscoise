@@ -1,0 +1,1 @@
+terraform import ciscoise_reservation.example "client_id:=string"
