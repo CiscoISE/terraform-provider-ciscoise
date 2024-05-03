@@ -589,7 +589,7 @@ func dataSourceTrustedCertificateRead(ctx context.Context, d *schema.ResourceDat
 			queryParams1.SortBy = vSortBy.(string)
 		}
 		if okFilter {
-			queryParams1.Filter = interfaceToSliceString(vFilter)
+			queryParams1.Filter = vFilter.(string)
 		}
 		if okFilterType {
 			queryParams1.FilterType = vFilterType.(string)

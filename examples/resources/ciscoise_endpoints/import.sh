@@ -1,0 +1,1 @@
+terraform import ciscoise_endpoints.example "value:=string"

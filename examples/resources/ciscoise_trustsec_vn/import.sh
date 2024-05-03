@@ -1,0 +1,1 @@
+terraform import ciscoise_trustsec_vn.example "id:=string"

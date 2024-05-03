@@ -1,0 +1,1 @@
+terraform import ciscoise_user_equipment.example "user_equipment_id:=string"

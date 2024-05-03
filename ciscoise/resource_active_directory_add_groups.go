@@ -102,7 +102,7 @@ func resourceActiveDirectoryAddGroups() *schema.Resource {
 							ForceNew:    true,
 							Computed:    true,
 						},
-						"adgroups": &schema.Schema{
+						"ad_groups": &schema.Schema{
 							Description: `Holds list of AD Groups`,
 							Type:        schema.TypeList,
 							Optional:    true,
