@@ -1,3 +1,9 @@
+## 0.8.1-beta (May 15, 2024)
+BUG FIXES:
+* `ciscoise_network_device_group` change parameter from `ndgtpye` to `othername`
+* `ciscoise_network_device` change `push_id_support` type from bool to string 
+* `ciscoise_network_access_authorization_rules` add missing parameters in `children` schema
+
 ## 0.8.0-beta (May 05, 2024)
 IMPROVEMENTS:
 * provider: Update ciscoisesdk from v1.2.0 to v1.3.1

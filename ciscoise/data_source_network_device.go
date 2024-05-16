@@ -1018,7 +1018,7 @@ func flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettings(item *is
 	respItem["device_authentication_settings"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceAuthenticationSettings(item.DeviceAuthenticationSettings)
 	respItem["sga_notification_and_updates"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsSgaNotificationAndUpdates(item.SgaNotificationAndUpdates)
 	respItem["device_configuration_deployment"] = flattenNetworkDeviceGetNetworkDeviceByNameItemNameTrustsecsettingsDeviceConfigurationDeployment(item.DeviceConfigurationDeployment)
-	respItem["push_id_support"] = boolPtrToString(item.PushIDSupport)
+	respItem["push_id_support"] = item.PushIDSupport
 
 	return []map[string]interface{}{
 		respItem,
