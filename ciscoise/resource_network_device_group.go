@@ -76,7 +76,7 @@ func resourceNetworkDeviceGroup() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
-						"ndgtype": &schema.Schema{
+						"othername": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -130,7 +130,7 @@ func resourceNetworkDeviceGroup() *schema.Resource {
 							DiffSuppressFunc: diffSupressOptional(),
 							Computed:         true,
 						},
-						"ndgtype": &schema.Schema{
+						"othername": &schema.Schema{
 							Type:             schema.TypeString,
 							Optional:         true,
 							DiffSuppressFunc: diffSupressOptional(),
@@ -431,8 +431,8 @@ func expandRequestNetworkDeviceGroupCreateNetworkDeviceGroupNetworkDeviceGroup(c
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ndgtype")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ndgtype")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ndgtype")))) {
-		request.Ndgtype = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".othername")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".othername")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".othername")))) {
+		request.Othername = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
@@ -460,8 +460,8 @@ func expandRequestNetworkDeviceGroupUpdateNetworkDeviceGroupByIDNetworkDeviceGro
 	if v, ok := d.GetOkExists(fixKeyAccess(key + ".description")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".description")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".description")))) {
 		request.Description = interfaceToString(v)
 	}
-	if v, ok := d.GetOkExists(fixKeyAccess(key + ".ndgtype")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".ndgtype")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".ndgtype")))) {
-		request.Ndgtype = interfaceToString(v)
+	if v, ok := d.GetOkExists(fixKeyAccess(key + ".othername")); !isEmptyValue(reflect.ValueOf(d.Get(fixKeyAccess(key+".othername")))) && (ok || !reflect.DeepEqual(v, d.Get(fixKeyAccess(key+".othername")))) {
+		request.Othername = interfaceToString(v)
 	}
 	if isEmptyValue(reflect.ValueOf(request)) {
 		return nil
