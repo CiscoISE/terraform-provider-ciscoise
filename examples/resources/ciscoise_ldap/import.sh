@@ -1,0 +1,1 @@
+terraform import ciscoise_ldap.example "id:=string"
