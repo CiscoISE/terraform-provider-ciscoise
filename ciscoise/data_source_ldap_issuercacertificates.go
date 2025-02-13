@@ -11,14 +11,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceLdapHosts() *schema.Resource {
+func dataSourceLdapissuercacertificates() *schema.Resource {
 	return &schema.Resource{
 		Description: `It performs read operation on ldap.
 
-- get-hosts
+- get-issuerca-certificates
 `,
 
-		ReadContext: dataSourceLdapHostsRead,
+		ReadContext: dataSourceLdapissuercacertificatesRead,
 		Schema: map[string]*schema.Schema{
 			"item": &schema.Schema{
 				Type:     schema.TypeList,
@@ -304,7 +304,7 @@ func dataSourceLdapHosts() *schema.Resource {
 								},
 							},
 						},
-						"enable_password_change_ldap": &schema.Schema{
+						"enable_password_change_lda_p": &schema.Schema{
 							Description: `enablePasswordChangeLDAP`,
 							Type:        schema.TypeString,
 							Computed:    true,
@@ -482,7 +482,7 @@ func dataSourceLdapHosts() *schema.Resource {
 	}
 }
 
-func dataSourceLdapHostsRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourceLdapissuercacertificatesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	clientConfig := m.(ClientConfig)
 	client := clientConfig.Client
 
@@ -490,26 +490,26 @@ func dataSourceLdapHostsRead(ctx context.Context, d *schema.ResourceData, m inte
 
 	selectedMethod := 1
 	if selectedMethod == 1 {
-		log.Printf("[DEBUG] Selected method: GetLdapHosts")
+		log.Printf("[DEBUG] Selected method: GetLdapissuercacertificates")
 
-		response1, restyResp1, err := client.Ldap.GetLdapHosts()
+		response1, restyResp1, err := client.Ldap.GetLdapissuercacertificates()
 
 		if err != nil || response1 == nil {
 			if restyResp1 != nil {
 				log.Printf("[DEBUG] Retrieved error response %s", restyResp1.String())
 			}
 			diags = append(diags, diagErrorWithAlt(
-				"Failure when executing 2 GetLdapHosts", err,
-				"Failure at GetLdapHosts, unexpected response", ""))
+				"Failure when executing 2 GetLdapissuercacertificates", err,
+				"Failure at GetLdapissuercacertificates, unexpected response", ""))
 			return diags
 		}
 
 		log.Printf("[DEBUG] Retrieved response %+v", responseInterfaceToString(*response1))
 
-		vItem1 := flattenLdapGetLdapHostsItem(response1.ERSLdap)
+		vItem1 := flattenLdapGetLdapissuercacertificatesItem(response1.ERSLdap)
 		if err := d.Set("item", vItem1); err != nil {
 			diags = append(diags, diagError(
-				"Failure when setting GetLdapHosts response",
+				"Failure when setting GetLdapissuercacertificates response",
 				err))
 			return diags
 		}
@@ -521,27 +521,27 @@ func dataSourceLdapHostsRead(ctx context.Context, d *schema.ResourceData, m inte
 	return diags
 }
 
-func flattenLdapGetLdapHostsItem(item *isegosdk.ResponseLdapGetLdapHostsERSLdap) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItem(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdap) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["general_settings"] = flattenLdapGetLdapHostsItemGeneralSettings(item.GeneralSettings)
-	respItem["connection_settings"] = flattenLdapGetLdapHostsItemConnectionSettings(item.ConnectionSettings)
-	respItem["directory_organization"] = flattenLdapGetLdapHostsItemDirectoryOrganization(item.DirectoryOrganization)
-	respItem["groups"] = flattenLdapGetLdapHostsItemGroups(item.Groups)
-	respItem["attributes"] = flattenLdapGetLdapHostsItemAttributes(item.Attributes)
-	respItem["enable_password_change_ldap"] = boolPtrToString(item.EnablePasswordChangeLDAP)
+	respItem["general_settings"] = flattenLdapGetLdapissuercacertificatesItemGeneralSettings(item.GeneralSettings)
+	respItem["connection_settings"] = flattenLdapGetLdapissuercacertificatesItemConnectionSettings(item.ConnectionSettings)
+	respItem["directory_organization"] = flattenLdapGetLdapissuercacertificatesItemDirectoryOrganization(item.DirectoryOrganization)
+	respItem["groups"] = flattenLdapGetLdapissuercacertificatesItemGroups(item.Groups)
+	respItem["attributes"] = flattenLdapGetLdapissuercacertificatesItemAttributes(item.Attributes)
+	respItem["enable_password_change_lda_p"] = boolPtrToString(item.EnablePasswordChangeLDAP)
 	respItem["name"] = item.Name
 	respItem["id"] = item.ID
 	respItem["description"] = item.Description
-	respItem["link"] = flattenLdapGetLdapHostsItemLink(item.Link)
+	respItem["link"] = flattenLdapGetLdapissuercacertificatesItemLink(item.Link)
 	return []map[string]interface{}{
 		respItem,
 	}
 }
 
-func flattenLdapGetLdapHostsItemGeneralSettings(item *isegosdk.ResponseLdapGetLdapHostsERSLdapGeneralSettings) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemGeneralSettings(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapGeneralSettings) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -552,9 +552,9 @@ func flattenLdapGetLdapHostsItemGeneralSettings(item *isegosdk.ResponseLdapGetLd
 	respItem["group_object_class"] = item.GroupObjectClass
 	respItem["group_map_attribute_name"] = item.GroupMapAttributeName
 	respItem["certificate"] = item.Certificate
-	respItem["schema"] = flattenLdapGetLdapHostsItemGeneralSettingsSchema(item.Schema)
-	respItem["group_member_reference"] = flattenLdapGetLdapHostsItemGeneralSettingsGroupMemberReference(item.GroupMemberReference)
-	respItem["user_info_attributes"] = flattenLdapGetLdapHostsItemGeneralSettingsUserInfoAttributes(item.UserInfoAttributes)
+	respItem["schema"] = flattenLdapGetLdapissuercacertificatesItemGeneralSettingsSchema(item.Schema)
+	respItem["group_member_reference"] = flattenLdapGetLdapissuercacertificatesItemGeneralSettingsGroupMemberReference(item.GroupMemberReference)
+	respItem["user_info_attributes"] = flattenLdapGetLdapissuercacertificatesItemGeneralSettingsUserInfoAttributes(item.UserInfoAttributes)
 
 	return []map[string]interface{}{
 		respItem,
@@ -562,7 +562,7 @@ func flattenLdapGetLdapHostsItemGeneralSettings(item *isegosdk.ResponseLdapGetLd
 
 }
 
-func flattenLdapGetLdapHostsItemGeneralSettingsSchema(item *isegosdk.ResponseLdapGetLdapHostsERSLdapGeneralSettingsSchema) interface{} {
+func flattenLdapGetLdapissuercacertificatesItemGeneralSettingsSchema(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapGeneralSettingsSchema) interface{} {
 	if item == nil {
 		return nil
 	}
@@ -572,7 +572,7 @@ func flattenLdapGetLdapHostsItemGeneralSettingsSchema(item *isegosdk.ResponseLda
 
 }
 
-func flattenLdapGetLdapHostsItemGeneralSettingsGroupMemberReference(item *isegosdk.ResponseLdapGetLdapHostsERSLdapGeneralSettingsGroupMemberReference) interface{} {
+func flattenLdapGetLdapissuercacertificatesItemGeneralSettingsGroupMemberReference(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapGeneralSettingsGroupMemberReference) interface{} {
 	if item == nil {
 		return nil
 	}
@@ -582,7 +582,7 @@ func flattenLdapGetLdapHostsItemGeneralSettingsGroupMemberReference(item *isegos
 
 }
 
-func flattenLdapGetLdapHostsItemGeneralSettingsUserInfoAttributes(item *isegosdk.ResponseLdapGetLdapHostsERSLdapGeneralSettingsUserInfoAttributes) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemGeneralSettingsUserInfoAttributes(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapGeneralSettingsUserInfoAttributes) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -606,14 +606,14 @@ func flattenLdapGetLdapHostsItemGeneralSettingsUserInfoAttributes(item *isegosdk
 
 }
 
-func flattenLdapGetLdapHostsItemConnectionSettings(item *isegosdk.ResponseLdapGetLdapHostsERSLdapConnectionSettings) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemConnectionSettings(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapConnectionSettings) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
-	respItem["primary_server"] = flattenLdapGetLdapHostsItemConnectionSettingsPrimaryServer(item.PrimaryServer)
-	respItem["secondary_server"] = flattenLdapGetLdapHostsItemConnectionSettingsSecondaryServer(item.SecondaryServer)
-	respItem["ldap_node_data"] = flattenLdapGetLdapHostsItemConnectionSettingsLdapNodeData(item.LdapNodeData)
+	respItem["primary_server"] = flattenLdapGetLdapissuercacertificatesItemConnectionSettingsPrimaryServer(item.PrimaryServer)
+	respItem["secondary_server"] = flattenLdapGetLdapissuercacertificatesItemConnectionSettingsSecondaryServer(item.SecondaryServer)
+	respItem["ldap_node_data"] = flattenLdapGetLdapissuercacertificatesItemConnectionSettingsLdapNodeData(item.LdapNodeData)
 	respItem["failover_to_secondary"] = boolPtrToString(item.FailoverToSecondary)
 	respItem["failback_retry_delay"] = item.FailbackRetryDelay
 	respItem["specify_server_for_each_ise_node"] = boolPtrToString(item.SpecifyServerForEachIseNode)
@@ -625,7 +625,7 @@ func flattenLdapGetLdapHostsItemConnectionSettings(item *isegosdk.ResponseLdapGe
 
 }
 
-func flattenLdapGetLdapHostsItemConnectionSettingsPrimaryServer(item *isegosdk.ResponseLdapGetLdapHostsERSLdapConnectionSettingsPrimaryServer) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemConnectionSettingsPrimaryServer(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapConnectionSettingsPrimaryServer) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -650,7 +650,7 @@ func flattenLdapGetLdapHostsItemConnectionSettingsPrimaryServer(item *isegosdk.R
 
 }
 
-func flattenLdapGetLdapHostsItemConnectionSettingsSecondaryServer(item *isegosdk.ResponseLdapGetLdapHostsERSLdapConnectionSettingsSecondaryServer) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemConnectionSettingsSecondaryServer(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapConnectionSettingsSecondaryServer) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -675,7 +675,7 @@ func flattenLdapGetLdapHostsItemConnectionSettingsSecondaryServer(item *isegosdk
 
 }
 
-func flattenLdapGetLdapHostsItemConnectionSettingsLdapNodeData(items *[]isegosdk.ResponseLdapGetLdapHostsERSLdapConnectionSettingsLdapNodeData) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemConnectionSettingsLdapNodeData(items *[]isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapConnectionSettingsLdapNodeData) []map[string]interface{} {
 	if items == nil {
 		return nil
 	}
@@ -692,14 +692,14 @@ func flattenLdapGetLdapHostsItemConnectionSettingsLdapNodeData(items *[]isegosdk
 	return respItems
 }
 
-func flattenLdapGetLdapHostsItemDirectoryOrganization(item *isegosdk.ResponseLdapGetLdapHostsERSLdapDirectoryOrganization) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemDirectoryOrganization(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapDirectoryOrganization) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
 	respItem := make(map[string]interface{})
 	respItem["user_directory_subtree"] = item.UserDirectorySubtree
 	respItem["group_directory_subtree"] = item.GroupDirectorySubtree
-	respItem["mac_format"] = flattenLdapGetLdapHostsItemDirectoryOrganizationMacFormat(item.MacFormat)
+	respItem["mac_format"] = flattenLdapGetLdapissuercacertificatesItemDirectoryOrganizationMacFormat(item.MacFormat)
 	respItem["strip_prefix"] = boolPtrToString(item.StripPrefix)
 	respItem["strip_suffix"] = item.StripSuffix
 	respItem["prefix_separator"] = item.PrefixSeparator
@@ -711,7 +711,7 @@ func flattenLdapGetLdapHostsItemDirectoryOrganization(item *isegosdk.ResponseLda
 
 }
 
-func flattenLdapGetLdapHostsItemDirectoryOrganizationMacFormat(item *isegosdk.ResponseLdapGetLdapHostsERSLdapDirectoryOrganizationMacFormat) interface{} {
+func flattenLdapGetLdapissuercacertificatesItemDirectoryOrganizationMacFormat(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapDirectoryOrganizationMacFormat) interface{} {
 	if item == nil {
 		return nil
 	}
@@ -721,7 +721,7 @@ func flattenLdapGetLdapHostsItemDirectoryOrganizationMacFormat(item *isegosdk.Re
 
 }
 
-func flattenLdapGetLdapHostsItemGroups(item *isegosdk.ResponseLdapGetLdapHostsERSLdapGroups) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemGroups(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapGroups) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -734,7 +734,7 @@ func flattenLdapGetLdapHostsItemGroups(item *isegosdk.ResponseLdapGetLdapHostsER
 
 }
 
-func flattenLdapGetLdapHostsItemAttributes(item *isegosdk.ResponseLdapGetLdapHostsERSLdapAttributes) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemAttributes(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapAttributes) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
@@ -747,7 +747,7 @@ func flattenLdapGetLdapHostsItemAttributes(item *isegosdk.ResponseLdapGetLdapHos
 
 }
 
-func flattenLdapGetLdapHostsItemLink(item *isegosdk.ResponseLdapGetLdapHostsERSLdapLink) []map[string]interface{} {
+func flattenLdapGetLdapissuercacertificatesItemLink(item *isegosdk.ResponseLdapGetLdapissuercacertificatesERSLdapLink) []map[string]interface{} {
 	if item == nil {
 		return nil
 	}
