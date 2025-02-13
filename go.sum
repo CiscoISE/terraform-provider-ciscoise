@@ -189,6 +189,10 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/CiscoISE/ciscoise-go-sdk v1.3.3 h1:1sG5BOeNBDs0p/tRAqdMk3Qlm0WspQQzmNmy/CzBNXs=
 github.com/CiscoISE/ciscoise-go-sdk v1.3.3/go.mod h1:XjQ8S87lr8LIXdGKiU1gHOOiO0cWKR6eGD+d2JfSOQU=
+github.com/CiscoISE/ciscoise-go-sdk v1.3.4 h1:LaWuOOy4vJ+xsJT2zeNx1T+a3x6OEqCepqbBfOTmnE4=
+github.com/CiscoISE/ciscoise-go-sdk v1.3.4/go.mod h1:XjQ8S87lr8LIXdGKiU1gHOOiO0cWKR6eGD+d2JfSOQU=
+github.com/CiscoISE/ciscoise-go-sdk v1.3.5 h1:xAtHNG/C6WEnSG/Hy0bPrXDeXIiJ66FdC+EX8mE38A4=
+github.com/CiscoISE/ciscoise-go-sdk v1.3.5/go.mod h1:XjQ8S87lr8LIXdGKiU1gHOOiO0cWKR6eGD+d2JfSOQU=
 github.com/Masterminds/goutils v1.1.1 h1:5nUrii3FMTL5diU80unEVvNevw1nH4+ZV4DSLVJLSYI=
 github.com/Masterminds/goutils v1.1.1/go.mod h1:8cTjp+g8YejhMuvIA5y2vz3BpJxksy863GQaJW2MFNU=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=
