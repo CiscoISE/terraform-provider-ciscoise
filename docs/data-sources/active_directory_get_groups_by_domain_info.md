@@ -19,7 +19,7 @@ It performs update operation on ActiveDirectory.
 terraform {
   required_providers {
     ciscoise = {
-      version = "0.8.1-beta "
+      version = "0.8.2-beta "
       source  = "hashicorp.com/edu/ciscoise"
     }
   }

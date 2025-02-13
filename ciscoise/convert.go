@@ -129,3 +129,12 @@ func requestStringToInterface(v string) interface{} {
 	}
 	return result
 }
+
+func interfaceToFloat64Ptr(item interface{}) *float64 {
+	nItem := interfaceToString(item)
+	nnItem, err := strconv.ParseFloat(nItem, 64)
+	if err != nil {
+		return nil
+	}
+	return &nnItem
+}

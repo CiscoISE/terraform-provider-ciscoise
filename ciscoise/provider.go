@@ -270,6 +270,9 @@ func Provider() *schema.Provider {
 			"ciscoise_user_equipment":                                              resourceUserEquipment(),
 			"ciscoise_user_equipment_bulk":                                         resourceUserEquipmentBulk(),
 			"ciscoise_user_equipment_csv":                                          resourceUserEquipmentCsv(),
+			"ciscoise_ldap":                                                        resourceLdap(),
+			"ciscoise_ldap_testbindprimary":                                        resourceLdapTestbindprimary(),
+			"ciscoise_ldap_testbindsecondary":                                      resourceLdapTestbindsecondary(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"ciscoise_mnt_account_status":                                         dataSourceMntAccountStatus(),
@@ -484,6 +487,11 @@ func Provider() *schema.Provider {
 			"ciscoise_user_equipment":                                             dataSourceUserEquipment(),
 			"ciscoise_user_equipment_imei_info":                                   dataSourceUserEquipmentImeiInfo(),
 			"ciscoise_user_equipment_subscriber_info":                             dataSourceUserEquipmentSubscriberInfo(),
+			"ciscoise_ldap":                                                       dataSourceLdap(),
+			"ciscoise_ldap_rootcacertificates":                                    dataSourceLdapRootcacertificates(),
+			"ciscoise_ldap_issuercacertificates":                                  dataSourceLdapissuercacertificates(),
+			"ciscoise_ldap_hosts":                                                 dataSourceLdapHosts(),
+			"ciscoise_ldap_name":                                                  dataSourceLdapName(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
