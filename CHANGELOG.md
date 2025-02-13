@@ -1,3 +1,17 @@
+## 0.8.2-beta (Feb 13, 2025)
+IMPROVEMENTS:
+* provider: Update ciscoisesdk from v1.3.3 to v1.3.6
+FEATURES:
+FEATURES:
+* **New Resource:** `ciscoise_ldap`
+* **New Resource:** `ciscoise_ldap_testbindprimary`
+* **New Resource:** `ciscoise_ldap_testbindsecondary`
+* **New DataSource** `ciscoise_ldap`
+* **New DataSource** `ciscoise_ldap_rootcacertificates`
+* **New DataSource** `ciscoise_ldap_issuercacertificates`
+* **New DataSource** `ciscoise_ldap_hosts`
+* **New DataSource** `ciscoise_ldap_name`
+
 ## 0.8.1-beta (May 15, 2024)
 BUG FIXES:
 * `ciscoise_network_device_group` change parameter from `ndgtpye` to `othername`

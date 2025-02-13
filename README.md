@@ -67,7 +67,7 @@ terraform {
   required_providers {
     ciscoise = {
       source = "hashicorp.com/edu/ciscoise"
-      version = "0.8.1-beta "
+      version = "0.8.2-beta "
     }
   }
 }
@@ -121,7 +121,7 @@ The following table shows the supported versions.
 |-------------------|---------------------------------------|---------------------|
 | 3.1_Patch_1       | 0.6.22-beta                           | 1.1.19              |
 | 3.2-Beta          | 0.7.0-beta                            | 1.2.0               |
-| 3.3_patch_1       | 0.8.1-beta                            | 1.3.3               |
+| 3.3_patch_1       | 0.8.2-beta                            | 1.3.6               |
 
 If your SDK, Terraform provider is older please consider updating it first.
 
